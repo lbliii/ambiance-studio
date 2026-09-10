@@ -2,7 +2,7 @@
 
 A local studio for painted, layered ambiance films. The CLI is the main interface for agents and repeatable production; the browser workbench provides visual placement and review.
 
-Version 0.7.0 adds [appearance, lighting and receiving shadows/reflections](docs/FINISHING.md), [all-cel edge inspection and explicit matte repair](docs/EDGE-QUALITY.md), and [interactive look development and supersampled export](docs/LOOK-WORKBENCH.md). It builds on captured revisions, edition-bound reviews, placement, timing, audio and encoded-picture reuse. The full Last Lantern production history remains preserved.
+Version 0.8.0 adds a [local film library](docs/STUDIO-LIBRARY.md): projects shared across worktrees, explicit current review movies, edition history and comparison, timestamped feedback, and resumable local iteration runs. It preserves the existing rendering, sound, finishing, revision and evidence workflows.
 
 ## Start here
 
@@ -17,9 +17,10 @@ This machine was tested with Python 3.14 and Node 24. `./ambiance doctor` report
 
 ```sh
 ./ambiance doctor
+./ambiance studio open
 ./ambiance project list
 ./ambiance --project projects/last-lantern project check
-./ambiance --project projects/last-lantern preview
+./ambiance --project projects/last-lantern preview --port 8784
 ```
 
 The migrated local repository includes `projects/last-lantern`. A fresh Git clone excludes working projects; create one with:
@@ -28,7 +29,9 @@ The migrated local repository includes `projects/last-lantern`. A fresh Git clon
 ./ambiance project init projects/last-lantern --template last-lantern --title "The Last Lantern"
 ```
 
-Open the URL printed by `preview` (normally `http://127.0.0.1:8783/editor/`). The server exposes only the editor and the selected project's declared assets. It is read-only. Browser edits need scene JSON export; CLI edits save validated files and retain a restorable history.
+Bookmark `http://127.0.0.1:8783/` for the film library. Use `./ambiance --project PROJECT project latest` for the exact selected movie and `project overview` to resume work. Register external project folders once with `./ambiance studio register PATH`.
+
+The separate `preview` command opens the scene editor (use `--port 8784` if the library is running). The scene preview exposes only the editor and the selected project's declared assets. It is read-only. Browser edits need scene JSON export; CLI edits save validated files and retain a restorable history.
 
 ## Work through the CLI
 
@@ -47,7 +50,8 @@ Commands emit JSON with stable exit codes. Inside a project, the CLI discovers i
 
 | Path | Purpose |
 | --- | --- |
-| `ambiance`, `ambiance_studio/` | CLI, project operations, read-only preview server |
+| `ambiance`, `ambiance_studio/` | CLI, project operations, film library, delivery selections and local runs |
+| `studio/` | Movie library, player, version comparison and feedback interface |
 | `editor/`, `tools/scene-command.mjs` | Shared absolute-time evaluator, visual workbench and JSON scene bridge |
 | `tools/asset_tool.py` | Registration, atlas preparation, proofs and cache checks |
 | `studio.py`, `kit.py` | Existing review/integrity tools; retained for compatibility |
@@ -60,6 +64,8 @@ Commands emit JSON with stable exit codes. Inside a project, the CLI discovers i
 Small reusable PNG assets are tracked in this repository. Large media, working projects and archives live alongside it locally and need their own backup. A Git clone alone does not include the finished-film archive. The migration inventory records each copied source file and hash. The original chat workspace is retained to keep its links usable.
 
 ## Guides
+
+- [Local film library](docs/STUDIO-LIBRARY.md): current movie links, discovery, iteration runs and feedback.
 
 - [CLI guide](docs/CLI.md): implemented commands and practical recipes.
 - [Rig workbench](docs/RIG-WORKBENCH.md): registration choices, sockets and visual inspection.

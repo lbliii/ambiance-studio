@@ -8,6 +8,16 @@ import sys
 
 ROOT=Path(__file__).resolve().parents[1]
 errors=[];links=0;skills=[]
+sys.path.insert(0,str(ROOT))
+from ambiance_studio import __version__
+versions={'package.json':json.loads((ROOT/'package.json').read_text())['version'],
+          'package-lock.json':json.loads((ROOT/'package-lock.json').read_text())['version'],
+          'pyproject.toml':re.search(r'^version\s*=\s*"([^"]+)"',(ROOT/'pyproject.toml').read_text(),re.M)[1]}
+for name,version in versions.items():
+    if version!=__version__:errors.append(f'{name}: version {version} differs from CLI {__version__}')
+for name in ['studio/studio.mjs','editor/editor.mjs']:
+    check=subprocess.run(['node','--check',str(ROOT/name)],capture_output=True,text=True)
+    if check.returncode:errors.append(f'{name}: {check.stderr}')
 for md in ROOT.rglob('*.md'):
     if any(part in ['archive','projects','__pycache__','node_modules','.venv'] for part in md.relative_to(ROOT).parts): continue
     body=md.read_text()

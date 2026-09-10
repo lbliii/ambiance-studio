@@ -1,0 +1,16 @@
+{
+  "format": "ambiance-delivery-selection",
+  "schema_version": 1,
+  "id": "take-2",
+  "title": "Take 2 — quieter evening",
+  "notes": "Slower smoke and a quieter bell.",
+  "default_role": "score",
+  "editions": [
+    {"role": "score", "revision": "v2", "edition": "score"},
+    {"role": "effects", "revision": "v2", "edition": "effects"},
+    {"role": "silent", "revision": "v2", "edition": "silent"}
+  ],
+  "poster": "reports/picture-v2/verification/contacts/decoded-0000.png",
+  "scene_snapshot": "reports/picture-v2/scene.snapshot.json",
+  "catalog_snapshot": "reports/picture-v2/catalog.snapshot.json"
+}

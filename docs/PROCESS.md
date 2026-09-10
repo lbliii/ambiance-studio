@@ -1,5 +1,7 @@
 # Making this repeatable
 
+> Historical design record from the initial studio passes. For current executable capabilities and engineering direction, use [CLI](CLI.md), [studio library](STUDIO-LIBRARY.md), and [architecture](architecture/CLI-FIRST.md). The future-work lists below are retained as history.
+
 ## The recommendation
 
 Build a personal **ambiance production kit** around a scene recipe, an asset library, and one deterministic rendering engine. Add a small visual stage for the tasks that are easier to see than describe: placement, anchors, grouping, depth, masks, and timing. Use Python for preparation and inspection, and keep generation services behind replaceable adapters.

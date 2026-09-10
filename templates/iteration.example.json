@@ -1,0 +1,15 @@
+{
+  "format": "ambiance-iteration",
+  "schema_version": 1,
+  "id": "take-3",
+  "title": "Take 3 — softer light",
+  "notes": "Softer window light with the selected score and environmental sound.",
+  "revision": "v3",
+  "capture_selection": "plans/revision-selection.json",
+  "default_role": "score",
+  "editions": [
+    {"role": "silent"},
+    {"role": "score", "audio": "audio/runs/score/mix/master.wav", "audio_run": "audio/runs/score", "repeats": 3},
+    {"role": "effects", "audio": "audio/runs/effects/mix/master.wav", "audio_run": "audio/runs/effects", "repeats": 3}
+  ]
+}

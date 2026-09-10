@@ -2,6 +2,10 @@
 
 Run commands from the repository root using `./ambiance`. The CLI requires Python 3.10+; scene operations/checks use Node. Pillow is optional for asset preparation. See [CLI guide](CLI.md) for the complete interface. Legacy `studio.py` and `kit.py` remain compatibility entry points.
 
+## Find the current movie and resume
+
+Use `./ambiance studio open` for the local film library. Register canonical project folders with `studio register PATH`; their IDs work across code worktrees. `project latest` resolves the selected review movie; `project overview` includes working divergence, open criteria and recent runs. Complete review iterations with a registered delivery and an explicit presentation selection. See [studio library](STUDIO-LIBRARY.md).
+
 ## Create a project
 
 ```sh
@@ -28,7 +32,7 @@ Complete the draft using the actual checks. Each criterion begins as `not-run`, 
 
 Use `pass` only when every criterion passed and dependencies are current. A `revise` record may retain failed or unperformed checks and does not pretend the stage is ready. Do not edit generated current receipts directly; submit a new review. Previous receipts are preserved by content hash.
 
-For a human release observation, save the user's actual note and identify its source/date in `feedback/`. Include both that note and the exact `deliverables/final/` file in the relevant criterion's evidence. The tool records the assertion; it does not authenticate the observer or independently perform the review.
+For a human release observation, save the user's actual note and identify its source/date in `feedback/`. Include both that note and the exact selected movie file in the relevant criterion's evidence. The tool records the assertion; it does not authenticate the observer or independently perform the review.
 
 ## Working folders
 
@@ -46,14 +50,16 @@ For a human release observation, save the user's actual note and identify its so
 | `feedback/` | Identified creative/listening observations |
 | `review-drafts/`, `reviews/` | Editable proposed reviews and recorded receipts |
 | `library/` | Reusable modules, compatibility notes, archive records |
-| `handoff.md` | Current stage, next action, limitations, final paths |
+| `deliveries/`, `presentations/` | Immutable movie sets and explicit current/release selection history |
+| `runs/`, `feedback/movies/` | Resumable local production progress and exact-movie notes |
+| `handoff.md` | Authored creative context; use `project overview` and `delivery handoff` for generated current facts |
 
 ## Inspect the bundled example
 
 ```sh
 ./ambiance doctor
 ./ambiance --project projects/last-lantern project check
-./ambiance --project projects/last-lantern preview
+./ambiance --project projects/last-lantern preview --port 8784
 ```
 
 The new preview reads the selected project's scene/catalog from `ambiance-project.json`. A fresh clone can create the example with `./ambiance project init projects/last-lantern --template last-lantern`. The legacy `kit.py serve` command still opens the bundled example. Projects created only by the legacy `studio.py` need explicit CLI configuration before the new preview can open them.

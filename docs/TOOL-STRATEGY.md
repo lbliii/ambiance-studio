@@ -1,5 +1,7 @@
 # Tool choices and the next engineering investments
 
+> Historical design record from the initial studio passes. For current executable capabilities and engineering direction, use [CLI](CLI.md), [studio library](STUDIO-LIBRARY.md), and [architecture](architecture/CLI-FIRST.md). The future-work lists below are retained as history.
+
 The most valuable change is to make the artistic relationship explicit: “this plume attaches to the chimney” becomes data the renderer preserves. A coordinate grid helps place the first point; a socket removes the need to repeat that placement after each parent edit. Similarly, a registration recipe replaces a series of one-off image adjustments.
 
 ## Own a small, portable core
