@@ -22,7 +22,11 @@ Codex documents repository-local skills in `.agents/skills`, with explicit invoc
 - **Then:** music and environmental details that support the same mood.
 - **Finally:** the video, cover, audio masters/stems where requested, reusable assets, and a report of completed and open checks.
 
-The full process is documented, but the packaged software is not yet a one-click image-to-video application. The editor supports placement, named attachments, cel playback, full-cycle preview checks, and project-specific loading through `ambiance preview`. A separate script registers and packs prepared transparent cels. General asset extraction, final rendering, and soundtrack generation still require the agent's available production tools. If a provider is unavailable, planning and local preparation can continue; the agent should identify the actual missing capability.
+The full process is documented, but the packaged software is not yet a one-click image-to-video application. The editor supports placement, named attachments, cel playback, full-cycle preview checks, and project-specific loading through `ambiance preview`. A separate script registers and packs prepared transparent cels. General asset extraction and soundtrack generation use the agent's available production tools; the CLI provides shared-scene rendering, verification, and explicit PCM mixing. If a provider is unavailable, planning and local preparation can continue; the agent should identify the actual missing capability.
+
+## Find your current movie
+
+Run `./ambiance studio open` and bookmark `http://127.0.0.1:8783/`. Open a project and choose **Watch current version**. Score, effects-only and silent choices stay within that version; earlier versions and exact-version links remain available. The scene editor is a separate working view. See the [studio library guide](docs/STUDIO-LIBRARY.md).
 
 ## Try the existing scene without spending credits
 
@@ -35,10 +39,10 @@ Or run these commands from this folder:
 ```sh
 ./ambiance doctor
 ./ambiance --project projects/last-lantern project check
-./ambiance --project projects/last-lantern preview
+./ambiance --project projects/last-lantern preview --port 8784
 ```
 
-Open `http://127.0.0.1:8783/editor/`. Stop the server with Ctrl-C. It serves only local files. The editor includes copyable scene JSON if a browser download does not save normally.
+Open `http://127.0.0.1:8784/editor/`. Stop the server with Ctrl-C. It serves only local files. The editor includes copyable scene JSON if a browser download does not save normally.
 
 See the [rig workbench guide](docs/RIG-WORKBENCH.md) for the new tools and a five-minute walkthrough.
 

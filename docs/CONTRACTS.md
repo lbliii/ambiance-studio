@@ -48,13 +48,15 @@ The record is currently maintained by the agent; no paid request queue is implem
 
 Record master sample rate/duration, source asset IDs, source trims/offsets, track gains, pan/width, processing and its order, cue times, circular wrap/tails, crossfade choices, and output stems. Keep requested musical direction distinct from measured or heard source properties.
 
-Specify whether stems contain master gain/processing and whether unity summing reconstructs the master. The example session is an editorial record, not a new general mixing engine. Retain the actual DAW or scripted mix source that produces the result.
+Specify whether stems contain master gain/processing and whether unity summing reconstructs the master. The executable [audio-session contract](AUDIO-SESSION.md) supports PCM arrangement, mixing and comparisons. Preserve separate external processing recipes for operations it does not implement.
 
 ## Review and release
 
-Use `studio.py review-template` for current criterion IDs. Save observations against exact files and let `record` hash them. Evidence paths must remain inside the project. The recorder also snapshots watched stage paths, so newly added files can invalidate a review even if they were not in its original evidence list.
+Use `./ambiance --project PATH review draft GATE --out FILE` for current criterion IDs. Save observations against exact files and let `record` hash them. Evidence paths must remain inside the project. The recorder also snapshots watched stage paths, so newly added files can invalidate a review even if they were not in its original evidence list.
 
 A release inventory should identify each final file's role, duration, dimensions/sample format, hash, generation/export date, and validation report. Do not mark technical or human checks passed based on a naming convention.
+
+Movie discovery, delivery sets, current selections, local iteration recipes and timestamped feedback are executable contracts described in [the studio library](STUDIO-LIBRARY.md). A delivery references existing movie/review evidence; it does not create an approval.
 
 ## Versions and changes
 

@@ -70,10 +70,11 @@ function save(){
   setStatus('Scene JSON is ready below. Download it or copy the text to keep your changes.');
 }
 async function start(){
-  const configResponse=await fetch('/api/config');
-  const config=configResponse.ok?await configResponse.json():{scene:'../scenes/last-lantern-rigged.json',catalog:'../assets/catalog.json'};
+  const project=new URLSearchParams(location.search).get('project');
+  const configResponse=project?null:await fetch('/api/config');
+  const config=project?{scene:`/api/editor/${encodeURIComponent(project)}/scene`,catalog:`/api/editor/${encodeURIComponent(project)}/catalog`}:configResponse.ok?await configResponse.json():{scene:'../scenes/last-lantern-rigged.json',catalog:'../assets/catalog.json'};
   const responses=await Promise.all([fetch(config.scene),fetch(config.catalog)]);
-  if(responses.some(r=>!r.ok))throw Error('Unable to load the scene or asset catalog. Start with python3 kit.py serve.');
+  if(responses.some(r=>!r.ok))throw Error('Unable to load this working scene or catalog. Saved movies remain available in the studio library.');
   [original,catalog]=await Promise.all(responses.map(r=>r.json()));
   await Promise.all(catalog.assets.map(async a=>{
     const im=new Image();im.src=a.file.startsWith('/')?a.file:`../${a.file}`;await im.decode();images.set(a.id,im);

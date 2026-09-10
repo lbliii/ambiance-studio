@@ -4,6 +4,8 @@ The supported entry point is `./ambiance` in the repository, or its absolute pat
 
 ## Project selection and output
 
+The [studio library](STUDIO-LIBRARY.md) provides shared discovery, exact/current movie links, recorded iteration runs and feedback. Start with `./ambiance studio open`. Registered IDs work with `--project ID` across worktrees; use `studio register PATH` for other project locations. Global `--registry FILE` or `AMBIANCE_REGISTRY` selects an isolated registry.
+
 Use `ambiance --project PATH COMMAND`, placing the global project option before the command. Without it, the CLI searches the current directory and its parents for `ambiance-project.json`. This small file points to `scene/scene.json` and `assets/catalog.json` within the project. Source paths never depend on the original chat location.
 
 Each finite command writes one JSON result to stdout: `ok`, `schema_version: 1`, `command`, and `data`. Errors contain `error.code` and `error.message`. Exit codes: 0 success, 1 failed checks, 2 invalid input or a locked project, 3 missing runtime/runtime failure, 130 interruption. Help/version are plain text. Preview prints one startup JSON object and serves until Ctrl-C; HTTP request logs go to stderr.
@@ -20,7 +22,18 @@ Revision selections and asset/placement manifests use project-relative reference
 | --- | --- |
 | `doctor` | Report runtime paths and executable capability availability |
 | `project init DIR [--reference FILE] [--title NAME] [--template blank or last-lantern]` | Create an isolated workspace atomically; preserve a reference and initialize pending gates |
-| `project list [--directory DIR]` | List initialized child projects |
+| `project list [--directory DIR]` | List registered/main-checkout projects, or limit discovery to child projects in DIR |
+| `studio register PATH [--id ID --relocate]` | Register or explicitly relocate a canonical local project address |
+| `studio open [--port N --no-browser]` / `studio serve [--port N]` | Start/reuse the background film library, or serve it in the foreground |
+| `studio status` / `studio stop` | Identify or stop the current registry's server |
+| `project latest [--channel review/release]` | Resolve the current selection to its exact movie and watch links |
+| `project overview [--out FILE]` | Current movies, working divergence, open criteria, available work and recent runs |
+| `delivery import FILE [--dry-run]` | Register an immutable movie set from captured editions or identity-bound legacy reports |
+| `delivery list` / `delivery inspect ID` | Inspect movie roles, identity and availability |
+| `delivery present ID --by NAME [--note TEXT --channel review/release --expect-selection HASH]` | Select a review or evidence-qualified release; preserve selection history |
+| `delivery handoff ID --out DIR` | Write a fresh handoff containing watch links, hashes and open checks |
+| `iteration run FILE --by NAME` / `iteration list` / `iteration inspect ID` | Run/resume capture/render/compose/verify/register/present recipes and inspect durable progress |
+| `feedback add ID --role score/effects/silent --time N --by NAME --note TEXT` / `feedback list ID` | Save/read exact-movie observations and timestamps |
 | `project status` | Read actual evidence/dependency freshness |
 | `project check [--out FILE]` | Check this project's asset integrity, scene graph, timing, attachments and geometric coverage |
 | `asset list` | Inspect this project's catalog |

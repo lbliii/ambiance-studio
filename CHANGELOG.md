@@ -1,5 +1,13 @@
 # Changes
 
+
+## 0.8.0
+
+- Added the persistent localhost film library, cross-worktree project registry, movie streaming/seeking, soundtrack choices, version history and synchronized comparison.
+- Added immutable delivery registration, explicit current/release selections, exact-version feedback, project overview and generated delivery handoffs.
+- Added resumable local iteration recipes over existing revision/render/compose/verification tools, retaining completed outputs and guarding against stale presentation.
+- Consolidated current workflow guidance and clarified historical roadmaps.
+
 ## 0.7.0 — production, finishing and review
 
 - Added production inventories, reversible scene transactions, source placement, timing tracks, rig proofs, asset preparation and cel previews.

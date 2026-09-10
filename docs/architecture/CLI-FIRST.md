@@ -20,6 +20,10 @@ Inventory checks and asset proofs live in focused Python modules. The scene brid
 
 The [next-pass design](CLI-NEXT-PASS.md) is implemented: shared timing reports, explicit captured revisions and edition-bound reviews, source-coordinate placement/reparenting, crop/return mappings, compound-rig proofs, and picture composition with requested decoded contacts. The [handoff](CLI-V06-HANDOFF.md) describes the independent CLI pilot and validation. Revision receipts extend the existing review validator; their typed dependencies replace folder watches only in explicitly captured scopes. Legacy review behavior remains available.
 
+## Studio library in 0.8
+
+The [library contract](../STUDIO-LIBRARY.md) adds a machine-local registry, project discovery across Git worktrees, immutable delivery sets, append-only presentation selections, movie streaming and exact-version feedback. `production.py` composes existing capture/render/compose/verify functions into resumable local iteration runs. `project overview` joins existing review and planning results without redefining readiness. `studio_server.py` serves the library independently of working-scene validity. The editor retains its existing saved-scene boundary.
+
 ## Remaining engineering slices
 
 Version 0.7 adds the [finishing/edge implementation](CLI-FINISHING-PLAN.md), with opt-in shared rendering, reproducible appearance packages, all-cel matte inspection/repair, supersampling and browser look development. Future physical lighting or additional color spaces must extend the explicit contract; existing painted shadows and parallax depths do not establish full scene geometry.
