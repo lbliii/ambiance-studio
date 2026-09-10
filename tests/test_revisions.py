@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from PIL import Image
 import studio
+from ambiance_studio import scene_runtime
 from ambiance_studio import revisions
 from ambiance_studio.cli import init_project, parser, run, main
 
@@ -90,12 +91,12 @@ class RevisionTests(unittest.TestCase):
 
     def test_capture_validates_the_exact_scene_bytes_it_snapshots(self):
         from ambiance_studio import cli
-        original = cli.scene_bridge
+        original = scene_runtime.scene_bridge
         def mutate_after_validation(*args, **kwargs):
             result = original(*args, **kwargs)
             scene = studio.read(self.p/'scene/scene.json'); scene['canvas']['fps'] = 0; studio.write(self.p/'scene/scene.json', scene)
             return result
-        with patch.object(cli, 'scene_bridge', side_effect=mutate_after_validation), self.assertRaisesRegex(ValueError, 'Inputs changed'):
+        with patch.object(scene_runtime, 'scene_bridge', side_effect=mutate_after_validation), self.assertRaisesRegex(ValueError, 'Inputs changed'):
             self.capture()
         self.assertFalse((self.p/'revisions/v1').exists())
 

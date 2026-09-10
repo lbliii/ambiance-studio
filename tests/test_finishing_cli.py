@@ -13,6 +13,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]; sys.path.insert(0, str(ROOT))
 import studio
+from ambiance_studio import scene_runtime
 from ambiance_studio import finishing, revisions, scene_authoring
 from ambiance_studio.cli import init_project, parser, run, main
 
@@ -108,11 +109,11 @@ class FinishingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'requirements differ'): self.cli('look', 'import', package, '--bindings', path)
         doc['requires']['layers'] = ['actor', 'floor']; studio.write(package, finishing._seal({k: v for k, v in doc.items() if k != 'payload_sha256'}))
         from ambiance_studio import cli
-        original = cli.scene_bridge
+        original = scene_runtime.scene_bridge
         def changed(*args, **kwargs):
             result = original(*args, **kwargs); path.write_bytes(path.read_bytes()+b' '); return result
         before = (self.p/'scene/scene.json').read_bytes()
-        with patch.object(cli, 'scene_bridge', side_effect=changed), self.assertRaisesRegex(ValueError, 'changed before save'):
+        with patch.object(scene_runtime, 'scene_bridge', side_effect=changed), self.assertRaisesRegex(ValueError, 'changed before save'):
             self.cli('look', 'import', package, '--bindings', path)
         self.assertEqual((self.p/'scene/scene.json').read_bytes(), before)
 

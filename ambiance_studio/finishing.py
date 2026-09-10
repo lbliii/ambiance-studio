@@ -11,6 +11,7 @@ import re
 import tempfile
 
 import studio
+from .scene_authoring import file_dependency
 
 LOOK = 'ambiance-look'
 PACKAGE = 'ambiance-finishing-package'
@@ -114,14 +115,8 @@ def _validate_rig(rig, finish):
     if selected != rig: raise ValueError('Rig must contain exactly finishing roots, their attachment ancestors and required groups')
 
 
-def file_dependency(path, role):
-    requested = str(Path(path).absolute()); path = Path(path).resolve(); data = path.read_bytes()
-    return {'file': str(path), 'resolved_path': str(path), 'path_base': 'absolute',
-            'requested_path': requested, 'sha256': hashlib.sha256(data).hexdigest(), 'bytes': len(data), 'roles': [role]}
-
-
-def load_apply(path):
-    doc = studio.read(path); fields(doc, ['kind', 'version', 'finishing'], 'look document')
+def apply_batch(doc):
+    fields(doc, ['kind', 'version', 'finishing'], 'look document')
     if doc.get('kind') != LOOK or doc.get('version') != 1 or 'finishing' not in doc:
         raise ValueError('Expected ambiance-look version 1 with finishing')
     if doc['finishing'] is not None and not isinstance(doc['finishing'], dict): raise ValueError('Finishing must be an object or null')
@@ -129,7 +124,7 @@ def load_apply(path):
 
 
 def inspect(project, scene, catalog, time=0):
-    from .cli import scene_bridge
+    from .scene_runtime import scene_bridge
     from .scene_authoring import resolve_batch
     diagnostics = scene_bridge('finishing-check', scene, catalog, {'time': time})
     _, dependencies = resolve_batch(project, scene, catalog,
@@ -198,7 +193,7 @@ def export_package(project, scene, catalog, out, include_rig=False):
 
 
 def import_batch(project, scene, catalog, package, bindings, include_rig=False):
-    from .cli import scene_bridge
+    from .scene_runtime import scene_bridge
     from .scene_authoring import verify_dependencies
     package_path = _package_path(package); bindings_path = Path(bindings).resolve()
     extra = [file_dependency(package_path, 'look-package'), file_dependency(bindings_path, 'look-bindings')]

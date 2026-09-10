@@ -1,6 +1,6 @@
 """Resolve source-placement identities before the shared JavaScript transaction.
 
-No scene is saved here. The CLI owns project locking, scene snapshots and its
+No scene is saved here. The transaction service owns locking, snapshots and its
 expected-scene check; verify_dependencies must run again immediately before save.
 """
 import copy
@@ -8,6 +8,21 @@ import hashlib
 import io
 import json
 from pathlib import Path
+
+
+def read_input(path, role):
+    """Read once so an input's identity describes exactly the bytes being used."""
+    requested = str(Path(path).absolute())
+    path = Path(path).resolve()
+    data = path.read_bytes()
+    record = {'file': str(path), 'resolved_path': str(path), 'path_base': 'absolute',
+              'requested_path': requested, 'sha256': hashlib.sha256(data).hexdigest(),
+              'bytes': len(data), 'roles': [role]}
+    return data, record
+
+
+def file_dependency(path, role):
+    return read_input(path, role)[1]
 
 
 def _path(project, relative):
@@ -27,7 +42,7 @@ def placement_batch(manifest):
 
 
 def resolve_batch(project,scene,catalog,batch):
-    project=Path(project).resolve();batch=copy.deepcopy(batch);dependencies={}
+    project=Path(project).resolve();batch=copy.deepcopy(batch);dependencies={};checked_assets=set()
     if not isinstance(batch,dict) or batch.get('version')!=1 or not isinstance(batch.get('operations'),list):
         raise ValueError('Expected a version 1 scene batch')
     assets={a['id']:a for a in catalog['assets']};layers={l['id']:l['asset'] for l in scene['layers']}
@@ -60,6 +75,9 @@ def resolve_batch(project,scene,catalog,batch):
 
     def check_asset(aid):
         if aid not in assets:raise ValueError(f'Unknown placement asset: {aid}')
+        # Shared bases may occur in every placement. Validate each pack once
+        # per batch; verify_dependencies still rechecks every pinned file.
+        if aid in checked_assets:return
         asset=assets[aid];image(asset,f'placement asset {aid}')
         provenance=asset.get('provenance',{});recipe_ref=provenance.get('recipe')
         if recipe_ref:
@@ -104,6 +122,7 @@ def resolve_batch(project,scene,catalog,batch):
             if mapping.get('reference'):image(mapping['reference'],f'mapped reference {aid}')
         elif asset.get('registration_mapping'):
             raise ValueError(f'Compiler registration mapping needs its verifiable recipe/pack: {aid}')
+        checked_assets.add(aid)
 
     has_placement=False
     finishing_config=scene.get('finishing');has_finishing=finishing_config is not None

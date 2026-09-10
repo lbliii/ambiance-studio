@@ -93,7 +93,7 @@ def capabilities():
 
 
 def _error(message, code='invalid_input', exit_code=2):
-    from .cli import CommandError
+    from .errors import CommandError
     raise CommandError(message, code, exit_code)
 
 
@@ -160,7 +160,7 @@ def _context(project, revision=None):
     if revision:
         from . import revisions
         return revisions.render_context(project, revision)
-    from .cli import locations
+    from .project import locations
     scene, catalog = locations(project)
     return {'scene':scene, 'catalog':catalog}
 
@@ -206,7 +206,7 @@ def _verify(project, binary, source, out, width, height, fps, frames, audio_trac
 
 
 def run(args, project):
-    from .cli import require_node
+    from .scene_runtime import require_node
     project = Path(project).resolve()
     if args.command == 'media' and args.action == 'compose':
         return compose(args, project)

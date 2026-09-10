@@ -10,7 +10,7 @@ from PIL import Image,ImageDraw
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-from ambiance_studio import planning,assets
+from ambiance_studio import planning,assets,scene_runtime
 from tools import asset_tool
 
 
@@ -77,12 +77,12 @@ class ProductionTests(unittest.TestCase):
     def test_direct_scene_change_during_batch_validation_is_not_overwritten(self):
         from ambiance_studio import cli as module
         batch=self.root/'batch.json';batch.write_text(json.dumps({'version':1,'operations':[{'op':'set','layer':'base','values':{'x':.3}}]}))
-        original_bridge=module.scene_bridge
+        original_bridge=scene_runtime.scene_bridge
         external=json.loads(self.scene.read_text());external['title']='Changed by another writer'
         def edit_during_validation(*args):
             candidate=original_bridge(*args);self.scene.write_text(json.dumps(external));return candidate
         args=module.parser().parse_args(['--project',str(self.p),'scene','apply',str(batch)])
-        with patch.object(module,'scene_bridge',side_effect=edit_during_validation):
+        with patch.object(scene_runtime,'scene_bridge',side_effect=edit_during_validation):
             with self.assertRaises(module.CommandError) as error:module.run(args)
         self.assertEqual(error.exception.code,'stale_input');self.assertEqual(json.loads(self.scene.read_text()),external)
     def test_asset_proof_keeps_original_and_exposes_actual_pixels(self):

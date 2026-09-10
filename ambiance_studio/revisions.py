@@ -232,7 +232,7 @@ def collect(project, selection):
     scene = json.loads(c.document('scene.json', scene_path, 'animation', 'scene')['bytes'])
     catalog = json.loads(c.document('catalog.json', catalog_path, 'assets', 'catalog')['bytes'])
     if scene.get('version') != 1 or catalog.get('version') != 1: raise ValueError('Unsupported scene/catalog version')
-    from .cli import scene_bridge
+    from .scene_runtime import scene_bridge
     scene_bridge('inspect', scene, catalog, {'full': True})
     from .finishing import used_asset_ids, dependency_roles
     used = used_asset_ids(scene); roles = dependency_roles(scene)
@@ -255,7 +255,7 @@ def collect(project, selection):
 
 
 def capture(project, id, selection_path, dry_run=False, expected=None):
-    from .cli import project_lock
+    from .project import project_lock
     identifier(id); selection_path = Path(selection_path).resolve(); destination = studio.inside(project, f'revisions/{id}')
     with project_lock(project):
         if destination.exists(): raise ValueError('Revision exists; choose a new ID')
@@ -388,7 +388,7 @@ def prepare_edition(project, args):
 def record_edition(project, prepared, result, args):
     """Register an actually verified render result, never a user-authored pass."""
     if prepared is None: return result
-    from .cli import project_lock
+    from .project import project_lock
     if not result.get('ok', True): return result
     with project_lock(project):
         id = prepared['revision']; edition = prepared['id']; c = prepared['collector']

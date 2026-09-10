@@ -161,7 +161,7 @@ def prepare(project, declaration):
 
 
 def register(project, declaration, dry_run=False):
-    from .cli import project_lock
+    from .project import project_lock
     with project_lock(project):
         candidate = prepare(project, declaration)
         path = record_path(project, candidate['id'])
@@ -212,7 +212,8 @@ def release_state(project, data):
 
 
 def present(project, id, actor, note='', channel='review', expected=None):
-    from .cli import project_lock, CommandError
+    from .project import project_lock
+    from .errors import CommandError
     if not isinstance(actor, str) or not actor.strip():
         raise ValueError('Identify who selected this presentation with --by')
     with project_lock(project):
@@ -277,7 +278,7 @@ def latest(project, channel='review', fingerprints=None):
 
 
 def feedback(project, id, role, seconds, note, observer):
-    from .cli import project_lock
+    from .project import project_lock
     data = load(project, id)
     if role not in data['editions']:
         raise ValueError('Soundtrack is unavailable for this delivery')
