@@ -1,0 +1,73 @@
+import {compileScene,point,inverseVector,ENGINE_VERSION} from './engine.mjs';
+
+const distance=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);
+export function auditScene(scene,catalog){
+  const rig=compileScene(scene,catalog),{width:W,height:H,fps,loop_seconds:T}=scene.canvas;
+  const N=Math.round(fps*T),failures=[],warnings=[],coverage=scene.coverage_layers||[];
+  let maxAttachmentError=0,minCoverageMargin=Infinity;
+  const closure=JSON.stringify(rig.sample(0))===JSON.stringify(rig.sample(T));
+  if(!closure)failures.push({check:'state closure'});
+  if(!coverage.length)warnings.push('No coverage plate declared; geometric coverage was not checked.');
+  for(let frame=0;frame<N;frame++){
+    const states=rig.sample(frame/fps),byId=new Map(states.map(s=>[s.id,s]));
+    if(states.some(s=>!s.matrix.every(Number.isFinite)))failures.push({check:'finite transforms',frame});
+    for(const layer of scene.layers.filter(l=>l.attach)){
+      const s=byId.get(layer.id),parent=byId.get(layer.attach.layer);
+      const socket=parent.sockets[layer.attach.socket];
+      const actual=point(s.parent,0,0),error=distance(actual,socket);
+      maxAttachmentError=Math.max(maxAttachmentError,error);
+      if(error>1e-7)failures.push({check:'attachment',layer:layer.id,frame,error});
+    }
+    for(const id of coverage){
+      const s=byId.get(id),[x,y,w,h]=s.rect;
+      const local=[[0,0],[W,0],[W,H],[0,H]].map(([px,py])=>inverseVector(s.matrix,px-s.matrix[4],py-s.matrix[5]));
+      const margin=Math.min(...local.flatMap(([px,py])=>[px-x,x+w-px,py-y,y+h-py]));
+      minCoverageMargin=Math.min(minCoverageMargin,margin);
+      if(margin<-.001||!s.visible||s.opacity<1)failures.push({check:'coverage plate',layer:id,frame,margin});
+    }
+  }
+  return {ok:!failures.length,engine_version:ENGINE_VERSION,scene:scene.id,frame_count:N,
+    state_closure:closure,attachment_count:scene.layers.filter(l=>l.attach).length,max_attachment_error_pixels:maxAttachmentError,
+    coverage_layers:coverage,min_coverage_margin_local_pixels:Number.isFinite(minCoverageMargin)?minCoverageMargin:null,
+    failure_count:failures.length,failures:failures.slice(0,30),warnings,
+    limits:['Geometric coverage assumes declared plates are opaque; browser pixel audit checks actual composite alpha at preview resolution.',
+      'The evaluator wraps time by design. State closure does not establish cel artwork continuity or the encoded video join.',
+      'Attachments follow authored sockets; this does not detect an incorrectly placed socket in the painting.']};
+}
+
+// Uses the same sampled matrices, cel rectangles and Canvas2D blend modes as the stage.
+// A small raster catches exposed canvas and large seam outliers; it is not full-resolution export QA.
+export async function auditPixels(scene,catalog,images,onProgress=()=>{}){
+  const rig=compileScene(scene,catalog),W=135,H=Math.round(W*scene.canvas.height/scene.canvas.width);
+  const canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;
+  const ctx=canvas.getContext('2d',{willReadFrequently:true}),ratio=W/scene.canvas.width;
+  const N=Math.round(scene.canvas.fps*scene.canvas.loop_seconds);
+  const background=document.createElement('canvas');background.width=W;background.height=H;
+  const bc=background.getContext('2d',{willReadFrequently:true});
+  let first,prev,uncoveredFrames=0,maxUncovered=0,worstFrame=0;
+  const deltas=[];
+  const delta=(a,b)=>{let sum=0;for(let i=0;i<a.length;i+=4)sum+=Math.abs(a[i]-b[i])+Math.abs(a[i+1]-b[i+1])+Math.abs(a[i+2]-b[i+2]);return sum/(a.length/4*3*255);};
+  for(let f=0;f<N;f++){
+    ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.clearRect(0,0,W,H);
+    for(const s of rig.sample(f/scene.canvas.fps)){
+      if(!s.visible)continue;
+      ctx.setTransform(...s.matrix.map(n=>n*ratio));ctx.globalAlpha=s.opacity;ctx.globalCompositeOperation=s.blend;
+      ctx.drawImage(images.get(s.asset),...s.source,...s.rect);
+    }
+    const raw=ctx.getImageData(0,0,W,H).data;
+    let holes=0;for(let i=3;i<raw.length;i+=4)if(raw[i]<254)holes++;
+    if(holes){uncoveredFrames++;if(holes>maxUncovered){maxUncovered=holes;worstFrame=f;}}
+    bc.fillStyle=scene.canvas.background;bc.fillRect(0,0,W,H);bc.drawImage(canvas,0,0);
+    const data=bc.getImageData(0,0,W,H).data;
+    if(prev)deltas.push(delta(data,prev));else first=data;
+    prev=data;
+    if(f%12===0){onProgress(f,N);await new Promise(resolve=>setTimeout(resolve,0));}
+  }
+  const seam=delta(prev,first),sorted=[...deltas].sort((a,b)=>a-b),p95=sorted[Math.floor((sorted.length-1)*.95)]||0;
+  onProgress(N,N);
+  return {ok:!uncoveredFrames,resolution:[W,H],frames:N,uncovered_frames:uncoveredFrames,
+    worst_frame:worstFrame,max_uncovered_pixels:maxUncovered,last_to_first_rgb_difference:seam,
+    adjacent_difference_p95:p95,seam_review_suggested:seam>Math.max(.01,p95*2),
+    limits:['Low-resolution composite pixel check only. Small fringes, fine cel jitter, artistic continuity and encoded media need separate inspection.',
+      'Seam difference is an attention cue, not a perceptual pass/fail decision.']};
+}

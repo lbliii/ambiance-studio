@@ -1,0 +1,71 @@
+{
+  "ok": true,
+  "skills": [
+    "ambiance-animate",
+    "ambiance-assets",
+    "ambiance-deconstruct",
+    "ambiance-produce",
+    "ambiance-release",
+    "ambiance-sound"
+  ],
+  "local_links_checked": 54,
+  "bundled_asset_check": {
+    "ok": true,
+    "scene": "last-lantern",
+    "asset_count": 15,
+    "layer_count": 16,
+    "export_frame_count": 480,
+    "cycles": [
+      {
+        "layer": "cloud-far-1",
+        "seconds": 4,
+        "cel_fps": 2.0
+      },
+      {
+        "layer": "cloud-far-2",
+        "seconds": 4,
+        "cel_fps": 2.0
+      },
+      {
+        "layer": "cloud-near-1",
+        "seconds": 4,
+        "cel_fps": 2.0
+      },
+      {
+        "layer": "cloud-near-2",
+        "seconds": 4,
+        "cel_fps": 2.0
+      },
+      {
+        "layer": "cloud-near-3",
+        "seconds": 4,
+        "cel_fps": 2.0
+      },
+      {
+        "layer": "town-lights",
+        "seconds": 8,
+        "cel_fps": 2.0
+      },
+      {
+        "layer": "chimney-smoke",
+        "seconds": 2,
+        "cel_fps": 6.0
+      },
+      {
+        "layer": "cottage",
+        "seconds": 2,
+        "cel_fps": 6.0
+      }
+    ],
+    "errors": [],
+    "limits": [
+      "PNG headers and hashes checked; no pixel alpha/edge analysis.",
+      "No rendered video, audio, or aesthetic validation performed by this command."
+    ]
+  },
+  "errors": [],
+  "limits": [
+    "No independent agent behavior trial or film review is implied.",
+    "This lightweight frontmatter check supplements the authoring-time skill validator."
+  ]
+}

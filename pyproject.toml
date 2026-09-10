@@ -1,0 +1,7 @@
+# Source-checkout application. Run ./ambiance; wheel packaging is not implemented.
+[tool.ambiance]
+name = "ambiance-studio"
+version = "0.4.0"
+python = ">=3.10"
+node = ">=18"
+entrypoint = "./ambiance"

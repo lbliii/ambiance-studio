@@ -1,0 +1,13 @@
+{
+  "contract_version": 1,
+  "implementation_status": "module design/handoff contract; scene-level nested attachments and sockets work, but parameterized module loading is not implemented",
+  "id": null,
+  "version": null,
+  "children": [],
+  "sockets": {},
+  "exposed_controls": {},
+  "preview_file": null,
+  "tested_camera_range": null,
+  "dependencies": [],
+  "review_evidence": []
+}

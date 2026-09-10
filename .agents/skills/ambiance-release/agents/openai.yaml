@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ambiance Quality and Delivery"
+  short_description: "Inspect, package, and catalog a finished film"
+  default_prompt: "Use $ambiance-release for the current ambiance project."

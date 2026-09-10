@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ambiance Sound Direction"
+  short_description: "Create a story through looping music and sound"
+  default_prompt: "Use $ambiance-sound for the current ambiance project."

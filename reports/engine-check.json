@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "checks": [
+    "exact state closure at 0 and T",
+    "negative full cycle wraps",
+    "out-of-order sampling is deterministic",
+    "JSON serialization preserves sampled state",
+    "cottage attachments share a parent transform",
+    "smoke cel boundaries",
+    "invalid cycle and group rejected",
+    "all 480 frame transforms finite"
+  ],
+  "limitation": "State checks only; browser pixel and human art reviews are separate."
+}

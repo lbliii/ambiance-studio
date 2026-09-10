@@ -1,0 +1,31 @@
+{
+  "id": "smoke-registered-v1",
+  "kind": "atlas",
+  "file": "atlas.png",
+  "width": 768,
+  "height": 1152,
+  "sha256": "2358b0648a4a0c5e062e2bc2e12d09e583d3cd090de9eb3c2f50054ab4f7be0e",
+  "atlas": {
+    "columns": 4,
+    "rows": 3,
+    "cell_width": 192,
+    "cell_height": 384,
+    "frame_count": 12
+  },
+  "pivot": [
+    0.5,
+    0.96875
+  ],
+  "sockets": {},
+  "provenance": {
+    "recipe": "recipe.json",
+    "cache_key": "f260c0b4b24ac62e4d6caeb304906ef8771e0a065f185a84d6ca9b2ac37e2d3c",
+    "sources": [
+      {
+        "file": "../../lantern/smoke-cels.png",
+        "sha256": "980324a1a92c285753bfb7c8f4ce3ced3966545342225591a4f4fc7d58786eee"
+      }
+    ]
+  },
+  "rights": "Derived from this project\u2019s original generated smoke; see source provenance. No new third-party license is granted."
+}

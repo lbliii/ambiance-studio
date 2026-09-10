@@ -1,0 +1,77 @@
+{
+  "ok": true,
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "tests/test_studio.py"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_agent_cannot_substitute_for_required_human_observation (__main__.StudioTests.test_agent_cannot_substitute_for_required_human_observation) ... ok\ntest_dependency_order_enforced (__main__.StudioTests.test_dependency_order_enforced) ... ok\ntest_evidence_change_invalidates_review (__main__.StudioTests.test_evidence_change_invalidates_review) ... ok\ntest_existing_project_protected (__main__.StudioTests.test_existing_project_protected) ... ok\ntest_final_change_clears_release_readiness (__main__.StudioTests.test_final_change_clears_release_readiness) ... ok\ntest_human_review_requires_exact_final_file_and_feedback (__main__.StudioTests.test_human_review_requires_exact_final_file_and_feedback) ... ok\ntest_missing_evidence_rejected (__main__.StudioTests.test_missing_evidence_rejected) ... ok\ntest_new_project_has_no_passes (__main__.StudioTests.test_new_project_has_no_passes) ... ok\ntest_new_receipt_invalidates_dependent_and_preserves_history (__main__.StudioTests.test_new_receipt_invalidates_dependent_and_preserves_history) ... ok\ntest_receipt_edit_detected (__main__.StudioTests.test_receipt_edit_detected) ... ok\ntest_reference_paths_cannot_escape_project (__main__.StudioTests.test_reference_paths_cannot_escape_project) ... ok\ntest_revision_retained_without_claiming_pass (__main__.StudioTests.test_revision_retained_without_claiming_pass) ... ok\ntest_targeted_asset_change_preserves_independent_sound_review (__main__.StudioTests.test_targeted_asset_change_preserves_independent_sound_review) ... ok\ntest_unperformed_check_cannot_pass (__main__.StudioTests.test_unperformed_check_cannot_pass) ... ok\n\n----------------------------------------------------------------------\nRan 14 tests in 0.325s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_assets.py"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_bottom_center_estimate_recovers_shift_and_warns (__main__.AssetTests.test_bottom_center_estimate_recovers_shift_and_warns) ... ok\ntest_cache_hit_and_tamper_detection (__main__.AssetTests.test_cache_hit_and_tamper_detection) ... ok\ntest_catalog_id_protected (__main__.AssetTests.test_catalog_id_protected) ... ok\ntest_changed_recipe_requires_new_version_directory (__main__.AssetTests.test_changed_recipe_requires_new_version_directory) ... ok\ntest_empty_frame_rejected (__main__.AssetTests.test_empty_frame_rejected) ... ok\ntest_landmark_count_rejected (__main__.AssetTests.test_landmark_count_rejected) ... ok\ntest_landmarks_remove_known_displacement_without_scale_change (__main__.AssetTests.test_landmarks_remove_known_displacement_without_scale_change) ... ok\ntest_one_scale_preserves_relative_shape_size (__main__.AssetTests.test_one_scale_preserves_relative_shape_size) ... ok\ntest_opaque_proof_rejected (__main__.AssetTests.test_opaque_proof_rejected) ... ok\ntest_pack_recipe_resolves_originals_and_hits_same_cache (__main__.AssetTests.test_pack_recipe_resolves_originals_and_hits_same_cache) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.057s\n\nOK\n"
+    },
+    {
+      "command": [
+        "node",
+        "editor/verify-engine.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"checks\": [\n    \"exact state closure at 0 and T\",\n    \"negative full cycle wraps\",\n    \"out-of-order sampling is deterministic\",\n    \"JSON serialization preserves sampled state\",\n    \"cottage attachments share a parent transform\",\n    \"smoke cel boundaries\",\n    \"invalid cycle and group rejected\",\n    \"all 480 frame transforms finite\"\n  ],\n  \"limitation\": \"State checks only; browser pixel and human art reviews are separate.\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "tests/test-rig.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"checks\": [\n    \"Parent translation, rotation, scale and depth preserve attachment through all 480 frames\",\n    \"Nested attachment works regardless of paint order\",\n    \"Cel-specific socket tracks follow the sampled parent cel\",\n    \"Cycles, missing sockets, mixed depth, and incomplete tracks are rejected\",\n    \"Camera can pass endpoint closure yet fail coverage midway\",\n    \"Compiled snapshots survive later authoring edits and arbitrary seek order\",\n    \"Attached visibility and opacity inherit from the parent\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "tools/check-scene.mjs",
+        "scenes/last-lantern-rigged.json",
+        "--out",
+        "reports/rig-check.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"engine_version\": \"0.3.0\",\n  \"scene\": \"last-lantern-rigged\",\n  \"frame_count\": 480,\n  \"state_closure\": true,\n  \"attachment_count\": 2,\n  \"max_attachment_error_pixels\": 0,\n  \"coverage_layers\": [\n    \"sky\"\n  ],\n  \"min_coverage_margin_local_pixels\": 39.6372243314388,\n  \"failure_count\": 0,\n  \"failures\": [],\n  \"warnings\": [],\n  \"limits\": [\n    \"Geometric coverage assumes declared plates are opaque; browser pixel audit checks actual composite alpha at preview resolution.\",\n    \"The evaluator wraps time by design. State closure does not establish cel artwork continuity or the encoded video join.\",\n    \"Attachments follow authored sockets; this does not detect an incorrectly placed socket in the painting.\"\n  ],\n  \"inputs\": {\n    \"scene_sha256\": \"874d455bbbed3522d8509a4353c2b0e6b938cdb8d70699270b6ab9ad45f01eae\",\n    \"catalog_sha256\": \"1b5ffd5fcfe613ad47a7841fd2208cce0c747ea00614eb0ce98383686e9c6eec\",\n    \"engine_sha256\": \"7d202395eaba9337675d382df033676b72a3a8f63b0678c410567b53b5553bb3\",\n    \"audit_sha256\": \"8fb1656ec0794056a0d2b652596d058d8742d766dd594a34782113a9ae764c3e\"\n  },\n  \"asset_hashes\": {\n    \"sky\": \"5570a10600fb88dcb3a2295c4967aa145f40c5096ff5654e60563b3de9811828\",\n    \"moon\": \"112a49460e2c79e2fccabba7fbb141f1057ece37253fa3e4ef1c30adc7e98469\",\n    \"cloud-cels\": \"aa80b2f0deca7411a418239e563e6ae387acc1424ab3b50affcf302c835d908f\",\n    \"far-hills\": \"d615c134a3c4d478c2c5af701bc98d919665fac46a207ae14bd4cd9731b8b757\",\n    \"town\": \"c7acbe0d2c20481d25ff5ab060f88700a5a69df913b220f018a8760759af2ef0\",\n    \"town-window-cels\": \"0eb4f63e13ebf724f5cffcd056e3353adfd4df8c49fdf4ccd1efb43581f533c7\",\n    \"woods\": \"202e1df7bbf81f7268eca88f2ba974a8bb06085a5ffd88df416c071e10ab309d\",\n    \"smoke-cels\": \"980324a1a92c285753bfb7c8f4ce3ced3966545342225591a4f4fc7d58786eee\",\n    \"cottage-cels\": \"9a02457f0a9c2a7e7349d8bcd2e1346dce549092ea8658bc2ee489bea50b4432\",\n    \"ground\": \"5fb69c1d9e68252d311d45f46cfb46e81dca041a92db7019b55a76fddfe553de\",\n    \"frame\": \"57c7fd4b1fbacbb739bf3b76b65cc3a89c1b81b466e5c8c81fc02655239533da\",\n    \"branch\": \"83aeaa5ca3757c862c9910a7925821327a93e9ab9064c9033767c129417436b7\"\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "kit.py",
+        "check",
+        "scenes/last-lantern-rigged.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"scene\": \"last-lantern-rigged\",\n  \"asset_count\": 15,\n  \"layer_count\": 16,\n  \"export_frame_count\": 480,\n  \"cycles\": [\n    {\n      \"layer\": \"cloud-far-1\",\n      \"seconds\": 4,\n      \"cel_fps\": 2.0\n    },\n    {\n      \"layer\": \"cloud-far-2\",\n      \"seconds\": 4,\n      \"cel_fps\": 2.0\n    },\n    {\n      \"layer\": \"cloud-near-1\",\n      \"seconds\": 4,\n      \"cel_fps\": 2.0\n    },\n    {\n      \"layer\": \"cloud-near-2\",\n      \"seconds\": 4,\n      \"cel_fps\": 2.0\n    },\n    {\n      \"layer\": \"cloud-near-3\",\n      \"seconds\": 4,\n      \"cel_fps\": 2.0\n    },\n    {\n      \"layer\": \"town-lights\",\n      \"seconds\": 8,\n      \"cel_fps\": 2.0\n    },\n    {\n      \"layer\": \"chimney-smoke\",\n      \"seconds\": 2,\n      \"cel_fps\": 6.0\n    },\n    {\n      \"layer\": \"cottage\",\n      \"seconds\": 2,\n      \"cel_fps\": 6.0\n    }\n  ],\n  \"errors\": [],\n  \"limits\": [\n    \"PNG headers and hashes checked; no pixel alpha/edge analysis.\",\n    \"No rendered video, audio, or aesthetic validation performed by this command.\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "tools/asset_tool.py",
+        "build",
+        "assets/compiled/smoke-v1/recipe.json",
+        "--out",
+        "assets/compiled/smoke-v1"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"cached\",\n  \"pack\": \"/Users/lb/Documents/Codex/2026-09-10/your-goal-is-to-plan-and/outputs/ambiance-studio/assets/compiled/smoke-v1\",\n  \"cache_key\": \"f260c0b4b24ac62e4d6caeb304906ef8771e0a065f185a84d6ca9b2ac37e2d3c\"\n}\n",
+      "stderr": ""
+    }
+  ]
+}

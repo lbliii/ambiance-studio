@@ -1,0 +1,37 @@
+{
+  "contract_version": 1,
+  "id": null,
+  "version": null,
+  "kind": null,
+  "sha256": null,
+  "raw_sources": [],
+  "production_file": null,
+  "preview_file": null,
+  "dimensions": {
+    "width": null,
+    "height": null
+  },
+  "color_space": null,
+  "alpha_convention": null,
+  "atlas": null,
+  "anchor": null,
+  "sockets": {},
+  "default_cycle_seconds": null,
+  "compatibility": {
+    "style_pack": null,
+    "palette": [],
+    "light_direction": null,
+    "viewpoint": null,
+    "screen_size_range": null,
+    "tags": []
+  },
+  "generation_request": null,
+  "preparation_recipe": null,
+  "review_evidence": [],
+  "usage_context": {
+    "origin": null,
+    "terms_reference": null,
+    "review_note": null
+  },
+  "known_limits": []
+}

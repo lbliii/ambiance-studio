@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ambiance Studio · Project workbench</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header>
+    <div><p class="eyebrow">AMBIANCE STUDIO / PROJECT WORKBENCH 0.4</p><h1>Everything in its place.</h1>
+      <p class="intro">Set the attachment once. Move the painting together. Check the whole loop.</p></div>
+    <div class="actions"><button id="export" class="primary" disabled>Export scene</button><button id="reset" disabled>Reset study</button></div>
+  </header>
+  <div id="error" role="alert" hidden></div>
+  <div class="workspace">
+    <section class="stage-panel" aria-label="Composition preview">
+      <div class="stage-top"><span id="title">The Last Lantern</span><span>9:16</span></div>
+      <canvas id="stage" width="1080" height="1920" aria-label="Portrait painting with independently animated depth layers. Select a layer, then drag in the picture to move it."></canvas>
+      <div class="transport"><button id="play" disabled>Play</button><output id="time" aria-live="off">0.00 / 16 s</output><label><input type="checkbox" id="grid"> Grid</label><label><input type="checkbox" id="solo"> Solo</label><label><input type="checkbox" id="sockets" checked> Sockets</label></div>
+      <label class="timeline-label" for="timeline">Loop position</label><input id="timeline" type="range" min="0" max="479" step="1" value="0" disabled>
+      <p class="hint">Select a layer, then drag anywhere in the painting. The dot marks its anchor.</p>
+    </section>
+    <section class="inspector" aria-label="Layer controls">
+      <div class="section-top"><h2>Layer placement</h2><span id="count" class="muted">Loading…</span></div>
+      <label class="field">Selected layer<select id="layer" disabled></select></label>
+      <div class="row"><button id="back" disabled>Send backward</button><button id="front" disabled>Bring forward</button><label><input type="checkbox" id="visible" checked> Visible</label></div>
+      <p id="group-note" class="group-note">Independent layer</p>
+      <label class="group-control"><input id="edit-group" type="checkbox" disabled> Move / scale the whole group</label>
+      <label class="field">Attachment<select id="attachment"></select></label>
+      <p class="hint">Choosing a socket snaps this layer's anchor to it. Attached position values are offsets in the parent's axes.</p>
+      <div class="fields">
+        <label class="field">Horizontal position <span class="unit">% of frame width</span><input id="x" type="number" step="0.1"></label>
+        <label class="field">Vertical position <span class="unit">% of frame height</span><input id="y" type="number" step="0.1"></label>
+        <label class="field">Scale <span class="unit">× original size</span><input id="scale" type="number" min="0.05" max="4" step="0.05"></label>
+        <label class="field">Rotation <span class="unit">degrees</span><input id="rotation" type="number" step="1"></label>
+        <label class="field">Opacity <span class="unit">%</span><input id="opacity" type="number" min="0" max="100" step="1"></label>
+      </div>
+      <div class="library-row"><label class="field">Socket name<input id="socket-name" type="text" value="mount" maxlength="40"></label><button id="place-socket">Place socket</button></div>
+      <p class="hint">Name a point on this layer, then click its location in the painting. Reusing a name moves that socket.</p>
+      <label class="field">Depth <output id="depth-value" aria-live="off">0.76</output><input id="depth" aria-label="Depth" type="range" min="0" max="2" step="0.005" value="0.76"></label>
+      <div class="depth-labels"><span>Far / less camera movement</span><span>Near / more movement</span></div>
+      <div class="fields compact">
+        <label class="field">Anchor X <span class="unit">0 left · 1 right</span><input id="anchor-x" type="number" min="0" max="1" step="0.05"></label>
+        <label class="field">Anchor Y <span class="unit">0 top · 1 bottom</span><input id="anchor-y" type="number" min="0" max="1" step="0.05"></label>
+      </div>
+      <div id="cel-panel">
+        <div class="section-top"><h2>Painted frames</h2><output id="cel-state" aria-live="off"></output></div>
+        <div class="fields">
+          <label class="field">Cycle duration<select id="cycle"></select></label>
+          <label class="field">Starting cel<input id="phase" type="number" min="0" step="1"></label>
+        </div>
+        <p class="hint">Different objects can share a sheet and start on different cels.</p>
+      </div>
+      <hr>
+      <div class="section-top"><h2>Reusable library</h2><span id="asset-count" class="muted"></span></div>
+      <div class="library-row"><label class="field">Asset<select id="asset"></select></label><button id="add" disabled>Add layer</button></div>
+      <label class="field">Load an exported scene<input id="import" type="file" accept=".json,application/json"></label>
+      <p id="status" role="status">Loading local artwork…</p>
+    </section>
+  </div>
+  <section class="qa-panel">
+    <div class="section-top"><h2>Loop inspection</h2><button id="audit">Check all frames</button></div>
+    <p id="audit-status" role="status">Check attachments, camera coverage, and the last-to-first transition.</p>
+    <div class="actions"><button id="join">Preview the join</button><button id="audit-json" hidden>Copyable report</button></div>
+    <textarea id="audit-report" rows="12" readonly hidden aria-label="Loop inspection report"></textarea>
+  </section>
+  <section id="export-panel" hidden>
+    <h2>Scene JSON</h2>
+    <p class="hint">Download a file, or copy this text into a JSON file. You can also paste a saved scene here and load it.</p>
+    <label class="field" for="scene-json">Editable scene data</label><textarea id="scene-json" rows="10" spellcheck="false"></textarea>
+    <div class="actions"><a id="download-scene" download="last-lantern-scene.json">Download JSON</a><button id="use-json">Load this JSON</button><button id="close-export">Close JSON</button></div>
+  </section>
+  <footer>Rig workbench: attached layers, cel animation, and loop inspection. The finished film also has mist, glow, drifting leaves, and sound. Export saves a scene recipe; video rendering remains a separate production step.</footer>
+</main>
+<script type="module" src="editor.mjs"></script>
+</body>
+</html>

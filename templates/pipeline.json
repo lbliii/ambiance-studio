@@ -1,0 +1,268 @@
+{
+  "version": 1,
+  "gates": [
+    {
+      "id": "intent",
+      "name": "Reference and creative intent",
+      "depends": [],
+      "watch": [
+        "inputs",
+        "plans/brief.md",
+        "project.json"
+      ],
+      "criteria": [
+        {
+          "id": "reference-read",
+          "description": "Reference is preserved and visibly inspected; observed features and inferred additions are distinguished.",
+          "kind": "review"
+        },
+        {
+          "id": "creative-direction",
+          "description": "Focal point, palette, edge treatment, movement restraint, sound story, and intended audience are specified.",
+          "kind": "review"
+        },
+        {
+          "id": "production-scope",
+          "description": "Format, durations, tool availability, reuse scope, and generation spending authority are recorded.",
+          "kind": "review"
+        }
+      ]
+    },
+    {
+      "id": "layout",
+      "name": "Layer and motion plan",
+      "depends": [
+        "intent"
+      ],
+      "watch": [
+        "plans/layer-plan.json",
+        "plans/layout-notes.md"
+      ],
+      "criteria": [
+        {
+          "id": "depth-and-order",
+          "description": "Every visible object has draw order, depth, bounds, anchor, and a motion method.",
+          "kind": "review"
+        },
+        {
+          "id": "occlusion-coverage",
+          "description": "Hidden backgrounds and borders that camera motion can reveal have clean-plate or mask plans.",
+          "kind": "review"
+        },
+        {
+          "id": "attachments",
+          "description": "Groups and attachment sockets keep architecture, smoke, lights, and ground consistent.",
+          "kind": "review"
+        }
+      ]
+    },
+    {
+      "id": "assets",
+      "name": "Production asset pack",
+      "depends": [
+        "layout"
+      ],
+      "watch": [
+        "assets",
+        "reports/assets",
+        "plans/generation-ledger.json"
+      ],
+      "criteria": [
+        {
+          "id": "integrity",
+          "description": "Files, dimensions, atlas geometry, alpha availability, and hashes were checked; attach the actual report.",
+          "kind": "review"
+        },
+        {
+          "id": "registration",
+          "description": "Cels were inspected in sequence for scale, pivot drift, neighboring fragments, and closing pose continuity.",
+          "kind": "review"
+        },
+        {
+          "id": "style-and-edges",
+          "description": "Cutouts and cels fit the reference style; alpha edges and the unlit/emissive relationship were visually reviewed.",
+          "kind": "review"
+        },
+        {
+          "id": "provenance",
+          "description": "Sources, prompts, references, returned IDs where available, selected takes, and preparation recipes are retained.",
+          "kind": "review"
+        }
+      ]
+    },
+    {
+      "id": "animation",
+      "name": "Animated picture draft",
+      "depends": [
+        "assets"
+      ],
+      "watch": [
+        "scene",
+        "reports/animation",
+        "deliverables/picture"
+      ],
+      "criteria": [
+        {
+          "id": "absolute-time",
+          "description": "The same time produces the same scene state; motion and cel cycles fit the picture loop.",
+          "kind": "review"
+        },
+        {
+          "id": "loop-and-coverage",
+          "description": "Zero/end state and last-to-first transition were checked; camera extremes reveal no missing artwork.",
+          "kind": "review"
+        },
+        {
+          "id": "picture-review",
+          "description": "A full draft was reviewed at phone size for attachment drift, flicker, frame jitter, visual hierarchy, and motion density.",
+          "kind": "review"
+        }
+      ]
+    },
+    {
+      "id": "sound-design",
+      "name": "Sound identity and selected sources",
+      "depends": [
+        "intent"
+      ],
+      "watch": [
+        "plans/sound-brief.md",
+        "audio/sources",
+        "audio/source-log.json",
+        "reports/sound-design"
+      ],
+      "criteria": [
+        {
+          "id": "sound-story",
+          "description": "The music and near/middle/distant sounds support a specific emotional idea with room for quiet.",
+          "kind": "review"
+        },
+        {
+          "id": "source-audition",
+          "description": "Selected sources were auditioned for hiss, harshness, unwanted layers, and distracting repetition; audition method is stated.",
+          "kind": "review"
+        },
+        {
+          "id": "source-records",
+          "description": "Selected source files, requests, settings, actual formats, and generation outcomes are retained.",
+          "kind": "review"
+        }
+      ]
+    },
+    {
+      "id": "mix",
+      "name": "Circular soundtrack master",
+      "depends": [
+        "animation",
+        "sound-design"
+      ],
+      "watch": [
+        "audio/session.json",
+        "audio/masters",
+        "audio/stems",
+        "reports/mix"
+      ],
+      "criteria": [
+        {
+          "id": "circular-edit",
+          "description": "Music phrasing, ambience beds, event tails, and master duration close musically and technically.",
+          "kind": "review"
+        },
+        {
+          "id": "signal-checks",
+          "description": "Sample counts, clipping, level, peak method, mono compatibility, and stem alignment have actual measurement evidence.",
+          "kind": "review"
+        },
+        {
+          "id": "repeat-listen",
+          "description": "Picture with sound was heard across three repeats; volume pumping, clicks, fatigue, and obvious restarts were considered.",
+          "kind": "review"
+        }
+      ]
+    },
+    {
+      "id": "export",
+      "name": "Encoded deliverables",
+      "depends": [
+        "mix"
+      ],
+      "watch": [
+        "deliverables/final",
+        "reports/export"
+      ],
+      "criteria": [
+        {
+          "id": "decoded-file",
+          "description": "The actual final video was decoded completely; picture count, dimensions, frame rate, ordered timing, and presented audio length were verified.",
+          "kind": "review"
+        },
+        {
+          "id": "encoded-seam",
+          "description": "The encoded soundtrack and loop join were checked on the presentation timeline, accounting for codec padding.",
+          "kind": "review"
+        },
+        {
+          "id": "editions",
+          "description": "Requested editions, cover, masters, and labels match the brief; no silent or stale mix is mislabeled as final.",
+          "kind": "review"
+        }
+      ]
+    },
+    {
+      "id": "release",
+      "name": "Creative release review",
+      "depends": [
+        "export"
+      ],
+      "watch": [
+        "feedback",
+        "deliverables/final"
+      ],
+      "criteria": [
+        {
+          "id": "human-look-listen",
+          "description": "A person reviewed the exact final file for the intended cozy/spooky balance and comfortable repetition.",
+          "kind": "human"
+        },
+        {
+          "id": "phone-check",
+          "description": "A person checked the exact final file on a phone, including picture crop, readable detail, and speaker sound.",
+          "kind": "human"
+        },
+        {
+          "id": "delivery-scope",
+          "description": "Intended use and asset terms have been reviewed as applicable; publishing destination and authority are explicit.",
+          "kind": "review"
+        }
+      ]
+    },
+    {
+      "id": "library",
+      "name": "Archive and reusable library",
+      "depends": [
+        "release"
+      ],
+      "watch": [
+        "library",
+        "handoff.md"
+      ],
+      "criteria": [
+        {
+          "id": "rebuild-record",
+          "description": "Scene, sound session, source references, tool versions, evidence, and rebuild limits are recorded.",
+          "kind": "review"
+        },
+        {
+          "id": "reusable-modules",
+          "description": "Accepted assets, rigs, motion recipes, and sound recipes have stable IDs, hashes, and compatibility notes.",
+          "kind": "review"
+        },
+        {
+          "id": "handoff",
+          "description": "A new operator can locate the final files, next actions, known limits, and reusable pieces without this chat.",
+          "kind": "review"
+        }
+      ]
+    }
+  ]
+}

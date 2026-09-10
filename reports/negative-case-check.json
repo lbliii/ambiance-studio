@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "invalid_three_second_cycle_rejected": true,
+  "observed_errors": [
+    "chimney-smoke: cel cycle must divide visual loop"
+  ]
+}

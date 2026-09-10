@@ -1,0 +1,35 @@
+{
+  "ok": true,
+  "skills": [
+    {
+      "skill": "ambiance-animate",
+      "exit_code": 0,
+      "output": "Skill is valid!"
+    },
+    {
+      "skill": "ambiance-assets",
+      "exit_code": 0,
+      "output": "Skill is valid!"
+    },
+    {
+      "skill": "ambiance-deconstruct",
+      "exit_code": 0,
+      "output": "Skill is valid!"
+    },
+    {
+      "skill": "ambiance-produce",
+      "exit_code": 0,
+      "output": "Skill is valid!"
+    },
+    {
+      "skill": "ambiance-release",
+      "exit_code": 0,
+      "output": "Skill is valid!"
+    },
+    {
+      "skill": "ambiance-sound",
+      "exit_code": 0,
+      "output": "Skill is valid!"
+    }
+  ]
+}

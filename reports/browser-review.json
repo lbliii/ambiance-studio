@@ -1,0 +1,27 @@
+{
+  "date": "2026-09-10",
+  "surface": "Codex in-app browser, localhost",
+  "checked": [
+    "Real production PNG assets decoded and displayed",
+    "Play/Pause advanced time and changed the selected cel",
+    "Smoke cycle changed from 2 to 4 seconds and phase from 0 to 2",
+    "Shared cottage group position changed to 3 percent of canvas width",
+    "Exported JSON contained group x=0.03 and smoke cycle_seconds=4",
+    "JSON text round trip restored those edited values",
+    "A 3-second smoke cycle was rejected because it does not divide 16 seconds",
+    "Adding a smoke instance increased the layer count from 16 to 17",
+    "Depth control changed a selected moon to 2.0",
+    "Direct canvas drag updated selected layer position",
+    "Reset restored the original study",
+    "736-pixel layout had content width 736 with no horizontal overflow",
+    "360-pixel layout had content width 360 with no horizontal overflow",
+    "Phone-width inspector visually checked for readable fields and controls"
+  ],
+  "limitations": [
+    "Browser download actions did not produce an observed JSON file in Downloads; copyable JSON export/load was verified as the fallback",
+    "Native file-chooser import was not exercised",
+    "This was not a full browser compatibility, accessibility, or rendered-pixel parity audit",
+    "No video or audio export is implemented in this prototype"
+  ],
+  "end_state": "Original study restored, playback paused, temporary viewport override cleared"
+}

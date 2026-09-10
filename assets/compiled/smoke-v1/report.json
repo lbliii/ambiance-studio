@@ -1,0 +1,473 @@
+{
+  "version": "1.0.0",
+  "cache_key": "f260c0b4b24ac62e4d6caeb304906ef8771e0a065f185a84d6ca9b2ac37e2d3c",
+  "pillow": "12.3.0",
+  "frame_count": 12,
+  "mode": "fixed",
+  "shared_scale": 0.8333333333333334,
+  "frames": [
+    {
+      "index": 0,
+      "source_size": [
+        192,
+        384
+      ],
+      "alpha_bounds": [
+        45,
+        31,
+        176,
+        372
+      ],
+      "measured_bounds": [
+        46,
+        31,
+        146,
+        372
+      ],
+      "source_pivot": [
+        96,
+        372
+      ],
+      "offset_pixels": [
+        16.0,
+        62.0
+      ],
+      "output_pivot": [
+        96.0,
+        372.0
+      ],
+      "output_alpha_bounds": [
+        54,
+        87,
+        162,
+        372
+      ]
+    },
+    {
+      "index": 1,
+      "source_size": [
+        192,
+        384
+      ],
+      "alpha_bounds": [
+        22,
+        11,
+        164,
+        372
+      ],
+      "measured_bounds": [
+        33,
+        35,
+        159,
+        372
+      ],
+      "source_pivot": [
+        96,
+        372
+      ],
+      "offset_pixels": [
+        16.0,
+        62.0
+      ],
+      "output_pivot": [
+        96.0,
+        372.0
+      ],
+      "output_alpha_bounds": [
+        43,
+        71,
+        153,
+        372
+      ]
+    },
+    {
+      "index": 2,
+      "source_size": [
+        192,
+        384
+      ],
+      "alpha_bounds": [
+        11,
+        11,
+        168,
+        372
+      ],
+      "measured_bounds": [
+        24,
+        33,
+        168,
+        372
+      ],
+      "source_pivot": [
+        96,
+        372
+      ],
+      "offset_pixels": [
+        16.0,
+        62.0
+      ],
+      "output_pivot": [
+        96.0,
+        372.0
+      ],
+      "output_alpha_bounds": [
+        25,
+        71,
+        156,
+        373
+      ]
+    },
+    {
+      "index": 3,
+      "source_size": [
+        192,
+        384
+      ],
+      "alpha_bounds": [
+        22,
+        40,
+        182,
+        372
+      ],
+      "measured_bounds": [
+        22,
+        40,
+        169,
+        372
+      ],
+      "source_pivot": [
+        96,
+        372
+      ],
+      "offset_pixels": [
+        16.0,
+        62.0
+      ],
+      "output_pivot": [
+        96.0,
+        372.0
+      ],
+      "output_alpha_bounds": [
+        34,
+        95,
+        167,
+        372
+      ]
+    },
+    {
+      "index": 4,
+      "source_size": [
+        192,
+        384
+      ],
+      "alpha_bounds": [
+        11,
+        0,
+        180,
+        372
+      ],
+      "measured_bounds": [
+        11,
+        32,
+        180,
+        372
+      ],
+      "source_pivot": [
+        96,
+        372
+      ],
+      "offset_pixels": [
+        16.0,
+        62.0
+      ],
+      "output_pivot": [
+        96.0,
+        372.0
+      ],
+      "output_alpha_bounds": [
+        25,
+        62,
+        166,
+        372
+      ]
+    },
+    {
+      "index": 5,
+      "source_size": [
+        192,
+        384
+      ],
+      "alpha_bounds": [
+        5,
+        0,
+        169,
+        372
+      ],
+      "measured_bounds": [
+        23,
+        41,
+        169,
+        372
+      ],
+      "source_pivot": [
+        96,
+        372
+      ],
+      "offset_pixels": [
+        16.0,
+        62.0
+      ],
+      "output_pivot": [
+        96.0,
+        372.0
+      ],
+      "output_alpha_bounds": [
+        34,
+        72,
+        157,
+        372
+      ]
+    },
+    {
+      "index": 6,
+      "source_size": [
+        192,
+        384
+      ],
+      "alpha_bounds": [
+        16,
+        0,
+        168,
+        372
+      ],
+      "measured_bounds": [
+        24,
+        45,
+        168,
+        372
+      ],
+      "source_pivot": [
+        96,
+        372
+      ],
+      "offset_pixels": [
+        16.0,
+        62.0
+      ],
+      "output_pivot": [
+        96.0,
+        372.0
+      ],
+      "output_alpha_bounds": [
+        29,
+        99,
+        156,
+        372
+      ]
+    },
+    {
+      "index": 7,
+      "source_size": [
+        192,
+        384
+      ],
+      "alpha_bounds": [
+        32,
+        0,
+        161,
+        372
+      ],
+      "measured_bounds": [
+        32,
+        35,
+        160,
+        372
+      ],
+      "source_pivot": [
+        96,
+        372
+      ],
+      "offset_pixels": [
+        16.0,
+        62.0
+      ],
+      "output_pivot": [
+        96.0,
+        372.0
+      ],
+      "output_alpha_bounds": [
+        42,
+        91,
+        150,
+        373
+      ]
+    },
+    {
+      "index": 8,
+      "source_size": [
+        192,
+        384
+      ],
+      "alpha_bounds": [
+        11,
+        13,
+        164,
+        384
+      ],
+      "measured_bounds": [
+        33,
+        73,
+        159,
+        372
+      ],
+      "source_pivot": [
+        96,
+        372
+      ],
+      "offset_pixels": [
+        16.0,
+        62.0
+      ],
+      "output_pivot": [
+        96.0,
+        372.0
+      ],
+      "output_alpha_bounds": [
+        26,
+        73,
+        153,
+        382
+      ]
+    },
+    {
+      "index": 9,
+      "source_size": [
+        192,
+        384
+      ],
+      "alpha_bounds": [
+        15,
+        10,
+        160,
+        373
+      ],
+      "measured_bounds": [
+        32,
+        48,
+        160,
+        373
+      ],
+      "source_pivot": [
+        96,
+        372
+      ],
+      "offset_pixels": [
+        16.0,
+        62.0
+      ],
+      "output_pivot": [
+        96.0,
+        372.0
+      ],
+      "output_alpha_bounds": [
+        28,
+        71,
+        150,
+        373
+      ]
+    },
+    {
+      "index": 10,
+      "source_size": [
+        192,
+        384
+      ],
+      "alpha_bounds": [
+        0,
+        9,
+        173,
+        373
+      ],
+      "measured_bounds": [
+        33,
+        41,
+        159,
+        372
+      ],
+      "source_pivot": [
+        96,
+        372
+      ],
+      "offset_pixels": [
+        16.0,
+        62.0
+      ],
+      "output_pivot": [
+        96.0,
+        372.0
+      ],
+      "output_alpha_bounds": [
+        37,
+        70,
+        160,
+        372
+      ]
+    },
+    {
+      "index": 11,
+      "source_size": [
+        192,
+        384
+      ],
+      "alpha_bounds": [
+        11,
+        10,
+        146,
+        373
+      ],
+      "measured_bounds": [
+        46,
+        42,
+        146,
+        373
+      ],
+      "source_pivot": [
+        96,
+        372
+      ],
+      "offset_pixels": [
+        16.0,
+        62.0
+      ],
+      "output_pivot": [
+        96.0,
+        372.0
+      ],
+      "output_alpha_bounds": [
+        54,
+        72,
+        138,
+        373
+      ]
+    }
+  ],
+  "warnings": [
+    "Cel 4: source alpha touches a cell edge; inspect for pre-existing clipping.",
+    "Cel 5: source alpha touches a cell edge; inspect for pre-existing clipping.",
+    "Cel 6: source alpha touches a cell edge; inspect for pre-existing clipping.",
+    "Cel 7: source alpha touches a cell edge; inspect for pre-existing clipping.",
+    "Cel 8: source alpha touches a cell edge; inspect for pre-existing clipping.",
+    "Cel 10: source alpha touches a cell edge; inspect for pre-existing clipping."
+  ],
+  "outputs": {
+    "recipe.json": "300280e64d2b5204aa63f787eae23f4b0ec0fc0daba3a88448c3a329fb405ad6",
+    "preview.gif": "6bf40ed0ca61697873acef986ef2d2cb72318862ee7de93210cefc1c88b3e1e6",
+    "atlas.png": "2358b0648a4a0c5e062e2bc2e12d09e583d3cd090de9eb3c2f50054ab4f7be0e",
+    "contact-sheet.png": "857ad39a5e641aaada16019a8dcd0237475117999aea9ca0bde634734eb72ac1",
+    "asset.json": "e5f197edc8dc0a10cb0c7d7011d20bc006a6a0fe8c74660299eb83ae82b2eba2"
+  },
+  "limits": [
+    "Does not remove backgrounds, track moving features, infer fake checkerboards, or judge the closing gesture.",
+    "Preview GIF timing is for inspection; the scene owns production timing."
+  ]
+}

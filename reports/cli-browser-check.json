@@ -1,0 +1,26 @@
+{
+  "ok": true,
+  "observer": "Codex browser UI inspection",
+  "url": "http://127.0.0.1:8783/editor/",
+  "title": "The Last Lantern \u2014 CLI project",
+  "layers": 16,
+  "assets": 15,
+  "scene_sha256": "c72998678da236948f8b4ecfe8c91775998b0a343648deac07c99d60c6b70e92",
+  "checks": {
+    "project_specific_loading": true,
+    "state_frames": 480,
+    "attachments": 2,
+    "max_attachment_error_pixels": 0,
+    "pixel_resolution": [
+      135,
+      240
+    ],
+    "uncovered_frames": 0,
+    "seam_review_suggested": false,
+    "error_text": ""
+  },
+  "limits": [
+    "Actual local preview verified; no encoded video or new audio master created.",
+    "Pixel inspection is at preview resolution."
+  ]
+}

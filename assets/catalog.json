@@ -1,0 +1,426 @@
+{
+  "version": 1,
+  "assets": [
+    {
+      "id": "sky",
+      "kind": "plate",
+      "file": "assets/lantern/sky.png",
+      "width": 941,
+      "height": 1672,
+      "sha256": "5570a10600fb88dcb3a2295c4967aa145f40c5096ff5654e60563b3de9811828",
+      "bytes": 2242793,
+      "tags": [
+        "autumn",
+        "painted-cel",
+        "last-lantern"
+      ],
+      "origin": {
+        "project": "The Last Lantern v2",
+        "source": "outputs/v2/source/sky.png",
+        "prompt_record": "reference/image-prompts.md",
+        "production_notes": "reference/visual-production.md"
+      },
+      "rights": {
+        "status": "project asset; provider terms not independently audited",
+        "public_domain": false
+      }
+    },
+    {
+      "id": "moon",
+      "kind": "plate",
+      "file": "assets/lantern/moon.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "112a49460e2c79e2fccabba7fbb141f1057ece37253fa3e4ef1c30adc7e98469",
+      "bytes": 1247584,
+      "tags": [
+        "autumn",
+        "painted-cel",
+        "last-lantern"
+      ],
+      "origin": {
+        "project": "The Last Lantern v2",
+        "source": "outputs/v2/source/moon.png",
+        "prompt_record": "reference/image-prompts.md",
+        "production_notes": "reference/visual-production.md"
+      },
+      "rights": {
+        "status": "project asset; provider terms not independently audited",
+        "public_domain": false
+      }
+    },
+    {
+      "id": "far-hills",
+      "kind": "plate",
+      "file": "assets/lantern/far-hills-layer.png",
+      "width": 1080,
+      "height": 1920,
+      "sha256": "d615c134a3c4d478c2c5af701bc98d919665fac46a207ae14bd4cd9731b8b757",
+      "bytes": 2795470,
+      "tags": [
+        "autumn",
+        "painted-cel",
+        "last-lantern"
+      ],
+      "origin": {
+        "project": "The Last Lantern v2",
+        "source": "outputs/v2/source/far-hills-layer.png",
+        "prompt_record": "reference/image-prompts.md",
+        "production_notes": "reference/visual-production.md"
+      },
+      "rights": {
+        "status": "project asset; provider terms not independently audited",
+        "public_domain": false
+      }
+    },
+    {
+      "id": "town",
+      "kind": "plate",
+      "file": "assets/lantern/town-hill-layer.png",
+      "width": 1080,
+      "height": 1920,
+      "sha256": "c7acbe0d2c20481d25ff5ab060f88700a5a69df913b220f018a8760759af2ef0",
+      "bytes": 2618927,
+      "tags": [
+        "autumn",
+        "painted-cel",
+        "last-lantern"
+      ],
+      "origin": {
+        "project": "The Last Lantern v2",
+        "source": "outputs/v2/source/town-hill-layer.png",
+        "prompt_record": "reference/image-prompts.md",
+        "production_notes": "reference/visual-production.md"
+      },
+      "rights": {
+        "status": "project asset; provider terms not independently audited",
+        "public_domain": false
+      }
+    },
+    {
+      "id": "woods",
+      "kind": "plate",
+      "file": "assets/lantern/woodland-layer.png",
+      "width": 1080,
+      "height": 1920,
+      "sha256": "202e1df7bbf81f7268eca88f2ba974a8bb06085a5ffd88df416c071e10ab309d",
+      "bytes": 568019,
+      "tags": [
+        "autumn",
+        "painted-cel",
+        "last-lantern"
+      ],
+      "origin": {
+        "project": "The Last Lantern v2",
+        "source": "outputs/v2/source/woodland-layer.png",
+        "prompt_record": "reference/image-prompts.md",
+        "production_notes": "reference/visual-production.md"
+      },
+      "rights": {
+        "status": "project asset; provider terms not independently audited",
+        "public_domain": false
+      }
+    },
+    {
+      "id": "ground",
+      "kind": "plate",
+      "file": "assets/lantern/ground-layer.png",
+      "width": 1080,
+      "height": 1920,
+      "sha256": "5fb69c1d9e68252d311d45f46cfb46e81dca041a92db7019b55a76fddfe553de",
+      "bytes": 1883482,
+      "tags": [
+        "autumn",
+        "painted-cel",
+        "last-lantern"
+      ],
+      "origin": {
+        "project": "The Last Lantern v2",
+        "source": "outputs/v2/source/ground-layer.png",
+        "prompt_record": "reference/image-prompts.md",
+        "production_notes": "reference/visual-production.md"
+      },
+      "rights": {
+        "status": "project asset; provider terms not independently audited",
+        "public_domain": false
+      }
+    },
+    {
+      "id": "frame",
+      "kind": "plate",
+      "file": "assets/lantern/wood-frame-layer.png",
+      "width": 1080,
+      "height": 1920,
+      "sha256": "57c7fd4b1fbacbb739bf3b76b65cc3a89c1b81b466e5c8c81fc02655239533da",
+      "bytes": 1548786,
+      "tags": [
+        "autumn",
+        "painted-cel",
+        "last-lantern"
+      ],
+      "origin": {
+        "project": "The Last Lantern v2",
+        "source": "outputs/v2/source/wood-frame-layer.png",
+        "prompt_record": "reference/image-prompts.md",
+        "production_notes": "reference/visual-production.md"
+      },
+      "rights": {
+        "status": "project asset; provider terms not independently audited",
+        "public_domain": false
+      }
+    },
+    {
+      "id": "branch",
+      "kind": "plate",
+      "file": "assets/lantern/branch.png",
+      "width": 1774,
+      "height": 887,
+      "sha256": "83aeaa5ca3757c862c9910a7925821327a93e9ab9064c9033767c129417436b7",
+      "bytes": 1021460,
+      "tags": [
+        "autumn",
+        "painted-cel",
+        "last-lantern"
+      ],
+      "origin": {
+        "project": "The Last Lantern v2",
+        "source": "outputs/v2/source/branch.png",
+        "prompt_record": "reference/image-prompts.md",
+        "production_notes": "reference/visual-production.md"
+      },
+      "rights": {
+        "status": "project asset; provider terms not independently audited",
+        "public_domain": false
+      }
+    },
+    {
+      "id": "cloud-cels",
+      "kind": "atlas",
+      "file": "assets/lantern/cloud-cels.png",
+      "width": 2048,
+      "height": 384,
+      "sha256": "aa80b2f0deca7411a418239e563e6ae387acc1424ab3b50affcf302c835d908f",
+      "bytes": 442670,
+      "tags": [
+        "autumn",
+        "painted-cel",
+        "last-lantern"
+      ],
+      "origin": {
+        "project": "The Last Lantern v2",
+        "source": "outputs/v2/sprite-sheets/cloud-cels.png",
+        "prompt_record": "reference/image-prompts.md",
+        "production_notes": "reference/visual-production.md"
+      },
+      "rights": {
+        "status": "project asset; provider terms not independently audited",
+        "public_domain": false
+      },
+      "atlas": {
+        "columns": 4,
+        "rows": 2,
+        "cell_width": 512,
+        "cell_height": 192,
+        "frame_count": 8,
+        "default_cycle_seconds": 4.0,
+        "order": "row-major"
+      }
+    },
+    {
+      "id": "smoke-cels",
+      "kind": "atlas",
+      "file": "assets/lantern/smoke-cels.png",
+      "width": 768,
+      "height": 1152,
+      "sha256": "980324a1a92c285753bfb7c8f4ce3ced3966545342225591a4f4fc7d58786eee",
+      "bytes": 426076,
+      "tags": [
+        "autumn",
+        "painted-cel",
+        "last-lantern"
+      ],
+      "origin": {
+        "project": "The Last Lantern v2",
+        "source": "outputs/v2/sprite-sheets/smoke-cels.png",
+        "prompt_record": "reference/image-prompts.md",
+        "production_notes": "reference/visual-production.md"
+      },
+      "rights": {
+        "status": "project asset; provider terms not independently audited",
+        "public_domain": false
+      },
+      "atlas": {
+        "columns": 4,
+        "rows": 3,
+        "cell_width": 192,
+        "cell_height": 384,
+        "frame_count": 12,
+        "default_cycle_seconds": 2.0,
+        "order": "row-major"
+      }
+    },
+    {
+      "id": "flame-cels",
+      "kind": "atlas",
+      "file": "assets/lantern/flame-cels.png",
+      "width": 512,
+      "height": 384,
+      "sha256": "9dde8b64b5416363608aa32fb084529127a13354e524f06c58fb529ac6a18c1f",
+      "bytes": 146857,
+      "tags": [
+        "autumn",
+        "painted-cel",
+        "last-lantern"
+      ],
+      "origin": {
+        "project": "The Last Lantern v2",
+        "source": "outputs/v2/sprite-sheets/flame-cels.png",
+        "prompt_record": "reference/image-prompts.md",
+        "production_notes": "reference/visual-production.md"
+      },
+      "rights": {
+        "status": "project asset; provider terms not independently audited",
+        "public_domain": false
+      },
+      "atlas": {
+        "columns": 4,
+        "rows": 2,
+        "cell_width": 128,
+        "cell_height": 192,
+        "frame_count": 8,
+        "default_cycle_seconds": 1,
+        "order": "row-major"
+      }
+    },
+    {
+      "id": "window-cels",
+      "kind": "atlas",
+      "file": "assets/lantern/window-cels.png",
+      "width": 1040,
+      "height": 666,
+      "sha256": "2fedcbd1a650fea7753dab0d6eb09f20c8dd75904e5d42c8d49aace8a96ce866",
+      "bytes": 661785,
+      "tags": [
+        "autumn",
+        "painted-cel",
+        "last-lantern"
+      ],
+      "origin": {
+        "project": "The Last Lantern v2",
+        "source": "outputs/v2/sprite-sheets/window-cels.png",
+        "prompt_record": "reference/image-prompts.md",
+        "production_notes": "reference/visual-production.md"
+      },
+      "rights": {
+        "status": "project asset; provider terms not independently audited",
+        "public_domain": false
+      },
+      "atlas": {
+        "columns": 4,
+        "rows": 3,
+        "cell_width": 260,
+        "cell_height": 222,
+        "frame_count": 12,
+        "default_cycle_seconds": 2.0,
+        "order": "row-major"
+      }
+    },
+    {
+      "id": "cottage-cels",
+      "kind": "atlas",
+      "file": "assets/lantern/cottage-cels.png",
+      "width": 2816,
+      "height": 2112,
+      "sha256": "9a02457f0a9c2a7e7349d8bcd2e1346dce549092ea8658bc2ee489bea50b4432",
+      "bytes": 2086547,
+      "tags": [
+        "autumn",
+        "painted-cel",
+        "last-lantern"
+      ],
+      "origin": {
+        "project": "The Last Lantern v2",
+        "source": "outputs/v2/sprite-sheets/cottage-cels.png",
+        "prompt_record": "reference/image-prompts.md",
+        "production_notes": "reference/visual-production.md"
+      },
+      "rights": {
+        "status": "project asset; provider terms not independently audited",
+        "public_domain": false
+      },
+      "atlas": {
+        "columns": 4,
+        "rows": 3,
+        "cell_width": 704,
+        "cell_height": 704,
+        "frame_count": 12,
+        "default_cycle_seconds": 2.0,
+        "order": "row-major"
+      }
+    },
+    {
+      "id": "town-window-cels",
+      "kind": "atlas",
+      "file": "assets/lantern/town-window-cels.png",
+      "width": 1728,
+      "height": 768,
+      "sha256": "0eb4f63e13ebf724f5cffcd056e3353adfd4df8c49fdf4ccd1efb43581f533c7",
+      "bytes": 47152,
+      "tags": [
+        "autumn",
+        "painted-cel",
+        "last-lantern"
+      ],
+      "origin": {
+        "project": "The Last Lantern v2",
+        "source": "outputs/v2/sprite-sheets/town-window-cels.png",
+        "prompt_record": "reference/image-prompts.md",
+        "production_notes": "reference/visual-production.md"
+      },
+      "rights": {
+        "status": "project asset; provider terms not independently audited",
+        "public_domain": false
+      },
+      "atlas": {
+        "columns": 4,
+        "rows": 4,
+        "cell_width": 432,
+        "cell_height": 192,
+        "frame_count": 16,
+        "default_cycle_seconds": 8.0,
+        "order": "row-major"
+      }
+    },
+    {
+      "id": "smoke-registered-v1",
+      "kind": "atlas",
+      "file": "assets/compiled/smoke-v1/atlas.png",
+      "width": 768,
+      "height": 1152,
+      "sha256": "2358b0648a4a0c5e062e2bc2e12d09e583d3cd090de9eb3c2f50054ab4f7be0e",
+      "atlas": {
+        "columns": 4,
+        "rows": 3,
+        "cell_width": 192,
+        "cell_height": 384,
+        "frame_count": 12
+      },
+      "pivot": [
+        0.5,
+        0.96875
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/compiled/smoke-v1/recipe.json",
+        "cache_key": "f260c0b4b24ac62e4d6caeb304906ef8771e0a065f185a84d6ca9b2ac37e2d3c",
+        "sources": [
+          {
+            "file": "../../lantern/smoke-cels.png",
+            "sha256": "980324a1a92c285753bfb7c8f4ce3ced3966545342225591a4f4fc7d58786eee"
+          }
+        ]
+      },
+      "rights": "Derived from this project\u2019s original generated smoke; see source provenance. No new third-party license is granted."
+    }
+  ]
+}

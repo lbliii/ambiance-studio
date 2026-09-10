@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ambiance Scene Animation"
+  short_description: "Assemble rigs and deterministic visual loops"
+  default_prompt: "Use $ambiance-animate for the current ambiance project."

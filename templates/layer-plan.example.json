@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "purpose": "Example planning contract; these proposed records are not executable scene assets.",
+  "coordinate_system": "normalized top-left canvas; depth is an artistic parallax multiplier",
+  "objects": [
+    {
+      "id": "moon",
+      "observed_or_proposed": "observed",
+      "role": "distant light source",
+      "bounds": [
+        0.52,
+        0.07,
+        0.24,
+        0.15
+      ],
+      "draw_order": 20,
+      "depth": 0.055,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "parent": null,
+      "socket": null,
+      "method": "plate+camera",
+      "cycle_seconds": 16,
+      "source_strategy": "reference-derived cutout",
+      "backing_needed": "clean sky"
+    },
+    {
+      "id": "cottage",
+      "observed_or_proposed": "observed",
+      "role": "warm focal subject",
+      "bounds": [
+        0.15,
+        0.21,
+        0.65,
+        0.37
+      ],
+      "draw_order": 80,
+      "depth": 0.76,
+      "anchor": [
+        0.5,
+        1
+      ],
+      "parent": "cottage-rig",
+      "socket": "ground-contact",
+      "method": "fixed architecture+masked window cels",
+      "cycle_seconds": 2,
+      "source_strategy": "preserve structure; derive internal cels",
+      "backing_needed": "clean woodland behind full cottage silhouette"
+    },
+    {
+      "id": "chimney-smoke",
+      "observed_or_proposed": "proposed",
+      "role": "quiet inhabited detail",
+      "bounds": [
+        0.46,
+        0.11,
+        0.13,
+        0.15
+      ],
+      "draw_order": 75,
+      "depth": 0.76,
+      "anchor": [
+        0.5,
+        1
+      ],
+      "parent": "cottage-rig",
+      "socket": "chimney-top",
+      "method": "12 painted cels+subtle drift",
+      "cycle_seconds": 2,
+      "source_strategy": "reuse compatible plume or generate registered poses",
+      "backing_needed": "none if clean sky/woods already cover reveal"
+    }
+  ],
+  "clean_plates": [
+    {
+      "id": "clean-woods",
+      "removes": [
+        "cottage"
+      ],
+      "must_cover": "full planned camera/rig displacement"
+    }
+  ],
+  "rigs": [
+    {
+      "id": "cottage-rig",
+      "children": [
+        "cottage",
+        "chimney-smoke",
+        "ground"
+      ],
+      "sockets": [
+        "chimney-top",
+        "ground-contact"
+      ]
+    }
+  ],
+  "camera_limits": {
+    "status": "to be established by coverage review",
+    "overscan_starting_example": 1.08
+  },
+  "open_questions": [
+    "Confirm chimney emission point against the actual image before placement."
+  ]
+}

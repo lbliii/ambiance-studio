@@ -1,0 +1,57 @@
+{
+  "contract_version": 1,
+  "implementation_status": "editorial example; not an executable mixer configuration",
+  "title": "A Light Still On for You",
+  "sample_rate": 48000,
+  "master_seconds": 48,
+  "picture_seconds": 16,
+  "music": {
+    "source_id": "elevenlabs-music-original",
+    "source_start_seconds": 2.875,
+    "overlap_seconds": 3,
+    "overlap_method": "compatible passages with correlation-aware overlap; exact processing in original mix.py"
+  },
+  "beds": [
+    {
+      "source_id": "woodland-01",
+      "source_seconds": 16,
+      "repeat": 3
+    },
+    {
+      "source_id": "hearth-01",
+      "source_seconds": 16,
+      "repeat": 3
+    }
+  ],
+  "events": [
+    {
+      "source_id": "leaves-01",
+      "times_seconds": [
+        3.4,
+        19.9,
+        36.8
+      ]
+    },
+    {
+      "source_id": "bell-01",
+      "times_seconds": [
+        9.1
+      ],
+      "echo_delays_seconds": [
+        0.47,
+        0.89,
+        1.34
+      ]
+    }
+  ],
+  "stems": [
+    "music",
+    "woodland",
+    "hearth",
+    "leaves",
+    "town-bell"
+  ],
+  "stem_contract": "all begin at zero, last 48 seconds, include mix/master gain, and sum at unity to the master within quantization rounding",
+  "target_loudness_reference_lufs": -22.5,
+  "note": "Example result, not a universal loudness requirement. Sources are in the optional production archive."
+}

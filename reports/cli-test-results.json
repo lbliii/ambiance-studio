@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "schema_version": 1,
+  "command": "test",
+  "data": {
+    "ok": true,
+    "checks": [
+      {
+        "command": [
+          "/Users/lb/.pyenv/versions/3.14.0/bin/python3",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-p",
+          "test_*.py"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ".....................................\n----------------------------------------------------------------------\nRan 37 tests in 3.284s\n\nOK\n"
+      },
+      {
+        "command": [
+          "node",
+          "editor/verify-engine.mjs"
+        ],
+        "exit_code": 0,
+        "stdout": "{\n  \"ok\": true,\n  \"checks\": [\n    \"exact state closure at 0 and T\",\n    \"negative full cycle wraps\",\n    \"out-of-order sampling is deterministic\",\n    \"JSON serialization preserves sampled state\",\n    \"cottage attachments share a parent transform\",\n    \"smoke cel boundaries\",\n    \"invalid cycle and group rejected\",\n    \"all 480 frame transforms finite\"\n  ],\n  \"limitation\": \"State checks only; browser pixel and human art reviews are separate.\"\n}\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "node",
+          "tests/test-rig.mjs"
+        ],
+        "exit_code": 0,
+        "stdout": "{\n  \"ok\": true,\n  \"checks\": [\n    \"Parent translation, rotation, scale and depth preserve attachment through all 480 frames\",\n    \"Nested attachment works regardless of paint order\",\n    \"Cel-specific socket tracks follow the sampled parent cel\",\n    \"Cycles, missing sockets, mixed depth, and incomplete tracks are rejected\",\n    \"Camera can pass endpoint closure yet fail coverage midway\",\n    \"Compiled snapshots survive later authoring edits and arbitrary seek order\",\n    \"Attached visibility and opacity inherit from the parent\"\n  ]\n}\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/lb/.pyenv/versions/3.14.0/bin/python3",
+          "tools/package_audit.py"
+        ],
+        "exit_code": 0,
+        "stdout": "{\n  \"ok\": true,\n  \"skills\": [\n    \"ambiance-animate\",\n    \"ambiance-assets\",\n    \"ambiance-deconstruct\",\n    \"ambiance-produce\",\n    \"ambiance-release\",\n    \"ambiance-sound\"\n  ],\n  \"local_links_checked\": 53,\n  \"bundled_asset_check\": {\n    \"ok\": true,\n    \"scene\": \"last-lantern\",\n    \"asset_count\": 15,\n    \"layer_count\": 16,\n    \"export_frame_count\": 480,\n    \"cycles\": [\n      {\n        \"layer\": \"cloud-far-1\",\n        \"seconds\": 4,\n        \"cel_fps\": 2.0\n      },\n      {\n        \"layer\": \"cloud-far-2\",\n        \"seconds\": 4,\n        \"cel_fps\": 2.0\n      },\n      {\n        \"layer\": \"cloud-near-1\",\n        \"seconds\": 4,\n        \"cel_fps\": 2.0\n      },\n      {\n        \"layer\": \"cloud-near-2\",\n        \"seconds\": 4,\n        \"cel_fps\": 2.0\n      },\n      {\n        \"layer\": \"cloud-near-3\",\n        \"seconds\": 4,\n        \"cel_fps\": 2.0\n      },\n      {\n        \"layer\": \"town-lights\",\n        \"seconds\": 8,\n        \"cel_fps\": 2.0\n      },\n      {\n        \"layer\": \"chimney-smoke\",\n        \"seconds\": 2,\n        \"cel_fps\": 6.0\n      },\n      {\n        \"layer\": \"cottage\",\n        \"seconds\": 2,\n        \"cel_fps\": 6.0\n      }\n    ],\n    \"errors\": [],\n    \"limits\": [\n      \"PNG headers and hashes checked; no pixel alpha/edge analysis.\",\n      \"No rendered video, audio, or aesthetic validation performed by this command.\"\n    ]\n  },\n  \"errors\": [],\n  \"limits\": [\n    \"No independent agent behavior trial or film review is implied.\",\n    \"This lightweight frontmatter check supplements the authoring-time skill validator.\"\n  ]\n}\n",
+        "stderr": ""
+      }
+    ]
+  }
+}

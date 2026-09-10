@@ -1,0 +1,52 @@
+{
+  "date": "2026-09-10",
+  "observer": "Codex browser UI inspection",
+  "url": "http://127.0.0.1:8782/editor/",
+  "scene_sha256": "874d455bbbed3522d8509a4353c2b0e6b938cdb8d70699270b6ab9ad45f01eae",
+  "catalog_sha256": "1b5ffd5fcfe613ad47a7841fd2208cce0c747ea00614eb0ce98383686e9c6eec",
+  "engine_sha256": "7d202395eaba9337675d382df033676b72a3a8f63b0678c410567b53b5553bb3",
+  "audit_sha256": "8fb1656ec0794056a0d2b652596d058d8742d766dd594a34782113a9ae764c3e",
+  "positive": {
+    "frames": 480,
+    "resolution": [
+      135,
+      240
+    ],
+    "uncovered_frames": 0,
+    "max_uncovered_pixels": 0,
+    "last_to_first_rgb_difference": 0.0031295892842733803,
+    "adjacent_difference_p95": 0.0028130799644960863,
+    "seam_review_suggested": false
+  },
+  "negative": {
+    "mutation": "Hide the sky layer in the UI",
+    "uncovered_frames": 480,
+    "max_uncovered_pixels": 4176,
+    "worst_frame": 404,
+    "state_failures": 480
+  },
+  "interactions": [
+    "Changed cottage scale to 1.15 and rotation to 5 degrees; exported JSON retained the socket-attached child.",
+    "Changed scene marked the previous inspection stale.",
+    "Placed test-mount on cottage using a canvas click.",
+    "Added smoke-registered-v1; its default anchor was [0.5,0.96875].",
+    "Attached added smoke to test-mount; exported child offsets were zero.",
+    "Loaded exported scene JSON and detached the child; finite independent placement was retained.",
+    "Reset to bundled rigged scene.",
+    "No browser error text after final inspection."
+  ],
+  "layout": {
+    "desktop_preview": [
+      1180,
+      980
+    ],
+    "phone_width": 390,
+    "document_width_at_phone_size": 390,
+    "horizontal_overflow": false
+  },
+  "limits": [
+    "Report transcribes observed UI diagnostics; no encoded video was produced or decoded.",
+    "Raster check is 135x240. Fine edge artifacts and artistic continuity need separate review.",
+    "No physical phone or independent operator pilot was performed."
+  ]
+}

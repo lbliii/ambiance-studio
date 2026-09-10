@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ambiance Producer"
+  short_description: "Guide an ambiance film from image to handoff"
+  default_prompt: "Use $ambiance-produce for the current ambiance project."

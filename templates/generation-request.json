@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "local_request_id": null,
+  "request_fingerprint": null,
+  "intended_asset_id": null,
+  "provider": null,
+  "capability": null,
+  "requested_model": null,
+  "actual_model_returned": null,
+  "prompt": null,
+  "references": [],
+  "settings": {},
+  "status": "planned",
+  "authorized_scope": {
+    "source": null,
+    "cost_limit": null,
+    "currency": null
+  },
+  "estimated_cost": null,
+  "reported_cost": null,
+  "provider_request_id": null,
+  "submitted_at": null,
+  "outputs": [],
+  "selected_output": null,
+  "attempts": [],
+  "notes": "Keep unknown values null. This record does not submit or authorize a paid request."
+}

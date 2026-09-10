@@ -1,0 +1,58 @@
+{
+  "provider": "ElevenLabs",
+  "interface": "Authenticated browser UI",
+  "generations": [
+    {
+      "type": "music",
+      "duration_requested_seconds": 60,
+      "variations_requested": 1,
+      "status": "completed",
+      "prompt": "Instrumental only, no voices. An intimate nocturnal chamber underscore for a nostalgic hand-painted autumn animation: a warmly lit cottage, pumpkins, a moonlit forest and a distant hilltop town. A light is still on for you. Tender, cozy, quietly uncanny. 60 BPM, 4/4, D minor with warm added ninths. A soft felt piano plays a sparse memorable three-note motif over very quiet muted sustained strings; occasional delicate celesta notes answer it. Generous rests, soft attacks, restrained dynamics, clean quiet recording. Repeat a four-bar 16-second harmonic cycle with subtle melodic variations: first welcoming, then a hint of mystery, then return to warmth. Keep a steady intimate texture throughout, already underway at the start and continuing at the end. Compatible opening and closing harmony for looping. No intro, outro, final cadence, fade to silence, drums, vocals, speech, choir, horror stings, crescendos, vinyl crackle, tape hiss, wind, rain or sound effects.",
+      "title": "A Light Still On for You",
+      "model_shown": "Music v1",
+      "project_url": "https://elevenlabs.io/app/music/project/ZboO8lIVfbM0nGJ4a9lG?selectedSongId=lsiiYDx4PoRxbIKaRTBB",
+      "selected_source": "elevenlabs/music-original.mp4"
+    },
+    {
+      "type": "woodland",
+      "duration_requested_seconds": 16,
+      "loop": true,
+      "variations": 4,
+      "status": "completed",
+      "selected_source": "elevenlabs/woodland-01.wav",
+      "prompt": "Quiet autumn woodland at night, heard from a sheltered cottage path. Very gentle intermittent air moving through distant tree crowns, soft low rustling with pockets of stillness. Intimate, calm, dry weather. Clean natural ambience, subtle dynamics. No continuous hiss, microphone wind rumble, rain, insects, birds, music, voices or sudden gusts. Seamless background loop."
+    },
+    {
+      "type": "hearth",
+      "duration_requested_seconds": 16,
+      "loop": true,
+      "variations": 4,
+      "status": "completed",
+      "prompt": "A small wood fire inside a cozy cottage, heard quietly from outside through a mostly closed window. Soft woody settling and occasional rounded ember pops, muffled and warm, restrained upper frequencies, plenty of quiet between details. Clean isolated environmental sound. No roaring blaze, constant sizzling, wind, voices, music or sharp startling cracks. Seamless loop.",
+      "selected_source": "elevenlabs/hearth-01.wav"
+    },
+    {
+      "type": "leaves",
+      "duration_requested_seconds": 3,
+      "loop": false,
+      "variations": 4,
+      "status": "completed",
+      "selected_source": "elevenlabs/leaves-01.wav",
+      "prompt": "A small handful of dry autumn leaves gently skittering across a stone garden path in one soft passing breeze. Delicate papery individual movements, then a natural quiet decay. Close but subtle. Clean isolated Foley. No footsteps, sustained wind, rain, crackling fire, voices, music or background hiss."
+    },
+    {
+      "type": "bell",
+      "duration_requested_seconds": 8,
+      "loop": false,
+      "variations": 4,
+      "status": "completed",
+      "selected_source": "elevenlabs/bell-01.wav",
+      "prompt": "One soft low bronze church bell heard far away across a wooded valley at night. A rounded muted attack followed by a long spacious natural decay, distant and reassuring with a faintly mysterious character. Single strike only, very gentle. Clean isolated sound, no additional tolls, wind, birds, voices, music or sudden loud impact."
+    }
+  ],
+  "sound_effect_settings": {
+    "prompt_influence": 0.3,
+    "automatic_prompt_enhancement": false,
+    "public_explore_sharing": false
+  }
+}

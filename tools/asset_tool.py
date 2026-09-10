@@ -1,0 +1,195 @@
+#!/usr/bin/env python3
+"""Compile transparent cels into an immutable, registered asset pack. Requires Pillow."""
+import argparse
+import hashlib
+import json
+import math
+import os
+from pathlib import Path
+import re
+import sys
+from PIL import Image, ImageDraw, __version__ as PILLOW_VERSION
+
+VERSION = '1.0.0'
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+def write(path, data):
+    path.write_text(json.dumps(data, indent=2) + '\n')
+
+def positive_int(n):
+    return type(n) is int and n > 0
+
+def pair(v):
+    return isinstance(v, list) and len(v) == 2 and all(type(n) in (int, float) and math.isfinite(n) for n in v)
+
+def build(recipe_path, out):
+    recipe_path, out = Path(recipe_path).resolve(), Path(out).resolve()
+    recipe = json.loads(recipe_path.read_text())
+    if recipe.get('version') != 1 or not re.fullmatch(r'[a-z0-9][a-z0-9-]*', recipe.get('id', '')):
+        raise ValueError('Use recipe version 1 and a lowercase asset id.')
+    inputs = recipe['input']
+    frames, sources, source_paths = [], [], []
+    if 'sheet' in inputs:
+        path = (recipe_path.parent / inputs['sheet']).resolve()
+        image = Image.open(path).convert('RGBA')
+        columns, rows, count = (inputs[k] for k in ['columns', 'rows', 'frame_count'])
+        if not all(positive_int(n) for n in [columns, rows, count]) or count > columns * rows or image.width % columns or image.height % rows:
+            raise ValueError('Input must have exact whole cells, and frame_count must fit the grid.')
+        w, h = image.width // columns, image.height // rows
+        frames = [image.crop((i % columns*w, i//columns*h, (i % columns+1)*w, (i//columns+1)*h)) for i in range(count)]
+        sources.append({'file': inputs['sheet'], 'sha256': sha(path)})
+        source_paths.append(path)
+    else:
+        for name in inputs['frames']:
+            path = (recipe_path.parent / name).resolve()
+            frames.append(Image.open(path).convert('RGBA'))
+            sources.append({'file': name, 'sha256': sha(path)})
+            source_paths.append(path)
+    if not frames or len(frames) > 256:
+        raise ValueError('Supply 1–256 explicitly ordered frames.')
+    spec, registration = recipe['output'], recipe['registration']
+    cw, ch = spec['cell_size']
+    columns = spec['columns']
+    pad = spec.get('padding', 2)
+    target = registration['target']
+    mode = registration['mode']
+    if not all(positive_int(n) for n in [cw, ch, columns, pad]) or pad < 2 or min(cw, ch) <= pad*2 or max(cw, ch) > 4096:
+        raise ValueError('Invalid output geometry; require at least 2 pixels of padding.')
+    if not pair(target) or any(n <= 0 or n >= 1 for n in target):
+        raise ValueError('Target pivot must be strictly inside the cell, in normalized coordinates.')
+    if mode not in ['fixed', 'landmarks', 'bottom-center']:
+        raise ValueError('Registration mode must be fixed, landmarks, or bottom-center.')
+    threshold = registration.get('alpha_threshold', 20)
+    if type(threshold) is not int or not 1 <= threshold <= 254:
+        raise ValueError('alpha_threshold must be 1–254.')
+    if mode == 'landmarks' and len(registration['points']) != len(frames):
+        raise ValueError('Provide one source-pixel landmark per cel.')
+    rows = math.ceil(len(frames)/columns)
+    if cw*columns > 16384 or ch*rows > 16384 or cw*columns*ch*rows > 64_000_000:
+        raise ValueError('Atlas exceeds the compiler memory budget; use smaller cells or split the pack.')
+    # Input locations are portable; order, bytes, settings, code and Pillow determine the build.
+    canonical = json.loads(json.dumps(recipe))
+    if 'sheet' in canonical['input']: canonical['input']['sheet'] = 'source-0'
+    else: canonical['input']['frames'] = [f'source-{i}' for i in range(len(sources))]
+    key_data = {'recipe': canonical, 'sources': [s['sha256'] for s in sources], 'compiler': sha(Path(__file__)), 'pillow': PILLOW_VERSION}
+    cache_key = hashlib.sha256(json.dumps(key_data, sort_keys=True).encode()).hexdigest()
+    if out.exists():
+        report_file = out/'report.json'
+        if report_file.is_file():
+            report = json.loads(report_file.read_text())
+            if report['cache_key'] == cache_key and all((out/f).is_file() and sha(out/f) == h for f, h in report['outputs'].items()):
+                return {'status': 'cached', 'pack': str(out), 'cache_key': cache_key}
+        raise ValueError('Output exists but differs. Choose a new version directory; accepted packs are immutable.')
+    tx, ty = target[0]*cw, target[1]*ch
+    records, limits, warnings = [], [1.0] if not spec.get('allow_upscale', False) else [], []
+    for i, frame in enumerate(frames):
+        alpha = frame.getchannel('A')
+        bounds = alpha.getbbox()  # Preserve even faint detail when fitting the sequence.
+        measured = alpha.point(lambda n: 255 if n >= threshold else 0).getbbox()
+        if not bounds or not measured:
+            raise ValueError(f'Cel {i}: empty or below alpha threshold. Repair it explicitly.')
+        if alpha.getextrema()[0] == 255 and not inputs.get('allow_opaque', False):
+            raise ValueError(f'Cel {i}: fully opaque. Real alpha is required; proofing grids are not transparency.')
+        if mode == 'fixed':
+            pivot = registration['point']
+        elif mode == 'landmarks':
+            pivot = registration['points'][i]
+        else:
+            pivot = [(measured[0]+measured[2])/2, measured[3]]
+        if not pair(pivot) or not (0 <= pivot[0] <= frame.width and 0 <= pivot[1] <= frame.height):
+            raise ValueError(f'Cel {i}: pivot must be a finite source-pixel point within its cell.')
+        px, py = pivot
+        for extent, available in [(px-bounds[0], tx-pad), (bounds[2]-px, cw-pad-tx), (py-bounds[1], ty-pad), (bounds[3]-py, ch-pad-ty)]:
+            if extent > 0:
+                limits.append(available/extent)
+        if bounds[0] == 0 or bounds[1] == 0 or bounds[2] == frame.width or bounds[3] == frame.height:
+            warnings.append(f'Cel {i}: source alpha touches a cell edge; inspect for pre-existing clipping.')
+        records.append({'index': i, 'source_size': list(frame.size), 'alpha_bounds': list(bounds), 'measured_bounds': list(measured), 'source_pivot': list(pivot)})
+    scale = min(limits)
+    if scale <= 0:
+        raise ValueError('The target pivot leaves insufficient padding.')
+    if mode == 'bottom-center':
+        warnings.append('Bottom-center is a silhouette estimate, not a tracked anatomical or architectural landmark. Review base stability; use explicit landmarks for asymmetric/deforming subjects.')
+    out.mkdir(parents=True)
+    atlas = Image.new('RGBA', (cw*columns, ch*rows))
+    normalized = []
+    for frame, record in zip(frames, records):
+        px, py = record['source_pivot']
+        offset = [tx-px*scale, ty-py*scale]
+        # Resample premultiplied color to avoid halos from transparent RGB.
+        cel = frame.convert('RGBa').transform((cw,ch), Image.Transform.AFFINE,
+            (1/scale,0,-offset[0]/scale,0,1/scale,-offset[1]/scale), Image.Resampling.BICUBIC).convert('RGBA')
+        i = record['index']
+        atlas.paste(cel, (i%columns*cw, i//columns*ch))
+        normalized.append(cel)
+        record.update(offset_pixels=offset, output_pivot=[tx,ty], output_alpha_bounds=cel.getchannel('A').getbbox())
+    atlas.save(out/'atlas.png')
+    # Small diagnostic proofs: actual alpha on light and dark, plus a fixed pivot cross.
+    pw, ph = min(200,cw), round(ch*min(200,cw)/cw)
+    proof = Image.new('RGB', (pw*columns, (ph+24)*rows*2), '#202432')
+    draw = ImageDraw.Draw(proof)
+    previews = []
+    for i, cel in enumerate(normalized):
+        thumb = cel.resize((pw,ph), Image.Resampling.LANCZOS)
+        for side, bg in enumerate(['#e8e3d8','#202432']):
+            x, y = i%columns*pw, (i//columns+side*rows)*(ph+24)
+            tile = Image.new('RGBA', (pw,ph), bg);tile.alpha_composite(thumb)
+            proof.paste(tile.convert('RGB'),(x,y))
+            cx, cy = x+target[0]*pw, y+target[1]*ph
+            draw.line((cx-6,cy,cx+6,cy), fill='#ff66bb', width=1)
+            draw.line((cx,cy-6,cx,cy+6), fill='#ff66bb', width=1)
+            draw.text((x+4,y+ph+4), f'Cel {i+1}', fill='#c58d62' if side == 0 else '#eeeeee')
+        tile = Image.new('RGBA', (pw,ph), '#202432');tile.alpha_composite(thumb)
+        previews.append(tile.convert('RGB'))
+    proof.save(out/'contact-sheet.png')
+    previews[0].save(out/'preview.gif',save_all=True,append_images=previews[1:],duration=120,loop=0,disposal=2)
+    packed_recipe = json.loads(json.dumps(recipe))
+    references = [os.path.relpath(p, out) for p in source_paths]
+    if 'sheet' in inputs: packed_recipe['input']['sheet'] = references[0]
+    else: packed_recipe['input']['frames'] = references
+    packed_sources = [{'file':f,'sha256':s['sha256']} for f,s in zip(references,sources)]
+    asset = {'id': recipe['id'], 'kind': 'atlas', 'file': 'atlas.png', 'width': atlas.width, 'height': atlas.height,
+        'sha256': sha(out/'atlas.png'), 'atlas': {'columns': columns,'rows':rows,'cell_width':cw,'cell_height':ch,'frame_count':len(frames)},
+        'pivot':target, 'sockets':recipe.get('sockets',{}), 'provenance': {'recipe':'recipe.json','cache_key':cache_key,'sources':packed_sources},
+        'rights':recipe.get('rights','Unspecified; inherits source restrictions.')}
+    write(out/'asset.json',asset);write(out/'recipe.json',packed_recipe)
+    outputs = {p.name:sha(p) for p in out.iterdir() if p.is_file()}
+    report = {'version':VERSION,'cache_key':cache_key,'pillow':PILLOW_VERSION,'frame_count':len(frames),'mode':mode,
+        'shared_scale':scale,'frames':records,'warnings':warnings,'outputs':outputs,
+        'limits':['Does not remove backgrounds, track moving features, infer fake checkerboards, or judge the closing gesture.','Preview GIF timing is for inspection; the scene owns production timing.']}
+    write(out/'report.json',report)
+    return {'status':'built','pack':str(out),'frames':len(frames),'shared_scale':scale,'warnings':warnings}
+
+def admit(pack, catalog_path):
+    pack, catalog_path = Path(pack).resolve(), Path(catalog_path).resolve()
+    root = catalog_path.parent.parent
+    report = json.loads((pack/'report.json').read_text())
+    if not all((pack/f).is_file() and sha(pack/f) == h for f,h in report['outputs'].items()):
+        raise ValueError('Pack bytes no longer match its build report.')
+    asset = json.loads((pack/'asset.json').read_text())
+    asset['file'] = str((pack/'atlas.png').relative_to(root))
+    asset['provenance']['recipe'] = str((pack/'recipe.json').relative_to(root))
+    catalog = json.loads(catalog_path.read_text())
+    existing = next((a for a in catalog['assets'] if a['id'] == asset['id']),None)
+    if existing:
+        if existing == asset: return {'status':'already admitted','id':asset['id']}
+        raise ValueError('Asset id already exists; use a new version id.')
+    catalog['assets'].append(asset)
+    temp = catalog_path.with_suffix('.tmp');write(temp,catalog);temp.replace(catalog_path)
+    return {'status':'admitted','id':asset['id']}
+
+def main():
+    parser=argparse.ArgumentParser(description=__doc__)
+    sub=parser.add_subparsers(dest='command',required=True)
+    p=sub.add_parser('build');p.add_argument('recipe',type=Path);p.add_argument('--out',required=True,type=Path)
+    p=sub.add_parser('admit');p.add_argument('pack',type=Path);p.add_argument('--catalog',required=True,type=Path)
+    args=parser.parse_args()
+    try:
+        result=build(args.recipe,args.out) if args.command=='build' else admit(args.pack,args.catalog)
+        print(json.dumps(result,indent=2));return 0
+    except (ValueError,KeyError,TypeError,OSError) as e:
+        print(json.dumps({'ok':False,'error':str(e)}));return 1
+
+if __name__=='__main__': sys.exit(main())

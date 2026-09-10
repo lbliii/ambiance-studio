@@ -1,0 +1,58 @@
+{
+  "loop": {
+    "last_to_first_mean_absolute_component_delta": 1.409642891589506,
+    "export_frames": 480,
+    "fps": 30,
+    "endpoint_pixel_component_differences": 0,
+    "period_seconds": 16
+  },
+  "video_checks": [
+    {
+      "height": 1920,
+      "audio_tracks": 0,
+      "file": "the-last-lantern-silent.mp4",
+      "width": 1080,
+      "fps": 30,
+      "duration_seconds": 16,
+      "decoded_frames": 480,
+      "monotonic_timestamps": true,
+      "fully_decoded": 1,
+      "codec": "avc1",
+      "bytes": 28199483
+    },
+    {
+      "height": 1920,
+      "audio_tracks": 1,
+      "file": "the-last-lantern.mp4",
+      "width": 1080,
+      "fps": 30,
+      "duration_seconds": 16,
+      "decoded_frames": 480,
+      "monotonic_timestamps": true,
+      "fully_decoded": 1,
+      "codec": "avc1",
+      "bytes": 21887359
+    }
+  ],
+  "frame_viewer": {
+    "bytes": 901655,
+    "playback_verified": true,
+    "manual_scrub_verified": true,
+    "asset_selection_verified": true,
+    "viewports_checked": [
+      736,
+      360
+    ]
+  },
+  "sha256": {
+    "sprite-sheets/cloud-cels.png": "aa80b2f0deca7411a418239e563e6ae387acc1424ab3b50affcf302c835d908f",
+    "sprite-sheets/cottage-cels.png": "9a02457f0a9c2a7e7349d8bcd2e1346dce549092ea8658bc2ee489bea50b4432",
+    "sprite-sheets/flame-cels.png": "9dde8b64b5416363608aa32fb084529127a13354e524f06c58fb529ac6a18c1f",
+    "sprite-sheets/smoke-cels.png": "980324a1a92c285753bfb7c8f4ce3ced3966545342225591a4f4fc7d58786eee",
+    "sprite-sheets/town-window-cels.png": "0eb4f63e13ebf724f5cffcd056e3353adfd4df8c49fdf4ccd1efb43581f533c7",
+    "sprite-sheets/window-cels.png": "2fedcbd1a650fea7753dab0d6eb09f20c8dd75904e5d42c8d49aace8a96ce866",
+    "source/build-assets.m": "c9b6a25b9d2eb695903c30438006273a5a1c82355bb9d1048e039d3b67730bd0",
+    "source/render-v2.m": "86d2ef9629e97a8dad4ed0a200be515d905abfc810f01f9f9c28bcdf1a2d06cf"
+  },
+  "town_light_fixed_camera_mean_rgb_delta": 0.120186
+}

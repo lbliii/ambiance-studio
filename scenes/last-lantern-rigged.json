@@ -1,0 +1,449 @@
+{
+  "version": 1,
+  "id": "last-lantern-rigged",
+  "title": "The Last Lantern \u00b7 attached rig",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "loop_seconds": 16,
+    "background": "#1a1733"
+  },
+  "camera": {
+    "overscan": 1.08,
+    "x_amplitude": 0.024074074074074074,
+    "y_amplitude": 0.005208333333333333,
+    "zoom_amplitude": 0.005
+  },
+  "groups": [
+    {
+      "id": "town-rig",
+      "name": "Town + lights",
+      "depth": 0.32,
+      "x": 0,
+      "y": 0,
+      "scale": 1,
+      "pivot": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "id": "cottage-rig",
+      "name": "Cottage + smoke + ground",
+      "depth": 0.76,
+      "x": 0,
+      "y": 0,
+      "scale": 1,
+      "pivot": [
+        0.5,
+        0.5
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "id": "sky",
+      "name": "Sky",
+      "asset": "sky",
+      "x": 0,
+      "y": 0,
+      "width": 1,
+      "height": 1,
+      "anchor": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 0.015
+    },
+    {
+      "id": "moon",
+      "name": "Moon",
+      "asset": "moon",
+      "x": 0.64,
+      "y": 0.136,
+      "width": 0.22777777777777777,
+      "height": 0.128125,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 0.055
+    },
+    {
+      "id": "cloud-far-1",
+      "name": "Cloud Far 1",
+      "asset": "cloud-cels",
+      "x": 0.2777777777777778,
+      "y": 0.0953125,
+      "width": 0.39814814814814814,
+      "height": 0.083984375,
+      "anchor": [
+        0.5,
+        0.8
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 0.45,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 0.1,
+      "cycle_seconds": 4,
+      "phase_frames": 0,
+      "motion": {
+        "x_amplitude": 0.07962962962962963,
+        "y_amplitude": 0,
+        "cycles": 1,
+        "phase": 0.0
+      }
+    },
+    {
+      "id": "cloud-far-2",
+      "name": "Cloud Far 2",
+      "asset": "cloud-cels",
+      "x": 0.7685185185185185,
+      "y": 0.13177083333333334,
+      "width": 0.32407407407407407,
+      "height": 0.068359375,
+      "anchor": [
+        0.5,
+        0.8
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 0.45,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 0.1,
+      "cycle_seconds": 4,
+      "phase_frames": 3,
+      "motion": {
+        "x_amplitude": 0.07962962962962963,
+        "y_amplitude": 0,
+        "cycles": 1,
+        "phase": 0.7
+      }
+    },
+    {
+      "id": "far-hills",
+      "name": "Far Hills",
+      "asset": "far-hills",
+      "x": 0,
+      "y": 0,
+      "width": 1,
+      "height": 1,
+      "anchor": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 0.18
+    },
+    {
+      "id": "cloud-near-1",
+      "name": "Cloud Near 1",
+      "asset": "cloud-cels",
+      "x": 0.25925925925925924,
+      "y": 0.15104166666666666,
+      "width": 0.41203703703703703,
+      "height": 0.0869140625,
+      "anchor": [
+        0.5,
+        0.8
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 0.6,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 0.2,
+      "cycle_seconds": 4,
+      "phase_frames": 1,
+      "motion": {
+        "x_amplitude": 0.11574074074074074,
+        "y_amplitude": 0,
+        "cycles": 1,
+        "phase": 1.0
+      }
+    },
+    {
+      "id": "cloud-near-2",
+      "name": "Cloud Near 2",
+      "asset": "cloud-cels",
+      "x": 0.5185185185185185,
+      "y": 0.1671875,
+      "width": 0.37037037037037035,
+      "height": 0.078125,
+      "anchor": [
+        0.5,
+        0.8
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 0.83,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 0.2,
+      "cycle_seconds": 4,
+      "phase_frames": 4,
+      "motion": {
+        "x_amplitude": 0.11574074074074074,
+        "y_amplitude": 0,
+        "cycles": 1,
+        "phase": 1.85
+      }
+    },
+    {
+      "id": "cloud-near-3",
+      "name": "Cloud Near 3",
+      "asset": "cloud-cels",
+      "x": 0.7777777777777778,
+      "y": 0.18333333333333332,
+      "width": 0.3287037037037037,
+      "height": 0.0693359375,
+      "anchor": [
+        0.5,
+        0.8
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 0.6,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 0.2,
+      "cycle_seconds": 4,
+      "phase_frames": 7,
+      "motion": {
+        "x_amplitude": 0.11574074074074074,
+        "y_amplitude": 0,
+        "cycles": 1,
+        "phase": 2.7
+      }
+    },
+    {
+      "id": "town",
+      "name": "Town",
+      "asset": "town",
+      "x": 0,
+      "y": 0,
+      "width": 1,
+      "height": 1,
+      "anchor": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "group": "town-rig",
+      "sockets": {
+        "windows": [
+          0.589798087141339,
+          0.18839712918660287
+        ]
+      }
+    },
+    {
+      "id": "town-lights",
+      "name": "Town Lights",
+      "asset": "town-window-cels",
+      "x": 0,
+      "y": 0,
+      "width": 0.38257173219978746,
+      "height": 0.0867224880382775,
+      "anchor": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "cycle_seconds": 8,
+      "phase_frames": 0,
+      "attach": {
+        "layer": "town",
+        "socket": "windows"
+      }
+    },
+    {
+      "id": "woods",
+      "name": "Woods",
+      "asset": "woods",
+      "x": 0,
+      "y": 0,
+      "width": 1,
+      "height": 1,
+      "anchor": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 0.54
+    },
+    {
+      "id": "chimney-smoke",
+      "name": "Chimney Smoke",
+      "asset": "smoke-cels",
+      "x": 0,
+      "y": 0,
+      "width": 0.12777777777777777,
+      "height": 0.14322916666666666,
+      "anchor": [
+        0.5,
+        1
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 0.27,
+      "visible": true,
+      "blend": "source-over",
+      "cycle_seconds": 2,
+      "phase_frames": 0,
+      "attach": {
+        "layer": "cottage",
+        "socket": "chimney"
+      }
+    },
+    {
+      "id": "cottage",
+      "name": "Cottage",
+      "asset": "cottage-cels",
+      "x": 0.1487778958554729,
+      "y": 0.20933014354066987,
+      "width": 0.6482465462274176,
+      "height": 0.36483253588516745,
+      "anchor": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "group": "cottage-rig",
+      "cycle_seconds": 2,
+      "phase_frames": 0,
+      "sockets": {
+        "chimney": [
+          0.5788262295081967,
+          0.12706475409836065
+        ]
+      }
+    },
+    {
+      "id": "ground",
+      "name": "Ground",
+      "asset": "ground",
+      "x": 0,
+      "y": 0,
+      "width": 1,
+      "height": 1,
+      "anchor": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "group": "cottage-rig"
+    },
+    {
+      "id": "framing-trees",
+      "name": "Framing Trees",
+      "asset": "frame",
+      "x": 0,
+      "y": 0,
+      "width": 1,
+      "height": 1,
+      "anchor": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1.34
+    },
+    {
+      "id": "near-branch",
+      "name": "Near Branch",
+      "asset": "branch",
+      "x": 1.0648148148148149,
+      "y": 0.041666666666666664,
+      "width": 0.6481481481481481,
+      "height": 0.18229166666666666,
+      "anchor": [
+        1,
+        0.43
+      ],
+      "scale": 1,
+      "rotation": 0.105,
+      "opacity": 0.94,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1.65,
+      "motion": {
+        "x_amplitude": 0.022222222222222223,
+        "y_amplitude": 0.005208333333333333,
+        "cycles": 1,
+        "phase": 0,
+        "rotation_amplitude": 0.018
+      }
+    }
+  ],
+  "audio": {
+    "status": "reference only; not played or mixed by this editor",
+    "loop_seconds": 48,
+    "stems": [
+      "music",
+      "woodland",
+      "hearth",
+      "leaves",
+      "town-bell"
+    ],
+    "leaf_cues_seconds": [
+      3.4,
+      19.9,
+      36.8
+    ],
+    "bell_cues_seconds": [
+      9.1
+    ]
+  },
+  "scope_notes": [
+    "Placement prototype using the original plates and atlases.",
+    "Original glow, mist, motes and procedural leaves are not ported.",
+    "No MP4 export or audio engine in this starter.",
+    "Rig workbench: smoke anchored to cottage chimney; town lights attached to town windows. Original prepared artwork remains unchanged."
+  ],
+  "coverage_layers": [
+    "sky"
+  ]
+}

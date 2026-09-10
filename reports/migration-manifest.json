@@ -1,0 +1,2352 @@
+{
+  "ok": true,
+  "created_at": "2026-09-10T15:40:35.468125+00:00",
+  "source": "/Users/lb/Documents/Codex/2026-09-10/your-goal-is-to-plan-and",
+  "repository": "/Users/lb/Developer/ambiance-studio",
+  "archive": "archive/session-2026-09-10",
+  "file_count": 467,
+  "bytes": 1396431890,
+  "source_retained": true,
+  "exclusions": [
+    ".DS_Store",
+    "__pycache__",
+    "work/ambiance-bootstrap (this migration staging directory)"
+  ],
+  "files": [
+    {
+      "path": "outputs/README.md",
+      "bytes": 2953,
+      "sha256": "baf7cb943b7fe53b1391757248b6b32c701ba2fe4cd0ae1bdd2e715f39fee372"
+    },
+    {
+      "path": "outputs/ambiance-kit/.gitignore",
+      "bytes": 85,
+      "sha256": "0ed2bb2625d99b07b6b2d9092c99be34dac8681ad213f7fe5f1215faa51a102c"
+    },
+    {
+      "path": "outputs/ambiance-kit/README.md",
+      "bytes": 4444,
+      "sha256": "401a1c054b26cff4318e9bfb7c1d0a1d168842b8fcea33fca2be151dd3218244"
+    },
+    {
+      "path": "outputs/ambiance-kit/assets/catalog.json",
+      "bytes": 11463,
+      "sha256": "fb3441543994f2fbc5c76e314bb4cacd10b5a15d41b150012d2dd42f669a58ee"
+    },
+    {
+      "path": "outputs/ambiance-kit/assets/lantern/branch.png",
+      "bytes": 1021460,
+      "sha256": "83aeaa5ca3757c862c9910a7925821327a93e9ab9064c9033767c129417436b7"
+    },
+    {
+      "path": "outputs/ambiance-kit/assets/lantern/cloud-cels.png",
+      "bytes": 442670,
+      "sha256": "aa80b2f0deca7411a418239e563e6ae387acc1424ab3b50affcf302c835d908f"
+    },
+    {
+      "path": "outputs/ambiance-kit/assets/lantern/cottage-cels.png",
+      "bytes": 2086547,
+      "sha256": "9a02457f0a9c2a7e7349d8bcd2e1346dce549092ea8658bc2ee489bea50b4432"
+    },
+    {
+      "path": "outputs/ambiance-kit/assets/lantern/far-hills-layer.png",
+      "bytes": 2795470,
+      "sha256": "d615c134a3c4d478c2c5af701bc98d919665fac46a207ae14bd4cd9731b8b757"
+    },
+    {
+      "path": "outputs/ambiance-kit/assets/lantern/flame-cels.png",
+      "bytes": 146857,
+      "sha256": "9dde8b64b5416363608aa32fb084529127a13354e524f06c58fb529ac6a18c1f"
+    },
+    {
+      "path": "outputs/ambiance-kit/assets/lantern/ground-layer.png",
+      "bytes": 1883482,
+      "sha256": "5fb69c1d9e68252d311d45f46cfb46e81dca041a92db7019b55a76fddfe553de"
+    },
+    {
+      "path": "outputs/ambiance-kit/assets/lantern/moon.png",
+      "bytes": 1247584,
+      "sha256": "112a49460e2c79e2fccabba7fbb141f1057ece37253fa3e4ef1c30adc7e98469"
+    },
+    {
+      "path": "outputs/ambiance-kit/assets/lantern/sky.png",
+      "bytes": 2242793,
+      "sha256": "5570a10600fb88dcb3a2295c4967aa145f40c5096ff5654e60563b3de9811828"
+    },
+    {
+      "path": "outputs/ambiance-kit/assets/lantern/smoke-cels.png",
+      "bytes": 426076,
+      "sha256": "980324a1a92c285753bfb7c8f4ce3ced3966545342225591a4f4fc7d58786eee"
+    },
+    {
+      "path": "outputs/ambiance-kit/assets/lantern/town-hill-layer.png",
+      "bytes": 2618927,
+      "sha256": "c7acbe0d2c20481d25ff5ab060f88700a5a69df913b220f018a8760759af2ef0"
+    },
+    {
+      "path": "outputs/ambiance-kit/assets/lantern/town-window-cels.png",
+      "bytes": 47152,
+      "sha256": "0eb4f63e13ebf724f5cffcd056e3353adfd4df8c49fdf4ccd1efb43581f533c7"
+    },
+    {
+      "path": "outputs/ambiance-kit/assets/lantern/window-cels.png",
+      "bytes": 661785,
+      "sha256": "2fedcbd1a650fea7753dab0d6eb09f20c8dd75904e5d42c8d49aace8a96ce866"
+    },
+    {
+      "path": "outputs/ambiance-kit/assets/lantern/wood-frame-layer.png",
+      "bytes": 1548786,
+      "sha256": "57c7fd4b1fbacbb739bf3b76b65cc3a89c1b81b466e5c8c81fc02655239533da"
+    },
+    {
+      "path": "outputs/ambiance-kit/assets/lantern/woodland-layer.png",
+      "bytes": 568019,
+      "sha256": "202e1df7bbf81f7268eca88f2ba974a8bb06085a5ffd88df416c071e10ab309d"
+    },
+    {
+      "path": "outputs/ambiance-kit/docs/BRIEF-TEMPLATE.md",
+      "bytes": 1857,
+      "sha256": "211a6b93af35f70353418c90650f85c6067d077ec35d5478590b815e7da6bc1d"
+    },
+    {
+      "path": "outputs/ambiance-kit/docs/PROCESS.md",
+      "bytes": 15317,
+      "sha256": "a07cb7ab58a2a46411fa5a87e93f2c1f5b21e29e05b800c86edf482b02803ea1"
+    },
+    {
+      "path": "outputs/ambiance-kit/docs/SCENE-CONTRACT.md",
+      "bytes": 5853,
+      "sha256": "471b3649e05e1103ae6807a92f96cf4c116b42530f8898e1b34203b43dee1b63"
+    },
+    {
+      "path": "outputs/ambiance-kit/editor/editor.mjs",
+      "bytes": 9039,
+      "sha256": "a68ac1dd77a2a4c5833156a91b08e7a4cb2c8f20e372e7e3e90e8a005d09386a"
+    },
+    {
+      "path": "outputs/ambiance-kit/editor/engine.mjs",
+      "bytes": 6678,
+      "sha256": "ea23d2c1a816df0ae7c02e81fbd6f6afd216ca6a458d92b1d251759bd0b10b99"
+    },
+    {
+      "path": "outputs/ambiance-kit/editor/index.html",
+      "bytes": 5166,
+      "sha256": "c457ba8a4dab0d91813bd2237deba28068f989c27dee30b54114399c77606aa2"
+    },
+    {
+      "path": "outputs/ambiance-kit/editor/style.css",
+      "bytes": 3977,
+      "sha256": "8c2610e79b141e8d208c37b898740a1c412d3458e66feace5a6bc00c57af28b8"
+    },
+    {
+      "path": "outputs/ambiance-kit/editor/verify-engine.mjs",
+      "bytes": 1888,
+      "sha256": "b20e02e7f26f1f1dceb4e01dc31f5708a41319c3e28f91e265459e1cc747ff54"
+    },
+    {
+      "path": "outputs/ambiance-kit/kit.py",
+      "bytes": 8088,
+      "sha256": "fa62ea96dd0853ef7c92bbba0cf0204eae87e07db36e65af4bc4bf2329af125c"
+    },
+    {
+      "path": "outputs/ambiance-kit/reference/audio-generation-log.json",
+      "bytes": 3879,
+      "sha256": "59efeff8f4183f2800990225a0c1b015d90cfe00cd4558ff7838e314c697c281"
+    },
+    {
+      "path": "outputs/ambiance-kit/reference/image-prompts.md",
+      "bytes": 6836,
+      "sha256": "09e68c516306ef73bab10ffa5d7f432eb31d69e4c2bc48be81dd12fffe8cff8d"
+    },
+    {
+      "path": "outputs/ambiance-kit/reference/original-mix-validation.json",
+      "bytes": 2681,
+      "sha256": "79804708c416754cb720b641ae2c1577dccab5aa0caa03b7d7fd074770d26c83"
+    },
+    {
+      "path": "outputs/ambiance-kit/reference/original-visual-validation.json",
+      "bytes": 1942,
+      "sha256": "293cfa874a0df81712e4f2237178627eefed6c0b6f8171476391279920d1fb65"
+    },
+    {
+      "path": "outputs/ambiance-kit/reference/sound-production.md",
+      "bytes": 4839,
+      "sha256": "c6baaa8a4325c8b796a2361c0757743fdc6a78fa84fc41d7795f8d54d52ec19c"
+    },
+    {
+      "path": "outputs/ambiance-kit/reference/visual-production.md",
+      "bytes": 4088,
+      "sha256": "340b3da998f371dc93fcdb96b165ed6a1bca5842fec316517bc5ed0ad25429a1"
+    },
+    {
+      "path": "outputs/ambiance-kit/reports/asset-check.json",
+      "bytes": 993,
+      "sha256": "e787c07f38838910d0dc9dac1452fe7ccdd45de0adc649871d46f3d3909f74cd"
+    },
+    {
+      "path": "outputs/ambiance-kit/reports/browser-review.json",
+      "bytes": 1482,
+      "sha256": "3f3d4c49338d9f3f7c36afd46021fb994ebf9c230e026c6f2ccd68f66c0da413"
+    },
+    {
+      "path": "outputs/ambiance-kit/reports/engine-check.json",
+      "bytes": 449,
+      "sha256": "949e3f252375b14e20eab03aa73fcd9846f076d4d7be955fa0d279d7f33bbc68"
+    },
+    {
+      "path": "outputs/ambiance-kit/reports/file-inventory.json",
+      "bytes": 5605,
+      "sha256": "83b4b22ed89ec4d6adae324e5b6e5282a7bd2e1226701494e82e058d57cb3c52"
+    },
+    {
+      "path": "outputs/ambiance-kit/reports/negative-case-check.json",
+      "bytes": 147,
+      "sha256": "ee7658103b63794ee6b728e0f6e09a91e9d14ac40c5f085781b122c2789ff4c9"
+    },
+    {
+      "path": "outputs/ambiance-kit/scenes/last-lantern.json",
+      "bytes": 8813,
+      "sha256": "4ef0d810e6c5f7f970442a06b9a0580bfef6c261c1e1ca28b7c6db7701179306"
+    },
+    {
+      "path": "outputs/ambiance-kit-starter.zip",
+      "bytes": 17555938,
+      "sha256": "e76a744ae3ced53f78792bce1698b1a23e282ed2fce7b336cbc064b5f6a7dc5c"
+    },
+    {
+      "path": "outputs/ambiance-studio/.agents/skills/ambiance-animate/SKILL.md",
+      "bytes": 2712,
+      "sha256": "0796a33fc6e2646d8b6ba3a37658ac6a6ddbb252b96edce36cf373feeb304f46"
+    },
+    {
+      "path": "outputs/ambiance-studio/.agents/skills/ambiance-animate/agents/openai.yaml",
+      "bytes": 198,
+      "sha256": "92a6bf1f2ccfce18b4df820c48d09e16c234cb47cf787b641b281c3e8eb48339"
+    },
+    {
+      "path": "outputs/ambiance-studio/.agents/skills/ambiance-assets/SKILL.md",
+      "bytes": 2819,
+      "sha256": "a7d5eabb7b838b58585a7b05f47fd6f6a4355c09e6b0631ec6abbd873ed961de"
+    },
+    {
+      "path": "outputs/ambiance-studio/.agents/skills/ambiance-assets/agents/openai.yaml",
+      "bytes": 196,
+      "sha256": "ea54f59e639559491bccd8569e6a9e2c298755c84a62dd14b107a5282ee80766"
+    },
+    {
+      "path": "outputs/ambiance-studio/.agents/skills/ambiance-deconstruct/SKILL.md",
+      "bytes": 2230,
+      "sha256": "724c19bfecdf74d699a8e0eeb5eda9287af773dace42756ce42e4b8cf046c7bc"
+    },
+    {
+      "path": "outputs/ambiance-studio/.agents/skills/ambiance-deconstruct/agents/openai.yaml",
+      "bytes": 198,
+      "sha256": "457ef638c209e0a4c66ebecfbde280c6e192269fb3a0e6d56b0d917358a28451"
+    },
+    {
+      "path": "outputs/ambiance-studio/.agents/skills/ambiance-produce/SKILL.md",
+      "bytes": 3024,
+      "sha256": "2b654a87a84466ae36570d1f53add80b9ee42ff0068ab884978190cf9c848f0c"
+    },
+    {
+      "path": "outputs/ambiance-studio/.agents/skills/ambiance-produce/agents/openai.yaml",
+      "bytes": 191,
+      "sha256": "68416a93851be69edeb7b27468258b284827d214d8824bbd8e809004a087a12e"
+    },
+    {
+      "path": "outputs/ambiance-studio/.agents/skills/ambiance-release/SKILL.md",
+      "bytes": 2634,
+      "sha256": "d5d22664bef3af63fa3efbd0dba8da8759a35ec9b5bb181f35e51099ff59a2a6"
+    },
+    {
+      "path": "outputs/ambiance-studio/.agents/skills/ambiance-release/agents/openai.yaml",
+      "bytes": 204,
+      "sha256": "40bfac3ec13b788c1e402aa2e7534ba54e03cd7962d2a68b873f144137b758ce"
+    },
+    {
+      "path": "outputs/ambiance-studio/.agents/skills/ambiance-sound/SKILL.md",
+      "bytes": 2659,
+      "sha256": "39be3aa0909f588d41853bc33bda4bf2298646485b7e2ef97874452408432a20"
+    },
+    {
+      "path": "outputs/ambiance-studio/.agents/skills/ambiance-sound/agents/openai.yaml",
+      "bytes": 198,
+      "sha256": "5b1494ef65a357c48e28ed8dd01314b2cf6c4d39127bed9442ac47deff8083b1"
+    },
+    {
+      "path": "outputs/ambiance-studio/.gitignore",
+      "bytes": 85,
+      "sha256": "0ed2bb2625d99b07b6b2d9092c99be34dac8681ad213f7fe5f1215faa51a102c"
+    },
+    {
+      "path": "outputs/ambiance-studio/AGENTS.md",
+      "bytes": 2347,
+      "sha256": "15744aa6c1be8222e24278fccf1ca2e9fb16c1629190a6ab1bb6c7c5221d4f96"
+    },
+    {
+      "path": "outputs/ambiance-studio/CHANGELOG.md",
+      "bytes": 1770,
+      "sha256": "9fa77b94c5d0dab65fe33e03572e2f1be7a0d76ad11330a7e2b135cc6c9b79bf"
+    },
+    {
+      "path": "outputs/ambiance-studio/README.md",
+      "bytes": 6211,
+      "sha256": "11a09e245fcf9fd513df7b1fd2d6eabe9484582966b8448535ae6defd1cd4dff"
+    },
+    {
+      "path": "outputs/ambiance-studio/START-HERE.md",
+      "bytes": 5289,
+      "sha256": "009ef4731c36dd93197a9df55582eb7d0bb3dcfce321f22cab9cd2750e3a6b04"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/catalog.json",
+      "bytes": 12449,
+      "sha256": "1b5ffd5fcfe613ad47a7841fd2208cce0c747ea00614eb0ce98383686e9c6eec"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/compiled/smoke-v1/asset.json",
+      "bytes": 811,
+      "sha256": "e5f197edc8dc0a10cb0c7d7011d20bc006a6a0fe8c74660299eb83ae82b2eba2"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/compiled/smoke-v1/atlas.png",
+      "bytes": 289158,
+      "sha256": "2358b0648a4a0c5e062e2bc2e12d09e583d3cd090de9eb3c2f50054ab4f7be0e"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/compiled/smoke-v1/contact-sheet.png",
+      "bytes": 467524,
+      "sha256": "857ad39a5e641aaada16019a8dcd0237475117999aea9ca0bde634734eb72ac1"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/compiled/smoke-v1/preview.gif",
+      "bytes": 155582,
+      "sha256": "6bf40ed0ca61697873acef986ef2d2cb72318862ee7de93210cefc1c88b3e1e6"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/compiled/smoke-v1/recipe.json",
+      "bytes": 595,
+      "sha256": "300280e64d2b5204aa63f787eae23f4b0ec0fc0daba3a88448c3a329fb405ad6"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/compiled/smoke-v1/report.json",
+      "bytes": 7673,
+      "sha256": "74a5efbadad9922e728b6fe8974e2db8d80e68c4c0c5bd55a3b030d1b6ba1e44"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/lantern/branch.png",
+      "bytes": 1021460,
+      "sha256": "83aeaa5ca3757c862c9910a7925821327a93e9ab9064c9033767c129417436b7"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/lantern/cloud-cels.png",
+      "bytes": 442670,
+      "sha256": "aa80b2f0deca7411a418239e563e6ae387acc1424ab3b50affcf302c835d908f"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/lantern/cottage-cels.png",
+      "bytes": 2086547,
+      "sha256": "9a02457f0a9c2a7e7349d8bcd2e1346dce549092ea8658bc2ee489bea50b4432"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/lantern/far-hills-layer.png",
+      "bytes": 2795470,
+      "sha256": "d615c134a3c4d478c2c5af701bc98d919665fac46a207ae14bd4cd9731b8b757"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/lantern/flame-cels.png",
+      "bytes": 146857,
+      "sha256": "9dde8b64b5416363608aa32fb084529127a13354e524f06c58fb529ac6a18c1f"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/lantern/ground-layer.png",
+      "bytes": 1883482,
+      "sha256": "5fb69c1d9e68252d311d45f46cfb46e81dca041a92db7019b55a76fddfe553de"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/lantern/moon.png",
+      "bytes": 1247584,
+      "sha256": "112a49460e2c79e2fccabba7fbb141f1057ece37253fa3e4ef1c30adc7e98469"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/lantern/sky.png",
+      "bytes": 2242793,
+      "sha256": "5570a10600fb88dcb3a2295c4967aa145f40c5096ff5654e60563b3de9811828"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/lantern/smoke-cels.png",
+      "bytes": 426076,
+      "sha256": "980324a1a92c285753bfb7c8f4ce3ced3966545342225591a4f4fc7d58786eee"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/lantern/town-hill-layer.png",
+      "bytes": 2618927,
+      "sha256": "c7acbe0d2c20481d25ff5ab060f88700a5a69df913b220f018a8760759af2ef0"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/lantern/town-window-cels.png",
+      "bytes": 47152,
+      "sha256": "0eb4f63e13ebf724f5cffcd056e3353adfd4df8c49fdf4ccd1efb43581f533c7"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/lantern/window-cels.png",
+      "bytes": 661785,
+      "sha256": "2fedcbd1a650fea7753dab0d6eb09f20c8dd75904e5d42c8d49aace8a96ce866"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/lantern/wood-frame-layer.png",
+      "bytes": 1548786,
+      "sha256": "57c7fd4b1fbacbb739bf3b76b65cc3a89c1b81b466e5c8c81fc02655239533da"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/lantern/woodland-layer.png",
+      "bytes": 568019,
+      "sha256": "202e1df7bbf81f7268eca88f2ba974a8bb06085a5ffd88df416c071e10ab309d"
+    },
+    {
+      "path": "outputs/ambiance-studio/assets/recipes/smoke-v1.json",
+      "bytes": 592,
+      "sha256": "380ff387a8fd1fd578998b2cc3dd750c8aaad2ac6c50f88386fbf70b1be4e41e"
+    },
+    {
+      "path": "outputs/ambiance-studio/docs/BRIEF-TEMPLATE.md",
+      "bytes": 1857,
+      "sha256": "211a6b93af35f70353418c90650f85c6067d077ec35d5478590b815e7da6bc1d"
+    },
+    {
+      "path": "outputs/ambiance-studio/docs/CONTRACTS.md",
+      "bytes": 5593,
+      "sha256": "9aa4f1ff78d763edb89c2e11ca095adf99e5f2603abd977e952a8f4dfe1f4335"
+    },
+    {
+      "path": "outputs/ambiance-studio/docs/OPERATIONS.md",
+      "bytes": 5497,
+      "sha256": "8d4a8fe7fd62a8beee35fbf008b0d786e2a9a5a834264a136ae1d25c07891a92"
+    },
+    {
+      "path": "outputs/ambiance-studio/docs/PROCESS.md",
+      "bytes": 15317,
+      "sha256": "a07cb7ab58a2a46411fa5a87e93f2c1f5b21e29e05b800c86edf482b02803ea1"
+    },
+    {
+      "path": "outputs/ambiance-studio/docs/PROVIDERS.md",
+      "bytes": 3884,
+      "sha256": "b43bbd82fe98def557a298cc9d4cf44c558b8713005e66faa12e63aa71e3e278"
+    },
+    {
+      "path": "outputs/ambiance-studio/docs/QUALITY-GATES.md",
+      "bytes": 6068,
+      "sha256": "827b4b915f0a54ee948c7771454a7eb59f8bf28fd99335b420a2bee06b1f068a"
+    },
+    {
+      "path": "outputs/ambiance-studio/docs/RIG-WORKBENCH.md",
+      "bytes": 6246,
+      "sha256": "1a41d122f254c54378d519033aff34bb4bcf7b0e3bcb7c9a8f5e756f611b62f9"
+    },
+    {
+      "path": "outputs/ambiance-studio/docs/SCALING.md",
+      "bytes": 6209,
+      "sha256": "e72b04b66764a6bb592a58337103bd82ce318bbfe896e6d61b291e1187a03725"
+    },
+    {
+      "path": "outputs/ambiance-studio/docs/SCENE-CONTRACT.md",
+      "bytes": 8070,
+      "sha256": "3e08ed18ef6e17ae9cff6aba910f30531bcd153f9df7f75a6c410ac133b9647d"
+    },
+    {
+      "path": "outputs/ambiance-studio/docs/STYLE-GUIDE.md",
+      "bytes": 4725,
+      "sha256": "72d39e097475d2d306b90486f2960846f75ef967d82a3f81a02302c9c59e926b"
+    },
+    {
+      "path": "outputs/ambiance-studio/docs/TOOL-STRATEGY.md",
+      "bytes": 5706,
+      "sha256": "e0c84b6f9df46d6e5badd5c1c1c4fd6c11294974fdaca555af6d6a54a701e7d4"
+    },
+    {
+      "path": "outputs/ambiance-studio/docs/TROUBLESHOOTING.md",
+      "bytes": 3176,
+      "sha256": "6fd6e30e50faf2f57be8d3fd6b1058778b3a609ec1c66042341643bc1c3fa3d7"
+    },
+    {
+      "path": "outputs/ambiance-studio/docs/workflows/01-reference-and-layers.md",
+      "bytes": 3253,
+      "sha256": "da6c3e45b47034a9d634acb1dab92f41d7964e25d9e84e9263723c41f940397c"
+    },
+    {
+      "path": "outputs/ambiance-studio/docs/workflows/02-assets-and-cels.md",
+      "bytes": 3952,
+      "sha256": "7dbe28e99dcd9eddac43b0611f0af2d9222f19ff2b8e20c1034a2bd4bea8714e"
+    },
+    {
+      "path": "outputs/ambiance-studio/docs/workflows/03-scene-and-animation.md",
+      "bytes": 3301,
+      "sha256": "6a403ce579084f865202f838c990812fd4d68e9a121e6b988d392e3f7506c95d"
+    },
+    {
+      "path": "outputs/ambiance-studio/docs/workflows/04-soundtrack.md",
+      "bytes": 4059,
+      "sha256": "58ed6a8d11058178f793b3d981e7632fc7ff2d4d4735a8e5efd2778cdc51d3b2"
+    },
+    {
+      "path": "outputs/ambiance-studio/docs/workflows/05-release-and-library.md",
+      "bytes": 3808,
+      "sha256": "7795086511eefbd4beee2f94059f2f926d6632978b129d4109f9406212d75a54"
+    },
+    {
+      "path": "outputs/ambiance-studio/editor/audit.mjs",
+      "bytes": 5103,
+      "sha256": "8fb1656ec0794056a0d2b652596d058d8742d766dd594a34782113a9ae764c3e"
+    },
+    {
+      "path": "outputs/ambiance-studio/editor/editor.mjs",
+      "bytes": 14053,
+      "sha256": "ff9e2f4a8b1c5b031ba9e3e01a7a4650c1c49a0613b2e3c9645955ea5af8f577"
+    },
+    {
+      "path": "outputs/ambiance-studio/editor/engine.mjs",
+      "bytes": 10313,
+      "sha256": "7d202395eaba9337675d382df033676b72a3a8f63b0678c410567b53b5553bb3"
+    },
+    {
+      "path": "outputs/ambiance-studio/editor/index.html",
+      "bytes": 6444,
+      "sha256": "dcdcd968ae74c3ab5fc672b7e8e42ef834d3f068fb8934c68f3d91bf03637fca"
+    },
+    {
+      "path": "outputs/ambiance-studio/editor/style.css",
+      "bytes": 4443,
+      "sha256": "2108f6e6927bc402d9bdaf1632ba51a6f86311e7646b3c482c295e460cf63666"
+    },
+    {
+      "path": "outputs/ambiance-studio/editor/verify-engine.mjs",
+      "bytes": 1888,
+      "sha256": "b20e02e7f26f1f1dceb4e01dc31f5708a41319c3e28f91e265459e1cc747ff54"
+    },
+    {
+      "path": "outputs/ambiance-studio/examples/last-lantern/CASE-STUDY.md",
+      "bytes": 4126,
+      "sha256": "db8fd014e8fcff7491df59b2ff562c80078709088c600ee10e1f3e5af09bad24"
+    },
+    {
+      "path": "outputs/ambiance-studio/examples/last-lantern/cover.jpg",
+      "bytes": 836136,
+      "sha256": "868d8a98b7cf98aec60fe00075853cba9ec13e5c38b7802857ec7c918bdb557c"
+    },
+    {
+      "path": "outputs/ambiance-studio/kit.py",
+      "bytes": 8723,
+      "sha256": "e8195bcbf79adf6fe16ddfd8b7c6c5ea74a56f4d543fde38ff5f86421d30e4cd"
+    },
+    {
+      "path": "outputs/ambiance-studio/reference/audio-generation-log.json",
+      "bytes": 3879,
+      "sha256": "59efeff8f4183f2800990225a0c1b015d90cfe00cd4558ff7838e314c697c281"
+    },
+    {
+      "path": "outputs/ambiance-studio/reference/image-prompts.md",
+      "bytes": 6836,
+      "sha256": "09e68c516306ef73bab10ffa5d7f432eb31d69e4c2bc48be81dd12fffe8cff8d"
+    },
+    {
+      "path": "outputs/ambiance-studio/reference/original-mix-validation.json",
+      "bytes": 2681,
+      "sha256": "79804708c416754cb720b641ae2c1577dccab5aa0caa03b7d7fd074770d26c83"
+    },
+    {
+      "path": "outputs/ambiance-studio/reference/original-visual-validation.json",
+      "bytes": 1942,
+      "sha256": "293cfa874a0df81712e4f2237178627eefed6c0b6f8171476391279920d1fb65"
+    },
+    {
+      "path": "outputs/ambiance-studio/reference/sound-production.md",
+      "bytes": 4839,
+      "sha256": "c6baaa8a4325c8b796a2361c0757743fdc6a78fa84fc41d7795f8d54d52ec19c"
+    },
+    {
+      "path": "outputs/ambiance-studio/reference/visual-production.md",
+      "bytes": 4088,
+      "sha256": "340b3da998f371dc93fcdb96b165ed6a1bca5842fec316517bc5ed0ad25429a1"
+    },
+    {
+      "path": "outputs/ambiance-studio/reports/RIG-VALIDATION.md",
+      "bytes": 2694,
+      "sha256": "715ca07e028b481497399985dc0e3a8ef1c3c8e2c0dc86d50d3592d75af3907b"
+    },
+    {
+      "path": "outputs/ambiance-studio/reports/STUDIO-VALIDATION.md",
+      "bytes": 2160,
+      "sha256": "3e2b763e54a98c219253e8258db514f541ff13d5c769fdc48024cdf334fc0186"
+    },
+    {
+      "path": "outputs/ambiance-studio/reports/asset-check.json",
+      "bytes": 993,
+      "sha256": "e787c07f38838910d0dc9dac1452fe7ccdd45de0adc649871d46f3d3909f74cd"
+    },
+    {
+      "path": "outputs/ambiance-studio/reports/browser-review.json",
+      "bytes": 1482,
+      "sha256": "3f3d4c49338d9f3f7c36afd46021fb994ebf9c230e026c6f2ccd68f66c0da413"
+    },
+    {
+      "path": "outputs/ambiance-studio/reports/engine-check.json",
+      "bytes": 449,
+      "sha256": "949e3f252375b14e20eab03aa73fcd9846f076d4d7be955fa0d279d7f33bbc68"
+    },
+    {
+      "path": "outputs/ambiance-studio/reports/file-inventory.json",
+      "bytes": 12002,
+      "sha256": "6748255ddf12220c7541cc31bab6898b1b9776f44c57eaa6f51c59f957ffd6b4"
+    },
+    {
+      "path": "outputs/ambiance-studio/reports/intake-check.json",
+      "bytes": 145,
+      "sha256": "1c84ffc7ea30fca3c7a725cc0451f513b2783c1980078acae635bff9a9402a7a"
+    },
+    {
+      "path": "outputs/ambiance-studio/reports/negative-case-check.json",
+      "bytes": 147,
+      "sha256": "ee7658103b63794ee6b728e0f6e09a91e9d14ac40c5f085781b122c2789ff4c9"
+    },
+    {
+      "path": "outputs/ambiance-studio/reports/package-audit-v0.3.json",
+      "bytes": 1528,
+      "sha256": "e518604c52a7150d29eba92e3c44865a12b9375d2d05596228d101cc5bfa5307"
+    },
+    {
+      "path": "outputs/ambiance-studio/reports/package-audit.json",
+      "bytes": 1528,
+      "sha256": "826f21ed7a463222689a20dfe65a580e165acff91377bbf495ec7de18ce0a907"
+    },
+    {
+      "path": "outputs/ambiance-studio/reports/rig-browser-check.json",
+      "bytes": 1983,
+      "sha256": "90a0e9ba1b2d3eee170a6b47004d36d299a64207e243fae81c714320b3d665f5"
+    },
+    {
+      "path": "outputs/ambiance-studio/reports/rig-check.json",
+      "bytes": 2129,
+      "sha256": "22c244b8217f955c5fdda2181cfb238f221b949f08ed33d38920d72f54f1f3d7"
+    },
+    {
+      "path": "outputs/ambiance-studio/reports/rig-test-results.json",
+      "bytes": 9035,
+      "sha256": "3f640d68fe0661eb84283b4b00fa792e0ba57ce0b98c126ce1b6d736aec893fa"
+    },
+    {
+      "path": "outputs/ambiance-studio/reports/skill-check-v0.3.json",
+      "bytes": 660,
+      "sha256": "25a125350b37b759ad82ed5dca97f0c4b2b3083f42ad3e868e285a0e371e5ac7"
+    },
+    {
+      "path": "outputs/ambiance-studio/requirements-assets.txt",
+      "bytes": 15,
+      "sha256": "41b54a6fb2918667ca47a61d73b522629d84490f3d78f0f20b21135faba10d35"
+    },
+    {
+      "path": "outputs/ambiance-studio/scenes/last-lantern-rigged.json",
+      "bytes": 9177,
+      "sha256": "874d455bbbed3522d8509a4353c2b0e6b938cdb8d70699270b6ab9ad45f01eae"
+    },
+    {
+      "path": "outputs/ambiance-studio/scenes/last-lantern.json",
+      "bytes": 8813,
+      "sha256": "4ef0d810e6c5f7f970442a06b9a0580bfef6c261c1e1ca28b7c6db7701179306"
+    },
+    {
+      "path": "outputs/ambiance-studio/studio.py",
+      "bytes": 13067,
+      "sha256": "32a8cffd7e59fd7b761ade8566cb8746a5f33341668568d5a84b7b024657d354"
+    },
+    {
+      "path": "outputs/ambiance-studio/templates/asset-record.json",
+      "bytes": 737,
+      "sha256": "23fc11afdd8ed1d811461fd1b9d30dfa8ed833ae5c8fd965f00937f9d30175d2"
+    },
+    {
+      "path": "outputs/ambiance-studio/templates/audio-session.example.json",
+      "bytes": 1361,
+      "sha256": "2fcc9ff23a919d5455f21a0508dcaa1c356ca353b8c52a6fab0ce3ae98ae92b6"
+    },
+    {
+      "path": "outputs/ambiance-studio/templates/generation-request.json",
+      "bytes": 647,
+      "sha256": "6d2d5a8d3e11e36f6c6e82e3e2a115d993d96e8a1695fa7f4de9670f6ef32ea3"
+    },
+    {
+      "path": "outputs/ambiance-studio/templates/layer-plan.example.json",
+      "bytes": 2500,
+      "sha256": "085b14b0f89c10780986a688d29e728bda0faab3b77e96ddc097e969e47b75ea"
+    },
+    {
+      "path": "outputs/ambiance-studio/templates/pipeline.json",
+      "bytes": 8338,
+      "sha256": "a2b8d741c4d695192ac34973dee204fd1ebd0c14c66b906526025de227f0ad40"
+    },
+    {
+      "path": "outputs/ambiance-studio/templates/rig-record.json",
+      "bytes": 387,
+      "sha256": "124309a09b83d94837279f115b271406ac294ffb3a06489f259c0eb7156278ff"
+    },
+    {
+      "path": "outputs/ambiance-studio/tests/skill-scenarios.md",
+      "bytes": 2827,
+      "sha256": "6cd7f546e0f3af3c84ee40869133f371ca1cd813cf41d7143bcd53fc56719044"
+    },
+    {
+      "path": "outputs/ambiance-studio/tests/test-rig.mjs",
+      "bytes": 3753,
+      "sha256": "774a8e4f97b2d369b93315fd6a954c1afe57285d91644858c71a3bae2a3dbbdb"
+    },
+    {
+      "path": "outputs/ambiance-studio/tests/test_assets.py",
+      "bytes": 4351,
+      "sha256": "fe27ec93ccc78e6da8e1dbb6a016c4968ca8d1e9e49f0d489dbbfc363509ecce"
+    },
+    {
+      "path": "outputs/ambiance-studio/tests/test_studio.py",
+      "bytes": 5610,
+      "sha256": "ec69ce1bb65d2431e43de47044e1864d17656e40efa0f56ab509203486741424"
+    },
+    {
+      "path": "outputs/ambiance-studio/tools/asset_tool.py",
+      "bytes": 11846,
+      "sha256": "1396e211db9ab905e67b5f9c9a43606bbd844c3825ae701e3ddb2dc21381dbfc"
+    },
+    {
+      "path": "outputs/ambiance-studio/tools/check-scene.mjs",
+      "bytes": 1685,
+      "sha256": "68b363261919fdaf57dc190f936c9f3c08da0a528fc588ce008ac1ae1a331056"
+    },
+    {
+      "path": "outputs/ambiance-studio/tools/package_audit.py",
+      "bytes": 2327,
+      "sha256": "a3765deb027622a1a09976c7dde66bc3c70f6d84feece8719f0d6db2881a9667"
+    },
+    {
+      "path": "outputs/ambiance-studio-v0.3-package.json",
+      "bytes": 14731,
+      "sha256": "bced3935959c1499888eecdbda76696dd38962b9b81ccb1a6040f4b1c989d4d9"
+    },
+    {
+      "path": "outputs/ambiance-studio-v0.3.zip",
+      "bytes": 19390961,
+      "sha256": "7b479b3e37725ea31bf3534c70a1d0aa4feb810b3a64fcdda52a825ee68ea460"
+    },
+    {
+      "path": "outputs/ambiance-studio.zip",
+      "bytes": 18456130,
+      "sha256": "e021137f9e5c4f59e23fb63ca287b83a16af138d6c620e0eba86ab454bd398ff"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/README.md",
+      "bytes": 4357,
+      "sha256": "8156f18afd1644053cf65caa0d3ad262b24031c24144bafac86b26c3215ec175"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/file-inventory.json",
+      "bytes": 11241,
+      "sha256": "d147c5aadaee913ff90b3e457c7edccdd8b7db809a7cdf82dabcca25c4af4d88"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/README.md",
+      "bytes": 2953,
+      "sha256": "baf7cb943b7fe53b1391757248b6b32c701ba2fe4cd0ae1bdd2e715f39fee372"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/README.md",
+      "bytes": 4839,
+      "sha256": "c6baaa8a4325c8b796a2361c0757743fdc6a78fa84fc41d7795f8d54d52ec19c"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/a-light-still-on-16s.wav",
+      "bytes": 4608044,
+      "sha256": "7a6cf4b2fe1b3e5d9613beef7e8830e77de4d72034697fabdbeb93a4efb76598"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/a-light-still-on-48s.wav",
+      "bytes": 13824044,
+      "sha256": "6794cea26284e26fcc3e63c68edfeaf93d025c2e9563b2f86801cffa02416310"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/ambience-only-48s.wav",
+      "bytes": 13824044,
+      "sha256": "f5577285fb268351306c95c99ea4f6a166652935f2047adb9e80409319b3fc06"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/source/deliverables.json",
+      "bytes": 1067,
+      "sha256": "93b295636a03b07723260857808d81985406d206e44d9cdbcc0aa1ae07542eac"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/source/elevenlabs/bell-01.wav",
+      "bytes": 1536078,
+      "sha256": "13c12ab0379f6b04b3a30f78c2fa112efb52131d102f396ea4afdb0210086653"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/source/elevenlabs/hearth-01.wav",
+      "bytes": 3072078,
+      "sha256": "dd04b8093a52f2c5e3539c24a4d387a179028c71e95db11541d877efa6067888"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/source/elevenlabs/leaves-01.wav",
+      "bytes": 576078,
+      "sha256": "de9adfc468d8e3dfb792e73c2e63e65b2773fc84ed5faa460130436629a5d680"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/source/elevenlabs/music-original.mp4",
+      "bytes": 981242,
+      "sha256": "0b24d8228f452c4e0adcba10d35d0c3c0e18d0e8775937de0289fdf1e4b6c34d"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/source/elevenlabs/woodland-01.wav",
+      "bytes": 3072078,
+      "sha256": "4ccc98902688757ffa16ab16689c6460c8f7eeb0d9a80b972571413b4a13ef08"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/source/encoded-audio-validation.json",
+      "bytes": 838,
+      "sha256": "241ba782b17f55728c9c9c0a41dfe9111c974cd416f5042529964ff41826d3b3"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/source/generation-log.json",
+      "bytes": 3879,
+      "sha256": "59efeff8f4183f2800990225a0c1b015d90cfe00cd4558ff7838e314c697c281"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/source/media.m",
+      "bytes": 6824,
+      "sha256": "19a6b51aee855d03fca5d4da9607febe9a407ac46b2871afc64c3a7642c6b53a"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/source/mix-validation.json",
+      "bytes": 2681,
+      "sha256": "79804708c416754cb720b641ae2c1577dccab5aa0caa03b7d7fd074770d26c83"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/source/mix.py",
+      "bytes": 8296,
+      "sha256": "55fd10b633ecc3f3befa64ccf037b32e0b04dd6fde1e4e8d37177334d605c334"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/source/video-16s-validation.json",
+      "bytes": 294,
+      "sha256": "b5debeba210469a2ee728ea1229553dcfb703aff6e87dec8925304407e3fd1a5"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/source/video-48s-validation.json",
+      "bytes": 296,
+      "sha256": "ca0867a1db94222515651651a150bf902981f23b6d1cd235b9ffa2fb054f8762"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/source/video-ambience-validation.json",
+      "bytes": 306,
+      "sha256": "9acfab208d56d526a2fc0c255f83f2b66770a4a2e4bbaf044765ed8471630073"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/stems/hearth-48s.wav",
+      "bytes": 13824044,
+      "sha256": "cf0dd9ac6c1d0110d2fe727a96ef0f2131510d26f1295450276df7ef1c711a60"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/stems/leaves-48s.wav",
+      "bytes": 13824044,
+      "sha256": "e2334df555ef68a1a0219927592e7d917f0c877f1c0afff63d7255f2765c0ad4"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/stems/music-48s.wav",
+      "bytes": 13824044,
+      "sha256": "ebac00d84c694be6a79b0703ac720278ffe9b97b8c82a213707e1af02202efd6"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/stems/town-bell-48s.wav",
+      "bytes": 13824044,
+      "sha256": "5d021754aae2d9d06b188b889a575371080135495984ff6ba4c2e1deb697d0b3"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/stems/woodland-48s.wav",
+      "bytes": 13824044,
+      "sha256": "e236b05bc290fcba0acfce9c51abfbaec1d5e0d0f47905b47c87e27a6e6a6062"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack/the-last-lantern-48s.mp4",
+      "bytes": 86127952,
+      "sha256": "6a60262e0caab34e404cd12f8a1086114cb3373ec41fd9d48ad9b982c3f139fe"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/soundtrack-plan.md",
+      "bytes": 9101,
+      "sha256": "2a8367f4ce16883d3691409d81ecbf6e858f65e0d2ff4c6b2447d681080bf059"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/source/background.png",
+      "bytes": 2771333,
+      "sha256": "e1f8365606f47406c87a81bc3c8615d5f82cd8892ca3a415af91c6d82104add0"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/source/branch.png",
+      "bytes": 1021460,
+      "sha256": "83aeaa5ca3757c862c9910a7925821327a93e9ab9064c9033767c129417436b7"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/source/make_audio.py",
+      "bytes": 3092,
+      "sha256": "ecffc6b3c5817847a5865badfa0ef59c1475287e5654e5a029eabf47d77108b1"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/source/prompts.md",
+      "bytes": 3740,
+      "sha256": "d7514f970ef73dd05979e92c74ca7ff96d97dabbaf47f35c87c836ba99df3636"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/source/render.m",
+      "bytes": 17583,
+      "sha256": "cb25abd87803a3d4ef9a158981d5b6b752c4a823b87456b2cf9d3c7f0ad7fd23"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/source/validation.json",
+      "bytes": 2352,
+      "sha256": "9c1f4dac3b9006c25b6289d01b78baebd6d368caa31a35eb51e7d576cbebc294"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/README.md",
+      "bytes": 4088,
+      "sha256": "340b3da998f371dc93fcdb96b165ed6a1bca5842fec316517bc5ed0ad25429a1"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/source/animation.json",
+      "bytes": 1948,
+      "sha256": "a4449601ac64dc582f494cd2c47049b9221abd8343574b9876cfcbe33aedad05"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/source/background.png",
+      "bytes": 2771333,
+      "sha256": "e1f8365606f47406c87a81bc3c8615d5f82cd8892ca3a415af91c6d82104add0"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/source/branch.png",
+      "bytes": 1021460,
+      "sha256": "83aeaa5ca3757c862c9910a7925821327a93e9ab9064c9033767c129417436b7"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/source/build-assets.m",
+      "bytes": 17612,
+      "sha256": "c9b6a25b9d2eb695903c30438006273a5a1c82355bb9d1048e039d3b67730bd0"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/source/clouds-original.png",
+      "bytes": 329365,
+      "sha256": "721dd6eea7cafd05bbc4f34a85568b4a957682c77834ff636c49878759dc1e5d"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/source/far-hills-layer.png",
+      "bytes": 2795470,
+      "sha256": "d615c134a3c4d478c2c5af701bc98d919665fac46a207ae14bd4cd9731b8b757"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/source/flames-original.png",
+      "bytes": 1760415,
+      "sha256": "7cccab74a9bd3a44dfaa79ee380ae439a97dab3f1dff7271ea8bcf3ed09ab9e0"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/source/ground-layer.png",
+      "bytes": 1883482,
+      "sha256": "5fb69c1d9e68252d311d45f46cfb46e81dca041a92db7019b55a76fddfe553de"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/source/house-layer.png",
+      "bytes": 611471,
+      "sha256": "8aa9d4ce858518b661c725ccf32f2b692459eca17f891d3d4e92da7f6b357784"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/source/moon.png",
+      "bytes": 1247584,
+      "sha256": "112a49460e2c79e2fccabba7fbb141f1057ece37253fa3e4ef1c30adc7e98469"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/source/prompts.md",
+      "bytes": 6836,
+      "sha256": "09e68c516306ef73bab10ffa5d7f432eb31d69e4c2bc48be81dd12fffe8cff8d"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/source/render-v2.m",
+      "bytes": 20801,
+      "sha256": "86d2ef9629e97a8dad4ed0a200be515d905abfc810f01f9f9c28bcdf1a2d06cf"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/source/sky.png",
+      "bytes": 2242793,
+      "sha256": "5570a10600fb88dcb3a2295c4967aa145f40c5096ff5654e60563b3de9811828"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/source/smoke-clean.png",
+      "bytes": 1624037,
+      "sha256": "64ed26989f78a1ab6f25026074d1ac7c131a42023c4db4c6be967f7013e5007c"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/source/smoke-original.png",
+      "bytes": 935719,
+      "sha256": "d839c80ee1b3f425f8987cea3f1473c3296b963d24d141d0ae803d47c53038ae"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/source/town-hill-layer.png",
+      "bytes": 2618927,
+      "sha256": "c7acbe0d2c20481d25ff5ab060f88700a5a69df913b220f018a8760759af2ef0"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/source/validation.json",
+      "bytes": 1942,
+      "sha256": "293cfa874a0df81712e4f2237178627eefed6c0b6f8171476391279920d1fb65"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/source/vista.png",
+      "bytes": 2458024,
+      "sha256": "b786a96254ef567760a71adaa809c4134f0b4f566e12511861f49c7cad257534"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/source/wood-frame-layer.png",
+      "bytes": 1548786,
+      "sha256": "57c7fd4b1fbacbb739bf3b76b65cc3a89c1b81b466e5c8c81fc02655239533da"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/source/woodland-layer.png",
+      "bytes": 568019,
+      "sha256": "202e1df7bbf81f7268eca88f2ba974a8bb06085a5ffd88df416c071e10ab309d"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/sprite-sheets/cloud-cels.png",
+      "bytes": 442670,
+      "sha256": "aa80b2f0deca7411a418239e563e6ae387acc1424ab3b50affcf302c835d908f"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/sprite-sheets/cottage-cels.png",
+      "bytes": 2086547,
+      "sha256": "9a02457f0a9c2a7e7349d8bcd2e1346dce549092ea8658bc2ee489bea50b4432"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/sprite-sheets/flame-cels.png",
+      "bytes": 146857,
+      "sha256": "9dde8b64b5416363608aa32fb084529127a13354e524f06c58fb529ac6a18c1f"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/sprite-sheets/smoke-cels.png",
+      "bytes": 426076,
+      "sha256": "980324a1a92c285753bfb7c8f4ce3ced3966545342225591a4f4fc7d58786eee"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/sprite-sheets/town-window-cels.png",
+      "bytes": 47152,
+      "sha256": "0eb4f63e13ebf724f5cffcd056e3353adfd4df8c49fdf4ccd1efb43581f533c7"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/sprite-sheets/window-cels.png",
+      "bytes": 661785,
+      "sha256": "2fedcbd1a650fea7753dab0d6eb09f20c8dd75904e5d42c8d49aace8a96ce866"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/the-last-lantern-cover.jpg",
+      "bytes": 836136,
+      "sha256": "868d8a98b7cf98aec60fe00075853cba9ec13e5c38b7802857ec7c918bdb557c"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/outputs/v2/the-last-lantern-silent.mp4",
+      "bytes": 28199483,
+      "sha256": "83a6bdbed1742362ee403bfbbdc2ee5da3ade7a769cb9f30cad6416c4775f7b3"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/requirements-audio.txt",
+      "bytes": 13,
+      "sha256": "7bd6b8946940b79948c548c8048e545684b91c8edc9444d8dfc0c8f76a97c0a7"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/work/soundtrack/analyze-music.py",
+      "bytes": 1539,
+      "sha256": "12b4a6c51c266645b23630fee248575dfb7b339222a20e9f459bbc9da9b7f6be"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/work/soundtrack/music-original.wav",
+      "bytes": 11528344,
+      "sha256": "c7524b1cf5cec9f5f006afe5e2782cbfe60824b5ba5a75d805420425f35aadb7"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/work/v2/loop-validation.json",
+      "bytes": 182,
+      "sha256": "e87c77bd7bcdab78b7991ec584cf0d9fb2b63df55d7ca2abb7bee6de6a096349"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/work/v2/the-last-lantern-silent.mp4-validation.json",
+      "bytes": 257,
+      "sha256": "d5a6384cb30088a8a635f50ebdeddf6709d5b804523e3e2dbd2ca5f6149fbe07"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/work/v2/the-last-lantern.mp4-validation.json",
+      "bytes": 250,
+      "sha256": "bf470df06955f31d0e77c9a1e8c5cfa89dacc3135b480c5bddccc1ec316641df"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference/work/woodland-ambience.wav",
+      "bytes": 3072044,
+      "sha256": "1bd7657c6fc21460003adfe6161f0bcc026525a7a6f9cb77ad9d581eb75af949"
+    },
+    {
+      "path": "outputs/last-lantern-production-reference.zip",
+      "bytes": 238067154,
+      "sha256": "6c2aa2ca77fb814617527d91ca4e60e065100c25433b8df93f63d7d311798b40"
+    },
+    {
+      "path": "outputs/soundtrack/README.md",
+      "bytes": 4839,
+      "sha256": "c6baaa8a4325c8b796a2361c0757743fdc6a78fa84fc41d7795f8d54d52ec19c"
+    },
+    {
+      "path": "outputs/soundtrack/a-light-still-on-16s.wav",
+      "bytes": 4608044,
+      "sha256": "7a6cf4b2fe1b3e5d9613beef7e8830e77de4d72034697fabdbeb93a4efb76598"
+    },
+    {
+      "path": "outputs/soundtrack/a-light-still-on-48s.wav",
+      "bytes": 13824044,
+      "sha256": "6794cea26284e26fcc3e63c68edfeaf93d025c2e9563b2f86801cffa02416310"
+    },
+    {
+      "path": "outputs/soundtrack/ambience-only-48s.wav",
+      "bytes": 13824044,
+      "sha256": "f5577285fb268351306c95c99ea4f6a166652935f2047adb9e80409319b3fc06"
+    },
+    {
+      "path": "outputs/soundtrack/soundtrack-session.zip",
+      "bytes": 47525828,
+      "sha256": "9b8fc7c6c645933a429c48b02d7044119c934bd7074424948bdb33cdee0454f2"
+    },
+    {
+      "path": "outputs/soundtrack/source/deliverables.json",
+      "bytes": 1067,
+      "sha256": "93b295636a03b07723260857808d81985406d206e44d9cdbcc0aa1ae07542eac"
+    },
+    {
+      "path": "outputs/soundtrack/source/elevenlabs/bell-01.wav",
+      "bytes": 1536078,
+      "sha256": "13c12ab0379f6b04b3a30f78c2fa112efb52131d102f396ea4afdb0210086653"
+    },
+    {
+      "path": "outputs/soundtrack/source/elevenlabs/hearth-01.wav",
+      "bytes": 3072078,
+      "sha256": "dd04b8093a52f2c5e3539c24a4d387a179028c71e95db11541d877efa6067888"
+    },
+    {
+      "path": "outputs/soundtrack/source/elevenlabs/leaves-01.wav",
+      "bytes": 576078,
+      "sha256": "de9adfc468d8e3dfb792e73c2e63e65b2773fc84ed5faa460130436629a5d680"
+    },
+    {
+      "path": "outputs/soundtrack/source/elevenlabs/music-original.mp4",
+      "bytes": 981242,
+      "sha256": "0b24d8228f452c4e0adcba10d35d0c3c0e18d0e8775937de0289fdf1e4b6c34d"
+    },
+    {
+      "path": "outputs/soundtrack/source/elevenlabs/woodland-01.wav",
+      "bytes": 3072078,
+      "sha256": "4ccc98902688757ffa16ab16689c6460c8f7eeb0d9a80b972571413b4a13ef08"
+    },
+    {
+      "path": "outputs/soundtrack/source/encoded-audio-validation.json",
+      "bytes": 838,
+      "sha256": "241ba782b17f55728c9c9c0a41dfe9111c974cd416f5042529964ff41826d3b3"
+    },
+    {
+      "path": "outputs/soundtrack/source/generation-log.json",
+      "bytes": 3879,
+      "sha256": "59efeff8f4183f2800990225a0c1b015d90cfe00cd4558ff7838e314c697c281"
+    },
+    {
+      "path": "outputs/soundtrack/source/media.m",
+      "bytes": 6824,
+      "sha256": "19a6b51aee855d03fca5d4da9607febe9a407ac46b2871afc64c3a7642c6b53a"
+    },
+    {
+      "path": "outputs/soundtrack/source/mix-validation.json",
+      "bytes": 2681,
+      "sha256": "79804708c416754cb720b641ae2c1577dccab5aa0caa03b7d7fd074770d26c83"
+    },
+    {
+      "path": "outputs/soundtrack/source/mix.py",
+      "bytes": 8296,
+      "sha256": "55fd10b633ecc3f3befa64ccf037b32e0b04dd6fde1e4e8d37177334d605c334"
+    },
+    {
+      "path": "outputs/soundtrack/source/video-16s-validation.json",
+      "bytes": 294,
+      "sha256": "b5debeba210469a2ee728ea1229553dcfb703aff6e87dec8925304407e3fd1a5"
+    },
+    {
+      "path": "outputs/soundtrack/source/video-48s-validation.json",
+      "bytes": 296,
+      "sha256": "ca0867a1db94222515651651a150bf902981f23b6d1cd235b9ffa2fb054f8762"
+    },
+    {
+      "path": "outputs/soundtrack/source/video-ambience-validation.json",
+      "bytes": 306,
+      "sha256": "9acfab208d56d526a2fc0c255f83f2b66770a4a2e4bbaf044765ed8471630073"
+    },
+    {
+      "path": "outputs/soundtrack/stems/hearth-48s.wav",
+      "bytes": 13824044,
+      "sha256": "cf0dd9ac6c1d0110d2fe727a96ef0f2131510d26f1295450276df7ef1c711a60"
+    },
+    {
+      "path": "outputs/soundtrack/stems/leaves-48s.wav",
+      "bytes": 13824044,
+      "sha256": "e2334df555ef68a1a0219927592e7d917f0c877f1c0afff63d7255f2765c0ad4"
+    },
+    {
+      "path": "outputs/soundtrack/stems/music-48s.wav",
+      "bytes": 13824044,
+      "sha256": "ebac00d84c694be6a79b0703ac720278ffe9b97b8c82a213707e1af02202efd6"
+    },
+    {
+      "path": "outputs/soundtrack/stems/town-bell-48s.wav",
+      "bytes": 13824044,
+      "sha256": "5d021754aae2d9d06b188b889a575371080135495984ff6ba4c2e1deb697d0b3"
+    },
+    {
+      "path": "outputs/soundtrack/stems/woodland-48s.wav",
+      "bytes": 13824044,
+      "sha256": "e236b05bc290fcba0acfce9c51abfbaec1d5e0d0f47905b47c87e27a6e6a6062"
+    },
+    {
+      "path": "outputs/soundtrack/the-last-lantern-16s.mp4",
+      "bytes": 28713822,
+      "sha256": "01f50f64920b37fbdc49f9171f724cfad43c7faa604ed4b82a57cfa93add289d"
+    },
+    {
+      "path": "outputs/soundtrack/the-last-lantern-48s.mp4",
+      "bytes": 86127952,
+      "sha256": "6a60262e0caab34e404cd12f8a1086114cb3373ec41fd9d48ad9b982c3f139fe"
+    },
+    {
+      "path": "outputs/soundtrack/the-last-lantern-ambience-only.mp4",
+      "bytes": 86123221,
+      "sha256": "a592fad36b6d0fff2b3363006000f3f60e01806170f7e0dcf0deb78f4f6b0b2a"
+    },
+    {
+      "path": "outputs/soundtrack-plan.md",
+      "bytes": 9101,
+      "sha256": "2a8367f4ce16883d3691409d81ecbf6e858f65e0d2ff4c6b2447d681080bf059"
+    },
+    {
+      "path": "outputs/source/background.png",
+      "bytes": 2771333,
+      "sha256": "e1f8365606f47406c87a81bc3c8615d5f82cd8892ca3a415af91c6d82104add0"
+    },
+    {
+      "path": "outputs/source/branch.png",
+      "bytes": 1021460,
+      "sha256": "83aeaa5ca3757c862c9910a7925821327a93e9ab9064c9033767c129417436b7"
+    },
+    {
+      "path": "outputs/source/make_audio.py",
+      "bytes": 3092,
+      "sha256": "ecffc6b3c5817847a5865badfa0ef59c1475287e5654e5a029eabf47d77108b1"
+    },
+    {
+      "path": "outputs/source/prompts.md",
+      "bytes": 3740,
+      "sha256": "d7514f970ef73dd05979e92c74ca7ff96d97dabbaf47f35c87c836ba99df3636"
+    },
+    {
+      "path": "outputs/source/render.m",
+      "bytes": 17583,
+      "sha256": "cb25abd87803a3d4ef9a158981d5b6b752c4a823b87456b2cf9d3c7f0ad7fd23"
+    },
+    {
+      "path": "outputs/source/validation.json",
+      "bytes": 2352,
+      "sha256": "9c1f4dac3b9006c25b6289d01b78baebd6d368caa31a35eb51e7d576cbebc294"
+    },
+    {
+      "path": "outputs/studio-packages.json",
+      "bytes": 505,
+      "sha256": "469d589c71364fb3241722ea6419a20fdff6db18db3946241304edbf90a14bab"
+    },
+    {
+      "path": "outputs/the-last-lantern-cover.jpg",
+      "bytes": 933902,
+      "sha256": "f74236b53ebca33771fd5180ecaffc4e514cd18da77e50993a11a35f53ca2362"
+    },
+    {
+      "path": "outputs/the-last-lantern-silent.mp4",
+      "bytes": 20107569,
+      "sha256": "95d678562ec4315e0a948523808ce31649e941115627c72d0a24fdd4eb2e16a3"
+    },
+    {
+      "path": "outputs/the-last-lantern.mp4",
+      "bytes": 20615660,
+      "sha256": "b34cc6dbf670a529b878bb56f888d5159c867c6e2e28e7843d0609877e4b2a75"
+    },
+    {
+      "path": "outputs/v2/README.md",
+      "bytes": 4088,
+      "sha256": "340b3da998f371dc93fcdb96b165ed6a1bca5842fec316517bc5ed0ad25429a1"
+    },
+    {
+      "path": "outputs/v2/animation-cels.zip",
+      "bytes": 3717803,
+      "sha256": "e0e809da6541e3b26a7deedd7f11b0491bcebc1dbeba17a11c73d3409bc014db"
+    },
+    {
+      "path": "outputs/v2/source/animation.json",
+      "bytes": 1948,
+      "sha256": "a4449601ac64dc582f494cd2c47049b9221abd8343574b9876cfcbe33aedad05"
+    },
+    {
+      "path": "outputs/v2/source/background.png",
+      "bytes": 2771333,
+      "sha256": "e1f8365606f47406c87a81bc3c8615d5f82cd8892ca3a415af91c6d82104add0"
+    },
+    {
+      "path": "outputs/v2/source/branch.png",
+      "bytes": 1021460,
+      "sha256": "83aeaa5ca3757c862c9910a7925821327a93e9ab9064c9033767c129417436b7"
+    },
+    {
+      "path": "outputs/v2/source/build-assets.m",
+      "bytes": 17612,
+      "sha256": "c9b6a25b9d2eb695903c30438006273a5a1c82355bb9d1048e039d3b67730bd0"
+    },
+    {
+      "path": "outputs/v2/source/clouds-original.png",
+      "bytes": 329365,
+      "sha256": "721dd6eea7cafd05bbc4f34a85568b4a957682c77834ff636c49878759dc1e5d"
+    },
+    {
+      "path": "outputs/v2/source/far-hills-layer.png",
+      "bytes": 2795470,
+      "sha256": "d615c134a3c4d478c2c5af701bc98d919665fac46a207ae14bd4cd9731b8b757"
+    },
+    {
+      "path": "outputs/v2/source/flames-original.png",
+      "bytes": 1760415,
+      "sha256": "7cccab74a9bd3a44dfaa79ee380ae439a97dab3f1dff7271ea8bcf3ed09ab9e0"
+    },
+    {
+      "path": "outputs/v2/source/ground-layer.png",
+      "bytes": 1883482,
+      "sha256": "5fb69c1d9e68252d311d45f46cfb46e81dca041a92db7019b55a76fddfe553de"
+    },
+    {
+      "path": "outputs/v2/source/house-layer.png",
+      "bytes": 611471,
+      "sha256": "8aa9d4ce858518b661c725ccf32f2b692459eca17f891d3d4e92da7f6b357784"
+    },
+    {
+      "path": "outputs/v2/source/moon.png",
+      "bytes": 1247584,
+      "sha256": "112a49460e2c79e2fccabba7fbb141f1057ece37253fa3e4ef1c30adc7e98469"
+    },
+    {
+      "path": "outputs/v2/source/prompts.md",
+      "bytes": 6836,
+      "sha256": "09e68c516306ef73bab10ffa5d7f432eb31d69e4c2bc48be81dd12fffe8cff8d"
+    },
+    {
+      "path": "outputs/v2/source/render-v2.m",
+      "bytes": 20801,
+      "sha256": "86d2ef9629e97a8dad4ed0a200be515d905abfc810f01f9f9c28bcdf1a2d06cf"
+    },
+    {
+      "path": "outputs/v2/source/sky.png",
+      "bytes": 2242793,
+      "sha256": "5570a10600fb88dcb3a2295c4967aa145f40c5096ff5654e60563b3de9811828"
+    },
+    {
+      "path": "outputs/v2/source/smoke-clean.png",
+      "bytes": 1624037,
+      "sha256": "64ed26989f78a1ab6f25026074d1ac7c131a42023c4db4c6be967f7013e5007c"
+    },
+    {
+      "path": "outputs/v2/source/smoke-original.png",
+      "bytes": 935719,
+      "sha256": "d839c80ee1b3f425f8987cea3f1473c3296b963d24d141d0ae803d47c53038ae"
+    },
+    {
+      "path": "outputs/v2/source/town-hill-layer.png",
+      "bytes": 2618927,
+      "sha256": "c7acbe0d2c20481d25ff5ab060f88700a5a69df913b220f018a8760759af2ef0"
+    },
+    {
+      "path": "outputs/v2/source/validation.json",
+      "bytes": 1942,
+      "sha256": "293cfa874a0df81712e4f2237178627eefed6c0b6f8171476391279920d1fb65"
+    },
+    {
+      "path": "outputs/v2/source/vista.png",
+      "bytes": 2458024,
+      "sha256": "b786a96254ef567760a71adaa809c4134f0b4f566e12511861f49c7cad257534"
+    },
+    {
+      "path": "outputs/v2/source/wood-frame-layer.png",
+      "bytes": 1548786,
+      "sha256": "57c7fd4b1fbacbb739bf3b76b65cc3a89c1b81b466e5c8c81fc02655239533da"
+    },
+    {
+      "path": "outputs/v2/source/woodland-layer.png",
+      "bytes": 568019,
+      "sha256": "202e1df7bbf81f7268eca88f2ba974a8bb06085a5ffd88df416c071e10ab309d"
+    },
+    {
+      "path": "outputs/v2/sprite-sheets/cloud-cels.png",
+      "bytes": 442670,
+      "sha256": "aa80b2f0deca7411a418239e563e6ae387acc1424ab3b50affcf302c835d908f"
+    },
+    {
+      "path": "outputs/v2/sprite-sheets/cottage-cels.png",
+      "bytes": 2086547,
+      "sha256": "9a02457f0a9c2a7e7349d8bcd2e1346dce549092ea8658bc2ee489bea50b4432"
+    },
+    {
+      "path": "outputs/v2/sprite-sheets/flame-cels.png",
+      "bytes": 146857,
+      "sha256": "9dde8b64b5416363608aa32fb084529127a13354e524f06c58fb529ac6a18c1f"
+    },
+    {
+      "path": "outputs/v2/sprite-sheets/smoke-cels.png",
+      "bytes": 426076,
+      "sha256": "980324a1a92c285753bfb7c8f4ce3ced3966545342225591a4f4fc7d58786eee"
+    },
+    {
+      "path": "outputs/v2/sprite-sheets/town-window-cels.png",
+      "bytes": 47152,
+      "sha256": "0eb4f63e13ebf724f5cffcd056e3353adfd4df8c49fdf4ccd1efb43581f533c7"
+    },
+    {
+      "path": "outputs/v2/sprite-sheets/window-cels.png",
+      "bytes": 661785,
+      "sha256": "2fedcbd1a650fea7753dab0d6eb09f20c8dd75904e5d42c8d49aace8a96ce866"
+    },
+    {
+      "path": "outputs/v2/the-last-lantern-cover.jpg",
+      "bytes": 836136,
+      "sha256": "868d8a98b7cf98aec60fe00075853cba9ec13e5c38b7802857ec7c918bdb557c"
+    },
+    {
+      "path": "outputs/v2/the-last-lantern-silent.mp4",
+      "bytes": 28199483,
+      "sha256": "83a6bdbed1742362ee403bfbbdc2ee5da3ade7a769cb9f30cad6416c4775f7b3"
+    },
+    {
+      "path": "outputs/v2/the-last-lantern.mp4",
+      "bytes": 21887359,
+      "sha256": "013c2b439fcae8d8518d6249c24f145e57f7223b22382553fa423225aa429e90"
+    },
+    {
+      "path": "work/audio-validation.json",
+      "bytes": 317,
+      "sha256": "38346c8e60ba56104b4bdadd6a6b78608b41b3b127909583f725ea9ae137d474"
+    },
+    {
+      "path": "work/background-prompt.txt",
+      "bytes": 2329,
+      "sha256": "a1f9e95f61328b0105b6c314add2308a2a9577bd2e7c2512f5c8eeb0fa53b7b0"
+    },
+    {
+      "path": "work/check",
+      "bytes": 51272,
+      "sha256": "a067603ced83f5348eb2fbd87682d4f890cc4253667b03e2a66724bdc9d35584"
+    },
+    {
+      "path": "work/check.m",
+      "bytes": 663,
+      "sha256": "df2502b5d901e7c70d780cecd3efd24155ff5e2a2f20e6d9b34dfdcd59c627a1"
+    },
+    {
+      "path": "work/coordinate-test.png",
+      "bytes": 840,
+      "sha256": "c7f0e871df3c587366d18b20de19dc876c110672d7866bdaa2828623a3f81030"
+    },
+    {
+      "path": "work/empty-failed-encode-2.mp4",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "work/empty-failed-encode.mp4",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "work/kit-bootstrap.py",
+      "bytes": 5690,
+      "sha256": "ccba5b5ca77c60f374d29d54a4df457de13cf1116740c67075a1027e0f0b598d"
+    },
+    {
+      "path": "work/kit-invalid-cycle.json",
+      "bytes": 6162,
+      "sha256": "d40f44571cb33d72c55deeceef5cb33d7d9be0cd8b2f7d6233d4f420c8b09a28"
+    },
+    {
+      "path": "work/loop-validation.json",
+      "bytes": 183,
+      "sha256": "474770c698460e060242900a5c599be311bade0115225ffec5fc46eac837a56d"
+    },
+    {
+      "path": "work/package-kit.py",
+      "bytes": 1709,
+      "sha256": "57b09d197ddbdbd84cf53482d42aebdd1ade2a029c87b3f74df265986f271d78"
+    },
+    {
+      "path": "work/plan.md",
+      "bytes": 1325,
+      "sha256": "d654c35ee4abe381e77097ede96e1da2c5d30158551e345d0e3f24ad1d812450"
+    },
+    {
+      "path": "work/qa/decoded-000.png",
+      "bytes": 3521704,
+      "sha256": "bcbaf81d3b50eadbe49241956b50a3389aa43550415a514d1ca6ee8e9d8af329"
+    },
+    {
+      "path": "work/qa/decoded-240.png",
+      "bytes": 3791030,
+      "sha256": "fc28417e5d6ac26c681e598edef2c00570aa3df8da92e592662bda35062e5f8f"
+    },
+    {
+      "path": "work/qa/decoded-479.png",
+      "bytes": 3870454,
+      "sha256": "ad4354a5aa9d2f4afdaac482d1dd77075cd1e779353a9ba39e9fe4506562fee7"
+    },
+    {
+      "path": "work/qa/frame-000.png",
+      "bytes": 4139564,
+      "sha256": "451208a178ce21f12c8bc523da197b03979836c4175e3a31e4d984d60e3574a2"
+    },
+    {
+      "path": "work/qa/frame-120.png",
+      "bytes": 4139659,
+      "sha256": "4aa864c74ec3b591fc6ce1a6fb572fc7ae54cf89440dae8a4687bd9cc111c7c3"
+    },
+    {
+      "path": "work/qa/frame-240.png",
+      "bytes": 4146430,
+      "sha256": "4f1dc03600ce29d41e77086b36b83cef2c38b9e0884a7a6255e2613c0448f961"
+    },
+    {
+      "path": "work/qa/frame-360.png",
+      "bytes": 4140495,
+      "sha256": "c190a360d6d0b5df6abc32016b67c76c2480a18171149a803feef4be4f0815e2"
+    },
+    {
+      "path": "work/qa/frame-479.png",
+      "bytes": 4138164,
+      "sha256": "48411c266f395077af457408f2d4ea15e63017d43c6fba256012c2a31266f9fc"
+    },
+    {
+      "path": "work/qa/frame-480.png",
+      "bytes": 4139564,
+      "sha256": "451208a178ce21f12c8bc523da197b03979836c4175e3a31e4d984d60e3574a2"
+    },
+    {
+      "path": "work/render",
+      "bytes": 80200,
+      "sha256": "ffb03ae19fdc07a2334fa76d3c28c4d8afdb38b5315ded85a88208354725e334"
+    },
+    {
+      "path": "work/rig-build/docs.py",
+      "bytes": 23359,
+      "sha256": "eb23a6b3f8ab1249b6d56b3dcaf220cb022987fec00238b8f40f19bd91dc7a87"
+    },
+    {
+      "path": "work/rig-build/finish-docs.py",
+      "bytes": 3371,
+      "sha256": "2356903e965f76267c0e0a58216f4f6c148ab332fbe09e04a79a633198fcb3cb"
+    },
+    {
+      "path": "work/rig-build/package.py",
+      "bytes": 1951,
+      "sha256": "709bb8fa90138158d0259814e537053f23fb9a90081742e1fd955a227ef2a26c"
+    },
+    {
+      "path": "work/rig-build/prepare.py",
+      "bytes": 1825,
+      "sha256": "e8dbfbbb048cf8b2595fcaf9f8c62503544a111555588a45ce3ee04d1433d4bf"
+    },
+    {
+      "path": "work/rig-build/rebuild-draft.py",
+      "bytes": 448,
+      "sha256": "0a2800275060c63d2bc8d32b0d1b8dd3e87c00eb625f2783c4cefcfdb29a8489"
+    },
+    {
+      "path": "work/rig-build/record-validation.py",
+      "bytes": 5520,
+      "sha256": "9628a7f3569264e82fb99dfb5ed428af10fcd4d2fc5c5d044d3f43c10b27130a"
+    },
+    {
+      "path": "work/rig-build/smoke-before-portable-recipe/asset.json",
+      "bytes": 808,
+      "sha256": "4013121fb3d546b19a674269f7fd51bcb6d2e140f179e06dde61b00c61267ce5"
+    },
+    {
+      "path": "work/rig-build/smoke-before-portable-recipe/atlas.png",
+      "bytes": 289158,
+      "sha256": "2358b0648a4a0c5e062e2bc2e12d09e583d3cd090de9eb3c2f50054ab4f7be0e"
+    },
+    {
+      "path": "work/rig-build/smoke-before-portable-recipe/contact-sheet.png",
+      "bytes": 467524,
+      "sha256": "857ad39a5e641aaada16019a8dcd0237475117999aea9ca0bde634734eb72ac1"
+    },
+    {
+      "path": "work/rig-build/smoke-before-portable-recipe/preview.gif",
+      "bytes": 155582,
+      "sha256": "6bf40ed0ca61697873acef986ef2d2cb72318862ee7de93210cefc1c88b3e1e6"
+    },
+    {
+      "path": "work/rig-build/smoke-before-portable-recipe/recipe.json",
+      "bytes": 592,
+      "sha256": "380ff387a8fd1fd578998b2cc3dd750c8aaad2ac6c50f88386fbf70b1be4e41e"
+    },
+    {
+      "path": "work/rig-build/smoke-before-portable-recipe/report.json",
+      "bytes": 7673,
+      "sha256": "c83a40c8075533de86d514665c116c5d8c154ea0b2961ffba75451aeee72a843"
+    },
+    {
+      "path": "work/soundtrack/ambience-48s.m4a",
+      "bytes": 1527971,
+      "sha256": "4cf7a5c6b99b8c5ea3e51d0738c0f4823d38946ce45c43548033d01bb964ab27"
+    },
+    {
+      "path": "work/soundtrack/analyze-music.py",
+      "bytes": 1539,
+      "sha256": "12b4a6c51c266645b23630fee248575dfb7b339222a20e9f459bbc9da9b7f6be"
+    },
+    {
+      "path": "work/soundtrack/final-video-16s.wav",
+      "bytes": 3079936,
+      "sha256": "1e2e3ca23a4f3e3ca691b3b85bf14c7258bc8737ef0172eb6a4d865ca2637c73"
+    },
+    {
+      "path": "work/soundtrack/final-video-48s.wav",
+      "bytes": 9223936,
+      "sha256": "6507d4d20199c53452455612b1af7bcf24dd0037a9587c6bfa5b72df70c3dfa3"
+    },
+    {
+      "path": "work/soundtrack/lantern-theme-guide.mid",
+      "bytes": 1074,
+      "sha256": "fbdbde11983a628f2c6a7e7cd3d601cd851412a881d6c64e48c641d07b4408fe"
+    },
+    {
+      "path": "work/soundtrack/media",
+      "bytes": 56696,
+      "sha256": "d93d629c81d0c8fa9884363c82975ea3023e0c4c21847dff96eff5f17f44e603"
+    },
+    {
+      "path": "work/soundtrack/mix-16s.m4a",
+      "bytes": 518688,
+      "sha256": "093c21b19b43a332d05fc3766642642236e4d48e1fae5964ed95157e542e5d54"
+    },
+    {
+      "path": "work/soundtrack/mix-48s.m4a",
+      "bytes": 1532702,
+      "sha256": "f7d17bf6312e9b3ffc5d6756a82ff3b75e198bca8d45619fac3c6d7187542e91"
+    },
+    {
+      "path": "work/soundtrack/music-analysis.json",
+      "bytes": 51,
+      "sha256": "acd3a5bec9104ce7c3e7833eb037751bfe20b72715e3985239679c51d4c7c2d2"
+    },
+    {
+      "path": "work/soundtrack/music-original.wav",
+      "bytes": 11528344,
+      "sha256": "c7524b1cf5cec9f5f006afe5e2782cbfe60824b5ba5a75d805420425f35aadb7"
+    },
+    {
+      "path": "work/soundtrack/picture-validation.json",
+      "bytes": 289,
+      "sha256": "3f16968beb5087863e365a4e49401ba67c7599c8cd905d9f8ae78ea3ae9dbc74"
+    },
+    {
+      "path": "work/soundtrack/render-score",
+      "bytes": 102944,
+      "sha256": "f22c247252571a67a858d572028c30b8d5d2195921f103a2a53f67dc66c1eb26"
+    },
+    {
+      "path": "work/soundtrack/render-score.swift",
+      "bytes": 3372,
+      "sha256": "9376886efc87607cbcde1b18faa8b9999b356da6e06c2ab9c7643521833c741c"
+    },
+    {
+      "path": "work/soundtrack/score-guide.json",
+      "bytes": 13280,
+      "sha256": "4c24dd84cbe7bba99d1f202daeae1b1049eaad84aabd386eb302941d5fb03841"
+    },
+    {
+      "path": "work/soundtrack/score-guide.py",
+      "bytes": 3128,
+      "sha256": "caa1b0591fde049fb999a4cad05fad3585d1e9d3ab644ccaba6d1683a4b999bd"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/AVFAudio-MFFJ6HCE9A7Z.pcm",
+      "bytes": 1227400,
+      "sha256": "5b4e86c4289528360299d1b73558910aec13ca0d4f935d836493a2981ebfad13"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/AVFoundation-7VNZZNFQDWLP.pcm",
+      "bytes": 5970728,
+      "sha256": "a21d23d66ed552c13b0cf7a0cbd76b3baa6f7ebfbff9184cd3648457de4e3ba2"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/ApplicationServices-3NXEUUZF9JJBD.pcm",
+      "bytes": 1218656,
+      "sha256": "9f49bb62d3fcecee9735905990dc446103a4b28347d14f1f1c98c1fa2a70c1e0"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/AudioToolbox-3FX4B654ICQE2.pcm",
+      "bytes": 1758672,
+      "sha256": "e02f88008ff9d1d2becfc06d65a35478efee763f65cdb79149db1a915d86b4b9"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/CFNetwork-1PNPO1ORVQZLS.pcm",
+      "bytes": 317672,
+      "sha256": "3e675bc0efd90da340d7e07098c0a56d9480a9867ad895da82582c0dc49006ea"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/CUPS-1HLHMKUB322XA.pcm",
+      "bytes": 748440,
+      "sha256": "430e77f8ba874053c96e8cbcf27dee52b07f92eb92d54c8b8f2d1ac5dece10c3"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/Carbon-3FMY3B0T5SZYU.pcm",
+      "bytes": 2445192,
+      "sha256": "c72e523ef4646b77ba608c2645116da6700f142d75cbd4718611086e1509010a"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/ColorSync-3EIM4S8RXNRVI.pcm",
+      "bytes": 127832,
+      "sha256": "aa6a1aa6c1a8b6acbd14172d9ad5d485a45419a56c4cda875c25b7873bece6f6"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/CoreAudio-J9DSWC1670R6.pcm",
+      "bytes": 338216,
+      "sha256": "f4dbbaa5d41d76d22b014cc38dd75886868de996f7094a322d50fc86a7768f9a"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/CoreAudioTypes-11649WXSRCA0E.pcm",
+      "bytes": 241824,
+      "sha256": "97b5093fe5d3092c161afb44578ac5c3325da4ff405db1bfffc48c4e694d6008"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/CoreFoundation-16SA8WK3L6MQN.pcm",
+      "bytes": 1375896,
+      "sha256": "5032849caa4b6efe718c3f9f4a5b990020c4ea27feefbff1897c38877a79d7f9"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/CoreGraphics-1PSDCAYCIV3T9.pcm",
+      "bytes": 1222152,
+      "sha256": "84099be99e7ac1de2cdc20cb5720764863249f23fb8e16cf4136745a3d737fe0"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/CoreImage-39ZO87840M5PP.pcm",
+      "bytes": 1238392,
+      "sha256": "d74e66b7718587e855b7ad8696976c019c27106e5f15fbe1dbe30f3f7259ebaf"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/CoreMIDI-1WOF0UOPGOCPX.pcm",
+      "bytes": 609648,
+      "sha256": "0e347910b59f2935fe7aabad7f7d3c7a73346b862c414bbe09fa04648b7adb68"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/CoreMedia-SHYM2JB41P4U.pcm",
+      "bytes": 1423856,
+      "sha256": "77a9b6e190f91196fdf9b69985d9ce3536968e54bdbdcf6c78c896d52c179582"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/CoreServices-39NCTJOEW7PQ2.pcm",
+      "bytes": 4478664,
+      "sha256": "52557adfd950ecd9dee12ecd469abbcce2af61767fdaa9abd8a473d8a50eac59"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/CoreText-3FAL1B4J38DIR.pcm",
+      "bytes": 985864,
+      "sha256": "54cf44c90a4787413cfd5eb031ce3e6e3a88a07453e03904768ced759414e94e"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/CoreVideo-DBBGB2LXU3HG.pcm",
+      "bytes": 437320,
+      "sha256": "ca4a3025e236bf1e6ebb2db63630cf72fea1ac589b8a64a43dbbc40811ea520f"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/Darwin-1FXX23EKWOBA9.pcm",
+      "bytes": 5855472,
+      "sha256": "6341537e662357c0339bce3fa67649f3f6ce4a6e962166efb36be4738e64bf63"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/DiskArbitration-3LBJF5I58QD8.pcm",
+      "bytes": 132704,
+      "sha256": "48714e8dd137d5b8d2eb9477fb1abeb75edc6e452f5792816b64fba0f31f8af4"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/Dispatch-R76HXUP80TVL.pcm",
+      "bytes": 287696,
+      "sha256": "ddd388ad3f2f22cbc17b79445c41e3314ecb7e49409d166231e292024c3ba98e"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/Foundation-24LYWIP48SHNP.pcm",
+      "bytes": 6421328,
+      "sha256": "311cfbd3d8737b75004f4c7dcb77090b96cdda3ad701185c3cb1fc833f94a7e8"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/IOKit-1IAL9NTK1TABA.pcm",
+      "bytes": 4295640,
+      "sha256": "4895119bdbd1159fb17f18ac8d37c3fc7b659f55effc85357feb90c359d7ea55"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/IOSurface-26455DPS9NDS0.pcm",
+      "bytes": 208552,
+      "sha256": "ab03469f1d8aa055e8f6ba3efd7b1874a4cf476ceec4708794d757e61b24c3f9"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/ImageIO-2ZSF831VT29UB.pcm",
+      "bytes": 907160,
+      "sha256": "cd0e0de6861c4bc13f575354e3b59b1d9f326417230e95ebab9c2957f904714b"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/MachO-20RPYVQSX341K.pcm",
+      "bytes": 466880,
+      "sha256": "34867d80b469c23d3ce37b4b9d436b7be02b895c98c9a8a3799ca1f1cd89ca31"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/MediaToolbox-1P5YMSVDQUIJ6.pcm",
+      "bytes": 74448,
+      "sha256": "0f09592279e8d03dc8cf07a8103c1b6e324ad87ce062ec852a85f2ddb91c3eb5"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/Metal-1GCZV9N85NJOH.pcm",
+      "bytes": 2637008,
+      "sha256": "a175fe5adee2bf945e0735f00b864d70a73ce1cce1a0fb7c6671b09a5e4ca4a8"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/ObjectiveC-1G8H182PQX3QE.pcm",
+      "bytes": 324696,
+      "sha256": "9e261d5d34755baba820e0a9aeca43d21bb642ca432a770bfc29e52e259aa35c"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/OpenGL-H89XJT7GTCP.pcm",
+      "bytes": 2720464,
+      "sha256": "e3f4cf94c0c9575a814db705eb2b19a7a9fe893a023865ef0ce5d0cfe1d9fc51"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/QuartzCore-39A8LQKF980J1.pcm",
+      "bytes": 694104,
+      "sha256": "361a58443e19f0b4e1f2a5ff93b1bdd1472607d0799e144ee93244eaa9c7230f"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/Security-3QCVXOV25KK54.pcm",
+      "bytes": 3094800,
+      "sha256": "2ec3652048a2c2ee01f1b77aae3868ae19e90fa037d137a9baffc1a72c2be7cf"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/SwiftShims-2IMTS4WWRU7VJ.pcm",
+      "bytes": 157224,
+      "sha256": "a9ee50866e7784ac2df635481e7361ab9dabaa6045c1fb7c78989e8863297996"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/UniformTypeIdentifiers-1OLJP4K3PLM48.pcm",
+      "bytes": 210040,
+      "sha256": "3532de148151028c9d4244dd636a575d1dd62946b735b0a7effd6aa06620b426"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/XPC-T0ZXCAST7PE3.pcm",
+      "bytes": 262280,
+      "sha256": "717cdd4fecd4da1a950e6a21185a73c67616b7878d8be4697c9e1fdd4c2830a4"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/_AvailabilityInternal-2YSBQADOLX02V.pcm",
+      "bytes": 424112,
+      "sha256": "ad41010fb979c028344b50954a7af6f2c52330bc23da0ff378130f11a6f1d4ac"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/_Builtin_float-19KE09ZDXQ6Q3.pcm",
+      "bytes": 41512,
+      "sha256": "12b6559ae67a364077b6e7d3181e2b2176adc19ace66978c3ee028ba5ec118f6"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/_Builtin_intrinsics-19KE09ZDXQ6Q3.pcm",
+      "bytes": 3020768,
+      "sha256": "c456a11898c0dbf1e9f14bb80628a87a01b627d3d03c51f09e5872fcbdec5887"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/_Builtin_inttypes-19KE09ZDXQ6Q3.pcm",
+      "bytes": 38320,
+      "sha256": "512242bebc7a122fe6ec5b9929d4fdffaba40ef9ced654a5043f97c4a94bacdc"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/_Builtin_limits-19KE09ZDXQ6Q3.pcm",
+      "bytes": 39000,
+      "sha256": "814780692006f4c6428e350583afa5f9c577c302520ccc6375b97f608acf9a8d"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/_Builtin_stdarg-19KE09ZDXQ6Q3.pcm",
+      "bytes": 37120,
+      "sha256": "08ba8c38f8854234d84d7c4f9f8d3b3b1d00dcaf38b1e5de435bc12b4502cbc8"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/_Builtin_stdbool-19KE09ZDXQ6Q3.pcm",
+      "bytes": 33952,
+      "sha256": "84e0e52c4667112b92b06a9c38ab1e91ffcac4e8e74717c4680a325401e963a0"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/_Builtin_stddef-19KE09ZDXQ6Q3.pcm",
+      "bytes": 38952,
+      "sha256": "bd04121ea345753696f5381dae317b6e19cad607fc3dcfa4413ba9b8e396ccfe"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/_Builtin_stdint-19KE09ZDXQ6Q3.pcm",
+      "bytes": 37712,
+      "sha256": "f4d03ca7bccf67bf062f6a6eed6e792b04743006c38ad242d210d7ae196138d2"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/_Builtin_tgmath-19KE09ZDXQ6Q3.pcm",
+      "bytes": 38336,
+      "sha256": "f8cec4c2c32d08ba1cb6ef38464ca097a9b3492810ced021c125b094c2506f27"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/_DarwinFoundation1-2YSBQADOLX02V.pcm",
+      "bytes": 457888,
+      "sha256": "e4d3c04a82a642d1b1539be84fdae2de62ca827ddb143add5ec4f5dce4a4df99"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/_DarwinFoundation2-3J4ZFA06I5V1P.pcm",
+      "bytes": 480736,
+      "sha256": "de3a6d8069b5bdc23ccaa46064d3991ac63993ea7301cb7d57baf78513506e43"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/_DarwinFoundation3-2NSGASPTSNBVQ.pcm",
+      "bytes": 615928,
+      "sha256": "121819085fdabb15070e2460e5f7d90cb338a6d16b2d75146429ca19a36f4835"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/_SwiftConcurrencyShims-2IMTS4WWRU7VJ.pcm",
+      "bytes": 34304,
+      "sha256": "f4ed6347066306c87165df189abb85aa0c1e93544412bfabd4574e19e08dfa40"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/launch-3T3BU4MASLMUM.pcm",
+      "bytes": 90688,
+      "sha256": "f6ba6c214952933b9ef7c596cb950c96d87369a17d28da0d9cc614b7d84a2df6"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/libDER-26DYHF6GC6WWA.pcm",
+      "bytes": 49632,
+      "sha256": "5df1ccdf4bdedfac54c38d5d69bcbdf67150e600223dcef1583e2d62dfbafb97"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/libkern-2KQ0X67RTM1JF.pcm",
+      "bytes": 66744,
+      "sha256": "49eab6243182ebc5529900b64ddadf62e533c5dcdb8840d824e911545c61243d"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/os_object-2MV8OP7R98AN8.pcm",
+      "bytes": 53792,
+      "sha256": "7cf51cc7654127ca4711419520875ab790c5d7dcae8f53e00e93a9ba5996ef91"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/os_workgroup-2MV8OP7R98AN8.pcm",
+      "bytes": 83808,
+      "sha256": "222134d94cf64c537a455276b40fefdb02b825c23bcf168e4d1c6fe4947dc57a"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/ptrauth-19KE09ZDXQ6Q3.pcm",
+      "bytes": 46496,
+      "sha256": "5500d55495109b6850ab6a1d39879dcbc0e13fc104de34871846a0987f93f650"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/ptrcheck-19KE09ZDXQ6Q3.pcm",
+      "bytes": 37680,
+      "sha256": "2c9f157cb2900c7d4045bdfaae758437dae09c86c10bfa2ec7fc302d671210d8"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/simd-KY25Q80SBOHY.pcm",
+      "bytes": 4011104,
+      "sha256": "7ca6e3cfaf807fb6b4e8fa70a39f6e0248d1c725ed8995b2cfe39670f5efc0ff"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/1A4UZ8XTRVUK5/sys_types-3J4ZFA06I5V1P.pcm",
+      "bytes": 37456,
+      "sha256": "1a29da758acd4f4357398b65646410b4de1bb40c2ecd9bccc9acf9088ba7c9d5"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/AVFAudio-29TPFLE27Y046.swiftmodule",
+      "bytes": 8973,
+      "sha256": "93c97e7a44a8ca19d43e059b8443227eb2f82cdabccf6f2d4476cf618cc292b9"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/AVFoundation-128SVS95O5UE1.swiftmodule",
+      "bytes": 10317,
+      "sha256": "d1883cb784a6a112987509187fadac70fbfdd4ed7757ccb804e9d8ab35d4d905"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/AudioToolbox-2491Z67TCD8MV.swiftmodule",
+      "bytes": 6544,
+      "sha256": "d71917df9665e05b89ac5818961b431c46dca3f44bc267b32af5ed68dac602d0"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/Combine-CLM2N41QP539.swiftmodule",
+      "bytes": 2410,
+      "sha256": "74224e6d5a564dd95006737583e6c63e0f50c42f09304db4c9799f7500096df6"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/CoreAudio-A10RMVLRW6KL.swiftmodule",
+      "bytes": 5336,
+      "sha256": "86df6820b7268a5b6d00fd8e041e362a6cd8083969a02ab81297ce651807fc3a"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/CoreFoundation-3I9GIY67LB99J.swiftmodule",
+      "bytes": 3282,
+      "sha256": "cfe64ef8fe1498e0fb8fd2393a9a7dd5208574b35f0cc81f85cd2311c8c46178"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/CoreGraphics-2ZZM75JAAJMBY.swiftmodule",
+      "bytes": 5191,
+      "sha256": "bcded3cebcf6797e1702687821d330a65b60903dcb4ba981d18a81cccab3c117"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/CoreImage-1IDF1DVENC8S7.swiftmodule",
+      "bytes": 7187,
+      "sha256": "bab98aca2ed8c417c1ce7dda9601fa4eb7db4fe6489af804f6d8901cb68098be"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/CoreMIDI-5N679U61XIO5.swiftmodule",
+      "bytes": 4939,
+      "sha256": "ddf433b4c09013442723663691d5eaf7dee082301c6bcf9856b6fa04ba541988"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/CoreMedia-1834UR28SV9A.swiftmodule",
+      "bytes": 7954,
+      "sha256": "3dc6d8dfd2702dfa4344cd4a2e6e387d233557b8111cbbb58f014934bf4a7068"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/CoreText-2PN6OYODU459I.swiftmodule",
+      "bytes": 6008,
+      "sha256": "24ec2c5e107a394eef17148211068c1c7d63b7515a26d4e5f8e4444b6d7dc81d"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/CoreVideo-2Z38TNJJ7L417.swiftmodule",
+      "bytes": 6813,
+      "sha256": "e0f3964fdece9110868c1159578a99d3a10eb38abcaf52548a1110abf33843ef"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/Darwin-291O9FLR68DGP.swiftmodule",
+      "bytes": 1797,
+      "sha256": "f49228a840fc906de8ebbcff07077a9a91bf3fcebb8a8fd6b3068206c605920c"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/Dispatch-2NVODKRL4W03C.swiftmodule",
+      "bytes": 3078,
+      "sha256": "03ab923fbefa7cd9af8d6bc8fef575ce640a64447d42bc0f52b1ddc8e86de2f5"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/Foundation-8E2CXYAOJWIG.swiftmodule",
+      "bytes": 4759,
+      "sha256": "26edaa5106a4f8f42ff0df30c8e8ea54df348d5e9d38c159e527a7e7422c8c78"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/IOKit-3KBZEZOQ3IAXA.swiftmodule",
+      "bytes": 3445,
+      "sha256": "27e453d41f14b9148644f0699dfe22d2cadc60f9c2a6d76cae8377d71cb518bb"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/Metal-BC6J2J2NFNPT.swiftmodule",
+      "bytes": 5114,
+      "sha256": "7aebe7185dc5efec6e47c553168c36433beb1d585526aece0df2760c4d2fa3e9"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/ObjectiveC-2WJJSHHEL3R0P.swiftmodule",
+      "bytes": 2527,
+      "sha256": "21a95b297bc7bc0dba8590437cd38b1a4b10d9cfb7f8d2e14c85da8abf9eb28a"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/Observation-AG9EYUWK351W.swiftmodule",
+      "bytes": 1069,
+      "sha256": "80f58b03b69202f8164bfcd891ba675e5678194e3992548aedd87551a34c1a56"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/QuartzCore-3A90OJCFETZHW.swiftmodule",
+      "bytes": 7192,
+      "sha256": "8b445ad7e2f4ab78b17f1c2cd59088e8a87d44c0a070ae46f6911af388b60b46"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/Swift-3AJJN1UPT8RFK.swiftmodule",
+      "bytes": 681,
+      "sha256": "5db22f7c9e6644e0f7a9a961a89f734283f96872b5965fbfb12898cbe9617435"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/Synchronization-CCH44QUWEVVC.swiftmodule",
+      "bytes": 2010,
+      "sha256": "1c2e15611f23436202a76635c079c93491ce291f5918ce90321d746e1b153fe9"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/System-3BXY2G0Y4Y36Z.swiftmodule",
+      "bytes": 2368,
+      "sha256": "169443eefa1fba0c7bb94eb5df6e4f91e2277cfcf566d6b41f12b18a44bf448b"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/UniformTypeIdentifiers-10MBSAL0MV1TD.swiftmodule",
+      "bytes": 5196,
+      "sha256": "4621b20016d494e6b43aba1e5546c208f24cfe18a73c7ba1fefc7048d0091e36"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/XPC-18LQUUVH1LCYE.swiftmodule",
+      "bytes": 3389,
+      "sha256": "2495fe75483c7a6d07a9d200ea436862a4a2695a5047b6509e7f34eaaea10d0e"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/_Builtin_float-JKB5YGFONNBY.swiftmodule",
+      "bytes": 887,
+      "sha256": "c2cd0a7ed5d1795586dac511104b4cc87eb5912b2f830676207721c4f864f1fa"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/_Concurrency-FANHPWLU7G6F.swiftmodule",
+      "bytes": 884,
+      "sha256": "b5a707bb6eabf16ed171443e5f8d3e568d2d9d6c67c00fd0f3c00323c833f619"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/_DarwinFoundation1-3BXQATE9X413D.swiftmodule",
+      "bytes": 900,
+      "sha256": "1a72fb3bfa4ec49e1defdaf03511e9caa1b9a02dfcaeaeec3fdbd8878a799d0b"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/_DarwinFoundation2-TSN52CSLWEO1.swiftmodule",
+      "bytes": 1251,
+      "sha256": "2080f294ad91807ef4c8dac8b612de2d49294f7d75c4cb7255b0f4897af70522"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/_DarwinFoundation3-2GOX52NJBS769.swiftmodule",
+      "bytes": 1446,
+      "sha256": "606470debd40090ec806f401f8de8f4cf74989ef11617ce4345e30ae4957e09b"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/_StringProcessing-APODMVSX0JV9.swiftmodule",
+      "bytes": 897,
+      "sha256": "25ff2efa4a96099b683e5e87453cb3a65e50d5bca24b12c5bdca140b6028403b"
+    },
+    {
+      "path": "work/soundtrack/swift-cache/simd-27STUITMV9XEN.swiftmodule",
+      "bytes": 2363,
+      "sha256": "7e7bacc22c6003de87fe6bc1c2158800b43a5d81b495b661854b340d87c652b0"
+    },
+    {
+      "path": "work/soundtrack/three-cycle-picture.mp4",
+      "bytes": 84596959,
+      "sha256": "b3ee48eb6e7f31a9c5a2afb9aa7f130f22f885fa738c854aa9d269b0b9f26f29"
+    },
+    {
+      "path": "work/studio-build/bootstrap.py",
+      "bytes": 7089,
+      "sha256": "6ebb84b71a5ec2f822ac46e5d0515df6b9a703b99c0800a6f134311d33de806c"
+    },
+    {
+      "path": "work/studio-build/first-intake/handoff.md",
+      "bytes": 160,
+      "sha256": "3389dddee8a4bb093a889a3473e1c16029c61f5796716cdf9deda77a5ade0000"
+    },
+    {
+      "path": "work/studio-build/first-intake/inputs/reference.jpg",
+      "bytes": 836136,
+      "sha256": "868d8a98b7cf98aec60fe00075853cba9ec13e5c38b7802857ec7c918bdb557c"
+    },
+    {
+      "path": "work/studio-build/first-intake/pipeline.json",
+      "bytes": 8338,
+      "sha256": "a2b8d741c4d695192ac34973dee204fd1ebd0c14c66b906526025de227f0ad40"
+    },
+    {
+      "path": "work/studio-build/first-intake/plans/brief.md",
+      "bytes": 1857,
+      "sha256": "211a6b93af35f70353418c90650f85c6067d077ec35d5478590b815e7da6bc1d"
+    },
+    {
+      "path": "work/studio-build/first-intake/plans/generation-ledger.json",
+      "bytes": 37,
+      "sha256": "0acc80db40f45b5e408387c3f710ffacff957b9f5e170667a07c7f29f1b6d1fc"
+    },
+    {
+      "path": "work/studio-build/first-intake/plans/layer-plan.json",
+      "bytes": 119,
+      "sha256": "eac31324c412d54ddf1116f55d6d9315e3673f039c77d3d206136cfadfe72e4f"
+    },
+    {
+      "path": "work/studio-build/first-intake/plans/layout-notes.md",
+      "bytes": 106,
+      "sha256": "e6f4b219b9eecb50128e2eedebac03d00fa9e0af1adef48267ef43949096cd27"
+    },
+    {
+      "path": "work/studio-build/first-intake/plans/sound-brief.md",
+      "bytes": 110,
+      "sha256": "2324950240cb71d4bd48fd7dcf541c6588642250801a909fb1dab7217264fcfc"
+    },
+    {
+      "path": "work/studio-build/first-intake/project.json",
+      "bytes": 546,
+      "sha256": "04f7c66af71da94380ec766a5cd344a612f3821c292e279b2cdc4406dbe6404b"
+    },
+    {
+      "path": "work/studio-build/package.py",
+      "bytes": 3417,
+      "sha256": "111c386d5946e0abd9e4ac097d0edebb35d02fab9e7673b2300ccd6642f6a0ef"
+    },
+    {
+      "path": "work/studio-build/reference.py",
+      "bytes": 1328,
+      "sha256": "e4c4f32ad5c97560560aefff70813ce681fe9d3b1c4822fb725ed89b8579276c"
+    },
+    {
+      "path": "work/studio-build/templates.py",
+      "bytes": 4665,
+      "sha256": "b2c72d49528f4a6b4037c1ac71b706eea4e241882f7f3e38dee412c0cd6e0e16"
+    },
+    {
+      "path": "work/the-last-lantern-silent.mp4-validation.json",
+      "bytes": 257,
+      "sha256": "d5a6384cb30088a8a635f50ebdeddf6709d5b804523e3e2dbd2ca5f6149fbe07"
+    },
+    {
+      "path": "work/the-last-lantern.mp4-validation.json",
+      "bytes": 250,
+      "sha256": "bf470df06955f31d0e77c9a1e8c5cfa89dacc3135b480c5bddccc1ec316641df"
+    },
+    {
+      "path": "work/v2/before-town-light-fix-the-last-lantern-silent.mp4",
+      "bytes": 28217741,
+      "sha256": "49673a162b189101fa9b0270d4f123b3c13de515b4aa3416051b3b941cb49453"
+    },
+    {
+      "path": "work/v2/before-town-light-fix-the-last-lantern.mp4",
+      "bytes": 21889332,
+      "sha256": "43e854386467f2509f0da784fdd927a6922fdcd01ca911bb3c81bdb5160e42d6"
+    },
+    {
+      "path": "work/v2/build-assets",
+      "bytes": 70688,
+      "sha256": "d93cc5eaa75a906904eb7106357decbf454fa6a67e2f7ebcb5c1ad596fbce2c7"
+    },
+    {
+      "path": "work/v2/cloud-proof.png",
+      "bytes": 122651,
+      "sha256": "a6dc3e6a45520fef214fd86fa113d4d481b3c6f837520609e12697c6a40e2525"
+    },
+    {
+      "path": "work/v2/flame-proof.png",
+      "bytes": 42942,
+      "sha256": "50fc6f58f18ccbdeb7ed27e8a33091c3fab04d0f5eb2196b2bb23f5f9f19abbe"
+    },
+    {
+      "path": "work/v2/frame-viewer-preview.html",
+      "bytes": 941937,
+      "sha256": "32bdb1a96af7a1b90aa2195ba3750ebbf12ca5220cc02e4aed6c0e3cfd7051ad"
+    },
+    {
+      "path": "work/v2/loop-validation.json",
+      "bytes": 182,
+      "sha256": "e87c77bd7bcdab78b7991ec584cf0d9fb2b63df55d7ca2abb7bee6de6a096349"
+    },
+    {
+      "path": "work/v2/make-proof-images",
+      "bytes": 52176,
+      "sha256": "567b7a96e7fffaa67139d67ae74bc793c516f2b1f9451872cf077014e7352218"
+    },
+    {
+      "path": "work/v2/make-proof-images.m",
+      "bytes": 1179,
+      "sha256": "15b4f6d7f58deb1d2bde9f5f62325ef8adb2118d4fee7d9e0f54a852b281c3af"
+    },
+    {
+      "path": "work/v2/qa/decoded-000.png",
+      "bytes": 3521704,
+      "sha256": "bcbaf81d3b50eadbe49241956b50a3389aa43550415a514d1ca6ee8e9d8af329"
+    },
+    {
+      "path": "work/v2/qa/decoded-240.png",
+      "bytes": 3791030,
+      "sha256": "fc28417e5d6ac26c681e598edef2c00570aa3df8da92e592662bda35062e5f8f"
+    },
+    {
+      "path": "work/v2/qa/decoded-479.png",
+      "bytes": 3870454,
+      "sha256": "ad4354a5aa9d2f4afdaac482d1dd77075cd1e779353a9ba39e9fe4506562fee7"
+    },
+    {
+      "path": "work/v2/qa/frame-000.png",
+      "bytes": 3980208,
+      "sha256": "a2359d0adc81082285b0439f0619511c448ea9be8b43d34aff5299646e9b3766"
+    },
+    {
+      "path": "work/v2/qa/frame-120.png",
+      "bytes": 3968851,
+      "sha256": "0f9948dbf0751b74dd306223b0315776ed0ef896bafd0c4779fb5afd421043fb"
+    },
+    {
+      "path": "work/v2/qa/frame-240.png",
+      "bytes": 3991179,
+      "sha256": "c04243591ec8a2a48891bd8adef04da211b8e57b7d427e25544feb323bed3039"
+    },
+    {
+      "path": "work/v2/qa/frame-360.png",
+      "bytes": 3974793,
+      "sha256": "16baadbdaab96bf98a2260f9786320b4dd14c558fc5b1e4a01b87761645e6f24"
+    },
+    {
+      "path": "work/v2/qa/frame-479.png",
+      "bytes": 3980781,
+      "sha256": "2457b9ba997fafa4e3147e74656b4902556623001b7594476536953748149455"
+    },
+    {
+      "path": "work/v2/qa/frame-480.png",
+      "bytes": 3980208,
+      "sha256": "a2359d0adc81082285b0439f0619511c448ea9be8b43d34aff5299646e9b3766"
+    },
+    {
+      "path": "work/v2/qa/town-light-proof.png",
+      "bytes": 72989,
+      "sha256": "4a1f4d2773586bead08ed3f0f3435cb1bd68f3dfa7cd9d8c0963747b8f82f913"
+    },
+    {
+      "path": "work/v2/render",
+      "bytes": 80712,
+      "sha256": "72f156cab071e42e3bbf46cc3ea5f5b77cad7019da720856da8f4b24f4bbe925"
+    },
+    {
+      "path": "work/v2/render-functions.m",
+      "bytes": 3793,
+      "sha256": "2472ec6e54a7ab8bdc134d7c192ef17bf99aee4d227955c444a00b8639670ed6"
+    },
+    {
+      "path": "work/v2/smoke-proof.png",
+      "bytes": 133115,
+      "sha256": "cb1f476ae435c403c20e0ade66be56093f539cd7164e74839a34245debfbf56c"
+    },
+    {
+      "path": "work/v2/the-last-lantern-silent.mp4-validation.json",
+      "bytes": 257,
+      "sha256": "d5a6384cb30088a8a635f50ebdeddf6709d5b804523e3e2dbd2ca5f6149fbe07"
+    },
+    {
+      "path": "work/v2/the-last-lantern.mp4-validation.json",
+      "bytes": 250,
+      "sha256": "bf470df06955f31d0e77c9a1e8c5cfa89dacc3135b480c5bddccc1ec316641df"
+    },
+    {
+      "path": "work/v2/window-proof.png",
+      "bytes": 373843,
+      "sha256": "579293943544e2eb432e2776ccfa0117b8baa1745a99e6e5c406d2ba96cc6d74"
+    },
+    {
+      "path": "work/woodland-ambience.wav",
+      "bytes": 3072044,
+      "sha256": "1bd7657c6fc21460003adfe6161f0bcc026525a7a6f9cb77ad9d581eb75af949"
+    },
+    {
+      "path": "work/write-check",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ambiance Image Breakdown"
+  short_description: "Plan painted layers, depth, and movement"
+  default_prompt: "Use $ambiance-deconstruct for the current ambiance project."

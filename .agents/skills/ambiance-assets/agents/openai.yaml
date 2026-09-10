@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ambiance Asset Production"
+  short_description: "Prepare reusable cutouts and cel sequences"
+  default_prompt: "Use $ambiance-assets for the current ambiance project."
