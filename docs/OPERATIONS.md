@@ -72,7 +72,7 @@ Read `handoff.md`, `project.json`, gate status, and the relevant stage's files. 
 
 ## Current limits
 
-The gate tool is a local, single-writer record keeper. It checks saved evidence and dependency freshness, not semantic truth. The editor is a rig and cel-animation workbench with preview checks. A separate Pillow tool performs registration and packing. The editor has no final video exporter or audio engine. Native production scripts and source examples are supplied separately as historical references. Follow the capability matrix in [SCALING.md](SCALING.md) when planning work.
+The gate tool is a local, single-writer record keeper. It checks saved evidence and dependency freshness, not semantic truth. The editor is a rig and cel-animation workbench with preview checks; the CLI now provides [rendering and media verification](RENDERING.md) and [explicit PCM audio arrangement](AUDIO-SESSION.md). A separate Pillow compiler performs registration and packing, with CLI proof/landmark authoring. Follow the capability matrix in [SCALING.md](SCALING.md) when planning work.
 
 ## Registration and rig checks (v0.3)
 

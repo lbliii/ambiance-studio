@@ -1,5 +1,6 @@
 """Read-only project preview with explicit mounts; never serves the repository tree."""
 import json
+import hashlib
 import mimetypes
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -52,6 +53,41 @@ def handler_for(root,project):
 def serve(root,project,port):
     server=ThreadingHTTPServer(('127.0.0.1',port),handler_for(root,project))
     print(json.dumps({'ok':True,'schema_version':1,'command':'preview','data':{'url':f'http://127.0.0.1:{server.server_port}/editor/','project':str(project),'read_only':True}}),flush=True)
+    try:server.serve_forever()
+    except KeyboardInterrupt:pass
+    finally:server.server_close()
+
+
+def look_routes(directory):
+    """Load only receipt-listed files into an immutable read-only HTTP snapshot."""
+    directory=Path(directory).resolve()
+    report=json.loads((directory/'render-report.json').read_text())
+    if report.get('mode')!='look-proof' or not report.get('ok'):raise ValueError('Expected a completed look-proof artifact')
+    routes={}
+    def add(name,digest):
+        file=(directory/name).resolve()
+        if not file.is_relative_to(directory) or Path(name).is_absolute():raise ValueError('Look artifact path escapes its directory')
+        data=file.read_bytes()
+        if hashlib.sha256(data).hexdigest()!=digest:raise ValueError(f'Look artifact changed: {name}')
+        routes['/'+name]=data
+    work=report['workbench']
+    add('index.html',report['output_sha256']);add('workbench.css',work['stylesheet_sha256']);add('workbench.json',work['sha256'])
+    for item in [*work['modules'],*work['asset_snapshots'],*report['samples']]:add(item['file'],item['sha256'])
+    routes['/']=routes['/index.html']
+    return routes
+
+
+def serve_look(directory,port):
+    routes=look_routes(directory)
+    class Handler(BaseHTTPRequestHandler):
+        def do_GET(self):
+            route=unquote(urlsplit(self.path).path)
+            if route not in routes:self.send_error(404);return
+            data=routes[route];mime='text/javascript' if route.endswith('.mjs') else mimetypes.guess_type(route)[0] or ('text/html' if route=='/' else 'application/octet-stream')
+            self.send_response(200);self.send_header('Content-Type',mime);self.send_header('Content-Length',str(len(data)))
+            self.send_header('Cache-Control','no-store');self.send_header('X-Content-Type-Options','nosniff');self.end_headers();self.wfile.write(data)
+    server=ThreadingHTTPServer(('127.0.0.1',port),Handler)
+    print(json.dumps({'ok':True,'schema_version':1,'command':'preview','data':{'url':f'http://127.0.0.1:{server.server_port}/','look':str(Path(directory).resolve()),'read_only':True,'verified_files':len(routes)-1}}),flush=True)
     try:server.serve_forever()
     except KeyboardInterrupt:pass
     finally:server.server_close()

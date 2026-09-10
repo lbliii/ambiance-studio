@@ -1,5 +1,13 @@
 # Changes
 
+## 0.7.0 — production, finishing and review
+
+- Added production inventories, reversible scene transactions, source placement, timing tracks, rig proofs, asset preparation and cel previews.
+- Added audio sessions, frame rendering, macOS video composition, captured revisions, comparison evidence and edition-bound reviews.
+- Added color grading, masked lighting and shared flicker, receiving shadows and reflections, supersampling, sprite-edge inspection and explicit matte repairs, plus reusable look and rig packages.
+- Added an interactive look workbench, production fixtures, regression coverage, and locked Node Canvas dependencies for fresh checkouts and CI.
+- Updated the six production skills and workflow guidance using the museum project's findings. Working films, generated media and production evidence remain in local project directories.
+
 ## 0.4.0 — repository and CLI
 
 Unified JSON CLI for projects, assets, scene operations, checks, reviews and preview. Project initialization can create a blank workspace or isolated Last Lantern template. Scene changes validate and retain restorable snapshots. Project preview serves a selected catalog through explicit read-only routes. Added repository conventions, CLI regression tests and a CI definition. Historical production files are inventoried locally under the ignored archive.

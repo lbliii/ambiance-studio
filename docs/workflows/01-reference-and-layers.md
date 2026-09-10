@@ -27,7 +27,27 @@ List every area movement may expose. A clean sky behind clouds, landscape behind
 | Branch | Rotation around hinge, optional leaf cels | Attachment point |
 | Falling leaves | Seeded circular paths, rotation, optional flip cels | Reproducible schedule and depth size |
 
-Use only the separation needed for the scene. Avoid dozens of new assets with no meaningful independent behavior. Prioritize the focal feature and a few supporting motions.
+Choose separation for the intended scene and any explicitly requested exploration. A subject can be prepared as a reusable rig while resting in the first loop. Avoid speculative cutouts with no intended behavior, but do not let the first restrained animation silently remove the ability to move objects the user wants to explore. Prioritize the focal feature and a few readable supporting actions.
+
+## Judge framing and movement before choosing cuts
+
+Use `plans/layout-notes.md` to explain the consequential decisions; the existing layer-plan fields can hold the resulting objects, backing, rigs and bounds. This is artistic planning, not a new executable scene schema or a requirement to separate every visible object.
+
+- **Framing:** judge the subject's screen size, silhouette, perspective, negative space and overlap at the intended display size. Keep enough room for the proposed action. Preserving a composition means preserving its visual relationships, not blindly retaining coordinates when the user requests a new format or staging.
+- **Action and parts:** name what the subject could do in this cycle or requested exploration. Choose a rigid cutout, compound rig, changing cels, or a retained plate accordingly. A rocking vase needs a pivot and backing; a turning head needs new views. More atlas cells do not create missing geometry.
+- **Motion envelope:** consider rest, the largest planned displacement/rotation, and the return or exit. Identify the pixels and surfaces revealed at those positions, including undersides and objects behind the mover. Record a proposed limit until an actual proof establishes a safe range; do not imply one painting supports arbitrary rotation.
+- **Overlap and contact:** decide which parts move together, which move relative to one another, and which remain in front. Keep draw order separate from camera depth. Plan contact shadows, reflections and stationary surroundings explicitly; a shadow on the floor must not rise with a levitating object.
+- **Readable change:** name the feature a viewer should notice at normal speed. A silhouette change, travel past an edge, or changing overlap often reads more clearly than tiny brightness modulation. Protect the primary action and assess supporting movement in context, not from a motion-difference image alone.
+
+For a compound or crossing action, make a small layer/blocking proof at rest and at its extremes before spending on the whole asset pack. A contact sheet alone cannot establish framing or occlusion. Retain the observed/inferred distinction when reconstructing hidden surfaces.
+
+### Example: a figure inside a moving casket
+
+A useful back-to-front split is repaired backing → rear casket wall/interior → figure → viewer-near rim/front wall → any foreground glass. Put the casket parts in one transform hierarchy, with a nested figure rig if it also moves independently. A foreground rim can cover the figure's lower body while the figure rises; that spatial overlap does not require camera motion. A lid or trim needs its own part only if the planned action calls for it.
+
+Decide whether the casket alone moves inside a stationary display case or the whole display moves. For an internal lift, preserve the external glass/frame, establish clearance, repair what appears beneath the casket and vary its floor shadow separately. Small jiggles can use rigid transforms; a large turn or exposed underside needs additional painted views. Inspect the silhouette, lower-body overlap, revealed backing and shadow at the proposed lift/tilt extremes. Do not treat a crop of the casket with the figure already painted into it as independent figure/casket assets.
+
+The same decision applies to a cat statue, pottery or a distant figure: choose a role and action first, then identify its complete silhouette, contact point, backing and any front-facing occluder. Extraction creates independent control; it does not mean every object should perform at once.
 
 ## Review the plan
 

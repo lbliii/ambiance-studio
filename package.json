@@ -1,0 +1,9 @@
+{
+  "name": "ambiance-studio",
+  "version": "0.7.0",
+  "private": true,
+  "description": "Painted, layered ambiance film production toolkit",
+  "devDependencies": {
+    "@napi-rs/canvas": "0.1.100"
+  }
+}

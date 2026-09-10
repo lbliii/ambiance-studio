@@ -8,6 +8,29 @@ Write an emotional sentence and locate the listener. What is near, what is behin
 
 The Last Lantern used a small musical identity, muffled hearth, quiet outside air, leaf movement, and one distant bell. The music made the place welcoming; the bell suggested a wider world. That relationship can transfer to other themes without copying the same notes or sound effects.
 
+## Map depth and stereo movement
+
+Make a small sound map alongside the layer plan. Choose whether the listener stays with the camera or occupies another intentional position. Separate local object sounds, diffuse room ambience, and the score: music need not move with an exhibit. Include only cues that serve the scene, with quiet between them.
+
+For each selected cue, record its source/identity, near/middle/far role, screen region or route, timing, and intended obstruction. Visual draw order and painted scale help stage a cue but do not supply physical distances. Keep screen-left and screen-right consistent with the picture. A sound can continue off screen; hiding a sprite does not automatically silence it.
+
+| Decision | Starting treatment | Judgment to check |
+| --- | --- | --- |
+| Near versus far | Compare the same source: clear direct detail nearby; lower direct level, gentler high frequencies and more room relative to direct sound farther away | Does the object retain its identity? Do not normalize the far version back to the near version's level. |
+| Static left/right location | Place the direct cue near its apparent source; choose a restrained stereo width | Does it belong to the visible object without pulling attention away from the main action? |
+| Travel | Automate pan smoothly across the actual cue duration; coordinate level, tone and room send when distance also changes | Does the sound follow the route and pace, including offscreen continuation? |
+| Glass, wall or doorway | Alter direct level/tone and reflected sound for a plausible obstruction or connected room | Visual overlap alone is not acoustic blockage. Preserve room tails instead of abruptly muting the entire cue. |
+
+Level, tonal balance and the contrast between direct sound and reflections can suggest front-to-back placement. Use a coherent room response for objects sharing a room; distance need not create a different cathedral-sized reverb for every prop. Longer pre-delay can separate a close source from its reverberation, so it is not a universal “farther” control. These are mix decisions to audition, not calibrated meters. See [iZotope's explanation of mix depth](https://www.izotope.com/community/blog/what-is-mix-depth-how-to-create-front-back-space).
+
+For a clean mono object cue, equal-power panning is a useful starting point for continuous left/right motion; [MDN documents this panning model](https://developer.mozilla.org/en-US/docs/Web/API/StereoPannerNode). Preserve intentional stereo sources when appropriate: balancing a stereo recording is not the same as positioning one mono object. Avoid opposite-polarity widening as the main spatial cue. Use smooth automation rather than channel jumps. Do not add Doppler pitch shifts to slow motion merely to advertise movement.
+
+Keep direct-source motion and the room return separate. Pan or route the signal entering the room effect, then let already-emitted reflections decay; moving the entire finished reverb tail with the current source position can make the room appear to move. Use a shared room bus or a documented equivalent in the actual mixer. A connected gallery can have its own response if the picture and listening support that choice.
+
+Record pan keypoints against cue times, depth treatment, direct gain, EQ, room send/return, and any obstruction in the sound plan and `audio/session.json`'s arrangement/processing notes. Keep the native session or script that implements them. These are editorial records within the existing session convention, not new executable fields. The studio's evidence CLI does not automatically turn layer depth or a written sound path into spatial audio.
+
+Before a full remix, render a short controlled study: the same isolated cue nearby, farther away, and traveling. Keep relative levels intact and leave gaps for tails. Check measured left/right energy at the cue's starting and ending windows, then audition whether its movement and distance are convincing. The study is useful evidence of a treatment, not approval of the full soundtrack.
+
 ## Source and audition separately
 
 Request music, continuous beds, and isolated events separately. Record the exact prompt, loop control if present, requested duration, provider/model returned, file format, request ID, and selected variation. Current provider support must be checked at use time; the original production used a browser fallback because callable ElevenLabs tools were unavailable in that session.
@@ -31,6 +54,10 @@ Save source offsets, cue times, gains, pan/width, processing, master duration, a
 Measure actual sample counts, clipped samples, loudness with method, peaks with true-peak/oversampling method stated, seam deltas, mono behavior, and aligned stem duration. Compare stem reconstruction where the delivery promises it. A PCM master preserves the edited mix but cannot recreate information lost in a lossy source.
 
 Listen to at least three consecutive repetitions with picture. Check for a click, gap, obvious musical restart, repeated-event fatigue, pumping, harshness, or a distracting change in distance. Human final review includes the actual phone speaker and intended crop. Keep those observations distinct from measurements.
+
+For spatial cues, audition stereo on headphones and the intended phone, then a mono fold-down. Check individual cues as well as the master so a surviving room bed cannot hide a disappearing event. Left/right travel will be reduced by close phone speakers and disappears in mono; timing, identity and useful near/far contrast should remain. Ordinary stereo does not promise reliable behind-the-head or overhead placement. Confirm the actual encoded deliverable rather than inferring playback from the WAV or device specifications.
+
+Inspect moving-cue automation at the circular join: active sources must continue coherently, or reset during a silent gap without cutting off their room tails. Check cue direction, smooth gain changes and clipping numerically, but do not label distance, mono readability or comfort as heard when only measurements exist.
 
 The reference's −22.5 LUFS and generous headroom are examples of its quiet artistic direction. Do not automatically impose a platform loudness claim or a fixed target on every film.
 

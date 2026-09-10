@@ -1,12 +1,13 @@
 // Pure, absolute-time scene sampling. Preview never advances simulation state.
+import {validateFinishing,drawFinished} from './finishing.mjs';
 export const TAU = Math.PI * 2;
 const identity = [1,0,0,1,0,0];
-function multiply(a,b) {
+export function multiply(a,b) {
   return [a[0]*b[0]+a[2]*b[1], a[1]*b[0]+a[3]*b[1],
     a[0]*b[2]+a[2]*b[3], a[1]*b[2]+a[3]*b[3],
     a[0]*b[4]+a[2]*b[5]+a[4], a[1]*b[4]+a[3]*b[5]+a[5]];
 }
-const translation = (x,y) => [1,0,0,1,x,y];
+export const translation = (x,y) => [1,0,0,1,x,y];
 const scaling = s => [s,0,0,s,0,0];
 const rotation = r => [Math.cos(r),Math.sin(r),-Math.sin(r),Math.cos(r),0,0];
 const chain = (...matrices) => matrices.reduce(multiply,identity);
@@ -15,7 +16,72 @@ export function inverseVector(m,x,y) {
   const det=m[0]*m[3]-m[1]*m[2];
   return [(m[3]*x-m[2]*y)/det,(-m[1]*x+m[0]*y)/det];
 }
-export const ENGINE_VERSION = '0.3.0';
+export const ENGINE_VERSION = '0.7.0';
+export function inverseMatrix(m) {
+  const det=m[0]*m[3]-m[1]*m[2];
+  if(!m.every(Number.isFinite)||!Number.isFinite(det)||Math.abs(det)<1e-14)throw Error('Singular or unstable transform');
+  return [m[3]/det,-m[1]/det,-m[2]/det,m[0]/det,(m[2]*m[5]-m[3]*m[4])/det,(m[1]*m[4]-m[0]*m[5])/det];
+}
+export function wrapTime(time,duration){return ((time%duration)+duration)%duration;}
+// wrappedSeconds is already normalized by the caller. Keep this arithmetic in
+// one place for rendering and the exact-at-time reparent solver.
+export function sampleLayerMotion(layer,wrappedSeconds,duration) {
+  const motion=layer.motion,p=TAU*wrappedSeconds/duration,q=motion?p*motion.cycles+motion.phase:0;
+  return {x:motion?motion.x_amplitude*Math.sin(q):0,y:motion?motion.y_amplitude*Math.sin(2*q):0,
+    rotation:(motion?.rotation_amplitude||0)*Math.sin(q+.3)};
+}
+
+// Tracks use absolute picture time. They replace an authored value; optional
+// periodic motion remains an additive offset, as it was for untracked layers.
+function trackValue(track,time,fallback) {
+  if(!track)return fallback;
+  const keys=track.keys;
+  let i=0;
+  while(i<keys.length-2&&time>=keys[i+1][0])i++;
+  const [start,a]=keys[i], [end,b]=keys[i+1];
+  if(time>=end)return b;
+  if(track.interpolation==='hold')return a;
+  let u=(time-start)/(end-start);
+  if(track.interpolation==='smoothstep')u=u*u*(3-2*u);
+  return a+(b-a)*u;
+}
+export function sampleLayerAppearance(layer,wrappedSeconds){
+  return {visible:trackValue(layer.tracks?.visible,wrappedSeconds,layer.visible),opacity:trackValue(layer.tracks?.opacity,wrappedSeconds,layer.opacity)};
+}
+
+function validateTracks(layer,asset,canvas) {
+  const tracks=layer.tracks;
+  if(layer.track_loop!==undefined&&!['closed','hidden-reset'].includes(layer.track_loop))throw Error(`Invalid track loop policy: ${layer.id}`);
+  if(tracks===undefined){
+    if(layer.track_loop!==undefined)throw Error(`Track loop policy needs tracks: ${layer.id}`);
+    return;
+  }
+  if(!tracks||typeof tracks!=='object'||Array.isArray(tracks)||!Object.keys(tracks).length)throw Error(`Expected nonempty tracks: ${layer.id}`);
+  const allowed=['x','y','scale','rotation','opacity','visible','cell'],T=canvas.loop_seconds;
+  for(const [name,track] of Object.entries(tracks)){
+    const label=`${layer.id}.${name}`;
+    if(!allowed.includes(name)||!track||typeof track!=='object'||Array.isArray(track)||Object.keys(track).some(k=>!['interpolation','keys'].includes(k)))throw Error(`Invalid track: ${label}`);
+    if(!['linear','smoothstep','hold'].includes(track.interpolation)||!Array.isArray(track.keys)||track.keys.length<2)throw Error(`Invalid interpolation or keys: ${label}`);
+    if(['visible','cell'].includes(name)&&track.interpolation!=='hold')throw Error(`Discrete track must use hold: ${label}`);
+    if(name==='cell'&&!asset.atlas)throw Error(`Cell track requires an atlas: ${label}`);
+    let previous=-1;
+    for(const key of track.keys){
+      if(!Array.isArray(key)||key.length!==2||!Number.isFinite(key[0])||key[0]<0||key[0]>T||key[0]<=previous)throw Error(`Track times must be strictly increasing within the loop: ${label}`);
+      previous=key[0];const v=key[1];
+      if(name==='visible'?typeof v!=='boolean':typeof v!=='number'||!Number.isFinite(v))throw Error(`Invalid track value: ${label}`);
+      if(name==='scale'&&v<=0||name==='opacity'&&(v<0||v>1)||name==='cell'&&(!Number.isInteger(v)||v<0||v>=asset.atlas.frame_count))throw Error(`Track value outside valid range: ${label}`);
+    }
+    if(track.keys[0][0]!==0||track.keys.at(-1)[0]!==T)throw Error(`Track must include zero and loop endpoint: ${label}`);
+    if(layer.track_loop!=='hidden-reset'&&track.keys[0][1]!==track.keys.at(-1)[1])throw Error(`Track endpoints must close, or declare a hidden reset: ${label}`);
+  }
+  if(layer.track_loop==='hidden-reset'){
+    const visible=tracks.visible,frame=1/canvas.fps;
+    if(!visible||visible.keys[0][1]!==false||visible.keys.at(-1)[1]!==false||
+      visible.keys.some(([t,v])=>v&&(t<frame||t>T-frame))||
+      trackValue(visible,T-frame,false)!==false||trackValue(visible,0,false)!==false)
+      throw Error(`Hidden reset requires explicit visibility false for at least one frame on both sides of the seam: ${layer.id}`);
+  }
+}
 export function compileScene(input,inputCatalog) {
   validateScene(input,inputCatalog);
   // A compiled snapshot cannot change midway through a frame audit or playback.
@@ -26,7 +92,7 @@ export function compileScene(input,inputCatalog) {
   const layers=new Map(scene.layers.map(l=>[l.id,l]));
   function sample(time){
     if(!Number.isFinite(time))throw Error('Time must be finite.');
-    const t=((time%T)+T)%T, p=TAU*t/T, memo=new Map();
+    const t=wrapTime(time,T), p=TAU*t/T, memo=new Map();
     function visit(layer){
     if(memo.has(layer.id))return memo.get(layer.id);
     const attached=layer.attach?visit(layers.get(layer.attach.layer)):null;
@@ -38,20 +104,22 @@ export function compileScene(input,inputCatalog) {
       const socket=attached.socketLocal[layer.attach.socket];
       parent=multiply(attached.matrix,translation(...socket));
     }
-    const motion=layer.motion, q=motion?p*motion.cycles+motion.phase:0;
-    const x=(layer.x+(motion?motion.x_amplitude*Math.sin(q):0))*W;
-    const y=(layer.y+(motion?motion.y_amplitude*Math.sin(2*q):0))*H;
-    const r=layer.rotation+(motion?.rotation_amplitude||0)*Math.sin(q+.3);
-    const matrix=chain(parent,translation(x,y),rotation(r),scaling(layer.scale));
+    const motion=sampleLayerMotion(layer,t,T);
+    const tracks=layer.tracks||{};
+    const x=(trackValue(tracks.x,t,layer.x)+motion.x)*W;
+    const y=(trackValue(tracks.y,t,layer.y)+motion.y)*H;
+    const r=trackValue(tracks.rotation,t,layer.rotation)+motion.rotation;
+    const matrix=chain(parent,translation(x,y),rotation(r),scaling(trackValue(tracks.scale,t,layer.scale)));
     const asset=assets.get(layer.asset), atlas=asset.atlas;
-    const cell=atlas?(Math.floor(t/layer.cycle_seconds*atlas.frame_count+1e-7)+(layer.phase_frames||0))%atlas.frame_count:0;
+    const cell=trackValue(tracks.cell,t,atlas?(Math.floor(t/layer.cycle_seconds*atlas.frame_count+1e-7)+(layer.phase_frames||0))%atlas.frame_count:0);
     const rect=[-layer.anchor[0]*layer.width*W,-layer.anchor[1]*layer.height*H,layer.width*W,layer.height*H];
     const socketLocal=Object.fromEntries(Object.entries({...asset.sockets,...layer.sockets}).map(([name,value])=>{
       const uv=Array.isArray(value)?value:value.frames[cell];
       return [name,[rect[0]+uv[0]*rect[2],rect[1]+uv[1]*rect[3]]];
     }));
-    const state={id:layer.id,asset:layer.asset,matrix,parent,cell,depth:d,visible:layer.visible&&(!attached||attached.visible),
-      opacity:layer.opacity*(attached?attached.opacity:1),blend:layer.blend,rect,socketLocal,
+    const appearance=sampleLayerAppearance(layer,t);
+    const state={id:layer.id,asset:layer.asset,matrix,parent,cell,depth:d,visible:appearance.visible&&(!attached||attached.visible),
+      opacity:appearance.opacity*(attached?attached.opacity:1),blend:layer.blend,rect,socketLocal,
       sockets:Object.fromEntries(Object.entries(socketLocal).map(([name,xy])=>[name,point(matrix,...xy)])),
       source:atlas?[(cell%atlas.columns)*atlas.cell_width,Math.floor(cell/atlas.columns)*atlas.cell_height,atlas.cell_width,atlas.cell_height]:[0,0,asset.width,asset.height]};
     memo.set(layer.id,state);return state;
@@ -86,6 +154,7 @@ export function validateScene(scene,catalog) {
     }else if(l.group?(!groups.has(l.group)||'depth' in l):!finite(l.depth)) throw Error(`Invalid depth/group: ${l.id}`);
     if(assets.get(l.asset).atlas && (!finite(l.cycle_seconds)||l.cycle_seconds<=0||Math.abs(c.loop_seconds/l.cycle_seconds-Math.round(c.loop_seconds/l.cycle_seconds))>1e-8||!Number.isInteger(l.phase_frames)||l.phase_frames<0)) throw Error(`Cel cycle must divide the visual loop: ${l.id}`);
     if(l.motion&&(!['x_amplitude','y_amplitude','cycles','phase'].every(k=>finite(l.motion[k]))||!Number.isInteger(l.motion.cycles)||l.motion.cycles<1||!finite(l.motion.rotation_amplitude||0))) throw Error(`Invalid motion: ${l.id}`);
+    validateTracks(l,assets.get(l.asset),c);
   }
   const layers=new Map(scene.layers.map(l=>[l.id,l])), visited=new Set(), visiting=new Set(),depths=new Map();
   for(const l of scene.layers){
@@ -113,10 +182,11 @@ export function validateScene(scene,catalog) {
   scene.layers.forEach(visit);
   if(scene.coverage_layers&&(!Array.isArray(scene.coverage_layers)||scene.coverage_layers.some(id=>!layers.has(id))))throw Error('Unknown coverage layer.');
   if(scene.audio&&(!finite(scene.audio.loop_seconds)||scene.audio.loop_seconds<=0||Math.abs(scene.audio.loop_seconds/c.loop_seconds-Math.round(scene.audio.loop_seconds/c.loop_seconds))>1e-8)) throw Error('Audio duration must be a whole number of picture loops.');
+  validateFinishing(scene,catalog);
   return true;
 }
 
-export function drawScene(canvas,scene,catalog,images,time,{selected=null,grid=false,solo=false,sockets=false,sampler=null}={}) {
+export function drawScene(canvas,scene,catalog,images,time,{selected=null,grid=false,solo=false,sockets=false,sampler=null,createCanvas=null,pass='beauty'}={}) {
   const {width:W,height:H}=scene.canvas;
   if(canvas.width!==W||canvas.height!==H){canvas.width=W;canvas.height=H;}
   const ctx=canvas.getContext('2d');
@@ -124,7 +194,10 @@ export function drawScene(canvas,scene,catalog,images,time,{selected=null,grid=f
   ctx.fillStyle=scene.canvas.background;ctx.fillRect(0,0,W,H);
   ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
   const states=sampler?sampler(time):sampleScene(scene,catalog,time);
-  for(const s of states){
+  canvas.finishingReport=null;
+  if(scene.finishing)canvas.finishingReport=drawFinished(canvas,scene,catalog,images,time,states,{selected,solo,createCanvas,pass});
+  else if(['lights','shadows','reflections'].includes(pass)){ctx.fillStyle='#000000';ctx.fillRect(0,0,W,H);}
+  else for(const s of states){
     if(!s.visible||(solo&&s.id!==selected))continue;
     ctx.save();ctx.setTransform(...s.matrix);ctx.globalAlpha=s.opacity;ctx.globalCompositeOperation=s.blend;
     ctx.drawImage(images.get(s.asset),...s.source,...s.rect);ctx.restore();

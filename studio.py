@@ -41,8 +41,8 @@ def inside(project,relative):
     if not target.is_relative_to(project.resolve()): raise ValueError(f'Path escapes the project: {relative}')
     return target
 
-def pipeline(project):
-    data=read(project/'pipeline.json')
+def pipeline(project,context=None):
+    data=context['pipeline'] if context else read(project/'pipeline.json')
     if data.get('version')!=1: raise ValueError('Unsupported pipeline version')
     gates=data['gates']; seen=set()
     for g in gates:
@@ -67,25 +67,33 @@ def watch_snapshot(project,gate):
         else: snapshot[relative]=None
     return snapshot
 
-def gate_status(project):
+def scoped_snapshot(project,gate,context=None):
+    return context['snapshot'](gate['id']) if context else watch_snapshot(project,gate)
+
+def gate_status(project,context=None):
     project=Path(project).resolve()
-    settings=read(project/'project.json')
+    settings=context['settings'] if context else read(project/'project.json')
     if settings.get('version')!=1: raise ValueError('Unsupported project version')
-    gates=pipeline(project); results={}
+    gates=pipeline(project,context); results={}
+    review_dir=context['review_dir'] if context else project/'reviews'
     for g in gates:
-        id=g['id']; path=project/'reviews'/f'{id}.json'
+        id=g['id']; path=review_dir/f'{id}.json'
         deps={d:results[d] for d in g['depends']}
         unavailable=[d for d,v in deps.items() if v['state']!='passed']
         record=read(path) if path.is_file() else None
         state='blocked' if unavailable else 'pending'
         reasons=[f'Dependency {d}: {results[d]["state"]}' for d in unavailable]
+        scope_issues=context['issues'](id) if context else []
+        if scope_issues:state='blocked';reasons=scope_issues+reasons
         if record:
             stale=[]
             payload={k:v for k,v in record.items() if k!='payload_sha256'}
             if record.get('payload_sha256')!=encoded_hash(payload): stale.append('Receipt content changed or lacks an integrity digest')
             if record.get('project_digest')!=encoded_hash(settings): stale.append('Project settings changed')
             if record.get('gate_digest')!=encoded_hash(g): stale.append('Gate criteria changed')
-            if record.get('watch_snapshot')!=watch_snapshot(project,g): stale.append('Watched inputs or outputs changed')
+            if record.get('watch_snapshot')!=scoped_snapshot(project,g,context): stale.append('Watched inputs or outputs changed')
+            if context and (record.get('version')!=2 or record.get('subject')!=context['subject']):stale.append('Review subject changed')
+            stale.extend(scope_issues)
             for d in g['depends']:
                 if record.get('dependencies',{}).get(d)!=results[d].get('receipt_digest'): stale.append(f'Dependency receipt changed: {d}')
             for check in record.get('checks',[]):
@@ -97,7 +105,7 @@ def gate_status(project):
             else: state='passed' if record['verdict']=='pass' else 'revise'
         results[id]=dict(state=state,name=g['name'],reasons=reasons,
                          receipt_digest=digest(path) if path.is_file() else None)
-    return dict(project=settings['id'],gates=results,
+    return dict(project=settings['id'],subject=context['subject'] if context else {'mode':'legacy-path-watches'},gates=results,
                 release_ready=results.get('release',{}).get('state')=='passed',
                 archived=all(v['state']=='passed' for v in results.values()),
                 meaning='Passed means recorded checks and evidence are current. It is not independent certification or permission to publish.')
@@ -133,18 +141,23 @@ def new_project(destination,reference=None,title=None):
     (destination/'handoff.md').write_text('# Project handoff\n\nCurrent stage: reference and brief. No quality gates have passed yet.\n\nRecord next actions, final paths, blockers, and reusable pieces here.\n')
     return dict(project=str(destination),next='Inspect the reference; complete the brief and tool/budget record. No gate is pre-approved.')
 
-def review_template(project,gate_id):
-    gate=next((g for g in pipeline(project) if g['id']==gate_id),None)
+def review_template(project,gate_id,context=None):
+    gate=next((g for g in pipeline(project,context) if g['id']==gate_id),None)
     if not gate: raise ValueError(f'Unknown gate: {gate_id}')
-    return dict(version=1,gate=gate_id,verdict='revise',recorder='',
+    result=dict(version=2 if context else 1,gate=gate_id,verdict='revise',recorder='',
                 checks=[dict(id=c['id'],result='not-run',observed_by=dict(kind='agent',name=''),
                              note='',evidence=[]) for c in gate['criteria']])
+    if context:result['subject']=context['subject']
+    return result
 
-def record_review(project,source):
+def record_review(project,source,context=None):
     project=Path(project).resolve(); review=read(source)
-    gate=next((g for g in pipeline(project) if g['id']==review.get('gate')),None)
+    if review.get('version')!=(2 if context else 1):raise ValueError('Unsupported review version or missing revision context')
+    if context and review.get('subject')!=context['subject']:raise ValueError('Review subject differs from the selected revision/edition')
+    gate=next((g for g in pipeline(project,context) if g['id']==review.get('gate')),None)
     if not gate: raise ValueError('Unknown gate in review')
-    status=gate_status(project)['gates']
+    status=gate_status(project,context)['gates']
+    initial_snapshot=scoped_snapshot(project,gate,context)
     if review.get('verdict') not in ['pass','revise']: raise ValueError('Verdict must be pass or revise')
     if not isinstance(review.get('recorder'),str) or not review['recorder'].strip(): raise ValueError('Name the person or agent recording this review')
     checks=review.get('checks',[])
@@ -170,24 +183,35 @@ def record_review(project,source):
             evidence.append(dict(path=rel,sha256=digest(p),bytes=p.stat().st_size))
         if c['result']=='pass' and spec['kind']=='human':
             if not any(e['path'].startswith('feedback/') for e in evidence): raise ValueError('Human review needs a feedback record quoting or identifying the actual observation')
-            if not any(e['path'].startswith('deliverables/final/') for e in evidence): raise ValueError('Human release review must identify the exact final file')
+            if context:
+                if not any(e['path'] in context['final_files'] for e in evidence):raise ValueError('Human release review must identify the exact selected edition file')
+            elif not any(e['path'].startswith('deliverables/final/') for e in evidence): raise ValueError('Human release review must identify the exact final file')
         normalized.append(dict(id=c['id'],result=c['result'],observed_by=observer,note=c.get('note',''),evidence=evidence))
     if review['verdict']=='pass':
+        if context and context['issues'](gate['id']):raise ValueError('Revision inputs are unavailable or changed: '+'; '.join(context['issues'](gate['id'])))
         blocked=[d for d in gate['depends'] if status[d]['state']!='passed']
         if blocked: raise ValueError('Unpassed or stale dependencies: '+', '.join(blocked))
-    receipt=dict(version=1,gate=gate['id'],verdict=review['verdict'],recorder=review['recorder'],
+    receipt=dict(version=2 if context else 1,gate=gate['id'],verdict=review['verdict'],recorder=review['recorder'],
                  recorded_at=datetime.now(timezone.utc).isoformat(),checks=normalized,
-                 project_digest=encoded_hash(read(project/'project.json')),gate_digest=encoded_hash(gate),
-                 watch_snapshot=watch_snapshot(project,gate),
+                 project_digest=encoded_hash(context['settings'] if context else read(project/'project.json')),gate_digest=encoded_hash(gate),
+                 watch_snapshot=initial_snapshot,
                  dependencies={d:status[d]['receipt_digest'] for d in gate['depends']})
+    if context:
+        receipt['subject']=context['subject']
+        if scoped_snapshot(project,gate,context)!=initial_snapshot:raise ValueError('Revision inputs changed during review recording')
+        for check in normalized:
+            for ev in check['evidence']:
+                if digest(inside(project,ev['path']))!=ev['sha256']:raise ValueError('Evidence changed during review recording')
     receipt['payload_sha256']=encoded_hash(receipt)
-    path=project/'reviews'/f'{gate["id"]}.json'
+    review_dir=context['review_dir'] if context else project/'reviews'
+    path=review_dir/f'{gate["id"]}.json'
     if path.exists():
         old_digest=digest(path)
-        history=project/'reviews/history'/f'{gate["id"]}-{old_digest}.json'
+        history=review_dir/'history'/f'{gate["id"]}-{old_digest}.json'
+        history.parent.mkdir(parents=True,exist_ok=True)
         if not history.exists(): shutil.copy2(path,history)
     write(path,receipt)
-    return gate_status(project)
+    return gate_status(project,context)
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)

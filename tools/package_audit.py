@@ -9,7 +9,7 @@ import sys
 ROOT=Path(__file__).resolve().parents[1]
 errors=[];links=0;skills=[]
 for md in ROOT.rglob('*.md'):
-    if any(part in ['archive','projects','__pycache__'] for part in md.relative_to(ROOT).parts): continue
+    if any(part in ['archive','projects','__pycache__','node_modules','.venv'] for part in md.relative_to(ROOT).parts): continue
     body=md.read_text()
     for target in re.findall(r'\]\(([^\n)]+)\)',body):
         target=target.strip().strip('<>')

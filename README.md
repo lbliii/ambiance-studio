@@ -2,11 +2,18 @@
 
 A local studio for painted, layered ambiance films. The CLI is the main interface for agents and repeatable production; the browser workbench provides visual placement and review.
 
-Version 0.4.0 brings the existing tools together, adds project-specific preview and validated scene editing, and preserves the full Last Lantern production history.
+Version 0.7.0 adds [appearance, lighting and receiving shadows/reflections](docs/FINISHING.md), [all-cel edge inspection and explicit matte repair](docs/EDGE-QUALITY.md), and [interactive look development and supersampled export](docs/LOOK-WORKBENCH.md). It builds on captured revisions, edition-bound reviews, placement, timing, audio and encoded-picture reuse. The full Last Lantern production history remains preserved.
 
 ## Start here
 
-Run these commands from this repository. No CLI installation or account is required. Use Python 3.10+ and Node 18+; the asset compiler additionally needs Pillow from `requirements-assets.txt`. This machine was tested with Python 3.14 and Node 24. `./ambiance doctor` reports actual availability.
+Run these commands from this repository. No CLI installation or account is required. Use Python 3.10+ and Node 18+. Install Pillow for asset preparation and Node Canvas for raster rendering and the full test suite:
+
+```sh
+python3 -m pip install -r requirements-assets.txt
+npm ci --ignore-scripts
+```
+
+This machine was tested with Python 3.14 and Node 24. `./ambiance doctor` reports actual availability.
 
 ```sh
 ./ambiance doctor
@@ -62,4 +69,4 @@ Small reusable PNG assets are tracked in this repository. Large media, working p
 - [Quality gates](docs/QUALITY-GATES.md): evidence, freshness and creative review.
 - [Tool strategy](docs/TOOL-STRATEGY.md): research and priorities behind this direction.
 
-Final video rendering, integrated audio arrangement, automatic feature tracking and provider orchestration remain to build. The CLI does not call a paid provider or publish a film. Historical native production scripts remain available in the archive.
+Frames and HTML motion proofs use Node Canvas; H.264 export and encoded-media verification currently use macOS AVFoundation. Audio arrangement uses explicit PCM WAV sources and Python's standard library. See [rendering](docs/RENDERING.md), [audio](docs/AUDIO-SESSION.md) and [production inventory](docs/PRODUCTION-INVENTORY.md). Automatic image decomposition/feature tracking and provider orchestration remain to build. The CLI does not call a paid provider or publish a film.

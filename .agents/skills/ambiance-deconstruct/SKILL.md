@@ -9,7 +9,9 @@ Read the project brief, reference image, and [image-to-layer workflow](../../../
 
 Describe the focal point, light sources, palette, edge character, atmospheric distance, perspective, and foreground framing. Mark proposed objects separately from observed ones. A single image does not provide unseen geometry or a physically accurate depth map.
 
-Create `plans/layer-plan.json` using [the production contracts](../../../docs/CONTRACTS.md), and record composition observations in `plans/layout-notes.md`. Give each planned object a stable ID, screen bounds, draw order, artistic depth, anchor, intended size, parent or socket, motion method, and source/reuse strategy.
+Keep artistic reasoning in `plans/layer-plan.json` and `plans/layout-notes.md`, using [the production contracts](../../../docs/CONTRACTS.md). Record stable object IDs, source bounds, draw order, depth, anchors, intended size, attachments, motion and source strategy. Link required parts to the existing [production inventory](../../../docs/PRODUCTION-INVENTORY.md); `plan inspect/check/next` reconciles progress without turning deliberately static objects into missing sprites.
+
+Before choosing asset boundaries, use the workflow's framing and movement judgment: intended screen size and action, moving subparts, overlap order, maximum proposed reveal, and contact/shadow behavior. For compound subjects or requested exploration, plan independent parts for those actions even if the first pose is still. A figure inside a casket may need a separate interior, figure, front rim and stationary display glass; a cropped composite does not provide those controls.
 
 Plan the pixels behind every moving object and beyond the frame edges. Separate clean backgrounds, opaque bases, alpha cutouts, masks, and emissive overlays. Identify seams likely to reveal duplicate roofs, silhouettes, or transparent gaps under camera motion. Plan modest camera limits before choosing overscan.
 

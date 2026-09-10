@@ -14,6 +14,7 @@ import sys
 import tempfile
 
 from . import __version__
+from . import planning, assets, revisions
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
@@ -47,6 +48,12 @@ def project_path(value):
     for p in [Path.cwd(),*Path.cwd().parents]:
         if (p/'ambiance-project.json').is_file():return p.resolve()
     raise CommandError('Choose --project PATH, or run inside an initialized project.')
+
+def optional_project_path(value):
+    if value:return project_path(value)
+    for p in [Path.cwd(),*Path.cwd().parents]:
+        if (p/'ambiance-project.json').is_file():return p.resolve()
+    return None
 
 def locations(project):
     conf=studio.read(project/'ambiance-project.json')
@@ -99,6 +106,7 @@ def init_project(destination,reference,title,template):
                 'camera':{'overscan':1.08,'x_amplitude':0,'y_amplitude':0,'zoom_amplitude':0},'groups':[],'layers':[]}
         studio.write(candidate/'scene/scene.json',scene)
         studio.write(candidate/'ambiance-project.json',{'version':1,'scene':'scene/scene.json','catalog':'assets/catalog.json','template':template})
+        studio.write(candidate/'plans/asset-inventory.json',{'version':1,'purpose':'Author visible objects, intended actions and required parts; reconcile with plan check.','items':[]})
         # Track the whole project library in asset/animation gates, including imported atlases.
         pipeline=studio.read(candidate/'pipeline.json')
         for gate in pipeline['gates']:
@@ -136,8 +144,18 @@ def parser():
     q=group.add_parser('build');q.add_argument('recipe',type=Path);q.add_argument('--out',type=Path,required=True)
     q=group.add_parser('admit');q.add_argument('pack',type=Path)
     q=group.add_parser('inspect');q.add_argument('pack',type=Path)
+    q=group.add_parser('proof');q.add_argument('asset');q.add_argument('--out',type=Path,required=True);q.add_argument('--catalog',type=Path)
+    q.add_argument('--fps',type=float,default=6);q.add_argument('--width',type=int,default=180);q.add_argument('--landmark',default='anchor')
+    assets.add_preparation_parsers(group)
     group=sub.add_parser('scene').add_subparsers(dest='action',required=True)
-    group.add_parser('inspect');q=group.add_parser('sample');q.add_argument('--time',type=float,required=True)
+    q=group.add_parser('inspect');q.add_argument('--full',action='store_true');q=group.add_parser('sample');q.add_argument('--time',type=float,required=True)
+    q=group.add_parser('apply');q.add_argument('file',type=Path);q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256')
+    q=group.add_parser('track');q.add_argument('layer');q.add_argument('file',type=Path);q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256')
+    q=group.add_parser('timing');q.add_argument('--layer');q.add_argument('--out',type=Path)
+    q=group.add_parser('place');q.add_argument('file',type=Path);q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256')
+    q=group.add_parser('reparent');q.add_argument('layer');q.add_argument('--to',required=True);q.add_argument('--socket',required=True)
+    q.add_argument('--keep-world',action='store_true',required=True);q.add_argument('--at',type=float,required=True)
+    q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256')
     q=group.add_parser('check');q.add_argument('--out',type=Path)
     q=group.add_parser('set');q.add_argument('layer')
     for name in ['x','y','scale','rotation-deg','opacity','depth','cycle-seconds']:q.add_argument('--'+name,type=float)
@@ -149,22 +167,28 @@ def parser():
     group.add_parser('history');q=group.add_parser('restore');q.add_argument('sha256')
     group=sub.add_parser('review').add_subparsers(dest='action',required=True)
     q=group.add_parser('draft');q.add_argument('gate');q.add_argument('--out',type=Path,required=True)
+    q.add_argument('--revision');q.add_argument('--edition')
     q=group.add_parser('record');q.add_argument('file',type=Path)
-    q=sub.add_parser('preview',help='Serve this project read-only on localhost');q.add_argument('--port',type=int,default=8783)
+    q=sub.add_parser('preview',help='Serve this project or saved look read-only on localhost');q.add_argument('--port',type=int,default=8783);q.add_argument('--look',type=Path,help='Serve a verified look-proof artifact without requiring a project')
     q=sub.add_parser('test',help='Run local regression checks without paid providers');q.add_argument('--out',type=Path)
+    planning.add_parsers(sub);assets.add_library_parsers(sub);revisions.add_parsers(sub)
+    from . import rendering, audio, finishing
+    rendering.add_parsers(sub);audio.add_parsers(sub);finishing.add_parsers(sub)
     return p
 
 def run(args):
     command=args.command;action=getattr(args,'action',None)
     if command=='doctor':
+        from . import rendering, audio
+        render_caps=rendering.capabilities();audio_caps=audio.capabilities()
         pillow=importlib.util.find_spec('PIL') is not None
         return {'version':__version__,'root':str(ROOT),'python':platform.python_version(),'python_executable':sys.executable,
             'node':shutil.which('node'),'pillow':pillow,'ffmpeg':shutil.which('ffmpeg'),'ffprobe':shutil.which('ffprobe'),
-            'capabilities':{'project_and_reviews':True,'asset_preparation':pillow,'scene_operations':bool(shutil.which('node')),'preview':bool(shutil.which('node')),'final_video_export':False,'audio_arrangement':False},
+            'capabilities':{'project_and_reviews':True,'revision_binding':True,'production_inventory':True,'asset_preparation':pillow,'asset_preflight_and_crop_return':pillow,'edge_inspection_and_repair':pillow,'finishing_and_look_packages':render_caps['frame_render'],'asset_proofs':pillow,'scene_operations':bool(shutil.which('node')),'scene_tracks':bool(shutil.which('node')),'source_placement_and_reparent':bool(shutil.which('node')),'scene_timing':bool(shutil.which('node')),'preview':bool(shutil.which('node')),'final_video_export':render_caps['final_video_export'],'audio_arrangement':audio_caps['audio_arrangement'],'rendering':render_caps,'audio':audio_caps},
             'note':'Optional dependency availability does not imply a renderer or provider adapter is implemented.'}
     if command=='test':
         require_node();asset_tool()
-        commands=[[sys.executable,'-m','unittest','discover','-s','tests','-p','test_*.py'],['node','editor/verify-engine.mjs'],['node','tests/test-rig.mjs'],[sys.executable,'tools/package_audit.py']]
+        commands=[[sys.executable,'-m','unittest','discover','-s','tests','-p','test_*.py'],['node','editor/verify-engine.mjs'],['node','tests/test-rig.mjs'],['node','tests/test-tracks.mjs'],['node','tests/test-source-placement.mjs'],['node','tests/test-finishing.mjs'],[sys.executable,'tools/package_audit.py']]
         results=[]
         for c in commands:
             p=subprocess.run(c,cwd=ROOT,capture_output=True,text=True)
@@ -175,13 +199,50 @@ def run(args):
         return {'projects':[{'path':str(p.parent.resolve()),'title':studio.read(p.parent/'project.json')['title']} for p in sorted(args.directory.glob('*/ambiance-project.json'))]}
     if command=='asset' and action=='build':return asset_tool().build(args.recipe,args.out)
     if command=='asset' and action=='inspect':
-        pack=args.pack.resolve();report=studio.read(pack/'report.json')
-        unchanged=all(studio.inside(pack,f).is_file() and studio.digest(studio.inside(pack,f))==h for f,h in report['outputs'].items())
-        return {'ok':unchanged,'asset':studio.read(pack/'asset.json'),'build':report}
+        asset_tool();return assets.inspect_pack(args.pack)
+    if command=='library':
+        selected=optional_project_path(args.project)
+        return assets.library(args,selected)
+    if command=='asset' and action=='proof':
+        asset_tool()
+        selected=optional_project_path(args.project)
+        return assets.proof(args.asset,args.out,selected,args.catalog,args.fps,args.width,args.landmark)
+    if command=='preview' and args.look is not None:
+        from .preview import serve_look
+        serve_look(args.look,args.port);return None
     project=project_path(args.project)
-    if command=='project' and action=='status':return studio.gate_status(project)
+    if command=='asset' and action in ['preflight','crop','return','edges','edge-repair']:return assets.run_preparation(args,project)
+    if command=='revision':return revisions.run(args,project)
+    if command=='plan':return planning.run(args,project)
+    if command in ['render','media']:
+        from . import rendering
+        prepared=revisions.prepare_edition(project,args)
+        result=rendering.run(args,project)
+        return revisions.record_edition(project,prepared,result,args)
+    if command=='audio':
+        from . import audio
+        return audio.run(args,project)
+    if command=='project' and action=='status':return revisions.project_status(project)
     if command in ['project','scene'] and action=='check':return check_project(project)
     scene_path,catalog_path=locations(project)
+    if command=='look':
+        from . import finishing, scene_authoring
+        with project_lock(project):
+            previous=studio.digest(scene_path);catalog_hash=studio.digest(catalog_path);config_hash=studio.digest(project/'ambiance-project.json')
+            scene=studio.read(scene_path);catalog=studio.read(catalog_path)
+            if action in ['inspect','check']:return finishing.inspect(project,scene,catalog,args.time)
+            if action=='export':return finishing.export_package(project,scene,catalog,args.out,include_rig=getattr(args,'include_rig',False))
+            if args.expect_sha256 and args.expect_sha256!=previous:raise CommandError('Scene changed since expected SHA-256.','stale_input',2)
+            extra=[];detail={}
+            if action=='apply':
+                extra=[finishing.file_dependency(args.file,'look-input')];batch=finishing.load_apply(args.file)
+            else:batch,extra,detail=finishing.import_batch(project,scene,catalog,args.package,args.bindings,include_rig=getattr(args,'include_rig',False))
+            batch,dependencies=scene_authoring.resolve_batch(project,scene,catalog,batch);dependencies+=extra
+            candidate=scene_bridge('apply',scene,catalog,{'batch':batch,'report':True})['scene']
+            if studio.digest(scene_path)!=previous or studio.digest(catalog_path)!=catalog_hash or studio.digest(project/'ambiance-project.json')!=config_hash:raise CommandError('Project changed during look validation; nothing saved.','stale_input',2)
+            scene_authoring.verify_dependencies(project,dependencies)
+            if args.dry_run:return {'dry_run':True,'previous_sha256':previous,'scene':candidate,'dependencies':dependencies,'import':detail}
+            return {**save_scene(project,scene_path,candidate,'look-'+action),'dependencies':dependencies,'import':detail}
     if command=='preview':
         checked=check_project(project)
         if not checked['ok']:raise CommandError('Project checks failed. Run project check for details.','check_failed',1)
@@ -192,15 +253,41 @@ def run(args):
         with project_lock(project):return asset_tool().admit(args.pack,catalog_path)
     if command=='review':
         if action=='draft':
-            draft=studio.review_template(project,args.gate)
+            if args.edition and not args.revision:raise CommandError('--edition requires --revision')
+            context=revisions.review_context(project,args.revision,args.edition) if args.revision else None
+            draft=studio.review_template(project,args.gate,context)
             if args.out.exists():raise CommandError('Review draft already exists.')
             studio.write(args.out,draft);return {'draft':str(args.out.resolve()),'review':draft}
-        with project_lock(project):return studio.record_review(project,args.file)
+        with project_lock(project):
+            source=studio.read(args.file);subject=source.get('subject',{})
+            context=revisions.review_context(project,subject['revision'],subject.get('edition')) if source.get('version')==2 else None
+            return studio.record_review(project,args.file,context)
     if command=='scene':
-        if action in ['inspect','sample']:return scene_bridge(action,studio.read(scene_path),studio.read(catalog_path),{'time':getattr(args,'time',None)})
+        if action in ['inspect','sample','timing']:return scene_bridge(action,studio.read(scene_path),studio.read(catalog_path),{'time':getattr(args,'time',None),'full':getattr(args,'full',False),'layer':getattr(args,'layer',None)})
         if action=='history':
             return {'snapshots':[{'sha256':p.stem,'path':str(p)} for p in sorted((project/'.ambiance/scene-history').glob('*.json'))]}
         with project_lock(project):
+            if action in ['apply','track','place','reparent']:
+                from . import scene_authoring
+                previous=studio.digest(scene_path)
+                catalog_hash=studio.digest(catalog_path);config_hash=studio.digest(project/'ambiance-project.json')
+                scene=studio.read(scene_path);catalog=studio.read(catalog_path)
+                if args.expect_sha256 and args.expect_sha256!=previous:raise CommandError('Scene changed since the expected SHA-256; inspect and rebase the edit.','stale_input',2)
+                if action=='reparent':batch={'version':1,'operations':[{'op':'reparent','layer':args.layer,'to':args.to,'socket':args.socket,'preserve':'world_at_time','at_seconds':args.at}]}
+                else:batch=studio.read(args.file)
+                if action=='place':batch=scene_authoring.placement_batch(batch)
+                if action=='track':
+                    if batch.get('version')!=1 or not isinstance(batch.get('tracks'),dict) or set(batch)-{'version','tracks','track_loop'}:raise CommandError('Track file needs version 1, tracks and optional track_loop.')
+                    values={'tracks':batch['tracks'],'track_loop':batch.get('track_loop','closed')}
+                    batch={'version':1,'operations':[{'op':'set','layer':args.layer,'values':values}]}
+                batch,dependencies=scene_authoring.resolve_batch(project,scene,catalog,batch)
+                reported=scene_bridge('apply',scene,catalog,{'batch':batch,'report':True})
+                candidate=reported['scene'];diagnostics=reported['operations']
+                if studio.digest(scene_path)!=previous:raise CommandError('Scene changed during validation; no edit was saved.','stale_input',2)
+                if studio.digest(catalog_path)!=catalog_hash or studio.digest(project/'ambiance-project.json')!=config_hash:raise CommandError('Catalog or project configuration changed during validation; no edit was saved.','stale_input',2)
+                scene_authoring.verify_dependencies(project,dependencies)
+                if args.dry_run:return {'dry_run':True,'previous_sha256':previous,'scene':candidate,'operations':len(batch['operations']),'diagnostics':diagnostics,'dependencies':dependencies}
+                return {**save_scene(project,scene_path,candidate,action),'diagnostics':diagnostics,'dependencies':dependencies}
             operation_args=vars(args).copy()
             # Only primitive scene arguments cross the JSON bridge.
             operation_args.pop('project',None)
@@ -220,7 +307,7 @@ def main(argv=None):
         command=' '.join(filter(None,[args.command,getattr(args,'action',None)]))
         ok=result.get('ok',True) if isinstance(result,dict) else True
         payload={'ok':ok,'schema_version':1,'command':command,'data':result}
-        if getattr(args,'out',None) and args.command!='asset' and not(args.command=='review' and args.action=='draft'):
+        if getattr(args,'out',None) and args.command not in ['asset','render','media'] and not(args.command=='look' and args.action=='export') and not(args.command=='review' and args.action=='draft') and not(args.command=='revision' and args.action=='handoff'):
             studio.write(args.out,payload)
         emit(command,result,ok)
         return 0 if ok else 1

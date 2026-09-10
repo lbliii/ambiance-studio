@@ -4,6 +4,8 @@ Keep changes scoped to a demonstrated production problem. Start with `./ambiance
 
 The root launcher is intentionally runnable without package installation. Python handles orchestration, files and review records. JavaScript owns scene validation and absolute-time evaluation. Image preparation stays in the Pillow compiler. Keep new UI and CLI behavior on these shared boundaries.
 
+For a fresh checkout, install the test and rendering dependencies with `python3 -m pip install -r requirements-assets.txt` and `npm ci --ignore-scripts`. The lockfile pins Node Canvas and its platform binaries so raster checks do not depend on a host's bundled runtime.
+
 Use UTF-8, LF, final newlines, four spaces in Python and two in JSON/JavaScript. Follow surrounding code where historical files differ. Run `./ambiance test`; add behavior tests for meaningful new state transitions or failure modes. If the editor changes, also inspect it through the browser. Record what actually ran rather than implying that JSON validation is an artistic review.
 
 Code, examples and small reusable assets are tracked. Working projects, full media, caches and the original session archive are ignored by Git. Preserve their local backup/inventory separately. The repository has no remote configured by the initializer. No open-source license or redistribution rights are assigned to the artwork by this setup.

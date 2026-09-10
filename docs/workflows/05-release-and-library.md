@@ -4,6 +4,8 @@
 
 ## Build the actual deliverables
 
+For a project with multiple working versions, explicitly [capture a revision](../REVISIONS.md) and render from it. Record editions against the exact picture and selected PCM, leaving working changes separate. `media compose` can reuse encoded picture for another soundtrack, and requested contact times in `media verify` make short actions inspectable in the actual movie.
+
 Use a tested export backend appropriate to the host. Keep format settings and tool versions explicit. When picture is already accepted and only the sound changes, copy the encoded picture during muxing where supported instead of re-encoding it unnecessarily.
 
 Name editions by content and duration. Keep final files separate from previews and temporary encodes. Generate a cover from a deliberately chosen frame. Apply only requested publishing overlays or captions. Check current platform UI before treating a guide as an official safe area.
@@ -35,3 +37,5 @@ Promote only selected production assets and useful patterns. Assign an immutable
 Save a rig when several parts should travel together. Save a motion recipe when parameters carry a useful behavior. Save a sound recipe when spatial roles and event timing transfer to another scene. Do not copy every rejected take or finished video into the reusable catalog.
 
 Close `handoff.md` with the final paths, current gate state, open limitations, rebuild route, next actions, and new reusable modules. A new operator should be able to resume from that file and the project data without the original conversation.
+
+For revision-bound work, `revision handoff` writes a new report with exact products and outstanding checks. It does not overwrite the project handoff, transfer an old verdict to a new edition, or infer a physical-phone or listening observation.

@@ -12,7 +12,9 @@
 | Per-frame attachments and coverage, preview seam comparison | Implemented Node state checks and browser pixel checks at preview resolution |
 | General image decomposition, matte repair, automatic feature tracking | Guided agent workflow; not automated by the compiler |
 | Full-fidelity Last Lantern picture in the shared browser engine | Partial; mist, glow, leaves, and motes remain to port |
-| General MP4 export and integrated audio engine | Not implemented in the editor; native historical production route exists |
+| Shared-scene frame/proof/video export | CLI implemented: Node Canvas raster, macOS AVFoundation H.264/PCM mux and actual decoded verification; historical missing effects still require porting |
+| Explicit sound arrangement | CLI implemented: source hashes, PCM clips/stems, fades, circular tails and A/B evidence; no synthesis/resampling/automatic normalization |
+| Production inventory, source proofs and named anchors | CLI reconciliation, library discovery and HTML proof/anchor authoring; artistic classification and review remain authored |
 | Provider request queue, retries, budget enforcement | Contract and workflow only; ledger maintained by the operator/agent |
 | Human artistic/phone listening review | Deliberately performed by people and recorded as evidence |
 | Another operator creating a new film from scratch with this package | Not yet demonstrated; the next pilot |

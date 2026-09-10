@@ -2,6 +2,7 @@
 """Compile transparent cels into an immutable, registered asset pack. Requires Pillow."""
 import argparse
 import hashlib
+import io
 import json
 import math
 import os
@@ -10,7 +11,7 @@ import re
 import sys
 from PIL import Image, ImageDraw, __version__ as PILLOW_VERSION
 
-VERSION = '1.0.0'
+VERSION = '1.2.0'
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -24,32 +25,122 @@ def positive_int(n):
 def pair(v):
     return isinstance(v, list) and len(v) == 2 and all(type(n) in (int, float) and math.isfinite(n) for n in v)
 
+def invert_affine(matrix):
+    if not isinstance(matrix,list) or len(matrix)!=6 or any(type(v) not in [int,float] or not math.isfinite(v) for v in matrix):
+        raise ValueError('Source mapping needs a finite six-number image_to_reference affine')
+    a,b,c,d,e,f=matrix;det=a*d-b*c
+    if abs(det)<1e-12: raise ValueError('Source mapping affine must be invertible')
+    return [d/det,-b/det,-c/det,a/det,(c*f-d*e)/det,(b*e-a*f)/det]
+
+
+def multiply_affine(a,b):
+    x,y,z,w,tx,ty=a;u,v,r,s,px,py=b
+    return [x*u+z*v,y*u+w*v,x*r+z*s,y*r+w*s,x*px+z*py+tx,y*px+w*py+ty]
+
+
 def build(recipe_path, out):
     recipe_path, out = Path(recipe_path).resolve(), Path(out).resolve()
-    recipe = json.loads(recipe_path.read_text())
+    recipe_bytes = recipe_path.read_bytes()
+    recipe = json.loads(recipe_bytes)
     if recipe.get('version') != 1 or not re.fullmatch(r'[a-z0-9][a-z0-9-]*', recipe.get('id', '')):
         raise ValueError('Use recipe version 1 and a lowercase asset id.')
     inputs = recipe['input']
-    frames, sources, source_paths = [], [], []
+    frames, sources, source_paths, source_rects, source_sizes = [], [], [], [], []
     if 'sheet' in inputs:
         path = (recipe_path.parent / inputs['sheet']).resolve()
-        image = Image.open(path).convert('RGBA')
+        source_bytes = path.read_bytes()
+        with Image.open(io.BytesIO(source_bytes)) as raw:
+            raw.load()
+            image = raw.convert('RGBA')
+        source_sizes.append(list(image.size))
         columns, rows, count = (inputs[k] for k in ['columns', 'rows', 'frame_count'])
         if not all(positive_int(n) for n in [columns, rows, count]) or count > columns * rows or image.width % columns or image.height % rows:
             raise ValueError('Input must have exact whole cells, and frame_count must fit the grid.')
         w, h = image.width // columns, image.height // rows
         frames = [image.crop((i % columns*w, i//columns*h, (i % columns+1)*w, (i//columns+1)*h)) for i in range(count)]
-        sources.append({'file': inputs['sheet'], 'sha256': sha(path)})
+        sources.append({'file': inputs['sheet'], 'sha256': hashlib.sha256(source_bytes).hexdigest()})
         source_paths.append(path)
+        source_rects = [(0,[i % columns*w,i//columns*h,(i % columns+1)*w,(i//columns+1)*h]) for i in range(count)]
     else:
         for name in inputs['frames']:
             path = (recipe_path.parent / name).resolve()
-            frames.append(Image.open(path).convert('RGBA'))
-            sources.append({'file': name, 'sha256': sha(path)})
+            source_bytes = path.read_bytes()
+            with Image.open(io.BytesIO(source_bytes)) as raw:
+                raw.load()
+                frames.append(raw.convert('RGBA'))
+            source_sizes.append(list(frames[-1].size))
+            sources.append({'file': name, 'sha256': hashlib.sha256(source_bytes).hexdigest()})
             source_paths.append(path)
+            source_rects.append((len(source_paths)-1,[0,0,frames[-1].width,frames[-1].height]))
     if not frames or len(frames) > 256:
         raise ValueError('Supply 1–256 explicitly ordered frames.')
+    edge_source = None
+    edge_dependencies = []
+    if recipe.get('edge_preparation') is not None:
+        edge_ref = recipe['edge_preparation']
+        if not isinstance(edge_ref, dict) or set(edge_ref) != {'file', 'sha256'} or not isinstance(edge_ref['file'], str) or Path(edge_ref['file']).is_absolute():
+            raise ValueError('edge_preparation needs an explicit recipe-relative file and sha256')
+        # Shared typed verifier also serves revision/scene authoring. This lazy
+        # import keeps legacy standalone compiler calls independent of CLI setup.
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+        from ambiance_studio.edge_quality import validate_edge_preparation
+        edge_path = (recipe_path.parent/edge_ref['file']).resolve()
+        checked_edge = validate_edge_preparation(edge_path, edge_ref['sha256'], source_paths)
+        edge_layout = checked_edge['report']['output_layout']
+        if 'sheet' not in inputs or any(inputs.get(key) != edge_layout[key] for key in ['columns', 'rows', 'frame_count']):
+            raise ValueError('Compiler sheet selection must match the edge preparation layout exactly')
+        edge_dependencies = checked_edge['dependencies']
+        edge_source = {'file': os.path.relpath(edge_path, out), 'sha256': edge_ref['sha256']}
+    mapping_source = None
+    source_mapping = None
+    if recipe.get('source_mapping'):
+        mapping_ref = recipe['source_mapping']
+        mapping_path = (recipe_path.parent / mapping_ref['file']).resolve()
+        if not mapping_path.is_file() or sha(mapping_path) != mapping_ref['sha256']:
+            raise ValueError('Source placement mapping changed or is missing')
+        source_mapping = json.loads(mapping_path.read_text())
+        if source_mapping.get('format') != 'ambiance-asset-source-mapping' or source_mapping.get('version') != 1 or source_mapping.get('path_base') != 'project':
+            raise ValueError('Expected project-relative ambiance-asset-source-mapping version 1')
+        project = next((p for p in [recipe_path.parent,*recipe_path.parents] if (p/'ambiance-project.json').is_file()),None)
+        if project is None: raise ValueError('Mapped builds require an ambiance-project.json ancestor for project-relative source identities')
+        for key in ['reference','image']:
+            record = source_mapping[key]
+            file = (project/record['file']).resolve()
+            if Path(record['file']).is_absolute() or not file.is_relative_to(project) or not file.is_file() or sha(file)!=record['sha256']:
+                raise ValueError(f'Source mapping {key} identity changed or escapes the project')
+            with Image.open(file) as mapped:
+                if mapped.size!=(record['width'],record['height']): raise ValueError(f'Source mapping {key} dimensions differ')
+            if key=='image' and (len(source_paths)!=1 or file!=source_paths[0]):
+                raise ValueError('Source mapping must identify the exact single compiler input image')
+        invert_affine(source_mapping['image_to_reference'])
+        mapping_source={'file':os.path.relpath(mapping_path,out),'sha256':sha(mapping_path)}
     spec, registration = recipe['output'], recipe['registration']
+    landmark_source = None
+    if recipe.get('registration_source'):
+        prior = recipe['registration_source']
+        prior_path = (recipe_path.parent / prior['file']).resolve()
+        if not prior_path.is_file() or sha(prior_path) != prior['sha256']:
+            raise ValueError('Recorded landmark source changed or is missing.')
+        prior_data = json.loads(prior_path.read_text())
+        if prior_data.get('version') != 1 or prior_data.get('landmarks', {}).get(prior.get('name')) != registration.get('points'):
+            raise ValueError('Embedded registration points differ from the recorded named landmark source; author a new landmark file.')
+        landmark_source = {**prior, 'file': os.path.relpath(prior_path, out)}
+    if 'landmarks_file' in registration:
+        if registration.get('mode') != 'landmarks' or 'points' in registration:
+            raise ValueError('A named landmark file requires landmarks mode and no inline points.')
+        landmark_path = (recipe_path.parent / registration['landmarks_file']).resolve()
+        landmark_data = json.loads(landmark_path.read_text())
+        name = registration.get('landmark')
+        if landmark_data.get('version') != 1 or not isinstance(name, str) or name not in landmark_data.get('landmarks', {}):
+            raise ValueError('Named landmark file must contain version 1 and the selected landmark.')
+        landmark_source = {'file': os.path.relpath(landmark_path, out), 'sha256': sha(landmark_path), 'name': name}
+        # Embed the resolved points in the portable recipe; retain the source identity
+        # in provenance so the authoring file is not silently forgotten.
+        registration = {k:v for k,v in registration.items() if k not in ['landmarks_file', 'landmark']}
+        registration['points'] = landmark_data['landmarks'][name]
+        recipe['registration'] = registration
+    if landmark_source:
+        recipe['registration_source'] = landmark_source
     cw, ch = spec['cell_size']
     columns = spec['columns']
     pad = spec.get('padding', 2)
@@ -71,6 +162,12 @@ def build(recipe_path, out):
         raise ValueError('Atlas exceeds the compiler memory budget; use smaller cells or split the pack.')
     # Input locations are portable; order, bytes, settings, code and Pillow determine the build.
     canonical = json.loads(json.dumps(recipe))
+    if 'edge_preparation' in canonical:
+        canonical['edge_preparation']['file'] = 'edge-preparation'
+    if 'source_mapping' in canonical:
+        canonical['source_mapping']['file'] = 'source-mapping'
+    if 'registration_source' in canonical:
+        canonical['registration_source']['file'] = 'registration-source'
     if 'sheet' in canonical['input']: canonical['input']['sheet'] = 'source-0'
     else: canonical['input']['frames'] = [f'source-{i}' for i in range(len(sources))]
     key_data = {'recipe': canonical, 'sources': [s['sha256'] for s in sources], 'compiler': sha(Path(__file__)), 'pillow': PILLOW_VERSION}
@@ -112,6 +209,10 @@ def build(recipe_path, out):
         raise ValueError('The target pivot leaves insufficient padding.')
     if mode == 'bottom-center':
         warnings.append('Bottom-center is a silhouette estimate, not a tracked anatomical or architectural landmark. Review base stability; use explicit landmarks for asymmetric/deforming subjects.')
+    if recipe_path.read_bytes()!=recipe_bytes or any(sha(p)!=record['sha256'] for p,record in zip(source_paths,sources)):
+        raise ValueError('Recipe/source changed during asset preparation')
+    if any(not record['path'].is_file() or sha(record['path']) != record['sha256'] for record in edge_dependencies):
+        raise ValueError('Edge preparation dependency changed during asset preparation')
     out.mkdir(parents=True)
     atlas = Image.new('RGBA', (cw*columns, ch*rows))
     normalized = []
@@ -127,7 +228,7 @@ def build(recipe_path, out):
         record.update(offset_pixels=offset, output_pivot=[tx,ty], output_alpha_bounds=cel.getchannel('A').getbbox())
     atlas.save(out/'atlas.png')
     # Small diagnostic proofs: actual alpha on light and dark, plus a fixed pivot cross.
-    pw, ph = min(200,cw), round(ch*min(200,cw)/cw)
+    pw, ph = min(200,cw), max(1, round(ch*min(200,cw)/cw))
     proof = Image.new('RGB', (pw*columns, (ph+24)*rows*2), '#202432')
     draw = ImageDraw.Draw(proof)
     previews = []
@@ -146,18 +247,41 @@ def build(recipe_path, out):
     proof.save(out/'contact-sheet.png')
     previews[0].save(out/'preview.gif',save_all=True,append_images=previews[1:],duration=120,loop=0,disposal=2)
     packed_recipe = json.loads(json.dumps(recipe))
+    if edge_source:
+        packed_recipe['edge_preparation'] = edge_source
     references = [os.path.relpath(p, out) for p in source_paths]
     if 'sheet' in inputs: packed_recipe['input']['sheet'] = references[0]
     else: packed_recipe['input']['frames'] = references
     packed_sources = [{'file':f,'sha256':s['sha256']} for f,s in zip(references,sources)]
+    input_sources=[]
+    for size,record in zip(source_sizes,packed_sources):
+        input_sources.append({**record,'width':size[0],'height':size[1]})
+    mapping={'version':1,'input_path_base':'recipe','input_sources':input_sources,'cell_size':[cw,ch],'shared_scale':scale,'padding':pad,'cels':[]}
+    if source_mapping:
+        mapping['reference']=source_mapping['reference'];mapping['reference_path_base']='project'
+        mapping['source_mapping']=mapping_source
+        packed_recipe['source_mapping']=mapping_source
+    for record,(source_index,rect) in zip(records,source_rects):
+        ox,oy=record['offset_pixels']
+        raw_to_cell=[scale,0,0,scale,ox,oy]
+        source_to_cell=[scale,0,0,scale,ox-rect[0]*scale,oy-rect[1]*scale]
+        cel_mapping={'index':record['index'],'source_index':source_index,'source_rect':rect,'source_pivot':record['source_pivot'],'raw_cel_to_cell':raw_to_cell,'source_to_cell':source_to_cell}
+        if source_mapping: cel_mapping['reference_to_cell']=multiply_affine(source_to_cell,invert_affine(source_mapping['image_to_reference']))
+        mapping['cels'].append(cel_mapping)
     asset = {'id': recipe['id'], 'kind': 'atlas', 'file': 'atlas.png', 'width': atlas.width, 'height': atlas.height,
         'sha256': sha(out/'atlas.png'), 'atlas': {'columns': columns,'rows':rows,'cell_width':cw,'cell_height':ch,'frame_count':len(frames)},
-        'pivot':target, 'sockets':recipe.get('sockets',{}), 'provenance': {'recipe':'recipe.json','cache_key':cache_key,'sources':packed_sources},
+        'registration_mapping':mapping, 'pivot':target, 'sockets':recipe.get('sockets',{}), 'provenance': {'recipe':'recipe.json','cache_key':cache_key,'sources':packed_sources},
         'rights':recipe.get('rights','Unspecified; inherits source restrictions.')}
+    if mapping_source:
+        asset['provenance']['source_mapping'] = mapping_source
+    if edge_source:
+        asset['provenance']['edge_preparation'] = edge_source
+    if landmark_source:
+        asset['provenance']['registration_source'] = landmark_source
     write(out/'asset.json',asset);write(out/'recipe.json',packed_recipe)
     outputs = {p.name:sha(p) for p in out.iterdir() if p.is_file()}
     report = {'version':VERSION,'cache_key':cache_key,'pillow':PILLOW_VERSION,'frame_count':len(frames),'mode':mode,
-        'shared_scale':scale,'frames':records,'warnings':warnings,'outputs':outputs,
+        'registration_mapping':mapping,'shared_scale':scale,'frames':records,'warnings':warnings,'outputs':outputs,
         'limits':['Does not remove backgrounds, track moving features, infer fake checkerboards, or judge the closing gesture.','Preview GIF timing is for inspection; the scene owns production timing.']}
     write(out/'report.json',report)
     return {'status':'built','pack':str(out),'frames':len(frames),'shared_scale':scale,'warnings':warnings}

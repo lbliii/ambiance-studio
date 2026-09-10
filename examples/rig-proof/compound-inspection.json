@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "title": "Compound object — inspect overlap and retained backing",
+  "inventory": "plans/asset-inventory.json",
+  "part_ids": ["casket-rig", "mummy-body", "mummy-gesture", "display-glass"],
+  "samples": [
+    {"id": "rest", "label": "Rest / accepted gesture reference pose", "time": 0},
+    {"id": "lift", "label": "Maximum authored lift", "time": 2},
+    {"id": "body-hidden", "label": "Hide body and attached gesture — inspect rear backing", "time": 2, "overrides": {"mummy-body": {"visible": false}}},
+    {"id": "glass-hidden", "label": "Hide fixed glass only", "time": 2, "overrides": {"stationary-glass": {"visible": false}}},
+    {"id": "gesture-hidden", "label": "Gesture contribution at lifted pose", "time": 2, "overrides": {"mummy-hand": {"visible": false}}}
+  ],
+  "regions": [{"id": "casket-detail", "label": "Body, rim and gesture", "rect": [0.15, 0.35, 0.7, 0.4]}],
+  "comparisons": [
+    {"id": "rest-to-lift", "left": "rest", "right": "lift", "difference": true},
+    {"id": "backing-exposure", "left": "lift", "right": "body-hidden", "difference": true},
+    {"id": "gesture-contribution", "left": "lift", "right": "gesture-hidden", "difference": true, "difference_gain": 8}
+  ],
+  "playback_seconds": 1
+}

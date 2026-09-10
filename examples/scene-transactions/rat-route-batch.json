@@ -1,0 +1,222 @@
+{
+  "version": 1,
+  "operations": [
+    {
+      "op": "add",
+      "asset": "gait",
+      "id": "far-rat",
+      "values": {
+        "x": 1.1,
+        "y": 0.35,
+        "width": 0.08,
+        "depth": 0.3,
+        "track_loop": "hidden-reset",
+        "tracks": {
+          "x": {
+            "interpolation": "linear",
+            "keys": [
+              [
+                0,
+                1.1
+              ],
+              [
+                2,
+                1.1
+              ],
+              [
+                3.7,
+                -0.1
+              ],
+              [
+                4,
+                -0.1
+              ]
+            ]
+          },
+          "visible": {
+            "interpolation": "hold",
+            "keys": [
+              [
+                0,
+                false
+              ],
+              [
+                2,
+                true
+              ],
+              [
+                3.8,
+                false
+              ],
+              [
+                4,
+                false
+              ]
+            ]
+          },
+          "cell": {
+            "interpolation": "hold",
+            "keys": [
+              [
+                0,
+                0
+              ],
+              [
+                2.1,
+                1
+              ],
+              [
+                2.2,
+                2
+              ],
+              [
+                2.3,
+                3
+              ],
+              [
+                2.4,
+                0
+              ],
+              [
+                2.5,
+                1
+              ],
+              [
+                2.6,
+                2
+              ],
+              [
+                2.7,
+                3
+              ],
+              [
+                2.8,
+                0
+              ],
+              [
+                2.9,
+                1
+              ],
+              [
+                3,
+                2
+              ],
+              [
+                3.1,
+                3
+              ],
+              [
+                3.2,
+                0
+              ],
+              [
+                3.3,
+                1
+              ],
+              [
+                3.4,
+                2
+              ],
+              [
+                3.5,
+                3
+              ],
+              [
+                3.6,
+                0
+              ],
+              [
+                4,
+                0
+              ]
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "add",
+      "asset": "paint",
+      "id": "arch-occluder",
+      "values": {
+        "x": 0.5,
+        "y": 0.35,
+        "width": 0.2
+      }
+    },
+    {
+      "op": "add",
+      "asset": "gait",
+      "id": "near-rat",
+      "values": {
+        "y": 0.8,
+        "width": 0.18,
+        "depth": 0.8,
+        "track_loop": "hidden-reset",
+        "tracks": {
+          "x": {
+            "interpolation": "linear",
+            "keys": [
+              [
+                0,
+                -0.1
+              ],
+              [
+                0.2,
+                -0.1
+              ],
+              [
+                1.8,
+                1.1
+              ],
+              [
+                4,
+                1.1
+              ]
+            ]
+          },
+          "visible": {
+            "interpolation": "hold",
+            "keys": [
+              [
+                0,
+                false
+              ],
+              [
+                0.2,
+                true
+              ],
+              [
+                2,
+                false
+              ],
+              [
+                4,
+                false
+              ]
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "add",
+      "asset": "paint",
+      "id": "foreground-occluder",
+      "values": {
+        "x": 0.9,
+        "y": 0.8,
+        "width": 0.2
+      }
+    },
+    {
+      "op": "order",
+      "layers": [
+        "far-rat",
+        "arch-occluder",
+        "near-rat",
+        "foreground-occluder"
+      ]
+    }
+  ]
+}

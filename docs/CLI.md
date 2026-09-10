@@ -10,6 +10,10 @@ Each finite command writes one JSON result to stdout: `ok`, `schema_version: 1`,
 
 `--out` on check/test commands writes the same result envelope to a file. CLI checks do not close quality gates; they are evidence for a separate review.
 
+`--out` on asset proofs, rendering and media verification instead names a **fresh artifact directory**. Those commands save their own reports alongside actual outputs. Audio outputs are immutable directories under the selected project's `audio/runs/`. Explicit recipe/batch/render paths are relative to the shell working directory; audio session and source paths are project-relative as described in the audio contract.
+
+Revision selections and asset/placement manifests use project-relative references. Their explicit command input/output filenames retain shell-relative semantics. `revision handoff --out` also creates a fresh artifact directory. Revision-aware commands identify working divergence separately from captured input integrity and review verdicts; see [revisions and editions](REVISIONS.md).
+
 ## Implemented commands
 
 | Command | Effect |
@@ -22,8 +26,22 @@ Each finite command writes one JSON result to stdout: `ok`, `schema_version: 1`,
 | `asset list` | Inspect this project's catalog |
 | `asset build RECIPE --out DIR` | Run the existing Pillow compiler with its immutable cache policy |
 | `asset inspect PACK` | Inspect metadata/report and verify built output hashes |
+| `asset proof PACK_OR_ID --out DIR [--catalog FILE --landmark NAME --fps N --width N]` | Produce contact sheet, onion skin, playback and an HTML source-anchor editor |
+| `asset preflight SOURCE --out DIR` | Decode image/channel/alpha facts and produce light/dark/alpha previews |
+| `asset crop SOURCE --recipe FILE --out DIR` | Export a source crop with preserved coordinate/identity mapping |
+| `asset return EDIT --mapping FILE --out DIR` | Return explicitly registered edited art as a native patch and composite derivative |
+| `asset edges PACK_OR_ID --display-width N --out DIR` | Inspect every cel at intended display size on light/dark backgrounds, with optional explicit context placement |
+| `asset edge-repair SOURCE --recipe FILE --out DIR` | Prepare an immutable, registered alpha/matte-color repair with source and recipe snapshots |
 | `asset admit PACK` | Add a compiled pack within the project to its catalog; protect existing IDs |
-| `scene inspect` | Return the scene's canvas and authored layers |
+| `library find [QUERY] [--directory DIR]` | Find assets and real proof paths across bundled and initialized project catalogs |
+| `library inspect ID [--catalog FILE]` | Inspect exact source metadata, integrity and decoded cel counts |
+| `plan inspect/check/next [--inventory PATH --out FILE]` | Reconcile intended parts, actual evidence, dependencies and remaining work; next returns five ready items by default (`--limit N`) |
+| `scene inspect [--full]` | Return the summary, or complete authored scene including camera/groups |
+| `scene apply FILE [--dry-run --expect-sha256 HASH]` | Validate an atomic batch; preview or save one restorable transaction |
+| `scene track LAYER FILE [--dry-run --expect-sha256 HASH]` | Author deterministic movement/cel tracks through the same transaction path |
+| `scene timing [--layer ID --out FILE]` | Report actual timing, holds, authored rates, output-frame sampling and inherited visibility |
+| `scene place FILE [--dry-run --expect-sha256 HASH]` | Resolve source-coordinate placement and save a validated batch |
+| `scene reparent LAYER --to PARENT --socket NAME --keep-world --at N [--dry-run --expect-sha256 HASH]` | Preserve world geometry/appearance at one reference time; report changed inheritance |
 | `scene sample --time SECONDS` | Return sampled matrices, source rectangles, cels and sockets |
 | `scene add ASSET --id ID [--name NAME] [--x N --y N --width N --depth N]` | Add an instance using the asset's default pivot |
 | `scene set LAYER [--x N --y N --scale N --rotation-deg N --opacity N --depth N --cycle-seconds N --phase-frames N]` | Validate and atomically save an authored change |
@@ -32,12 +50,38 @@ Each finite command writes one JSON result to stdout: `ok`, `schema_version: 1`,
 | `scene check [--out FILE]` | Same technical check as project check |
 | `scene history` | List preserved snapshots |
 | `scene restore SHA256` | Validate and restore a snapshot; preserve the current scene first |
-| `review draft GATE --out FILE` | Create an unperformed review draft without replacing an existing file |
+| `revision capture ID --selection FILE [--dry-run --expect-selection-sha256 HASH]` | Capture control snapshots and pin typed dependencies; never transfer pass verdicts |
+| `revision inspect ID` / `revision check ID [--out FILE]` | Inspect a captured manifest or verify actual pinned dependencies |
+| `revision compare ID --working [--out FILE]` | Show working divergence separately from captured integrity |
+| `revision handoff ID [--edition ID] --out DIR` | Save a new handoff with exact artifacts and outstanding checks |
+| `review draft GATE [--revision ID --edition ID] --out FILE` | Create an unperformed legacy or revision-bound review draft |
 | `review record FILE` | Record actual criteria/evidence with the existing gate tool |
-| `preview [--port N]` | Serve the selected project on localhost, read-only |
+| `look inspect/check [--time N --out FILE]` | Validate grades, light signals, receiving surfaces and actual typed dependencies |
+| `look apply FILE [--dry-run --expect-sha256 HASH]` | Save a complete finishing recipe through the scene transaction path |
+| `look export --out DIR [--include-rig]` | Package a look and optionally its mounting, cel/track, group and layer definitions |
+| `look import PACKAGE --bindings FILE [--include-rig --dry-run --expect-sha256 HASH]` | Rebind a package to explicit targets; rig adoption requires matching canvas/clock and exact rig assets |
+| `preview [--port N] [--look DIR]` | Serve the selected project, or receipt-verified look artifact, on localhost read-only |
+| `render frame --time N --out DIR [--revision ID]` | Render an actual PNG from the shared scene evaluator and drawing code |
+| `render proof --out DIR [--revision ID --start N --seconds N --disable LAYER --width N]` | Render a normal-speed HTML comparison with frame seeking and optional disabled layers |
+| `render rig-proof FILE --out DIR [--revision ID --width N]` | Render named poses/hidden-part variants, detail crops, differences and optional playback |
+| `render look-proof FILE --out DIR [--revision ID --width N --supersample 1/2/4]` | Save interactive baseline/variant comparison, grading/light controls, passes and downloadable transactions |
+| `render video --out DIR [--revision ID --edition ID --seconds N --repeats N --audio WAV --width N --height N --bitrate N]` | Encode H.264, optionally mux PCM, verify output and optionally bind an edition |
+| `media compose PICTURE --audio PCM --repeats N --out DIR [--revision ID --edition ID --picture-receipt FILE]` | Reuse compressed picture samples with selected PCM; verify the resulting edition |
+| `media verify FILE --out DIR [--frames N --loop-frames N --audio-tracks 0/1 --contact-time N --contact-frame N]` | Completely decode video/audio, check timing and save join/requested-contact evidence |
+| `audio inspect SESSION` | Validate explicit selected PCM sources and inspect arrangement/levels |
+| `audio import-stems SESSION --session-id ID` | Preserve a legacy session and create a new executable session from its rendered stems |
+| `audio mix SESSION [--run-id ID --start N --duration N --solo STEM --mute STEM --gain STEM=DB]` | Render a versioned circular arrangement, aligned stems and numerical reports |
+| `audio compare SESSION --variant-b FILE [--run-id ID --start N --duration N]` | Create matching A/B excerpts without automatic normalization |
+| `audio check WAV_OR_RUN` | Inspect PCM or verify a saved run's hashes, timing and stem reconstruction |
 | `test [--out FILE]` | Run Python regressions, legacy/rig Node checks and package audit |
 
 A blank project is the default for new artwork. It has no layers; its technical check deliberately reports incomplete until prepared assets and a scene are added. The explicit Last Lantern template copies the existing assets into the project, so editing one project cannot modify another's catalog or artwork.
+
+Detailed contracts and examples: [inventory and asset proofs](PRODUCTION-INVENTORY.md), [crop/return preparation](ASSET-PREPARATION.md), [scene transactions](architecture/SCENE-TRANSACTIONS.md), [authored tracks](SCENE-CONTRACT.md), [rendering/media](RENDERING.md), [audio sessions](AUDIO-SESSION.md), [revisions and editions](REVISIONS.md). Edition audio may cite `--audio-run`, `--audio-provenance` or additional `--audio-session` inputs; their provenance requirements are described in the revision contract.
+
+Track files contain `version: 1`, a `tracks` object and optional `track_loop` (`closed` by default). Track values use the scene contract's units; rotation is radians. A batch can author a whole rig, including existing motions and per-cel sockets, in one file. Dry runs validate without writing history or the scene. `--expect-sha256` rejects stale edits under the project lock. Failed batches preserve the original scene.
+
+Run `scene apply batch.json --dry-run` to review its candidate and obtain `data.previous_sha256`. Supply that exact value as `--expect-sha256` when saving the batch. The command also checks that the scene did not change during validation. Direct file writers do not participate in the CLI lock.
 
 ## Attach without coordinate reconstruction
 
@@ -66,6 +110,8 @@ These paths are relative to the shell's working directory; they are explicit eve
 
 Scene writes are validated by the same evaluator used in the browser. The previous file is retained by SHA-256 under `.ambiance/scene-history/`. A per-project write lock prevents simultaneous CLI writers. If a process is killed, verify that no writer is active before removing its stale `.ambiance/write.lock`. Direct file edits and the legacy scripts do not acquire this CLI lock.
 
-The read-only preview never saves over a CLI change. Export browser JSON deliberately, then reload the page to pick up saved project files. Asset/catalog edits and scene edits make affected review evidence stale through the project's watch paths. Existing projects created only with `studio.py` need the explicit project configuration before the new CLI can open them; no silent migration is attempted.
+The read-only preview never saves over a CLI change. Export browser JSON deliberately, then reload the page to pick up saved project files. Asset/catalog edits and scene edits make affected legacy review evidence stale through the project's watch paths. Existing projects created only with `studio.py` need the explicit project configuration before the new CLI can open them; no silent migration is attempted.
 
-The CLI has no full-fidelity frame/video export, audio mix engine or provider queue yet. Browser pixel audits, human visual/listening review and encoded-video checks remain separate evidence.
+Version 0.7 adds opt-in [finishing](FINISHING.md), [edge quality](EDGE-QUALITY.md), and a [look workbench](LOOK-WORKBENCH.md). `render frame/proof/video` also accept `--supersample 1/2/4`; internal dimensions must remain at most 4096 per side, and output size/aspect ratio stay unchanged. A 1080 × 1920 export supports scale 2. `preview --look DIR` needs no selected project; it loads only receipt-listed files and rejects altered artifacts.
+
+The renderer uses Node Canvas for images/proofs and macOS AVFoundation for video/verification. This does not port all historical Last Lantern effects into the shared scene automatically. Audio arrangement accepts explicit PCM WAV sources and performs no source synthesis, resampling or automatic normalization. Provider queues and automatic image decomposition remain unimplemented. Browser pixel audits, human visual/listening review and encoded-video checks establish different evidence.

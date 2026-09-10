@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Local, dependency-free entry point for the Ambiance Kit placement prototype."""
+"""Local validation entry point; scene semantics are evaluated by the shared Node engine."""
 import argparse
 import functools
 import hashlib
@@ -106,12 +106,33 @@ def validate(scene_path, catalog_path=None):
             require(positive(cycle), f'{id}: missing positive cel cycle')
             if positive(cycle):
                 require(abs(duration/cycle-round(duration/cycle)) < 1e-8, f'{id}: cel cycle must divide visual loop')
-                cycles.append(dict(layer=id, seconds=cycle, cel_fps=asset['atlas']['frame_count']/cycle))
+                cycles.append(dict(layer=id, seconds=cycle))
             phase = layer.get('phase_frames',0)
             require(number(phase) and float(phase).is_integer() and phase >= 0, f'{id}: phase must be a non-negative integer')
     if 'audio' in scene:
         a = scene['audio']['loop_seconds']
         require(positive(a) and abs(a/duration-round(a/duration)) < 1e-8, 'Audio duration must be a whole number of picture loops')
+    timing = None
+    if not errors:
+        node = shutil.which('node')
+        require(node is not None, 'Node is required for shared scene timing validation.')
+        if node:
+            process = subprocess.run([node, str(ROOT/'tools/scene-command.mjs')],
+                input=json.dumps({'action':'timing','scene':scene,'catalog':catalog}), capture_output=True, text=True)
+            try:
+                result=json.loads(process.stdout)
+                require(process.returncode == 0 and result.get('ok'), 'Scene timing validation failed: '+str(result.get('error','unknown error')))
+                if result.get('ok'):
+                    timing=result['data'];by_layer={r['layer']:r for r in timing['layers']}
+                    for entry in cycles:
+                        row=by_layer[entry['layer']];fallback=row['fallback_cycle']
+                        entry.update(cel_fps=None if row['timing_driver']=='cell_track' else fallback['nominal_cel_fps'],
+                            timing_driver=row['timing_driver'],fallback_cycle=fallback,
+                            timing_summary={'authored_rate_segments':row['authored']['rate_segments'],
+                                'sampled_cel_transitions':row['sampled']['cel_transitions'],
+                                'unpresented_authored_holds':len(row['sampled']['unpresented_authored_holds'])})
+            except (ValueError,KeyError,TypeError):
+                errors.append('Scene timing runtime returned an invalid result: '+process.stderr.strip())
     if any('attach' in l or 'sockets' in l for l in scene['layers']):
         node = shutil.which('node')
         require(node is not None, 'Node is required to validate attachment graphs.')
@@ -119,7 +140,7 @@ def validate(scene_path, catalog_path=None):
             result = subprocess.run([node, str(ROOT/'tools/check-scene.mjs'), str(scene_path.resolve()), '--catalog', str(catalog_path.resolve())], capture_output=True, text=True)
             require(result.returncode == 0, 'Attachment/scene audit failed: '+result.stdout if result.returncode else '')
     return dict(ok=not errors, scene=scene['id'], asset_count=len(assets), layer_count=len(ids),
-                export_frame_count=round(duration*c['fps']), cycles=cycles, errors=errors,
+                export_frame_count=round(duration*c['fps']), cycles=cycles, timing=timing, errors=errors,
                 limits=['PNG headers and hashes checked; no pixel alpha/edge analysis.',
                         'No rendered video, audio, or aesthetic validation performed by this command.'])
 
