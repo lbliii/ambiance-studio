@@ -1,39 +1,29 @@
 """A local, JSON-first interface to the studio's tested production tools."""
 import argparse
-from contextlib import contextmanager
-from datetime import datetime, timezone
 import importlib.util
 import json
-import os
 from pathlib import Path
 import platform
 import shutil
-import shlex
 import subprocess
 import sys
 import tempfile
 
 from . import __version__
 from . import planning, assets, revisions
+from .errors import CommandError
+from .project import locations, project_lock
+from .scene_runtime import require_node, scene_bridge
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 import studio
-
-class CommandError(Exception):
-    def __init__(self,message,code='invalid_input',exit_code=2):
-        super().__init__(message);self.code=code;self.exit_code=exit_code
 
 class Parser(argparse.ArgumentParser):
     def error(self,message):raise CommandError(message)
 
 def emit(command,data,ok=True):
     print(json.dumps({'ok':ok,'schema_version':1,'command':command,'data':data},indent=2,allow_nan=False))
-
-def require_node():
-    node=shutil.which('node')
-    if not node:raise CommandError('Node is required for scene operations. Run ambiance doctor.','missing_dependency',3)
-    return node
 
 def asset_tool():
     if importlib.util.find_spec('PIL') is None:raise CommandError('Install requirements-assets.txt with this Python to prepare assets.','missing_dependency',3)
@@ -58,36 +48,6 @@ def optional_project_path(value, registry_file=None):
     for p in [Path.cwd(),*Path.cwd().parents]:
         if (p/'ambiance-project.json').is_file():return p.resolve()
     return None
-
-def locations(project):
-    conf=studio.read(project/'ambiance-project.json')
-    if conf.get('version')!=1:raise CommandError('Unsupported project configuration version')
-    return studio.inside(project,conf['scene']),studio.inside(project,conf['catalog'])
-
-@contextmanager
-def project_lock(project):
-    directory=project/'.ambiance';directory.mkdir(exist_ok=True)
-    lock=directory/'write.lock'
-    try:fd=os.open(lock,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)
-    except FileExistsError:raise CommandError(f'Project is locked: {lock}. Check for an active writer before removing a stale lock.','project_locked',2)
-    try:
-        with os.fdopen(fd,'w') as f:f.write(str(os.getpid()))
-        yield
-    finally:lock.unlink(missing_ok=True)
-
-def scene_bridge(action,scene,catalog,args):
-    p=subprocess.run([require_node(),str(ROOT/'tools/scene-command.mjs')],input=json.dumps({'action':action,'scene':scene,'catalog':catalog,'args':args},allow_nan=False),text=True,capture_output=True)
-    try:result=json.loads(p.stdout)
-    except ValueError:raise CommandError('Scene evaluator failed: '+p.stderr.strip(),'runtime_error',3)
-    if p.returncode or not result['ok']:raise CommandError(result.get('error','Scene operation failed'))
-    return result['data']
-
-def save_scene(project,path,next_scene,operation):
-    history=project/'.ambiance/scene-history';history.mkdir(parents=True,exist_ok=True)
-    previous=studio.digest(path);backup=history/f'{previous}.json'
-    if not backup.exists():shutil.copy2(path,backup)
-    studio.write(path,next_scene)
-    return {'scene':str(path),'operation':operation,'previous_sha256':previous,'sha256':studio.digest(path),'restore_command':shlex.join(['ambiance','--project',str(project),'scene','restore',previous])}
 
 def init_project(destination,reference,title,template):
     destination=Path(destination).resolve()
@@ -267,25 +227,10 @@ def run(args):
         result['current_delivery']=deliveries.latest(project)
         return result
     if command in ['project','scene'] and action=='check':return check_project(project)
+    if command in ['look','scene']:
+        from . import scene_commands
+        return scene_commands.run_look(args,project) if command=='look' else scene_commands.run_scene(args,project)
     scene_path,catalog_path=locations(project)
-    if command=='look':
-        from . import finishing, scene_authoring
-        with project_lock(project):
-            previous=studio.digest(scene_path);catalog_hash=studio.digest(catalog_path);config_hash=studio.digest(project/'ambiance-project.json')
-            scene=studio.read(scene_path);catalog=studio.read(catalog_path)
-            if action in ['inspect','check']:return finishing.inspect(project,scene,catalog,args.time)
-            if action=='export':return finishing.export_package(project,scene,catalog,args.out,include_rig=getattr(args,'include_rig',False))
-            if args.expect_sha256 and args.expect_sha256!=previous:raise CommandError('Scene changed since expected SHA-256.','stale_input',2)
-            extra=[];detail={}
-            if action=='apply':
-                extra=[finishing.file_dependency(args.file,'look-input')];batch=finishing.load_apply(args.file)
-            else:batch,extra,detail=finishing.import_batch(project,scene,catalog,args.package,args.bindings,include_rig=getattr(args,'include_rig',False))
-            batch,dependencies=scene_authoring.resolve_batch(project,scene,catalog,batch);dependencies+=extra
-            candidate=scene_bridge('apply',scene,catalog,{'batch':batch,'report':True})['scene']
-            if studio.digest(scene_path)!=previous or studio.digest(catalog_path)!=catalog_hash or studio.digest(project/'ambiance-project.json')!=config_hash:raise CommandError('Project changed during look validation; nothing saved.','stale_input',2)
-            scene_authoring.verify_dependencies(project,dependencies)
-            if args.dry_run:return {'dry_run':True,'previous_sha256':previous,'scene':candidate,'dependencies':dependencies,'import':detail}
-            return {**save_scene(project,scene_path,candidate,'look-'+action),'dependencies':dependencies,'import':detail}
     if command=='preview':
         checked=check_project(project)
         if not checked['ok']:raise CommandError('Project checks failed. Run project check for details.','check_failed',1)
@@ -305,42 +250,6 @@ def run(args):
             source=studio.read(args.file);subject=source.get('subject',{})
             context=revisions.review_context(project,subject['revision'],subject.get('edition')) if source.get('version')==2 else None
             return studio.record_review(project,args.file,context)
-    if command=='scene':
-        if action in ['inspect','sample','timing']:return scene_bridge(action,studio.read(scene_path),studio.read(catalog_path),{'time':getattr(args,'time',None),'full':getattr(args,'full',False),'layer':getattr(args,'layer',None)})
-        if action=='history':
-            return {'snapshots':[{'sha256':p.stem,'path':str(p)} for p in sorted((project/'.ambiance/scene-history').glob('*.json'))]}
-        with project_lock(project):
-            if action in ['apply','track','place','reparent']:
-                from . import scene_authoring
-                previous=studio.digest(scene_path)
-                catalog_hash=studio.digest(catalog_path);config_hash=studio.digest(project/'ambiance-project.json')
-                scene=studio.read(scene_path);catalog=studio.read(catalog_path)
-                if args.expect_sha256 and args.expect_sha256!=previous:raise CommandError('Scene changed since the expected SHA-256; inspect and rebase the edit.','stale_input',2)
-                if action=='reparent':batch={'version':1,'operations':[{'op':'reparent','layer':args.layer,'to':args.to,'socket':args.socket,'preserve':'world_at_time','at_seconds':args.at}]}
-                else:batch=studio.read(args.file)
-                if action=='place':batch=scene_authoring.placement_batch(batch)
-                if action=='track':
-                    if batch.get('version')!=1 or not isinstance(batch.get('tracks'),dict) or set(batch)-{'version','tracks','track_loop'}:raise CommandError('Track file needs version 1, tracks and optional track_loop.')
-                    values={'tracks':batch['tracks'],'track_loop':batch.get('track_loop','closed')}
-                    batch={'version':1,'operations':[{'op':'set','layer':args.layer,'values':values}]}
-                batch,dependencies=scene_authoring.resolve_batch(project,scene,catalog,batch)
-                reported=scene_bridge('apply',scene,catalog,{'batch':batch,'report':True})
-                candidate=reported['scene'];diagnostics=reported['operations']
-                if studio.digest(scene_path)!=previous:raise CommandError('Scene changed during validation; no edit was saved.','stale_input',2)
-                if studio.digest(catalog_path)!=catalog_hash or studio.digest(project/'ambiance-project.json')!=config_hash:raise CommandError('Catalog or project configuration changed during validation; no edit was saved.','stale_input',2)
-                scene_authoring.verify_dependencies(project,dependencies)
-                if args.dry_run:return {'dry_run':True,'previous_sha256':previous,'scene':candidate,'operations':len(batch['operations']),'diagnostics':diagnostics,'dependencies':dependencies}
-                return {**save_scene(project,scene_path,candidate,action),'diagnostics':diagnostics,'dependencies':dependencies}
-            operation_args=vars(args).copy()
-            # Only primitive scene arguments cross the JSON bridge.
-            operation_args.pop('project',None)
-            operation_args.pop('registry',None)
-            if action=='restore':
-                import re
-                if not re.fullmatch('[0-9a-f]{64}',args.sha256):raise CommandError('Provide a SHA-256 returned by scene history.')
-                operation_args['snapshot']=studio.read(project/'.ambiance/scene-history'/f'{args.sha256}.json')
-            next_scene=scene_bridge(action,studio.read(scene_path),studio.read(catalog_path),operation_args)
-            return save_scene(project,scene_path,next_scene,action)
     raise CommandError('Unsupported command')
 
 def main(argv=None):

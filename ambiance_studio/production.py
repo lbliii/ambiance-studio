@@ -136,7 +136,8 @@ def validate_recipe(recipe):
 
 
 def iteration(project, recipe, actor):
-    from .cli import parser, run, project_lock
+    from .cli import parser, run
+    from .project import project_lock
     validate_recipe(recipe)
     id = recipe['id']; path = run_file(project, id); directory = path.parent
     with project_lock(project):

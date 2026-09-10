@@ -1,6 +1,10 @@
 # Scene transactions and authored tracks
 
-A transaction makes a complete scene change reviewable before it is saved. The Python CLI acquires the project lock, checks an optional expected scene hash, and preserves the previous scene before replacing it. `tools/scene-command.mjs` edits a private JSON copy and validates the result with the same `editor/engine.mjs` used in preview and rendering. A rejected operation or final graph produces an error and no candidate scene.
+A transaction makes a complete scene change reviewable before it is saved. The CLI delegates scene and look commands to `ambiance_studio/scene_commands.py`. Both use `scene_transactions.py` to acquire the project lock, check an optional expected scene hash, and preserve the previous scene before replacing it. `scene_runtime.py` owns transport to `tools/scene-command.mjs`, which edits a private JSON copy and validates the result with the same `editor/engine.mjs` used in preview and rendering. A rejected operation or final graph produces an error and no candidate scene.
+
+Every scene mutation, including single-layer edits and restore, captures the exact configuration, scene and catalog bytes under the lock and checks their identities again before saving. Batch, track, placement and look input files are pinned as dependencies; edits or symlink retargeting during validation abort the transaction. History preserves the captured scene bytes. Existing history files and requested restore snapshots must match their content hashes. Dry runs create no history. Direct file writers still bypass the lock: these checks detect changes during validation but do not provide a filesystem compare-and-swap against writers racing the final replacement.
+
+Asset packs shared by several placements are validated once per batch. The final dependency check still hashes every pinned input before saving; validation results are never cached across transactions.
 
 ## Batch contract
 
