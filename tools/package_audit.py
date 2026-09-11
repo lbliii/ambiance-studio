@@ -42,8 +42,16 @@ result=subprocess.run([sys.executable,str(ROOT/'kit.py'),'check'],capture_output
 if result.returncode: errors.append('Bundled asset/scene check failed: '+result.stdout+result.stderr)
 try: asset_report=json.loads(result.stdout)
 except ValueError: asset_report=None
+try:
+    from ambiance_studio.roadmap import check as roadmap_check
+    roadmap_report=roadmap_check(ROOT)
+    errors.extend(roadmap_report['errors'])
+except ImportError:
+    roadmap_report=None;errors.append('Roadmap check needs PyYAML: python3 -m pip install -r requirements-checks.txt')
+except (ValueError, TypeError, KeyError) as error:
+    roadmap_report=None;errors.append('Invalid roadmap: '+str(error))
 report=dict(ok=not errors,skills=skills,local_links_checked=links,
-            bundled_asset_check=asset_report,errors=errors,
+            bundled_asset_check=asset_report,roadmap=roadmap_report,errors=errors,
             limits=['No independent agent behavior trial or film review is implied.',
                     'This lightweight frontmatter check supplements the authoring-time skill validator.'])
 print(json.dumps(report,indent=2));sys.exit(0 if report['ok'] else 1)
