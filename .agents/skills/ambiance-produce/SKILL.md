@@ -7,6 +7,8 @@ description: "Plan and carry an ambiance film from a reference image through lay
 
 Use `./ambiance` from the studio root, with `--project PATH` before the command. Read [operations](../../../docs/OPERATIONS.md) for project handling and [quality gates](../../../docs/QUALITY-GATES.md) for evidence rules.
 
+Author canonical creative intent with the [production plan](../../../docs/PRODUCTION-PLAN.md) and `plan spec inspect/check/apply`. Keep five-dimensional intent and expectations there, fulfillment in inventory, runtime in scene, and actual observations in reviews. Migrate legacy census notes explicitly with preserved originals; `plan complexity` reports workload, not artistic quality.
+
 1. Locate the user's project with `project list`; registered IDs work across code worktrees. Read its brief, authored handoff and `project overview` for current movies, open criteria and available work. Use `project status` for detailed gate/revision evidence. For a new project, preserve the supplied image with `ambiance project init` and register its canonical location with `studio register PATH`. If the reference is attached without a usable local path, inspect it through the available image capability and preserve a returned local copy when supported; do not claim it was archived before it exists.
 2. Inspect the reference. Record what is visible separately from proposed additions. Read the [style guide](../../../docs/STYLE-GUIDE.md); adapt its defaults to the user's image and explicit direction.
 3. Use `doctor` to inspect local capabilities. Record dimensions, picture/master durations, assets and generation authority. Continue local work if paid tools are unavailable; a plugin login does not establish API access.
