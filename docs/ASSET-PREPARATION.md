@@ -1,5 +1,7 @@
 # Raster preflight, crop and registered return
 
+For interactive separation of one moving part and its fixed foreground, use the [preparation workbench](PREPARATION-WORKBENCH.md). It keeps removal and cutout masks distinct, uses this module's affine resampler, and exports source-mapped derivatives with compiler recipes.
+
 These helpers produce local derivatives and measured facts. They never call an image provider, infer a clean matte from an alpha channel, or replace accepted source art. Every output directory must be new.
 
 ```sh

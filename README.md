@@ -1,8 +1,10 @@
 # Ambiance Studio
 
-A local studio for painted, layered ambiance films. The CLI is the main interface for agents and repeatable production; the browser workbench provides visual placement and review.
+A local studio for painted, layered ambiance films, designed for agent operation first. The agent pilots production through structured CLI/tools and saved project state. Localhost lets the human observe, compare and judge results, with optional visual editing for the human or agent.
 
 Version 0.8.0 adds a [local film library](docs/STUDIO-LIBRARY.md): projects shared across worktrees, explicit current review movies, edition history and comparison, timestamped feedback, and resumable local iteration runs. It preserves the existing rendering, sound, finishing, revision and evidence workflows.
+
+The [asset preparation workbench](docs/PREPARATION-WORKBENCH.md) combines source/backing inspection, separate removal/cutout/foreground masks, alignment and a shared-engine movement preview. Author its JSON recipe directly and run `asset prepare` to build fresh, reproducible parts. The browser can inspect the result or export optional visual edits through the same recipe. Try the [independent example](examples/preparation-workbench/README.md).
 
 ## Start here
 

@@ -1,5 +1,15 @@
 # CLI-first studio architecture
 
+## Product priority: agent operation, human observation
+
+User direction, September 11, 2026: the agent is the primary production operator. Optimize the toolkit for how an agent inspects state, authors bounded changes, runs tools, reads concise results, inspects rendered artifacts and resumes work. The human supplies creative direction and judges the quality of concrete results. Human observability is essential, with implementation priority following the agent's operational capabilities.
+
+Each production capability starts with a saved contract and a callable CLI/tool path. Operations share validation and implementation with localhost. Browser interaction is optional: it can help the human inspect or adjust work, and the agent can use computer control when visual interaction is useful. It must not be the only way to author a mask, configure a look, inspect an intermediate result or advance production.
+
+The default agent loop is inspect → author a bounded change → validate/build → inspect picture or sound artifacts → present a comparison → incorporate feedback. Return compact state, actionable errors and exact artifact paths; keep full evidence available without requiring the agent to read it on every call. Prefer useful batch operations and recoverable state over recreating every GUI gesture as an individual command. Technical evidence supports artistic judgment; the agent also inspects its own visual/listening results wherever its tools permit.
+
+Acceptance requires an agent to run the production path from saved inputs without UI interaction. Test localhost separately for legible progress, version-specific previews, comparison and feedback. A successful browser editing demonstration alone does not establish agent ergonomics.
+
 ## Decisions implemented in 0.4
 
 The CLI is an adapter over the existing tools. It emits structured results, selects a project explicitly, and calls the shared JavaScript evaluator for scene validation and sampling. It does not recreate motion math in Python. The browser reads the same saved scene/catalog through a read-only project server.
@@ -25,6 +35,8 @@ The [next-pass design](CLI-NEXT-PASS.md) is implemented: shared timing reports, 
 The [library contract](../STUDIO-LIBRARY.md) adds a machine-local registry, project discovery across Git worktrees, immutable delivery sets, append-only presentation selections, movie streaming and exact-version feedback. `production.py` composes existing capture/render/compose/verify functions into resumable local iteration runs. `project overview` joins existing review and planning results without redefining readiness. `studio_server.py` serves the library independently of working-scene validity. The editor retains its existing saved-scene boundary.
 
 ## Remaining engineering slices
+
+The [preparation workbench plan](ASSET-PREPARATION-WORKBENCH.md) turns the museum's mask and alignment lessons into an integrated CLI/browser workflow. Its first slice provides saved separation recipes, interactive masks/alignment and shared-engine motion proofs. The next engineering pass improves direct recipe inspection, validation, bounded edits and proof discovery for the agent; a measured agent-operated pilot on a different painting follows.
 
 Version 0.7 adds the [finishing/edge implementation](CLI-FINISHING-PLAN.md), with opt-in shared rendering, reproducible appearance packages, all-cel matte inspection/repair, supersampling and browser look development. Future physical lighting or additional color spaces must extend the explicit contract; existing painted shadows and parallax depths do not establish full scene geometry.
 

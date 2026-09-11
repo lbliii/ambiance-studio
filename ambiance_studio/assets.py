@@ -184,6 +184,10 @@ def proof(identifier,out,project=None,catalog=None,fps=6,width=180,landmark='anc
 
 
 def add_preparation_parsers(group):
+    q=group.add_parser('prepare',help='Build a source-coordinate separation workbench and reproducible parts')
+    q.add_argument('source',type=Path,nargs='?');q.add_argument('--backing',type=Path)
+    q.add_argument('--recipe',type=Path);q.add_argument('--backing-to-source',type=float,nargs=6)
+    q.add_argument('--out',type=Path,required=True)
     q=group.add_parser('preflight',help='Decode transparency facts and make light/dark previews');q.add_argument('source',type=Path);q.add_argument('--out',type=Path,required=True)
     q=group.add_parser('crop',help='Export a mapped source crop into a fresh directory');q.add_argument('source',type=Path);q.add_argument('--recipe',type=Path,required=True);q.add_argument('--out',type=Path,required=True)
     q=group.add_parser('return',help='Register a returned edit and blend into a source derivative');q.add_argument('edit',type=Path);q.add_argument('--mapping',type=Path,required=True);q.add_argument('--out',type=Path,required=True)
@@ -193,6 +197,9 @@ def add_preparation_parsers(group):
 
 def run_preparation(args,project):
     from . import asset_prep
+    if args.action=='prepare':
+        from . import preparation
+        return preparation.build(project,args.out,args.recipe,args.source,args.backing,args.backing_to_source)
     if args.action=='preflight': return asset_prep.preflight(args.source,args.out)
     if args.action=='crop': return asset_prep.crop(project,args.source,args.recipe,args.out)
     if args.action=='return': return asset_prep.return_edit(project,args.edit,args.mapping,args.out)

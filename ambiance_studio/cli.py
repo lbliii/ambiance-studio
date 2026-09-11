@@ -141,7 +141,10 @@ def parser():
     q=group.add_parser('draft');q.add_argument('gate');q.add_argument('--out',type=Path,required=True)
     q.add_argument('--revision');q.add_argument('--edition')
     q=group.add_parser('record');q.add_argument('file',type=Path)
-    q=sub.add_parser('preview',help='Serve this project or saved look read-only on localhost');q.add_argument('--port',type=int,default=8783);q.add_argument('--look',type=Path,help='Serve a verified look-proof artifact without requiring a project')
+    q=sub.add_parser('preview',help='Serve a project, saved look or preparation workspace on localhost');q.add_argument('--port',type=int,default=8783)
+    preview_kind=q.add_mutually_exclusive_group()
+    preview_kind.add_argument('--look',type=Path,help='Serve a verified look-proof artifact without requiring a project')
+    preview_kind.add_argument('--prepare',type=Path,help='Inspect and edit a verified preparation draft without writing project files')
     q=sub.add_parser('test',help='Run local regression checks without paid providers');q.add_argument('--out',type=Path)
     planning.add_parsers(sub);assets.add_library_parsers(sub);revisions.add_parsers(sub)
     from . import rendering, audio, finishing, production
@@ -162,6 +165,7 @@ def run(args):
     if command=='doctor':
         from . import rendering, audio
         render_caps=rendering.capabilities();audio_caps=audio.capabilities()
+        render_caps['preparation_workbench']=importlib.util.find_spec('PIL') is not None and bool(shutil.which('node'))
         pillow=importlib.util.find_spec('PIL') is not None
         return {'version':__version__,'root':str(ROOT),'python':platform.python_version(),'python_executable':sys.executable,
             'node':shutil.which('node'),'pillow':pillow,'ffmpeg':shutil.which('ffmpeg'),'ffprobe':shutil.which('ffprobe'),
@@ -191,6 +195,9 @@ def run(args):
     if command=='preview' and args.look is not None:
         from .preview import serve_look
         serve_look(args.look,args.port);return None
+    if command=='preview' and args.prepare is not None:
+        from .preparation_server import serve
+        serve(args.prepare,args.port);return None
     project=project_path(args.project,args.registry)
     if command in ['delivery','iteration','feedback'] or (command=='project' and action in ['latest','overview']):
         from . import production, deliveries
@@ -210,7 +217,7 @@ def run(args):
         else:id=result.get('id') or result.get('selection',{}).get('delivery')
         if id:result.update(watch_url=f'{base}/projects/{alias}/deliveries/{id}',current_url=f'{base}/projects/{alias}')
         return result
-    if command=='asset' and action in ['preflight','crop','return','edges','edge-repair']:return assets.run_preparation(args,project)
+    if command=='asset' and action in ['prepare','preflight','crop','return','edges','edge-repair']:return assets.run_preparation(args,project)
     if command=='revision':return revisions.run(args,project)
     if command=='plan':return planning.run(args,project)
     if command in ['render','media']:
