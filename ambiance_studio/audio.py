@@ -31,6 +31,8 @@ def capabilities():
 
 def add_parsers(sub):
     group = sub.add_parser('audio', help='Inspect, arrange and compare explicit PCM audio sessions').add_subparsers(dest='action', required=True)
+    from . import audio_cues
+    audio_cues.add_parsers(group)
     p = group.add_parser('inspect'); p.add_argument('session', type=Path)
     p = group.add_parser('import-stems', help='Create a new unity-gain session from an existing session stem list')
     p.add_argument('legacy_session', type=Path); p.add_argument('--session-id', required=True)
@@ -151,7 +153,7 @@ def write_wav(path, left, right, rate):
 
 def load_session(project, path, *, session_data=None):
     session = read_json(path) if session_data is None else session_data
-    fields(session, ['format', 'schema_version', 'id', 'sample_rate', 'frames', 'sources', 'stems', 'clips', 'master_gain_db', 'notes', 'imported_from', 'picture_events'], 'session')
+    fields(session, ['format', 'schema_version', 'id', 'sample_rate', 'frames', 'sources', 'stems', 'clips', 'master_gain_db', 'notes', 'imported_from', 'picture_events', 'picture_sync'], 'session')
     if session.get('format') != FORMAT or session.get('schema_version') != 1:
         raise ValueError('Expected ambiance-audio-session schema_version 1; use audio import-stems for a legacy session with rendered stems')
     identifier(session.get('id'), 'session id')
@@ -215,6 +217,9 @@ def load_session(project, path, *, session_data=None):
     for clip in clips:
         if clip.get('source_start_frame', 0) + clip['frames'] > infos[clip['source']]['frames']:
             raise ValueError(f'Clip {clip["id"]} region exceeds selected source')
+    if 'picture_sync' in session:
+        from .audio_cues import validate_sync
+        validate_sync(session['picture_sync'], session)
     return session, infos
 
 
@@ -449,6 +454,9 @@ def check_audio(path):
 
 def run(args, project):
     project = Path(project).resolve(); action = args.action
+    if action in ['cue-bind', 'cue-check']:
+        from . import audio_cues
+        return audio_cues.bind(args, project) if action == 'cue-bind' else audio_cues.check(args, project)
     if action == 'check': return check_audio(argument_path(project, args.path))
     if action == 'import-stems': return import_stems(project, argument_path(project, args.legacy_session), args.session_id)
     path = argument_path(project, args.session)

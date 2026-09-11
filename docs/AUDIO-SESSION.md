@@ -102,3 +102,17 @@ Pan applies to the supplied clip as a whole. For an object whose direct sound tr
 Peaks are **sample peaks**, not oversampled true peaks. RMS is unweighted dBFS, **not LUFS**. A seam delta is a numerical observation, not proof of a seamless musical phrase. The commands do not claim listening, spatial realism, phone readability, an effective score, AAC alignment or final media review. Record actual listening observations against the output filename/hash separately.
 
 Regression fixtures in `tests/test_audio.py` check exact placement and circular tails, region selection, repeats, fades, stereo preservation, pan travel, relative A/B gains, excerpt timing, source mutation/missing-source failures, output immutability, reconstruction, tampering and unsupported processing fields. They require no provider or network.
+# Explicit picture-action cue binding
+
+Use [scene activity](SCENE-ACTIVITY.md) to measure the complete selected picture loop at stride one before binding sound. This is separate from the existing descriptive `picture_events` notes.
+
+```sh
+./ambiance --project PROJECT audio cue-bind audio/session.json --activity reports/activity/activity-report.json --links cue-links.json --pcm audio/selected.wav --out audio/session-cues.json
+./ambiance --project PROJECT audio cue-check audio/session-cues.json --activity reports/revised-activity/activity-report.json --pcm audio/selected.wav --out reports/cue-check.json
+```
+
+The links input is an array such as `[{"clip_id":"rustle","action_id":"paper-turn","picture_frames":[30,150],"offset_samples":2400}]`. Each repeated clip start needs an explicit picture frame. `offset_samples` is a signed integer on the session PCM clock. The binding command requires every actual clip start to equal `picture_frame × sample_rate / picture_fps + offset_samples` exactly, without implicit rounding. Picture/session lengths and an optional selected PCM length must match. The source session is preserved; the output is a fresh derivative.
+
+The optional session `picture_sync` version 1 stores the exact activity receipt hash, scene/catalog/plan/clock identities, measured action state hashes and authored cadence, links, selected source byte/decoded PCM hashes, and optional selected PCM identity. It never changes gains, samples, generation or audition state. `audio cue-check` returns nonzero on changed/deleted/retimed/repeated actions, picture fps/loop changes, moved audio clips, source changes or different selected PCM. A changed gesture can require sound review even if its first onset is unchanged. Identical-duration views with identical action state can reuse the same selected soundtrack; crop-dependent sound design remains an explicit separate session.
+
+The diagnostics identify affected clip IDs and preserve before/after evidence. They do not choose replacement anchors, stretch waveforms, generate new effects or assert a listening pass. After deliberately revising timing, write a new binding and listen to the chosen picture/sound pair. Native tests verify identical selected PCM snapshots and exact sample counts/alignment across both view movies; lossy AAC decoding is not claimed to preserve PCM bytes.

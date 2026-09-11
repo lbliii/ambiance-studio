@@ -218,7 +218,8 @@ class CoverageTests(unittest.TestCase):
             clock={'start_frame':0,'frames':6,'fps':6,'picture_seconds':1,'stride':1},actions=[action],summary=[{'view':'portrait','actions':[row]}])
         file=self.p/'activity-contract.json';studio.write(file,{'fixture':'Provider interface is mocked here; no measured runtime claim'})
         provider=SimpleNamespace(verify_receipt=lambda path:report,actions_from_plan=lambda p:p['actions'])
-        with patch.dict(sys.modules,{'ambiance_studio.activity':provider}):
+        with patch.dict(sys.modules,{'ambiance_studio.activity':provider}), \
+             patch.object(sys.modules['ambiance_studio'],'activity',provider,create=True):
             self.assertEqual(coverage.activity_receipt(self.p,file,ctx,exp,'portrait')['kind'],'activity')
             row['timing_target_diagnostics']=['sampled_onset_exceeds_authored_target']
             with self.assertRaisesRegex(ValueError,'timing targets'):coverage.activity_receipt(self.p,file,ctx,exp,'portrait')

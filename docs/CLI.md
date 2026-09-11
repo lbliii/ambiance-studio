@@ -68,6 +68,8 @@ Revision selections and asset/placement manifests use project-relative reference
 | `view check [--view ID ... --revision ID --out FILE]` | Check geometric coverage/attachments for selected view rectangles at every output frame |
 | `scene apply FILE [--dry-run --expect-sha256 HASH]` | Validate an atomic batch; preview or save one restorable transaction |
 | `scene track LAYER FILE [--dry-run --expect-sha256 HASH]` | Author deterministic movement/cel tracks through the same transaction path |
+| `scene activity --out DIR [--view ID --action-id ID --layer ID --raster --compare FILE --start-frame N --frames N --stride N --long-edge N --revision ID --resume]` | Save per-view sampled activity, bounded raster contributions and exact proof identities; see [scene activity](SCENE-ACTIVITY.md) |
+| `scene activity-review FILE --out FILE` | Record an actual observation of an exact normal-speed action/view proof |
 | `scene timing [--layer ID --out FILE]` | Report actual timing, holds, authored rates, output-frame sampling and inherited visibility |
 | `scene place FILE [--dry-run --expect-sha256 HASH]` | Resolve source-coordinate placement and save a validated batch |
 | `scene reparent LAYER --to PARENT --socket NAME --keep-world --at N [--dry-run --expect-sha256 HASH]` | Preserve world geometry/appearance at one reference time; report changed inheritance |
@@ -103,6 +105,8 @@ Revision selections and asset/placement manifests use project-relative reference
 | `audio import-stems SESSION --session-id ID` | Preserve a legacy session and create a new executable session from its rendered stems |
 | `audio mix SESSION [--run-id ID --start N --duration N --solo STEM --mute STEM --gain STEM=DB]` | Render a versioned circular arrangement, aligned stems and numerical reports |
 | `audio compare SESSION --variant-b FILE [--run-id ID --start N --duration N]` | Create matching A/B excerpts without automatic normalization |
+| `audio cue-bind SESSION --activity RECEIPT --links FILE --out SESSION [--pcm WAV]` | Create an explicitly sample-aligned picture-cue session derivative |
+| `audio cue-check SESSION --activity RECEIPT [--pcm WAV --out FILE]` | Diagnose changed picture actions, cadence, loop lengths and cue/source identities without retiming |
 | `audio check WAV_OR_RUN` | Inspect PCM or verify a saved run's hashes, timing and stem reconstruction |
 | `test [--out FILE --artifacts DIR --require-native]` | Run Python/Node regressions and package audit; save bounded JSON/JUnit/log evidence with exact inputs |
 
