@@ -13,7 +13,10 @@
 
 ## Delivery
 
-- Canvas and frame rate:
+- Authored scene canvas and shared frame rate:
+- Requested view IDs, crop intent and output dimensions (portrait 9:16 / landscape 16:9 / authored):
+- Focal subject and acceptable exclusions in each view:
+- New artwork or overscan needed to make each crop work:
 - Picture loop length:
 - Soundtrack/master length:
 - Intended publishing destination:
@@ -56,5 +59,5 @@ The request describes the desired source. Confirm what was actually delivered be
 - Sound sketch heard against the picture:
 - Three-repeat listening and visual review:
 - Actual phone check:
-- Final export report:
+- Final export report and exact watch link for every requested view/soundtrack:
 - New reusable assets/rigs/patterns to catalog:

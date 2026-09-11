@@ -228,8 +228,10 @@ def run(args):
             data=deliveries.latest(project,args.channel)
             data['current_url']=f'{base}/projects/{alias}'
             if data.get('delivery'):
-                data['watch_url']=f'{base}/projects/{alias}/deliveries/{data["delivery"]["id"]}'
-                data['file']=str(project/data['delivery']['editions'][data['delivery']['default_role']]['movie']['path'])
+                production.link_delivery(data['delivery'],alias,base)
+                _,entry=deliveries.resolve_entry(data['delivery'])
+                data['watch_url']=entry['watch_url'] if data['delivery']['schema_version']==2 else data['delivery']['watch_url']
+                data['file']=str(project/entry['movie']['path'])
             return data
         result=production.handoff(project,args.id,args.out,alias,base) if command=='delivery' and action=='handoff' else production.run_command(args,project)
         if command=='iteration' and action=='run':id=result['run']['id']

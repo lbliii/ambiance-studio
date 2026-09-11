@@ -76,6 +76,10 @@ class ViewDeliveryTests(unittest.TestCase):
         result=production.overview(self.p,'film','http://127.0.0.1:8783')
         self.assertEqual(set(result['entry_checks']),{'portrait.score','landscape.score'})
         self.assertFalse(result['release_ready'])
+        latest=cli.run(cli.parser().parse_args(['--registry',str(self.http.registry),'--project','film','project','latest']))
+        self.assertEqual(latest['file'],str((self.p/result['current']['delivery']['entries']['portrait.score']['movie']['path']).resolve()))
+        self.assertTrue(latest['watch_url'].endswith('?view=portrait&role=score'))
+        self.assertTrue(latest['delivery']['entries']['landscape.score']['current_url'].endswith('?view=landscape&role=score'))
         for key,check in result['entry_checks'].items():
             self.assertEqual(check['subject']['view'],key.split('.')[0]);self.assertTrue(check['open_checks'])
         self.assertIn('?view=landscape&role=score',result['current']['delivery']['entries']['landscape.score']['watch_url'])

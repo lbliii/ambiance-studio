@@ -51,20 +51,23 @@ def runs(project):
     return sorted(rows, key=lambda row: row['started_utc'], reverse=True)
 
 
+def link_delivery(data, alias, base_url):
+    if not data:return data
+    data['watch_url']=f'{base_url}/projects/{alias}/deliveries/{data["id"]}'
+    for key,entry in data.get('entries',{}).items():
+        suffix=f'?view={entry["view"]}&role={entry["role"]}' if data['schema_version']==2 else '?role='+entry['role']
+        entry['watch_url']=data['watch_url']+suffix
+        entry['current_url']=f'{base_url}/projects/{alias}'+suffix
+        entry['media_url']=f'{base_url}/media/{alias}/{data["id"]}/{key}'
+    return data
+
+
 def overview(project, alias, base_url, fingerprints=None):
     selected = deliveries.latest(project, fingerprints=fingerprints)
     history = deliveries.listing(project, fingerprints)
-    def link(data):
-        if not data:return data
-        data['watch_url'] = f'{base_url}/projects/{alias}/deliveries/{data["id"]}'
-        for key, entry in data.get('entries', {}).items():
-            suffix=f'?view={entry["view"]}&role={entry["role"]}' if data['schema_version']==2 else '?role='+entry['role']
-            entry['watch_url']=data['watch_url']+suffix
-            entry['media_url']=f'{base_url}/media/{alias}/{data["id"]}/{key}'
-        return data
-    selected['delivery'] = link(selected.get('delivery'))
+    selected['delivery'] = link_delivery(selected.get('delivery'),alias,base_url)
     for entry in history:
-        link(entry)
+        link_delivery(entry,alias,base_url)
     errors = []; checks = []; gates = None; working = {}; entry_checks = {}
     current_data = selected.get('delivery')
     try:

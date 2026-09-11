@@ -45,3 +45,5 @@ For rough edges, first compare source cel, compiled atlas, output raster and dec
 If a roof ghost appears behind the cottage, repair the clean plate or separation. If smoke floats off the chimney, repair its group/socket. If a bright border flickers, inspect alpha and resampling. If a wrap is visible, repair the periodic path or cel sequence. Do not add broad blur or more particles as a default concealment strategy.
 
 Render a small draft after the repair. Reuse accepted cached layers and source files. Increase resolution for final inspection only after layout, motion, and coverage are stable.
+
+For requested portrait and landscape outputs, use `view apply`, `view check`, then `render views-proof --view portrait --view landscape` through the CLI. The saved proof and editor panes sample one scene clock. Inspect raw-alpha coverage, finishing, attachments, camera extremes and the join independently in both crops. Render final pictures with explicit `--view` and bind them to the captured revision. Guide overlays are inspection aids and are excluded from output.

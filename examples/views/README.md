@@ -37,3 +37,5 @@ python3 examples/views/produce_motion_fixture.py projects/dual-production-demo -
 ```
 
 This CLI path creates a fresh local-art project, paired motion proof, captured revision and one version-2 iteration containing portrait/landscape × silent/score. The score is explicitly a quiet 220 Hz engineering test tone. Use `--long-edge 1920` for full preferred output sizes. Native encoding requires macOS media services. Re-run the saved `plans/iteration.json` through `iteration run` to verify/resume outputs; the fixture creator itself always requires a fresh project directory.
+
+For a bounded raster measurement, run `node examples/views/benchmark_raster.mjs on pair` (or `off`, `single`) in separate processes. It measures four source times at preferred output size, excluding encoding, PNG output, proof audits and human review. See [pilot evidence](../../docs/architecture/DUAL-FORMAT-VALIDATION.md) for recorded results and limitations.

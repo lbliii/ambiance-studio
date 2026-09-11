@@ -94,7 +94,9 @@ async function main(){
   for(const asset of catalog.assets.filter(a=>used.has(a.id))){
     const assetPath=await inside(asset.file),bytes=await fs.readFile(assetPath),hash=sha(bytes);
     if(hash!==asset.sha256)throw Error(`Asset hash does not match catalog: ${asset.id}`);
-    const decoded=await runtime.loadImage(bytes);
+    let decoded;
+    try { decoded=await runtime.loadImage(bytes); }
+    catch (error) { throw Error(`Cannot decode asset ${asset.id} (${asset.file}): ${error.message}`); }
     if(decoded.width!==asset.width||decoded.height!==asset.height)throw Error(`Asset dimensions do not match catalog: ${asset.id}`);
     images.set(asset.id,decoded);assetBytes.set(asset.id,bytes);assetHashes.push({id:asset.id,file:asset.file,sha256:hash});
   }

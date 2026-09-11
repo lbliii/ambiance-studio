@@ -1,6 +1,6 @@
 # Implementation plan: one scene, portrait and landscape
 
-Decision recorded September 11, 2026, following the user's request to select the approach and plan implementation. **Status: milestones 1–2 implemented on the saved-view feature branch; milestones 3–5 remain planned.** [Saved views](../VIEWS.md) documents the currently executable commands. The earlier [analysis](DUAL-FORMAT-PLAN.md) records the code observations and alternative approaches.
+Decision recorded September 11, 2026, following the user's request to select the approach and plan implementation. **Status: milestones 1–5 implemented on the saved-view feature branch.** [Validation and pilot evidence](DUAL-FORMAT-VALIDATION.md) records native exports, browser observations, performance and adaptation limits. [Saved views](../VIEWS.md) documents the currently executable commands. The earlier [analysis](DUAL-FORMAT-PLAN.md) records the code observations and alternative approaches.
 
 Build one shared scene with two saved, static views. Author artwork, rigs, motion, finishing and sound once; inspect portrait and landscape together; produce both through one resumable iteration and present them in one delivery. Use a bounded shared-stage composite followed by uniform crop/scale for the first release. This preserves the existing finishing behavior and gives us a reference implementation for later optimization.
 
