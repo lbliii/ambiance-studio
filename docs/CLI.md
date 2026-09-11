@@ -21,7 +21,7 @@ Revision selections and asset/placement manifests use project-relative reference
 | Command | Effect |
 | --- | --- |
 | `doctor` | Report runtime paths and executable capability availability |
-| `project init DIR [--reference FILE] [--title NAME] [--template blank or last-lantern]` | Create an isolated workspace atomically; preserve a reference and initialize pending gates |
+| `project init DIR [--reference FILE] [--title NAME] [--template blank or last-lantern] [--format dual]` | Create an isolated workspace atomically; optional dual framing requires the blank template |
 | `project list [--directory DIR]` | List registered/main-checkout projects, or limit discovery to child projects in DIR |
 | `studio register PATH [--id ID --relocate]` | Register or explicitly relocate a canonical local project address |
 | `studio open [--port N --no-browser]` / `studio serve [--port N]` | Start/reuse the background film library, or serve it in the foreground |
@@ -51,6 +51,9 @@ Revision selections and asset/placement manifests use project-relative reference
 | `library inspect ID [--catalog FILE]` | Inspect exact source metadata, integrity and decoded cel counts |
 | `plan inspect/check/next [--inventory PATH --out FILE]` | Reconcile intended parts, actual evidence, dependencies and remaining work; next returns five ready items by default (`--limit N`) |
 | `scene inspect [--full]` | Return the summary, or complete authored scene including camera/groups |
+| `view inspect [ID] [--revision ID]` | Inspect saved framing, preferred dimensions, projection and exact view identity |
+| `view apply FILE [--dry-run --expect-sha256 HASH]` | Replace framing through a validated, restorable scene transaction |
+| `view check [--view ID ... --revision ID --out FILE]` | Check geometric coverage/attachments for selected view rectangles at every output frame |
 | `scene apply FILE [--dry-run --expect-sha256 HASH]` | Validate an atomic batch; preview or save one restorable transaction |
 | `scene track LAYER FILE [--dry-run --expect-sha256 HASH]` | Author deterministic movement/cel tracks through the same transaction path |
 | `scene timing [--layer ID --out FILE]` | Report actual timing, holds, authored rates, output-frame sampling and inherited visibility |
@@ -61,7 +64,7 @@ Revision selections and asset/placement manifests use project-relative reference
 | `scene set LAYER [--x N --y N --scale N --rotation-deg N --opacity N --depth N --cycle-seconds N --phase-frames N]` | Validate and atomically save an authored change |
 | `scene socket LAYER NAME --u N --v N` | Define an object-local normalized static socket |
 | `scene attach CHILD --to PARENT --socket NAME [--offset-x N --offset-y N]` | Attach a child, inheriting its parent's depth/group; preserve its authored motion |
-| `scene check [--out FILE]` | Same technical check as project check |
+| `scene check [--out FILE]` | Technical asset and authored-stage check; project check also inspects intended views when configured |
 | `scene history` | List preserved snapshots |
 | `scene restore SHA256` | Validate and restore a snapshot; preserve the current scene first |
 | `revision capture ID --selection FILE [--dry-run --expect-selection-sha256 HASH]` | Capture control snapshots and pin typed dependencies; never transfer pass verdicts |
@@ -90,6 +93,8 @@ Revision selections and asset/placement manifests use project-relative reference
 | `test [--out FILE]` | Run Python regressions, legacy/rig Node checks and package audit |
 
 A blank project is the default for new artwork. It has no layers; its technical check deliberately reports incomplete until prepared assets and a scene are added. The explicit Last Lantern template copies the existing assets into the project, so editing one project cannot modify another's catalog or artwork.
+
+[Saved views](VIEWS.md) add opt-in portrait/landscape project setup, framing edits and geometric checks. Named-view raster exports and paired previews are not yet implemented; existing render commands still export the full authored canvas at its original aspect ratio.
 
 Detailed contracts and examples: [inventory and asset proofs](PRODUCTION-INVENTORY.md), [crop/return preparation](ASSET-PREPARATION.md), [scene transactions](architecture/SCENE-TRANSACTIONS.md), [authored tracks](SCENE-CONTRACT.md), [rendering/media](RENDERING.md), [audio sessions](AUDIO-SESSION.md), [revisions and editions](REVISIONS.md). Edition audio may cite `--audio-run`, `--audio-provenance` or additional `--audio-session` inputs; their provenance requirements are described in the revision contract.
 

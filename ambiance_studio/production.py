@@ -6,6 +6,7 @@ import time
 
 import studio
 from . import deliveries, revisions
+from .errors import CommandError
 
 
 def add_parsers(sub):
@@ -99,12 +100,17 @@ def overview(project, alias, base_url, fingerprints=None):
         inventory_errors = inventory['errors']
     except (OSError, ValueError, KeyError, TypeError) as error:
         ready = []; inventory_errors = [str(error)]
+    from . import views
+    try:
+        framing = views.project_summary(project)
+    except (OSError, ValueError, KeyError, TypeError, CommandError) as error:
+        framing = {'ok': False, 'errors': [str(error)]}
     return {'ok': True, 'project': alias, 'current_url': f'{base_url}/projects/{alias}',
             'current': selected, 'release': deliveries.latest(project, 'release', fingerprints),
             'history': history, 'working': working, 'open_checks': checks, 'ready_work': ready,
             'inventory_errors': inventory_errors, 'errors': errors, 'runs': runs(project)[:10],
             'release_ready': gates['release_ready'] if gates else False,
-            'check_subject': gates['subject'] if gates else None}
+            'check_subject': gates['subject'] if gates else None, 'framing': framing}
 
 
 def validate_recipe(recipe):

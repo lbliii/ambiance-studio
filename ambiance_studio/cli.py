@@ -10,7 +10,7 @@ import sys
 import tempfile
 
 from . import __version__
-from . import planning, assets, revisions
+from . import planning, assets, revisions, views
 from .errors import CommandError
 from .project import locations, project_lock
 from .scene_runtime import require_node, scene_bridge
@@ -49,9 +49,12 @@ def optional_project_path(value, registry_file=None):
         if (p/'ambiance-project.json').is_file():return p.resolve()
     return None
 
-def init_project(destination,reference,title,template):
+def init_project(destination,reference,title,template,output_format=None):
     destination=Path(destination).resolve()
     if destination.exists():raise CommandError('Project already exists; choose a new directory.')
+    if output_format not in [None,'dual']:raise CommandError('Unsupported project output format')
+    if output_format=='dual' and template!='blank':raise CommandError('Dual format requires the blank template; adapt existing artwork explicitly.')
+    if output_format=='dual':require_node()
     if template=='last-lantern':require_node()
     destination.parent.mkdir(parents=True,exist_ok=True)
     # Build out of sight; a failure cannot leave a half-initialized destination.
@@ -68,6 +71,11 @@ def init_project(destination,reference,title,template):
             scene={'version':1,'id':destination.name,'title':settings['title'],
                 'canvas':{'width':1080,'height':1920,'fps':30,'loop_seconds':16,'background':'#1a1733'},
                 'camera':{'overscan':1.08,'x_amplitude':0,'y_amplitude':0,'zoom_amplitude':0},'groups':[],'layers':[]}
+        if output_format=='dual':
+            scene['canvas'].update(width=1920,height=1920)
+            scene['framing']=scene_bridge('view-defaults',scene,studio.read(candidate/'assets/catalog.json'),{})
+            settings['intended_views']=['portrait','landscape']
+            studio.write(candidate/'project.json',settings)
         studio.write(candidate/'scene/scene.json',scene)
         studio.write(candidate/'ambiance-project.json',{'version':1,'scene':'scene/scene.json','catalog':'assets/catalog.json','template':template})
         studio.write(candidate/'plans/asset-inventory.json',{'version':1,'purpose':'Author visible objects, intended actions and required parts; reconcile with plan check.','items':[]})
@@ -80,7 +88,7 @@ def init_project(destination,reference,title,template):
         candidate.rename(destination)
     return {'project':str(destination),'template':template,'scene':'scene/scene.json','catalog':'assets/catalog.json','next':'Inspect the reference and brief; no gate is pre-approved.'}
 
-def check_project(project):
+def check_project(project,include_views=True):
     scene_path,catalog_path=locations(project)
     from kit import validate
     integrity=validate(scene_path,catalog_path)
@@ -90,8 +98,14 @@ def check_project(project):
     p=subprocess.run([require_node(),str(ROOT/'tools/check-scene.mjs'),str(scene_path),'--catalog',str(catalog_path)],capture_output=True,text=True)
     try:state=json.loads(p.stdout)
     except ValueError:raise CommandError('Scene audit failed: '+p.stderr,'runtime_error',3)
-    return {'ok':integrity['ok'] and state['ok'],'integrity':integrity,'state':state,
+    result={'ok':integrity['ok'] and state['ok'],'integrity':integrity,'state':state,
             'limits':['This is a technical check, not artistic approval, browser pixel inspection, or encoded-video validation.']}
+    if include_views and (scene.get('framing') or studio.read(project/'project.json').get('intended_views') is not None):
+        summary=views.project_summary(project)
+        result['framing']=summary
+        result['view_checks']=views.inspect(project,check=True,selected=summary['intended_views']) if summary['ok'] else None
+        result['ok']=result['ok'] and summary['ok'] and bool(result['view_checks'] and result['view_checks']['ok'])
+    return result
 
 def parser():
     p=Parser(prog='ambiance',description='Ambiance Studio — local projects, assets, rigs, checks and reviews. Commands emit JSON.')
@@ -102,6 +116,7 @@ def parser():
     sub.add_parser('doctor',help='Inspect runtimes and implemented capabilities')
     group=sub.add_parser('project').add_subparsers(dest='action',required=True)
     q=group.add_parser('init');q.add_argument('destination',type=Path);q.add_argument('--reference',type=Path);q.add_argument('--title');q.add_argument('--template',choices=['blank','last-lantern'],default='blank')
+    q.add_argument('--format',dest='output_format',choices=['dual'],help='Blank square stage with saved portrait and landscape framing')
     q=group.add_parser('list');q.add_argument('--directory',type=Path)
     group.add_parser('status');q=group.add_parser('check');q.add_argument('--out',type=Path)
     q=group.add_parser('latest');q.add_argument('--channel',choices=['review','release'],default='review')
@@ -146,7 +161,7 @@ def parser():
     preview_kind.add_argument('--look',type=Path,help='Serve a verified look-proof artifact without requiring a project')
     preview_kind.add_argument('--prepare',type=Path,help='Inspect and edit a verified preparation draft without writing project files')
     q=sub.add_parser('test',help='Run local regression checks without paid providers');q.add_argument('--out',type=Path)
-    planning.add_parsers(sub);assets.add_library_parsers(sub);revisions.add_parsers(sub)
+    planning.add_parsers(sub);assets.add_library_parsers(sub);revisions.add_parsers(sub);views.add_parsers(sub)
     from . import rendering, audio, finishing, production
     rendering.add_parsers(sub);audio.add_parsers(sub);finishing.add_parsers(sub)
     production.add_parsers(sub)
@@ -169,17 +184,17 @@ def run(args):
         pillow=importlib.util.find_spec('PIL') is not None
         return {'version':__version__,'root':str(ROOT),'python':platform.python_version(),'python_executable':sys.executable,
             'node':shutil.which('node'),'pillow':pillow,'ffmpeg':shutil.which('ffmpeg'),'ffprobe':shutil.which('ffprobe'),
-            'capabilities':{'project_and_reviews':True,'revision_binding':True,'production_inventory':True,'asset_preparation':pillow,'asset_preflight_and_crop_return':pillow,'edge_inspection_and_repair':pillow,'finishing_and_look_packages':render_caps['frame_render'],'asset_proofs':pillow,'scene_operations':bool(shutil.which('node')),'scene_tracks':bool(shutil.which('node')),'source_placement_and_reparent':bool(shutil.which('node')),'scene_timing':bool(shutil.which('node')),'preview':bool(shutil.which('node')),'final_video_export':render_caps['final_video_export'],'audio_arrangement':audio_caps['audio_arrangement'],'rendering':render_caps,'audio':audio_caps},
+            'capabilities':{'project_and_reviews':True,'revision_binding':True,'production_inventory':True,'asset_preparation':pillow,'asset_preflight_and_crop_return':pillow,'edge_inspection_and_repair':pillow,'finishing_and_look_packages':render_caps['frame_render'],'asset_proofs':pillow,'scene_operations':bool(shutil.which('node')),'scene_tracks':bool(shutil.which('node')),'saved_views':bool(shutil.which('node')),'source_placement_and_reparent':bool(shutil.which('node')),'scene_timing':bool(shutil.which('node')),'preview':bool(shutil.which('node')),'final_video_export':render_caps['final_video_export'],'audio_arrangement':audio_caps['audio_arrangement'],'rendering':render_caps,'audio':audio_caps},
             'note':'Optional dependency availability does not imply a renderer or provider adapter is implemented.'}
     if command=='test':
         require_node();asset_tool()
-        commands=[[sys.executable,'-m','unittest','discover','-s','tests','-p','test_*.py'],['node','editor/verify-engine.mjs'],['node','tests/test-rig.mjs'],['node','tests/test-tracks.mjs'],['node','tests/test-source-placement.mjs'],['node','tests/test-finishing.mjs'],[sys.executable,'tools/package_audit.py']]
+        commands=[[sys.executable,'-m','unittest','discover','-s','tests','-p','test_*.py'],['node','editor/verify-engine.mjs'],['node','tests/test-rig.mjs'],['node','tests/test-views.mjs'],['node','tests/test-tracks.mjs'],['node','tests/test-source-placement.mjs'],['node','tests/test-finishing.mjs'],[sys.executable,'tools/package_audit.py']]
         results=[]
         for c in commands:
             p=subprocess.run(c,cwd=ROOT,capture_output=True,text=True)
             results.append({'command':c,'exit_code':p.returncode,'stdout':p.stdout,'stderr':p.stderr})
         return {'ok':all(r['exit_code']==0 for r in results),'checks':results}
-    if command=='project' and action=='init':return init_project(args.destination,args.reference,args.title,args.template)
+    if command=='project' and action=='init':return init_project(args.destination,args.reference,args.title,args.template,args.output_format)
     if command=='project' and action=='list':
         return {'projects':registry.projects(ROOT,registry_file,args.directory),'registry':str(registry_file)}
     if command=='asset' and action=='build':return asset_tool().build(args.recipe,args.out)
@@ -219,6 +234,7 @@ def run(args):
         return result
     if command=='asset' and action in ['prepare','preflight','crop','return','edges','edge-repair']:return assets.run_preparation(args,project)
     if command=='revision':return revisions.run(args,project)
+    if command=='view':return views.run(args,project)
     if command=='plan':return planning.run(args,project)
     if command in ['render','media']:
         from . import rendering
@@ -233,7 +249,7 @@ def run(args):
         result=revisions.project_status(project)
         result['current_delivery']=deliveries.latest(project)
         return result
-    if command in ['project','scene'] and action=='check':return check_project(project)
+    if command in ['project','scene'] and action=='check':return check_project(project,include_views=command=='project')
     if command in ['look','scene']:
         from . import scene_commands
         return scene_commands.run_look(args,project) if command=='look' else scene_commands.run_scene(args,project)

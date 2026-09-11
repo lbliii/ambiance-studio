@@ -1,9 +1,11 @@
 import {compileScene,point,inverseVector,ENGINE_VERSION} from './engine.mjs';
+import {resolveView,viewIds} from './views.mjs';
 
 const distance=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);
-export function auditScene(scene,catalog){
+export function auditScene(scene,catalog,{coverageRect=null}={}){
   const rig=compileScene(scene,catalog),{width:W,height:H,fps,loop_seconds:T}=scene.canvas;
   const N=Math.round(fps*T),failures=[],warnings=[],coverage=scene.coverage_layers||[];
+  const [vx,vy,vw,vh]=coverageRect??[0,0,W,H];
   let maxAttachmentError=0,minCoverageMargin=Infinity;
   const closure=JSON.stringify(rig.sample(0))===JSON.stringify(rig.sample(T));
   if(!closure)failures.push({check:'state closure'});
@@ -20,7 +22,7 @@ export function auditScene(scene,catalog){
     }
     for(const id of coverage){
       const s=byId.get(id),[x,y,w,h]=s.rect;
-      const local=[[0,0],[W,0],[W,H],[0,H]].map(([px,py])=>inverseVector(s.matrix,px-s.matrix[4],py-s.matrix[5]));
+      const local=[[vx,vy],[vx+vw,vy],[vx+vw,vy+vh],[vx,vy+vh]].map(([px,py])=>inverseVector(s.matrix,px-s.matrix[4],py-s.matrix[5]));
       const margin=Math.min(...local.flatMap(([px,py])=>[px-x,x+w-px,py-y,y+h-py]));
       minCoverageMargin=Math.min(minCoverageMargin,margin);
       if(margin<-.001||!s.visible||s.opacity<1)failures.push({check:'coverage plate',layer:id,frame,margin});
@@ -33,6 +35,19 @@ export function auditScene(scene,catalog){
     limits:['Geometric coverage assumes declared plates are opaque; browser pixel audit checks actual composite alpha at preview resolution.',
       'The evaluator wraps time by design. State closure does not establish cel artwork continuity or the encoded video join.',
       'Attachments follow authored sockets; this does not detect an incorrectly placed socket in the painting.']};
+}
+
+export function auditViews(scene,catalog,ids=null){
+  const named=viewIds(scene).filter(id=>id!=='authored');
+  const selected=ids??(named.length?named:['authored']);
+  if(!Array.isArray(selected)||!selected.length||new Set(selected).size!==selected.length)throw Error('Select one or more unique view IDs');
+  const views=Object.fromEntries(selected.map(id=>{
+    const view=resolveView(scene,id),report=auditScene(scene,catalog,{coverageRect:view.rect_scene_px});
+    if(!scene.layers.length){report.ok=false;report.failure_count++;report.failures.push({check:'Scene has no layers'});}
+    return [id,{view,...report,coverage_checked:!!scene.coverage_layers?.length}];
+  }));
+  return {ok:Object.values(views).every(report=>report.ok),views,
+    limits:['All-frame geometry only. Actual alpha, view composition and encoded media require separate inspection.']};
 }
 
 // Uses the same sampled matrices, cel rectangles and Canvas2D blend modes as the stage.

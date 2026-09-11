@@ -1,6 +1,6 @@
 # Implementation plan: one scene, portrait and landscape
 
-Decision recorded September 11, 2026, following the user's request to select the approach and plan implementation. **Status: implementation planned; no runtime feature is implemented by this document.** The earlier [analysis](DUAL-FORMAT-PLAN.md) records the code observations and alternative approaches.
+Decision recorded September 11, 2026, following the user's request to select the approach and plan implementation. **Status: milestone 1 implemented on the saved-view feature branch; milestones 2–5 remain planned.** [Saved views](../VIEWS.md) documents the currently executable commands. The earlier [analysis](DUAL-FORMAT-PLAN.md) records the code observations and alternative approaches.
 
 Build one shared scene with two saved, static views. Author artwork, rigs, motion, finishing and sound once; inspect portrait and landscape together; produce both through one resumable iteration and present them in one delivery. Use a bounded shared-stage composite followed by uniform crop/scale for the first release. This preserves the existing finishing behavior and gives us a reference implementation for later optimization.
 
@@ -53,7 +53,7 @@ Contract decisions:
 
 Implement view validation, resolution, projection, canonical view identity and raster planning in a new `editor/views.mjs`, reused by Node and the browser. `editor/engine.mjs` validates the optional extension through that module. The Python adapter calls the existing JavaScript bridge for view semantics; it does not implement a second geometry resolver. Add a focused `ambiance_studio/views.py` adapter and extend `scene_commands.py`/`tools/scene-command.mjs` for transaction operations.
 
-All commands in this table are implementation targets, not currently available commands:
+The `view` commands and dual initialization are implemented in milestone 1. Rendering, review-view selection, paired iteration and view-specific feedback in this table remain implementation targets:
 
 | Interface | Result and operational contract |
 | --- | --- |

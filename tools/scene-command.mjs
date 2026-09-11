@@ -1,10 +1,13 @@
 // JSON stdin/stdout bridge. The transaction edits a private snapshot; shared
 // evaluator validation must succeed before the CLI can persist any result.
 import fs from 'node:fs';
+import {createHash} from 'node:crypto';
 import {compileScene,validateScene} from '../editor/engine.mjs';
 import {sceneTiming} from '../editor/timing.mjs';
 import {finishingDiagnostics} from '../editor/finishing.mjs';
 import {placeFromSource,reparentAtTime} from '../editor/source-placement.mjs';
+import {resolveView,viewIds,viewProjection,canonicalView,dualFraming} from '../editor/views.mjs';
+import {auditViews} from '../editor/audit.mjs';
 
 const layerFields=['name','asset','x','y','width','height','anchor','scale','rotation','opacity','visible','blend','depth','group','attach','sockets','cycle_seconds','phase_frames','motion','tracks','track_loop'];
 const optionalFields=['depth','group','attach','sockets','cycle_seconds','phase_frames','motion','tracks','track_loop'];
@@ -22,10 +25,10 @@ function applyOperations(scene,catalog,operations,report=false){
     if(!object(op)||typeof op.op!=='string')throw Error('Each operation needs an op name');
     const shapes={add:['op','asset','id','values'],set:['op','layer','values','unset'],replace:['op','layer','value'],remove:['op','layer','cascade'],order:['op','layers'],group:['op','id','value'],camera:['op','values'],socket:['op','layer','name','value'],attach:['op','layer','to','socket','offset_x','offset_y'],coverage:['op','layers'],
       place_from_source:['op','id','asset','base','mode','reference','mapping','base_mapping','source_anchor','source_size','anchor','order','values'],
-      reparent:['op','layer','to','socket','preserve','at_seconds'],finishing:['op','value']};
+      reparent:['op','layer','to','socket','preserve','at_seconds'],finishing:['op','value'],framing:['op','value']};
     if(!shapes[op.op])throw Error(`Unsupported scene operation: ${op.op}`);
     fields(op,shapes[op.op],op.op);
-    if(op.op==='finishing'){if(op.value===null)delete scene.finishing;else scene.finishing=structuredClone(op.value);}
+    if(['finishing','framing'].includes(op.op)){if(op.value===null)delete scene[op.op];else scene[op.op]=structuredClone(op.value);}
     else if(op.op==='place_from_source')diagnostics.push(placeFromSource(scene,catalog,op));
     else if(op.op==='reparent')diagnostics.push(reparentAtTime(scene,catalog,op));
     else if(op.op==='add'){
@@ -94,6 +97,16 @@ try{
   validateScene(scene,catalog);
   let result;
   if(action==='sample')result=compileScene(scene,catalog).sample(args.time);
+  else if(action==='view-defaults')result=dualFraming();
+  else if(action==='view-check')result=auditViews(scene,catalog,args.views);
+  else if(action==='view-inspect'){
+    const views=Object.fromEntries((args.id?[args.id]:viewIds(scene)).map(id=>{
+      const view=resolveView(scene,id);
+      return [id,{...view,projection:viewProjection(view),view_sha256:createHash('sha256').update(canonicalView(view)).digest('hex')}];
+    }));
+    result={authored_canvas:{width:scene.canvas.width,height:scene.canvas.height},views,
+      limits:['Saved framing only; named-view raster export is not yet implemented.']};
+  }
   else if(action==='finishing-check')result=finishingDiagnostics(scene,catalog,args.time??0,compileScene(scene,catalog).sample(args.time??0));
   else if(action==='timing')result=sceneTiming(scene,catalog,{layer:args.layer});
   else if(action==='inspect')result=args.full?scene:{id:scene.id,title:scene.title,canvas:scene.canvas,layers:scene.layers};

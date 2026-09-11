@@ -1,4 +1,5 @@
 import {compileScene,drawScene} from './engine.mjs';
+import {resizeSceneCanvas} from './views.mjs';
 const clone=value=>structuredClone(value),el=id=>document.getElementById(id);
 const emptyFinishing=()=>({version:1,working_space:'linear-srgb',output_space:'srgb'});
 const gradeDefaults={exposure:0,contrast:1,saturation:1,balance:[1,1,1]};
@@ -14,7 +15,7 @@ export async function boot(){
   const makeCanvas=(w,h)=>{const c=document.createElement('canvas');c.width=w;c.height=h;return c;};
   const internals={baseline:makeCanvas(1,1),candidate:makeCanvas(1,1)};
   const previewWidth=()=>config.width*previewScale,previewHeight=()=>config.height*previewScale;
-  function sceneFor(finish){const s=clone(config.scene);s.canvas.width=previewWidth()*supersample;s.canvas.height=previewHeight()*supersample;if(finish===null)delete s.finishing;else s.finishing=clone(finish);return s;}
+  function sceneFor(finish){const s=clone(config.scene);resizeSceneCanvas(s,previewWidth()*supersample,previewHeight()*supersample);if(finish===null)delete s.finishing;else s.finishing=clone(finish);return s;}
   function recompile(){compiled=compileScene(sceneFor(finishing),config.catalog);baselineCompiled=compileScene(sceneFor(config.scene.finishing??null),config.catalog);}
   function draw(){
     const drawStarted=performance.now();

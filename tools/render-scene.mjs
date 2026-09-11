@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Rasterize through the exact engine used by the browser. Python owns CLI options.
 import fs from 'node:fs/promises';
+import {resizeSceneCanvas} from '../editor/views.mjs';
 import path from 'node:path';
 import os from 'node:os';
 import {fileURLToPath} from 'node:url';
@@ -64,7 +65,7 @@ async function main(){
   const supersample=request.supersample??1;
   if(![1,2,4].includes(supersample)||width*supersample>4096||height*supersample>4096)throw Error('Supersampling requires scale 1, 2, or 4 and internal dimensions <=4096');
   const internalWidth=width*supersample,internalHeight=height*supersample;
-  scene.canvas.width=internalWidth;scene.canvas.height=internalHeight;
+  resizeSceneCanvas(scene,internalWidth,internalHeight);
   const compiled=compileScene(scene,catalog),fps=scene.canvas.fps,loopFrames=fps*scene.canvas.loop_seconds;
   if(!scene.layers.length)throw Error('Cannot render an empty scene');
   const start=finite(request.start??0,'start');if(start<0)throw Error('start must be nonnegative');
@@ -102,7 +103,7 @@ async function main(){
   const endpointDifference=difference(first,endpoint);
   if(!first.equals(endpoint))throw Error('Raster endpoint differs from frame zero');
   render((loopFrames-1)/fps);const seam=difference(first,canvas.data());
-  const report={ok:true,mode,scene:scenePath,scene_sha256:sha(sceneBytes),catalog:catalogPath,catalog_sha256:sha(catalogBytes),engine_version:ENGINE_VERSION,engine_sha256:sha(engineBytes),source_canvas:sourceCanvas,render_canvas:{...scene.canvas,width,height},internal_canvas:structuredClone(scene.canvas),supersample,downsample:supersample===1?null:{passes:1,filter:'Canvas high-quality image smoothing',alpha:'Canvas premultiplied interpolation',stage:'after complete scene render; before PNG or native encoder'},finishing_engine_sha256:sha(await fs.readFile(path.join(root,'editor/finishing.mjs'))),start_seconds:start,frames,seconds:frames/fps,source_assets:assetHashes,canvas_module:runtime.module,canvas_version:runtime.version,node_version:process.version,platform:process.platform,renderer_sha256:sha(await fs.readFile(fileURLToPath(import.meta.url))),rig_proof_renderer_sha256:rigPlan?sha(await fs.readFile(path.join(root,'tools/rig-proof.mjs'))):null,rgba_endpoint_exact:true,endpoint_difference:endpointDifference,last_to_first:seam,visual_review_performed:false};
+  const report={ok:true,mode,scene:scenePath,scene_sha256:sha(sceneBytes),catalog:catalogPath,catalog_sha256:sha(catalogBytes),engine_version:ENGINE_VERSION,engine_sha256:sha(engineBytes),source_canvas:sourceCanvas,render_canvas:{...scene.canvas,width,height},internal_canvas:structuredClone(scene.canvas),supersample,downsample:supersample===1?null:{passes:1,filter:'Canvas high-quality image smoothing',alpha:'Canvas premultiplied interpolation',stage:'after complete scene render; before PNG or native encoder'},finishing_engine_sha256:sha(await fs.readFile(path.join(root,'editor/finishing.mjs'))),views_module_sha256:sha(await fs.readFile(path.join(root,'editor/views.mjs'))),start_seconds:start,frames,seconds:frames/fps,source_assets:assetHashes,canvas_module:runtime.module,canvas_version:runtime.version,node_version:process.version,platform:process.platform,renderer_sha256:sha(await fs.readFile(fileURLToPath(import.meta.url))),rig_proof_renderer_sha256:rigPlan?sha(await fs.readFile(path.join(root,'tools/rig-proof.mjs'))):null,rgba_endpoint_exact:true,endpoint_difference:endpointDifference,last_to_first:seam,visual_review_performed:false};
   const started=Date.now();finishingDiagnostics.length=0;
   if(mode==='look-proof'){
     Object.assign(report,await renderLookProof(lookPlan,{out,root,runtime,catalog,images,assetBytes,width,height,supersample,sourceScene:JSON.parse(sceneBytes),sceneHash:sha(sceneBytes),catalogHash:sha(catalogBytes)}));

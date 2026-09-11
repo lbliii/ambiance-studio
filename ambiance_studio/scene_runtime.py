@@ -9,6 +9,18 @@ from .errors import CommandError
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def load_scene_json(value):
+    """Scene/framing input must not silently discard repeated object keys."""
+    def unique(pairs):
+        result = {}
+        for key, item in pairs:
+            if key in result:
+                raise ValueError(f'Duplicate JSON field: {key}')
+            result[key] = item
+        return result
+    return json.loads(value, object_pairs_hook=unique)
+
+
 def require_node():
     node = shutil.which('node')
     if not node:

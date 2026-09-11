@@ -58,6 +58,8 @@ function install(next){
   time=0;stop();$('edit-group').checked=false;
   $('timeline').max=Math.round(scene.canvas.loop_seconds*scene.canvas.fps)-1;
   $('title').textContent=scene.title;
+  $('stage-size').textContent=`${scene.canvas.width} × ${scene.canvas.height}`;
+  $('stage').setAttribute('aria-label','Authored painting with independently animated layers. Select a layer, then drag in the picture to move it.');
   refreshList();refreshFields();render();
 }
 function save(){
