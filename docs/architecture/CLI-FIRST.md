@@ -36,6 +36,8 @@ The [library contract](../STUDIO-LIBRARY.md) adds a machine-local registry, proj
 
 ## Remaining engineering slices
 
+The [TV quality and sound-library plan](TV-QUALITY-AND-SOUND-LIBRARY.md) and its [dependency backlog](TV-QUALITY-AND-SOUND-LIBRARY.yaml) cover the proposed opt-in 4K profile, effective source-resolution checks, compact loop masters, source-audio quality, and curated audio reuse. They preserve current project scope and keep surround and hour-long exports as separate follow-ups. These are planned capabilities, not changes to the current command contract.
+
 The [consolidated production improvements](PRODUCTION-IMPROVEMENTS.md) and [dependency backlog](PRODUCTION-IMPROVEMENTS.yaml) organize work across semantic planning, explicit expectations, dual-format staging, asset preparation, source/follower lighting, activity evidence, CI and agent behavior trials. The [capability index](../CAPABILITIES.json) identifies current public command routes, authoritative contracts and limits. Package audit checks those routes and references without executing a production operation or treating a plan as implemented behavior.
 
 The [cel motion workbench plan](CEL-MOTION-WORKBENCH.md), revised through [web research and agent operation review](CEL-MOTION-RESEARCH.md), has implemented milestones 1–3: source/layer initialization, compact observation packets, validated batch edits, translation-only correction at fixed geometry, bounded classical propagation and synchronized comparisons. The [implementation handoff](CEL-MOTION-HANDOFF.md) records the pilot and limitations. Learned tracking, scene contact/velocity tools and cloud deformation exploration remain follow-up milestones.
