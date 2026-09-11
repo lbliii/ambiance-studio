@@ -36,7 +36,7 @@ The [library contract](../STUDIO-LIBRARY.md) adds a machine-local registry, proj
 
 ## Remaining engineering slices
 
-The selected [portrait/landscape implementation plan](DUAL-FORMAT-IMPLEMENTATION.md) adds two saved views of one scene, synchronized proofs, view-bound editions and a resumable paired delivery. [Saved-view authoring and checks](../VIEWS.md) are the implemented first milestone. Named-view rasterization and paired proofs are next; retain existing scene and delivery behavior through explicit compatibility adapters.
+The selected [portrait/landscape implementation plan](DUAL-FORMAT-IMPLEMENTATION.md) adds two saved views of one scene, synchronized proofs, view-bound editions and a resumable paired delivery. [Saved-view authoring, checks, rasterization and paired proofs](../VIEWS.md) implement the first two milestones. View-aware editions and paired delivery are next; retain existing scene and delivery behavior through explicit compatibility adapters.
 
 The [preparation workbench plan](ASSET-PREPARATION-WORKBENCH.md) turns the museum's mask and alignment lessons into an integrated CLI/browser workflow. Its first slice provides saved separation recipes, interactive masks/alignment and shared-engine motion proofs. The next engineering pass improves direct recipe inspection, validation, bounded edits and proof discovery for the agent; a measured agent-operated pilot on a different painting follows.
 

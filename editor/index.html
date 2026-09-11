@@ -20,6 +20,7 @@
       <div class="transport"><button id="play" disabled>Play</button><output id="time" aria-live="off">0.00 / 16 s</output><label><input type="checkbox" id="grid"> Grid</label><label><input type="checkbox" id="solo"> Solo</label><label><input type="checkbox" id="sockets" checked> Sockets</label></div>
       <label class="timeline-label" for="timeline">Loop position</label><input id="timeline" type="range" min="0" max="479" step="1" value="0" disabled>
       <p class="hint">Select a layer, then drag anywhere in the painting. The dot marks its anchor.</p>
+      <label id="view-guide-control" hidden><input type="checkbox" id="view-guides" checked> Saved view guides</label>
     </section>
     <section class="inspector" aria-label="Layer controls">
       <div class="section-top"><h2>Layer placement</h2><span id="count" class="muted">Loading…</span></div>
@@ -59,6 +60,13 @@
       <p id="status" role="status">Loading local artwork…</p>
     </section>
   </div>
+  <section id="output-views" aria-label="Synchronized output views" hidden>
+    <div class="section-top"><h2>Output views</h2><label><input type="checkbox" id="show-views" checked> Preview together</label></div>
+    <p class="hint">Both views follow the scene's play and seek controls. Framing is applied after lighting and camera movement.</p>
+    <div class="transport"><button id="view-play">Play</button><output id="view-time" aria-live="off"></output></div>
+    <label for="view-timeline" class="timeline-label">Output loop position</label><input id="view-timeline" type="range" min="0" max="0" step="1" value="0">
+    <div id="view-panes"></div><p id="view-status" role="status"></p>
+  </section>
   <section class="qa-panel">
     <div class="section-top"><h2>Loop inspection</h2><button id="audit">Check all frames</button></div>
     <p id="audit-status" role="status">Check attachments, camera coverage, and the last-to-first transition.</p>

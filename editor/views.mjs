@@ -74,3 +74,43 @@ export function resizeSceneCanvas(scene, width, height) {
   scene.canvas.width = width; scene.canvas.height = height;
   return scene;
 }
+
+const gcd = (a, b) => b ? gcd(b, a % b) : a;
+export function fitView(view, longEdge) {
+  if (!integer(longEdge) || longEdge > RASTER_LIMIT) throw Error('Long-edge ceiling must be a positive integer at most 4096');
+  const divisor = gcd(view.output.width, view.output.height);
+  const w = view.output.width / divisor, h = view.output.height / divisor;
+  const multiple = Math.floor(longEdge / Math.max(w, h));
+  if (!multiple) throw Error(`View ${view.id} cannot fit its integer aspect ratio within long-edge ${longEdge}`);
+  return {width: w * multiple, height: h * multiple};
+}
+
+// Plan once, before allocating canvases. One sufficiently detailed stage serves
+// every output, including fractional crops, without changing the camera basis.
+export function planViews(scene, requests, {supersample = 1, long_edge = null} = {}) {
+  validateFraming(scene);
+  if (![1, 2, 4].includes(supersample)) throw Error('Supersample must be 1, 2, or 4');
+  if (!Array.isArray(requests) || !requests.length || new Set(requests.map(r => r.id)).size !== requests.length) throw Error('Select one or more unique views');
+  const views = requests.map(request => {
+    fields(request, ['id', 'width', 'height'], 'view render request');
+    if (typeof request.id !== 'string') throw Error('Each view render request needs an explicit view ID');
+    const view = resolveView(scene, request.id);
+    if (long_edge !== null && (request.width != null || request.height != null)) throw Error('Long-edge sizing cannot be combined with width/height overrides');
+    const width = request.width ?? view.output.width;
+    const output = long_edge !== null ? fitView(view, long_edge) : {
+      width, height: request.height ?? width * view.output.height / view.output.width
+    };
+    if (![output.width, output.height].every(integer) || Math.max(output.width, output.height) > RASTER_LIMIT) throw Error(`View ${view.id} needs integer output dimensions at most 4096 preserving its aspect ratio`);
+    if (output.width * view.output.height !== output.height * view.output.width) throw Error(`View ${view.id} output must preserve its aspect ratio`);
+    return {view, output};
+  });
+  const source_canvas = canvasSize(scene), {width: W, height: H} = source_canvas;
+  const divisor = gcd(W, H), unitW = W / divisor, unitH = H / divisor;
+  const required = Math.max(...views.map(v => v.output.width / v.view.rect_scene_px[2])) * supersample;
+  const multiple = Math.ceil(required * divisor);
+  const internal_canvas = {width: unitW * multiple, height: unitH * multiple};
+  if (Math.max(internal_canvas.width, internal_canvas.height) > RASTER_LIMIT) throw Error(`Views require an internal stage of ${internal_canvas.width} × ${internal_canvas.height}; maximum is 4096 per side. Lower output size or supersampling, or choose a less magnified view.`);
+  const scale = internal_canvas.width / W;
+  return {version: 1, source_canvas, internal_canvas, scale, supersample,
+    views: views.map(v => ({...v, source_rect_px: v.view.rect_scene_px.map(n => n * scale)}))};
+}

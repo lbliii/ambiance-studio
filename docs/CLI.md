@@ -77,12 +77,13 @@ Revision selections and asset/placement manifests use project-relative reference
 | `look apply FILE [--dry-run --expect-sha256 HASH]` | Save a complete finishing recipe through the scene transaction path |
 | `look export --out DIR [--include-rig]` | Package a look and optionally its mounting, cel/track, group and layer definitions |
 | `look import PACKAGE --bindings FILE [--include-rig --dry-run --expect-sha256 HASH]` | Rebind a package to explicit targets; rig adoption requires matching canvas/clock and exact rig assets |
-| `preview [--port N] [--look DIR or --prepare DIR]` | Serve the selected project or verified artifact; preparation supports in-memory draft editing and recipe downloads without project writes |
-| `render frame --time N --out DIR [--revision ID]` | Render an actual PNG from the shared scene evaluator and drawing code |
-| `render proof --out DIR [--revision ID --start N --seconds N --disable LAYER --width N]` | Render a normal-speed HTML comparison with frame seeking and optional disabled layers |
+| `preview [--port N] [--look DIR or --prepare DIR or --views-proof DIR]` | Serve the selected project or verified artifact; preparation supports in-memory draft editing and recipe downloads without project writes |
+| `render frame --time N --out DIR [--revision ID --view ID]` | Render an actual PNG from the shared scene evaluator and drawing code |
+| `render proof --out DIR [--revision ID --view ID --start N --seconds N --disable LAYER --width N]` | Render a normal-speed HTML comparison with frame seeking and optional disabled layers |
+| `render views-proof --view ID --view ID --out DIR [--revision ID --start N --seconds N --long-edge N --supersample 1/2/4]` | Save synchronized crops of each finished stage frame with per-view coverage, seam and frame-hash evidence |
 | `render rig-proof FILE --out DIR [--revision ID --width N]` | Render named poses/hidden-part variants, detail crops, differences and optional playback |
 | `render look-proof FILE --out DIR [--revision ID --width N --supersample 1/2/4]` | Save interactive baseline/variant comparison, grading/light controls, passes and downloadable transactions |
-| `render video --out DIR [--revision ID --edition ID --seconds N --repeats N --audio WAV --width N --height N --bitrate N]` | Encode H.264, optionally mux PCM, verify output and optionally bind an edition |
+| `render video --out DIR [--revision ID --view ID --edition ID --seconds N --repeats N --audio WAV --width N --height N --bitrate N]` | Encode H.264, optionally mux PCM, and verify output; edition binding currently supports authored output only |
 | `media compose PICTURE --audio PCM --repeats N --out DIR [--revision ID --edition ID --picture-receipt FILE]` | Reuse compressed picture samples with selected PCM; verify the resulting edition |
 | `media verify FILE --out DIR [--frames N --loop-frames N --audio-tracks 0/1 --contact-time N --contact-frame N]` | Completely decode video/audio, check timing and save join/requested-contact evidence |
 | `audio inspect SESSION` | Validate explicit selected PCM sources and inspect arrangement/levels |
@@ -94,7 +95,7 @@ Revision selections and asset/placement manifests use project-relative reference
 
 A blank project is the default for new artwork. It has no layers; its technical check deliberately reports incomplete until prepared assets and a scene are added. The explicit Last Lantern template copies the existing assets into the project, so editing one project cannot modify another's catalog or artwork.
 
-[Saved views](VIEWS.md) add opt-in portrait/landscape project setup, framing edits and geometric checks. Named-view raster exports and paired previews are not yet implemented; existing render commands still export the full authored canvas at its original aspect ratio.
+[Saved views](VIEWS.md) support portrait/landscape project setup, framing edits, checks, synchronized previews, paired raster proofs and single-view video export. Omitting `--view` preserves full authored-canvas rendering. View-aware edition registration and a combined delivery remain planned.
 
 Detailed contracts and examples: [inventory and asset proofs](PRODUCTION-INVENTORY.md), [crop/return preparation](ASSET-PREPARATION.md), [scene transactions](architecture/SCENE-TRANSACTIONS.md), [authored tracks](SCENE-CONTRACT.md), [rendering/media](RENDERING.md), [audio sessions](AUDIO-SESSION.md), [revisions and editions](REVISIONS.md). Edition audio may cite `--audio-run`, `--audio-provenance` or additional `--audio-session` inputs; their provenance requirements are described in the revision contract.
 

@@ -1,6 +1,6 @@
 # Saved output views
 
-Saved views define portrait and landscape framing in one scene without changing its artwork, layer geometry, camera, rigs or clock. This first implementation provides project setup, view authoring and geometric checks. Rendering still exports the full authored canvas; named-view output and synchronized proofs are the next milestone.
+Saved views define portrait and landscape framing in one scene without changing its artwork, layer geometry, camera, rigs or clock. Project setup, view authoring, geometric checks, synchronized previews, paired proofs and single-view frame/video rendering are implemented. View-aware edition registration, paired production runs and delivery selection remain planned.
 
 Create a blank dual-format project with:
 
@@ -47,4 +47,23 @@ Both inspection commands accept `--revision ID`, resolve the captured scene/cata
 
 `scene check` retains the authored-stage scope. `project check` additionally checks intended views and the primary-output summary for projects using framing. `project overview` exposes a compact `framing` section, including discrepancies, without blocking access to existing review movies when the working scene is invalid. A dual initializer records `intended_views` in project settings; the first intended view supplies the expected legacy primary-output dimensions. Scene framing remains the executable dimension source, and reads never rewrite either file.
 
-The workbench displays the authored canvas at its actual aspect ratio. Existing full-canvas renders and look previews preserve their old geometry when internally downscaled or supersampled; framing metadata scales within the private runtime copy. The saved source is unchanged. Until named-view rendering lands, use these views for planning and geometric inspection, and keep full-stage proofs labeled as such.
+The workbench displays the authored canvas at its actual aspect ratio, with optional named-view guides. Its output panes share the scene's play/seek clock and exclude editing overlays. Both views are extracted after the camera and finishing pass. The all-frame browser audit reports the authored stage and each view separately. Preview can be switched off while editing expensive scenes.
+
+## Render and compare
+
+```sh
+./ambiance --project projects/new-film render views-proof --view portrait --view landscape --seconds 3 --long-edge 640 --out projects/new-film/render/paired-proof
+./ambiance preview --views-proof projects/new-film/render/paired-proof --port 8797
+./ambiance --project projects/new-film render frame --view landscape --width 640 --out projects/new-film/render/landscape-frame
+./ambiance --project projects/new-film render video --view portrait --out projects/new-film/render/portrait-video
+```
+
+`frame`, `proof` and `video` accept one `--view`. Frames and video default to that view's preferred dimensions. A named-view motion proof defaults to a 640-pixel long-edge ceiling. Explicit `--width/--height` overrides must preserve the selected aspect ratio with integer dimensions. No `--view` retains the previous full-stage behavior, including the 360-wide motion-proof default. Native video still requires macOS, even dimensions and the existing encode/decode checks. Named-view `--edition` registration is explicitly rejected until edition schema support lands; retain the view's render report with its movie.
+
+`views-proof` accepts repeated `--view` IDs and an integer `--long-edge` ceiling. At 640, the standard outputs are 360 × 640 and 640 × 360. At 639, they become 351 × 624 and 624 × 351, preserving exact ratios. One stage is rendered per requested frame time; all output PNGs share those sample times. The page has one playback/seek clock. Disabled-layer, rig and look matrices remain separate operations.
+
+The shared planner chooses a uniform internal stage scale sufficient for the most detailed output and the selected `--supersample 1/2/4`. It preserves integer stage dimensions and rejects a stage larger than 4096 per side before creating output. Lower resolution or supersampling when a magnified crop would exceed that limit; the renderer never silently reduces requested quality. Each output gets one final crop/resample of the finished stage, preserving lights, shadows and reflections in their source coordinates. Existing full-stage render and look-preview paths retain their previous geometry and pixels.
+
+The saved `render-report.json` includes source/tool hashes, resolved view hashes, actual dimensions, the raster plan, shared sample times, per-frame PNG hashes, per-view loop endpoint/seam measurements, wall time and process peak memory. Paired proofs also record all-frame geometric checks and reduced-resolution painted-alpha checks before background fill. Alpha checks use at most 240 pixels on the long side and do not exceed the requested proof size. `review_needed` flags coverage problems; successful artifact generation is not artistic approval. Detailed frame evidence stays in the report, while CLI output provides its path and a compact result.
+
+`preview --views-proof` verifies the saved page and every listed PNG before serving an immutable snapshot on localhost. It rejects changed frames, incomplete lists and paths outside the proof directory. The [moving fixture](../examples/views/README.md) exercises these commands without paid art.

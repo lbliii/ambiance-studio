@@ -13,3 +13,17 @@ The script initializes a square stage, applies animated artwork through a scene 
 Open the editor at `/editor/`, inspect the circle at frames 0 and 30, and run **Check all frames**. The canvas should be square and the circle should stay round. These are checks of the shared stage; this milestone does not render the named portrait or landscape outputs. Paired raster proofs are milestone 2 in the [implementation plan](../../docs/architecture/DUAL-FORMAT-IMPLEMENTATION.md).
 
 The September 11, 2026 agent-operated pilot passed both CLI view checks and the browser's 480-frame check with zero exposed-canvas frames. The agent visually inspected frames 0 and 30 and the saved PNG; the square grid and round subject retained their proportions. This is geometric fixture evidence, not a human film or phone review.
+
+## Moving paired proof
+
+```sh
+node examples/views/create_motion_fixture.mjs projects/paired-views-pilot
+./ambiance --project projects/paired-views-pilot preview --port 8796
+./ambiance preview --views-proof projects/paired-views-pilot/render/paired-proof --port 8797
+```
+
+This second fixture adds an attached two-cel hand, camera motion, a moving round body, a fixed foreground rim, lighting, shadow and reflection. The script creates local test artwork, applies the complete scene through CLI transactions, runs `project check`, and produces both views through `render views-proof`. It preserves the full-size output intentions while using a small authored stage for inexpensive interactive inspection. Choose a fresh destination.
+
+The initial paired pilot generated sixteen 180 × 320 portrait frames and sixteen 320 × 180 landscape frames. Rendering and its reduced-resolution checks took 1.182 seconds with 193,560,576 bytes of peak process memory on the local Node Canvas runtime. This small fixture is not a performance estimate for production artwork or full-HD finishing.
+
+The agent inspected frame 0 in the editor and frame 4 in the saved proof: the subject stayed round, its changed hand cel remained attached, the rim stayed in front, and the reflection appeared in both views. Both panes reported frame 4 at 0.5 seconds after seeking and later frame 10 during shared playback. The browser's sixteen-frame stage and view checks passed with zero exposed frames. Automated raster tests compare every fixture frame against independently specified crops and inject a transparent defect visible only in portrait. These observations are separate from a human aesthetic or physical-phone review.

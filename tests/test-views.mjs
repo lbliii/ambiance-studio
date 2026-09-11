@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {compileScene,validateScene,point} from '../editor/engine.mjs';
 import {auditViews,auditScene} from '../editor/audit.mjs';
-import {dualFraming,resolveView,viewIds,viewProjection,canonicalView,resizeSceneCanvas} from '../editor/views.mjs';
+import {dualFraming,resolveView,viewIds,viewProjection,canonicalView,resizeSceneCanvas,planViews} from '../editor/views.mjs';
 const checks=[];
 function check(name,fn){fn();checks.push(name);}
 const read=name=>JSON.parse(fs.readFileSync(new URL(name,import.meta.url)));
@@ -86,5 +86,18 @@ check('Runtime downscaling/supersampling keeps framing valid and shape-preservin
     }
   }
   assert.throws(()=>resizeSceneCanvas(fixture(),1920,1080),/aspect ratio/);
+});
+check('Paired sizing respects aspect ratios, common stage detail and internal limits',()=>{
+  const scene=structuredClone(source);scene.canvas.width=1920;scene.framing=dualFraming();
+  const plan=planViews(scene,[{id:'portrait'},{id:'landscape'}],{long_edge:640,supersample:2});
+  assert.deepEqual(plan.views.map(v=>v.output),[{width:360,height:640},{width:640,height:360}]);
+  assert.deepEqual(plan.internal_canvas,{width:1280,height:1280});
+  assert.deepEqual(planViews(scene,[{id:'portrait'},{id:'landscape'}],{long_edge:639}).views.map(v=>v.output),[{width:351,height:624},{width:624,height:351}]);
+  assert.throws(()=>planViews(scene,[{id:'portrait'}],{long_edge:8}),/cannot fit/);
+  assert.throws(()=>planViews(scene,[{id:'portrait'},{id:'portrait'}]),/unique/);
+  assert.throws(()=>planViews(scene,[{id:'landscape',width:360}]),/integer/);
+  assert.throws(()=>planViews(fixture(),[{id:'landscape'}],{supersample:2}),/maximum is 4096/);
+  const asymmetric=planViews(scene,[{id:'portrait',width:90,height:160},{id:'landscape',width:320,height:180}]);
+  assert.deepEqual(asymmetric.internal_canvas,{width:320,height:320});
 });
 console.log(JSON.stringify({ok:true,checks},null,2));

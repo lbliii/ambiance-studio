@@ -4,7 +4,7 @@ The optional v0.7 `finishing` extension adds linear-sRGB appearance recipes, pai
 
 The scene is the recipe. The catalog describes ingredients. Both are readable JSON so a person, a visual editor, and an assistant can make the same change without rewriting rendering code.
 
-An optional version-1 `framing` extension stores [named output views](VIEWS.md) in authored canvas pixels. It preserves the scene's coordinate basis, rigs, camera and clock. The implemented authoring/checking commands do not yet change the full-canvas renderer into a named-view exporter.
+An optional version-1 `framing` extension stores [named output views](VIEWS.md) in authored canvas pixels. It preserves the scene's coordinate basis, rigs, camera and clock. Named-view rendering and synchronized previews extract uniformly scaled crops after the full stage's finishing pass; omitting `--view` retains full-canvas rendering.
 
 ## Coordinate system
 

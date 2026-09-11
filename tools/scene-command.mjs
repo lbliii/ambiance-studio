@@ -6,7 +6,7 @@ import {compileScene,validateScene} from '../editor/engine.mjs';
 import {sceneTiming} from '../editor/timing.mjs';
 import {finishingDiagnostics} from '../editor/finishing.mjs';
 import {placeFromSource,reparentAtTime} from '../editor/source-placement.mjs';
-import {resolveView,viewIds,viewProjection,canonicalView,dualFraming} from '../editor/views.mjs';
+import {resolveView,viewIds,viewProjection,canonicalView,dualFraming,planViews} from '../editor/views.mjs';
 import {auditViews} from '../editor/audit.mjs';
 
 const layerFields=['name','asset','x','y','width','height','anchor','scale','rotation','opacity','visible','blend','depth','group','attach','sockets','cycle_seconds','phase_frames','motion','tracks','track_loop'];
@@ -98,6 +98,7 @@ try{
   let result;
   if(action==='sample')result=compileScene(scene,catalog).sample(args.time);
   else if(action==='view-defaults')result=dualFraming();
+  else if(action==='view-plan')result=planViews(scene,args.requests,args.options);
   else if(action==='view-check')result=auditViews(scene,catalog,args.views);
   else if(action==='view-inspect'){
     const views=Object.fromEntries((args.id?[args.id]:viewIds(scene)).map(id=>{
@@ -105,7 +106,7 @@ try{
       return [id,{...view,projection:viewProjection(view),view_sha256:createHash('sha256').update(canonicalView(view)).digest('hex')}];
     }));
     result={authored_canvas:{width:scene.canvas.width,height:scene.canvas.height},views,
-      limits:['Saved framing only; named-view raster export is not yet implemented.']};
+      limits:['Saved framing definitions; use render commands for raster evidence.']};
   }
   else if(action==='finishing-check')result=finishingDiagnostics(scene,catalog,args.time??0,compileScene(scene,catalog).sample(args.time??0));
   else if(action==='timing')result=sceneTiming(scene,catalog,{layer:args.layer});

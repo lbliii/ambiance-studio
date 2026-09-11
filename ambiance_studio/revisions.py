@@ -339,6 +339,8 @@ def prepare_edition(project, args):
     """Freeze declared inputs before rendering; publication checks them again."""
     edition = getattr(args, 'edition', None)
     if not edition: return None
+    if getattr(args, 'view', None) not in [None, 'authored']:
+        raise ValueError('Named-view edition registration is not implemented yet; render without --edition and retain the view report.')
     id = getattr(args, 'revision', None)
     if not id: raise ValueError('--edition requires --revision')
     identifier(edition); context = render_context(project, id); data = load(project, id)
@@ -367,6 +369,8 @@ def prepare_edition(project, args):
             raw = proof_path.read_bytes()
             if hashlib.sha256(raw).hexdigest() != pinned['sha256']: raise ValueError('Picture receipt changed while reading')
             report = json.loads(raw)
+            if report.get('view', {}).get('view', {}).get('id', 'authored') != 'authored':
+                raise ValueError('Named-view picture receipts need view-aware edition registration, which is not implemented yet.')
             if report.get('mode') != 'video' or not report.get('ok'):
                 raise ValueError('Picture receipt must be a successful saved render video report')
             for key in ['scene', 'catalog']:

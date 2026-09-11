@@ -159,6 +159,7 @@ def parser():
     q=sub.add_parser('preview',help='Serve a project, saved look or preparation workspace on localhost');q.add_argument('--port',type=int,default=8783)
     preview_kind=q.add_mutually_exclusive_group()
     preview_kind.add_argument('--look',type=Path,help='Serve a verified look-proof artifact without requiring a project')
+    preview_kind.add_argument('--views-proof',type=Path,help='Serve a saved synchronized view proof with verified frame hashes')
     preview_kind.add_argument('--prepare',type=Path,help='Inspect and edit a verified preparation draft without writing project files')
     q=sub.add_parser('test',help='Run local regression checks without paid providers');q.add_argument('--out',type=Path)
     planning.add_parsers(sub);assets.add_library_parsers(sub);revisions.add_parsers(sub);views.add_parsers(sub)
@@ -188,7 +189,7 @@ def run(args):
             'note':'Optional dependency availability does not imply a renderer or provider adapter is implemented.'}
     if command=='test':
         require_node();asset_tool()
-        commands=[[sys.executable,'-m','unittest','discover','-s','tests','-p','test_*.py'],['node','editor/verify-engine.mjs'],['node','tests/test-rig.mjs'],['node','tests/test-views.mjs'],['node','tests/test-tracks.mjs'],['node','tests/test-source-placement.mjs'],['node','tests/test-finishing.mjs'],[sys.executable,'tools/package_audit.py']]
+        commands=[[sys.executable,'-m','unittest','discover','-s','tests','-p','test_*.py'],['node','editor/verify-engine.mjs'],['node','tests/test-rig.mjs'],['node','tests/test-views.mjs'],['node','tests/test-view-raster.mjs'],['node','tests/test-tracks.mjs'],['node','tests/test-source-placement.mjs'],['node','tests/test-finishing.mjs'],[sys.executable,'tools/package_audit.py']]
         results=[]
         for c in commands:
             p=subprocess.run(c,cwd=ROOT,capture_output=True,text=True)
@@ -210,6 +211,9 @@ def run(args):
     if command=='preview' and args.look is not None:
         from .preview import serve_look
         serve_look(args.look,args.port);return None
+    if command=='preview' and args.views_proof is not None:
+        from .preview import serve_look
+        serve_look(args.views_proof,args.port,kind='views-proof');return None
     if command=='preview' and args.prepare is not None:
         from .preparation_server import serve
         serve(args.prepare,args.port);return None

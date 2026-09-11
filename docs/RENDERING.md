@@ -19,6 +19,12 @@ Proof durations must contain an integer number of frames and fit within one visu
 
 The report measures exact RGBA equality at the mathematical loop endpoints and the adjacent last-to-first RGB difference. These are technical measurements, not judgments about natural motion, registration or the encoded seam. PNG pixels are deterministic with the same inputs and raster runtime; byte identity across different Canvas versions is not promised.
 
+## Saved portrait and landscape views
+
+`render frame/proof/video --view ID` extracts one saved view after rendering the complete finished stage. `render views-proof --view portrait --view landscape --long-edge 640 --seconds 3 --out NEW_DIR` saves synchronized PNG sequences and a shared-clock player. Both use the same stage adapter as the editor. The output dimensions, source rectangle, view hash, internal raster and stage-adapter hash are recorded. Omitting `--view` preserves the full-stage sizing described above.
+
+Use `preview --views-proof DIR` to serve the verified paired artifact. These proofs include per-view geometry and reduced-resolution alpha checks; each output also has its own endpoint/seam measurements. Video still encodes one selected view per command, with normal native verification. Named-view edition registration and a resumable combined delivery are later milestones. See [saved views](VIEWS.md) for sizing, limits and runnable examples.
+
 ## Native video export
 
 ```sh
