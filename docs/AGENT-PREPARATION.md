@@ -28,7 +28,7 @@ A version-1 edit batch has 1–64 `operations`:
 - `set-mask` and `append-polygon`: `mask: removal`, or `part: ID, mask: cutout`, plus `value`.
 - `set-motion`, `set-pivot`, `set-binding`, `set-companions`, `set-source`: `part: ID, value`.
 - `add-part`: `value` containing a complete part; `remove-part`: `part: ID`.
-- `set-alignment`, `set-context`, `set-seconds`: `value`.
+- `set-alignment`, `set-context`, `set-seconds`, `set-backing`: `value`.
 
 Related changes belong in one batch. The result may be a study with `context: null`, which is explicitly labeled unbound. Quiet proposed motion does not change its part boundaries or required hidden paint.
 
@@ -57,7 +57,7 @@ The preparation's demonstration motion is not copied into the production rig. Au
 
 ## Proofs and observations
 
-`proof` saves full-speed synchronized views for normal, subjects-hidden and foreground-hidden variants, plus actual rest/extreme raster frames for each view. It reuses `render views-proof` and `render frame`. `--resume` verifies completed file hashes and skips them; incomplete attempts remain for diagnosis and retry into a new local attempt. Changed preparation, sizing or runtime identity requires a new run. `proof-run.json` records exact input identities, per-attempt artifacts, completion and an unreviewed artistic status.
+`proof` saves full-speed synchronized views for normal, subjects-hidden and foreground-hidden variants, plus actual rest/extreme raster frames for each view. It reuses `render views-proof` and `render frame`. `--resume` verifies completed file hashes and skips them; incomplete attempts remain for diagnosis and retry into a new local attempt. Changed preparation, sizing or runtime identity requires a new run. `proof-run.json` records exact input identities, per-attempt artifacts, completion and an unreviewed artistic status. `preparation_commands.validate_proof(path)` verifies those completed artifact hashes and returns bound context/views with scope explicitly limited to an isolated preparation study.
 
 Inspect these pictures for duplicate subjects left in backing, foreground fragments moving with a cutout, gaps in reconstructed paint, soft edges, registration and framing. Watch both full-speed views and record who observed them, display size, timestamps and the actual findings. Raster counts, successful compilation and structural checks cannot replace those observations. A positive mask result cannot detect a visually wrong but fully opaque replacement backing by itself.
 

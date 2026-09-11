@@ -91,6 +91,48 @@ class CompoundPreparationTests(unittest.TestCase):
         cached=commands.cli(self.root,'asset','prepare','place',self.root/'prepared','--base','base','--prefix','fixture','--resume')
         self.assertTrue(cached['cached']);self.assertEqual(cached['sha256'],result['sha256'])
 
+    def test_bound_cli_replay_and_paired_raster_proof_resume(self):
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('agent_prep_fixture',ROOT/'examples/agent-preparation/create_fixture.py')
+        fixture=importlib.util.module_from_spec(spec);spec.loader.exec_module(fixture)
+        project=self.root/'tea';result=fixture.create(project,proof=False)
+        prepared=Path(result['prepared']['directory']);recipe=p.load(prepared/'recipe.json')
+        receipt=p.load(prepared/'preparation-receipt.json')
+        self.assertEqual(set(receipt['views']),{'portrait','landscape'})
+        self.assertEqual(receipt['bindings']['pot']['inventory_part'],{'item_id':'pot','part_id':'paint'})
+        # Placement changes the working scene but must not invalidate immutable preparation controls.
+        c.validate_preparation_receipt(prepared/'preparation-receipt.json',p.sha((prepared/'preparation-receipt.json').read_bytes()),[prepared/'images/pot.png'])
+        out=project/'reports/proof';real=commands.cli;completed=[]
+        def interrupt_second(*args):
+            if len(completed)>4: raise KeyboardInterrupt()
+            result=real(*args);completed.append(result);return result
+        with patch.object(commands,'cli',side_effect=interrupt_second):
+            with self.assertRaises(KeyboardInterrupt):commands.proof(project,prepared,out,128)
+        run=p.load(out/'proof-run.json');self.assertIn('normal',run['steps'])
+        original=run['steps']['normal'];report=commands.proof(project,prepared,out,128,resume=True)
+        self.assertEqual(report['status'],'complete');run=p.load(out/'proof-run.json');self.assertEqual(original,run['steps']['normal'])
+        self.assertEqual(commands.validate_proof(out/'proof-run.json')['scope'],'isolated preparation raster study')
+        for view,size in [('portrait',(72,128)),('landscape',(128,72))]:
+            normal=Path(run['steps']['normal']['directory']);hidden=Path(run['steps']['subjects-hidden']['directory'])
+            with Image.open(normal/f'rest-{view}/frame.png') as rest,Image.open(normal/f'extreme-{view}/frame.png') as extreme,Image.open(hidden/f'rest-{view}/frame.png') as absent:
+                self.assertEqual(rest.size,size);self.assertNotEqual(rest.tobytes(),extreme.tobytes());self.assertNotEqual(rest.tobytes(),absent.tobytes())
+        # A hash-consistent wrong-view report still fails the typed preparation contract.
+        render_path=Path(run['steps']['normal']['directory'])/'render/render-report.json'
+        render_bytes=render_path.read_bytes();run_bytes=(out/'proof-run.json').read_bytes()
+        rendered=p.load(render_path);rendered['views'].pop('landscape');p.write(render_path,rendered)
+        run['steps']['normal']['files']['render/render-report.json']=p.sha(render_path.read_bytes());p.write(out/'proof-run.json',run)
+        with self.assertRaisesRegex(ValueError,'wrong or missing views'):commands.validate_proof(out/'proof-run.json')
+        render_path.write_bytes(render_bytes);(out/'proof-run.json').write_bytes(run_bytes);run=p.load(out/'proof-run.json')
+        # Frame tampering cannot masquerade as a successfully resumed proof.
+        frame=Path(run['steps']['normal']['directory'])/'rest-portrait/frame.png';frame.write_bytes(b'changed')
+        with self.assertRaisesRegex(ValueError,'Completed proof step changed'):commands.proof(project,prepared,out,128,resume=True)
+        # Omitted intended view and invalid semantic foreign key fail before a new build.
+        recipe['context']['scene']['sha256']=p.sha((project/'scene/scene.json').read_bytes())
+        recipe['context']['views']=['portrait'];p.write(project/'bad.json',recipe)
+        with self.assertRaisesRegex(ValueError,'every intended'):c.build(project,project/'bad.json',project/'bad-prepared')
+        recipe['context']['views']=['portrait','landscape'];recipe['parts'][0]['binding']['inventory_part']['part_id']='absent';p.write(project/'bad.json',recipe)
+        with self.assertRaisesRegex(ValueError,'not declared'):c.build(project,project/'bad.json',project/'bad-prepared')
+
     def test_public_inspect_edit_build_and_rest_raster(self):
         inspect=commands.cli(self.root,'asset','prepare','inspect',self.file)
         self.assertEqual(inspect['parts'][0]['pivot_source_px'],[18.25,35.125])

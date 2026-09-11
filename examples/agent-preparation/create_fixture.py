@@ -62,10 +62,12 @@ def create(out,subject='tea',proof=True):
                {'id':'rail','kind':'occluder','mask':{'polygons':[rect(24,180,233,187)]},'pivot':[0,0]}]
         part_names=[part['id'] for part in parts]
     # Saved views have different crops; fractional source placement exercises subpixel maps.
-    canvas={'width':w,'height':h,'fps':30,'loop_seconds':2,'background':'#18232c'}
-    ratio=9/16;pw=min(w,h*ratio);ph=pw/ratio;lw=min(w,h/ratio);lh=lw*ratio
-    framing={'version':1,'views':{'portrait':{'rect_scene_px':[(w-pw)/2,(h-ph)/2,pw,ph],'output':{'width':144,'height':256}},
-                                  'landscape':{'rect_scene_px':[(w-lw)/2,(h-lh)/2,lw,lh],'output':{'width':256,'height':144}}}}
+    W=H=max(w,h);scale=.75 if subject=='cabinet' else 1
+    ox,oy=(W-w*scale)/2+.25,(H-h*scale)/2+.125
+    canvas={'width':W,'height':H,'fps':30,'loop_seconds':2,'background':'#18232c'}
+    ratio=9/16;pw=min(W,H*ratio);ph=pw/ratio;lw=min(W,H/ratio);lh=lw*ratio
+    framing={'version':1,'views':{'portrait':{'rect_scene_px':[28 if subject=='tea' else (W-pw)/2,(H-ph)/2,pw,ph],'output':{'width':144,'height':256}},
+                                  'landscape':{'rect_scene_px':[(W-lw)/2,(H-lh)/2,lw,lh],'output':{'width':256,'height':144}}}}
     # Build/admit the reference using its ordinary full-source mapping.
     reference=single.image_record(out,raw/'source.png')
     mapping={'format':'ambiance-asset-source-mapping','version':1,'path_base':'project','reference':reference,'image':reference,'image_to_reference':[1,0,0,1,0,0],'registration':'Known fixture reference'}
@@ -76,7 +78,7 @@ def create(out,subject='tea',proof=True):
     run(out,'asset','build',raw/'base-recipe.json','--out',out/'assets/production/reference');run(out,'asset','admit',out/'assets/production/reference')
     scene={'version':1,'id':'compound-fixture','title':old['title'],'canvas':canvas,
            'camera':{'overscan':1,'x_amplitude':0,'y_amplitude':0,'zoom_amplitude':0},'groups':[],'framing':framing,
-           'layers':[{'id':'base','asset':'fixture-reference','cycle_seconds':2,'phase_frames':0,'x':.5+.25/w,'y':.5+.125/h,'width':(w+4)/w,'height':(h+4)/h,
+           'layers':[{'id':'base','asset':'fixture-reference','cycle_seconds':2,'phase_frames':0,'x':(ox+w*scale/2)/W,'y':(oy+h*scale/2)/H,'width':(w+4)*scale/W,'height':(h+4)*scale/H,
                       'anchor':[.5,.5],'scale':1,'rotation':0,'opacity':1,'visible':True,'depth':0,'blend':'source-over'}]}
     p.write(out/'scene/scene.json',scene)
     inventory={'version':1,'items':[{'id':name,'required_parts':[{'id':'paint','role':'occluder' if name=='rail' else 'cutout'}]} for name in part_names]}
@@ -94,7 +96,7 @@ def create(out,subject='tea',proof=True):
     context={'scene':{'file':'scene/scene.json','sha256':p.sha((out/'scene/scene.json').read_bytes())},
              'production_plan':{'file':'plans/production-plan.json','sha256':p.sha((out/'plans/production-plan.json').read_bytes())},
              'inventory':{'file':'plans/asset-inventory.json','sha256':p.sha((out/'plans/asset-inventory.json').read_bytes())},
-             'views':['portrait','landscape'],'source_to_scene':[1,0,0,1,.25,.125]}
+             'views':['portrait','landscape'],'source_to_scene':[scale,0,0,scale,ox,oy]}
     write(out/'plans/legacy-preparation.json',old)
     draft=run(out,'asset','prepare','init',out/'plans/legacy-preparation.json','--out',out/'assets/prepared/draft')
     batch={'version':1,'operations':[{'op':'remove-part','part':'subject'},{'op':'remove-part','part':'foreground'},

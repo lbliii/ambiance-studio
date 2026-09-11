@@ -32,7 +32,7 @@ def validate(recipe):
     for part in parts:
         ap.fields(part, ['id', 'kind', 'source', 'mask', 'pivot', 'motion', 'companions', 'binding'], 'compound part')
         id = identifier(part.get('id'), 'part ID')
-        if not re.fullmatch('[a-z0-9][a-z0-9-]*', id): raise ValueError('Part IDs must use lowercase letters, digits and hyphens')
+        if not re.fullmatch('[a-z0-9][a-z0-9-]*', id) or id.endswith(('-mask','-source')): raise ValueError('Part IDs must use lowercase letters, digits and hyphens')
         if id in ids: raise ValueError(f'Duplicate or reserved part ID: {id}')
         ids.add(id)
         if part.get('kind') not in ['cutout', 'occluder']: raise ValueError('Part kind must be cutout or fixed occluder')
@@ -46,7 +46,7 @@ def validate(recipe):
         for companion in companions:
             ap.fields(companion, ['id', 'image'], 'registration companion')
             cid = identifier(companion.get('id'), 'companion ID')
-            if not re.fullmatch('[a-z0-9][a-z0-9-]*', cid): raise ValueError('Companion IDs must use lowercase letters, digits and hyphens')
+            if not re.fullmatch('[a-z0-9][a-z0-9-]*', cid) or cid.endswith(('-mask','-source')): raise ValueError('Companion IDs must use lowercase letters, digits and hyphens')
             if cid in ids: raise ValueError(f'Duplicate companion/part ID: {cid}')
             ids.add(cid)
             # Validate a companion through the existing full-source grayscale-mask contract.
@@ -149,7 +149,8 @@ def context_inputs(project, recipe):
     scene = json.loads(inputs['scene']); inventory = json.loads(inputs['inventory']); plan = json.loads(inputs['production_plan'])
     from .scene_runtime import scene_bridge
     framing_scene = {'version': 1, 'id': 'preparation-envelopes', 'title': recipe['title'],
-                     'canvas': scene['canvas'], 'groups': [], 'layers': []}
+                     'canvas': scene['canvas'], 'groups': [], 'layers': [],
+                     'camera': {'overscan':1,'x_amplitude':0,'y_amplitude':0,'zoom_amplitude':0}}
     if 'framing' in scene: framing_scene['framing'] = scene['framing']
     info = scene_bridge('view-inspect', framing_scene, {'version': 1, 'assets': []}, {})
     selected = {}
@@ -245,8 +246,8 @@ def edit(project, file, batch_file, out, expected):
         elif action == 'remove-part':
             if not part: raise ValueError('Cannot remove an unknown part')
             recipe['parts'].remove(part)
-        elif action in ['set-alignment', 'set-context', 'set-seconds']:
-            recipe[{'set-alignment': 'backing_to_source', 'set-context': 'context', 'set-seconds': 'seconds'}[action]] = op['value']
+        elif action in ['set-alignment', 'set-context', 'set-seconds', 'set-backing']:
+            recipe[{'set-alignment': 'backing_to_source', 'set-context': 'context', 'set-seconds': 'seconds', 'set-backing': 'backing'}[action]] = op['value']
         else: raise ValueError(f'Unsupported preparation operation: {action}')
     load_inputs(project, recipe)
     if recipe.get('context'): context_inputs(project, recipe)
@@ -283,6 +284,7 @@ def scene_for(recipe, assets, context=None):
 
 def build(project, file, out):
     project, out = Path(project).resolve(), Path(out).resolve(); ap.relative(project,out)
+    if not re.fullmatch('[a-z0-9][a-z0-9-]*',out.name): raise ValueError('Build output name must be a lowercase asset prefix')
     path = Path(file); path = path/'recipe.json' if path.is_dir() else path
     raw=path.read_bytes();recipe=json.loads(raw);inputs=load_inputs(project,recipe);controls,context=context_inputs(project,recipe)
     images,facts,warnings=evaluate(recipe,inputs)

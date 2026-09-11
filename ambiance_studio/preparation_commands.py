@@ -9,7 +9,7 @@ import sys
 
 import studio
 from . import asset_prep as ap, compound_preparation as cp, preparation
-from .generation_ledger import canonical, identifier
+from .generation_ledger import identifier
 from .project import project_lock
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,7 +29,11 @@ def proof(project, directory, out, long_edge=640, resume=False):
     integer(long_edge,'proof long edge',32,2048)
     views=list(receipt['views']) or ['authored']
     if len(views)>8: raise ValueError('Preparation proof supports at most 8 selected views')
-    identity={'preparation_receipt_sha256':ap.sha((directory/'preparation-receipt.json').read_bytes()),
+    runtime_files=['tools/render-scene.mjs','tools/views-proof.mjs','editor/engine.mjs','editor/finishing.mjs',
+                   'editor/views.mjs','editor/stage-raster.mjs','editor/audit.mjs','ambiance_studio/rendering.py']
+    if (ROOT/'editor/bindings.mjs').exists(): runtime_files.append('editor/bindings.mjs')
+    runtime_identity=lambda: {name:ap.sha((ROOT/name).read_bytes()) for name in runtime_files}
+    identity={'runtime':runtime_identity(),'preparation_receipt_sha256':ap.sha((directory/'preparation-receipt.json').read_bytes()),
               'artifact_sha256':ap.sha((directory/'artifact.json').read_bytes()),'long_edge':long_edge,'views':views,
               'renderer_sha256':ap.sha((ROOT/'tools/render-scene.mjs').read_bytes()),
               'engine_sha256':ap.sha((ROOT/'editor/engine.mjs').read_bytes())}
@@ -39,7 +43,7 @@ def proof(project, directory, out, long_edge=640, resume=False):
             run=ap.load(out/'proof-run.json')
             if run['identity']!=identity: raise ValueError('Preparation/options/runtime changed; use a fresh proof directory')
         else:
-            out.mkdir(parents=True);run={'format':'ambiance-preparation-proof','version':1,'identity':identity,'steps':{},'status':'running','observations':[]}
+            out.mkdir(parents=True);run={'format':'ambiance-preparation-proof','version':1,'preparation_directory':str(directory),'identity':identity,'steps':{},'status':'running','observations':[]}
             studio.write(out/'proof-run.json',run)
         variants={'normal':[], 'subjects-hidden':[p['id'] for p in recipe['parts'] if p['kind']=='cutout'],
                   'foreground-hidden':[p['id'] for p in recipe['parts'] if p['kind']=='occluder']}
@@ -75,6 +79,7 @@ def proof(project, directory, out, long_edge=640, resume=False):
             # Result-directory alias is never a symlink; resume resolves the recorded attempt explicitly.
             run['steps'][name]['files_base']=str(attempt_dir)
             cp.artifact(directory)
+            if runtime_identity()!=identity['runtime']: raise ValueError('Proof runtime changed during rendering; use a fresh proof run')
             studio.write(out/'proof-run.json',run)
         run['status']='complete';run['review_status']='unreviewed'
         run['review_needed']=['Inspect hidden/rest/extreme in every view for duplicate old paint, attached foreground fragments and missing reconstruction.',
@@ -89,10 +94,42 @@ def proof(project, directory, out, long_edge=640, resume=False):
     return {'ok':True,'report':str(out/'proof-run.json'),'html':str(out/'index.html'),'status':'complete','views':views,'steps':{k:v['directory'] for k,v in run['steps'].items()},'review_status':'unreviewed'}
 
 
+def validate_proof(path):
+    """Verify saved preparation raster evidence; never confer a scene or artistic verdict."""
+    path=Path(path).resolve();run=ap.load(path)
+    if run.get('format')!='ambiance-preparation-proof' or run.get('version')!=1 or run.get('status')!='complete':
+        raise ValueError('Expected a completed preparation proof')
+    directory=Path(run['preparation_directory']).resolve();recipe,receipt=cp.artifact(directory)
+    if ap.sha((directory/'preparation-receipt.json').read_bytes())!=run['identity']['preparation_receipt_sha256']:
+        raise ValueError('Proof preparation identity differs')
+    if ap.sha((directory/'artifact.json').read_bytes())!=run['identity']['artifact_sha256']:
+        raise ValueError('Proof artifact identity differs')
+    if set(run.get('steps',{}))!={'normal','subjects-hidden','foreground-hidden'}:
+        raise ValueError('Preparation proof needs every normal/hidden variant')
+    for name,step in run['steps'].items():
+        base=Path(step['files_base']).resolve()
+        if not base.is_relative_to(path.parent): raise ValueError('Preparation proof step escapes its run')
+        for relative,digest in step['files'].items():
+            if ap.sha(ap.project_file(base,relative).read_bytes())!=digest: raise ValueError(f'Preparation proof file changed: {name}/{relative}')
+        rendered=ap.load(base/'render/render-report.json')
+        if rendered.get('ok') is not True or rendered.get('mode')!='views-proof': raise ValueError('Preparation raster render did not complete')
+        if set(rendered.get('views',{}))!=set(run['identity']['views']): raise ValueError('Preparation proof has wrong or missing views')
+        for id,view in receipt['views'].items():
+            if rendered['views'][id]['view_sha256']!=view['view_sha256']: raise ValueError('Preparation proof view identity differs')
+        if rendered.get('frames')!=round(recipe['seconds']*30) or rendered.get('seconds')!=recipe['seconds']:
+            raise ValueError('Preparation proof clock differs')
+        for key,filename in [('scene_sha256','scene.json'),('catalog_sha256','catalog.json')]:
+            if rendered.get(key)!=ap.sha((base/'project'/filename).read_bytes()): raise ValueError('Preparation render input identity differs')
+    return {'ok':True,'format':run['format'],'receipt':str(path),'sha256':ap.sha(path.read_bytes()),
+            'preparation_receipt':str(directory/'preparation-receipt.json'),'views':receipt['views'],
+            'production_context':receipt.get('context'),'bindings':receipt['bindings'],
+            'scope':'isolated preparation raster study','review_status':'unreviewed'}
+
+
 def place(project, directory, base, prefix=None, expected=None, dry_run=False, resume=False):
     from .scene_transactions import scene_transaction
     from .scene_commands import apply_batch
-    from . import assets, scene_authoring
+    from . import scene_authoring
     directory=Path(directory).resolve();recipe,receipt=cp.artifact(directory)
     if not base: raise ValueError('prepare place requires --base naming the existing source plane')
     prefix=identifier(prefix or directory.name,'placement prefix')
