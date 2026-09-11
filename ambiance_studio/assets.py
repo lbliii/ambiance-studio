@@ -47,6 +47,19 @@ def inspect_pack(pack):
     changed=[f for f,h in report['outputs'].items() if not studio.inside(pack,f).is_file() or studio.digest(studio.inside(pack,f))!=h]
     result={'ok':not changed,'asset':asset,'build':report,'changed_outputs':changed,
             'proofs':{f:str(pack/f) for f in ['contact-sheet.png','preview.gif'] if (pack/f).is_file()}}
+    if not changed and asset.get('provenance',{}).get('motion_preparation'):
+        from .asset_motion import validate_preparation, compiler_settings
+        ref=asset['provenance']['motion_preparation'];recipe=studio.read(pack/'recipe.json')
+        if ref!=recipe.get('motion_preparation'): raise ValueError('Motion recipe and asset provenance differ')
+        spec=recipe['input'];paths=[(pack/f).resolve() for f in ([spec['sheet']] if 'sheet' in spec else spec['frames'])]
+        verified=validate_preparation(pack/ref['file'],ref['sha256'],paths);compiler_settings(verified,recipe)
+        baseline=verified['context']['asset'];g=verified['geometry']
+        if any(asset[k]!=baseline[k] for k in ['width','height','atlas','pivot']): raise ValueError('Motion pack changed baseline geometry')
+        if asset['sockets']!=recipe.get('sockets',{}): raise ValueError('Motion pack socket policies differ')
+        mapping=asset['registration_mapping']
+        if mapping['shared_scale']!=g['scale'] or len(mapping['cels'])!=len(g['offsets']): raise ValueError('Motion pack mapping differs')
+        for cel,original,offset in zip(mapping['cels'],baseline['registration_mapping']['cels'],g['offsets']):
+            if cel['raw_cel_to_cell']!=[g['scale'],0,0,g['scale'],*offset] or any(cel[k]!=original[k] for k in ['index','source_index','source_rect','source_pivot']): raise ValueError('Motion pack cel mapping differs')
     if not changed:
         _,frames=read_asset(asset,pack);result['cel_analysis']=stats(frames)
     return result
