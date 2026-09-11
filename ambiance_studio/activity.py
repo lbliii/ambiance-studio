@@ -247,6 +247,7 @@ def run(args, project):
             if digest(asset['path']) != asset['sha256']: raise ValueError('Activity source changed; cannot resume')
         for module, expected in report['modules'].items():
             if digest(ROOT/module) != expected: raise ValueError('Activity implementation changed; choose a fresh output directory')
-        return {'ok': True, 'resumed': True, 'report': str(args.out.resolve()/'activity-report.json'), 'summary': report['summary']}
+        return {'ok': True, 'resumed': True, 'report': str(args.out.resolve()/'activity-report.json'), 'summary': report['summary'],
+                'review_required':True, 'diagnostic_coverage':report.get('diagnostic_coverage'), 'next_action':report.get('next_action')}
     args.out.parent.mkdir(parents=True, exist_ok=True)
     return _json_command([require_node(), ROOT/'tools/activity-scene.mjs'], request)

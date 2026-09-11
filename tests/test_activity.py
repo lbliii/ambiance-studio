@@ -39,6 +39,9 @@ class ActivityTests(unittest.TestCase):
         result, report, out = self.measure('--raster', '--view', 'portrait', '--view', 'landscape')
         self.assertLess(len(json.dumps(result)), 4000)
         self.assertFalse(report['visual_review_performed'])
+        self.assertTrue(result['review_required']);self.assertFalse(result['diagnostic_coverage']['no_warning_is_readability'])
+        self.assertEqual(report['summary'][0]['actions'][0]['status'],'unreviewed')
+        self.assertIn('unflagged',result['next_action'])
         self.assertEqual(report['clock']['sampling_hz'], 6)
         self.assertEqual(len(report['views']), 2)
         reference = rendering.run(args('render', 'frame', '--view', 'portrait', '--time', '1', '--width', '72', '--out', self.root/'reference'), self.project)
@@ -182,6 +185,10 @@ class ActivityTests(unittest.TestCase):
         self.assertEqual(report['actions'][0]['layers'],['actor'])
         state=json.loads((out/'state.json').read_text())
         self.assertEqual(state['views'][0]['profile']['kind']['character']['action_ids'],[action_id])
+        scene_path=self.project/'scene/scene.json';scene=json.loads(scene_path.read_text());scene['layers'][0]['visible']=False;scene_path.write_text(json.dumps(scene))
+        hidden=self.root/'semantic-hidden';activity.run(args('scene','activity','--action-id',action_id,'--view','portrait','--out',hidden),self.project)
+        hidden_report=activity.verify_receipt(hidden)
+        self.assertIn('sampled_rest_exceeds_authored_target',hidden_report['summary'][0]['actions'][0]['timing_target_diagnostics'])
 
     def test_binding_samples_and_disabled_source_include_coupled_receiver(self):
         project=self.root/'binding'

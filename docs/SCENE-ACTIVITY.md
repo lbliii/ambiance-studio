@@ -21,7 +21,7 @@ The artifact directory contains:
 | `maps/ACTION/VIEW.png` | Maximum sampled per-pixel residual change; red intensity is an 8-bit RGB difference, not salience |
 | `index.html`, `frames/` | Hash-bound normal-speed PNG playback, synchronized views and interventions; present only with `--raster` |
 
-`ambiance_studio.activity.verify_receipt(path)` verifies required files and every manifest hash before returning the full receipt. Consumers must additionally match its scene/catalog/plan/expectation/view identities to their selected subject. The verifier does not turn measurements into an artistic pass. The ordinary command summary contains only per-view action IDs, applicability, warning IDs, maximum sampled rest, unreviewed status, performance and artifact paths.
+`ambiance_studio.activity.verify_receipt(path)` verifies required files and every manifest hash before returning the full receipt. Consumers must additionally match its scene/catalog/plan/expectation/view identities to their selected subject. The verifier does not turn measurements into an artistic pass. The ordinary command summary contains per-view action IDs, applicability, warning IDs, authored timing-target violations, maximum sampled rest, unreviewed status, performance and artifact paths. It always says review is required, names known detector misses and asks for flagged AND unflagged normal-speed review. Empty warnings cannot satisfy an observed requirement.
 
 ## Units and sampling
 
