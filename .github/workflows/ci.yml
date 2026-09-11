@@ -22,9 +22,24 @@ jobs:
         with:
           node-version: "24"
           package-manager-cache: false
-      - run: python -m pip install -r requirements-assets.txt
+      - run: python -m pip install -r requirements-checks.txt
       - run: npm ci --ignore-scripts
-      - run: ./ambiance test
+      - name: Regression checks with bounded diagnostics
+        run: ./ambiance test --artifacts .ambiance/ci/checks --out .ambiance/ci/result.json
+      - name: Public CLI synthetic replay
+        if: always()
+        run: python examples/workflow-replay/run.py --out .ambiance/ci/replay
+      - name: Assemble allowlisted evidence
+        if: always()
+        run: python tools/ci_bundle.py --run .ambiance/ci/checks --replay .ambiance/ci/replay --out .ambiance/ci/upload
+      - name: Retain attributable evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: studio-${{ runner.os }}-${{ matrix.python || 'native' }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .ambiance/ci/upload/
+          if-no-files-found: error
+          retention-days: 7
   native-media:
     runs-on: macos-latest
     timeout-minutes: 15
@@ -41,6 +56,21 @@ jobs:
         with:
           node-version: "24"
           package-manager-cache: false
-      - run: python -m pip install -r requirements-assets.txt
+      - run: python -m pip install -r requirements-checks.txt
       - run: npm ci --ignore-scripts
-      - run: ./ambiance test
+      - name: Regression checks with bounded diagnostics
+        run: ./ambiance test --require-native --artifacts .ambiance/ci/checks --out .ambiance/ci/result.json
+      - name: Public CLI synthetic replay
+        if: always()
+        run: python examples/workflow-replay/run.py --out .ambiance/ci/replay
+      - name: Assemble allowlisted evidence
+        if: always()
+        run: python tools/ci_bundle.py --run .ambiance/ci/checks --replay .ambiance/ci/replay --out .ambiance/ci/upload
+      - name: Retain attributable evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: studio-${{ runner.os }}-${{ matrix.python || 'native' }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .ambiance/ci/upload/
+          if-no-files-found: error
+          retention-days: 7
