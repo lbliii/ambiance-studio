@@ -19,6 +19,7 @@
       <canvas id="stage" width="1080" height="1920" aria-label="Painting with independently animated depth layers. Select a layer, then drag in the picture to move it."></canvas>
       <div class="transport"><button id="play" disabled>Play</button><output id="time" aria-live="off">0.00 / 16 s</output><label><input type="checkbox" id="grid"> Grid</label><label><input type="checkbox" id="solo"> Solo</label><label><input type="checkbox" id="sockets" checked> Sockets</label></div>
       <label class="timeline-label" for="timeline">Loop position</label><input id="timeline" type="range" min="0" max="479" step="1" value="0" disabled>
+      <p class="hint">Play animates all visible layers together. Leave Solo off to see the whole scene. Each animation runs at its scheduled time.</p>
       <p class="hint">Select a layer, then drag anywhere in the painting. The dot marks its anchor.</p>
       <label id="view-guide-control" hidden><input type="checkbox" id="view-guides" checked> Saved view guides</label>
     </section>
@@ -27,7 +28,8 @@
       <label class="field">Selected layer<select id="layer" disabled></select></label>
       <div class="row"><button id="back" disabled>Send backward</button><button id="front" disabled>Bring forward</button><label><input type="checkbox" id="visible" checked> Visible</label></div>
       <p id="group-note" class="group-note">Independent layer</p>
-      <label class="group-control"><input id="edit-group" type="checkbox" disabled> Move / scale the whole group</label>
+      <label id="group-control" class="group-control" hidden><input id="edit-group" type="checkbox" aria-describedby="placement-hint" disabled> Edit group position and scale</label>
+      <p id="placement-hint" class="hint"></p>
       <label class="field">Attachment<select id="attachment"></select></label>
       <p class="hint">Choosing a socket snaps this layer's anchor to it. Attached position values are offsets in the parent's axes.</p>
       <div class="fields">
