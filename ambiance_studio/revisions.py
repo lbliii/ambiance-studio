@@ -18,6 +18,7 @@ SELECTION = 'ambiance-revision-selection'
 EDITION = 'ambiance-edition'
 PREPARATION = 'ambiance-external-preparation'
 DOCUMENTS = {
+    'production_plan': 'layout',
     'brief': 'intent', 'layer_plan': 'layout', 'layout_notes': 'layout',
     'inventory': 'layout', 'generation_ledger': 'assets',
     'sound_plan': 'sound-design', 'source_ledger': 'sound-design',
@@ -82,7 +83,7 @@ def seal(data):
 
 def read_sealed(path, kind, versions=(1,)):
     data = studio.read(path)
-    if data.get('format') != kind or data.get('schema_version') not in versions: raise ValueError(f'Unsupported {kind} contract: {path}')
+    if not isinstance(data, dict) or data.get('format') != kind or type(data.get('schema_version')) is not int or data['schema_version'] not in versions: raise ValueError(f'Unsupported {kind} contract: {path}')
     if data.get('payload_sha256') != studio.encoded_hash({k: v for k, v in data.items() if k != 'payload_sha256'}):
         raise ValueError(f'Manifest integrity changed: {path}')
     return data
@@ -232,6 +233,20 @@ def collect(project, selection):
     if settings.get('reference'):
         source = settings['reference']; c.pin(studio.inside(project, source['path']), 'intent', 'reference', source['sha256'])
     docs = selection.get('documents', {}); fields(docs, DOCUMENTS, 'selected documents')
+    docs = dict(docs)
+    from . import production_plan
+    canonical_plan = studio.inside(project, production_plan.PATH)
+    if canonical_plan.exists() or docs.get('production_plan'):
+        if docs.get('production_plan', production_plan.PATH) != production_plan.PATH:
+            raise ValueError('Capture must select the canonical production plan; apply a scope revision before capture')
+        plan = production_plan.load(project)
+        docs['production_plan'] = production_plan.PATH
+        if docs.get('inventory', 'plans/asset-inventory.json') != 'plans/asset-inventory.json':
+            raise ValueError('Canonical production intent uses plans/asset-inventory.json')
+        docs['inventory'] = 'plans/asset-inventory.json'
+        for source in plan['sources']: c.pin(studio.inside(project, source['path']), 'layout', 'production_source', source['sha256'])
+        for relation in plan['relations']:
+            for dep in relation['dependencies']: c.pin(studio.inside(project, dep['path']), 'animation', 'production_driver', dep['sha256'])
     for role, name in docs.items(): c.document(role+Path(name).suffix, studio.inside(project, name), DOCUMENTS[role], role)
     scene_path = studio.inside(project, selection['scene']); catalog_path = studio.inside(project, selection['catalog'])
     scene = json.loads(c.document('scene.json', scene_path, 'animation', 'scene')['bytes'])
@@ -532,12 +547,19 @@ def review_context(project, id, edition=None, view=None):
         view=inherited
     selected=captured_view(project,id,view) if view not in [None,'authored'] else None
     if selected:subject.update(view=selected['id'],view_sha256=selected['sha256'])
+    plan_context = None
+    if 'production_plan' in controls:
+        from . import production_plan
+        plan_context = production_plan.load_context(project, id, verify=False)
+        subject['production_plan'] = {'schema_version': 1, 'plan_sha256': plan_context['plan_sha256'],
+                                      'expectation_sha256': plan_context['expectation_sha256']}
     gates = studio.read(studio.inside(project, controls['pipeline']))
     settings = studio.read(studio.inside(project, controls['settings']))
     all_roles = {r['role'] for r in refs}
     required = {'intent': {'reference', 'brief'}, 'layout': {'layer_plan'}, 'assets': {'image'}, 'animation': {'scene'},
                 'sound-design': {'sound_plan', 'audio_source'}, 'mix': {'master'}, 'export': {'edition_output'}, 'release': {'edition_output'}}
-    def relevant(gate): return unique([r for r in refs if r['section'] in [gate, 'policy']])
+    def relevant(gate): return unique([r for r in refs if r['section'] in [gate, 'policy'] or
+                                      (plan_context and r['role'] in ['production_plan', 'production_source', 'production_driver'])])
     def snapshot(gate):
         return {r['path']: studio.digest(studio.inside(project, r['path'])) if studio.inside(project, r['path']).is_file() else None for r in relevant(gate)}
     def issues(gate):
@@ -550,7 +572,7 @@ def review_context(project, id, edition=None, view=None):
             chosen = ([ed['audio']['path']] if ed.get('audio') else []) if edition else [m['path'] for m in data['masters']]
             if not chosen or any(path not in complete for path in chosen): errors.append('Selected master lacks an explicit audio-run or external-preparation dependency record')
         return errors
-    return {'settings': settings, 'pipeline': gates, 'subject': subject,
+    return {'settings': settings, 'pipeline': gates, 'subject': subject, 'plan_context': plan_context,
             'review_dir': studio.inside(project, f'reviews/revisions/{id}/'+(f'editions/{identifier(edition)}' if edition else f'views/{selected["id"]}/picture' if selected else 'picture')),
             'snapshot': snapshot, 'issues': issues, 'final_files': final_files}
 

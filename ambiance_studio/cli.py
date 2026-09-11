@@ -121,6 +121,7 @@ def parser():
     group.add_parser('status');q=group.add_parser('check');q.add_argument('--out',type=Path)
     q=group.add_parser('latest');q.add_argument('--channel',choices=['review','release'],default='review')
     q=group.add_parser('overview');q.add_argument('--out',type=Path)
+    q.add_argument('--stage',choices=['layout','assets','animation','export'],default='animation');q.add_argument('--view');q.add_argument('--revision')
     group=sub.add_parser('studio',help='Open the shared local film library').add_subparsers(dest='action',required=True)
     q=group.add_parser('register');q.add_argument('path',type=Path);q.add_argument('--id');q.add_argument('--relocate',action='store_true')
     q=group.add_parser('open');q.add_argument('--port',type=int,default=8783);q.add_argument('--no-browser',action='store_true')
@@ -234,7 +235,7 @@ def run(args):
         matches=[item['id'] for item in registry.projects(ROOT,registry_file) if item['path']==str(project)]
         alias=matches[0] if matches else studio.read(project/'project.json')['id']
         base=studio_server.base_url(registry_file)
-        if command=='project' and action=='overview':return production.overview(project,alias,base)
+        if command=='project' and action=='overview':return production.overview(project,alias,base,readiness_options={'stage':args.stage,'view':args.view,'revision':args.revision})
         if command=='project' and action=='latest':
             data=deliveries.latest(project,args.channel)
             data['current_url']=f'{base}/projects/{alias}'

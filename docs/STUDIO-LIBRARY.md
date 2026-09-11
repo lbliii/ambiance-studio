@@ -1,5 +1,7 @@
 # The local film library
 
+Canonical [production readiness](PRODUCTION-PLAN.md) is shared by `plan coverage`, project overview, `iteration preflight` and delivery scope summaries. Recipe `scope: proof|review|final` distinguishes presentable drafts from a full-production claim. Drafts may retain gaps; final scope requires all intended view/soundtrack pairs and applicable exact evidence. A selected review movie is useful evidence even when creative or human checks remain open.
+
 Use the studio library to find movies across code checkouts and worktrees. Project records own the selected versions; browser tabs and conversations do not determine what is current.
 
 ```sh

@@ -209,18 +209,18 @@ def load(project):
     return validate(project, read(studio.inside(Path(project).resolve(), PATH)))
 
 
-def load_context(project, revision=None):
+def load_context(project, revision=None, *, verify=True):
     project = Path(project).resolve()
     if revision:
         from . import revisions
         manifest = revisions.load(project, revision)
-        if not revisions.check(project, revision)['ok']: raise ValueError('Captured revision dependencies changed')
+        if verify and not revisions.check(project, revision)['ok']: raise ValueError('Captured revision dependencies changed')
         name = manifest['controls'].get('production_plan')
         if not name: raise ValueError('Revision has no captured production plan; legacy records are unchanged')
         path = studio.inside(project, name)
     else:
         path = studio.inside(project, PATH)
-    raw = path.read_bytes(); plan = validate(project, read(path))
+    raw = path.read_bytes(); plan = validate(project, read(path), verify_sources=verify)
     if raw != path.read_bytes(): raise ValueError('Plan changed during inspection')
     return {'plan': plan, 'path': str(path), 'plan_sha256': hashlib.sha256(raw).hexdigest(),
             'expectation_sha256': identity(plan)['expectations'], 'revision': revision}

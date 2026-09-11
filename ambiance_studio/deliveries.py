@@ -307,7 +307,31 @@ def release_state(project, data):
                 reasons.append(f'{role}: release review is {state["gates"]["release"]["state"]}')
         except (OSError, ValueError, KeyError, TypeError) as error:
             reasons.append(f'{role}: {error}')
-    return {'approved': not reasons, 'reasons': reasons}
+    scope = production_scope(project, data)
+    if scope['enforced'] and not scope['ready']:
+        reasons += ['Production scope: '+r['action'] for r in scope['blocked']]
+    return {'approved': not reasons, 'reasons': reasons, 'production_scope': scope}
+
+
+def production_scope(project, data):
+    from . import production_plan, production_coverage
+    selected = list(entries(data).values()); revisions_used = sorted({e['revision'] for e in selected if e.get('revision')})
+    enforced = (project/production_plan.PATH).exists()
+    reports = []; blocked = []
+    for revision in revisions_used:
+        manifest = revisions.load(project, revision)
+        if 'production_plan' not in manifest['controls'] and not enforced: continue
+        enforced = True
+        outputs = {}
+        for entry in selected:
+            if entry['revision'] == revision: outputs.setdefault(entry['view'], []).append(entry['role'])
+        report = production_coverage.evaluate(project, 'export', revision=revision,
+            outputs=[{'view_id': v, 'roles': roles} for v, roles in outputs.items()], details=True)
+        reports.append(report['report']); blocked.extend(report['blocked'])
+    if enforced and (not revisions_used or any(not e.get('revision') for e in selected)):
+        blocked.append({'id': 'plan.delivery-legacy-subject', 'action': 'Capture the intended plan and produce view-bound editions before claiming full scope.'})
+    return {'enforced': enforced, 'ready': enforced and not blocked, 'blocked': blocked[:8], 'reports': reports,
+            'meaning': 'Captured production scope; earlier sealed records retain their original meaning.'}
 
 
 def present(project, id, actor, note='', channel='review', expected=None):
@@ -353,6 +377,7 @@ def inspect(project, id, fingerprints=None):
         result['poster'] = None
     result['checked_utc'] = now()
     result['record_sha256'] = studio.digest(record_path(project, id))
+    result['production_scope'] = production_scope(project, data)
     return result
 
 

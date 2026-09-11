@@ -100,6 +100,10 @@ def gate_status(project,context=None):
                 for ev in check.get('evidence',[]):
                     ep=inside(project,ev['path'])
                     if not ep.is_file() or digest(ep)!=ev['sha256']: stale.append(f'Evidence changed: {ev["path"]}')
+            for check in record.get('expectations', []):
+                for ev in check.get('evidence', []):
+                    ep=inside(project,ev['path'])
+                    if not ep.is_file() or digest(ep)!=ev['sha256']: stale.append(f'Expectation evidence changed: {ev["path"]}')
             if stale: state='stale'; reasons=stale+reasons
             elif unavailable: state='blocked'
             else: state='passed' if record['verdict']=='pass' else 'revise'
@@ -148,6 +152,9 @@ def review_template(project,gate_id,context=None):
                 checks=[dict(id=c['id'],result='not-run',observed_by=dict(kind='agent',name=''),
                              note='',evidence=[]) for c in gate['criteria']])
     if context:result['subject']=context['subject']
+    if context and context.get('plan_context'):
+        from ambiance_studio.production_coverage import observation_drafts
+        result['expectations']=observation_drafts(context['plan_context'],gate_id,context['subject'].get('view','authored'))
     return result
 
 def record_review(project,source,context=None):
@@ -191,6 +198,8 @@ def record_review(project,source,context=None):
         if context and context['issues'](gate['id']):raise ValueError('Revision inputs are unavailable or changed: '+'; '.join(context['issues'](gate['id'])))
         blocked=[d for d in gate['depends'] if status[d]['state']!='passed']
         if blocked: raise ValueError('Unpassed or stale dependencies: '+', '.join(blocked))
+    from ambiance_studio.production_coverage import normalize_observations
+    observations=normalize_observations(project,review,context)
     receipt=dict(version=2 if context else 1,gate=gate['id'],verdict=review['verdict'],recorder=review['recorder'],
                  recorded_at=datetime.now(timezone.utc).isoformat(),checks=normalized,
                  project_digest=encoded_hash(context['settings'] if context else read(project/'project.json')),gate_digest=encoded_hash(gate),
@@ -198,10 +207,14 @@ def record_review(project,source,context=None):
                  dependencies={d:status[d]['receipt_digest'] for d in gate['depends']})
     if context:
         receipt['subject']=context['subject']
+        if context.get('plan_context'): receipt['expectations']=observations
         if scoped_snapshot(project,gate,context)!=initial_snapshot:raise ValueError('Revision inputs changed during review recording')
         for check in normalized:
             for ev in check['evidence']:
                 if digest(inside(project,ev['path']))!=ev['sha256']:raise ValueError('Evidence changed during review recording')
+        for check in observations:
+            for ev in check.get('evidence',[]):
+                if digest(inside(project,ev['path']))!=ev['sha256']:raise ValueError('Expectation evidence changed during review recording')
     receipt['payload_sha256']=encoded_hash(receipt)
     review_dir=context['review_dir'] if context else project/'reviews'
     path=review_dir/f'{gate["id"]}.json'
