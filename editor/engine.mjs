@@ -133,7 +133,7 @@ export function compileScene(input,inputCatalog) {
     }
     return scene.layers.map(visit);
   }
-  const inspectBindings=time=>({version:1,time:wrapTime(time,T),bindings:scene.bindings??null,samples:sample(time).flatMap(s=>s.bindings)});
+  const inspectBindings=time=>({version:1,time:wrapTime(time,T),bindings:structuredClone(scene.bindings??null),samples:sample(time).flatMap(s=>s.bindings)});
   return {sample,inspectBindings,scene,catalog};
 }
 export function sampleScene(scene,catalog,time){

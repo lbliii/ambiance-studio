@@ -54,6 +54,7 @@ console.log(JSON.stringify({scene:f.scene,catalog:f.catalog}));"""
             for layer in target['layers']:
                 if layer['id'] in remap['layers']:layer['id']=remap['layers'][layer['id']]
                 if layer.get('attach') and layer['attach']['layer'] in remap['layers']:layer['attach']['layer']=remap['layers'][layer['attach']['layer']]
+            if rig: next(l for l in target['layers'] if l['id']=='new-floor')['asset']='pumpkin'
             studio.write(self.scene_path,target)
             self.cli('look','import',out,'--bindings',mapping,*(['--include-rig'] if rig else []))
             actual=studio.read(self.scene_path)

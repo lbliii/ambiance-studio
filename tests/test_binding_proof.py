@@ -10,6 +10,17 @@ ROOT=Path(__file__).resolve().parents[1]
 
 
 class BindingProof(unittest.TestCase):
+    def test_preparation_snapshots_keep_transitive_engine_modules(self):
+        from ambiance_studio import preparation
+        with tempfile.TemporaryDirectory() as temp:
+            project=Path(temp);source=project/'source.png';Image.new('RGBA',(16,16),'white').save(source)
+            (project/'ambiance-project.json').write_text('{"version":1}')
+            out=project/'prepared';preparation.build(project,out,source=source,backing=source)
+            result=subprocess.run(['node','--input-type=module','-e',f"await import({json.dumps((out/'engine.mjs').as_uri())})"],capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr)
+            _,_,files=preparation.artifact(out)
+            self.assertIn('bindings.mjs',files);self.assertIn('views.mjs',files)
+
     def test_source_receiver_proof_captures_both_views_and_module_closure(self):
         with tempfile.TemporaryDirectory() as temp:
             project=Path(temp)/'fixture'

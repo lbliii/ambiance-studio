@@ -253,9 +253,10 @@ def import_batch(project, scene, catalog, package, bindings, include_rig=False):
         if not identical: substitutions.append({'source_asset': record['id'], 'target_asset': target['id'], 'role': 'grade-target', 'source_sha256': record['sha256'], 'target_sha256': target['sha256']})
     art = {row['layer']: row for row in doc['source']['layer_art']}
     target_layers = {row['id']: row for row in scene['layers']}
+    rig_sources = {row['id']: row for row in rig['layers']} if rig is not None else {}
     for effect in doc['finishing'].get('illuminations', []):
         for name in [effect['layer'], effect['receiver']]:
-            target = by_asset[target_layers[binding['layers'][name]]['asset']]
+            target = by_asset[binding['assets'][rig_sources[name]['asset']]] if rig is not None else by_asset[target_layers[binding['layers'][name]]['asset']]
             if name not in art or any(art[name].get(key) != target.get(key) for key in ['sha256', 'width', 'height', 'atlas']) or ('registration' in art[name] and art[name]['registration'] != _registration_identity(target)):
                 raise ValueError(f'Painted illumination base/contribution version differs: {name}')
     result = copy.deepcopy(doc['finishing'])

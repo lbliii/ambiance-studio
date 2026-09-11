@@ -6,7 +6,7 @@ const object=v=>v&&typeof v==='object'&&!Array.isArray(v);
 const finite=v=>typeof v==='number'&&Number.isFinite(v);
 const clamp=v=>Math.max(0,Math.min(1,v));
 const fields=(v,keys,label)=>{if(!object(v)||Object.keys(v).some(k=>!keys.includes(k)))throw Error(`Invalid ${label} fields`);};
-const span=(v,label,equal=false)=>{if(!Array.isArray(v)||v.length!==2||!v.every(finite)||(equal?v[0]>v[1]:v[0]>=v[1]))throw Error(`Invalid ${label} range`);};
+const span=(v,label,equal=false)=>{if(!Array.isArray(v)||v.length!==2||!v.every(finite)||!finite(v[1]-v[0])||(equal?v[0]>v[1]:v[0]>=v[1]))throw Error(`Invalid ${label} range`);};
 const channels=['x','y','rotation','scale','opacity','cell'];
 
 export function validateBindings(scene,catalog){
@@ -27,7 +27,7 @@ export function validateBindings(scene,catalog){
     const target=layer(d.layer),asset=assets.get(target.asset);
     if(!channels.includes(d.channel))throw Error(`Unsupported binding target channel: ${link.id}`);
     span(d.range,'target',true);
-    const value=v=>{if(!finite(v)||v<d.range[0]||v>d.range[1]||d.channel==='opacity'&&(v<0||v>1)||d.channel==='scale'&&(v<.001||v>100)||d.channel==='cell'&&(!asset.atlas||!Number.isInteger(v)||v<0||v>=asset.atlas.frame_count))throw Error(`Binding output outside valid range: ${link.id}`);};
+    const value=v=>{if(!finite(v)||v<d.range[0]||v>d.range[1]||d.channel==='opacity'&&(v<0||v>1)||['x','y','rotation'].includes(d.channel)&&Math.abs(v)>100||d.channel==='scale'&&(v<.001||v>100)||d.channel==='cell'&&(!asset.atlas||!Number.isInteger(v)||v<0||v>=asset.atlas.frame_count))throw Error(`Binding output outside valid range: ${link.id}`);};
     d.range.forEach(value);value(link.off);
     const writer=`${d.layer}.${d.channel}`;
     if(writers.has(writer)||target.tracks?.[d.channel])throw Error(`Multiple writers / track conflict: ${writer}`);writers.add(writer);
@@ -73,7 +73,7 @@ export function sampleBinding(link,signals,readState,time,duration){
   let raw,active,kind;
   if(s.signal!==undefined){raw=sampleSignal(signals.get(s.signal),readState,time,duration);active=raw>0;kind='intensity';}
   else{const state=readState(s.layer);raw=state.channels[s.channel];active=state.visible&&state.opacity>0;kind=s.channel==='cell'?'state':'pose';}
-  const input=kind==='state'?raw:clamp((raw-s.range[0])/(s.range[1]-s.range[0]));
+  const input=kind==='state'?raw:raw<=s.range[0]?0:raw>=s.range[1]?1:clamp((raw-s.range[0])/(s.range[1]-s.range[0]));
   let value=link.off;
   if(active){
     if(kind==='state')value=link.map.values[input];
@@ -84,5 +84,5 @@ export function sampleBinding(link,signals,readState,time,duration){
       else{if(link.map.interpolation==='hold')u=0;else if(link.map.interpolation==='smoothstep')u=u*u*(3-2*u);value=x+(y-x)*u;}
     }
   }
-  return {id:link.id,source:{kind,raw,value:input,active},target:link.target,value};
+  return {id:link.id,source:{kind,raw,value:input,active},target:structuredClone(link.target),value};
 }
