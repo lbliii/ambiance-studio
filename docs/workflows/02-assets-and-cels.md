@@ -14,6 +14,10 @@ Write a generation request with references and desired output before sending it.
 
 ## Source generation contract
 
+Choose source detail from each layer's largest displayed size across requested views, camera/parent scaling and cel poses. Record original dimensions and crop/registration/enlargement history; a large derivative may already be an upscale. Missing original mappings remain unknown. Small props do not each need 4K source files. Inspect deliberate upscales rather than treating their pixel count as recovered paint.
+
+For TV/4K work, check the internal stage and output against [saved-view raster limits](../VIEWS.md). Use small staging previews, then full-resolution stills and short encoded motion. Supersampling can smooth edges but cannot supply absent texture. The automatic source-resolution audit and named TV profile in the [quality roadmap](../architecture/TV-QUALITY-AND-SOUND-LIBRARY.md) remain planned; use existing mappings, scene samples and proofs until implemented.
+
 For a rigid cutout: specify framing, intended scene location, lighting, perspective, complete silhouette, margins, transparency request, and the attachment/pivot. For a clean plate: identify the removed objects and the scenery that should continue behind them.
 
 For cels: establish a master pose, fixed camera and canvas, grid/cell order, frame count, margins, palette, light, common scale, pivot, and exactly what changes. Describe the continuous action across the last-to-first transition. A rising smoke sequence should not be made to reverse downward merely because ping-pong playback is convenient.

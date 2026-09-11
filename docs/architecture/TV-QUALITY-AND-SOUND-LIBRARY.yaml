@@ -1,0 +1,376 @@
+format: ambiance-quality-roadmap
+schema_version: 1
+updated: '2026-09-11'
+status: planned
+baseline_commit: '31390fb'
+design: docs/architecture/TV-QUALITY-AND-SOUND-LIBRARY.md
+meaning: >-
+  Human/agent implementation backlog, not an executable production recipe,
+  scheduler, implemented capability declaration, or spending authorization.
+scope:
+  core:
+    - Opt-in 3840x2160 landscape, 30 fps, SDR TV profile with source-detail validation.
+    - Preserve every film's existing declared view and action requirements.
+    - Compact picture and audiovisual cycles with explicit compatible clocks.
+    - Source-format preservation, 48 kHz working audio, and honest loudness/true-peak checks.
+    - Curated reusable environmental sound catalog and two editable mix recipes.
+    - Stereo depth and a short revision-bound film pilot with exact delivery links.
+  deferred:
+    - Surround and immersive rendering or delivery.
+    - Ten-hour files and generalized long-duration assembly.
+    - 8K, HDR, 60 fps, and unconditional enlargement of renderer limits.
+    - Automatic publishing, recurring automation, provider replacement, or large generation queues.
+  starter_collection:
+    name: Quiet interiors and nearby nature
+    accepted_clip_target: 18
+    range: [15, 20]
+    meaning: Accepted reusable clips, not generation-call count or a fixed quota.
+    recipes: [sheltered-reading-room, quiet-garden-exterior]
+  authority:
+    current_request: Produce the plan.
+    execution: Implementation is a subsequent task; this file performs no work by itself.
+    paid_generation_budget: null
+    account_changes_authorized: false
+    publishing_authorized: false
+    note: Preserve any later explicit authorization; never request it twice for the same scope.
+phases:
+  - id: 0
+    name: Inventory and baseline
+  - id: 1
+    name: Quality foundations
+  - id: 2
+    name: Curated audio reuse
+  - id: 3
+    name: Complete compact pilot
+  - id: 4
+    name: Conditional follow-ups
+tasks:
+  - id: BASE-01
+    title: Inventory existing sources, current editions, and provider routes
+    phase: 0
+    priority: P0
+    status: planned
+    relative_size: S
+    depends_on: []
+    affected_paths:
+      - ambiance_studio/assets.py
+      - docs/PROVIDERS.md
+      - reference/audio-generation-log.json
+      - Selected projects' audio source and retrieval records
+    deliverables:
+      - Read-only candidate inventory with actual paths, hashes, formats, and recorded listening state.
+      - Existing art dimensions, preparation mappings, intended view sizes, and source-detail risks.
+      - Source gaps and proposed reuse; current delivery identities remain intact.
+      - Per-route model/format/entitlement facts with unknowns explicit and no account changes.
+    acceptance:
+      - Historical ledger entries without local files remain unresolved, not accepted or regenerated.
+      - Generated, imported, and prepared sounds retain distinct provenance.
+      - Select a pilot only after inspecting its current project overview and source-resolution needs.
+    validation:
+      - Hash and decode available candidate files; confirm source references without writing production inputs.
+      - Reconcile known provider output IDs before considering a replacement request.
+
+  - id: TV-01
+    title: Add an opt-in TV quality profile and resource preflight
+    phase: 1
+    priority: P0
+    status: planned
+    relative_size: M
+    depends_on: [BASE-01]
+    affected_paths:
+      - ambiance_studio/rendering.py
+      - ambiance_studio/production.py
+      - editor/views.mjs
+      - tools/render-scene.mjs
+      - docs/VIEWS.md
+      - docs/RENDERING.md
+    deliverables:
+      - Resolve the proposed tv_4k_sdr profile through existing saved views and render settings.
+      - Explicit 3840x2160, 30 fps, BT.709 SDR and starting 40 Mbps video settings.
+      - Report output and internal-stage dimensions, supersampling, estimated size, and relevant limits.
+      - Preserve project defaults, earlier revisions, and requested alternate compositions.
+    acceptance:
+      - No silent resolution, composition, bitrate, or supersampling fallback.
+      - Full-stage sizing, including magnified crops, is checked before costly work.
+      - A supported 4K fixture encodes and decodes at the requested dimensions and clock.
+    validation:
+      - Legacy defaults and explicit overrides retain documented behavior.
+      - Reject oversized stage, odd native dimensions, invalid aspect ratio, and unsupported clock/profile cases.
+      - Actual native short encode plus deliberate resource measurement; no hard wall-time assertion in fast tests.
+
+  - id: TV-02
+    title: Audit effective artwork resolution across each view and motion envelope
+    phase: 1
+    priority: P0
+    status: planned
+    relative_size: L
+    depends_on: [BASE-01, TV-01]
+    affected_paths:
+      - ambiance_studio/assets.py
+      - ambiance_studio/edge_quality.py
+      - editor/engine.mjs
+      - editor/views.mjs
+      - tools/render-scene.mjs
+      - docs/EDGE-QUALITY.md
+    deliverables:
+      - Per-source and per-cel original/prepared dimensions and registration/crop identities.
+      - Maximum displayed footprint and enlargement with view, frame/time, layer, and cel identity.
+      - Explicit unknowns for missing raw-source mappings or incomplete sampling coverage.
+      - Actionable art remedies and saved full-resolution still/motion proof references.
+    acceptance:
+      - A previously enlarged derivative cannot hide an undersized recorded original.
+      - Camera and parent transforms, padding, crop, and every requested view affect the report.
+      - Sampling coverage or analytic bounds are stated; partial samples are never labeled full-envelope guarantees.
+      - Numbers report detail risk; artistic acceptance remains a separate observation.
+    validation:
+      - Fixtures for nested scaling, camera extrema, cel changes, padded atlases, and original-to-prepared enlargement.
+      - Verify reported worst cases against actual shared-engine raster proofs.
+      - Review one real painted scene at full output size and normal playback.
+
+  - id: LOOP-01
+    title: Define compact master and export intent without expanding long files
+    phase: 1
+    priority: P0
+    status: planned
+    relative_size: S
+    depends_on: [BASE-01]
+    affected_paths:
+      - docs/SCENE-CONTRACT.md
+      - docs/AUDIO-SESSION.md
+      - docs/RENDERING.md
+      - ambiance_studio/production.py
+      - templates/iteration-views.example.json
+    deliverables:
+      - Explicit distinction between picture period, audio/master period, and optional presentation duration.
+      - A short example with an audio period that is a whole multiple of the picture period.
+      - Default output is one complete audiovisual master; preview can repeat it without additional media.
+      - Future duration setting is documented as delivery intent, not a currently supported scene field.
+    acceptance:
+      - Existing repeats never implies that the tool synthesized or extended matching audio.
+      - Exact frame/sample counts, source hashes, and valid boundaries are retained.
+      - No duplicated endpoint frame, accidental time stretch, or long-file generation in core examples.
+    validation:
+      - Compatible and incompatible audio/picture clocks and partial-cycle proof cases.
+      - Demonstrate repeated playback using one short asset and correct decoded join observations.
+
+  - id: AUDIO-01
+    title: Add source format inspection and explicit local audio preparation
+    phase: 1
+    priority: P0
+    status: planned
+    relative_size: M
+    depends_on: [BASE-01]
+    affected_paths:
+      - ambiance_studio/audio.py
+      - ambiance_studio/revisions.py
+      - docs/AUDIO-SESSION.md
+      - docs/PROVIDERS.md
+      - Local runtime capability discovery
+    deliverables:
+      - Inspect codec/container, rate, channels, duration, bit depth where meaningful, and bitrate.
+      - Preserve original compressed/native files and prepare immutable 48 kHz working derivatives.
+      - Explicit tested decoder/resampler backend with source and tool identities.
+      - Provider quality record distinguishing generation model, retrieval format, and later processing.
+      - Concrete gap-generation comparison plan only where existing sources cannot answer the question.
+    acceptance:
+      - Unknown source quality or subscription entitlement remains unknown.
+      - Current connected-flow limits are distinguished from public API options.
+      - Raw PCM requires declared valid format/channel metadata; MP3-to-WAV never becomes a lossless-origin claim.
+      - Paid comparisons require an already authorized bounded batch; local preparation continues independently.
+    validation:
+      - Fixtures for mono/stereo, compressed inputs, wrong rate, truncated payload, unsupported layout, and changed originals.
+      - Sample-count and reconstruction/provenance checks after explicit resampling.
+      - Same-take format comparisons separated from different-take/model listening comparisons.
+
+  - id: AUDIO-02
+    title: Add perceptual level measurements and configurable upload audio encoding
+    phase: 1
+    priority: P0
+    status: planned
+    relative_size: M
+    depends_on: [AUDIO-01]
+    affected_paths:
+      - ambiance_studio/audio.py
+      - ambiance_studio/rendering.py
+      - native/media/media.m
+      - ambiance_studio/revisions.py
+      - docs/AUDIO-SESSION.md
+      - docs/RENDERING.md
+    deliverables:
+      - LUFS and oversampled true-peak measurements with backend/version and method.
+      - Sample peaks and RMS remain separately labeled; silence/short gated clips handled explicitly.
+      - Audio bitrate becomes explicit in recipe and edition evidence; trial 384 kbps stereo AAC for TV uploads.
+      - Decoded AAC presentation-interval measurements and provisional headroom criteria.
+    acceptance:
+      - No automatic loudness normalization or universal ambiance LUFS target.
+      - Unsupported formats fail before rendering; backend availability is not a passed measurement.
+      - Encoded output is measured and auditioned separately from the WAV.
+    validation:
+      - Reference loudness signals, inter-sample peak fixture, silence, short events, and stereo/mono cancellation cases.
+      - Real native mux/decode with configured bitrate, exact timing, and retained original PCM.
+      - No inference of auditory comfort from passing numerical checks.
+
+  - id: LIB-01
+    title: Implement a typed audio library with portable project use
+    phase: 2
+    priority: P0
+    status: planned
+    relative_size: M
+    depends_on: [BASE-01, AUDIO-01]
+    affected_paths:
+      - ambiance_studio/assets.py
+      - ambiance_studio/audio.py
+      - ambiance_studio/revisions.py
+      - docs/CONTRACTS.md
+      - Audio library contract, examples, and CLI adapter to be introduced
+    deliverables:
+      - Versioned audio records and real CLI search/inspect/import/audition/promote/materialize operations.
+      - Candidate, prepared, auditioned, accepted, and rejected/revise states with identity-bound observations.
+      - Stable local media-root configuration, immutable originals/derivatives, and duplicate detection by hash.
+      - Project-contained materialization receipt and portable selected-source handoff.
+    acceptance:
+      - Existing visual asset schemas and library behavior remain compatible.
+      - No accepted status without actual audition evidence, and no copied artistic approval for a new derivative.
+      - Current project-contained source rules are preserved without external symlink bypasses.
+      - Lookup or use never causes provider generation; media root is independent of a disposable worktree.
+    validation:
+      - Bad/missing hashes, duplicate IDs, broken version references, stale promotion, and unsupported audio kinds.
+      - Use the pinned sources in a second project after the shared library is made unavailable.
+      - Package audit when adding library fixtures, resources, or media packaging behavior.
+
+  - id: LIB-02
+    title: Curate Quiet interiors and nearby nature
+    phase: 2
+    priority: P0
+    status: planned
+    relative_size: M
+    depends_on: [LIB-01, AUDIO-02]
+    affected_paths:
+      - Selected project audio originals and derivative records
+      - Shared local audio catalog and collection inventory
+    deliverables:
+      - Four background beds, eight small-movement variants, three water sounds, and three distant events as candidate targets.
+      - Promote suitable existing takes before preparing generation requests for useful gaps.
+      - Listening notes, exact loop/tail metadata, source terms references, measured facts, and pairing limitations.
+      - Estimate accepted-media and candidate-storage totals; keep rejected media out of the reusable collection.
+    acceptance:
+      - Target is 15–20 selected clips; counts do not force weak selections or unauthorized spending.
+      - Every selected asset has an actual playable source and clear generated/imported/prepared provenance.
+      - Missing/deferred categories stay visible; no invented completion or audition.
+      - Baked distance/reverberation is labeled rather than assumed reversible.
+    validation:
+      - Audition isolated sounds and repeat beds at least three times.
+      - Check no unwanted layers, cut tails, clipping, distracting loop events, or source substitutions.
+      - Preserve candidate-count and spending ledger for any separately authorized generation batch.
+
+  - id: MIX-01
+    title: Build reusable stereo recipes and a near/far/travel study
+    phase: 2
+    priority: P0
+    status: planned
+    relative_size: M
+    depends_on: [LIB-02, LOOP-01]
+    affected_paths:
+      - ambiance_studio/audio.py
+      - ambiance_studio/audio_cues.py
+      - docs/workflows/04-soundtrack.md
+      - Shared recipe examples and pilot audio sessions
+    deliverables:
+      - Sheltered reading room and quiet garden exterior recipes referencing accepted asset versions.
+      - Recipe application creates new editable sample-frame sessions with explicit cues, gains, pans, and tails.
+      - One controlled near/far/travel study with distinct direct and room-return preparation.
+      - Pitched-material metadata only where musical reuse is deliberately selected.
+    acceptance:
+      - Recipes reuse source bytes and do not duplicate long audio or overwrite existing mixes.
+      - No unimplemented spatial processing fields are passed to the current strict session schema.
+      - Cue identity remains useful in mono; source travel does not drag all prior room reflections with it.
+      - Optional future random choices must resolve to a saved seed and explicit deterministic schedule.
+    validation:
+      - Reproduce session output from pinned sources and recorded external preparation.
+      - Listen to isolated source, room return, full mix, and mono with picture across repeated boundaries.
+      - Run existing cue checks after changes to scene/action timing.
+
+  - id: PILOT-01
+    title: Deliver one complete compact TV-quality film iteration
+    phase: 3
+    priority: P0
+    status: planned
+    relative_size: M
+    depends_on: [TV-01, TV-02, LOOP-01, AUDIO-02, MIX-01]
+    affected_paths:
+      - Selected pilot project plans, sources, scenes, audio, revisions, reviews, and deliveries
+      - docs/architecture/TV-QUALITY-AND-SOUND-LIBRARY.md
+    deliverables:
+      - Low-resolution preview, full-resolution source/still/motion evidence, and complete short 4K landscape cycle.
+      - Compact stereo audiovisual master, aligned stems, and all existing declared view/soundtrack pairs.
+      - Exact revision-bound verification, delivery presentation, current/exact watch links, and actual byte totals.
+      - Rebuild/import instructions and identity-bound observations with unperformed device checks explicit.
+    acceptance:
+      - Core CLI production runs without mandatory browser editing or a ten-hour intermediate.
+      - Existing full artistic scope is retained; actual visible life is reviewed in each requested composition.
+      - A review movie is presentable with open human checks, but no unperformed TV/phone/listening pass is claimed.
+      - YouTube upload/playback verification is a separate authorized step, never inferred from a local decode.
+    validation:
+      - Required coverage and inventory checks, full native decode, exact frame/sample counts, and encoded joins.
+      - Actual edited-scene browser inspection when preview/rendering behavior changes.
+      - At least three playback repetitions and recorded TV/soundbar, headphone, mono, and applicable phone observations.
+      - Run ./ambiance test and affected native/editor/package checks after implementation changes.
+
+  - id: TV-03
+    title: Extend raster limits only for a demonstrated required composition
+    phase: 4
+    priority: conditional
+    status: conditional
+    relative_size: L
+    depends_on: [TV-02]
+    activation: A required 4K composition exceeds the current full-stage limit after legitimate staging options are assessed.
+    deliverables:
+      - Measured memory/time baseline and a bounded shared-renderer design for the failing scene.
+      - Correct treatment of finishing, shadows, reflections, and sampling across crop/tile boundaries.
+      - Revision/tool identity and explicit resource-limit updates.
+    acceptance:
+      - Do not silently shrink outputs, drop required art, or only remove the limit check.
+      - If activated for the pilot, this task becomes a prerequisite for that pilot's 4K completion.
+    validation:
+      - Existing rendering parity plus boundary-effect fixtures and an actual 4K painted proof.
+
+  - id: SURROUND-01
+    title: Add optional 5.1 delivery with a preserved stereo edition
+    phase: 4
+    priority: later
+    status: deferred
+    relative_size: L
+    depends_on: [PILOT-01]
+    activation: User selects surround as a subsequent product milestone and a target playback chain is available.
+    deliverables:
+      - Versioned channel-layout and source-routing contract, mixer support, encoder support, and verifier support.
+      - Discrete speaker placement, downmix behavior, per-layout loudness, and edition identities.
+      - Platform/device qualification and a separate future decision for binaural or overhead/immersive audio.
+    acceptance:
+      - A six-channel count alone does not establish correct 5.1 speaker layout.
+      - Preserve stereo fallback and never label existing stereo depth as implemented surround.
+      - Device/YouTube proof requires the actual selected format and exact edition.
+    validation:
+      - Channel-ID fixtures, speaker-order/downmix checks, real encoded decode, and actual supported-device audition.
+
+  - id: DURATION-01
+    title: Add optional long export or a tested external assembly handoff
+    phase: 4
+    priority: later
+    status: deferred
+    relative_size: L
+    depends_on: [PILOT-01, LOOP-01]
+    activation: A literal long-duration file is requested; player Repeat remains sufficient otherwise.
+    deliverables:
+      - Explicit requested-duration policy and output size/resource preflight.
+      - Encoded picture reuse and bounded continuous audio assembly with correct delay/tail handling.
+      - Large-file-capable writing and verification, or an externally tested editor/CLI recipe.
+      - Full-duration evidence and exact upload artifact separate from compact production assets.
+    acceptance:
+      - Audio mixing/import and decoded-WAV verification do not use overflowing 32-bit size fields or whole-duration buffers.
+      - Repetition preserves original motion speed, intended sound cadence, and exact presentation duration.
+      - No promise that repeated AAC packet copying is automatically gapless.
+      - Recheck platform limits and authorization at delivery time; no automatic upload.
+    validation:
+      - Short correctness fixtures first, then one deliberately requested long run with measured disk/memory/time.
+      - Full decode/timestamps plus start, internal joins, and end observations on the actual output.

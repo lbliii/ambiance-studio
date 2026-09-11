@@ -9,7 +9,7 @@ Read `project.json`, current gate status, and [delivery workflow](../../../docs/
 
 Use `media verify` for complete decode, expected dimensions/frame count/rate, timestamps, audio tracks and presentation duration. Request action-specific contacts when useful. Inspect encoded audio separately from WAV; raw extracted samples can include priming/padding outside the presented interval. See [rendering and media](../../../docs/RENDERING.md).
 
-For soundtrack editions, use `media compose` to reuse supported encoded picture with explicitly selected PCM. Keep score, ambience-only and silent editions unambiguous, and preserve final files separately from scratch renders.
+For soundtrack editions, use `media compose` to reuse supported encoded picture with explicitly selected PCM. Deliver the complete short master specified by the brief; longer files are separate requested derivatives. State all cycle/delivery durations and verify matching audio. For TV targets, follow the workflow's full-resolution and device/platform review guidance. Keep score, ambience-only and silent editions unambiguous, and preserve final files separately from scratch renders.
 
 Follow [captured revisions and editions](../../../docs/REVISIONS.md): `revision capture/check`, revision-bound rendering/composition, `review draft --revision ID --edition ID`, then `review record`. Legacy folder-watch receipts remain valid on their own terms; capture does not migrate pass verdicts. Release requires actual human look/listen and phone observations of the exact edition. Reuse applicable feedback; leave unperformed checks open while continuing useful work.
 
