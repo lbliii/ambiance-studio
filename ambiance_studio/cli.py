@@ -119,6 +119,8 @@ def parser():
     q=group.add_parser('proof');q.add_argument('asset');q.add_argument('--out',type=Path,required=True);q.add_argument('--catalog',type=Path)
     q.add_argument('--fps',type=float,default=6);q.add_argument('--width',type=int,default=180);q.add_argument('--landmark',default='anchor')
     assets.add_preparation_parsers(group)
+    from . import asset_motion
+    asset_motion.add_parsers(group)
     group=sub.add_parser('scene').add_subparsers(dest='action',required=True)
     q=group.add_parser('inspect');q.add_argument('--full',action='store_true');q=group.add_parser('sample');q.add_argument('--time',type=float,required=True)
     q=group.add_parser('apply');q.add_argument('file',type=Path);q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256')
@@ -144,6 +146,7 @@ def parser():
     q=sub.add_parser('preview',help='Serve a project, saved look or preparation workspace on localhost');q.add_argument('--port',type=int,default=8783)
     preview_kind=q.add_mutually_exclusive_group()
     preview_kind.add_argument('--look',type=Path,help='Serve a verified look-proof artifact without requiring a project')
+    preview_kind.add_argument('--motion',type=Path,help='Inspect a motion proof and evaluate in-memory drafts')
     preview_kind.add_argument('--prepare',type=Path,help='Inspect and edit a verified preparation draft without writing project files')
     q=sub.add_parser('test',help='Run local regression checks without paid providers');q.add_argument('--out',type=Path)
     planning.add_parsers(sub);assets.add_library_parsers(sub);revisions.add_parsers(sub)
@@ -169,7 +172,7 @@ def run(args):
         pillow=importlib.util.find_spec('PIL') is not None
         return {'version':__version__,'root':str(ROOT),'python':platform.python_version(),'python_executable':sys.executable,
             'node':shutil.which('node'),'pillow':pillow,'ffmpeg':shutil.which('ffmpeg'),'ffprobe':shutil.which('ffprobe'),
-            'capabilities':{'project_and_reviews':True,'revision_binding':True,'production_inventory':True,'asset_preparation':pillow,'asset_preflight_and_crop_return':pillow,'edge_inspection_and_repair':pillow,'finishing_and_look_packages':render_caps['frame_render'],'asset_proofs':pillow,'scene_operations':bool(shutil.which('node')),'scene_tracks':bool(shutil.which('node')),'source_placement_and_reparent':bool(shutil.which('node')),'scene_timing':bool(shutil.which('node')),'preview':bool(shutil.which('node')),'final_video_export':render_caps['final_video_export'],'audio_arrangement':audio_caps['audio_arrangement'],'rendering':render_caps,'audio':audio_caps},
+            'capabilities':{'project_and_reviews':True,'revision_binding':True,'production_inventory':True,'asset_preparation':pillow,'asset_preflight_and_crop_return':pillow,'edge_inspection_and_repair':pillow,'finishing_and_look_packages':render_caps['frame_render'],'cel_motion':{'manual':pillow,'tracking':'pillow-patch-ncc' if pillow else None,'version':'1.0.0'},'asset_proofs':pillow,'scene_operations':bool(shutil.which('node')),'scene_tracks':bool(shutil.which('node')),'source_placement_and_reparent':bool(shutil.which('node')),'scene_timing':bool(shutil.which('node')),'preview':bool(shutil.which('node')),'final_video_export':render_caps['final_video_export'],'audio_arrangement':audio_caps['audio_arrangement'],'rendering':render_caps,'audio':audio_caps},
             'note':'Optional dependency availability does not imply a renderer or provider adapter is implemented.'}
     if command=='test':
         require_node();asset_tool()
@@ -192,6 +195,10 @@ def run(args):
         asset_tool()
         selected=optional_project_path(args.project,args.registry)
         return assets.proof(args.asset,args.out,selected,args.catalog,args.fps,args.width,args.landmark)
+    if command=='preview' and args.motion is not None:
+        asset_tool()
+        from .motion_server import serve
+        serve(args.motion,args.port);return None
     if command=='preview' and args.look is not None:
         from .preview import serve_look
         serve_look(args.look,args.port);return None
@@ -199,6 +206,10 @@ def run(args):
         from .preparation_server import serve
         serve(args.prepare,args.port);return None
     project=project_path(args.project,args.registry)
+    if command=='asset' and action=='motion':
+        asset_tool()
+        from . import asset_motion
+        return asset_motion.run(args,project)
     if command in ['delivery','iteration','feedback'] or (command=='project' and action in ['latest','overview']):
         from . import production, deliveries
         matches=[item['id'] for item in registry.projects(ROOT,registry_file) if item['path']==str(project)]
@@ -264,7 +275,7 @@ def main(argv=None):
         args=parser().parse_args(argv)
         result=run(args)
         if result is None:return 0
-        command=' '.join(filter(None,[args.command,getattr(args,'action',None)]))
+        command=' '.join(filter(None,[args.command,getattr(args,'action',None),getattr(args,'motion_action',None)]))
         ok=result.get('ok',True) if isinstance(result,dict) else True
         payload={'ok':ok,'schema_version':1,'command':command,'data':result}
         if getattr(args,'out',None) and args.command not in ['asset','render','media'] and not(args.command=='look' and args.action=='export') and not(args.command=='review' and args.action=='draft') and not(args.command in ['revision','delivery'] and args.action=='handoff'):

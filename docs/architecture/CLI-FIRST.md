@@ -36,6 +36,8 @@ The [library contract](../STUDIO-LIBRARY.md) adds a machine-local registry, proj
 
 ## Remaining engineering slices
 
+The [cel motion workbench plan](CEL-MOTION-WORKBENCH.md), revised through [web research and agent operation review](CEL-MOTION-RESEARCH.md), adds multiple landmarks and motion rules, localized jitter diagnostics, constrained registration corrections and synchronized comparisons. It is planned, not implemented. Its first release includes source/layer initialization, compact observation packets, validated batch edits, translation-only correction at fixed geometry and optional bounded classical propagation. Learned tracking, scene contact/velocity tools and cloud deformation exploration follow in separate milestones.
+
 The selected [portrait/landscape implementation plan](DUAL-FORMAT-IMPLEMENTATION.md) adds two saved views of one scene, synchronized proofs, view-bound editions and a resumable paired delivery. It is planned, not implemented. Start with its saved-view and picture-proof milestones; retain existing scene and delivery behavior through explicit compatibility adapters.
 
 The [preparation workbench plan](ASSET-PREPARATION-WORKBENCH.md) turns the museum's mask and alignment lessons into an integrated CLI/browser workflow. Its first slice provides saved separation recipes, interactive masks/alignment and shared-engine motion proofs. The next engineering pass improves direct recipe inspection, validation, bounded edits and proof discovery for the agent; a measured agent-operated pilot on a different painting follows.
