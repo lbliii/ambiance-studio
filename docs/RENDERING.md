@@ -38,6 +38,8 @@ The output uses H.264 High, BT.709 color tags, fixed frame timestamps, and no fr
 
 Every encode includes one complete visual loop of warmup frames. The retained picture starts only after the backend verifies an independent sync frame, then copies the compressed samples with timestamps shifted to zero. The intermediate warmup encode and trim receipt are retained. This preserves the fix for a demonstrated first-frame texture/quality dip in the original museum export. A sync-frame failure is explicit; the CLI never silently produces a dependent-frame trim.
 
+After encoding, `encode-checkpoint.json` saves source identities and the intermediate hash before trimming. It is diagnostic evidence, not a successful render or verification receipt. If packaging fails, the completed intermediate can be inspected without repainting the scene.
+
 Optional audio must be an existing stereo 48 kHz PCM WAV with exactly the final repeated picture duration. Its bytes are captured before picture rendering and retained as `selected-audio.wav`; that snapshot is encoded to AAC once inside the final mux. Pre-encoded AAC and missing or mismatched selected sources fail; no audio synthesis or source substitution occurs. This avoids a demonstrated AAC passthrough edit-list error of 2,112 samples. Audio arrangement remains a separate operation.
 
 Successful `render video` automatically performs a complete native verification of its output. It writes `picture.mp4`, or `video.mp4` when composition is needed, together with `render-report.json` and `verification/`. The report names the exact output and whether the verification passed. An interrupted/failed fresh directory is diagnostic evidence and is never overwritten by a retry.
