@@ -32,6 +32,7 @@ def validate(recipe):
     for part in parts:
         ap.fields(part, ['id', 'kind', 'source', 'mask', 'pivot', 'motion', 'companions', 'binding'], 'compound part')
         id = identifier(part.get('id'), 'part ID')
+        if not re.fullmatch('[a-z0-9][a-z0-9-]*', id): raise ValueError('Part IDs must use lowercase letters, digits and hyphens')
         if id in ids: raise ValueError(f'Duplicate or reserved part ID: {id}')
         ids.add(id)
         if part.get('kind') not in ['cutout', 'occluder']: raise ValueError('Part kind must be cutout or fixed occluder')
@@ -45,6 +46,7 @@ def validate(recipe):
         for companion in companions:
             ap.fields(companion, ['id', 'image'], 'registration companion')
             cid = identifier(companion.get('id'), 'companion ID')
+            if not re.fullmatch('[a-z0-9][a-z0-9-]*', cid): raise ValueError('Companion IDs must use lowercase letters, digits and hyphens')
             if cid in ids: raise ValueError(f'Duplicate companion/part ID: {cid}')
             ids.add(cid)
             # Validate a companion through the existing full-source grayscale-mask contract.
@@ -146,7 +148,10 @@ def context_inputs(project, recipe):
     inputs = {key: checked_ref(project, context[key]).read_bytes() for key in ['scene', 'production_plan', 'inventory']}
     scene = json.loads(inputs['scene']); inventory = json.loads(inputs['inventory']); plan = json.loads(inputs['production_plan'])
     from .scene_runtime import scene_bridge
-    info = scene_bridge('view-inspect', scene, {'version': 1, 'assets': []}, {})
+    framing_scene = {'version': 1, 'id': 'preparation-envelopes', 'title': recipe['title'],
+                     'canvas': scene['canvas'], 'groups': [], 'layers': []}
+    if 'framing' in scene: framing_scene['framing'] = scene['framing']
+    info = scene_bridge('view-inspect', framing_scene, {'version': 1, 'assets': []}, {})
     selected = {}
     for id in context['views']:
         if id not in info['views']: raise ValueError(f'Saved composition is missing: {id}')
@@ -162,7 +167,9 @@ def context_inputs(project, recipe):
 
 def inspect(project, path, check=False):
     project, path = Path(project).resolve(), Path(path).resolve()
-    if path.is_dir(): path = path/'recipe.json'
+    if path.is_dir():
+        if (path/'artifact.json').exists(): artifact(path)
+        path = path/'recipe.json'
     raw = path.read_bytes(); recipe = json.loads(raw)
     if recipe.get('format') == single.FORMAT:
         inputs = single.load_inputs(project, recipe); images, facts, warnings = single.evaluate(recipe, inputs)
@@ -296,10 +303,11 @@ def build(project, file, out):
         ap.write(stage/'preview-project/scene.json',scene);ap.write(stage/'preview-project/catalog.json',catalog)
         ap.write(stage/'preview-project/ambiance-project.json',{'version':1,'scene':'scene.json','catalog':'catalog.json'})
         dependencies=[{'file':ref['file'],'sha256':ref['sha256'],'role':role} for role,ref in references(recipe)]
-        if recipe.get('context'): dependencies += [{'file':recipe['context'][role]['file'],'sha256':ap.sha(data),'role':role} for role,data in controls.items()]
+        if recipe.get('context'): dependencies += [{'file':ap.relative(project,out/'snapshots'/f'{role}.bin'),'sha256':ap.sha(data),'role':role} for role,data in controls.items()]
         dependencies += [{'file':ap.relative(project,out/'recipe.json'),'sha256':ap.sha(raw),'role':'preparation recipe'}]
         receipt={'format':RECEIPT,'version':1,'project_root_relative':__import__('os').path.relpath(project,out),
                  'recipe_sha256':ap.sha(raw),'outputs':outputs,'dependencies':dependencies,
+                 'context':recipe.get('context'),
                  'bindings':{part['id']:part.get('binding') for part in recipe['parts']},'views':context['views'] if context else {},
                  'compiler_contract':{'cell_size':[min(4096,w+4),min(4096,h+4)],'padding':2,'point':[w/2,h/2],'target':[.5,.5]},
                  'facts':facts,'warnings':warnings,'review_status':'unreviewed',

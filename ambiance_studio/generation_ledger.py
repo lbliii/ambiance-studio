@@ -193,7 +193,12 @@ def reconcile(project, id, file):
                 if saved.read_bytes() != data: raise ValueError('Saved output snapshot changed')
             else:
                 # A crash can leave an unreferenced content-addressed snapshot; a retry verifies and reuses it.
-                with saved.open('xb') as handle: handle.write(data)
+                import os, tempfile
+                with tempfile.NamedTemporaryFile(dir=saved.parent, prefix='.retrieving-') as handle:
+                    handle.write(data); handle.flush(); os.fsync(handle.fileno())
+                    try: os.link(handle.name, saved)
+                    except FileExistsError:
+                        if saved.read_bytes() != data: raise ValueError('Saved output snapshot changed')
         row['status'] = event['state']
         row['attempts'].append({'event_id': event['event_id'], 'sha256': event_hash, 'at': datetime.now(timezone.utc).isoformat(), 'event': event})
         studio.write(ledger_path(project), ledger)
