@@ -29,7 +29,7 @@ def create(out, case='visible', fps=12):
     if case == 'duplicate': atlas.paste(atlas.crop((0,0,24,24)), (24,0))
     if case == 'low-contrast':
         # Broad but barely different from the base; tests should not confuse area with contrast.
-        pixels=list(atlas.getdata());atlas.putdata([(145,133,124,a) if a else (0,0,0,0) for _,_,_,a in pixels])
+        pixels=list(atlas.get_flattened_data() if hasattr(atlas, "get_flattened_data") else atlas.getdata());atlas.putdata([(145,133,124,a) if a else (0,0,0,0) for _,_,_,a in pixels])
     atlas.save(art/'actor.png')
     cover=Image.new('RGBA',(8,8),'#91857b');cover.save(art/'cover.png')
     layer={'id':'actor','asset':'actor','x':.5,'y':.5,'width':.28,'height':.28,'anchor':[.5,.5],

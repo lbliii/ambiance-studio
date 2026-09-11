@@ -32,6 +32,7 @@ function paintFacts(asset,image,rt){
 }
 async function main(){
   const started=performance.now();let input='';for await(const b of process.stdin)input+=b;const req=JSON.parse(input);
+  const resuming=req.resume===true;delete req.resume;
   const rt=runtime(),project=await fs.realpath(req.project),out=path.resolve(req.out);
   const inside=async p=>{const real=await fs.realpath(path.resolve(project,p));if(!real.startsWith(project+path.sep))throw Error(`Input outside project: ${p}`);return real;};
   const scenePath=await inside(req.scene_path),catalogPath=await inside(req.catalog_path);
@@ -51,19 +52,22 @@ async function main(){
   const state=measureActivity(scene,catalog,{views:viewPlan.views,painted,actions:req.actions,stride:req.stride,start_frame:req.start_frame,frames:req.frames});
   if(rig.inspectBindings)for(let f=req.start_frame;f<req.start_frame+req.frames;f+=req.stride)state.driver_samples.push({frame:f,values:rig.inspectBindings(f/scene.canvas.fps)});
   const frames=req.frames/req.stride,actions=req.raster?(req.actions??[]):[];
-  if(actions.length>8||frames>600||frames*(actions.length+variants.length)*viewPlan.internal_canvas.width*viewPlan.internal_canvas.height>400000000)
-    throw Error('Activity workload exceeds 8 actions, 600 samples or 400 million stage pixels; shorten proof, increase stride or lower --long-edge');
+  if(req.raster&&(actions.length>8||frames>600||(actions.length+variants.length)*viewPlan.views.length>16||frames*(actions.length+variants.length)*viewPlan.internal_canvas.width*viewPlan.internal_canvas.height>400000000))
+    throw Error('Raster workload exceeds 8 actions, 16 panes, 600 samples or 400 million stage pixels; shorten proof, filter actions, increase stride or lower --long-edge');
   const renderers=new Map();
   if(req.raster){
     for(const v of variants)renderers.set(v.id,createStageRenderer(v.scene,catalog,images,viewPlan,rt.createCanvas));
     for(const action of actions){const copy=structuredClone(scene);for(const l of copy.layers)if(action.layers.includes(l.id)){l.visible=false;if(l.tracks?.visible)l.tracks.visible={interpolation:'hold',keys:[[0,false],[scene.canvas.loop_seconds,false]]};}renderers.set('disabled-'+action.id,createStageRenderer(copy,catalog,images,viewPlan,rt.createCanvas));}
   }
-  await fs.mkdir(out,{recursive:false});
+  if(!resuming)await fs.mkdir(out,{recursive:false});
   const files=[];
-  async function save(relative,bytes){await fs.mkdir(path.dirname(path.join(out,relative)),{recursive:true});await fs.writeFile(path.join(out,relative),bytes);files.push({path:relative,sha256:sha(bytes),bytes:Buffer.byteLength(bytes)});}
+  async function save(relative,bytes){const target=path.join(out,relative);await fs.mkdir(path.dirname(target),{recursive:true});
+    try{const existing=await fs.readFile(target);if(sha(existing)!==sha(bytes))throw Error(`Partial activity artifact changed: ${relative}; choose a fresh output directory`);}
+    catch(error){if(error.code!=='ENOENT')throw error;await fs.writeFile(target,bytes,{flag:'wx'});}
+    files.push({path:relative,sha256:sha(bytes),bytes:Buffer.byteLength(bytes)});}
   await save('scene.snapshot.json',sceneBytes);await save('catalog.snapshot.json',catalogBytes);await save('request.json',json(req));
   for(const v of variants.slice(1))await save(`variants/${v.id}.json`,json(v.scene));
-  const rows=[],previous=new Map(),maps=new Map(),panes=[];
+  const rows=[],previous=new Map(),firstSaved=new Map(),maps=new Map(),panes=[];
   const makePane=(variant,view)=>({id:variant+' / '+view.view.id,variant,view:view.view.id,output:view.output,files:[],hashes:[]});
   if(req.raster)for(const variant of renderers.keys())for(const view of viewPlan.views)panes.push(makePane(variant,view));
   const rasterStarted=performance.now();
@@ -71,7 +75,7 @@ async function main(){
     const frame=req.start_frame+i*req.stride,time=frame/scene.canvas.fps,now=new Map();
     for(const [variant,renderer] of renderers){renderer.render(time);for(const v of viewPlan.views){
       const id=v.view.id,canvas=renderer.outputs.get(id),key=variant+'/'+id,bytes=canvas.toBuffer('image/png'),relative=`frames/${key}/${String(i).padStart(5,'0')}.png`;
-      now.set(key,Buffer.from(canvas.data()));await save(relative,bytes);const pane=panes.find(p=>p.variant===variant&&p.view===id);pane.files.push(relative);pane.hashes.push(sha(bytes));
+      now.set(key,Buffer.from(canvas.data()));if(i===0)firstSaved.set(key,now.get(key));await save(relative,bytes);const pane=panes.find(p=>p.variant===variant&&p.view===id);pane.files.push(relative);pane.hashes.push(sha(bytes));
     }}
     for(const v of viewPlan.views){const id=v.view.id,current=now.get('target/'+id),before=previous.get('target/'+id);
       for(const action of [null,...actions]){
@@ -83,8 +87,15 @@ async function main(){
     previous.clear();for(const [key,value] of now)previous.set(key,value);
   }
   const rasterSeconds=(performance.now()-rasterStarted)/1000;
+  const joins=[];
+  for(const [variant,renderer] of renderers){renderer.render(scene.canvas.loop_seconds);const endpoint=new Map([...renderer.outputs].map(([id,c])=>[id,Buffer.from(c.data())]));renderer.render(0);
+    for(const [id,c] of renderer.outputs)joins.push({variant,view:id,zero_to_endpoint_rgba_exact:endpoint.get(id).equals(Buffer.from(c.data())),
+      saved_last_to_first:pixelMetrics(firstSaved.get(variant+'/'+id),previous.get(variant+'/'+id)).metrics,
+      saved_segment_is_full_loop:req.start_frame===0&&req.frames===scene.canvas.fps*scene.canvas.loop_seconds});}
   for(const [key,values] of maps){const view=viewPlan.views.find(v=>v.view.id===key.split('/')[1]);const canvas=rt.createCanvas(view.output.width,view.output.height),ctx=canvas.getContext('2d'),pixels=ctx.createImageData(canvas.width,canvas.height);values.forEach((n,i)=>{pixels.data[i*4]=Math.min(255,n);pixels.data[i*4+3]=255;});ctx.putImageData(pixels,0,0);await save('maps/'+key+'.png',canvas.toBuffer('image/png'));}
-  if(req.raster)await save('index.html',viewsProofPage(panes,scene.canvas.fps/req.stride,req.start_frame/scene.canvas.fps,frames,scene.canvas.loop_seconds));
+  if(req.raster)await save('index.html',viewsProofPage(panes,scene.canvas.fps/req.stride,req.start_frame/scene.canvas.fps,frames,scene.canvas.loop_seconds)
+    .replace('Portrait and landscape proof','Motion activity proof').replace('One scene, shared timing','Motion activity proof')
+    .replace('Each view comes from the same finished scene at the same time.',`Target, explicit variants and disabled-layer interventions share the same picture clock and views. Strength and cadence are separate experiments. Sampling: every ${req.stride} production frame(s); playback remains 1×.`));
   for(const v of state.views)for(const a of v.actions){const raster=rows.filter(r=>r.view===v.view.id&&r.action===a.id);a.warnings=diagnosticWarnings({layers:v.layers.filter(l=>a.layers.includes(l.layer))},raster);a.raster_sample_count=raster.length;
     a.candidate_quiet_intervals=intervals(raster.map(r=>r.residual_changed_pixels===0),req.stride/scene.canvas.fps,req.start_frame/scene.canvas.fps).filter(r=>r.active).map(({active,...r})=>r);
     a.attribution='Disabled layer set includes attached descendants and coupled lighting. Residual change is an intervention result, not exclusive gesture attribution or an artistic pass.';
@@ -93,7 +104,7 @@ async function main(){
   await save('painted-cells.json',json(painted));
   const modules={};for(const name of ['editor/engine.mjs','editor/timing.mjs','editor/activity.mjs','editor/views.mjs','editor/stage-raster.mjs','editor/finishing.mjs','tools/activity-scene.mjs'])modules[name]=sha(await fs.readFile(path.join(root,name)));
   if(rig.inspectBindings)modules['editor/bindings.mjs']=sha(await fs.readFile(path.join(root,'editor/bindings.mjs')));
-  const inputsUnchanged=sha(await fs.readFile(scenePath))===req.scene_sha256&&sha(await fs.readFile(catalogPath))===req.catalog_sha256&&(await Promise.all(assets.map(async a=>sha(await fs.readFile(a.path))===a.sha256))).every(Boolean);
+  const inputsUnchanged=sha(await fs.readFile(scenePath))===req.scene_sha256&&sha(await fs.readFile(catalogPath))===req.catalog_sha256&&(!req.plan||sha(await fs.readFile(req.plan.path))===req.plan.plan_sha256)&&(await Promise.all(assets.map(async a=>sha(await fs.readFile(a.path))===a.sha256))).every(Boolean);
   if(!inputsUnchanged)throw Error('Inputs changed during activity proof; completed receipt was not published');
   const report={kind:'ambiance-scene-activity',version:1,schema_version:1,ok:true,scene_sha256:req.scene_sha256,catalog_sha256:req.catalog_sha256,plan:req.plan??null,revision:req.revision??null,
     views:viewPlan.views.map(v=>({...v,view_sha256:sha(canonicalView(v.view))})),clock:{picture_seconds:scene.canvas.loop_seconds,fps:scene.canvas.fps,start_frame:req.start_frame,frames:req.frames,stride:req.stride,sampling_hz:scene.canvas.fps/req.stride},
@@ -101,7 +112,7 @@ async function main(){
     artifacts:files,source_assets:assets,modules,runtime:{node:process.version,canvas:rt.version,platform:process.platform},
     performance:{elapsed_seconds:(performance.now()-started)/1000,raster_seconds:rasterSeconds,peak_rss_bytes:process.resourceUsage().maxRSS*1024,stage_pixel_samples:req.raster?frames*renderers.size*viewPlan.internal_canvas.width*viewPlan.internal_canvas.height:0,saved_frames:panes.reduce((n,p)=>n+p.files.length,0)},
     summary:state.views.map(v=>({view:v.view.id,actions:v.actions.map(a=>({id:a.id,applicable:a.applicable,warnings:a.warnings,max_sampled_rest_seconds:a.max_sampled_rest_seconds,status:'unreviewed'}))})),
-    raster_performed:req.raster,visual_review_performed:false,attribution:'Unresolved nonlinear/overlap/source-follower attribution; global frame change cannot satisfy character or environmental action.'};
+    raster_performed:req.raster,joins,visual_review_performed:false,attribution:'Unresolved nonlinear/overlap/source-follower attribution; global frame change cannot satisfy character or environmental action.'};
   await fs.writeFile(path.join(out,'activity-report.json'),json(report));
   return {ok:true,report:path.join(out,'activity-report.json'),report_sha256:sha(json(report)),proof:req.raster?path.join(out,'index.html'):null,summary:report.summary,performance:report.performance};
 }

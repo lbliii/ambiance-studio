@@ -49,7 +49,8 @@ export function measureActivity(scene, catalog, {views, painted, actions = [], s
         if (!paint) throw Error(`Missing decoded painted-cell facts: ${s.asset}/${s.cell}`);
         const polygon=corners(s,paint,projection), xs=polygon.map(p=>p[0]),ys=polygon.map(p=>p[1]);
         const bounds=polygon.length?[Math.min(...xs),Math.min(...ys),Math.max(...xs)-Math.min(...xs),Math.max(...ys)-Math.min(...ys)]:null;
-        const anchor=point(multiply(projection,s.matrix),0,0),local=point(multiply(inverseMatrix(s.parent),s.matrix),0,0);
+        const localMatrix=multiply(inverseMatrix(s.parent),s.matrix).map(n=>Math.round(n*1e9)/1e9);
+        const anchor=point(multiply(projection,s.matrix),0,0),local=point(localMatrix,0,0);
         const prev=data.at(-1),travel=prev?magnitude(subtract(anchor,prev.anchor_display_px)):0;
         const localTravel=prev?magnitude(subtract(local,prev.local_anchor_scene_px)):0;
         const cornerTravel=prev&&polygon.length&&prev.polygon_display_px.length?Math.max(...polygon.map((p,k)=>magnitude(subtract(p,prev.polygon_display_px[k])))):0;
@@ -57,7 +58,7 @@ export function measureActivity(scene, catalog, {views, painted, actions = [], s
         const changed=!!prev&&(cornerTravel>1e-7||paint.sha256!==prev.painted_sha256||s.opacity!==prev.opacity||s.visible!==prev.visible);
         data.push({frame:start_frame+i*stride,time_seconds:(start_frame+i*stride)/fps,cell:s.cell,painted_sha256:paint.sha256,
           visible:s.visible,opacity:s.opacity,render_eligible:eligible,intersects_view:inView,depth:s.depth,
-          anchor_display_px:anchor,local_anchor_scene_px:local,polygon_display_px:polygon,painted_bounds_display_px:bounds,
+          anchor_display_px:anchor,local_anchor_scene_px:local,local_matrix:localMatrix,polygon_display_px:polygon,painted_bounds_display_px:bounds,
           world_anchor_travel_px:travel,local_anchor_travel_scene_px:localTravel,painted_corner_travel_px:cornerTravel,
           travel_subject_diagonals:bounds&&magnitude(bounds.slice(2))?cornerTravel/magnitude(bounds.slice(2)):null,
           travel_output_diagonals:cornerTravel/Math.hypot(view.output.width,view.output.height),speed_px_per_second:cornerTravel/dt,
@@ -105,6 +106,7 @@ export function pixelMetrics(current, previous, disabled = null, previousDisable
 
 export function diagnosticWarnings(state, raster) {
   const warnings=[];
+  if(state.layers.some(l=>l.summary.cel_index_changes>0&&l.summary.distinct_painted_cels===1))warnings.push('cel_indices_repeat_identical_paint');
   if(!state.layers.some(l=>l.summary.in_view_samples))warnings.push('no_projected_painted_presence');
   if(raster?.length&&raster.every(r=>r.contribution_pixels===0))warnings.push('no_measured_contribution');
   if(raster?.length>1&&raster.slice(1).every(r=>r.residual_changed_pixels===0))warnings.push('no_measured_residual_change');

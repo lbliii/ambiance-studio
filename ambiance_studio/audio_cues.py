@@ -23,7 +23,7 @@ def snapshot(path):
     for action in report['actions']:
         rows = [row for row in state['views'][0]['layers'] if row['layer'] in action['layers']]
         # Projected crop/camera is deliberately excluded from shared sound identity.
-        signatures = {row['layer']: [{k: sample[k] for k in ['cell', 'painted_sha256', 'visible', 'opacity', 'local_anchor_scene_px', 'channels', 'binding_values']}
+        signatures = {row['layer']: [{k: sample[k] for k in ['cell', 'painted_sha256', 'visible', 'opacity', 'local_matrix', 'channels', 'binding_values']}
                                       for sample in row['samples']] for row in rows}
         changes = [any(samples[i] != samples[i-1] for samples in signatures.values()) if i else False for i in range(clock['frames'])]
         onsets = [i for i, changed in enumerate(changes) if changed and (i == 0 or not changes[i-1])]

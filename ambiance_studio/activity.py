@@ -81,6 +81,21 @@ def variants_from_recipe(path, scene, catalog):
             if not re.fullmatch(r'[a-z][a-z0-9_-]{0,31}', identifier) or identifier == 'target' or any(v['id'] == identifier for v in variants):
                 raise ValueError('Comparison IDs must be unique safe IDs distinct from target')
             batch = row['batch']
+            if experiment == 'cadence':
+                for op in batch.get('operations', []):
+                    values = op.get('values', {})
+                    if op.get('op') != 'set' or op.get('unset') or set(values) - {'cycle_seconds', 'phase_frames', 'motion', 'tracks'}:
+                        raise ValueError('Cadence comparisons may change clocks, phase and track key times only')
+                    original = next((l for l in scene['layers'] if l['id'] == op.get('layer')), {})
+                    if 'motion' in values and any(values['motion'].get(k, 0) != original.get('motion', {}).get(k, 0) for k in ['x_amplitude', 'y_amplitude', 'rotation_amplitude']):
+                        raise ValueError('Cadence comparisons must preserve motion amplitudes')
+                    if 'tracks' in values:
+                        if set(values['tracks']) != set(original.get('tracks', {})):
+                            raise ValueError('Cadence comparisons must preserve track channels')
+                        for channel, track in values['tracks'].items():
+                            prior = original['tracks'][channel]
+                            if track.get('interpolation') != prior['interpolation'] or {json.dumps(k[1]) for k in track['keys']} != {json.dumps(k[1]) for k in prior['keys']}:
+                                raise ValueError('Cadence comparisons must preserve track values/interpolation')
             if experiment == 'strength':
                 # Amplitude/size-only experiments cannot silently alter cadence.
                 for op in batch.get('operations', []):
@@ -175,6 +190,7 @@ def run(args, project):
     for layer in args.layer:
         actions.append({'id': 'layer-'+layer, 'layers': [layer], 'views': [], 'targets': [], 'cadence': None, 'semantic': False})
     if len({a['id'] for a in actions}) != len(actions): raise ValueError('Duplicate action ID; remove repeated filters')
+    if len(actions) > 64: raise ValueError('Activity summary is limited to 64 actions; select --action-id filters')
     for action in actions:
         if not re.fullmatch(r'[a-z][a-z0-9_-]{0,63}', action['id']): raise ValueError('Activity action IDs require a safe lowercase identifier')
         if not set(action['layers']) <= layers: raise ValueError(f'Action {action["id"]} references unrealized layers')
@@ -188,6 +204,10 @@ def run(args, project):
                'variants': variants_from_recipe(args.compare, scene, catalog) if args.compare else []}
     if args.out.exists():
         if not args.resume: raise ValueError('Activity output exists; use --resume for an unchanged completed run or a fresh directory')
+        if not (args.out/'activity-report.json').exists():
+            if not (args.out/'request.json').is_file() or json.loads((args.out/'request.json').read_text()) != request:
+                raise ValueError('Partial activity request missing or changed; choose a fresh output directory')
+            return _json_command([require_node(), ROOT/'tools/activity-scene.mjs'], {**request, 'resume': True})
         report = verify_receipt(args.out)
         if json.loads((args.out/'request.json').read_text()) != request:
             raise ValueError('Activity resume inputs/options changed; choose a fresh output directory')

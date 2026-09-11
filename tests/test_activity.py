@@ -1,0 +1,136 @@
+"""Cleared raster and PCM ground truth, with exact receipt and CLI checks."""
+import argparse
+import importlib.util
+import json
+import os
+from pathlib import Path
+import struct
+import subprocess
+import sys
+import tempfile
+import unittest
+import wave
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from ambiance_studio import activity, audio_cues, rendering
+from ambiance_studio.cli import parser
+
+spec = importlib.util.spec_from_file_location('activity_fixture', ROOT/'examples/activity/create_fixture.py')
+fixture = importlib.util.module_from_spec(spec); spec.loader.exec_module(fixture)
+
+
+def args(*values): return parser().parse_args(list(map(str, values)))
+
+
+@unittest.skipUnless(rendering.capabilities()['frame_render'], 'Requires Node Canvas')
+class ActivityTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name); self.project = fixture.create(self.root/'film', fps=6)
+        self.counter = 0
+
+    def measure(self, *options, project=None):
+        self.counter += 1; out = self.root/f'proof-{self.counter}'
+        result = activity.run(args('scene', 'activity', '--layer', 'actor', '--long-edge', '128', '--out', out, *options), project or self.project)
+        return result, activity.verify_receipt(out), out
+
+    def test_real_raster_parity_clock_identity_and_resume(self):
+        result, report, out = self.measure('--raster', '--view', 'portrait', '--view', 'landscape')
+        self.assertLess(len(json.dumps(result)), 4000)
+        self.assertFalse(report['visual_review_performed'])
+        self.assertEqual(report['clock']['sampling_hz'], 6)
+        self.assertEqual(len(report['views']), 2)
+        reference = rendering.run(args('render', 'frame', '--view', 'portrait', '--time', '1', '--width', '72', '--out', self.root/'reference'), self.project)
+        self.assertEqual(Path(reference['output']).read_bytes(), (out/'frames/target/portrait/00006.png').read_bytes())
+        request = args('scene', 'activity', '--layer', 'actor', '--long-edge', '128', '--out', out, '--raster', '--view', 'portrait', '--view', 'landscape', '--resume')
+        self.assertTrue(activity.run(request, self.project)['resumed'])
+        (out/'maps/layer-actor/portrait.png').write_bytes(b'changed')
+        with self.assertRaisesRegex(ValueError, 'changed'): activity.run(request, self.project)
+
+    def test_occluded_offscreen_duplicate_tiny_and_low_contrast(self):
+        for case, warning in [('occluded','no_measured_contribution'),('offscreen','no_projected_painted_presence'),
+                              ('duplicate','cel_indices_repeat_identical_paint'),('hidden','no_measured_contribution'),
+                              ('tiny','small_measured_support'),('low-contrast','low_frame_average_contribution')]:
+            with self.subTest(case=case):
+                project = fixture.create(self.root/case, case, fps=6)
+                _, report, out = self.measure('--raster', project=project)
+                self.assertIn(warning, report['summary'][0]['actions'][0]['warnings'])
+                state = json.loads((out/'state.json').read_text())
+                if case == 'duplicate':
+                    row=state['views'][0]['layers'][0]['summary']
+                    self.assertGreater(row['cel_index_changes'],0);self.assertEqual(row['distinct_painted_cels'],1)
+
+    def test_global_pulse_never_becomes_character_approval(self):
+        project=fixture.create(self.root/'pulse','pulse',fps=6)
+        _, report, out=self.measure('--raster',project=project)
+        rows=json.loads((out/'raster.json').read_text())['rows']
+        self.assertGreater(max(r['frame_changed_pixels'] for r in rows),0)
+        self.assertEqual(report['summary'][0]['actions'][0]['status'],'unreviewed')
+        # Residual may change through an overlaid pulse: attribution stays explicit.
+        self.assertIn('Unresolved',report['attribution'])
+
+    def test_strength_and_cadence_are_separate_bounded_experiments(self):
+        _, report, _=self.measure('--raster','--compare',self.project/'comparison.json')
+        self.assertEqual([v['experiment'] for v in report['variants']],['target','strength','strength','cadence','cadence'])
+        recipe=json.loads((self.project/'comparison.json').read_text())
+        recipe['strength'][0]['batch']['operations'][0]['values']['motion']['cycles']=2
+        path=self.root/'invalid.json';path.write_text(json.dumps(recipe))
+        with self.assertRaisesRegex(ValueError,'cycles'): self.measure('--raster','--compare',path)
+
+    def test_invalid_limits_and_unknown_fields_publish_no_success_receipt(self):
+        with self.assertRaises(Exception): self.measure('--stride','0')
+        with self.assertRaises(Exception): self.measure('--frames','999999')
+        self.assertFalse((self.root/'proof-1/activity-report.json').exists())
+        self.assertFalse((self.root/'proof-2/activity-report.json').exists())
+
+    def test_actual_observation_requires_exact_raster_view_and_speed(self):
+        _, report, out=self.measure('--raster','--view','portrait')
+        doc={'kind':'ambiance-activity-observation','schema_version':1,'receipt':str(out/'activity-report.json'),
+             'receipt_sha256':activity.digest(out/'activity-report.json'),'action_id':'layer-actor','view_id':'portrait',
+             'status':'revise','observer':'test fixture author (schema validation only)','note':'Synthetic supplied statement, not a human audition.',
+             'observed_level':1,'playback_rate':.5,'display_width':72,'display_height':128,'watched_start_seconds':0,'watched_end_seconds':4}
+        source=self.root/'observation.json';source.write_text(json.dumps(doc))
+        with self.assertRaisesRegex(ValueError,'normal speed'): activity.record_observation(source,self.root/'record.json')
+        doc['status']='unreviewed';doc['observed_level']=None;source.write_text(json.dumps(doc))
+        self.assertEqual(activity.record_observation(source,self.root/'record.json')['status'],'unreviewed')
+
+    def make_session(self):
+        source=self.project/'audio/tone.wav'; source.parent.mkdir(exist_ok=True)
+        with wave.open(str(source),'wb') as wav:
+            wav.setnchannels(2);wav.setsampwidth(2);wav.setframerate(48000)
+            wav.writeframes(b''.join(struct.pack('<hh',1200 if i%100<50 else -1200,1200 if i%100<50 else -1200) for i in range(192000)))
+        session={'format':'ambiance-audio-session','schema_version':1,'id':'cues','sample_rate':48000,'frames':192000,
+                 'sources':[{'id':'tone','path':'audio/tone.wav','sha256':activity.digest(source)}],
+                 'stems':[{'id':'effects'}],'clips':[{'id':'cue','source':'tone','stem':'effects','source_start_frame':0,'frames':8000,'at_frame':8000}]}
+        file=self.project/'audio/session.json';file.write_text(json.dumps(session))
+        links=self.root/'links.json';links.write_text(json.dumps([{'clip_id':'cue','action_id':'layer-actor','picture_frames':[1],'offset_samples':0}]))
+        return file,source,links
+
+    def test_explicit_audio_binding_detects_retime_delete_repeat_and_preserves_pcm(self):
+        _,_,out=self.measure()
+        session,pcm,links=self.make_session();before=pcm.read_bytes();bound=self.project/'audio/bound.json'
+        audio_cues.bind(args('audio','cue-bind',session,'--activity',out,'--links',links,'--pcm',pcm,'--out',bound),self.project)
+        check=lambda proof:audio_cues.check(args('audio','cue-check',bound,'--activity',proof,'--pcm',pcm),self.project)
+        self.assertTrue(check(out)['ok']);self.assertEqual(before,pcm.read_bytes())
+        self.assertEqual(check(out)['alignment'][0]['delta_samples'],[0])
+        _,_,paired=self.measure('--view','portrait','--view','landscape')
+        self.assertTrue(check(paired)['ok'])
+        scene_path=self.project/'scene/scene.json';scene=json.loads(scene_path.read_text())
+        scene['layers'][0]['motion']['cycles']=2;scene_path.write_text(json.dumps(scene))
+        _,_,changed=self.measure();self.assertFalse(check(changed)['ok'])
+        self.assertTrue(any(i['code'].startswith('picture_action_') for i in check(changed)['issues']))
+        # Explicitly delete the measured action from a new receipt through CLI selection.
+        empty=self.root/'empty';activity.run(args('scene','activity','--out',empty),self.project)
+        self.assertIn('picture_action_deleted',[i['code'] for i in check(empty)['issues']])
+        session_data=json.loads(bound.read_text());session_data['clips'][0]['at_frame']+=1;bound.write_text(json.dumps(session_data))
+        self.assertIn('cue_session_retimed',[i['code'] for i in check(out)['issues']])
+
+    def test_public_cli_out_is_artifact_directory(self):
+        out=self.root/'cli'
+        p=subprocess.run([str(ROOT/'ambiance'),'--project',str(self.project),'scene','activity','--layer','actor','--out',str(out)],capture_output=True,text=True)
+        self.assertEqual(p.returncode,0,p.stdout+p.stderr);self.assertTrue(out.is_dir())
+        self.assertEqual(json.loads(p.stdout)['data']['report'],str(out.resolve()/'activity-report.json'))
+
+
+if __name__=='__main__': unittest.main()
