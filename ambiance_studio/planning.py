@@ -18,12 +18,12 @@ def add_parsers(sub):
         if action=='check':q.add_argument('--require-complete',action='store_true',help='Fail when declared production scope is empty or unfinished; does not certify aesthetics')
 
 
-def inspect(project, inventory='plans/asset-inventory.json'):
+def inspect(project, inventory='plans/asset-inventory.json', *, scene_path=None, catalog_path=None):
     project=Path(project).resolve();path=studio.inside(project,inventory)
     plan=studio.read(path)
     if plan.get('version')!=1 or not isinstance(plan.get('items'),list):raise ValueError('Expected inventory version 1 with items.')
     conf=studio.read(project/'ambiance-project.json')
-    catalog_path=studio.inside(project,conf['catalog']);scene_path=studio.inside(project,conf['scene'])
+    catalog_path=catalog_path or studio.inside(project,conf['catalog']);scene_path=scene_path or studio.inside(project,conf['scene'])
     catalog=studio.read(catalog_path);scene=studio.read(scene_path)
     assets={a['id']:a for a in catalog['assets']};layers={l['id']:l for l in scene['layers']}
     errors=[];warnings=[];ids=set();rows=[];asset_coverage=set()
@@ -140,8 +140,14 @@ def inspect(project, inventory='plans/asset-inventory.json'):
         'limits':['Production evidence is separate from artistic approval.','Object/method declarations are authored; this command does not infer every object from an image.','Planned work is normal incompleteness, not a failed integrity check.']}
 
 
+def ready_work(result, limit=5):
+    ready=[r for r in result['items'] if not r['complete_for_scope'] and not r['blocked_by']] if result['ok'] else []
+    ready.sort(key=lambda r:(PRIORITIES.index(r['priority']) if r['priority'] in PRIORITIES else len(PRIORITIES),r['id']))
+    return {'total_ready':len(ready), 'ready':ready[:limit]}
+
+
 def run(args,project):
-    if args.action in ['spec', 'complexity']:
+    if args.action in ['spec', 'complexity', 'coverage', 'evidence']:
         from . import plan_commands
         return plan_commands.run(args, project)
     result=inspect(project,args.inventory)
@@ -155,10 +161,7 @@ def run(args,project):
             'meaning':'Declared production scope only; pending artistic reviews are not approvals, and omitted objects or deliverable formats cannot be inferred.'}
     if args.action=='next':
         if not 1<=args.limit<=1000:raise ValueError('Next-action limit must be 1–1000')
-        ready=[r for r in result['items'] if not r['complete_for_scope'] and not r['blocked_by']]
-        ready.sort(key=lambda r:(PRIORITIES.index(r['priority']) if r['priority'] in PRIORITIES else len(PRIORITIES),r['id']))
-        result['total_ready']=len(ready) if result['ok'] else 0
-        result['ready']=ready[:args.limit] if result['ok'] else []
+        result.update(ready_work(result,args.limit))
         result['blocked']=[{'id':r['id'],'dependencies':r['blocked_by']} for r in result['items'] if r['blocked_by']]
         result['reason']='Declared priorities and satisfied prerequisites; no paid or generation action is executed.'
         result.pop('items')
