@@ -154,7 +154,7 @@ def parser():
     group.add_parser('history');q=group.add_parser('restore');q.add_argument('sha256')
     group=sub.add_parser('review').add_subparsers(dest='action',required=True)
     q=group.add_parser('draft');q.add_argument('gate');q.add_argument('--out',type=Path,required=True)
-    q.add_argument('--revision');q.add_argument('--edition')
+    q.add_argument('--revision');q.add_argument('--edition');q.add_argument('--view')
     q=group.add_parser('record');q.add_argument('file',type=Path)
     q=sub.add_parser('preview',help='Serve a project, saved look or preparation workspace on localhost');q.add_argument('--port',type=int,default=8783)
     preview_kind=q.add_mutually_exclusive_group()
@@ -269,13 +269,14 @@ def run(args):
     if command=='review':
         if action=='draft':
             if args.edition and not args.revision:raise CommandError('--edition requires --revision')
-            context=revisions.review_context(project,args.revision,args.edition) if args.revision else None
+            if args.view and not args.revision:raise CommandError('--view requires --revision')
+            context=revisions.review_context(project,args.revision,args.edition,args.view) if args.revision else None
             draft=studio.review_template(project,args.gate,context)
             if args.out.exists():raise CommandError('Review draft already exists.')
             studio.write(args.out,draft);return {'draft':str(args.out.resolve()),'review':draft}
         with project_lock(project):
             source=studio.read(args.file);subject=source.get('subject',{})
-            context=revisions.review_context(project,subject['revision'],subject.get('edition')) if source.get('version')==2 else None
+            context=revisions.review_context(project,subject['revision'],subject.get('edition'),subject.get('view')) if source.get('version')==2 else None
             return studio.record_review(project,args.file,context)
     raise CommandError('Unsupported command')
 

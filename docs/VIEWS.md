@@ -1,6 +1,6 @@
 # Saved output views
 
-Saved views define portrait and landscape framing in one scene without changing its artwork, layer geometry, camera, rigs or clock. Project setup, view authoring, geometric checks, synchronized previews, paired proofs and single-view frame/video rendering are implemented. View-aware edition registration, paired production runs and delivery selection remain planned.
+Saved views define portrait and landscape framing in one scene without changing its artwork, layer geometry, camera, rigs or clock. Project setup, view authoring, geometric checks, synchronized previews, paired proofs and single-view frame/video rendering are implemented. View-bound editions, resumable combined production runs and exact view/soundtrack delivery selection are implemented.
 
 Create a blank dual-format project with:
 
@@ -58,7 +58,7 @@ The workbench displays the authored canvas at its actual aspect ratio, with opti
 ./ambiance --project projects/new-film render video --view portrait --out projects/new-film/render/portrait-video
 ```
 
-`frame`, `proof` and `video` accept one `--view`. Frames and video default to that view's preferred dimensions. A named-view motion proof defaults to a 640-pixel long-edge ceiling. Explicit `--width/--height` overrides must preserve the selected aspect ratio with integer dimensions. No `--view` retains the previous full-stage behavior, including the 360-wide motion-proof default. Native video still requires macOS, even dimensions and the existing encode/decode checks. Named-view `--edition` registration is explicitly rejected until edition schema support lands; retain the view's render report with its movie.
+`frame`, `proof` and `video` accept one `--view`. Frames and video default to that view's preferred dimensions. A named-view motion proof defaults to a 640-pixel long-edge ceiling. Explicit `--width/--height` overrides must preserve the selected aspect ratio with integer dimensions. No `--view` retains the previous full-stage behavior, including the 360-wide motion-proof default. Native video still requires macOS, even dimensions and the existing encode/decode checks. Pass `--revision ID --edition ID` to capture the rendered view identity and actual decoded dimensions. Composition inherits that view; `media verify --revision ID --edition ID` uses the recorded output expectations.
 
 `views-proof` accepts repeated `--view` IDs and an integer `--long-edge` ceiling. At 640, the standard outputs are 360 × 640 and 640 × 360. At 639, they become 351 × 624 and 624 × 351, preserving exact ratios. One stage is rendered per requested frame time; all output PNGs share those sample times. The page has one playback/seek clock. Disabled-layer, rig and look matrices remain separate operations.
 
@@ -67,3 +67,15 @@ The shared planner chooses a uniform internal stage scale sufficient for the mos
 The saved `render-report.json` includes source/tool hashes, resolved view hashes, actual dimensions, the raster plan, shared sample times, per-frame PNG hashes, per-view loop endpoint/seam measurements, wall time and process peak memory. Paired proofs also record all-frame geometric checks and reduced-resolution painted-alpha checks before background fill. Alpha checks use at most 240 pixels on the long side and do not exceed the requested proof size. `review_needed` flags coverage problems; successful artifact generation is not artistic approval. Detailed frame evidence stays in the report, while CLI output provides its path and a compact result.
 
 `preview --views-proof` verifies the saved page and every listed PNG before serving an immutable snapshot on localhost. It rejects changed frames, incomplete lists and paths outside the proof directory. The [moving fixture](../examples/views/README.md) exercises these commands without paid art.
+
+## Produce and review both formats
+
+Use [iteration v2](../templates/iteration-views.example.json) to produce every requested view/soundtrack combination in one resumable job. Each view encodes once, then composition reuses its compressed picture and selected PCM. The initial coordinator uses one encoder worker; paired previews and saved proofs share one scene clock.
+
+```sh
+./ambiance --project PROJECT iteration run plans/dual-iteration.json --by Codex
+./ambiance --project PROJECT project latest
+./ambiance --project PROJECT delivery handoff dual-review-01 --out PROJECT/reports/dual-handoff
+```
+
+See [the library contract](STUDIO-LIBRARY.md) for exact URLs, per-view posters, review readiness and feedback. Named picture reviews use `review draft GATE --revision ID --view ID`; edition reviews inherit their movie's view. No review verdict is copied between views.

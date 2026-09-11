@@ -102,12 +102,6 @@ class ViewRenderTests(unittest.TestCase):
         self.assertNotEqual(after['output_sha256'],working['output_sha256'])
         self.assertEqual(after['revision']['revision_id'],'v1')
 
-    def test_named_view_cannot_be_registered_as_a_legacy_edition(self):
-        args=parse('render','video','--view','portrait','--revision','v1','--edition','portrait-edition','--out',self.root/'edition')
-        with self.assertRaisesRegex(ValueError,'Named-view edition registration'):
-            revisions.prepare_edition(self.project,args)
-        self.assertFalse((self.root/'edition').exists())
-
     @unittest.skipUnless(os.environ.get('AMBIANCE_TEST_NATIVE')=='1' and sys.platform=='darwin','Requires native macOS media services')
     def test_both_orientations_encode_and_decode_at_requested_dimensions(self):
         for id,width,height in [('portrait',90,160),('landscape',160,90)]:

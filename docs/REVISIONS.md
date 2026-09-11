@@ -106,3 +106,11 @@ Revision/edition review histories are separate under `reviews/revisions/`. The c
 Status distinguishes working divergence, revision integrity and review states. A changed asset marks its asset evidence stale and blocks downstream gates; independent sound-source evidence remains valid. A changed selected PCM or movie is detected even when its report stays unchanged. Handoff writes a new Markdown/JSON bundle with exact paths, hashes and outstanding checks; it does not overwrite `handoff.md` or publish anything.
 
 Legacy version-1 reviews retain their original folder-watch behavior and bytes. There is no automatic migration, inferred release selection or conversion of an old pass into a new approval.
+
+## Saved view identity
+
+Named-view movies write edition schema 2: `view` stores its ID, canonical definition and SHA-256; `output_expectations` stores actual decoded width, height, fps, total frames, loop frames and audio-track count. These dimensions may be a smaller review size than the preferred output. The definition must match the captured scene and dimensions must preserve its aspect ratio. Authored output continues to write schema 1. Readers accept versions explicitly per record kind; sealed legacy files are never rewritten to add view fields.
+
+`media compose` inherits the picture view through a matching render receipt or prior captured edition. It cannot relabel portrait bytes as landscape. `media verify FILE --revision ID --edition ID` validates the movie identity and uses the bound expectations, even after working framing changes.
+
+Before encoding, picture review scopes can use `review draft GATE --revision ID --view portrait --out FILE` (and separately landscape). Their paths are `reviews/revisions/ID/views/VIEW/picture/`. Edition review scopes retain their existing paths and add the exact view/hash to the subject. Explicit `--view` must match the selected edition. Review observations and pass verdicts remain separate; a delivery is release ready only when every requested entry has current release evidence.

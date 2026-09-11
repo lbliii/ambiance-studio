@@ -27,3 +27,13 @@ This second fixture adds an attached two-cel hand, camera motion, a moving round
 The initial paired pilot generated sixteen 180 × 320 portrait frames and sixteen 320 × 180 landscape frames. Rendering and its reduced-resolution checks took 1.182 seconds with 193,560,576 bytes of peak process memory on the local Node Canvas runtime. This small fixture is not a performance estimate for production artwork or full-HD finishing.
 
 The agent inspected frame 0 in the editor and frame 4 in the saved proof: the subject stayed round, its changed hand cel remained attached, the rim stayed in front, and the reflection appeared in both views. Both panes reported frame 4 at 0.5 seconds after seeking and later frame 10 during shared playback. The browser's sixteen-frame stage and view checks passed with zero exposed frames. Automated raster tests compare every fixture frame against independently specified crops and inject a transparent defect visible only in portrait. These observations are separate from a human aesthetic or physical-phone review.
+
+## Complete native production demo
+
+```sh
+python3 examples/views/produce_motion_fixture.py projects/dual-production-demo --long-edge 320
+./ambiance studio register projects/dual-production-demo
+./ambiance --project projects/dual-production-demo project latest
+```
+
+This CLI path creates a fresh local-art project, paired motion proof, captured revision and one version-2 iteration containing portrait/landscape × silent/score. The score is explicitly a quiet 220 Hz engineering test tone. Use `--long-edge 1920` for full preferred output sizes. Native encoding requires macOS media services. Re-run the saved `plans/iteration.json` through `iteration run` to verify/resume outputs; the fixture creator itself always requires a fresh project directory.

@@ -53,10 +53,11 @@ def add_parsers(sub):
     group = sub.add_parser('media', help='Decode and inspect actual encoded deliverables').add_subparsers(dest='action', required=True)
     q = group.add_parser('verify')
     q.add_argument('file', type=Path)
+    q.add_argument('--revision'); q.add_argument('--edition'); q.add_argument('--view')
     q.add_argument('--out', type=Path, required=True, help='Fresh report/contact directory')
     for field in ['width', 'height', 'fps', 'frames', 'loop-frames']:
         q.add_argument('--'+field, type=int, help='Defaults to the selected scene')
-    q.add_argument('--audio-tracks', type=int, choices=[0, 1], default=0)
+    q.add_argument('--audio-tracks', type=int, choices=[0, 1])
     q.add_argument('--contact-time', type=float, action='append', default=[])
     q.add_argument('--contact-frame', type=int, action='append', default=[])
     q = group.add_parser('compose', help='Reuse encoded CFR H.264 picture with selected PCM, then verify')
@@ -66,6 +67,7 @@ def add_parsers(sub):
     q.add_argument('--repeats', type=int, default=1)
     q.add_argument('--out', type=Path, required=True)
     q.add_argument('--revision')
+    q.add_argument('--view', help='Assert the picture view when binding a revision edition')
     _edition_arguments(q)
 
 
@@ -227,11 +229,35 @@ def run(args, project):
         source = args.file.resolve()
         if not source.is_file():
             _error(f'Media file does not exist: {source}')
-        expected = {field: getattr(args, field) if getattr(args, field, None) is not None else canvas.get(field) for field in ['width', 'height', 'fps']}
-        return _verify(project, _native_binary(project), source, out, **expected,
-                       frames=args.frames if args.frames is not None else int(loop_frames), audio_tracks=args.audio_tracks,
-                       loop_frames=args.loop_frames if args.loop_frames is not None else int(loop_frames),
-                       contact_times=args.contact_time, contact_frames=args.contact_frame)
+        defaults={**canvas,'frames':int(loop_frames),'loop_frames':int(loop_frames),'audio_tracks':0};subject=None;edition_path=None
+        if getattr(args,'edition',None):
+            from . import revisions
+            if not args.revision:_error('--edition requires --revision')
+            edition=revisions.load_edition(project,args.revision,args.edition)
+            if _digest(source)!=edition['output']['sha256']:_error('Media bytes differ from the selected edition')
+            view=revisions.edition_view(project,edition)
+            if args.view is not None and args.view!=view['id']:_error('Verification view differs from the selected edition')
+            edition_path=revisions.edition_path(project,args.revision,args.edition);edition_hash=_digest(edition_path)
+            if edition['schema_version']==2:defaults.update(edition['output_expectations'])
+            else:
+                verification_path=_project_input(project,edition['verification']['path'])
+                if _digest(verification_path)!=edition['verification']['sha256']:_error('Selected edition verification receipt changed')
+                verified=json.loads(verification_path.read_text())
+                for key,source_key in [('width','width'),('height','height'),('fps','fps'),('frames','decoded_frames'),('loop_frames','loop_frames')]:
+                    if source_key in verified:defaults[key]=int(verified[source_key])
+                defaults['audio_tracks']=verified.get('audio',{}).get('tracks',0)
+            subject={'revision':args.revision,'revision_sha256':context['manifest_sha256'],'edition':args.edition,'edition_sha256':edition_hash,'view':view['id'],'view_sha256':view['sha256']}
+        elif getattr(args,'view',None):
+            from . import views
+            row=views.inspect(project,args.view,getattr(args,'revision',None))['views'][args.view]
+            defaults.update(row['output']);subject={'revision':getattr(args,'revision',None),'view':args.view,'view_sha256':row['view_sha256']}
+        expected={field:getattr(args,field) if getattr(args,field,None) is not None else defaults[field] for field in ['width','height','fps','frames','loop_frames','audio_tracks']}
+        result=_verify(project,_native_binary(project),source,out,**expected,contact_times=args.contact_time,contact_frames=args.contact_frame)
+        if getattr(args,'revision',None):_context(project,args.revision)
+        if edition_path and _digest(edition_path)!=edition_hash:_error('Edition receipt changed during verification')
+        if subject:
+            result['subject']=subject;Path(result['report']).write_text(json.dumps(result,indent=2,allow_nan=False)+'\n')
+        return result
     out = _fresh(args.out)
     supersample = getattr(args, 'supersample', 1)
     selected = getattr(args, 'views', None) or ([args.view] if getattr(args, 'view', None) else None)
@@ -427,6 +453,8 @@ def _pcm_bytes(source, seconds):
 
 def compose(args, project):
     """Compose encoded picture without invoking Canvas or the raster renderer."""
+    if getattr(args,'view',None) is not None and not getattr(args,'edition',None):
+        _error('--view on composition requires --revision and --edition so the picture identity can be checked')
     out = _fresh(args.out)
     picture = args.picture.resolve(); audio = args.audio.resolve()
     for source in [picture, audio]:
