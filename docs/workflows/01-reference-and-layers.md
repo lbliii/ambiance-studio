@@ -2,11 +2,15 @@
 
 **Input:** the user's image and creative intent. **Output:** preserved reference, brief, object/layer plan, clean-plate plan, and proposed motion/sound roles. **Gates:** intent and layout.
 
+For a complete seed film, start with [seed-to-stage production](../SEED-TO-STAGE.md): whole-scene census, story choices and requested output compositions before narrowing asset scope. Portrait and landscape are the studio defaults unless the user specifies otherwise. Full-frame staging may require expanded paint and independent objects; preserve identity while adapting composition.
+
 ## Inspect before inventing
 
 Read the image at its native framing and at a small portrait preview. Identify focal subject, horizon/perspective, major light sources, warm/cool relationships, depth cues, and foreground silhouettes. Record observations separately from additions. If the image contains no city, a hilltop city is a creative proposal, not an extracted fact.
 
 Keep the source unchanged. Copy it into project inputs and record its hash. Record reference provenance/usage context when known. Ask only for missing decisions that would materially change the result; infer routine production details and label the assumptions.
+
+Complete the [layer-and-light planning pass](../LAYER-AND-LIGHT-PLANNING.md): distinguish depth planes, independently controlled parts and light-source/receiver relationships. Inventory steady sources as well as changing ones. The tram review demonstrated that listing animation opportunities without preparing their required separations can leave an otherwise clean film almost still.
 
 ## Break down relationships
 

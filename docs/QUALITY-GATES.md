@@ -5,9 +5,9 @@ The canonical gate definitions are in `templates/pipeline.json`. A project recei
 | Gate | Required outcome and evidence | If it fails |
 | --- | --- | --- |
 | `intent` | Inspected reference, emotional brief, style/focal decisions, delivery/tool/budget scope | Clarify the actual uncertainty; continue useful planning |
-| `layout` | Object breakdown, draw/depth order, anchor/group plan, clean backing and camera limits | Repair the missing spatial relationship before producing affected assets |
+| `layout` | Whole-scene census, story/action choices, requested output composition proofs, draw/depth order, light relationships, attachments and hidden-paint plan | Repair missing scope, composition or spatial relationships before producing affected assets |
 | `assets` | Real production files, catalog/recipes, integrity report, cel registration and edge review, provenance | Fix the asset or preparation recipe; preserve unaffected accepted assets |
-| `animation` | Deterministic timing, compatible cycles, join/coverage checks, phone-size visual draft review | Repair timing, attachment, matte, or camera range at its source |
+| `animation` | Completed declared scope, noticeable story/environment motion in each requested composition, deterministic timing and join/coverage checks | Repair the missing action, cadence, artwork, composition or technical defect at its source |
 | `sound-design` | Emotional sound brief, separate selected sources, actual audition notes, source records | Replace or edit the weak source without discarding the whole mix |
 | `mix` | Circular arrangement, exact masters/stems, measured levels/seam/mono, repeated listening with picture | Adjust phrasing, tails, event timing, processing, or level |
 | `export` | Fully decoded final media, correct frame/audio presentation timeline, encoded join, correct editions | Fix the export/mux or source issue and verify the new actual file |
@@ -30,6 +30,8 @@ A passing criterion records:
 A change to an evidence file, a watched input/output, project settings, gate criteria, or an upstream receipt causes re-evaluation. Unaffected independent work can retain its review: changing a smoke atlas should not by itself invalidate the sound-source audition.
 
 The recorder checks evidence presence and consistency. **It does not inspect image aesthetics, listen to audio, authenticate a reviewer's identity, or prove that a supplied report is truthful.** The observer is responsible for performing the stated check and saving the real evidence. This is a local production record, not an audit service or digital-signature system.
+
+New project templates include whole-scene census, requested output composition and scope-coverage criteria following the tram feedback. Existing projects retain their copied criteria and historical reviews; no automatic migration or reapproval occurs. `plan check --require-complete` checks declared production completeness and supplies one piece of scope evidence. It cannot detect an omitted requirement or establish that an action is artistically readable. Apply the [seed-to-stage workflow](SEED-TO-STAGE.md) to the current user direction and record new-revision observations separately from prior edition reviews.
 
 Technical reports should identify the inspected file hashes, commands/tool versions, actual results, and limits. A contact sheet proves which images were available to inspect, but not that someone watched the animation. A peak measurement cannot establish pleasant sound. A zero/end state test cannot establish that the last encoded frame joins smoothly.
 
