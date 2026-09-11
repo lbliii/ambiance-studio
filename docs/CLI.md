@@ -52,6 +52,10 @@ Revision selections and asset/placement manifests use project-relative reference
 | `library find [QUERY] [--directory DIR]` | Find assets and real proof paths across bundled and initialized project catalogs |
 | `library inspect ID [--catalog FILE]` | Inspect exact source metadata, integrity and decoded cel counts |
 | `plan inspect/check/next [--inventory PATH --out FILE]` | Reconcile intended parts, actual evidence, dependencies and remaining work; next returns five ready items by default (`--limit N`) |
+| `plan spec inspect/check [--details --out FILE]` | Validate canonical production intent and source identities; report legacy required-flag contradictions |
+| `plan spec apply FILE [--dry-run --expect-sha256 HASH]` | Apply explicit scope revisions with a reviewable diff and preserved plan history |
+| `plan spec migrate FILE --original PATH [--original PATH] --out DIR` | Preserve original notes/inventory and emit an authored migration candidate/diff without saving it |
+| `plan complexity [--out FILE]` | Separate workload dimensions and declared coverage counts, without an aesthetic score |
 | `plan check --require-complete [--inventory PATH --out FILE]` | Also fail empty or unfinished declared production scope; report remaining items without certifying artistic quality |
 | `scene inspect [--full]` | Return the summary, or complete authored scene including camera/groups |
 | `view inspect [ID] [--revision ID]` | Inspect saved framing, preferred dimensions, projection and exact view identity |
