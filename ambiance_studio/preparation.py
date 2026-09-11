@@ -286,8 +286,7 @@ def build(project, out, recipe_path=None, source=None, backing=None, alignment=N
                 'registration': {'mode': 'fixed', 'point': [w/2, h/2], 'target': [.5, .5]},
                 'output': {'cell_size': [min(4096, w+4), min(4096, h+4)], 'columns': 1, 'padding': 2}})
         # Capture the shared renderer and UI, so an artifact never uses a later engine silently.
-        for name in ('engine.mjs', 'finishing.mjs', 'views.mjs', 'bindings.mjs', 'preparation-workbench.mjs', 'preparation-workbench.css'):
-            if name == 'bindings.mjs' and not (ROOT/'editor'/name).exists(): continue
+        for name in ('engine.mjs', 'finishing.mjs', 'bindings.mjs', 'views.mjs', 'preparation-workbench.mjs', 'preparation-workbench.css'):
             (stage/name).write_bytes((ROOT/'editor'/name).read_bytes())
         (stage/'index.html').write_bytes((ROOT/'editor/preparation-workbench.html').read_bytes())
         prep.write(stage/'workbench.json', {'recipe': recipe, **result})

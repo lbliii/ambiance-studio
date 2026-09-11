@@ -134,7 +134,7 @@ def resolve_batch(project,scene,catalog,batch):
         checked_assets.add(aid)
 
     has_placement=False
-    finishing_config=scene.get('finishing');has_finishing=finishing_config is not None
+    finishing_config=scene.get('finishing');has_finishing=finishing_config is not None or scene.get('bindings') is not None
     for op in batch['operations']:
         if not isinstance(op,dict):raise ValueError('Each operation must be an object')
         action=op.get('op')
@@ -155,6 +155,7 @@ def resolve_batch(project,scene,catalog,batch):
         elif action=='set' and 'asset' in op.get('values',{}):layers[op['layer']]=op['values']['asset']
         elif action=='remove':layers.pop(op.get('layer'),None)
         elif action=='finishing':finishing_config=op.get('value');has_finishing=True
+        elif action=='bindings':has_finishing=True
     for aid in set(layers.values()):
         if any(assets.get(aid,{}).get('provenance',{}).get(k) for k in ['motion_preparation','preparation_receipt']): check_asset(aid)
     if has_finishing:

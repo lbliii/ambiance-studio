@@ -170,8 +170,8 @@ def parser():
     q.add_argument('--artifacts',type=Path,help='Fresh directory for bounded JSON/JUnit/log diagnostics')
     q.add_argument('--require-native',action='store_true',help='Fail on unavailable native media capability or any skipped required test')
     planning.add_parsers(sub);assets.add_library_parsers(sub);revisions.add_parsers(sub);views.add_parsers(sub)
-    from . import rendering, audio, finishing, production
-    rendering.add_parsers(sub);audio.add_parsers(sub);finishing.add_parsers(sub)
+    from . import rendering, audio, finishing, production, bindings
+    rendering.add_parsers(sub);audio.add_parsers(sub);finishing.add_parsers(sub);bindings.add_parsers(sub)
     production.add_parsers(sub)
     return p
 
@@ -253,6 +253,9 @@ def run(args):
         from . import generation_ledger
         return generation_ledger.run(args,project)
     if command=='asset' and action in ['prepare','preflight','crop','return','edges','edge-repair']:return assets.run_preparation(args,project)
+    if command=='binding':
+        from . import bindings
+        return bindings.run(args,project)
     if command=='revision':return revisions.run(args,project)
     if command=='view':return views.run(args,project)
     if command=='plan':return planning.run(args,project)
