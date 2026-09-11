@@ -180,6 +180,8 @@ class ActivityTests(unittest.TestCase):
         self.assertIn('activity',report['plan']['expectation_sha256'])
         self.assertEqual(report['actions'][0]['targets'][1]['readability_target'],3)
         self.assertEqual(report['actions'][0]['layers'],['actor'])
+        state=json.loads((out/'state.json').read_text())
+        self.assertEqual(state['views'][0]['profile']['kind']['character']['action_ids'],[action_id])
 
     def test_binding_samples_and_disabled_source_include_coupled_receiver(self):
         project=self.root/'binding'

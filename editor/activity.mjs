@@ -86,7 +86,16 @@ export function measureActivity(scene, catalog, {views, painted, actions = [], s
         timing_target_diagnostics:targetDiagnostics,comparison_scope:'Sampled projected-state candidates only; neither an artistic verdict nor proof of unsampled cadence.',
         observation:{status:'unreviewed',observed_level:null,observer:null,evidence:null}};
     });
-    report.views.push({...view,layers:rows,actions:actionRows});
+    const profile={};
+    for(const dimension of ['kind','depth_band','motion_role']){
+      profile[dimension]={};
+      for(const action of actionRows.filter(a=>a.applicable)){
+        const key=action[dimension]??'unclassified';
+        if(!profile[dimension][key])profile[dimension][key]={action_ids:[],layer_ids:[]};
+        const bucket=profile[dimension][key];bucket.action_ids.push(action.id);bucket.layer_ids=[...new Set([...bucket.layer_ids,...action.layers])];
+      }
+    }
+    report.views.push({...view,profile,layers:rows,actions:actionRows});
   }
   return report;
 }

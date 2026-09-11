@@ -45,7 +45,7 @@ def actions_from_plan(plan):
         result.append({'id': action['id'], 'element_id': element['id'], 'description': action['description'],
                        'layers': action.get('layer_ids', element.get('realization', {}).get('layer_ids', [])),
                        'views': [t['view_id'] for t in action['targets']], 'targets': action['targets'],
-                       'kind': element.get('kind'), 'motion_role': element.get('motion_role'),
+                       'kind': element.get('kind'), 'depth_band': element.get('depth_band'), 'motion_role': element.get('motion_role'),
                        'cadence': element.get('cadence'), 'method': action['method'], 'timing': action.get('timing')})
     return result
 
