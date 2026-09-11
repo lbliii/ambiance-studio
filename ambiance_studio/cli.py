@@ -165,6 +165,8 @@ def parser():
     preview_kind.add_argument('--motion',type=Path,help='Inspect a motion proof and evaluate in-memory drafts')
     preview_kind.add_argument('--prepare',type=Path,help='Inspect and edit a verified preparation draft without writing project files')
     q=sub.add_parser('test',help='Run local regression checks without paid providers');q.add_argument('--out',type=Path)
+    q.add_argument('--artifacts',type=Path,help='Fresh directory for bounded JSON/JUnit/log diagnostics')
+    q.add_argument('--require-native',action='store_true',help='Fail on unavailable native media capability or any skipped required test')
     planning.add_parsers(sub);assets.add_library_parsers(sub);revisions.add_parsers(sub);views.add_parsers(sub)
     from . import rendering, audio, finishing, production, bindings
     rendering.add_parsers(sub);audio.add_parsers(sub);finishing.add_parsers(sub);bindings.add_parsers(sub)
@@ -192,12 +194,8 @@ def run(args):
             'note':'Optional dependency availability does not imply a renderer or provider adapter is implemented.'}
     if command=='test':
         require_node();asset_tool()
-        commands=[[sys.executable,'-m','unittest','discover','-s','tests','-p','test_*.py'],['node','editor/verify-engine.mjs'],['node','tests/test-rig.mjs'],['node','tests/test-views.mjs'],['node','tests/test-view-raster.mjs'],['node','tests/test-tracks.mjs'],['node','tests/test-source-placement.mjs'],['node','tests/test-finishing.mjs'],['node','tests/test-bindings.mjs'],[sys.executable,'tools/package_audit.py']]
-        results=[]
-        for c in commands:
-            p=subprocess.run(c,cwd=ROOT,capture_output=True,text=True)
-            results.append({'command':c,'exit_code':p.returncode,'stdout':p.stdout,'stderr':p.stderr})
-        return {'ok':all(r['exit_code']==0 for r in results),'checks':results}
+        from .checks import run_suite
+        return run_suite(args.artifacts,args.require_native)
     if command=='project' and action=='init':return init_project(args.destination,args.reference,args.title,args.template,args.output_format)
     if command=='project' and action=='list':
         return {'projects':registry.projects(ROOT,registry_file,args.directory),'registry':str(registry_file)}
