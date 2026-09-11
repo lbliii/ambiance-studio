@@ -17,6 +17,8 @@ Animate shape changes with cels and rigid movement with transforms. Offset phase
 
 Use `render rig-proof` for compound rest/extreme, body-hidden and fixed-occluder comparisons. Inspect the actual backing: hiding descendants cannot erase baked imagery. Keep fixed glass and receiving shadows independent. Judge repeated flames' shape, cadence and phase together; compare supporting motion enabled/disabled when its readability is uncertain.
 
+Use [source bindings](../../../docs/BINDINGS.md) for bounded source-to-follower response on the existing clock. Keep attachment, driving and receiving distinct. Prepare dim/base art and explicit receiver masks for painted light; inspect low/high/off and source-pose extremes in both intended compositions, plus the isolated illumination pass. Use `binding inspect/check/apply`; conflicting tracks, cycles or unsupported companion corrections require an explicit revision.
+
 Make a low-resolution draft and inspect zero, intermediate times, camera extremes, and the join. Compare state at 0 and T, then inspect the transition from the final exported frame to frame zero. Export exactly N samples from frame 0 through N−1; do not add a duplicated endpoint. Check edge coverage and attachment drift during the whole cycle, not only the cover frame.
 
 Save the scene and actual reports/proofs. Run `scene check` on the selected project, then the browser pixel check and visual inspection as separate evidence. For a captured revision, render with `--revision ID`; do not substitute the working scene. Reconcile placed parts with `plan check`.

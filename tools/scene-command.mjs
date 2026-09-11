@@ -25,10 +25,10 @@ function applyOperations(scene,catalog,operations,report=false){
     if(!object(op)||typeof op.op!=='string')throw Error('Each operation needs an op name');
     const shapes={add:['op','asset','id','values'],set:['op','layer','values','unset'],replace:['op','layer','value'],remove:['op','layer','cascade'],order:['op','layers'],group:['op','id','value'],camera:['op','values'],socket:['op','layer','name','value'],attach:['op','layer','to','socket','offset_x','offset_y'],coverage:['op','layers'],
       place_from_source:['op','id','asset','base','mode','reference','mapping','base_mapping','source_anchor','source_size','anchor','order','values'],
-      reparent:['op','layer','to','socket','preserve','at_seconds'],finishing:['op','value'],framing:['op','value']};
+      reparent:['op','layer','to','socket','preserve','at_seconds'],finishing:['op','value'],bindings:['op','value'],framing:['op','value']};
     if(!shapes[op.op])throw Error(`Unsupported scene operation: ${op.op}`);
     fields(op,shapes[op.op],op.op);
-    if(['finishing','framing'].includes(op.op)){if(op.value===null)delete scene[op.op];else scene[op.op]=structuredClone(op.value);}
+    if(['finishing','framing','bindings'].includes(op.op)){if(op.value===null)delete scene[op.op];else scene[op.op]=structuredClone(op.value);}
     else if(op.op==='place_from_source')diagnostics.push(placeFromSource(scene,catalog,op));
     else if(op.op==='reparent')diagnostics.push(reparentAtTime(scene,catalog,op));
     else if(op.op==='add'){
@@ -97,6 +97,7 @@ try{
   validateScene(scene,catalog);
   let result;
   if(action==='sample')result=compileScene(scene,catalog).sample(args.time);
+  else if(action==='binding-check')result=compileScene(scene,catalog).inspectBindings(args.time??0);
   else if(action==='view-defaults')result=dualFraming();
   else if(action==='view-plan')result=planViews(scene,args.requests,args.options);
   else if(action==='view-check')result=auditViews(scene,catalog,args.views);

@@ -82,6 +82,7 @@ Revision selections and asset/placement manifests use project-relative reference
 | `revision handoff ID [--edition ID] --out DIR` | Save a new handoff with exact artifacts and outstanding checks |
 | `review draft GATE [--revision ID --edition ID --view ID] --out FILE` | Create an unperformed legacy or revision-bound review draft |
 | `review record FILE` | Record actual criteria/evidence with the existing gate tool |
+| `binding inspect/check [--time N --out FILE]` / `binding apply FILE [--dry-run --expect-sha256 HASH]` | Inspect or atomically replace source/follower bindings; see [bindings](BINDINGS.md) |
 | `look inspect/check [--time N --out FILE]` | Validate grades, light signals, receiving surfaces and actual typed dependencies |
 | `look apply FILE [--dry-run --expect-sha256 HASH]` | Save a complete finishing recipe through the scene transaction path |
 | `look export --out DIR [--include-rig]` | Package a look and optionally its mounting, cel/track, group and layer definitions |
