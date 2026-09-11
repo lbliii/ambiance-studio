@@ -125,6 +125,8 @@ def parser():
     q=group.add_parser('inspect');q.add_argument('--full',action='store_true');q=group.add_parser('sample');q.add_argument('--time',type=float,required=True)
     q=group.add_parser('apply');q.add_argument('file',type=Path);q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256')
     q=group.add_parser('track');q.add_argument('layer');q.add_argument('file',type=Path);q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256')
+    from . import activity
+    activity.add_parsers(group)
     q=group.add_parser('timing');q.add_argument('--layer');q.add_argument('--out',type=Path)
     q=group.add_parser('place');q.add_argument('file',type=Path);q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256')
     q=group.add_parser('reparent');q.add_argument('layer');q.add_argument('--to',required=True);q.add_argument('--socket',required=True)
@@ -245,6 +247,9 @@ def run(args):
         result['current_delivery']=deliveries.latest(project)
         return result
     if command in ['project','scene'] and action=='check':return check_project(project)
+    if command=='scene' and action in ['activity','activity-review']:
+        from . import activity
+        return activity.run(args,project)
     if command in ['look','scene']:
         from . import scene_commands
         return scene_commands.run_look(args,project) if command=='look' else scene_commands.run_scene(args,project)
@@ -278,7 +283,7 @@ def main(argv=None):
         command=' '.join(filter(None,[args.command,getattr(args,'action',None),getattr(args,'motion_action',None)]))
         ok=result.get('ok',True) if isinstance(result,dict) else True
         payload={'ok':ok,'schema_version':1,'command':command,'data':result}
-        if getattr(args,'out',None) and args.command not in ['asset','render','media'] and not(args.command=='look' and args.action=='export') and not(args.command=='review' and args.action=='draft') and not(args.command in ['revision','delivery'] and args.action=='handoff'):
+        if getattr(args,'out',None) and args.command not in ['asset','render','media'] and not(args.command=='scene' and args.action in ['activity','activity-review']) and not(args.command=='audio' and args.action=='cue-bind') and not(args.command=='look' and args.action=='export') and not(args.command=='review' and args.action=='draft') and not(args.command in ['revision','delivery'] and args.action=='handoff'):
             studio.write(args.out,payload)
         emit(command,result,ok)
         return 0 if ok else 1

@@ -1,0 +1,22 @@
+import assert from 'node:assert/strict';
+import {measureActivity,pixelMetrics,intervals} from '../editor/activity.mjs';
+import {planViews} from '../editor/views.mjs';
+import {compileScene} from '../editor/engine.mjs';
+
+const layer={id:'child',asset:'ink',x:.4,y:.5,width:.2,height:.2,anchor:[.5,.5],scale:1,rotation:0,opacity:1,visible:true,blend:'source-over',depth:0,cycle_seconds:1,phase_frames:0};
+const scene={version:1,id:'activity',canvas:{width:100,height:100,fps:4,loop_seconds:2,background:'#000000'},camera:{overscan:1,x_amplitude:.05,y_amplitude:0,zoom_amplitude:0},groups:[],layers:[layer]};
+const catalog={version:1,assets:[{id:'ink',width:20,height:10,atlas:{columns:2,rows:1,cell_width:10,cell_height:10,frame_count:2}}]};
+const painted={ink:[0,1].map(cell=>({cell,sha256:'identical',bounds_uv:[.1,.2,.6,.5]}))};
+const report=()=>measureActivity(scene,catalog,{views:planViews(scene,[{id:'authored'}]).views,painted,actions:[{id:'gesture',layers:['child'],views:[]}]});
+let row=report().views[0].layers[0];
+assert.equal(row.summary.distinct_painted_cels,1);assert.ok(row.summary.cel_index_changes>0);assert.equal(row.summary.world_anchor_travel_px,0);
+assert.equal(row.summary.max_speed_px_per_second,0);assert.deepEqual(row.samples[0].painted_bounds_display_px,[32,44,12,10]);
+layer.depth=1;row=report().views[0].layers[0];assert.ok(row.summary.world_anchor_travel_px>0);assert.equal(row.summary.local_anchor_travel_scene_px,0);
+assert.equal(row.samples[2].cell,compileScene(scene,catalog).sample(.5)[0].cell);
+layer.x=2;assert.equal(report().views[0].layers[0].summary.in_view_samples,0);
+layer.x=.5;layer.visible=false;assert.equal(report().views[0].layers[0].summary.eligible_samples,0);
+assert.throws(()=>measureActivity(scene,catalog,{views:[],painted}));
+assert.deepEqual(intervals([false,true,true,false],.5),[{active:false,start_seconds:0,end_seconds:.5,duration_seconds:.5},{active:true,start_seconds:.5,end_seconds:1.5,duration_seconds:1},{active:false,start_seconds:1.5,end_seconds:2,duration_seconds:.5}]);
+const a=new Uint8Array([100,100,100,255]), b=new Uint8Array([80,80,80,255]);
+const same=pixelMetrics(a,b,a,b).metrics;assert.equal(same.frame_changed_pixels,1);assert.equal(same.residual_changed_pixels,0);assert.equal(same.contribution_pixels,0);
+console.log(JSON.stringify({ok:true,checks:'actual clock, duplicate paint, inherited versus local travel, offscreen, hidden, signed raster residual, interval units'}));
