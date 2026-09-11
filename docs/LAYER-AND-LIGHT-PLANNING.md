@@ -2,7 +2,7 @@
 
 The A Quieter Tomorrow review exposed a production failure: a clean background with a few moving cutouts left the exterior and characters largely still. Small brightness changes did not replace missing depth, cloth animation or connected illumination. Use this workflow during reference deconstruction and focused revisions to make the intended controls explicit.
 
-This is an authored planning and review workflow. It adds no scene schema, automatic extraction, light detector, cloth solver or new approval gate. Keep decisions in the project's layer plan/layout notes and actual parts in the [production inventory](PRODUCTION-INVENTORY.md). Record target motion using [motion direction](MOTION-DIRECTION.md).
+This is an authored planning and review workflow. It adds no automatic extraction, light detector, cloth solver or new approval gate. Keep semantic intent and expectations in the canonical [production plan](PRODUCTION-PLAN.md), spatial reasoning in layer/layout notes and fulfillment in the [production inventory](PRODUCTION-INVENTORY.md). Refer to the same element IDs throughout. Record target motion using [motion direction](MOTION-DIRECTION.md).
 
 ## Three related maps
 
@@ -39,7 +39,7 @@ For each source record:
 - **Coupling:** name the source signal and the responses it drives. The flame, nearby illumination and its reflection should agree in time, while water can distort the reflected shape independently. Separate sources need independent behavior unless there is a shared cause.
 - **Evidence/state:** assets that exist, missing paint and the proof needed. A still reference establishes neither a flicker frequency nor an off-state image.
 
-Use a project table with columns `ID | observed source | proposed behavior/cadence | source art | receivers/blockers/reflections | signal | state/proof`. Sources deliberately kept steady still belong in the table.
+A source table with columns `ID | observed source | proposed behavior/cadence | source art | receivers/blockers/reflections | signal | state/proof` can summarize the canonical elements/relations and runtime references. Keep it derived or clearly label it explanatory; do not maintain another editable source of intent. Sources deliberately kept steady still belong in the plan.
 
 Keep moon illumination steady unless cloud cover or another cause changes its visibility. Treat distant twinkling as a considered direction, not a preset applied to all city/bridge lights. A candle can have continuously changing shape/intensity without requiring the pumpkin body to move. An electrical dropout requires the fixture and affected surfaces to dim together; a global exposure dip is not a substitute.
 

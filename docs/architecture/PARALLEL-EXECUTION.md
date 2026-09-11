@@ -4,6 +4,8 @@ User authorization, September 11, 2026: launch five separate tasks, give each a 
 
 ## Verified baseline
 
+This section preserves the pre-integration starting point. The [integration handoff](PRODUCTION-INTEGRATION-HANDOFF.md), current source and source-bound validation receipts describe the subsequently integrated code.
+
 - Fetched `origin/main` is `dae0e18`; this planning worktree is `codex/encoder-loop-recovery` at `c53a5e4`, with additional uncommitted source/document changes.
 - [PR #5](https://github.com/lbliii/ambiance-studio/pull/5), head `ca5a6e624033e252a05a5c643515de10d1a52e1c`, implements the dual-format pipeline. All six recorded CI checks passed, but the PR has conflicts against current main. The archived task **Support dual aspect ratios** confirms completion and contains pilot evidence. Main alone was an insufficient capability check.
 - Do not rebuild named views, paired previews, iteration v2, view-bound editions or exact orientation/soundtrack delivery. Integrate and extend them.

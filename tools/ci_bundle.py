@@ -3,6 +3,7 @@
 import argparse
 import json
 from pathlib import Path
+import re
 import shutil
 import sys
 
@@ -10,12 +11,12 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from ambiance_studio.checks import digest, write
 
-MAX_FILES = 256
+MAX_FILES = 1024
 MAX_FILE_BYTES = 2 * 1024 * 1024
 MAX_TOTAL_BYTES = 20 * 1024 * 1024
 
 
-def bundle(run, replay, out):
+def bundle(run, replay, out, combined=None):
     run, replay, out = Path(run).resolve(), Path(replay).resolve(), Path(out).resolve()
     if out.exists():
         raise ValueError('Bundle output must be fresh')
@@ -48,6 +49,57 @@ def bundle(run, replay, out):
             if source.suffix not in {'.png', '.json', '.html', '.mjs', '.css'}:
                 continue
             select(replay, source.relative_to(replay), Path('replay') / source.relative_to(replay))
+    if combined is not None:
+        combined = Path(combined).resolve()
+        select(combined, Path('combined.json'), Path('combined/combined.json'))
+        # These roots are created by repository fixture builders, never a user project glob.
+        proof_paths = {
+            'intent': ['reports/production-intent-replay.json', 'reports/replay-transcript.json', 'reports/fake.json', 'render/paired'],
+            'bindings': ['reports/binding.json', 'render/paired', 'render/source-hidden', 'render/browser-parity/packet.json'],
+            'paired-recovery': ['recovery.json', 'interrupted-run.json', 'commands',
+                                'synthetic-project/deliveries/recovery-pair.json'],
+        }
+        preparation_paths = ['reports/replay.json', 'reports/preparation-proof/proof-run.json',
+                             'assets/prepared/compound/preparation-receipt.json',
+                             'reports/preparation-proof/normal-attempt-1/render']
+        for variant in ['normal', 'subjects-hidden', 'foreground-hidden']:
+            for pose in ['rest', 'extreme']:
+                for view in ['portrait', 'landscape']:
+                    preparation_paths.append(f'reports/preparation-proof/{variant}-attempt-1/{pose}-{view}')
+        proof_paths['assets-tea'] = proof_paths['assets-cabinet'] = preparation_paths
+        activity_paths = ['calibration.json']
+        for case in ['visible', 'offscreen', 'tiny', 'hidden', 'occluded', 'duplicate', 'low-contrast',
+                     'excessive', 'pulse', 'painted-visible', 'painted-barely', 'painted-invisible', 'painted-excessive']:
+            for name in ['activity-report.json', 'state.json', 'raster.json', 'painted-cells.json', 'maps']:
+                activity_paths.append(case + '-proof/' + name)
+        for name in ['activity-report.json', 'state.json', 'raster.json', 'painted-cells.json', 'maps']:
+            activity_paths.append('matched/' + name)
+        for workload in ['single', 'paired']:
+            for cache in ['cold-process', 'warm-os-cache']:
+                activity_paths.append(f'{workload}-{cache}/activity-report.json')
+        proof_paths['activity'] = activity_paths
+        for feature in ['intent', 'assets-tea', 'assets-cabinet', 'bindings', 'activity', 'paired-recovery']:
+            parent = combined / feature
+            for source in sorted(parent.glob('attempt-*.*')):
+                if re.fullmatch(r'attempt-\d{3}\.(stdout\.json|stderr\.txt)', source.name):
+                    select(combined, source.relative_to(combined), Path('combined') / source.relative_to(combined))
+            for attempt in sorted(parent.glob('attempt-*')):
+                if not re.fullmatch(r'attempt-\d{3}', attempt.name):
+                    continue
+                for relative in proof_paths.get(feature, []):
+                    candidate = attempt / relative
+                    for source in sorted(candidate.rglob('*')) if candidate.is_dir() else [candidate]:
+                        if source.suffix in {'.png', '.json', '.html', '.mjs', '.css'}:
+                            select(combined, source.relative_to(combined), Path('combined') / source.relative_to(combined))
+                if feature in {'paired-recovery', 'intent'}:
+                    run_path = 'synthetic-project/runs/recovery-pair' if feature == 'paired-recovery' else 'runs/paired'
+                    for view in ['portrait', 'landscape']:
+                        for encode in sorted((attempt / run_path).glob(view + '.picture.silent-*')):
+                            if not re.fullmatch(view + r'\.picture\.silent-\d+', encode.name):
+                                continue
+                            for relative in ['render-report.json', 'encode-checkpoint.json', 'picture.mp4', 'verification/media-report.json', 'verification/contacts/decoded-0000.png']:
+                                source = encode / relative
+                                select(combined, source.relative_to(combined), Path('combined') / source.relative_to(combined))
     if len(entries) > MAX_FILES or sum(size for _, _, size in entries) > MAX_TOTAL_BYTES:
         raise ValueError('Artifact bundle exceeds bounded file/byte allowance')
     if not entries:
@@ -70,9 +122,10 @@ def bundle(run, replay, out):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--run', type=Path, required=True); p.add_argument('--replay', type=Path, required=True); p.add_argument('--out', type=Path, required=True)
+    p.add_argument('--combined', type=Path)
     args = p.parse_args()
     try:
-        print(json.dumps(bundle(args.run, args.replay, args.out), indent=2)); return 0
+        print(json.dumps(bundle(args.run, args.replay, args.out, args.combined), indent=2)); return 0
     except (OSError, ValueError) as error:
         print(json.dumps({'ok': False, 'error': str(error)})); return 1
 

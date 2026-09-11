@@ -1,0 +1,12 @@
+{
+  "format": "ambiance-production-plan",
+  "schema_version": 1,
+  "story": {"premise": "Unplanned: author the scene's story.", "direction": "Unplanned: record the user's intended scope and chosen compositions."},
+  "sources": [],
+  "elements": [],
+  "actions": [],
+  "outputs": [],
+  "relations": [],
+  "expectations": [],
+  "change": {"reason": "Start an explicitly unplanned production contract.", "supersedes_sha256": null}
+}

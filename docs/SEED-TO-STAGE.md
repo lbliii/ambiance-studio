@@ -6,7 +6,9 @@ This direction follows the user's repeated review of A Quieter Tomorrow: clean a
 
 ## Start with the whole scene
 
-Before prioritizing a few easy assets, inspect the whole reference and save a census in `plans/scene-census.json`. Inventory meaningful object families, including partially visible framing, characters and their action parts, environmental surfaces, and all light sources. Group repeated leaves/windows where they have one role; a census need not name every pixel or identical leaf. Use stable IDs and distinguish observed objects from proposed additions.
+For a new contract, start from the [unplanned template](../templates/production-plan.json), author its story, sources, elements, actions, requested outputs and expectations, then use `plan spec apply` with the appropriate predecessor hash. The template intentionally has no scope and cannot establish readiness. The [single-format example](../examples/production-plan.json) demonstrates an explicit nearly-still direction; do not copy its creative choices into another seed.
+
+Before prioritizing a few easy assets, inspect the whole reference and author its semantic census in the canonical [production plan](PRODUCTION-PLAN.md), `plans/production-plan.json`. Inventory meaningful object families, including partially visible framing, characters and their action parts, environmental surfaces, and all light sources. Group repeated leaves/windows where they have one role; a census need not name every pixel or identical leaf. Use stable IDs and distinguish observed objects from proposed additions. Preserve existing census notes as migration inputs; do not maintain a second editable census that can disagree with the plan.
 
 For each entry record its story role, visible relationships, possible actions, chosen treatment and reason, required production parts, and inventory IDs that carry the work. Deliberately still objects also need a decision: framing, structure, a resting pose, contrast to nearby movement, or another artistic purpose. Include both foreground and distant activity when the scene supports it. Choosing a story hierarchy happens after this survey.
 
@@ -24,11 +26,11 @@ Use [layer and light planning](LAYER-AND-LIGHT-PLANNING.md) to distinguish depth
 
 ## Commit scope before polishing
 
-Record selected requirements in the [production inventory](PRODUCTION-INVENTORY.md) with `required: true` and tracked `required_parts`. Include portrait/landscape composition proofs, necessary extraction/backing, selected character and environment actions, and source/receiver light proofs. Link each requirement to the census and brief. Reconcile `plan next` with story priority: the easiest ready asset is not automatically the most important artistic task.
+Record selected expectations in the production plan and their realization parts in the [production inventory](PRODUCTION-INVENTORY.md). Inventory entries retain `required: true` and tracked `required_parts`; they describe fulfillment, while the plan owns intent. Include the requested composition proofs, necessary extraction/backing, selected character and environment actions, and source/receiver light proofs. Reconcile `plan next` with story priority: the easiest ready asset is not automatically the most important artistic task.
 
 Separate a prototype's scope from the full film's scope. It is useful to test one animal or a page hinge first; that proves that component. The remaining required scene work stays open. A missing source, preparation difficulty or unavailable capability should name the work still needed and its next action. Record any consequential reduction with reason and impact; do not silently relabel a requested feature optional to make the plan appear complete. Ask only when a real scope/authority decision requires the user's input, while continuing independent work.
 
-The CLI enforces a narrow part of this distinction: required items cannot be declared `static-deferred`, and `plan check --require-complete` fails empty or unfinished declared scope. Ordinary `plan check` remains an integrity check that may pass while production is incomplete. Neither command can discover omitted objects, enforce an unwritten intention, or judge appeal. Keep the census, requirements and actual visual observations connected.
+Use `plan coverage --stage animation` for stage-specific readiness and the stable blocked expectation IDs shared with overview and iteration preflight. Future export evidence does not block animation; final export checks the intended view/role set. Register actual provider evidence through `plan evidence`; observed readability still requires an observation of exact artifacts. For an unmigrated legacy inventory, `plan check --require-complete` remains an inventory-only completion check; ordinary `plan check` is an integrity check. Neither can discover omitted objects, enforce an unwritten intention, or judge appeal.
 
 ## Prove the intended experience early
 
@@ -38,7 +40,7 @@ Apply [motion direction](MOTION-DIRECTION.md) to distinguish size, speed, notice
 
 Record what was actually noticeable in each view at normal speed, including any long spans that felt still and whether the principal action worked without a pointer or crop. Then inspect edges, registration, contacts, reveal limits and loop seams. Passing stability checks does not answer whether the film meets the creative brief. A still, a difference image and a timing report provide different evidence from normal playback.
 
-Before calling the requested production scope complete, run `plan check --require-complete` and attach it to the picture review alongside actual visual observations and both requested compositions. Unfinished work can still be shown as a clearly scoped review draft; presentation is useful progress and does not remove outstanding requirements. Keep final human checks truthful and preserve the user's existing authorization.
+Before calling the requested production scope complete, run coverage for the applicable stage and attach its exact input-bound report to the picture review alongside actual visual observations and every requested composition. Use explicit review scope for partial iterations and final scope when the full intended output set is required. Unfinished work can still be shown as a clearly scoped review draft; presentation is useful progress and does not remove outstanding requirements. Keep final human checks truthful and preserve the user's existing authorization.
 
 ## Agent decision discipline
 
@@ -46,4 +48,4 @@ Keep concise consequential decisions in the project: chosen direction, reason, t
 
 The next autonomous production is the behavioral test of these changes. File/skill validation and fixture tests establish structure and specific CLI behavior; they cannot prove an agent will make good artistic choices. Judge the actual paired composition and motion drafts against the recorded brief before extending the process with more rules.
 
-The [consolidated engineering plan](architecture/PRODUCTION-IMPROVEMENTS.md) specifies the proposed typed intent model, stage-aware expectations, semantic layer roles, coordinated lighting, activity diagnostics and CI/behavior trials. Its [YAML backlog](architecture/PRODUCTION-IMPROVEMENTS.yaml) owns implementation status and dependencies; it is not an executable project recipe.
+The [consolidated engineering plan](architecture/PRODUCTION-IMPROVEMENTS.md) describes typed intent, stage-aware expectations, semantic layer roles, coordinated lighting, activity diagnostics and CI/behavior trials. Its [YAML backlog](architecture/PRODUCTION-IMPROVEMENTS.yaml) owns implementation status and dependencies; it is not an executable project recipe.

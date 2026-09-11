@@ -1,10 +1,34 @@
 import tempfile
+import argparse
+import json
 from pathlib import Path
 import unittest
-from ambiance_studio.roadmap import check
+from ambiance_studio.roadmap import check, check_capabilities
 
 
 class RoadmapTests(unittest.TestCase):
+    def test_capability_index_rejects_stale_routes_and_never_registers_planned_work(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); (root / 'docs').mkdir()
+            (root / 'docs/contract.md').write_text('contract')
+            parser = argparse.ArgumentParser()
+            parser.add_subparsers().add_parser('actual').add_subparsers().add_parser('inspect')
+            row = {'id': 'scope', 'status': 'implemented', 'public_cli': [['actual', 'inspect']],
+                   'references': ['docs/contract.md'], 'limits': ['No artistic verdict.']}
+            data = {'format': 'ambiance-capability-index', 'schema_version': 1, 'capabilities': [row]}
+            def result():
+                (root / 'docs/CAPABILITIES.json').write_text(json.dumps(data))
+                return check_capabilities(root, parser)
+            self.assertTrue(result()['ok'])
+            row['public_cli'] = [['actual', 'missing']]
+            self.assertIn('unregistered', str(result()['errors']))
+            row['status'] = 'planned'
+            self.assertIn('planned capability', str(result()['errors']))
+            row['public_cli'] = []
+            self.assertTrue(result()['ok'])
+            row['references'] = ['../outside']
+            self.assertIn('missing/escaped', str(result()['errors']))
+
     def test_dependencies_sources_and_duplicate_keys_fail_without_calling_commands(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp); p = root / 'docs/architecture/PRODUCTION-IMPROVEMENTS.yaml'; p.parent.mkdir(parents=True)

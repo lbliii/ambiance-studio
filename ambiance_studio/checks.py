@@ -73,11 +73,12 @@ def execute(check_id, command, directory, *, timeout=600, env=None):
         for name, stream in [('stdout', stdout), ('stderr', stderr)]:
             size = stream.tell()
             stream.seek(max(0, size - LOG_LIMIT))
-            content = scrub(stream.read().decode('utf-8', errors='replace'))
+            encoded = scrub(stream.read().decode('utf-8', errors='replace')).encode('utf-8')
+            content = encoded[-LOG_LIMIT:].decode('utf-8', errors='ignore')
             path = directory / (check_id + '.' + name + '.txt')
-            path.write_text(content)
+            path.write_text(content, encoding='utf-8')
             outputs[name] = {'path': path.name, 'captured_bytes': path.stat().st_size,
-                             'original_bytes': size, 'truncated': size > LOG_LIMIT, 'sha256': digest(path)}
+                             'original_bytes': size, 'truncated': size > LOG_LIMIT or len(encoded) > LOG_LIMIT, 'sha256': digest(path)}
     return {'id': check_id, 'command': [scrub(str(c)) for c in command], 'exit_code': code,
             'ok': code == 0 and not timed_out, 'timed_out': timed_out,
             'elapsed_seconds': round(time.monotonic() - start, 3), 'logs': outputs}
@@ -124,6 +125,7 @@ def run_suite(artifacts=None, require_native=False):
               'runtime': {'python': platform.python_version(), 'node': subprocess.run(['node', '--version'], capture_output=True, text=True).stdout.strip(), 'platform': platform.system()},
               'source': {'commit': identity['commit'], 'tracked_tree_sha256': identity['tracked_tree_sha256'], 'manifest': 'inputs.json'},
               'native_required': required, 'checks': [native], 'cases': [],
+              'ci': {key: os.environ.get(env) for key, env in [('run_id', 'GITHUB_RUN_ID'), ('attempt', 'GITHUB_RUN_ATTEMPT'), ('event', 'GITHUB_EVENT_NAME'), ('head_sha', 'AMBIANCE_CI_HEAD_SHA'), ('checkout_sha', 'GITHUB_SHA')]},
               'limits': ['Regression checks and artifact replay are not autonomous agent trials or artistic reviews.',
                          'Retained logs are scrubbed bounded tails; detailed synthetic proofs require an explicit allowlist.']}
     if not native['ok']:

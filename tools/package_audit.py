@@ -43,15 +43,19 @@ if result.returncode: errors.append('Bundled asset/scene check failed: '+result.
 try: asset_report=json.loads(result.stdout)
 except ValueError: asset_report=None
 try:
-    from ambiance_studio.roadmap import check as roadmap_check
+    from ambiance_studio.roadmap import check as roadmap_check, check_capabilities
     roadmap_report=roadmap_check(ROOT)
     errors.extend(roadmap_report['errors'])
+    capability_report=check_capabilities(ROOT)
+    errors.extend(capability_report['errors'])
+    from ambiance_studio.production_plan import validate as validate_production_plan
+    validate_production_plan(None,json.loads((ROOT/'templates/production-plan.json').read_text()))
 except ImportError:
-    roadmap_report=None;errors.append('Roadmap check needs PyYAML: python3 -m pip install -r requirements-checks.txt')
+    roadmap_report=None;capability_report=None;errors.append('Roadmap check needs PyYAML: python3 -m pip install -r requirements-checks.txt')
 except (ValueError, TypeError, KeyError) as error:
-    roadmap_report=None;errors.append('Invalid roadmap: '+str(error))
+    roadmap_report=None;capability_report=None;errors.append('Invalid roadmap/capability index: '+str(error))
 report=dict(ok=not errors,skills=skills,local_links_checked=links,
-            bundled_asset_check=asset_report,roadmap=roadmap_report,errors=errors,
+            bundled_asset_check=asset_report,roadmap=roadmap_report,capabilities=capability_report,errors=errors,
             limits=['No independent agent behavior trial or film review is implied.',
                     'This lightweight frontmatter check supplements the authoring-time skill validator.'])
 print(json.dumps(report,indent=2));sys.exit(0 if report['ok'] else 1)

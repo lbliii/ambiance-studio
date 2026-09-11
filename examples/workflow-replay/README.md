@@ -2,11 +2,19 @@
 
 Run `python3 examples/workflow-replay/run.py --out NEW_DIRECTORY` from any directory. It creates only locally drawn synthetic art and calls the public CLI for saved views, raster proof, incomplete-scope failure, per-view backing failure and scene restoration. Re-run with the same output and `--resume` to reuse completed steps and verify receipts. Changed code or a partial fixture initialization requires a new directory; an interrupted backing test restores its saved scene before retrying. No private project, provider call or existing delivery is touched.
 
-`replay.json` records commands, expected/nonzero exits, receipt hashes, active step and what remains unperformed. Both original and injected backing proofs are retained. The latter deliberately exposes a landscape-only coverage defect; its existence does not imply approval. Additional feature-owned scenarios join this replay after their APIs merge.
+`replay.json` records commands, expected/nonzero exits, receipt hashes, active step and what remains unperformed. Both original and injected backing proofs are retained. The latter deliberately exposes a landscape-only coverage defect; its existence does not imply approval. Additional feature-owned scenarios run through the combined entry point below.
 
 This is a deterministic artifact replay. The [scenario definitions](../../tests/agent-evaluations/scenarios.json) describe three unperformed autonomous trials and their observation requirements. A test pass must never be reported as completing those trials or a film.
 
 CI uploads use `tools/ci_bundle.py`'s fixed synthetic-proof allowlist, file/byte limits and manifest. Never upload an arbitrary project folder as a substitute.
+
+## Combined feature replay
+
+Run `python3 examples/workflow-replay/combined.py --out NEW_DIRECTORY --native` for the native lane, or omit `--native` for the portable raster lane. The latter explicitly records paired native recovery as not run. Each feature retains its existing fixture and evaluator: production intent/coverage, compound tea and cabinet preparation, painted source/receiver bindings, activity diagnostics and paired interruption recovery. Repeatable `--feature ID` selects a subset; unselected work is listed, never counted as completed.
+
+`combined.json` pins the source tree, selected fixtures, their own result paths and every generated file hash. `--resume` verifies completed output without regenerating it. Failed or externally interrupted fixtures retain their prior attempts and retry into fresh directories; this wrapper does not replace production's internal checkpoints. A timeout stops the fixture's process group. Source changes or tampered completed files require a fresh replay, and failures remain nonzero. No agent trial or artistic review is inferred from these fixture assertions.
+
+CI's combined artifact subset includes the attributable summary, fixture command output, named proof reports and selected synthetic raster/native media. The full local replay retains the complete sources and proofs. An uploaded subset is diagnostic evidence; it is not a self-contained project or a substitute for rerunning the feature's full proof validator.
 
 ## Actual paired-delivery interruption
 
