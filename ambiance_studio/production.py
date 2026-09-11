@@ -126,6 +126,8 @@ def validate_recipe(recipe):
     if recipe.get('format') != 'ambiance-iteration' or recipe.get('schema_version') not in [1,2]:
         raise ValueError('Expected ambiance-iteration schema_version 1 or 2')
     id = revisions.identifier(recipe['id']); revisions.identifier(recipe['revision'])
+    if not isinstance(recipe.get('title',id),str) or not recipe.get('title',id).strip() or not isinstance(recipe.get('notes',''),str):
+        raise ValueError('Iteration title and notes must be text, with a nonempty title')
     if len(id) > 80:
         raise ValueError('Iteration ID must be at most 80 characters')
     entries = recipe.get('editions')
@@ -146,7 +148,7 @@ def validate_recipe(recipe):
             raise ValueError('Silent edition uses one picture loop')
         if not isinstance(entry.get('repeats', 1), int) or isinstance(entry.get('repeats', 1), bool) or entry.get('repeats', 1) < 1:
             raise ValueError('Repeats must be a positive integer')
-    if recipe.get('supersample',1) not in [1,2,4] or isinstance(recipe.get('supersample'),bool):
+    if type(recipe.get('supersample',1)) is not int or recipe.get('supersample',1) not in [1,2,4]:
         raise ValueError('Supersample must be 1, 2, or 4')
     if recipe['schema_version']==1:
         if any(key in recipe for key in ['views','default','long_edge']):raise ValueError('Version 1 recipes use one authored picture')
@@ -199,6 +201,7 @@ def iteration(project, recipe, actor):
     from .cli import parser, run
     from .project import project_lock
     validate_recipe(recipe)
+    if not isinstance(actor,str) or not actor.strip():raise ValueError('Identify who runs this iteration with --by')
     id = recipe['id']; path = run_file(project, id); directory = path.parent
     with project_lock(project):
         if path.exists():

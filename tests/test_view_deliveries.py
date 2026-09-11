@@ -99,6 +99,10 @@ class ViewDeliveryTests(unittest.TestCase):
                 with self.assertRaises((ValueError,cli.CommandError)):production.iteration(self.p,recipe,'Fixture')
                 encode.assert_not_called()
             state=studio.read(production.run_file(self.p,recipe['id']));self.assertEqual(state['state'],'failed');self.assertFalse(state['steps'])
+        for field,value in [('title',[]),('notes',1),('supersample',2.0)]:
+            bad=self.recipe('bad-metadata');bad[field]=value
+            with self.assertRaises(ValueError):production.validate_recipe(bad)
+        with self.assertRaisesRegex(ValueError,'--by'):production.iteration(self.p,self.recipe('no-actor'),' ')
         recipe=self.recipe('x'*80);production.validate_recipe(recipe)
         plan=production.view_job_plan(self.p,recipe,self.p/'runs/long',{'attempts':{}})
         self.assertEqual(len({job['edition'] for job in plan['jobs']}),4)
