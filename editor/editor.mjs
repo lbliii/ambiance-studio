@@ -36,6 +36,12 @@ function refreshFields(){
   }
   options($('attachment'),entries,l.attach?JSON.stringify([l.attach.layer,l.attach.socket]):'');
   $('edit-group').disabled=!g;
+  $('group-control').hidden=!g;
+  const parent=scene.layers.find(p=>p.id===l.attach?.layer);
+  $('placement-hint').textContent=g?
+    ($('edit-group').checked?`Position and scale now affect all layers in ${g.name}.`:`Select this to adjust all layers in ${g.name} together.`):
+    parent?`Select “${parent.name}” to move or scale this layer together with its parent.`:
+    scene.layers.some(child=>child.attach?.layer===l.id)?'Moving or scaling this layer also moves its attached layers.':'Position and scale affect this layer only.';
   $('cel-panel').hidden=!a.atlas;
   if(a.atlas){
     const T=scene.canvas.loop_seconds;

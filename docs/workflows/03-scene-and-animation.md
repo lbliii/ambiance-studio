@@ -4,7 +4,7 @@
 
 ## Assemble the still first
 
-Match the reference with movement disabled. Establish layers, anchors, groups, masks, and base lighting. Align the window overlay with its architecture and the smoke with its chimney. Make the foreground/middle/background readable with overlap and contrast as well as parallax.
+Assemble the selected portrait/landscape compositions with movement disabled, preserving the reference's identity and intended spatial relationships. Follow explicit user scope if different. Establish layers, anchors, groups, masks, and base lighting. Align the window overlay with its architecture and the smoke with its chimney. Make the foreground/middle/background readable with overlap and contrast as well as parallax. Use the [seed-to-stage workflow](../SEED-TO-STAGE.md) for required art and capability gaps.
 
 Use the [scene contract](../SCENE-CONTRACT.md) for the existing editor. Named and nested sockets, cel-specific socket tracks and preview loop checks are implemented; use the [workbench guide](../RIG-WORKBENCH.md). Richer particles and sound sessions are described in [contracts](../CONTRACTS.md) but remain to implement. Do not silently put unsupported settings into JSON and claim they render.
 
@@ -12,7 +12,7 @@ Use the [scene contract](../SCENE-CONTRACT.md) for the existing editor. Named an
 
 Use [source-coordinate placement](../SOURCE-PLACEMENT.md) when cutouts share a reference image. Use `scene reparent --keep-world --at` to preserve a chosen pose while attaching existing parts; later parent motion deliberately changes their world movement. Keep the recorded mapping and transaction diagnostics instead of repeating crop/padding calculations in project scripts.
 
-Choose a primary motion, supporting cels, and quiet background movement. Use phase offsets so repeated assets do not move in lockstep. Keep structural motion small enough that the painted perspective remains convincing. Use separate camera response for depth, with shared transforms for attached elements.
+Choose primary story actions, readable supporting/environmental life and stable references using [motion direction](../MOTION-DIRECTION.md). Test amplitude and cadence separately at normal viewing size in every requested composition. Use phase offsets so repeated assets do not move in lockstep. Keep structural motion within the prepared perspective/reveal envelope. Use separate camera response for depth, with shared transforms for attached elements.
 
 For multiple candles, vary compatible shape sequences, cadence and phase rather than merely shifting one identical brightness pulse. Choose periods that close over the picture loop; do not choose arbitrary rates and assume they loop. Judge the combined pattern at actual speed: distinct local flames should remain attached to their wicks, and shared light response should make sense for the room. Independence does not require animating every practical light equally strongly.
 
@@ -32,7 +32,7 @@ Run `scene timing` to identify the active cel driver, authored holds and frame-s
 - Inspect compound objects and crossings at their motion extremes: front rims still occlude the correct parts, stationary frames remain stationary, and shadows/reflections keep the intended contact or separation.
 - Watch the draft three times at phone size. Look for distracting synchronization, short repeated gestures, cel jitter, and excessive motion density. Check that the intended supporting action is noticeable without a label pointing to it. If uncertain, compare it enabled/disabled or at two proposed strengths while preserving the primary action. Record the actual observation; if continuous viewing is unavailable, keep that check open and present the short proof for review.
 
-Keep state checks, rendered-image checks, and encoded-video checks separate. Report the actual scene/asset hashes and engine version. The bundled example's Node check covers its own state only; a new scene needs its own inputs and suitable assertions.
+Run `plan check --require-complete` before calling the declared production scope complete. Keep unproduced required parts visible even when a partial draft is ready to show. Record observed readability and any unintended still intervals alongside the defect checks. Keep state checks, rendered-image checks, and encoded-video checks separate. Report the actual scene/asset hashes and engine version. The bundled example's Node check covers its own state only; a new scene needs its own inputs and suitable assertions.
 
 ## Repair at the responsible layer
 

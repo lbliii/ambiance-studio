@@ -1,0 +1,675 @@
+format: ambiance-improvement-roadmap
+schema_version: 1
+updated: '2026-09-11'
+status: parallel_execution_authorized
+design: docs/architecture/PRODUCTION-IMPROVEMENTS.md
+meaning: Human/agent implementation backlog; not an executable production recipe, scheduler, approval or runtime
+  schema.
+decisions:
+  roadmap_authoring: YAML for task status/dependencies/acceptance; Markdown owns rationale.
+  project_contracts: Canonical versioned JSON; optional YAML import only if later justified and normalized through
+    the same schema.
+  minimum_layers: No universal count. Require identified independently controllable elements, depth relationships
+    and actual evidence for the selected scene.
+  complexity: A descriptive vector for scope/workload, never an artistic grade.
+  quality: Per-view, per-action observed rubric with explicit unknown/revise/meets-direction states; no averaged
+    0-100 composition score.
+  automation: Reuse the existing CLI/evaluator/revision model. No new background automation or live provider execution
+    is created by this plan.
+phases:
+- id: 0
+  name: Consolidate local foundation
+- id: 1
+  name: Typed expectations, paired framing and CI fixtures
+- id: 2
+  name: Production preparation and coordinated motion
+- id: 3
+  name: View evidence, delivery, sound and operational efficiency
+- id: 4
+  name: Skills integration and observed production pilots
+- id: 5
+  name: Evidence-triggered follow-up tools
+pilot_expectations:
+  project: a-quieter-tomorrow
+  status: targets_unreviewed_for_new_revision
+  outputs:
+  - view: portrait
+    width: 1080
+    height: 1920
+  - view: landscape
+    width: 1920
+    height: 1080
+  required_control_roles:
+  - rear-sky
+  - cloud-field
+  - far-city
+  - near-bridge
+  - river-reflections
+  - fixed-interior-and-window-occlusion
+  - independent-ghost-cloth
+  - newspaper
+  - mouse
+  - phone-hand
+  - candle-and-floor-response
+  viewing_targets:
+  - Assess visible environmental life in ordinary five-second spans.
+  - Assess an obvious early motion cue around the first two seconds.
+  - Judge primary/supporting actions without a pointer or detail crop in each view.
+  limits:
+  - These are project targets, not universal thresholds or automatic perception scores.
+  - Control roles can require multiple art pieces; they are not a fixed renderer-layer quota.
+  - Current first-film-v2 remains the exact baseline and does not satisfy the newly planned scope.
+tasks:
+- id: KIT-01
+  title: Consolidate tested local changes and accurate capability status
+  phase: 0
+  priority: P0
+  status: implemented
+  evidence: docs/architecture/FOUNDATION-HANDOFF.md
+  relative_size: S
+  depends_on: []
+  affected_paths:
+  - AGENTS.md
+  - .agents/skills
+  - ambiance_studio/planning.py
+  - editor/editor.mjs
+  - editor/index.html
+  - editor/style.css
+  - docs/architecture/CLI-FIRST.md
+  - templates/pipeline.json
+  deliverables:
+  - Review and integrate the local scope guardrails, instruction edits and group-control fix in coherent changes.
+  - Reconcile the separate local encode-checkpoint commit and its integration status.
+  - Correct stale implemented/planned capability descriptions; preserve existing project/captured state.
+  acceptance:
+  - All intended source changes are accounted for and separated from private generated project evidence.
+  - Capability entries cite callable commands and implementation evidence; cel-motion milestones 1-3 are not labeled
+    wholly unimplemented.
+  - No repository push, merge or publishing is implied by roadmap status.
+  validation:
+  - Full ./ambiance test plus relevant native checks for encoder changes.
+  - Skill format/link validation and review of changed instructions.
+  - Exact current-delivery and captured-revision integrity checks.
+  source_specs:
+  - docs/architecture/CEL-MOTION-HANDOFF.md
+  - docs/SEED-TO-STAGE.md
+- id: DATA-01
+  title: Version the production intent, semantic census and expectations contract
+  phase: 1
+  priority: P0
+  status: planned
+  relative_size: M
+  depends_on:
+  - KIT-01
+  affected_paths:
+  - ambiance_studio/planning.py
+  - ambiance_studio/revisions.py
+  - templates
+  - docs/CONTRACTS.md
+  - docs/PRODUCTION-INVENTORY.md
+  deliverables:
+  - Canonical production-plan JSON with story, source identity, five semantic dimensions, output intentions, expectations
+    and realization references.
+  - Explicit migration from current census/layer/inventory notes, retaining originals and a reviewable diff.
+  - Strict plan inspection/check/application through existing atomic project transaction conventions.
+  acceptance:
+  - The plan owns creative expectations; inventory owns production stage/evidence; scene owns runtime geometry and
+    timing.
+  - Logical entities may map to multiple parts; multiple labels on one baked plate cannot claim independent required
+    controls.
+  - Expectations identify stage, view, rationale/direction source and proof/review kind; scope edits remain visible
+    and restorable.
+  - Legacy scenes, inventories and sealed records keep their original meaning.
+  validation:
+  - Schema and migration positive/negative fixtures, including missing/unknown/duplicate fields and IDs.
+  - Changed source, out-of-project reference, stale write, round-trip and restore checks.
+  - Recorded unplanned/unreviewed states never become vacuous passes.
+  source_specs:
+  - docs/SEED-TO-STAGE.md
+  - docs/MOTION-DIRECTION.md
+  - docs/LAYER-AND-LIGHT-PLANNING.md
+- id: DATA-02
+  title: Reconcile stage-specific expectations with exact production evidence
+  phase: 3
+  priority: P0
+  status: planned
+  relative_size: L
+  depends_on:
+  - DATA-01
+  affected_paths:
+  - ambiance_studio/planning.py
+  - ambiance_studio/production.py
+  - ambiance_studio/revisions.py
+  - ambiance_studio/deliveries.py
+  - studio.py
+  deliverables:
+  - Shared plan-coverage evaluator and compact actionable results reused by CLI, overview and iteration preflight.
+  - Typed capture and review subjects for plan/expectation identities; proof receipt validation by kind and stage.
+  - Explicit proof/review/final scope reporting while retaining ordinary scratch renders and partial presentations.
+  acceptance:
+  - A generic nonempty file cannot satisfy an exact composition, rendered-motion or encoded-movie expectation.
+  - Animation readiness does not require future final exports; full export readiness requires the intended view/role
+    set.
+  - Changing an expectation, realization, scene, view or driver invalidates the affected evidence.
+  - An intentional scope revision is distinguishable from an accidentally deleted/deferred requirement.
+  - All consumers return the same ready/blocked items and stable issue IDs.
+  validation:
+  - Empty, omitted, stale, wrong-view, wrong-revision, reduced-scope and stage-cycle fixtures.
+  - Legacy completion flag compatibility and partial-review presentation tests.
+  - One CLI replay proves same decisions from overview, coverage and iteration preflight.
+  source_specs:
+  - docs/REVISIONS.md
+  - docs/STUDIO-LIBRARY.md
+  - docs/QUALITY-GATES.md
+- id: VIEW-01
+  title: Implement saved views and synchronized portrait/landscape picture proofs
+  phase: 1
+  priority: P0
+  status: implemented_pending_integration
+  integration_note: PR 5 head ca5a6e6 implements this stream; resolve conflicts and revalidate, do not duplicate.
+  relative_size: L
+  depends_on:
+  - KIT-01
+  affected_paths:
+  - editor/views.mjs (new)
+  - ambiance_studio/views.py (new)
+  - editor/engine.mjs
+  - tools/render-scene.mjs
+  - ambiance_studio/rendering.py
+  - editor/audit.mjs
+  - editor/editor.mjs
+  deliverables:
+  - 'Dual-format implementation milestones 1-2: validated named static views and explicit dual initialization.'
+  - Shared-stage raster extraction and view-selecting renders, with a synchronized normal-speed views proof.
+  - Per-view geometric and actual alpha coverage, dimensions and framing identity.
+  acceptance:
+  - Legacy authored-view pixels, ratios, sockets, timing and finishing remain unchanged.
+  - Both orientations preserve proportions and use one shared source clock.
+  - A coverage/crop defect in one view is attributed to that view.
+  - Unsupported raster size is rejected before work; no silent resolution downgrade.
+  - A valid crop is not labeled a passed artistic composition.
+  validation:
+  - Known independent crop fixtures with asymmetric art, cels, attachment, fixed occluder and light effects.
+  - Actual browser/CLI raster and time checks.
+  - Full-stage/view proof resource measurements and legacy render fixtures.
+  source_specs:
+  - docs/architecture/DUAL-FORMAT-IMPLEMENTATION.md
+- id: ASSET-01
+  title: Make source reconstruction and multi-part preparation practical for the agent
+  phase: 2
+  priority: P0
+  status: planned
+  relative_size: L
+  depends_on:
+  - DATA-01
+  - VIEW-01
+  affected_paths:
+  - ambiance_studio/preparation.py
+  - ambiance_studio/asset_prep.py
+  - ambiance_studio/assets.py
+  - ambiance_studio/scene_authoring.py
+  - examples/preparation-workbench
+  deliverables:
+  - Structured prepare inspect/check/edit/proof operations and bounded batch preparation.
+  - Shared repair/mask dependencies across related cutouts, clean backing and fixed foreground pieces.
+  - Preparation output tied to both composition envelopes, source maps, anchors and reusable compiler recipes.
+  acceptance:
+  - Agent prepares and places a compound subject without hand-reconstructing coordinates or using the browser as
+    the only authoring path.
+  - Hidden/rest/extreme views expose duplicate baked subjects, carried foreground fragments and missing paint.
+  - Reusable source paint and old accepted packs are preserved; new geometry/poses are identified as inferred/generated
+    work.
+  - Delicate alpha, tile/cloth detail, padding and companion masks survive preparation and registration.
+  validation:
+  - Existing cabinet fixture plus a different source-backed painted object with independent removal/cutout/occluder
+    masks.
+  - Source mapping, stale recipe, batch interruption and immutable rebuild tests.
+  - Actual display-size raster/normal-speed review in both compositions.
+  source_specs:
+  - docs/architecture/ASSET-PREPARATION-WORKBENCH.md
+  - docs/architecture/PREPARATION-WORKBENCH-HANDOFF.md
+- id: BIND-01
+  title: Add reusable painted illumination and explicit source-to-follower bindings
+  phase: 2
+  priority: P0
+  status: planned
+  relative_size: L
+  depends_on:
+  - DATA-01
+  - KIT-01
+  affected_paths:
+  - editor/engine.mjs
+  - editor/finishing.mjs
+  - tools/scene-command.mjs
+  - ambiance_studio/finishing.py
+  - ambiance_studio/revisions.py
+  - docs/FINISHING.md
+  deliverables:
+  - Small acyclic driver model mapping source intensity/pose/state to follower cel, opacity and bounded transforms.
+  - Explicit attachment versus driver versus receiver relationships and coordinate/units/precedence rules.
+  - Painted illumination masks/cels and deliberate compositing over a prepared dim/base surface.
+  - Binding inspection and paired source/receiver proof, with reusable rig/look package support.
+  acceptance:
+  - Candle source and floor response remain coordinated at arbitrary seeks and loop joins; floor registration is
+    retained.
+  - Source hidden/off behavior is defined and does not leave an unintended orphan response.
+  - Cycles, conflicting writers, invalid ranges, mismatched cel tables and unsupported companion corrections fail
+    explicitly.
+  - No arbitrary expression engine or general feedback physics is required.
+  validation:
+  - Candle left/rest/right and low/high/off fixtures; moving receiver and foreground occluder cases.
+  - Shared evaluator/browser/CLI pixel parity and exact signal/track precedence tests.
+  - Package round-trip, corrected companion mask, changed driver and captured dependency tests.
+  source_specs:
+  - docs/FINISHING.md
+  - docs/LAYER-AND-LIGHT-PLANNING.md
+  - docs/architecture/CEL-MOTION-HANDOFF.md
+- id: MOTION-01
+  title: Report semantic scene activity on the actual production clock
+  phase: 2
+  priority: P0
+  status: planned
+  relative_size: M
+  depends_on:
+  - DATA-01
+  - VIEW-01
+  affected_paths:
+  - editor/engine.mjs
+  - editor/timing.mjs
+  - ambiance_studio/planning.py
+  - ambiance_studio/rendering.py
+  - docs/SCENE-TIMING.md
+  deliverables:
+  - Scene profile and activity reports grouped by kind, depth band, motion role and view.
+  - Actual cel holds, onset/duration/repeat/rest, transformed painted bounds, object/frame travel and speed.
+  - Compact intended-versus-realized report linked to required actions and full evidence.
+  acceptance:
+  - Uses the existing effective clock, visibility, inherited transforms and cel tracks.
+  - Distinct cel indices do not imply distinct painted content or visible movement.
+  - Camera/world travel is identified separately from character gesture; state activity is labeled separately from
+    perceptual readability.
+  - Report units, sampling and unknown/unreviewed values are explicit.
+  validation:
+  - Repeated identical cels, long holds, moving parent, hidden intervals, disabled source and same-depth/different-route
+    fixtures.
+  - View-specific bounds/size examples and cross-checks against sampled runtime state.
+  - Bounded output size with detailed evidence saved separately.
+  source_specs:
+  - docs/SCENE-TIMING.md
+  - docs/MOTION-DIRECTION.md
+- id: MOTION-02
+  title: Add view-specific movement proofs and calibrate diagnostic warnings
+  phase: 3
+  priority: P1
+  status: planned
+  relative_size: L
+  depends_on:
+  - MOTION-01
+  - CI-01
+  affected_paths:
+  - editor/audit.mjs
+  - ambiance_studio/rendering.py
+  - tools/render-scene.mjs
+  - tests/fixtures (new bounded cases)
+  - docs/MOTION-DIRECTION.md
+  deliverables:
+  - Rendered contribution/disabled-element comparisons, temporal maps and candidate quiet-interval diagnostics.
+  - Matched quieter/target/stronger comparisons, followed by separate cadence comparisons.
+  - Evidence-based rubric for composition, readability, timing and integration without an aggregate aesthetic grade.
+  acceptance:
+  - Offscreen/occluded motion, duplicate cels and global exposure pulsing cannot automatically satisfy visible primary-action
+    expectations.
+  - Metrics cite view/display scale, units and actual raster evidence; uncertain attribution is reported.
+  - Warnings are calibrated on held-out positive/negative painted examples; no universal salience threshold is claimed.
+  - Observed readability remains a named human/agent review of exact normal-speed artifacts.
+  validation:
+  - Synthetic ground-truth contribution fixtures plus held-out source-backed painted clips.
+  - Measure false warnings and missed cases; inspect unflagged as well as flagged samples.
+  - Cross-view first/last-frame and ordinary playback review, with bounded comparison combinations.
+  source_specs:
+  - docs/MOTION-DIRECTION.md
+  - docs/LOOK-WORKBENCH.md
+- id: DELIVERY-01
+  title: Produce, resume and present exact paired movie editions
+  phase: 3
+  priority: P0
+  status: implemented_with_scope_integration_remaining
+  integration_note: PR 5 implements paired exports and delivery. DATA-02 owns remaining production-plan scope and evidence integration.
+  relative_size: L
+  depends_on:
+  - VIEW-01
+  - DATA-02
+  affected_paths:
+  - ambiance_studio/revisions.py
+  - ambiance_studio/rendering.py
+  - ambiance_studio/production.py
+  - ambiance_studio/deliveries.py
+  - ambiance_studio/studio_server.py
+  - studio/studio.mjs
+  deliverables:
+  - 'Dual-format milestones 3-4: view-bound media/reviews, iteration v2 and unique view/soundtrack-role pairs.'
+  - Independent per-output checkpoints, retained completed media and current-selection conflict checks.
+  - Exact orientation-aware feedback, posters, watch links and handoffs.
+  acceptance:
+  - Both movies decode to their requested dimensions/clock/audio and carry exact captured plan/view identity.
+  - Failure after one orientation succeeds preserves its output and does not select an incomplete pair as complete.
+  - Old scenes, sealed editions, iteration recipes and watch URLs retain meaning.
+  - Proof/review/final status and remaining expectations are visible.
+  validation:
+  - Native paired encode/decode and audio sample-duration tests.
+  - Injected interruption after receipt creation, second-view failure and stale selection tests.
+  - Wrong-view receipt, duplicate pair, missing pair and legacy route/record fixtures.
+  source_specs:
+  - docs/architecture/DUAL-FORMAT-IMPLEMENTATION.md
+  - docs/STUDIO-LIBRARY.md
+  - docs/REVISIONS.md
+- id: AUDIO-01
+  title: Keep sound cues aligned with the chosen picture actions and clock
+  phase: 3
+  priority: P1
+  status: planned
+  relative_size: M
+  depends_on:
+  - DATA-01
+  - MOTION-01
+  affected_paths:
+  - ambiance_studio/audio.py
+  - ambiance_studio/production.py
+  - docs/AUDIO-SESSION.md
+  - .agents/skills/ambiance-sound/SKILL.md
+  deliverables:
+  - Explicit action/cue references and changed-picture-clock diagnostics over current audio sessions.
+  - Shared soundtrack identity across compatible views, with explicit exceptions for intentional per-view sound
+    design.
+  - Cue review when paper/mouse/travel cadence changes.
+  acceptance:
+  - A picture timing edit identifies affected sound cues rather than retaining a stale rustle schedule.
+  - Retiming is explicit and reviewable; no automatic waveform stretching or new generation is implied.
+  - Identical-duration views can reuse selected audio without claiming a new audition.
+  validation:
+  - Shifted/deleted/repeated action cues, changed loop length and preserved shared-audio fixtures.
+  - Exact soundtrack/source identity and sample alignment checks in paired media.
+  - Actual listening review on the chosen revised picture remains separate.
+  source_specs:
+  - docs/AUDIO-SESSION.md
+  - docs/workflows/04-soundtrack.md
+- id: OPS-01
+  title: Make generation and asset retrieval resumable without redundant requests
+  phase: 3
+  priority: P1
+  status: planned
+  relative_size: M
+  depends_on:
+  - DATA-01
+  affected_paths:
+  - templates/generation-request.json
+  - ambiance_studio/assets.py
+  - docs/PROVIDERS.md
+  - docs/CONTRACTS.md
+  deliverables:
+  - CLI recording/reconciliation of provider or tool requests with identity, status, source references and returned
+    outputs.
+  - Compact next retrieval/selection action for uncertain or interrupted jobs.
+  - Explicit generation authority/known cost fields and source-bound admission.
+  acceptance:
+  - An uncertain timeout preserves the original request and cannot silently become a new charged request.
+  - Tool-produced images can be recorded even when their generator has no CLI adapter.
+  - No provider/account capability or unknown price/model/job ID is invented.
+  - Existing-file pilots need no new provider queue or paid generation.
+  validation:
+  - Local fake-provider/tool receipts for timeout, retrieval, duplicate result, changed source and resumed selection.
+  - No-network fixture proving idempotent recording and explicit unknown states.
+  source_specs:
+  - docs/PROVIDERS.md
+  - docs/CONTRACTS.md
+- id: PERF-01
+  title: Measure and improve agent output size and picture-proof responsiveness
+  phase: 3
+  priority: P1
+  status: planned
+  relative_size: M
+  depends_on:
+  - VIEW-01
+  - BIND-01
+  - MOTION-01
+  affected_paths:
+  - ambiance_studio/production.py
+  - ambiance_studio/planning.py
+  - ambiance_studio/rendering.py
+  - editor/look-workbench.mjs
+  - editor/editor.mjs
+  deliverables:
+  - Compact summaries with filters/detail mode and artifact pointers; remove duplicated ready-work logic.
+  - Recorded single/paired proof latency, peak memory, playback rate and agent interaction measurements.
+  - Bounded draft sizing and only demonstrated cache/ROI optimizations.
+  acceptance:
+  - A normal inspection does not require reading thousands of frame rows to find one actionable gap.
+  - Preview speed changes do not retime the production clock or silently change output geometry.
+  - Any optimized renderer matches the full-stage reference within declared raster tolerances.
+  validation:
+  - Fixed moderate synthetic workload, cold/warm runs and output-volume measurement.
+  - Deterministic functional tests; benchmarks reported without flaky wall-time gates.
+  - Actual browser controls remain responsive during the representative proof.
+  source_specs:
+  - docs/LOOK-WORKBENCH.md
+  - docs/architecture/DUAL-FORMAT-IMPLEMENTATION.md
+- id: CI-01
+  title: Extend CI with cross-feature fixtures and retained diagnostic artifacts
+  phase: 1
+  priority: P0
+  status: planned
+  relative_size: M
+  depends_on:
+  - KIT-01
+  affected_paths:
+  - .github/workflows/ci.yml
+  - tests
+  - examples
+  - tools/package_audit.py
+  - .github/pull_request_template.md
+  deliverables:
+  - Feature-owned schema, raster, native, CLI replay and browser parity cases in the existing lanes.
+  - Stable issue IDs, bounded JSON/JUnit summaries and synthetic/cleared proof artifacts on failure.
+  - Required native lane distinguishes unavailable capability from a successful skipped run.
+  acceptance:
+  - Tests catch known failure modes rather than matching implementation wording or layer counts.
+  - Private film assets and live paid generations are not automatic PR inputs or artifacts.
+  - Legacy compatibility and actual renderer behavior remain covered.
+  - Backlog dependencies/links and capability references are validated without calling planned commands.
+  validation:
+  - Inject duplicate/static layers, hidden activity, bad backing, wrong-view crop, drifting light and partial paired-delivery
+    failures as features land.
+  - Verify failure artifacts are attributable to exact test inputs/runtime and remain bounded.
+  - Exercise restored caches/clean installs within the current Python/Node support policy.
+  source_specs:
+  - .github/workflows/ci.yml
+  - tests/skill-scenarios.md
+- id: CI-02
+  title: Run bounded agent behavior trials on unfamiliar seeds
+  phase: 4
+  priority: P1
+  status: planned
+  relative_size: M
+  depends_on:
+  - DATA-02
+  - ASSET-01
+  - BIND-01
+  - MOTION-02
+  - DELIVERY-01
+  - CI-01
+  affected_paths:
+  - tests/skill-scenarios.md
+  - tests/agent-evaluations (new)
+  - docs/SEED-TO-STAGE.md
+  deliverables:
+  - Recorded scenario inputs, permissions, expected artifacts and evaluation rubric.
+  - Local artifact-only replay plus explicitly launched live-agent trials when authorized.
+  - Comparison of scope coverage, observed motion, intervention rate and recovery effort.
+  acceptance:
+  - A quiet-film prompt produces visible selected life, while an explicitly nearly-still prompt remains nearly still.
+  - An explicit single-format request overrides studio defaults; a difficult dual-format seed triggers reconstruction/restaging
+    work.
+  - The agent resumes from saved state without original-chat dependence and does not silently reduce scope.
+  - Evaluation uses resulting artifacts and actual observations; skill syntax alone is never a pass.
+  validation:
+  - Tram-shaped scenario plus an unfamiliar non-Halloween seed and a source/receiver lighting scenario.
+  - Blind artifact review against stated expectations; record unknowns and all interventions.
+  - Bound resources/generation authority per trial; do not introduce a recurring automation.
+  source_specs:
+  - tests/skill-scenarios.md
+  - docs/SEED-TO-STAGE.md
+- id: DOCS-01
+  title: Integrate the shipped contracts into skills, templates and reusable kit modules
+  phase: 4
+  priority: P1
+  status: planned
+  relative_size: M
+  depends_on:
+  - DATA-02
+  - ASSET-01
+  - BIND-01
+  - MOTION-02
+  - DELIVERY-01
+  - AUDIO-01
+  affected_paths:
+  - AGENTS.md
+  - .agents/skills
+  - templates
+  - docs/CLI.md
+  - docs/CONTRACTS.md
+  - docs/architecture/CLI-FIRST.md
+  - examples
+  deliverables:
+  - Short stage-specific instruction updates referencing authoritative contracts and real commands.
+  - New project templates and runnable two-view/painted-light/semantic-plan examples.
+  - Reusable rig/look packages carry roles, safe scales, contacts, masks, drivers and receiver dependencies.
+  acceptance:
+  - No conflicting duplicated checklist or command claiming an unimplemented feature.
+  - Legacy project pipelines and accepted library versions are not silently rewritten.
+  - One complete example operates through the public CLI without GUI-only steps.
+  - Package admission remains separate from artistic approval.
+  validation:
+  - Skill syntax/link audit and production-contract fixture validation.
+  - Executable example and reusable-package round trips.
+  - Review scenario behavior as well as prose consistency.
+  source_specs:
+  - docs/CONTRACTS.md
+  - docs/FINISHING.md
+  - docs/SEED-TO-STAGE.md
+- id: PILOT-01
+  title: Demonstrate the full improvement set on the tram and one fresh scene
+  phase: 4
+  priority: P0
+  status: planned
+  relative_size: L
+  depends_on:
+  - CI-02
+  - DOCS-01
+  - OPS-01
+  - PERF-01
+  affected_paths:
+  - projects/a-quieter-tomorrow (local derivatives only)
+  - isolated fresh-painting pilot (new local project)
+  - docs/architecture (implementation handoff)
+  deliverables:
+  - Portrait and landscape blocking compositions, required production art and short readable motion proofs.
+  - Coordinated painted light, explicit character/environment actions and exact normal-speed review observations.
+  - Captured paired movie delivery with honest outstanding human checks and measured effort/performance.
+  acceptance:
+  - Both intended compositions preserve the chosen subjects, actions and painted identity.
+  - Required source/receiver and independence expectations are demonstrated by actual pictures.
+  - The tram review targets are assessed, including continuous environmental life and earlier/more apparent gestures.
+  - The fresh scene demonstrates generalization without inheriting tram-specific content or timing mechanically.
+  - Current baseline deliveries, originals and library versions remain available.
+  validation:
+  - All applicable CLI coverage, geometry/raster, source identity, native decode and loop checks.
+  - Normal-speed visual review in both views and actual sound review; phone/human checks only when performed.
+  - Final handoff with measured outcomes, failed assumptions, exact/current watch links and remaining capability
+    gaps.
+  source_specs:
+  - docs/architecture/DUAL-FORMAT-IMPLEMENTATION.md
+  - docs/SEED-TO-STAGE.md
+- id: FOLLOW-01
+  title: Add scene contact and continuous-curve tools where pilot motion needs them
+  phase: 5
+  priority: P2
+  status: planned
+  relative_size: L
+  depends_on:
+  - PILOT-01
+  affected_paths:
+  - editor/engine.mjs
+  - editor/audit.mjs
+  - ambiance_studio/asset_motion.py
+  - tests/test-rig.mjs
+  - tests/test-tracks.mjs
+  deliverables:
+  - 'Existing cel-motion milestone 5: receiver-relative contacts, bounded Hermite channels and velocity/join diagnostics
+    when demonstrated necessary.'
+  acceptance:
+  - Planted contacts remain measured relative to the correct surface and actual output clock.
+  - Intentional deformation and deliberate motion corners are retained; legacy interpolation is unchanged.
+  - Adoption is motivated by actual pilot defects rather than being required for every scene.
+  validation:
+  - Contact slip, moving parent/receiver, repeated cel conflict, curve extrema and matched-position/mismatched-velocity
+    fixtures.
+  - Actual raster and encoded-join review.
+  source_specs:
+  - docs/architecture/CEL-MOTION-WORKBENCH.md
+- id: FOLLOW-02
+  title: Evaluate broader tracking and cloud/cloth deformation after measured need
+  phase: 5
+  priority: P2
+  status: planned
+  relative_size: L
+  depends_on:
+  - PILOT-01
+  affected_paths:
+  - ambiance_studio/motion_tracking.py
+  - ambiance_studio/asset_motion.py
+  - isolated deformation prototypes (new)
+  deliverables:
+  - 'Existing cel-motion milestones 4 and 6 as separate experiments: harder tracking and drawn-cel/rigid/deformation
+    comparisons.'
+  - Measured useful effort saved, uncertain matches, wrong selected matches and preservation of painted shape.
+  acceptance:
+  - Uncertain tracking stops or reports missing observations instead of forcing a confident correction.
+  - A deformation prototype must preserve the intended painting and beat a simpler cel/transform option on an actual
+    need.
+  - No general cloth physics, automatic in-betweening or learned tracker is claimed before the pilot establishes
+    it.
+  validation:
+  - Held-out flames, clouds and articulated character poses, with manual independent checks.
+  - Matched display-size/speed comparisons and documented failure cases.
+  source_specs:
+  - docs/architecture/CEL-MOTION-WORKBENCH.md
+  - docs/architecture/CEL-MOTION-HANDOFF.md
+completion:
+  core_tasks:
+  - KIT-01
+  - DATA-01
+  - DATA-02
+  - VIEW-01
+  - ASSET-01
+  - BIND-01
+  - MOTION-01
+  - MOTION-02
+  - DELIVERY-01
+  - AUDIO-01
+  - OPS-01
+  - PERF-01
+  - CI-01
+  - CI-02
+  - DOCS-01
+  - PILOT-01
+  follow_up_tasks:
+  - FOLLOW-01
+  - FOLLOW-02
+  requires:
+  - Working public CLI path, strict contracts and compatible captured evidence.
+  - Feature-owned positive/negative tests and actual raster/native/browser checks.
+  - Observed paired film results and honest creative review, not only counters or schema passes.
+  - Preserved originals, prior editions and unperformed human checks.
+  limits:
+  - Task sizes are relative integration effort, not time/cost promises.
+  - This plan does not authorize paid generation, sending, publishing, pushing or merging.

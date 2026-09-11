@@ -15,6 +15,7 @@ def add_parsers(sub):
     for action in ['inspect','check','next']:
         q=group.add_parser(action);q.add_argument('--inventory',default='plans/asset-inventory.json');q.add_argument('--out',type=Path)
         if action=='next':q.add_argument('--limit',type=int,default=5)
+        if action=='check':q.add_argument('--require-complete',action='store_true',help='Fail when declared production scope is empty or unfinished; does not certify aesthetics')
 
 
 def inspect(project, inventory='plans/asset-inventory.json'):
@@ -48,6 +49,9 @@ def inspect(project, inventory='plans/asset-inventory.json'):
         id=item['id'];ids.add(id);start_errors=len(errors)
         state=item.get('state','planned')
         if state not in STATES:errors.append(f'{id}: unknown state {state}')
+        mandatory=item.get('required',False)
+        if not isinstance(mandatory,bool):errors.append(f'{id}: required must be a boolean');mandatory=False
+        if mandatory and state=='static-deferred':errors.append(f'{id}: required scope cannot be static-deferred; retain the work or explicitly revise the scope')
         dependencies=item.get('dependencies',[])
         if not isinstance(dependencies,list) or not all(isinstance(d,str) for d in dependencies):
             errors.append(f'{id}: dependencies must be IDs');dependencies=[]
@@ -61,6 +65,7 @@ def inspect(project, inventory='plans/asset-inventory.json'):
                 if not asset_integrity[a]:errors.append(f'{id}: existing asset {a} failed integrity')
         required=item.get('required_parts',[])
         if not isinstance(required,list):errors.append(f'{id}: required_parts must be a list');required=[]
+        if mandatory and not required:errors.append(f'{id}: required scope needs tracked required_parts')
         parts=[];part_ids=set()
         for n,part in enumerate(required):
             if isinstance(part,str):
@@ -103,7 +108,7 @@ def inspect(project, inventory='plans/asset-inventory.json'):
         complete=(completed_parts or (retained and not parts) or deferred) and len(errors)==start_errors
         if state=='complete' and not completed_parts:errors.append(f'{id}: complete claim lacks completed parts')
         rows.append({'id':id,'name':item.get('name',id),'location':item.get('location'),'declared_state':state,
-            'priority':item.get('priority','next'),'method':item.get('method','unspecified'),'existing_asset_ids':existing,
+            'required':mandatory,'priority':item.get('priority','next'),'method':item.get('method','unspecified'),'existing_asset_ids':existing,
             'scene_layer_ids':in_scene,'required_parts':parts,'dependencies':dependencies,'complete_for_scope':complete,
             'disposition':'deferred' if deferred else 'retained' if retained and not parts else 'produced' if completed_parts else 'missing-work',
             'next_action':item.get('next_action','Define the intended action and required parts.')})
@@ -140,6 +145,14 @@ def run(args,project):
         from . import plan_commands
         return plan_commands.run(args, project)
     result=inspect(project,args.inventory)
+    if args.action=='check' and getattr(args,'require_complete',False):
+        outstanding=[{'id':r['id'],'state':r['declared_state'],'blocked_by':r['blocked_by'],'next_action':r['next_action']}
+                     for r in result['items'] if not r['complete_for_scope']]
+        if not result['items']:result['errors'].append('Production scope is empty; author the reference census and required parts first.')
+        if outstanding:result['errors'].append('Unfinished production scope: '+', '.join(r['id'] for r in outstanding))
+        result['ok']=not result['errors']
+        result['completion']={'required':True,'complete':result['ok'],'outstanding':outstanding,
+            'meaning':'Declared production scope only; pending artistic reviews are not approvals, and omitted objects or deliverable formats cannot be inferred.'}
     if args.action=='next':
         if not 1<=args.limit<=1000:raise ValueError('Next-action limit must be 1–1000')
         ready=[r for r in result['items'] if not r['complete_for_scope'] and not r['blocked_by']]

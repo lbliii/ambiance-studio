@@ -12,6 +12,10 @@ Creative intent has an explicit versioned [production plan](PRODUCTION-PLAN.md).
 
 The check reconciles declared assets and parts with the actual project catalog, scene, hashes and dependencies. Missing planned work is normal incompleteness; broken references, stale evidence, fabricated completion and dependency cycles cause nonzero failures. `next` returns up to five incomplete work items whose declared prerequisites are satisfied, ordered by authored priority; use `--limit N` for more. It executes no production actions. Corrupt inputs produce no ready-action list. Deferring a dependency does not fulfill another object's requirement for that produced part.
 
+Use `plan check --require-complete` before claiming declared production scope complete. It also fails empty inventories and unfinished/transitively blocked items, and returns `completion.outstanding` with IDs and next actions. It permits optional, deliberately deferred items. A nonzero result does not prevent showing a labeled partial draft or continuing production.
+
+Mark selected requirements with optional boolean `required: true`. Such items must have tracked `required_parts` and cannot be `static-deferred`; changing the declared artistic scope is an explicit project decision. Omitted `required` retains legacy behavior. Existing version 1 inventories need no migration, and ordinary `check` still allows honest incomplete work. The completion check reuses the same evidence/dependency evaluator; it does not infer objects, validate unwritten format requirements, or turn pending artistic reviews into approval. See [seed-to-stage production](SEED-TO-STAGE.md).
+
 ## Version 1 inventory
 
 ```json
