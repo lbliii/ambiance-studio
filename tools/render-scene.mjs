@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 // Rasterize through the exact engine used by the browser. Python owns CLI options.
 import fs from 'node:fs/promises';
+import {resizeSceneCanvas,planViews,canonicalView} from '../editor/views.mjs';
+import {createStageRenderer} from '../editor/stage-raster.mjs';
+import {viewsProofPage} from './views-proof.mjs';
 import path from 'node:path';
 import os from 'node:os';
 import {fileURLToPath} from 'node:url';
@@ -12,6 +15,7 @@ import {compileScene,drawScene,ENGINE_VERSION} from '../editor/engine.mjs';
 import {prepareRigProof,renderRigProof} from './rig-proof.mjs';
 import {prepareLookProof,renderLookProof} from './look-proof.mjs';
 import {finishingAssetIds} from '../editor/finishing.mjs';
+import {auditViews,auditViewPixels} from '../editor/audit.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const require=createRequire(import.meta.url);
 const sha=data=>createHash('sha256').update(data).digest('hex');
@@ -59,23 +63,29 @@ async function main(){
   }
   const [sceneBytes,catalogBytes,engineBytes]=await Promise.all([fs.readFile(scenePath),fs.readFile(catalogPath),fs.readFile(path.join(root,'editor/engine.mjs'))]);
   const scene=JSON.parse(sceneBytes),catalog=JSON.parse(catalogBytes),sourceCanvas=structuredClone(scene.canvas);
-  const width=request.width??sourceCanvas.width,height=request.height??width*sourceCanvas.height/sourceCanvas.width;
-  if(!Number.isInteger(width)||!Number.isInteger(height)||width<1||height<1||width*sourceCanvas.height!==height*sourceCanvas.width)throw Error('Render dimensions must be positive integers preserving the authored aspect ratio.');
-  const supersample=request.supersample??1;
+  if(request.expected_scene_sha256&&sha(sceneBytes)!==request.expected_scene_sha256||request.expected_catalog_sha256&&sha(catalogBytes)!==request.expected_catalog_sha256)throw Error('Scene or catalog changed after view preflight; rerun the render');
+  const viewPlan=request.views?planViews(scene,request.views,request.view_options):null;
+  const width=viewPlan?.views[0].output.width??request.width??sourceCanvas.width,height=viewPlan?.views[0].output.height??request.height??width*sourceCanvas.height/sourceCanvas.width;
+  if(!Number.isInteger(width)||!Number.isInteger(height)||width<1||height<1||(!viewPlan&&width*sourceCanvas.height!==height*sourceCanvas.width))throw Error('Render dimensions must be positive integers preserving the authored aspect ratio.');
+  const supersample=viewPlan?.supersample??request.supersample??1;
   if(![1,2,4].includes(supersample)||width*supersample>4096||height*supersample>4096)throw Error('Supersampling requires scale 1, 2, or 4 and internal dimensions <=4096');
-  const internalWidth=width*supersample,internalHeight=height*supersample;
-  scene.canvas.width=internalWidth;scene.canvas.height=internalHeight;
+  const internalWidth=viewPlan?.internal_canvas.width??width*supersample,internalHeight=viewPlan?.internal_canvas.height??height*supersample;
+  if(!viewPlan)resizeSceneCanvas(scene,internalWidth,internalHeight);
   const compiled=compileScene(scene,catalog),fps=scene.canvas.fps,loopFrames=fps*scene.canvas.loop_seconds;
   if(!scene.layers.length)throw Error('Cannot render an empty scene');
   const start=finite(request.start??0,'start');if(start<0)throw Error('start must be nonnegative');
-  const mode=request.mode;if(!['frame','proof','rig-proof','look-proof','video'].includes(mode))throw Error('Unknown render mode');
+  const mode=request.mode;if(!['frame','proof','rig-proof','look-proof','video','views-proof'].includes(mode))throw Error('Unknown render mode');
+  if(mode==='views-proof'&&!viewPlan)throw Error('Paired proof requires explicit views');
+  if(viewPlan&&['rig-proof','look-proof'].includes(mode))throw Error('Named views cannot be combined with rig/look matrices');
+  if(viewPlan&&mode!=='views-proof'&&viewPlan.views.length!==1)throw Error('Select one view for a single-output render');
   if(mode==='rig-proof'&&supersample!==1)throw Error('Rig-proof matrix uses fixed resolution; supersampling is supported for frame, proof, look-proof and video');
-  const seconds=finite(request.seconds??(mode==='proof'?Math.min(3,scene.canvas.loop_seconds):scene.canvas.loop_seconds),'seconds');
+  const seconds=finite(request.seconds??(['proof','views-proof'].includes(mode)?Math.min(3,scene.canvas.loop_seconds):scene.canvas.loop_seconds),'seconds');
   const frames=mode==='frame'?1:seconds*fps;
   if(!Number.isInteger(frames)||frames<1||frames>loopFrames)throw Error('Duration must contain an integer frame count within one scene loop');
   if(mode==='video'&&(width%2||height%2))throw Error('Native H.264 dimensions must be even');
   const disable=request.disable??[];
   if(!Array.isArray(disable)||disable.some(id=>!scene.layers.some(l=>l.id===id)))throw Error('Every disabled layer must exist in this scene');
+  if(mode==='views-proof'&&disable.length)throw Error('Paired proofs cannot add disabled-layer variants');
   const alternate=structuredClone(scene);for(const layer of alternate.layers)if(disable.includes(layer.id)){layer.visible=false;if(layer.tracks?.visible)layer.tracks.visible={interpolation:'hold',keys:[[0,false],[scene.canvas.loop_seconds,false]]};}
   const alternateCompiled=compileScene(alternate,catalog);
   const rigPlan=mode==='rig-proof'?prepareRigProof(request.rig_recipe,scene,catalog):null;
@@ -84,25 +94,44 @@ async function main(){
   for(const asset of catalog.assets.filter(a=>used.has(a.id))){
     const assetPath=await inside(asset.file),bytes=await fs.readFile(assetPath),hash=sha(bytes);
     if(hash!==asset.sha256)throw Error(`Asset hash does not match catalog: ${asset.id}`);
-    const decoded=await runtime.loadImage(bytes);
+    let decoded;
+    try { decoded=await runtime.loadImage(bytes); }
+    catch (error) { throw Error(`Cannot decode asset ${asset.id} (${asset.file}): ${error.message}`); }
     if(decoded.width!==asset.width||decoded.height!==asset.height)throw Error(`Asset dimensions do not match catalog: ${asset.id}`);
     images.set(asset.id,decoded);assetBytes.set(asset.id,bytes);assetHashes.push({id:asset.id,file:asset.file,sha256:hash});
   }
   // Validate everything above before creating the immutable result directory.
   await fs.mkdir(out,{recursive:false});
   await fs.writeFile(path.join(out,'scene.snapshot.json'),sceneBytes);await fs.writeFile(path.join(out,'catalog.snapshot.json'),catalogBytes);
-  const canvas=runtime.createCanvas(width,height),internalCanvas=supersample===1?canvas:runtime.createCanvas(internalWidth,internalHeight);
+  const stageRenderer=viewPlan?createStageRenderer(scene,catalog,images,viewPlan,runtime.createCanvas):null;
+  const alternateRenderer=viewPlan&&disable.length?createStageRenderer(alternate,catalog,images,viewPlan,runtime.createCanvas):null;
+  const canvas=stageRenderer?.outputs.get(viewPlan.views[0].view.id)??runtime.createCanvas(width,height),internalCanvas=stageRenderer?.stage??(supersample===1?canvas:runtime.createCanvas(internalWidth,internalHeight));
   const finishingDiagnostics=[];
   const render=(time,off=false)=>{
+    if(stageRenderer){const active=off?alternateRenderer:stageRenderer;active.render(time);if(active.stage.finishingReport)finishingDiagnostics.push({...active.stage.finishingReport,time_seconds:time,disabled_variant:off});if(off){const ctx=canvas.getContext('2d');ctx.clearRect(0,0,width,height);ctx.drawImage(active.outputs.values().next().value,0,0);}return;}
     drawScene(internalCanvas,off?alternate:scene,catalog,images,time,{sampler:off?alternateCompiled.sample:compiled.sample,createCanvas:runtime.createCanvas});
     if(internalCanvas.finishingReport)finishingDiagnostics.push({...internalCanvas.finishingReport,time_seconds:time,disabled_variant:off});
     if(supersample!==1){const ctx=canvas.getContext('2d');ctx.clearRect(0,0,width,height);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.drawImage(internalCanvas,0,0,width,height);}
   };
-  render(0);const first=Buffer.from(canvas.data());render(scene.canvas.loop_seconds);const endpoint=Buffer.from(canvas.data());
+  const endpoints=new Map();
+  render(0);const first=Buffer.from(canvas.data());
+  if(stageRenderer)for(const [id,c] of stageRenderer.outputs)endpoints.set(id,{first:Buffer.from(c.data())});
+  render(scene.canvas.loop_seconds);const endpoint=Buffer.from(canvas.data());
+  if(stageRenderer)for(const [id,c] of stageRenderer.outputs){const row=endpoints.get(id);row.rgba_endpoint_exact=row.first.equals(c.data());row.endpoint_difference=difference(row.first,c.data());if(!row.rgba_endpoint_exact)throw Error('Raster endpoint differs for view '+id);}
   const endpointDifference=difference(first,endpoint);
   if(!first.equals(endpoint))throw Error('Raster endpoint differs from frame zero');
   render((loopFrames-1)/fps);const seam=difference(first,canvas.data());
-  const report={ok:true,mode,scene:scenePath,scene_sha256:sha(sceneBytes),catalog:catalogPath,catalog_sha256:sha(catalogBytes),engine_version:ENGINE_VERSION,engine_sha256:sha(engineBytes),source_canvas:sourceCanvas,render_canvas:{...scene.canvas,width,height},internal_canvas:structuredClone(scene.canvas),supersample,downsample:supersample===1?null:{passes:1,filter:'Canvas high-quality image smoothing',alpha:'Canvas premultiplied interpolation',stage:'after complete scene render; before PNG or native encoder'},finishing_engine_sha256:sha(await fs.readFile(path.join(root,'editor/finishing.mjs'))),start_seconds:start,frames,seconds:frames/fps,source_assets:assetHashes,canvas_module:runtime.module,canvas_version:runtime.version,node_version:process.version,platform:process.platform,renderer_sha256:sha(await fs.readFile(fileURLToPath(import.meta.url))),rig_proof_renderer_sha256:rigPlan?sha(await fs.readFile(path.join(root,'tools/rig-proof.mjs'))):null,rgba_endpoint_exact:true,endpoint_difference:endpointDifference,last_to_first:seam,visual_review_performed:false};
+  if(stageRenderer)for(const [id,c] of stageRenderer.outputs)endpoints.get(id).last_to_first=difference(endpoints.get(id).first,c.data());
+  const report={ok:true,mode,scene:scenePath,scene_sha256:sha(sceneBytes),catalog:catalogPath,catalog_sha256:sha(catalogBytes),engine_version:ENGINE_VERSION,engine_sha256:sha(engineBytes),source_canvas:sourceCanvas,render_canvas:{...scene.canvas,width,height},internal_canvas:structuredClone(scene.canvas),supersample,downsample:supersample===1?null:{passes:1,filter:'Canvas high-quality image smoothing',alpha:'Canvas premultiplied interpolation',stage:'after complete scene render; before PNG or native encoder'},finishing_engine_sha256:sha(await fs.readFile(path.join(root,'editor/finishing.mjs'))),views_module_sha256:sha(await fs.readFile(path.join(root,'editor/views.mjs'))),start_seconds:start,frames,seconds:frames/fps,source_assets:assetHashes,canvas_module:runtime.module,canvas_version:runtime.version,node_version:process.version,platform:process.platform,renderer_sha256:sha(await fs.readFile(fileURLToPath(import.meta.url))),rig_proof_renderer_sha256:rigPlan?sha(await fs.readFile(path.join(root,'tools/rig-proof.mjs'))):null,rgba_endpoint_exact:true,endpoint_difference:endpointDifference,last_to_first:seam,visual_review_performed:false};
+  if(viewPlan){
+    report.raster_plan=viewPlan;report.internal_canvas={...sourceCanvas,...viewPlan.internal_canvas};
+    report.stage_adapter_sha256=sha(await fs.readFile(path.join(root,'editor/stage-raster.mjs')));
+    report.extraction={passes:1,filter:'Canvas high-quality image smoothing',stage:'after complete finished stage; before PNG or native encoder'};
+    report.downsample=null;
+    report.views=Object.fromEntries(viewPlan.views.map(v=>{const {first,...measurements}=endpoints.get(v.view.id);return [v.view.id,{...v,view_sha256:sha(canonicalView(v.view)),...measurements}];}));
+    if(mode==='views-proof'){report.render_canvas=null;report.views_proof_renderer_sha256=sha(await fs.readFile(path.join(root,'tools/views-proof.mjs')));}
+    else report.view=report.views[viewPlan.views[0].view.id];
+  }
   const started=Date.now();finishingDiagnostics.length=0;
   if(mode==='look-proof'){
     Object.assign(report,await renderLookProof(lookPlan,{out,root,runtime,catalog,images,assetBytes,width,height,supersample,sourceScene:JSON.parse(sceneBytes),sceneHash:sha(sceneBytes),catalogHash:sha(catalogBytes)}));
@@ -123,6 +152,21 @@ async function main(){
     report.full_loop_review_performed=false;report.check_scope='Selected variant poses, optional targeted playback, plus endpoint measurement; no full-loop visual inspection';
   }else if(mode==='frame'){
     render(start);const bytes=canvas.toBuffer('image/png');await fs.writeFile(path.join(out,'frame.png'),bytes);report.output=path.join(out,'frame.png');report.output_sha256=sha(bytes);
+  }else if(mode==='views-proof'){
+    const ids=viewPlan.views.map(v=>v.view.id);
+    report.geometry=auditViews(scene,catalog,ids);
+    report.pixels=await auditViewPixels(scene,catalog,images,ids,runtime.createCanvas,()=>{},viewPlan);
+    report.audit_module_sha256=sha(await fs.readFile(path.join(root,'editor/audit.mjs')));
+    report.review_needed=!report.geometry.ok||!report.pixels.ok;
+    const outputs=viewPlan.views.map(v=>({id:v.view.id,output:v.output,files:[],hashes:[]}));
+    for(const output of outputs)await fs.mkdir(path.join(out,output.id));
+    for(let frame=0;frame<frames;frame++){
+      render(start+frame/fps);
+      for(const output of outputs){const relative=output.id+'/'+String(frame).padStart(5,'0')+'.png',bytes=stageRenderer.outputs.get(output.id).toBuffer('image/png');await fs.writeFile(path.join(out,relative),bytes);output.files.push(relative);output.hashes.push(sha(bytes));}
+    }
+    await fs.writeFile(path.join(out,'index.html'),viewsProofPage(outputs,fps,start,frames,scene.canvas.loop_seconds));
+    report.output_sha256=sha(await fs.readFile(path.join(out,'index.html')));
+    report.output=path.join(out,'index.html');report.outputs=outputs;report.sample_times=Array.from({length:frames},(_,frame)=>start+frame/fps);report.playback='One timeline; every output samples each identical source time';report.stage_frames_rendered=frames;
   }else if(mode==='proof'){
     const files=[];
     for(const off of disable.length?[false,true]:[false]){
@@ -152,6 +196,7 @@ async function main(){
   }
   if(finishingDiagnostics.length)report.finishing_diagnostics={samples:finishingDiagnostics.length,max_clipped_pixels:finishingDiagnostics.reduce((n,x)=>Math.max(n,x.clipped_pixels),0),clipped_pixels_sum:finishingDiagnostics.reduce((n,x)=>n+x.clipped_pixels,0),internal_pixels_per_frame:internalWidth*internalHeight,scope:mode==='video'?'Encoded output and encoder preroll samples':'Saved render samples',automatic_artistic_judgment:false};
   report.elapsed_seconds=(Date.now()-started)/1000;
+  report.peak_rss_bytes=process.resourceUsage().maxRSS*1024;
   await fs.writeFile(path.join(out,'render-report.json'),JSON.stringify(report,null,2)+'\n');return report;
 }
 try{console.log(JSON.stringify(await main()));}catch(error){console.log(JSON.stringify({ok:false,error:error.message}));process.exitCode=1;}

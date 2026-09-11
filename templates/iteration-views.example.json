@@ -1,0 +1,26 @@
+{
+  "format": "ambiance-iteration",
+  "schema_version": 2,
+  "id": "dual-review-01",
+  "revision": "dual-r1",
+  "capture_selection": "plans/revision-selection.json",
+  "views": [
+    "portrait",
+    "landscape"
+  ],
+  "default": {
+    "view": "portrait",
+    "role": "score"
+  },
+  "editions": [
+    {
+      "role": "silent"
+    },
+    {
+      "role": "score",
+      "audio": "audio/runs/score/mix/master.wav",
+      "audio_run": "audio/runs/score",
+      "repeats": 3
+    }
+  ]
+}

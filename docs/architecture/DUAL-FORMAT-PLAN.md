@@ -1,6 +1,6 @@
 # Portrait and landscape from one production
 
-Analysis and proposal, September 11, 2026. This document proposes an extension; the commands and view contract below are not implemented. Existing project scenes and accepted deliveries were left unchanged.
+Analysis and proposal, September 11, 2026. This document preserves the initial analysis; executable capabilities now follow the implementation plan and current CLI documentation. Existing project scenes and accepted deliveries were left unchanged.
 
 The user subsequently delegated the approach choice and implementation planning. The selected architecture, concrete contracts, milestone order and acceptance criteria are now recorded in the [implementation plan](DUAL-FORMAT-IMPLEMENTATION.md). This analysis remains the rationale; the implementation plan takes precedence where it narrows or settles an earlier option.
 
