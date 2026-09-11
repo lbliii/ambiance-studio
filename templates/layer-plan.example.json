@@ -102,5 +102,11 @@
   },
   "open_questions": [
     "Confirm chimney emission point against the actual image before placement."
-  ]
+  ],
+  "framing_intent": {
+    "requested_views": [
+      "authored"
+    ],
+    "notes": "Replace with the requested view IDs. Describe focal coverage, edge reveals and usable source resolution for every crop before producing assets."
+  }
 }

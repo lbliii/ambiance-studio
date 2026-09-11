@@ -20,3 +20,5 @@ Make a low-resolution draft and inspect zero, intermediate times, camera extreme
 Save the scene and actual reports/proofs. Run `scene check` on the selected project, then the browser pixel check and visual inspection as separate evidence. For a captured revision, render with `--revision ID`; do not substitute the working scene. Reconcile placed parts with `plan check`.
 
 Close `animation` from both technical evidence and a visual review. Changes to assets or camera limits require a new affected review. Pure JSON validation cannot establish that a frame looks correct.
+
+For multiple requested formats, use `view check` and `render views-proof --view portrait --view landscape` before final video. Inspect both crops at the same sample times, including edge coverage, attachments, receiving effects and last-to-first motion. The editor output panes and saved paired proof use a shared clock; independently playing final MP4s do not establish exact synchronization. Use `review draft GATE --revision ID --view ID` for separate picture-review subjects.

@@ -4,6 +4,8 @@ A local studio for painted, layered ambiance films, designed for agent operation
 
 Version 0.8.0 adds a [local film library](docs/STUDIO-LIBRARY.md): projects shared across worktrees, explicit current review movies, edition history and comparison, timestamped feedback, and resumable local iteration runs. It preserves the existing rendering, sound, finishing, revision and evidence workflows.
 
+[Dual-format production](docs/VIEWS.md) adds portrait 9:16 and landscape 16:9 views of one scene, synchronized previews, view-bound editions, and one resumable export/delivery job. Start a blank stage with `project init --format dual`, or add contained views to existing artwork. Try the [complete local-art demo](examples/views/README.md) and see the [validation evidence](docs/architecture/DUAL-FORMAT-VALIDATION.md).
+
 The [asset preparation workbench](docs/PREPARATION-WORKBENCH.md) combines source/backing inspection, separate removal/cutout/foreground masks, alignment and a shared-engine movement preview. Author its JSON recipe directly and run `asset prepare` to build fresh, reproducible parts. The browser can inspect the result or export optional visual edits through the same recipe. Try the [independent example](examples/preparation-workbench/README.md).
 
 ## Start here

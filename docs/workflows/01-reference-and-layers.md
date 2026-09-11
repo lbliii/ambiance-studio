@@ -54,3 +54,5 @@ The same decision applies to a cat statue, pottery or a distant figure: choose a
 Save a layer proof or labeled layout when the relationships are hard to communicate. Check that the still composition works at phone size and the reference's identity remains intact. Review proposed camera limits and hidden-pixel work before generation. Record dependencies so assets can be prepared independently where possible.
 
 Evidence should let another operator answer: what exists, what must be made, what moves, what stays attached, and which invisible areas must be painted. Close the two planning gates only to that scope; no generated asset or render is implied.
+
+For multi-format production, record the authored stage separately from every requested [saved view](../VIEWS.md). Design the focal area and reveal budget for both crops together; neither orientation is automatically the master. Judge subjects, overlaps and available pixels at each output size. A contained alternate crop can omit important scenery; identify expanded-art or restaging work explicitly before accepting it.

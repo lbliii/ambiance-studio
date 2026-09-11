@@ -39,6 +39,7 @@ Source placement and preserve-world reparenting additionally evaluate geometry a
 | `place_from_source` | `id`, `asset`, `base`, `mode`, hash-bound `reference`, optional mappings, source anchor/size, layer anchor, paint-order target and appearance/timing `values`. Derives reference placement and adds a named socket plus attached layer. See the [placement contract](../SOURCE-PLACEMENT.md). |
 | `reparent` | `layer`, `to`, `socket`, `preserve: "world_at_time"`, finite `at_seconds`. Solves and verifies new local base fields and effective appearance for the sampled pose. Cel clocks and paint order remain; child transform tracks fail. |
 | `coverage` | `layers`: unique IDs of plates intended to cover the whole canvas. Allows an explicit coverage change during a deletion or replacement. |
+| `framing` | `value`: complete version-1 [saved view definitions](../VIEWS.md), or `null` to remove them. Does not change layer geometry or timing. |
 
 Layer values expose `name`, `asset`, `x`, `y`, `width`, `height`, `anchor`, `scale`, `rotation` (radians), `opacity`, `visible`, `blend`, `depth`, `group`, `attach`, `sockets`, `cycle_seconds`, `phase_frames`, `motion`, `tracks` and `track_loop`. Existing one-operation CLI commands remain compatible. Use a batch to change structural fields together—for example, unset `attach` while setting an independent `depth` and world position. Detachment does not reconstruct world coordinates automatically.
 

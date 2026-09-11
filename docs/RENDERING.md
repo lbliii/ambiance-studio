@@ -19,6 +19,12 @@ Proof durations must contain an integer number of frames and fit within one visu
 
 The report measures exact RGBA equality at the mathematical loop endpoints and the adjacent last-to-first RGB difference. These are technical measurements, not judgments about natural motion, registration or the encoded seam. PNG pixels are deterministic with the same inputs and raster runtime; byte identity across different Canvas versions is not promised.
 
+## Saved portrait and landscape views
+
+`render frame/proof/video --view ID` extracts one saved view after rendering the complete finished stage. `render views-proof --view portrait --view landscape --long-edge 640 --seconds 3 --out NEW_DIR` saves synchronized PNG sequences and a shared-clock player. Both use the same stage adapter as the editor. The output dimensions, source rectangle, view hash, internal raster and stage-adapter hash are recorded. Omitting `--view` preserves the full-stage sizing described above.
+
+Use `preview --views-proof DIR` to serve the verified paired artifact. These proofs include per-view geometry and reduced-resolution alpha checks; each output also has its own endpoint/seam measurements. Video still encodes one selected view per command, with normal native verification. Named-view edition registration records the crop and actual decoded output. A version-2 iteration produces and presents the requested view/soundtrack set. See [saved views](VIEWS.md) for sizing, limits and runnable examples.
+
 ## Native video export
 
 ```sh
@@ -42,7 +48,7 @@ Successful `render video` automatically performs a complete native verification 
 ./ambiance --project projects/the-midnight-collection media verify projects/the-midnight-collection/deliverables/final/the-midnight-collection-72s-score.mp4 --frames 2160 --loop-frames 720 --audio-tracks 1 --out projects/the-midnight-collection/reports/media-recheck-01
 ```
 
-Expected dimensions, frame rate and loop frames default to the selected scene. Expected total frames also default to one scene loop; specify `--frames` for a repeated edition. `--audio-tracks` defaults to zero and must be explicitly set to one for a sound-on edition. Expectations can be set with `--width`, `--height`, `--fps`, `--frames` and `--loop-frames`.
+Without an edition selector, expected dimensions, frame rate and loop frames default to the selected scene. Expected total frames also default to one scene loop; specify `--frames` for a repeated edition. `--audio-tracks` defaults to zero without an edition selector. With `--revision ID --edition ID`, verification first matches the exact movie hash, then defaults dimensions, timing and audio tracks to that edition. Legacy editions derive expectations from their pinned decode report. Explicit expectation flags override defaults for diagnostic checks. Expectations can be set with `--width`, `--height`, `--fps`, `--frames` and `--loop-frames`.
 
 Verification decodes all picture and audio samples and returns nonzero for incomplete decode, wrong dimensions/frame count/rate, unordered or mistimed picture timestamps, wrong track count, wrong audio rate/channels, or incorrect audio presentation duration. Decoded PCM must cover the presented interval contiguously; decoder allocation/copy/output failures fail explicitly. Media identity is hashed before and after decoding; a changed input invalidates the report. It reports raw audio sample counts separately from the samples presented within the intended timeline, including track starts, durations and edit segments.
 
@@ -96,7 +102,7 @@ Optional `inventory` is an existing project-relative inventory path; `part_ids` 
 
 Picture and PCM inputs are copied into the fresh edition directory as independent snapshots. The receipt binds their original paths, bytes and hashes, the native source/binary and host, the composition recipe and final output identity. Original inputs and snapshots are checked for changes during processing. Verification decodes the whole result and compares the elementary compressed video sample hash sequence against the original sequence repeated N times. A new MP4 container hash is expected; unchanged compressed picture payloads establish picture reuse.
 
-An edition can be bound with `--revision ID --edition ID`. To prevent attributing an arbitrary movie to that revision, the revision adapter requires the picture to be already bound to the revision or explicitly supplied through `--picture-receipt FILE`, an existing project-relative render report that identifies the captured scene/catalog and picture hash. The manifest is never rewritten by composition. Without edition registration, ordinary composition remains available.
+An edition can be bound with `--revision ID --edition ID`. To prevent attributing an arbitrary movie to that revision, the revision adapter requires the picture to be already bound to the revision or explicitly supplied through `--picture-receipt FILE`, an existing project-relative render report that identifies the captured scene/catalog and picture hash. The manifest is never rewritten by composition. Named-view composition inherits the exact picture view and output dimensions. Optional `--view ID` asserts that identity and rejects a mismatch; it requires edition registration. Without edition registration, ordinary composition remains available.
 
 The output directory contains `picture-input.mp4`, `selected-audio.wav`, `composition-recipe.json`, `video.mp4`, `compose-report.json` and `verification/`. Source changes, failed decode or a differing compressed sample sequence produce a failed result and no accepted edition.
 

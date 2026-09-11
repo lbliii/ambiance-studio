@@ -1,5 +1,6 @@
 // Pure, absolute-time scene sampling. Preview never advances simulation state.
 import {validateFinishing,drawFinished} from './finishing.mjs';
+import {validateFraming} from './views.mjs';
 export const TAU = Math.PI * 2;
 const identity = [1,0,0,1,0,0];
 export function multiply(a,b) {
@@ -138,6 +139,7 @@ export function validateScene(scene,catalog) {
   if(!scene||scene.version!==1||!Array.isArray(scene.layers)||!Array.isArray(scene.groups)) throw Error('Expected a version 1 scene with layers and groups.');
   const c=scene.canvas;
   if(!c||!['width','height','fps','loop_seconds'].every(k=>finite(c[k])&&c[k]>0)||c.width>4096||c.height>4096||!Number.isInteger(c.width)||!Number.isInteger(c.height)||!Number.isInteger(c.fps)||!Number.isInteger(c.fps*c.loop_seconds)) throw Error('Invalid canvas or frame count (preview maximum 4096 pixels per side).');
+  validateFraming(scene);
   if(!scene.camera||!['overscan','x_amplitude','y_amplitude','zoom_amplitude'].every(k=>finite(scene.camera[k]))||scene.camera.overscan<1) throw Error('Invalid camera.');
   const groups=new Map();
   for(const g of scene.groups){

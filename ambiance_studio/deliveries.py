@@ -68,10 +68,45 @@ def record_path(project, id):
 
 
 def load(project, id):
-    data = revisions.read_sealed(record_path(project, id), FORMAT)
+    data = revisions.read_sealed(record_path(project, id), FORMAT, versions=(1,2))
     if data['id'] != id:
         raise ValueError('Delivery identity mismatch')
+    if data['schema_version']==2:
+        if not isinstance(data.get('entries'),dict) or not data['entries']:raise ValueError('Delivery entries are missing')
+        for key,entry in data['entries'].items():
+            if key!=entry_key(entry['view'],entry['role']) or entry['id']!=key:raise ValueError('Delivery entry identity mismatch')
+        resolve_entry(data)
     return data
+
+
+def entry_key(view, role):
+    if role not in ROLES:raise ValueError('Unknown soundtrack role')
+    return revisions.identifier(f'{view}.{role}')
+
+
+def entries(data):
+    if data.get('schema_version',1)==2:return data['entries']
+    return {role:{**entry,'id':role,'view':'authored','poster':data.get('poster')} for role,entry in data['editions'].items()}
+
+
+def resolve_entry(data, view=None, role=None, entry_id=None, unambiguous=False):
+    available=entries(data)
+    if entry_id is not None:
+        if entry_id not in available:raise ValueError('Delivery entry is unavailable')
+        selected=available[entry_id]
+        if view is not None and view!=selected['view'] or role is not None and role!=selected['role']:raise ValueError('Entry differs from the requested view or soundtrack')
+        return entry_id,selected
+    if unambiguous and view is None and role is not None:
+        matches=[(key,value) for key,value in available.items() if value['role']==role]
+        if len(matches)!=1:raise ValueError('Choose an explicit view for this soundtrack')
+        return matches[0]
+    if data.get('schema_version',1)==2:
+        default=data['default'];key=entry_key(view if view is not None else default['view'],role if role is not None else default['role'])
+    else:
+        if view not in [None,'authored']:raise ValueError('View is unavailable in this legacy delivery')
+        key=role if role is not None else data['default_role']
+    if key not in available:raise ValueError('Requested view and soundtrack are unavailable')
+    return key,available[key]
 
 
 def metadata(report):
@@ -88,7 +123,7 @@ def metadata(report):
     return result
 
 
-def prepare(project, declaration):
+def _prepare_legacy(project, declaration, allow_named=False):
     allowed = {'format', 'schema_version', 'id', 'title', 'notes', 'default_role', 'editions',
                'poster', 'provenance', 'scene_snapshot', 'catalog_snapshot'}
     revisions.fields(declaration, allowed, 'delivery selection')
@@ -111,6 +146,7 @@ def prepare(project, declaration):
         bound = None
         if entry.get('revision') or entry.get('edition'):
             bound = revisions.load_edition(project, entry['revision'], entry['edition'])
+            if bound['schema_version']==2 and not allow_named:raise ValueError('Named-view editions require delivery selection schema_version 2')
             if entry.get('file', bound['output']['path']) != bound['output']['path']:
                 raise ValueError('Selected movie differs from captured edition output')
             file = bound['output']['path']; verification = bound['verification']['path']
@@ -160,6 +196,49 @@ def prepare(project, declaration):
             'review': 'Human review is separate; registration does not grant release approval.'}
 
 
+def prepare(project, declaration):
+    if declaration.get('schema_version')!=2:return _prepare_legacy(project,declaration)
+    allowed={'format','schema_version','id','title','notes','default','entries','provenance','scene_snapshot','catalog_snapshot'}
+    revisions.fields(declaration,allowed,'view delivery selection')
+    if declaration.get('format')!=SELECTION:raise ValueError('Expected ambiance-delivery-selection schema_version 2')
+    id=revisions.identifier(declaration['id']);selected=declaration.get('entries')
+    if not isinstance(selected,list) or not selected:raise ValueError('Delivery requires view entries')
+    result_entries={};dependencies=[];working={}
+    for entry in selected:
+        revisions.fields(entry,{'view','role','revision','edition','poster'},'view delivery entry')
+        if not entry.get('revision') or not entry.get('edition'):raise ValueError('View deliveries require captured edition receipts')
+        bound=revisions.load_edition(project,entry['revision'],entry['edition']);view=revisions.edition_view(project,bound)
+        if entry.get('view')!=view['id']:raise ValueError('Delivery view differs from its edition')
+        key=entry_key(view['id'],entry.get('role'))
+        if key in result_entries:raise ValueError('Each view and soundtrack pair must be unique')
+        poster=entry.get('poster')
+        if poster is None:
+            contact=studio.inside(project,bound['verification']['path']).parent/'contacts/decoded-0000.png'
+            if contact.is_file():poster=revisions.relative(project,contact)
+        one={k:v for k,v in declaration.items() if k in {'id','title','notes','provenance','scene_snapshot','catalog_snapshot'}}
+        one.update(format=SELECTION,schema_version=1,editions=[{k:entry[k] for k in ['role','revision','edition']}],default_role=entry['role'])
+        if poster:one['poster']=poster
+        if not poster:raise ValueError('Each view entry requires its own poster')
+        parsed=_prepare_legacy(project,one,allow_named=True)
+        from PIL import Image
+        with Image.open(studio.inside(project,poster)) as image:
+            facts=parsed['editions'][entry['role']]
+            if image.size!=(facts['width'],facts['height']):raise ValueError('Entry poster dimensions differ from its movie')
+        item=parsed['editions'][entry['role']]
+        receipt=reference(project,revisions.relative(project,revisions.edition_path(project,entry['revision'],entry['edition'])))
+        result_entries[key]={**item,'id':key,'view':view['id'],'view_sha256':view['sha256'],'poster':parsed['poster'],'edition_receipt':receipt}
+        dependencies.extend(parsed['dependencies']);working=parsed['working_inputs']
+    default=declaration.get('default')
+    revisions.fields(default,{'view','role'},'default delivery pair')
+    if set(default)!={'view','role'} or entry_key(default['view'],default['role']) not in result_entries:raise ValueError('Default view and soundtrack must exist')
+    default_entry=result_entries[entry_key(default['view'],default['role'])]
+    return {'format':FORMAT,'schema_version':2,'id':id,'title':parsed['title'],'notes':parsed['notes'],'created_utc':now(),
+            'default':default,'entries':result_entries,'poster':default_entry['poster'],'working_inputs':working,
+            'dependencies':list({item['path']:item for item in dependencies}.values()),
+            'selection_sha256':studio.encoded_hash(declaration),'selection':declaration,
+            'review':'Each view and soundtrack has its own exact edition; human review remains separate.'}
+
+
 def register(project, declaration, dry_run=False):
     from .project import project_lock
     with project_lock(project):
@@ -176,7 +255,7 @@ def register(project, declaration, dry_run=False):
         if not dry_run:
             studio.write(path, revisions.seal(candidate))
         return {'ok': True, 'id': candidate['id'], 'dry_run': dry_run, 'record': str(path),
-                'editions': list(candidate['editions'])}
+                ('entries' if candidate['schema_version']==2 else 'editions'): list(entries(candidate))}
 
 
 def current(project, channel='review'):
@@ -196,9 +275,29 @@ def selection_token(project, channel='review'):
     return selected['payload_sha256'] if selected else 'none'
 
 
+def review_states(project, data):
+    result={}
+    for key,entry in entries(data).items():
+        try:
+            context=revisions.review_context(project,entry['revision'],entry['edition']) if entry['revision'] else None
+            state=studio.gate_status(project,context)
+            review_dir=context['review_dir'] if context else project/'reviews'
+            checks=[]
+            for gate,value in state['gates'].items():
+                if value['state']=='passed':continue
+                path=review_dir/f'{gate}.json';receipt=studio.read(path) if path.exists() else {}
+                checks.append({'gate':gate, 'state':value['state'], 'reasons':value['reasons'],
+                               'criteria':[{'id':check['id'],'result':check['result'],'note':check.get('note','')} for check in receipt.get('checks',[]) if check['result']!='pass']})
+            result[key]={'view':entry['view'],'role':entry['role'],'subject':state['subject'],
+                         'release_ready':bool(entry['revision']) and state['release_ready'],'open_checks':checks}
+        except (OSError,ValueError,KeyError,TypeError) as error:
+            result[key]={'view':entry['view'],'role':entry['role'],'release_ready':False,'open_checks':[],'error':str(error)}
+    return result
+
+
 def release_state(project, data):
     reasons = []
-    for role, edition in data['editions'].items():
+    for role, edition in entries(data).items():
         if not edition['revision']:
             reasons.append(f'{role}: legacy export has no edition-bound release review')
             continue
@@ -238,11 +337,16 @@ def present(project, id, actor, note='', channel='review', expected=None):
 def inspect(project, id, fingerprints=None):
     data = load(project, id)
     checks = {item['path']: intact(project, item, fingerprints) for item in data['dependencies']}
-    result = {key: data[key] for key in ['id', 'title', 'notes', 'created_utc', 'default_role', 'poster', 'working_inputs']}
-    result['editions'] = {role: {**entry, 'available': checks[entry['movie']['path']]['ok'],
-                         'technical_evidence_current': checks[entry['verification']['path']]['ok'],
+    result = {key: data[key] for key in ['id', 'title', 'notes', 'created_utc', 'poster', 'working_inputs']}
+    result['schema_version']=data['schema_version']
+    result['entries'] = {role: {**entry, 'available': checks[entry['movie']['path']]['ok'],
+                         'technical_evidence_current': checks[entry['verification']['path']]['ok'] and (not entry.get('edition_receipt') or checks[entry['edition_receipt']['path']]['ok']),
+                         'poster':entry.get('poster') if not entry.get('poster') or checks[entry['poster']['path']]['ok'] else None,
                          'error': checks[entry['movie']['path']].get('error')}
-                         for role, entry in data['editions'].items()}
+                         for role, entry in entries(data).items()}
+    if data['schema_version']==2:result['default']=data['default']
+    else:
+        result['default_role']=data['default_role'];result['editions']=result['entries']
     result['issues'] = [check for check in checks.values() if not check['ok']]
     result['ok'] = not result['issues']
     if data['poster'] and not checks[data['poster']['path']]['ok']:
@@ -277,12 +381,10 @@ def latest(project, channel='review', fingerprints=None):
         return {'ok': False, 'selection': selected, 'delivery': None, 'error': str(error)}
 
 
-def feedback(project, id, role, seconds, note, observer):
+def feedback(project, id, role, seconds, note, observer, view=None):
     from .project import project_lock
     data = load(project, id)
-    if role not in data['editions']:
-        raise ValueError('Soundtrack is unavailable for this delivery')
-    edition = data['editions'][role]
+    selected_id,edition=resolve_entry(data,view,role,unambiguous=True)
     if isinstance(seconds, bool) or not isinstance(seconds, (float, int)) or not math.isfinite(seconds) or not 0 <= seconds < edition['duration_seconds']:
         raise ValueError('Feedback time must fall inside the selected movie')
     if not isinstance(note, str) or not note.strip() or len(note) > 10000:
@@ -291,10 +393,11 @@ def feedback(project, id, role, seconds, note, observer):
         raise ValueError('Identify the observer')
     if not intact(project, edition['movie'])['ok']:
         raise ValueError('Movie changed; cannot attach feedback to these bytes')
-    record = {'format': 'ambiance-movie-feedback', 'schema_version': 1, 'id': uuid.uuid4().hex,
+    record = {'format': 'ambiance-movie-feedback', 'schema_version': data['schema_version'], 'id': uuid.uuid4().hex,
               'created_utc': now(), 'delivery': id, 'role': role, 'seconds': seconds,
               'movie': edition['movie'], 'observer': observer.strip(), 'note': note.strip(),
               'state': 'open', 'meaning': 'An observation, not an automatic gate pass.'}
+    if data['schema_version']==2:record.update(entry=selected_id,view=edition['view'],view_sha256=edition['view_sha256'],revision=edition['revision'],edition=edition['edition'])
     with project_lock(project):
         path = project/'feedback/movies'/f'{record["id"]}.json'
         studio.write(path, revisions.seal(record))
@@ -304,7 +407,7 @@ def feedback(project, id, role, seconds, note, observer):
 def feedback_list(project, id):
     results = []
     for path in (project/'feedback/movies').glob('*.json'):
-        data = revisions.read_sealed(path, 'ambiance-movie-feedback')
+        data = revisions.read_sealed(path, 'ambiance-movie-feedback', versions=(1,2))
         if data['delivery'] == id:
             results.append(data)
     return sorted(results, key=lambda row: row['created_utc'], reverse=True)
