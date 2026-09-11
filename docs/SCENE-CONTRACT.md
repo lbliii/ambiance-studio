@@ -1,6 +1,6 @@
 # Scene and asset contract, version 1
 
-The optional v0.7 `finishing` extension adds linear-sRGB appearance recipes, painted light zones, shared signals, and receiving shadow/reflection relationships. Its full schema and limits are in [finishing](FINISHING.md). Absence of the extension retains legacy Canvas rendering. It does not change layer transforms, cel clocks, or paint order.
+The optional v0.7 `finishing` extension adds linear-sRGB appearance recipes, painted light zones, shared signals, and receiving shadow/reflection relationships. Its full schema and limits are in [finishing](FINISHING.md). Absence of the extension retains legacy Canvas rendering. Explicit [source bindings](BINDINGS.md) can additionally replace bounded layer channels using the same clock; prepared illumination uses documented receiver compositing order. Scenes without these extensions preserve prior behavior.
 
 The scene is the recipe. The catalog describes ingredients. Both are readable JSON so a person, a visual editor, and an assistant can make the same change without rewriting rendering code.
 

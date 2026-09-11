@@ -18,13 +18,13 @@ export function finishingAssetIds(scene){
   const f=config(scene);if(!f)return [];
   const ids=new Set(Object.keys(f.assets||{}));
   for(const g of [f.grade,...Object.values(f.assets||{}),...Object.values(f.groups||{}),...Object.values(f.layers||{})])if(g?.mask_asset)ids.add(g.mask_asset);
-  for(const e of [...(f.lights||[]),...(f.shadows||[]),...(f.reflections||[])])if(e.mask_asset)ids.add(e.mask_asset);
+  for(const e of [...(f.lights||[]),...(f.shadows||[]),...(f.reflections||[]),...(f.illuminations||[])])if(e.mask_asset)ids.add(e.mask_asset);
   return [...ids];
 }
 export function validateFinishing(scene,catalog){
   if(scene.finishing===undefined)return true;
   const f=scene.finishing,T=scene.canvas.loop_seconds;
-  fields(f,['version','working_space','output_space','assets','groups','layers','grade','lights','signals','shadows','reflections'],'finishing');
+  fields(f,['version','working_space','output_space','assets','groups','layers','grade','lights','signals','shadows','reflections','illuminations'],'finishing');
   if(f.version!==1||f.working_space!=='linear-srgb'||f.output_space!=='srgb')throw Error('Finishing requires version 1, linear-srgb working space and srgb output');
   rgb(scene.canvas.background);
   const assets=new Map(catalog.assets.map(a=>[a.id,a])),layers=new Map(scene.layers.map(l=>[l.id,l]));
@@ -41,7 +41,7 @@ export function validateFinishing(scene,catalog){
   for(const [name,known] of [['assets',assets],['groups',groups],['layers',layers]])if(f[name]!==undefined){if(!object(f[name]))throw Error(`Invalid ${name} grades`);for(const [id,g] of Object.entries(f[name])){if(!known.has(id))throw Error(`Unknown ${name} grade target: ${id}`);grade(g);}}
   if(f.grade!==undefined)grade(f.grade);
   const signals=new Set();
-  for(const name of ['signals','lights','shadows','reflections'])if(f[name]!==undefined&&!Array.isArray(f[name]))throw Error(`${name} must be an array`);
+  for(const name of ['signals','lights','shadows','reflections','illuminations'])if(f[name]!==undefined&&!Array.isArray(f[name]))throw Error(`${name} must be an array`);
   for(const s of f.signals||[]){
     fields(s,['id','layer','values','keys','interpolation'],'signal');
     if(typeof s.id!=='string'||!s.id||signals.has(s.id))throw Error('Invalid/duplicate signal');signals.add(s.id);
@@ -65,13 +65,37 @@ export function validateFinishing(scene,catalog){
     mask(e.mask_asset);signal(e.signal);
     if(e.elevation){const v=e.elevation;fields(v,['layer','rest_y','range','offset','scale','opacity','softness'],'elevation');layer(v.layer);range(v.rest_y,-10,10,'rest_y');range(v.range,.000001,10,'elevation range');if(v.offset!==undefined)vec(v.offset,2,'elevated offset');if(v.scale!==undefined)vec(v.scale,2,'elevated scale',.001,8);if(v.opacity!==undefined)range(v.opacity,0,1,'elevated opacity');if(v.softness!==undefined)range(v.softness,0,.1,'elevated softness');}
   }
+  const contributions=new Set();
+  for(const e of f.illuminations||[]){
+    fields(e,['id','layer','receiver','mask_asset','mode'],'painted illumination');id(e);layer(e.layer);layer(e.receiver);mask(e.mask_asset);
+    if(!['add','mix'].includes(e.mode))throw Error('Painted illumination mode must be add or mix');
+    if(e.mask_asset){
+      const receiver=assets.get(layers.get(e.receiver).asset),maskAsset=assets.get(e.mask_asset),a=receiver.registration_mapping,b=maskAsset.registration_mapping;
+      if(a?.reference?.sha256&&a.reference.sha256===b?.reference?.sha256){
+        const normalized=(m,asset)=>{const w=asset.atlas?.cell_width||asset.width,h=asset.atlas?.cell_height||asset.height;return m?.map((n,i)=>n/(i%2?h:w));};
+        const maskTransform=normalized(b.cels?.[0]?.reference_to_cell,maskAsset);
+        if(!maskTransform||maskTransform.length!==6||!a.cels?.length||a.cels.some(c=>{const matrix=normalized(c.reference_to_cell,receiver);return !matrix||matrix.length!==6||matrix.some((n,i)=>!finite(n)||!finite(maskTransform[i])||Math.abs(n-maskTransform[i])>1e-9);}))throw Error(`Illumination ${e.id}: receiver/mask registration differs; author a matching companion correction`);
+      }
+    }
+
+    if(contributions.has(e.layer))throw Error(`Multiple receiving surfaces for painted layer: ${e.layer}`);
+    contributions.add(e.layer);
+    if(e.layer===e.receiver||layers.get(e.layer).attach?.layer!==e.receiver)throw Error('Painted illumination must attach directly to its receiving surface');
+    if(scene.layers.findIndex(l=>l.id===e.receiver)>=scene.layers.findIndex(l=>l.id===e.layer))throw Error('Painted illumination receiver must precede its contribution layer');
+  }
+  for(const e of f.illuminations||[])if(contributions.has(e.receiver))throw Error('Painted illumination cannot receive another contribution');
   return true;
 }
+// Shared by bindings and finishing; readState resolves the same dependency graph.
+export function sampleSignal(s,readState,time,T){
+  if(s.layer!==undefined){const l=readState(s.layer);return l.visible?s.values[l.cell]*l.opacity:0;}
+  const t=((time%T)+T)%T;let i=0;while(i<s.keys.length-2&&t>=s.keys[i+1][0])i++;
+  const [a,x]=s.keys[i],[b,y]=s.keys[i+1];let u=(t-a)/(b-a);
+  if(s.interpolation==='hold')u=0;else if(s.interpolation==='smoothstep')u=u*u*(3-2*u);
+  return x+(y-x)*u;
+}
 function signalValues(f,states,time,T){
-  const t=((time%T)+T)%T,out={};
-  for(const s of f.signals||[]){if(s.layer!==undefined){const l=states.get(s.layer);out[s.id]=l.visible?s.values[l.cell]*l.opacity:0;continue;}
-    let i=0;while(i<s.keys.length-2&&t>=s.keys[i+1][0])i++;const [a,x]=s.keys[i],[b,y]=s.keys[i+1];let u=(t-a)/(b-a);if(s.interpolation==='hold')u=0;else if(s.interpolation==='smoothstep')u=u*u*(3-2*u);out[s.id]=x+(y-x)*u;
-  }return out;
+  return Object.fromEntries((f.signals||[]).map(s=>[s.id,sampleSignal(s,id=>states.get(id),time,T)]));
 }
 export function finishingDiagnostics(scene,catalog,time=0,states=[]){
   validateFinishing(scene,catalog);const f=scene.finishing;
@@ -79,7 +103,7 @@ export function finishingDiagnostics(scene,catalog,time=0,states=[]){
   const warnings=[];
   for(const l of scene.layers)if(l.attach&&(f.groups?.[scene.layers.find(p=>p.id===l.attach.layer)?.group]))warnings.push({layer:l.id,code:'GROUP_GRADE_EXPLICIT',message:'Group grades apply to direct group members only; attached children need explicit instance grades.'});
   for(const e of f.shadows||[])if(!scene.layers.find(l=>l.id===e.caster)?.sockets?.ground&&!catalog.assets.find(a=>a.id===scene.layers.find(l=>l.id===e.caster)?.asset)?.sockets?.ground)warnings.push({effect:e.id,code:'GROUND_ESTIMATED',message:'No ground socket; projection uses full-cell bottom center. Author a ground socket for padded sprites.'});
-  return {ok:true,enabled:true,pipeline:'linear-srgb / premultiplied compositing / srgb output',mask_assets:finishingAssetIds(scene),grade_order:['asset','direct group','instance','lights','composite','scene grade'],signals:states.length?signalValues(f,new Map(states.map(s=>[s.id,s])),time,scene.canvas.loop_seconds):null,lights:(f.lights||[]).length,shadows:(f.shadows||[]).length,reflections:(f.reflections||[]).length,warnings,limits:['Authored 2D projections; no recovered geometry or physically based material lighting.','Inputs must be sRGB artwork; masks are luminance × alpha data. No automatic ICC/profile conversion.','Group grades are direct membership, independent of transform parenting.','Clipping diagnostics require raster inspection; configuration validation is not artistic approval.']};
+  return {ok:true,enabled:true,pipeline:'linear-srgb / premultiplied compositing / srgb output',mask_assets:finishingAssetIds(scene),grade_order:['asset','direct group','instance','lights','composite','scene grade'],signals:states.length?signalValues(f,new Map(states.map(s=>[s.id,s])),time,scene.canvas.loop_seconds):null,lights:(f.lights||[]).length,shadows:(f.shadows||[]).length,reflections:(f.reflections||[]).length,illuminations:(f.illuminations||[]).length,warnings,limits:['Authored 2D projections; no recovered geometry or physically based material lighting.','Inputs must be sRGB artwork; masks are luminance × alpha data. No automatic ICC/profile conversion.','Group grades are direct membership, independent of transform parenting.','Clipping diagnostics require raster inspection; configuration validation is not artistic approval.']};
 }
 function curve(v,knots){if(!knots)return v;v=clamp(v);let i=0;while(i<knots.length-2&&v>knots[i+1][0])i++;const [a,x]=knots[i],[b,y]=knots[i+1];return x+(y-x)*(v-a)/(b-a);}
 export function gradeRGB(rgb,g,weight=1){
@@ -120,7 +144,7 @@ function blurLinearRGBA(data,w,h,r){
 }
 export function drawFinished(canvas,scene,catalog,images,time,states,options={}){
   const W=scene.canvas.width,H=scene.canvas.height,f=scene.finishing,pass=options.pass??'beauty';
-  if(!['beauty','ungraded','lights','shadows','reflections'].includes(pass))throw Error(`Unknown finishing pass: ${pass}`);
+  if(!['beauty','ungraded','lights','shadows','reflections','illuminations'].includes(pass))throw Error(`Unknown finishing pass: ${pass}`);
   const make=options.createCanvas??((w,h)=>{if(canvas.ownerDocument){const c=canvas.ownerDocument.createElement('canvas');c.width=w;c.height=h;return c;}return new canvas.constructor(w,h);});
   const ctx=canvas.getContext('2d'),scratch=make(W,H),sc=scratch.getContext('2d');
   const buffer=new Float32Array(W*H*3),baseColor=rgb(scene.canvas.background),debug=!['beauty','ungraded'].includes(pass);
@@ -132,7 +156,7 @@ export function drawFinished(canvas,scene,catalog,images,time,states,options={})
   const renderLayer=s=>{sc.setTransform(1,0,0,1,0,0);sc.clearRect(0,0,W,H);sc.imageSmoothingEnabled=true;sc.imageSmoothingQuality='high';sc.globalAlpha=1;sc.globalCompositeOperation='source-over';sc.setTransform(...s.matrix);const im=images.get(s.asset);if(!im)throw Error(`Missing image: ${s.asset}`);
     // Isolate source cells so transformed filtering cannot see adjacent poses.
     sc.drawImage(isolatedCell(im,s.source,make),...s.rect);};
-  const blit=(bounds,pixels,opacity,blend,transform)=>{const [bx,by,w,h]=bounds;for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=(y*w+x)*4,a=clamp(pixels[i+3]/255*opacity);if(!a)continue;const j=((by+y)*W+bx+x)*3;let c=[LUT[pixels[i]],LUT[pixels[i+1]],LUT[pixels[i+2]]];if(transform)c=transform(c,bx+x+.5,by+y+.5);for(let k=0;k<3;k++){let v=c[k],d=buffer[j+k];if(blend==='multiply')v*=d;else if(blend==='screen')v=1-(1-clamp(v))*(1-clamp(d));buffer[j+k]=d*(1-a)+v*a;}}};
+  const blit=(bounds,pixels,opacity,blend,transform)=>{const [bx,by,w,h]=bounds;for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=(y*w+x)*4,a=clamp(pixels[i+3]/255*opacity);if(!a)continue;const j=((by+y)*W+bx+x)*3;let c=[LUT[pixels[i]],LUT[pixels[i+1]],LUT[pixels[i+2]]];if(transform)c=transform(c,bx+x+.5,by+y+.5);for(let k=0;k<3;k++){let v=c[k],d=buffer[j+k];if(blend==='multiply')v*=d;else if(blend==='screen')v=1-(1-clamp(v))*(1-clamp(d));buffer[j+k]=blend==='add'?d+v*a:d*(1-a)+v*a;}}};
   const appearance=new Map();
   for(const s of states){const l=layers.get(s.id),inverse=inv(s.matrix),grades=[f.assets?.[s.asset],f.groups?.[l.group],f.layers?.[s.id]].filter(Boolean),lights=zone.filter(z=>z.receivers.includes(s.id));
     appearance.set(s.id,(c,x,y,lightOnly=false)=>{
@@ -173,12 +197,28 @@ export function drawFinished(canvas,scene,catalog,images,time,states,options={})
     for(let y=0;y<bounds[3];y++)for(let x=0;x<bounds[2];x++){const xx=x+bounds[0]-rx,yy=y+bounds[1]-ry,i=(y*bounds[2]+x)*4;pixels[i+3]*=xx>=0&&xx<rw&&yy>=0&&yy<rh?receiverPixels[(yy*rw+xx)*4+3]/255:0;}
     blit(bounds,pixels,opacity*intensity(e)*caster.opacity*receiver.opacity,'source-over',color?()=>debug?[1,1,1]:color:null);
   }
-  for(const s of states){if(!s.visible||(options.solo&&s.id!==options.selected))continue;const bounds=bounding(s.matrix,s.rect,W,H);if(!bounds[2]||!bounds[3])continue;renderLayer(s);const pixels=sc.getImageData(...bounds).data,l=layers.get(s.id),inverse=inv(s.matrix);
+  const contributions=new Set((f.illuminations||[]).map(e=>e.layer));
+  function illuminate(e,receiverPixels,receiverBounds){
+    const s=byId.get(e.layer),receiver=byId.get(e.receiver);
+    if(!s.visible||s.opacity<=0)return;
+    const bounds=bounding(s.matrix,s.rect,W,H);if(!bounds[2]||!bounds[3])return;
+    renderLayer(s);const pixels=sc.getImageData(...bounds).data,ri=inv(receiver.matrix);
+    const [rx,ry,rw,rh]=receiverBounds;
+    for(let y=0;y<bounds[3];y++)for(let x=0;x<bounds[2];x++){
+      const wx=x+bounds[0],wy=y+bounds[1],xx=wx-rx,yy=wy-ry,i=(y*bounds[2]+x)*4;
+      const local=xy(ri,wx+.5,wy+.5),u=(local[0]-receiver.rect[0])/receiver.rect[2],v=(local[1]-receiver.rect[1])/receiver.rect[3];
+      pixels[i+3]*=(xx>=0&&xx<rw&&yy>=0&&yy<rh?receiverPixels[(yy*rw+xx)*4+3]/255:0)*maskValue(e.mask_asset,u,v,images,make,catalog);
+    }
+    // s.opacity already inherits receiver opacity exactly once through attachment.
+    blit(bounds,pixels,s.opacity,e.mode==='add'?'add':'source-over',appearance.get(s.id));
+  }
+  for(const s of states){if(!s.visible||contributions.has(s.id)||(options.solo&&s.id!==options.selected&&!(f.illuminations||[]).some(e=>e.layer===options.selected&&e.receiver===s.id)))continue;const bounds=bounding(s.matrix,s.rect,W,H);if(!bounds[2]||!bounds[3])continue;renderLayer(s);const pixels=sc.getImageData(...bounds).data,l=layers.get(s.id),inverse=inv(s.matrix);
     blit(bounds,pixels,s.opacity,debug?'source-over':s.blend,(c,x,y)=>{
-      if(pass==='shadows'||pass==='reflections')return [0,0,0];
+      if(['shadows','reflections','illuminations'].includes(pass))return [0,0,0];
       if(pass==='ungraded')return c;
       return appearance.get(s.id)(c,x,y,pass==='lights');
     });
+    if(pass==='beauty'||pass==='illuminations')for(const e of f.illuminations||[])if(e.receiver===s.id)illuminate(e,pixels,bounds);
     if(pass!=='ungraded')for(const kind of ['shadows','reflections'])if(pass==='beauty'||pass===kind)for(const e of f[kind]||[])if(e.receiver===s.id)effect(e,kind,pixels,bounds);
   }
   const result=ctx.createImageData(W,H);

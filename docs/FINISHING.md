@@ -66,6 +66,10 @@ The effect multiplies receiver RGB by a colored intensity factor. It does not ad
 
 A cel signal requires one intensity value per source cel, including held/repeated cels. It follows the layer's actual cell clock or cell track and multiplies by effective visibility/opacity, so a hidden flame's shared signal becomes zero. Alternatively use closed `keys: [[time,value],...]` plus `interpolation: "linear"`, `"smoothstep"` or `"hold"`, with keys beginning at zero and ending at the picture duration with matching values. Intensities range from zero through eight. A key-based signal is independent of a layer. Shared signal IDs can drive several lights or projected effects without separately authored flicker cadences.
 
+## Source bindings and prepared painted light
+
+[Source bindings](BINDINGS.md) map existing signal intensity, normalized local pose or discrete cel/state to bounded layer channels. `binding inspect/check/apply` uses normal scene transactions. `finishing.illuminations` composites prepared contribution layers over explicit receiving bases, clipped by receiver alpha and receiver-local masks in linear light. Attachment, source response and surface receiving remain distinct. Reusable look/rig packages preserve the binding endpoints, registered masks and painted base/contribution identities.
+
 ## Contact shadows and reflections
 
 `shadows` and `reflections` are explicit relationships, painted immediately after their receiver and before later foreground layers. The caster must occur after the receiver in the scene's painter order, and they must be different layers. Receiver alpha clips the projected result; caster and receiver visibility/opacity affect it. An arbitrary depth number does not establish the relationship.
