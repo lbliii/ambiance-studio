@@ -1,5 +1,6 @@
 // Pure, absolute-time scene sampling. Preview never advances simulation state.
 import {validateFinishing,drawFinished} from './finishing.mjs';
+import {validateBindings,sampleBinding} from './bindings.mjs';
 export const TAU = Math.PI * 2;
 const identity = [1,0,0,1,0,0];
 export function multiply(a,b) {
@@ -90,6 +91,8 @@ export function compileScene(input,inputCatalog) {
   const assets=new Map(catalog.assets.map(a=>[a.id,a]));
   const groups=new Map(scene.groups.map(g=>[g.id,g]));
   const layers=new Map(scene.layers.map(l=>[l.id,l]));
+  const signals=new Map((scene.finishing?.signals||[]).map(s=>[s.id,s]));
+  const bindings=new Map(scene.layers.map(l=>[l.id,(scene.bindings?.links||[]).filter(b=>b.target.layer===l.id)]));
   function sample(time){
     if(!Number.isFinite(time))throw Error('Time must be finite.');
     const t=wrapTime(time,T), p=TAU*t/T, memo=new Map();
@@ -106,19 +109,22 @@ export function compileScene(input,inputCatalog) {
     }
     const motion=sampleLayerMotion(layer,t,T);
     const tracks=layer.tracks||{};
-    const x=(trackValue(tracks.x,t,layer.x)+motion.x)*W;
-    const y=(trackValue(tracks.y,t,layer.y)+motion.y)*H;
-    const r=trackValue(tracks.rotation,t,layer.rotation)+motion.rotation;
-    const matrix=chain(parent,translation(x,y),rotation(r),scaling(trackValue(tracks.scale,t,layer.scale)));
     const asset=assets.get(layer.asset), atlas=asset.atlas;
-    const cell=trackValue(tracks.cell,t,atlas?(Math.floor(t/layer.cycle_seconds*atlas.frame_count+1e-7)+(layer.phase_frames||0))%atlas.frame_count:0);
+    const channels={x:trackValue(tracks.x,t,layer.x)+motion.x,y:trackValue(tracks.y,t,layer.y)+motion.y,
+      rotation:trackValue(tracks.rotation,t,layer.rotation)+motion.rotation,scale:trackValue(tracks.scale,t,layer.scale),
+      ...sampleLayerAppearance(layer,t),
+      cell:trackValue(tracks.cell,t,atlas?(Math.floor(t/layer.cycle_seconds*atlas.frame_count+1e-7)+(layer.phase_frames||0))%atlas.frame_count:0)};
+    const responses=bindings.get(layer.id).map(b=>sampleBinding(b,signals,id=>visit(layers.get(id)),t,T));
+    for(const response of responses)channels[response.target.channel]=response.value;
+    const matrix=chain(parent,translation(channels.x*W,channels.y*H),rotation(channels.rotation),scaling(channels.scale));
+    const cell=channels.cell;
     const rect=[-layer.anchor[0]*layer.width*W,-layer.anchor[1]*layer.height*H,layer.width*W,layer.height*H];
     const socketLocal=Object.fromEntries(Object.entries({...asset.sockets,...layer.sockets}).map(([name,value])=>{
       const uv=Array.isArray(value)?value:value.frames[cell];
       return [name,[rect[0]+uv[0]*rect[2],rect[1]+uv[1]*rect[3]]];
     }));
-    const appearance=sampleLayerAppearance(layer,t);
-    const state={id:layer.id,asset:layer.asset,matrix,parent,cell,depth:d,visible:appearance.visible&&(!attached||attached.visible),
+    const appearance=channels;
+    const state={id:layer.id,asset:layer.asset,channels,bindings:responses,matrix,parent,cell,depth:d,visible:appearance.visible&&(!attached||attached.visible),
       opacity:appearance.opacity*(attached?attached.opacity:1),blend:layer.blend,rect,socketLocal,
       sockets:Object.fromEntries(Object.entries(socketLocal).map(([name,xy])=>[name,point(matrix,...xy)])),
       source:atlas?[(cell%atlas.columns)*atlas.cell_width,Math.floor(cell/atlas.columns)*atlas.cell_height,atlas.cell_width,atlas.cell_height]:[0,0,asset.width,asset.height]};
@@ -126,7 +132,8 @@ export function compileScene(input,inputCatalog) {
     }
     return scene.layers.map(visit);
   }
-  return {sample,scene,catalog};
+  const inspectBindings=time=>({version:1,time:wrapTime(time,T),bindings:scene.bindings??null,samples:sample(time).flatMap(s=>s.bindings)});
+  return {sample,inspectBindings,scene,catalog};
 }
 export function sampleScene(scene,catalog,time){
   return compileScene(scene,catalog).sample(time);
@@ -183,6 +190,7 @@ export function validateScene(scene,catalog) {
   if(scene.coverage_layers&&(!Array.isArray(scene.coverage_layers)||scene.coverage_layers.some(id=>!layers.has(id))))throw Error('Unknown coverage layer.');
   if(scene.audio&&(!finite(scene.audio.loop_seconds)||scene.audio.loop_seconds<=0||Math.abs(scene.audio.loop_seconds/c.loop_seconds-Math.round(scene.audio.loop_seconds/c.loop_seconds))>1e-8)) throw Error('Audio duration must be a whole number of picture loops.');
   validateFinishing(scene,catalog);
+  validateBindings(scene,catalog);
   return true;
 }
 
@@ -196,7 +204,7 @@ export function drawScene(canvas,scene,catalog,images,time,{selected=null,grid=f
   const states=sampler?sampler(time):sampleScene(scene,catalog,time);
   canvas.finishingReport=null;
   if(scene.finishing)canvas.finishingReport=drawFinished(canvas,scene,catalog,images,time,states,{selected,solo,createCanvas,pass});
-  else if(['lights','shadows','reflections'].includes(pass)){ctx.fillStyle='#000000';ctx.fillRect(0,0,W,H);}
+  else if(['lights','shadows','reflections','illuminations'].includes(pass)){ctx.fillStyle='#000000';ctx.fillRect(0,0,W,H);}
   else for(const s of states){
     if(!s.visible||(solo&&s.id!==selected))continue;
     ctx.save();ctx.setTransform(...s.matrix);ctx.globalAlpha=s.opacity;ctx.globalCompositeOperation=s.blend;

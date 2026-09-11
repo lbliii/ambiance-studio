@@ -150,8 +150,8 @@ def parser():
     preview_kind.add_argument('--prepare',type=Path,help='Inspect and edit a verified preparation draft without writing project files')
     q=sub.add_parser('test',help='Run local regression checks without paid providers');q.add_argument('--out',type=Path)
     planning.add_parsers(sub);assets.add_library_parsers(sub);revisions.add_parsers(sub)
-    from . import rendering, audio, finishing, production
-    rendering.add_parsers(sub);audio.add_parsers(sub);finishing.add_parsers(sub)
+    from . import rendering, audio, finishing, production, bindings
+    rendering.add_parsers(sub);audio.add_parsers(sub);finishing.add_parsers(sub);bindings.add_parsers(sub)
     production.add_parsers(sub)
     return p
 
@@ -176,7 +176,7 @@ def run(args):
             'note':'Optional dependency availability does not imply a renderer or provider adapter is implemented.'}
     if command=='test':
         require_node();asset_tool()
-        commands=[[sys.executable,'-m','unittest','discover','-s','tests','-p','test_*.py'],['node','editor/verify-engine.mjs'],['node','tests/test-rig.mjs'],['node','tests/test-tracks.mjs'],['node','tests/test-source-placement.mjs'],['node','tests/test-finishing.mjs'],[sys.executable,'tools/package_audit.py']]
+        commands=[[sys.executable,'-m','unittest','discover','-s','tests','-p','test_*.py'],['node','editor/verify-engine.mjs'],['node','tests/test-rig.mjs'],['node','tests/test-tracks.mjs'],['node','tests/test-source-placement.mjs'],['node','tests/test-finishing.mjs'],['node','tests/test-bindings.mjs'],[sys.executable,'tools/package_audit.py']]
         results=[]
         for c in commands:
             p=subprocess.run(c,cwd=ROOT,capture_output=True,text=True)
@@ -229,6 +229,9 @@ def run(args):
         if id:result.update(watch_url=f'{base}/projects/{alias}/deliveries/{id}',current_url=f'{base}/projects/{alias}')
         return result
     if command=='asset' and action in ['prepare','preflight','crop','return','edges','edge-repair']:return assets.run_preparation(args,project)
+    if command=='binding':
+        from . import bindings
+        return bindings.run(args,project)
     if command=='revision':return revisions.run(args,project)
     if command=='plan':return planning.run(args,project)
     if command in ['render','media']:

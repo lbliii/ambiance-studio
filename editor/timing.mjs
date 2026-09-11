@@ -23,9 +23,10 @@ export function sceneTiming(scene,catalog,{layer:filter}={}){
   const assets=new Map(catalog.assets.map(a=>[a.id,a]));
   const layers=selected.map(layer=>{
     const asset=assets.get(layer.asset),count=asset.atlas?.frame_count||1;
-    const driver=layer.tracks?.cell?'cell_track':count>1?'cycle':'static';
+    const binding=scene.bindings?.links.find(b=>b.target.layer===layer.id&&b.target.channel==='cell');
+    const driver=binding?'binding':layer.tracks?.cell?'cell_track':count>1?'cycle':'static';
     const fallback=asset.atlas?{seconds:layer.cycle_seconds,phase_frames:layer.phase_frames,nominal_cel_fps:count/layer.cycle_seconds,active:driver==='cycle'}:null;
-    let boundaries=[0,T];
+    let boundaries=driver==='binding'?[]:[0,T];
     if(driver==='cell_track')boundaries=layer.tracks.cell.keys.map(k=>k[0]);
     else if(driver==='cycle'){
       const events=Math.round(T/layer.cycle_seconds)*count;
@@ -64,7 +65,7 @@ export function sceneTiming(scene,catalog,{layer:filter}={}){
     while(leading<N&&!values[leading].render_eligible)leading++;
     while(trailing<N&&!values[N-1-trailing].render_eligible)trailing++;
     return {layer:layer.id,asset:layer.asset,timing_driver:driver,fallback_cycle:fallback,
-      authored:{holds,rate_segments:rates,cel_changes:holds.length-1,seam_cel_change:holds.at(-1).cell!==holds[0].cell},
+      binding:binding??null,authored:{available:driver!=='binding',reason:driver==='binding'?'Binding follows evaluated source; consult sampled intervals and binding inspection for exact at-time values.':null,holds,rate_segments:rates,cel_changes:driver==='binding'?null:holds.length-1,seam_cel_change:driver==='binding'?null:holds.at(-1).cell!==holds[0].cell},
       sampled:{segments,cel_transitions:transitions,render_eligible_cel_transitions:visibleTransitions,
         seam_cel_change:last.cell!==first.cell,unpresented_authored_holds:unpresented,
         effective_visibility_windows:visibility,zero_opacity_intervals:zeroOpacity,render_eligible_windows:eligible},

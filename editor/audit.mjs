@@ -50,7 +50,7 @@ export async function auditPixels(scene,catalog,images,onProgress=()=>{}){
   for(let f=0;f<N;f++){
     ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.clearRect(0,0,W,H);
     for(const s of rig.sample(f/scene.canvas.fps)){
-      if(!s.visible)continue;
+      if(!s.visible||(scene.finishing?.illuminations||[]).some(e=>e.layer===s.id))continue;
       ctx.setTransform(...s.matrix.map(n=>n*ratio));ctx.globalAlpha=s.opacity;ctx.globalCompositeOperation=s.blend;
       ctx.drawImage(images.get(s.asset),...s.source,...s.rect);
     }

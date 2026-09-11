@@ -15,7 +15,7 @@ try{
   report=auditScene(scene,catalog);
   const assetRoot=path.dirname(path.dirname(catalogFile));
   report.inputs={scene_sha256:hash(sceneFile),catalog_sha256:hash(catalogFile),
-    engine_sha256:hash(path.join(root,'editor/engine.mjs')),audit_sha256:hash(path.join(root,'editor/audit.mjs'))};
+    engine_sha256:hash(path.join(root,'editor/engine.mjs')),audit_sha256:hash(path.join(root,'editor/audit.mjs')),bindings_sha256:hash(path.join(root,'editor/bindings.mjs')),finishing_sha256:hash(path.join(root,'editor/finishing.mjs'))};
   report.asset_hashes={};
   for(const id of new Set(scene.layers.map(l=>l.asset))){
     const asset=catalog.assets.find(a=>a.id===id),file=path.resolve(assetRoot,asset.file);
