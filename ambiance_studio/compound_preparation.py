@@ -172,9 +172,20 @@ def context_inputs(project, recipe):
 
 def inspect(project, path, check=False):
     project, path = Path(project).resolve(), Path(path).resolve()
-    if path.is_dir():
-        if (path/'artifact.json').exists(): artifact(path)
-        path = path/'recipe.json'
+    if path.is_dir() and (path/'artifact.json').exists():
+        recipe, receipt = artifact(path)
+        diverged=[]
+        for role, ref in [*references(recipe), *list((recipe.get('context') or {}).items())]:
+            if not isinstance(ref,dict) or 'file' not in ref: continue
+            target=ap.project_file(project,ref['file'])
+            if not target.is_file() or ap.sha(target.read_bytes())!=ref['sha256']: diverged.append({'role':role,'file':ref['file']})
+        return {'ok':not receipt['warnings'] and not diverged if check else True, 'artifact':str(path),
+                'recipe':str(path/'recipe.json'),'sha256':receipt['recipe_sha256'],'receipt':str(path/'preparation-receipt.json'),
+                'parts':list(receipt['outputs']),'bindings':receipt['bindings'],'views':receipt['views'],
+                'facts':receipt['facts'],'warnings':receipt['warnings'],'working_divergence':diverged,
+                'captured_integrity':True,'review_status':'unreviewed',
+                'next_action':'Captured bytes remain intact. Use a new recipe/context for changed working inputs; inspect saved proofs separately.'}
+    if path.is_dir(): path=path/'recipe.json'
     raw = path.read_bytes(); recipe = json.loads(raw)
     if recipe.get('format') == single.FORMAT:
         inputs = single.load_inputs(project, recipe); images, facts, warnings = single.evaluate(recipe, inputs)

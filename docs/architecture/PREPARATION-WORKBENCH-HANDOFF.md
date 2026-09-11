@@ -25,3 +25,5 @@ The next milestone is a measured object-preparation pilot on a different paintin
 The first editor handles one rigid part and one fixed foreground layer. Compound rigs remain in the scene tools. Polygon masks are hard-edged; imported grayscale masks preserve soft alpha outside edited regions. The fixture intentionally leaves small background corners around its rounded pedestal visible in isolation as a preparation exercise.
 
 Live preview requires the recorded preparation implementation/Pillow version. Saved masks match interactive mask bytes exactly; browser/native Canvas sampling can differ at edges. Compiler source mappings pin source and prepared image, while full separation provenance remains in the complete preparation artifact; the revision dependency schema was not extended in this slice. No existing film, accepted source, sound session, review selection or provider account was changed.
+
+The agent operation pass is now implemented; see [its handoff](AGENT-PREPARATION-HANDOFF.md) for public compound preparation/recovery commands, exact local fixture evidence and remaining artistic-pilot scope.

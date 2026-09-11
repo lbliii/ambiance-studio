@@ -98,10 +98,15 @@ class CompoundPreparationTests(unittest.TestCase):
         project=self.root/'tea';result=fixture.create(project,proof=False)
         prepared=Path(result['prepared']['directory']);recipe=p.load(prepared/'recipe.json')
         receipt=p.load(prepared/'preparation-receipt.json')
+        snapshot=c.inspect(project,prepared);self.assertTrue(snapshot['captured_integrity']);self.assertTrue(snapshot['working_divergence'])
         self.assertEqual(set(receipt['views']),{'portrait','landscape'})
         self.assertEqual(receipt['bindings']['pot']['inventory_part'],{'item_id':'pot','part_id':'paint'})
         # Placement changes the working scene but must not invalidate immutable preparation controls.
         c.validate_preparation_receipt(prepared/'preparation-receipt.json',p.sha((prepared/'preparation-receipt.json').read_bytes()),[prepared/'images/pot.png'])
+        from ambiance_studio.revisions import Collector
+        collector=Collector(project);catalog=p.load(project/'assets/catalog.json')
+        collector.asset(next(a for a in catalog['assets'] if a['id']=='compound-pot'))
+        self.assertTrue(any(row['path'].endswith('images/pot-light.png') for row in collector.refs))
         out=project/'reports/proof';real=commands.cli;completed=[]
         def interrupt_second(*args):
             if len(completed)>4: raise KeyboardInterrupt()
@@ -116,6 +121,9 @@ class CompoundPreparationTests(unittest.TestCase):
             normal=Path(run['steps']['normal']['directory']);hidden=Path(run['steps']['subjects-hidden']['directory'])
             with Image.open(normal/f'rest-{view}/frame.png') as rest,Image.open(normal/f'extreme-{view}/frame.png') as extreme,Image.open(hidden/f'rest-{view}/frame.png') as absent:
                 self.assertEqual(rest.size,size);self.assertNotEqual(rest.tobytes(),extreme.tobytes());self.assertNotEqual(rest.tobytes(),absent.tobytes())
+        foreground=Path(run['steps']['foreground-hidden']['directory'])/'rest-landscape/frame.png'
+        with Image.open(foreground) as image:
+            self.assertEqual(image.getpixel((110,64))[:3],(54,84,101))
         # A hash-consistent wrong-view report still fails the typed preparation contract.
         render_path=Path(run['steps']['normal']['directory'])/'render/render-report.json'
         render_bytes=render_path.read_bytes();run_bytes=(out/'proof-run.json').read_bytes()

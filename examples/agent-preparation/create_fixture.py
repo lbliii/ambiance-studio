@@ -100,7 +100,8 @@ def create(out,subject='tea',proof=True):
     write(out/'plans/legacy-preparation.json',old)
     draft=run(out,'asset','prepare','init',out/'plans/legacy-preparation.json','--out',out/'assets/prepared/draft')
     batch={'version':1,'operations':[{'op':'remove-part','part':'subject'},{'op':'remove-part','part':'foreground'},
-           *[{'op':'add-part','value':part} for part in parts],{'op':'set-seconds','value':2},{'op':'set-context','value':context}]}
+           *[{'op':'add-part','value':part} for part in parts],
+           *[{'op':'append-polygon','mask':'removal','value':region} for region in old['masks']['occluder']['polygons']],{'op':'set-seconds','value':2},{'op':'set-context','value':context}]}
     write(out/'plans/preparation-batch.json',batch)
     edited=run(out,'asset','prepare','edit',draft['recipe'],'--batch',out/'plans/preparation-batch.json','--expect-sha256',draft['sha256'],'--out',out/'assets/prepared/authoring')
     checked=run(out,'asset','prepare','inspect',edited['recipe'])
