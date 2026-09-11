@@ -2,6 +2,8 @@
 
 These are realistic forward-test cases, not completed independent-agent evaluations. The skills have been format/link checked; the record keeper has executable behavior tests. A second operator's end-to-end film remains an open pilot.
 
+The [consolidated production roadmap](../docs/architecture/PRODUCTION-IMPROVEMENTS.md) extends this evaluation program through CI-02 and PILOT-01 in its [backlog](../docs/architecture/PRODUCTION-IMPROVEMENTS.yaml): paired staging, deliberate stillness, visible quiet-scene activity, coupled painted light and resumed production. Those trials remain planned; no behavior pass is implied by the instruction updates.
+
 Run a trial in a separate project with only the stated inputs and permitted tools. Evaluate artifacts and decisions, not whether the response repeats exact wording. Use live generation only when its budget is explicitly authorized.
 
 | User request and inputs | Expected observable behavior |

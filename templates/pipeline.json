@@ -18,12 +18,12 @@
         },
         {
           "id": "creative-direction",
-          "description": "Focal point, palette, edge treatment, movement restraint, sound story, and intended audience are specified.",
+          "description": "Focal point, palette, edge treatment, story actions, intended motion readability/cadence, sound story, and audience are specified.",
           "kind": "review"
         },
         {
           "id": "production-scope",
-          "description": "Authored stage, every requested view and output size, durations, tool availability, reuse scope, and generation spending authority are recorded.",
+          "description": "Authored stage, requested portrait/landscape or explicitly chosen views and output sizes, durations, required creative work, tool gaps, reuse scope, and generation authority are recorded.",
           "kind": "review"
         }
       ]
@@ -36,7 +36,9 @@
       ],
       "watch": [
         "plans/layer-plan.json",
-        "plans/layout-notes.md"
+        "plans/layout-notes.md",
+        "plans/scene-census.json",
+        "plans/asset-inventory.json"
       ],
       "criteria": [
         {
@@ -52,6 +54,16 @@
         {
           "id": "attachments",
           "description": "Groups and attachment sockets keep architecture, smoke, lights, and ground consistent.",
+          "kind": "review"
+        },
+        {
+          "id": "scene-census",
+          "description": "Meaningful visible object families and light sources were surveyed before selecting assets; story roles, deliberate stillness, chosen actions, source/receiver relationships and required production parts are recorded.",
+          "kind": "review"
+        },
+        {
+          "id": "output-compositions",
+          "description": "Small blocking/composition proofs show the intended subjects, action room and hidden-paint needs in every requested output format, preserving proportions and reference identity.",
           "kind": "review"
         }
       ]
@@ -99,7 +111,8 @@
       "watch": [
         "scene",
         "reports/animation",
-        "deliverables/picture"
+        "deliverables/picture",
+        "plans/asset-inventory.json"
       ],
       "criteria": [
         {
@@ -114,7 +127,12 @@
         },
         {
           "id": "picture-review",
-          "description": "A full draft of each requested view was reviewed at its intended display size for attachment drift, flicker, frame jitter, visual hierarchy, and motion density.",
+          "description": "A full draft was reviewed at normal speed/size in each requested composition for noticeable story/environment actions, unintended still intervals, visual hierarchy, contacts, flicker and jitter; actual observations are stated.",
+          "kind": "review"
+        },
+        {
+          "id": "scope-coverage",
+          "description": "plan check --require-complete passes for the selected production scope, with actual picture evidence for required actions and output compositions; a partial prototype has not silently replaced the intended film.",
           "kind": "review"
         }
       ]
