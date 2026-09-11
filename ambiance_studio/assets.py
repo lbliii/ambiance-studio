@@ -47,6 +47,12 @@ def inspect_pack(pack):
     changed=[f for f,h in report['outputs'].items() if not studio.inside(pack,f).is_file() or studio.digest(studio.inside(pack,f))!=h]
     result={'ok':not changed,'asset':asset,'build':report,'changed_outputs':changed,
             'proofs':{f:str(pack/f) for f in ['contact-sheet.png','preview.gif'] if (pack/f).is_file()}}
+    if not changed and asset.get('provenance',{}).get('preparation_receipt'):
+        from .compound_preparation import validate_preparation_receipt
+        ref=asset['provenance']['preparation_receipt'];recipe=studio.read(pack/'recipe.json')
+        if ref!=recipe.get('preparation_receipt'): raise ValueError('Preparation recipe/provenance differ')
+        spec=recipe['input'];paths=[(pack/f).resolve() for f in ([spec['sheet']] if 'sheet' in spec else spec['frames'])]
+        validate_preparation_receipt(pack/ref['file'],ref['sha256'],paths,recipe)
     if not changed and asset.get('provenance',{}).get('motion_preparation'):
         from .asset_motion import validate_preparation, compiler_settings
         ref=asset['provenance']['motion_preparation'];recipe=studio.read(pack/'recipe.json')
@@ -198,9 +204,12 @@ def proof(identifier,out,project=None,catalog=None,fps=6,width=180,landmark='anc
 
 def add_preparation_parsers(group):
     q=group.add_parser('prepare',help='Build a source-coordinate separation workbench and reproducible parts')
-    q.add_argument('source',type=Path,nargs='?');q.add_argument('--backing',type=Path)
+    q.add_argument('source',type=Path,nargs='?');q.add_argument('target',type=Path,nargs='?');q.add_argument('--backing',type=Path)
+    q.add_argument('--batch',type=Path);q.add_argument('--expect-sha256');q.add_argument('--context',type=Path)
+    q.add_argument('--base');q.add_argument('--prefix');q.add_argument('--dry-run',action='store_true')
+    q.add_argument('--long-edge',type=int,default=640);q.add_argument('--resume',action='store_true')
     q.add_argument('--recipe',type=Path);q.add_argument('--backing-to-source',type=float,nargs=6)
-    q.add_argument('--out',type=Path,required=True)
+    q.add_argument('--out',type=Path)
     q=group.add_parser('preflight',help='Decode transparency facts and make light/dark previews');q.add_argument('source',type=Path);q.add_argument('--out',type=Path,required=True)
     q=group.add_parser('crop',help='Export a mapped source crop into a fresh directory');q.add_argument('source',type=Path);q.add_argument('--recipe',type=Path,required=True);q.add_argument('--out',type=Path,required=True)
     q=group.add_parser('return',help='Register a returned edit and blend into a source derivative');q.add_argument('edit',type=Path);q.add_argument('--mapping',type=Path,required=True);q.add_argument('--out',type=Path,required=True)
@@ -212,7 +221,8 @@ def run_preparation(args,project):
     from . import asset_prep
     if args.action=='prepare':
         from . import preparation
-        return preparation.build(project,args.out,args.recipe,args.source,args.backing,args.backing_to_source)
+        from . import preparation_commands
+        return preparation_commands.run(args,project)
     if args.action=='preflight': return asset_prep.preflight(args.source,args.out)
     if args.action=='crop': return asset_prep.crop(project,args.source,args.recipe,args.out)
     if args.action=='return': return asset_prep.return_edit(project,args.edit,args.mapping,args.out)
