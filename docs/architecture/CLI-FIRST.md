@@ -36,6 +36,8 @@ The [library contract](../STUDIO-LIBRARY.md) adds a machine-local registry, proj
 
 ## Remaining engineering slices
 
+The selected [portrait/landscape implementation plan](DUAL-FORMAT-IMPLEMENTATION.md) adds two saved views of one scene, synchronized proofs, view-bound editions and a resumable paired delivery. It is planned, not implemented. Start with its saved-view and picture-proof milestones; retain existing scene and delivery behavior through explicit compatibility adapters.
+
 The [preparation workbench plan](ASSET-PREPARATION-WORKBENCH.md) turns the museum's mask and alignment lessons into an integrated CLI/browser workflow. Its first slice provides saved separation recipes, interactive masks/alignment and shared-engine motion proofs. The next engineering pass improves direct recipe inspection, validation, bounded edits and proof discovery for the agent; a measured agent-operated pilot on a different painting follows.
 
 Version 0.7 adds the [finishing/edge implementation](CLI-FINISHING-PLAN.md), with opt-in shared rendering, reproducible appearance packages, all-cel matte inspection/repair, supersampling and browser look development. Future physical lighting or additional color spaces must extend the explicit contract; existing painted shadows and parallax depths do not establish full scene geometry.
