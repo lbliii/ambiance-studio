@@ -162,18 +162,19 @@ class ActivityTests(unittest.TestCase):
 
     def test_semantic_plan_adapter_pins_exact_action_targets_and_expectations(self):
         from ambiance_studio import cli, production_plan
+        action_id='A'*98+'.X'
         plan=json.loads((ROOT/'examples/production-plan.json').read_text())
-        element=plan['elements'][0];element.update(kind='character',motion_role='primary',cadence='recurring',action_ids=['gesture'],required_art=[])
+        element=plan['elements'][0];element.update(kind='character',motion_role='primary',cadence='recurring',action_ids=[action_id],required_art=[])
         element['realization']={'method':'rig','inventory_parts':[],'layer_ids':['actor']}
-        plan['actions']=[{'id':'gesture','element_id':'room','description':'Turn and travel','method':'cel and rigid motion','layer_ids':['actor'],
+        plan['actions']=[{'id':action_id,'element_id':'room','description':'Turn and travel','method':'cel and rigid motion','layer_ids':['actor'],
                           'targets':[{'view_id':'portrait','readability_target':2},{'view_id':'landscape','readability_target':3}],
                           'timing':{'rest_max_seconds':1}}]
         plan['outputs']=[{'view_id':v,'roles':['silent']} for v in ['portrait','landscape']]
-        plan['expectations']=[{**plan['expectations'][0],'id':'activity','view_ids':['portrait','landscape'],'action_ids':['gesture'],
+        plan['expectations']=[{**plan['expectations'][0],'id':'activity','view_ids':['portrait','landscape'],'action_ids':[action_id],
                                'requirement':{'type':'measured','check':'activity'}}]
         proposal=self.root/'plan.json';proposal.write_text(json.dumps(plan))
         cli.run(args('--project',self.project,'plan','spec','apply',proposal,'--expect-sha256','absent'))
-        out=self.root/'semantic';activity.run(args('scene','activity','--action-id','gesture','--view','portrait','--view','landscape','--out',out),self.project)
+        out=self.root/'semantic';activity.run(args('scene','activity','--action-id',action_id,'--view','portrait','--view','landscape','--out',out),self.project)
         report=activity.verify_receipt(out)
         self.assertEqual(report['plan']['plan_sha256'],activity.digest(self.project/production_plan.PATH))
         self.assertIn('activity',report['plan']['expectation_sha256'])

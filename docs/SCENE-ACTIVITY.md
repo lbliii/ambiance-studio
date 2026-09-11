@@ -8,7 +8,7 @@
 ./ambiance --project PROJECT scene activity --layer mouse --raster --frames 90 --out reports/mouse-draft
 ```
 
-Actions come from the canonical production plan: action ID, owning element's realization layers (or the explicit action subset), target views, 0–4 readability targets, method, cadence, and timing targets. `--layer ID` adds a diagnostic intervention with ID `layer-ID`, without inventing a semantic requirement. `--action-id` filters plan actions; repeat `--view` for up to two outputs. An absent plan permits diagnostic drafts; an invalid plan fails. `--revision ID` selects captured inputs and its captured plan.
+Actions come from the canonical production plan: action ID, owning element's realization layers (or the explicit action subset), target views, 0–4 readability targets, method, cadence, and timing targets. `--layer ID` adds a diagnostic intervention with ID `layer-ID` (or a stable hashed diagnostic ID for unusual runtime IDs), without inventing a semantic requirement. `--action-id` filters plan actions; repeat `--view` for up to two outputs. An absent plan permits diagnostic drafts; an invalid plan fails. `--revision ID` selects captured inputs and its captured plan.
 
 The artifact directory contains:
 

@@ -217,11 +217,14 @@ def run(args, project):
     layers = {l['id'] for l in scene['layers']}
     if set(args.layer) - layers: raise ValueError('Unknown --layer in selected scene')
     for layer in args.layer:
-        actions.append({'id': 'layer-'+layer, 'layers': [layer], 'views': [], 'targets': [], 'cadence': None, 'semantic': False})
+        diagnostic_id = 'layer-'+layer
+        if not re.fullmatch(r'[a-zA-Z0-9][a-zA-Z0-9_.-]{0,99}', diagnostic_id):
+            diagnostic_id = 'layer-'+hashlib.sha256(layer.encode()).hexdigest()[:24]
+        actions.append({'id': diagnostic_id, 'layers': [layer], 'views': [], 'targets': [], 'cadence': None, 'semantic': False})
     if len({a['id'] for a in actions}) != len(actions): raise ValueError('Duplicate action ID; remove repeated filters')
     if len(actions) > 64: raise ValueError('Activity summary is limited to 64 actions; select --action-id filters')
     for action in actions:
-        if not re.fullmatch(r'[a-z][a-z0-9_-]{0,63}', action['id']): raise ValueError('Activity action IDs require a safe lowercase identifier')
+        if not re.fullmatch(r'[a-zA-Z0-9][a-zA-Z0-9_.-]{0,99}', action['id']): raise ValueError('Activity action IDs must use the canonical stable-ID vocabulary')
         if not set(action['layers']) <= layers: raise ValueError(f'Action {action["id"]} references unrealized layers')
     if args.compare and not args.raster: raise ValueError('--compare requires --raster')
     frames = args.frames if args.frames is not None else round(scene['canvas']['fps'] * scene['canvas']['loop_seconds'])
