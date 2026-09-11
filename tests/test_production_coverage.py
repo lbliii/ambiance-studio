@@ -226,6 +226,17 @@ class CoverageTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'realization'):coverage.activity_receipt(self.p,file,ctx,exp,'portrait')
 
     @unittest.skipUnless(os.environ.get('AMBIANCE_TEST_NATIVE') == '1' and sys.platform == 'darwin', 'Requires actual native encode/decode')
+    def test_small_review_movie_is_presented_without_claiming_final_evidence(self):
+        self.capture(); recipe = self.recipe(); recipe['long_edge'] = 128
+        result = production.iteration(self.p, recipe, 'Synthetic small review fixture')
+        self.assertTrue(result['ok'])
+        self.assertFalse(result['production_readiness']['ready'])
+        self.assertEqual(len(result['production_readiness']['evidence_registration_gaps']), 2)
+        from ambiance_studio import deliveries
+        self.assertEqual(deliveries.latest(self.p)['delivery']['id'], recipe['id'])
+        self.assertFalse(deliveries.inspect(self.p, recipe['id'])['production_scope']['ready'])
+
+    @unittest.skipUnless(os.environ.get('AMBIANCE_TEST_NATIVE') == '1' and sys.platform == 'darwin', 'Requires actual native encode/decode')
     def test_full_native_iteration_registers_exact_movies_and_partial_review_stays_presentable(self):
         self.capture(); report = self.proof(revision='v1')['report']
         for view in ['portrait', 'landscape']: self.register(report, view, 'v1')

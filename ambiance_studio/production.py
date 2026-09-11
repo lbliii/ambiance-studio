@@ -144,15 +144,22 @@ def record_iteration_scope(project, recipe, declaration):
     manifest = revisions.load(project, recipe['revision'])
     if 'production_plan' not in manifest['controls']:
         return coverage.evaluate(project, 'export', revision=recipe['revision'])
-    ctx = production_plan.load_context(project, recipe['revision'])
+    ctx = production_plan.load_context(project, recipe['revision']); registration_gaps = []
     for entry in declaration.get('entries', declaration.get('editions', [])):
         view = entry.get('view', 'authored')
         for exp in ctx['plan']['expectations']:
             if exp['requirement']['check'] != 'movie' or view not in exp['view_ids']: continue
-            coverage.register_evidence(project, exp['id'], view,
-                revisions.relative(project, revisions.edition_path(project, entry['revision'], entry['edition'])),
-                entry['revision'], entry['role'])
-    return coverage.evaluate(project, 'export', revision=recipe['revision'])
+            try:
+                coverage.register_evidence(project, exp['id'], view,
+                    revisions.relative(project, revisions.edition_path(project, entry['revision'], entry['edition'])),
+                    entry['revision'], entry['role'])
+            except (OSError, ValueError, KeyError, TypeError, CommandError) as error:
+                if recipe.get('scope') == 'final': raise
+                registration_gaps.append({'expectation_id': exp['id'], 'view_id': view,
+                                          'role': entry['role'], 'reason': str(error)})
+    result = coverage.evaluate(project, 'export', revision=recipe['revision'])
+    if registration_gaps: result['evidence_registration_gaps'] = registration_gaps
+    return result
 
 
 def validate_recipe(recipe):
