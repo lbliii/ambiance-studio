@@ -13,6 +13,7 @@ import studio
 from .errors import CommandError
 from .project import locations, project_lock
 from . import scene_authoring
+from .scene_runtime import load_scene_json
 
 
 class SceneTransaction:
@@ -30,14 +31,14 @@ class SceneTransaction:
         self.previous_sha256 = scene_ref['sha256']
         if expected and expected != self.previous_sha256:
             raise CommandError('Scene changed since expected SHA-256; inspect and rebase the edit.', 'stale_input', 2)
-        self.scene = json.loads(self.previous_bytes)
+        self.scene = load_scene_json(self.previous_bytes)
         self.catalog = json.loads(catalog_bytes)
         self.dependencies = []
 
     def read_json(self, path, role):
         raw, record = scene_authoring.read_input(path, role)
         self.dependencies.append(record)
-        return json.loads(raw)
+        return load_scene_json(raw)
 
     def _verify_inputs(self):
         try:
