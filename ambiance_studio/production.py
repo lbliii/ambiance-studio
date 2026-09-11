@@ -21,6 +21,7 @@ def add_parsers(sub):
     q.add_argument('--note', default=''); q.add_argument('--channel', choices=['review', 'release'], default='review'); q.add_argument('--expect-selection')
     group = sub.add_parser('iteration', help='Produce and present a recorded local iteration').add_subparsers(dest='action', required=True)
     q = group.add_parser('run'); q.add_argument('file', type=Path); q.add_argument('--by', required=True)
+    q = group.add_parser('preflight'); q.add_argument('file', type=Path); q.add_argument('--stage', choices=['layout', 'assets', 'animation', 'export']); q.add_argument('--out', type=Path)
     group.add_parser('list')
     q = group.add_parser('inspect'); q.add_argument('id')
     group = sub.add_parser('feedback', help='Keep observations tied to exact movie versions').add_subparsers(dest='action', required=True)
@@ -62,7 +63,7 @@ def link_delivery(data, alias, base_url):
     return data
 
 
-def overview(project, alias, base_url, fingerprints=None):
+def overview(project, alias, base_url, fingerprints=None, readiness_options=None):
     selected = deliveries.latest(project, fingerprints=fingerprints)
     history = deliveries.listing(project, fingerprints)
     selected['delivery'] = link_delivery(selected.get('delivery'),alias,base_url)
@@ -101,8 +102,7 @@ def overview(project, alias, base_url, fingerprints=None):
     from . import planning
     try:
         inventory = planning.inspect(project)
-        ready = [{'id': item['id'], 'action': item['next_action']} for item in inventory['items']
-                 if not item['complete_for_scope'] and not item['blocked_by']][:5] if inventory['ok'] else []
+        ready = [{'id': item['id'], 'action': item['next_action']} for item in planning.ready_work(inventory)['ready']]
         inventory_errors = inventory['errors']
     except (OSError, ValueError, KeyError, TypeError) as error:
         ready = []; inventory_errors = [str(error)]
@@ -116,16 +116,59 @@ def overview(project, alias, base_url, fingerprints=None):
             'history': history, 'working': working, 'open_checks': checks, 'ready_work': ready,
             'inventory_errors': inventory_errors, 'errors': errors, 'runs': runs(project)[:10],
             'entry_checks':entry_checks,
-            'release_ready': bool(entry_checks) and all(item['release_ready'] for item in entry_checks.values()) if current_data else gates['release_ready'] if gates else False,
-            'check_subject': gates['subject'] if gates else None, 'framing': framing}
+            'release_ready': bool(entry_checks) and all(item['release_ready'] for item in entry_checks.values()) and
+                             (not current_data.get('production_scope', {}).get('enforced') or current_data['production_scope']['ready']) if current_data else gates['release_ready'] if gates else False,
+            'check_subject': gates['subject'] if gates else None, 'framing': framing,
+            'production_readiness': production_readiness(project, **(readiness_options or {}))}
+
+
+def production_readiness(project, **kwargs):
+    from .production_coverage import evaluate
+    return evaluate(project, **kwargs)
+
+
+def iteration_preflight(project, recipe, stage=None):
+    validate_recipe(recipe)
+    scope = recipe.get('scope', 'review')
+    revision = recipe['revision'] if revisions.manifest_path(project, recipe['revision']).exists() else None
+    outputs = [{'view_id': v, 'roles': [e['role'] for e in recipe['editions']]}
+               for v in recipe.get('views', ['authored'])]
+    readiness = production_readiness(project, stage=stage or ('export' if scope == 'final' else 'animation'),
+                                      revision=revision, outputs=outputs, phase='preflight')
+    return {'ok': readiness['ready'], 'scope': scope, 'may_render': scope != 'final' or readiness['ready'],
+            'readiness': readiness, 'output_pairs': outputs}
+
+
+def record_iteration_scope(project, recipe, declaration):
+    from . import production_coverage as coverage, production_plan
+    manifest = revisions.load(project, recipe['revision'])
+    if 'production_plan' not in manifest['controls']:
+        return coverage.evaluate(project, 'export', revision=recipe['revision'])
+    ctx = production_plan.load_context(project, recipe['revision']); registration_gaps = []
+    for entry in declaration.get('entries', declaration.get('editions', [])):
+        view = entry.get('view', 'authored')
+        for exp in ctx['plan']['expectations']:
+            if exp['requirement']['check'] != 'movie' or view not in exp['view_ids']: continue
+            try:
+                coverage.register_evidence(project, exp['id'], view,
+                    revisions.relative(project, revisions.edition_path(project, entry['revision'], entry['edition'])),
+                    entry['revision'], entry['role'])
+            except (OSError, ValueError, KeyError, TypeError, CommandError) as error:
+                if recipe.get('scope') == 'final': raise
+                registration_gaps.append({'expectation_id': exp['id'], 'view_id': view,
+                                          'role': entry['role'], 'reason': str(error)})
+    result = coverage.evaluate(project, 'export', revision=recipe['revision'])
+    if registration_gaps: result['evidence_registration_gaps'] = registration_gaps
+    return result
 
 
 def validate_recipe(recipe):
     revisions.fields(recipe, {'format', 'schema_version', 'id', 'title', 'notes', 'revision',
-                              'capture_selection', 'width', 'long_edge', 'supersample', 'editions', 'default_role', 'views', 'default'}, 'iteration')
+                              'capture_selection', 'width', 'long_edge', 'supersample', 'editions', 'default_role', 'views', 'default', 'scope'}, 'iteration')
     if recipe.get('format') != 'ambiance-iteration' or recipe.get('schema_version') not in [1,2]:
         raise ValueError('Expected ambiance-iteration schema_version 1 or 2')
     id = revisions.identifier(recipe['id']); revisions.identifier(recipe['revision'])
+    if recipe.get('scope', 'review') not in ['proof', 'review', 'final']: raise ValueError('Iteration scope must be proof, review or final')
     if not isinstance(recipe.get('title',id),str) or not recipe.get('title',id).strip() or not isinstance(recipe.get('notes',''),str):
         raise ValueError('Iteration title and notes must be text, with a nonempty title')
     if len(id) > 80:
@@ -214,7 +257,8 @@ def iteration(project, recipe, actor):
                         raise ValueError('Completed run output changed; use a new iteration ID')
                 if not deliveries.inspect(project, id)['ok']:
                     raise ValueError('Completed delivery dependencies changed; inspect the saved delivery')
-                return {'ok': True, 'run': state, 'reused': True}
+                readiness = production_readiness(project, stage='export', revision=recipe['revision'])
+                return {'ok': recipe.get('scope') != 'final' or readiness['ready'], 'run': state, 'reused': True, 'production_readiness': readiness}
             if (directory/'active.lock').exists():
                 try:os.kill(state['pid'],0)
                 except ProcessLookupError:(directory/'active.lock').unlink()
@@ -285,6 +329,10 @@ def iteration(project, recipe, actor):
             elif revisions.load(project, recipe['revision'])['selection'] != studio.read(selection):
                 raise ValueError('Existing revision selection differs from the iteration recipe')
         revisions.render_context(project, recipe['revision'])
+        preflight = iteration_preflight(project, recipe)
+        state['production_preflight'] = preflight; save('production-preflight')
+        if not preflight['may_render']:
+            raise CommandError('Full production scope is not ready; inspect '+preflight['readiness']['report'], 'production_not_ready', 1)
         if recipe['schema_version']==2:
             save('preflight');plan=view_job_plan(project,recipe,directory,state)
             if state.get('plan') and state['plan']!=plan:raise ValueError('Captured job inputs or raster plan changed; choose a new iteration ID')
@@ -346,11 +394,13 @@ def iteration(project, recipe, actor):
             if contacts.exists():
                 declaration['poster'] = revisions.relative(project, contacts)
             deliveries.register(project, declaration)
+        state['production_readiness'] = record_iteration_scope(project, recipe, declaration)
         save('present')
         selected = deliveries.present(project, id, actor, recipe.get('notes', ''), expected=state['expected_selection'])
         state.update(state='complete', selection=selected['selection'], finished_utc=deliveries.now())
         save('complete')
-        return {'ok': True, 'run': state, 'delivery': id}
+        complete = recipe.get('scope') != 'final' or state['production_readiness']['ready']
+        return {'ok': complete, 'run': state, 'delivery': id, 'production_readiness': state['production_readiness']}
     except BaseException as error:
         state.update(state='interrupted' if isinstance(error, KeyboardInterrupt) else 'failed', error=str(error),
                      recovery='Rerun the unchanged recipe to reuse completed steps. For stale_selection, inspect and present the saved delivery explicitly.')
@@ -372,6 +422,7 @@ def run_command(args, project):
             return handoff(project, args.id, args.out)
         return deliveries.present(project, args.id, args.by, args.note, args.channel, args.expect_selection)
     if args.command == 'iteration':
+        if args.action == 'preflight': return iteration_preflight(project, studio.read(args.file), args.stage)
         if args.action == 'run':
             return iteration(project, studio.read(args.file), args.by)
         if args.action == 'inspect':
