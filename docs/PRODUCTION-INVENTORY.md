@@ -1,5 +1,7 @@
 # Production inventory and asset proofs
 
+Creative intent has an explicit versioned [production plan](PRODUCTION-PLAN.md). Use `plan spec` for story, typed elements, output intentions and expectations; this inventory continues to own fulfillment stages and evidence. Migrate authored census notes explicitly and retain their originals. Existing inventory `required` flags cannot silently weaken the canonical expectations.
+
 `plan inspect`, `plan check` and `plan next` read `plans/asset-inventory.json` in the selected project. Use `--inventory PROJECT_RELATIVE_PATH` for another plan. New projects start with an empty inventory, which is explicitly reported as not yet authored. Existing projects can add a version 1 inventory without migrating the executable scene.
 
 ```sh
