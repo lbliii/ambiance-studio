@@ -1,5 +1,7 @@
 # Contracts for modular production
 
+The executable [production-plan contract](PRODUCTION-PLAN.md) owns typed creative intent and semantic references. Its strict CLI and consumer API are implemented; legacy narrative layer notes remain useful explanation, with explicit migration rather than automatic rewriting.
+
 The existing editor's executable format is described in [SCENE-CONTRACT.md](SCENE-CONTRACT.md). The production records below are handoff conventions and supplied templates. They describe data to retain; they do not imply that every field is already interpreted by the prototype.
 
 ## Reference and creative brief

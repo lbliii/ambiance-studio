@@ -306,7 +306,7 @@ def main(argv=None):
         command=' '.join(filter(None,[args.command,getattr(args,'action',None),getattr(args,'motion_action',None)]))
         ok=result.get('ok',True) if isinstance(result,dict) else True
         payload={'ok':ok,'schema_version':1,'command':command,'data':result}
-        if getattr(args,'out',None) and args.command not in ['asset','render','media'] and not(args.command=='look' and args.action=='export') and not(args.command=='review' and args.action=='draft') and not(args.command in ['revision','delivery'] and args.action=='handoff'):
+        if getattr(args,'out',None) and args.command not in ['asset','render','media'] and not(args.command=='look' and args.action=='export') and not(args.command=='review' and args.action=='draft') and not(args.command in ['revision','delivery'] and args.action=='handoff') and not(args.command=='plan' and getattr(args,'spec_action',None)=='migrate'):
             studio.write(args.out,payload)
         emit(command,result,ok)
         return 0 if ok else 1
