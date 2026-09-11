@@ -315,4 +315,5 @@ def main(argv=None):
         print(json.dumps({'ok':False,'schema_version':1,'error':{'code':e.code,'message':str(e)}},indent=2));return e.exit_code
     except (OSError,ValueError,TypeError,KeyError) as e:
         print(json.dumps({'ok':False,'schema_version':1,'error':{'code':'invalid_input','message':str(e)}},indent=2));return 2
-    except KeyboardInterrupt:return 130
+    except KeyboardInterrupt:
+        print(json.dumps({'ok':False,'schema_version':1,'error':{'code':'interrupted','message':'Operation interrupted. Inspect saved run/artifact state and resume the unchanged recipe where supported.'}}));return 130

@@ -91,6 +91,14 @@ class CLITests(unittest.TestCase):
         self.assertIn(b'404 Not Found',request('/archive/session/outputs/README.md'))
 
 class CLIEntryTests(unittest.TestCase):
+    def test_interruption_preserves_json_contract_and_exit_130(self):
+        from unittest.mock import patch
+        from ambiance_studio.cli import main
+        stream=io.StringIO()
+        with patch('ambiance_studio.cli.run',side_effect=KeyboardInterrupt),patch('sys.stdout',stream):
+            code=main(['doctor'])
+        self.assertEqual(code,130);self.assertEqual(json.loads(stream.getvalue())['error']['code'],'interrupted')
+
     def test_unknown_command_is_json_and_nonzero(self):
         code,data=run('not-a-command');self.assertEqual(code,2);self.assertEqual(data['error']['code'],'invalid_input')
     def test_missing_project_is_actionable(self):
