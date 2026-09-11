@@ -1,0 +1,22 @@
+{
+  "format": "ambiance-production-plan",
+  "schema_version": 1,
+  "story": {"premise": "A quiet room holds a steady light.", "direction": "Explicit nearly-still single-format study; prepare the room before animation."},
+  "sources": [],
+  "elements": [{
+    "id": "room", "kind": "structure", "depth_band": "midground", "motion_role": "stable",
+    "cadence": "still", "readability_target": 0, "origin": "proposed", "purpose": "Fixed painted reference.",
+    "source_ids": [], "action_ids": [],
+    "realization": {"method": "baked", "inventory_parts": [{"item_id": "room", "part_id": "plate"}], "layer_ids": []},
+    "required_art": [{"id": "room-plate", "role": "source", "purpose": "Painted room surface", "inventory_part": {"item_id": "room", "part_id": "plate"}}]
+  }],
+  "actions": [],
+  "outputs": [{"view_id": "authored", "roles": ["silent"]}],
+  "relations": [],
+  "expectations": [
+    {"id": "room-framing", "rationale": "Keep the whole quiet room visible.", "direction": "Authored single-format study", "stage": "layout", "view_ids": ["authored"], "element_ids": ["room"], "action_ids": [], "relation_ids": [], "requirement": {"type": "structural", "check": "view"}},
+    {"id": "room-art", "rationale": "Produce the declared painted plate.", "direction": "Authored study", "stage": "assets", "view_ids": ["authored"], "element_ids": ["room"], "action_ids": [], "relation_ids": [], "requirement": {"type": "structural", "check": "art"}},
+    {"id": "room-movie", "rationale": "Deliver the intended silent movie.", "direction": "Authored study", "stage": "export", "view_ids": ["authored"], "element_ids": ["room"], "action_ids": [], "relation_ids": [], "requirement": {"type": "measured", "check": "movie"}}
+  ],
+  "change": {"reason": "Initial explicit production scope.", "supersedes_sha256": null}
+}

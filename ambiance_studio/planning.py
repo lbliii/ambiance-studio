@@ -10,6 +10,8 @@ PRIORITIES = ['next','prepare-with-flame','exploration','preserve','retain-or-tu
 
 def add_parsers(sub):
     group=sub.add_parser('plan',help='Reconcile production intentions with current evidence').add_subparsers(dest='action',required=True)
+    from . import plan_commands
+    plan_commands.add_parsers(group)
     for action in ['inspect','check','next']:
         q=group.add_parser(action);q.add_argument('--inventory',default='plans/asset-inventory.json');q.add_argument('--out',type=Path)
         if action=='next':q.add_argument('--limit',type=int,default=5)
@@ -139,6 +141,9 @@ def inspect(project, inventory='plans/asset-inventory.json'):
 
 
 def run(args,project):
+    if args.action in ['spec', 'complexity']:
+        from . import plan_commands
+        return plan_commands.run(args, project)
     result=inspect(project,args.inventory)
     if args.action=='check' and getattr(args,'require_complete',False):
         outstanding=[{'id':r['id'],'state':r['declared_state'],'blocked_by':r['blocked_by'],'next_action':r['next_action']}
