@@ -134,6 +134,8 @@ def parser():
     q=group.add_parser('proof');q.add_argument('asset');q.add_argument('--out',type=Path,required=True);q.add_argument('--catalog',type=Path)
     q.add_argument('--fps',type=float,default=6);q.add_argument('--width',type=int,default=180);q.add_argument('--landmark',default='anchor')
     assets.add_preparation_parsers(group)
+    from . import generation_ledger
+    generation_ledger.add_parsers(group)
     from . import asset_motion
     asset_motion.add_parsers(group)
     group=sub.add_parser('scene').add_subparsers(dest='action',required=True)
@@ -249,6 +251,9 @@ def run(args):
         else:id=result.get('id') or result.get('selection',{}).get('delivery')
         if id:result.update(watch_url=f'{base}/projects/{alias}/deliveries/{id}',current_url=f'{base}/projects/{alias}')
         return result
+    if command=='asset' and action=='request':
+        from . import generation_ledger
+        return generation_ledger.run(args,project)
     if command=='asset' and action in ['prepare','preflight','crop','return','edges','edge-repair']:return assets.run_preparation(args,project)
     if command=='binding':
         from . import bindings
@@ -315,4 +320,5 @@ def main(argv=None):
         print(json.dumps({'ok':False,'schema_version':1,'error':{'code':e.code,'message':str(e)}},indent=2));return e.exit_code
     except (OSError,ValueError,TypeError,KeyError) as e:
         print(json.dumps({'ok':False,'schema_version':1,'error':{'code':'invalid_input','message':str(e)}},indent=2));return 2
-    except KeyboardInterrupt:return 130
+    except KeyboardInterrupt:
+        print(json.dumps({'ok':False,'schema_version':1,'error':{'code':'interrupted','message':'Operation interrupted. Inspect saved run/artifact state and resume the unchanged recipe where supported.'}}));return 130
