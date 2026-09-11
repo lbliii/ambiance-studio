@@ -27,7 +27,7 @@ Revision selections and asset/placement manifests use project-relative reference
 | `studio open [--port N --no-browser]` / `studio serve [--port N]` | Start/reuse the background film library, or serve it in the foreground |
 | `studio status` / `studio stop` | Identify or stop the current registry's server |
 | `project latest [--channel review/release]` | Resolve the current selection to its exact movie and watch links |
-| `project overview [--out FILE]` | Current movies, working divergence, open criteria, available work and recent runs |
+| `project overview [--stage STAGE --view ID --revision ID --out FILE]` | Current movies, working divergence, open criteria, available work, recent runs and shared production readiness |
 | `delivery import FILE [--dry-run]` | Register an immutable movie set from captured editions or identity-bound legacy reports |
 | `delivery list` / `delivery inspect ID` | Inspect movie roles, identity and availability |
 | `delivery present ID --by NAME [--note TEXT --channel review/release --expect-selection HASH]` | Select a review or evidence-qualified release; preserve selection history |
@@ -58,6 +58,9 @@ Revision selections and asset/placement manifests use project-relative reference
 | `plan spec apply FILE [--dry-run --expect-sha256 HASH]` | Apply explicit scope revisions with a reviewable diff and preserved plan history |
 | `plan spec migrate FILE --original PATH [--original PATH] --out DIR` | Preserve original notes/inventory and emit an authored migration candidate/diff without saving it |
 | `plan complexity [--out FILE]` | Separate workload dimensions and declared coverage counts, without an aesthetic score |
+| `plan coverage [--stage layout/assets/animation/export --view ID --revision ID --phase current/preflight --details --out FILE]` | Shared stage-aware readiness, stable gaps and exact typed evidence; default reports remain compact |
+| `plan evidence EXPECTATION --view ID --receipt PATH [--revision ID --role score/effects/silent]` | Verify and register an exact provider receipt against canonical intent, preserving inventory history |
+| `iteration preflight FILE [--stage STAGE --out FILE]` | Inspect the same scope/readiness decision used by iteration execution; final movies remain future outputs until rendered |
 | `plan check --require-complete [--inventory PATH --out FILE]` | Also fail empty or unfinished declared production scope; report remaining items without certifying artistic quality |
 | `scene inspect [--full]` | Return the summary, or complete authored scene including camera/groups |
 | `view inspect [ID] [--revision ID]` | Inspect saved framing, preferred dimensions, projection and exact view identity |

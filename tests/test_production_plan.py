@@ -80,6 +80,18 @@ class PlanTests(unittest.TestCase):
         binding['inventory_part']['part_id'] = 'other'
         with self.assertRaises(ValueError): plan.validate_binding(self.project, binding, self.data)
 
+    def test_migration_pins_preserved_copies_as_live_inventory_evolves(self):
+        self.save(); out=self.project/'migration'
+        result=plan.migrate(self.project,self.proposal,['plans/asset-inventory.json'],out)
+        self.assertTrue(result['ok']); plan.apply(self.project,out/'candidate.json')
+        inventory=self.project/'plans/asset-inventory.json'; data=studio.read(inventory)
+        data['expectation_evidence']=[]; studio.write(inventory,data)
+        self.assertTrue(plan.inspect(self.project)['ok'])
+        original=plan.load(self.project)['migration']['originals'][0]
+        self.assertTrue(original['path'].startswith('migration/originals/'))
+        (self.project/original['path']).write_text('changed archive')
+        with self.assertRaisesRegex(ValueError,'changed'): plan.load(self.project)
+
     def test_required_inventory_cannot_disappear_from_new_scope(self):
         path = self.project/'plans/asset-inventory.json'; inventory = studio.read(path)
         inventory['items'].append({'id': 'character', 'required': True, 'required_parts': [{'id': 'gait', 'required': True}]})

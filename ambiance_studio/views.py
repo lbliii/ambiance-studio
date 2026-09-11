@@ -44,6 +44,9 @@ def project_summary(project):
     info = inspect(project)
     settings = studio.read(project/'project.json')
     intended = settings.get('intended_views')
+    from . import production_plan
+    canonical = (project/production_plan.PATH).exists()
+    if canonical: intended = [o['view_id'] for o in production_plan.load(project)['outputs']]
     if intended is None:
         intended = [id for id in info['views'] if id != 'authored'] or ['authored']
     errors = []
@@ -52,12 +55,14 @@ def project_summary(project):
         intended = []
     errors += [f'Intended view is missing from the scene: {id}' for id in intended if id not in info['views']]
     primary = settings.get('output', {})
+    if canonical and intended and intended[0] in info['views']: primary = info['views'][intended[0]]['output']
     if intended and intended[0] in info['views']:
         expected = info['views'][intended[0]]['output']
         if any(primary.get(key) != expected[key] for key in ['width', 'height']):
             errors.append('Primary output summary differs from the first intended view; update the project scope explicitly')
     return {'ok': not errors, 'authored_canvas': info['authored_canvas'], 'intended_views': intended,
-            'primary_output': primary, 'views': info['views'], 'errors': errors}
+            'primary_output': primary, 'views': info['views'], 'errors': errors,
+            'intent_source': production_plan.PATH if canonical else 'project.json (legacy)'}
 
 
 def run(args, project):

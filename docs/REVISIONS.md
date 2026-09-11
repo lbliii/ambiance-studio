@@ -1,5 +1,7 @@
 # Captured revisions and media editions
 
+New captures include an existing canonical [production plan](PRODUCTION-PLAN.md), its source/driver dependencies and inventory snapshot. Reviews identify the exact captured plan/expectation hashes alongside existing view/edition identities. Existing sealed records remain unchanged; changing working intent creates divergence and requires a new capture to review that intent. Plan-aware review drafts retain unperformed expectation observations as `unreviewed`.
+
 A revision freezes control documents and pins the exact binary dependencies selected for a film. Working changes remain separate. A successful capture is not a passed review.
 
 ## Select and capture
