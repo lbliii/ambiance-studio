@@ -5,8 +5,6 @@ import math
 from pathlib import Path
 import re
 
-from .errors import CommandError
-from .project import locations
 from .scene_runtime import ROOT, require_node, scene_bridge
 from .rendering import _json_command
 
@@ -57,6 +55,10 @@ def load_actions(project, revision=None):
     # is different from a malformed plan, which must not be silently ignored.
     if not revision and not (Path(project)/'plans/production-plan.json').exists():
         return [], None
+    if revision:
+        from . import revisions
+        if not revisions.load(project, revision)['controls'].get('production_plan'):
+            return [], None
     from . import production_plan
     context = production_plan.load_context(project, revision=revision)
     if not context or context.get('plan') is None:
@@ -133,15 +135,33 @@ def verify_receipt(path):
         raise ValueError('Activity receipt is missing required artifacts')
     if digest(path.parent/'scene.snapshot.json') != report['scene_sha256'] or digest(path.parent/'catalog.snapshot.json') != report['catalog_sha256']:
         raise ValueError('Activity snapshot identity does not match receipt')
+    request = json.loads((path.parent/'request.json').read_text())
+    scene = json.loads((path.parent/'scene.snapshot.json').read_text())
+    catalog = json.loads((path.parent/'catalog.snapshot.json').read_text())
+    expected = scene_bridge('view-plan', scene, catalog, {'requests': request['views'], 'options': {'long_edge': request['long_edge']}})
+    if [{k:v[k] for k in ['view','output','source_rect_px']} for v in report['views']] != expected['views']:
+        raise ValueError('Activity view identity differs from its source/request')
+    for v in report['views']:
+        if hashlib.sha256(json.dumps(v['view'], separators=(',', ':'), ensure_ascii=False).encode()).hexdigest() != v['view_sha256']:
+            raise ValueError('Activity view hash mismatch')
+    if report['actions'] != request['actions'] or report.get('plan') != request.get('plan'):
+        raise ValueError('Activity semantic inputs differ from its request')
+    if report['clock'] != {'picture_seconds':scene['canvas']['loop_seconds'], 'fps':scene['canvas']['fps'],
+                          'start_frame':request['start_frame'], 'frames':request['frames'], 'stride':request['stride'],
+                          'sampling_hz':scene['canvas']['fps']/request['stride']}:
+        raise ValueError('Activity clock differs from its request')
     return report
 
 
-def record_observation(source, out):
+def verify_observation(source):
     doc = json.loads(Path(source).read_text())
-    fields(doc, ['kind', 'schema_version', 'receipt', 'receipt_sha256', 'action_id', 'view_id', 'status', 'observer',
+    fields(doc, ['kind', 'schema_version', 'receipt', 'receipt_sha256', 'action_id', 'view_id', 'criterion', 'status', 'observer',
                  'observed_level', 'note', 'playback_rate', 'display_width', 'display_height', 'watched_start_seconds', 'watched_end_seconds'], 'activity observation')
     if doc.get('kind') != 'ambiance-activity-observation' or doc.get('schema_version') != 1:
         raise ValueError('Expected ambiance-activity-observation schema_version 1')
+    doc.setdefault('criterion', 'readability')
+    if doc['criterion'] not in ['readability', 'composition']:
+        raise ValueError('Observation criterion must be readability or composition')
     receipt_path = Path(doc['receipt']).resolve()
     report = verify_receipt(receipt_path)
     if digest(receipt_path) != doc['receipt_sha256'] or not report['raster_performed']:
@@ -167,6 +187,15 @@ def record_observation(source, out):
             raise ValueError('Watched bounds must lie inside the exact saved proof segment')
     elif level is not None:
         raise ValueError('Unreviewed observations cannot contain an observed level')
+    target = next((t['readability_target'] for t in action.get('targets', []) if t['view_id'] == doc['view_id']), None)
+    if doc['criterion'] == 'readability' and doc['status'] == 'meets-direction' and level is not None and target is not None and level < target:
+        raise ValueError('Observed level below the saved target cannot claim meets-direction; revise the observation or explicitly revise direction')
+    return {'observation': doc, 'receipt': report, 'receipt_path': str(receipt_path),
+            'receipt_sha256': doc['receipt_sha256'], 'observation_sha256': digest(source), 'readability_target': target}
+
+
+def record_observation(source, out):
+    doc = verify_observation(source)['observation']
     out = Path(out).resolve()
     if out.exists(): raise ValueError('Observation output exists; choose a fresh file')
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -213,6 +242,8 @@ def run(args, project):
             raise ValueError('Activity resume inputs/options changed; choose a fresh output directory')
         for asset in report['source_assets']:
             if digest(asset['path']) != asset['sha256']: raise ValueError('Activity source changed; cannot resume')
+        for module, expected in report['modules'].items():
+            if digest(ROOT/module) != expected: raise ValueError('Activity implementation changed; choose a fresh output directory')
         return {'ok': True, 'resumed': True, 'report': str(args.out.resolve()/'activity-report.json'), 'summary': report['summary']}
     args.out.parent.mkdir(parents=True, exist_ok=True)
     return _json_command([require_node(), ROOT/'tools/activity-scene.mjs'], request)

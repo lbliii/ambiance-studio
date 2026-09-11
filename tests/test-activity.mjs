@@ -15,6 +15,9 @@ layer.depth=1;row=report().views[0].layers[0];assert.ok(row.summary.world_anchor
 assert.equal(row.samples[2].cell,compileScene(scene,catalog).sample(.5)[0].cell);
 layer.x=2;assert.equal(report().views[0].layers[0].summary.in_view_samples,0);
 layer.x=.5;layer.visible=false;assert.equal(report().views[0].layers[0].summary.eligible_samples,0);
+const parent={...layer,id:'parent',visible:true,x:.2,depth:0,sockets:{tip:[.5,.5]},motion:{x_amplitude:.1,y_amplitude:0,cycles:1,phase:0},tracks:{visible:{interpolation:'hold',keys:[[0,true],[.5,false],[1,true],[2,true]]}}};
+layer.visible=true;layer.attach={layer:'parent',socket:'tip'};delete layer.depth;layer.x=0;scene.layers.unshift(parent);
+row=report().views[0].layers.find(l=>l.layer==='child');assert.ok(row.summary.world_anchor_travel_px>0);assert.equal(row.summary.local_anchor_travel_scene_px,0);assert.equal(row.samples[2].visible,false);
 assert.throws(()=>measureActivity(scene,catalog,{views:[],painted}));
 assert.deepEqual(intervals([false,true,true,false],.5),[{active:false,start_seconds:0,end_seconds:.5,duration_seconds:.5},{active:true,start_seconds:.5,end_seconds:1.5,duration_seconds:1},{active:false,start_seconds:1.5,end_seconds:2,duration_seconds:.5}]);
 const a=new Uint8Array([100,100,100,255]), b=new Uint8Array([80,80,80,255]);

@@ -43,15 +43,15 @@ def validate_sync(sync, session):
     if sync.get('version') != 1: raise ValueError('picture_sync requires version 1')
     activity.fields(sync['picture'], ['receipt', 'receipt_sha256', 'clock', 'actions', 'scene_sha256', 'catalog_sha256', 'plan'], 'picture identity')
     if not isinstance(sync.get('links'), list) or not sync['links']: raise ValueError('picture_sync requires explicit cue links')
-    seen = set(); clips = {c['id']: c for c in session['clips']}
+    seen = set()
     for link in sync['links']:
         activity.fields(link, ['clip_id', 'action_id', 'picture_frames', 'offset_samples'], 'cue link')
-        if link['clip_id'] not in clips or link['clip_id'] in seen: raise ValueError('Cue link requires a unique existing clip_id')
+        if not isinstance(link.get('clip_id'), str) or not link['clip_id'] or link['clip_id'] in seen: raise ValueError('Cue link requires a unique clip_id')
         seen.add(link['clip_id'])
         if link['action_id'] not in sync['picture']['actions']: raise ValueError('Cue link requires a measured action_id')
         if type(link['offset_samples']) is not int: raise ValueError('Cue offset_samples must be an explicit signed integer')
-        if not isinstance(link['picture_frames'], list) or len(link['picture_frames']) != clips[link['clip_id']].get('repeat', 1):
-            raise ValueError('Cue picture_frames must identify every clip repeat explicitly')
+        if not isinstance(link['picture_frames'], list) or not link['picture_frames']:
+            raise ValueError('Cue picture_frames must identify explicit picture anchors')
         if any(type(f) is not int or not 0 <= f < sync['picture']['clock']['frames'] for f in link['picture_frames']):
             raise ValueError('Cue picture_frames must lie on the measured picture clock')
         if link['picture_frames'] != sorted(set(link['picture_frames'])): raise ValueError('Cue picture_frames must be unique and increasing')
@@ -73,14 +73,17 @@ def source_identities(project, session, infos):
 def alignment(session, picture, links):
     rows = []; clips = {c['id']: c for c in session['clips']}; fps = picture['clock']['fps']; rate = session['sample_rate']
     for link in links:
-        clip = clips[link['clip_id']]
+        clip = clips.get(link['clip_id'])
+        if clip is None:
+            rows.append({'clip_id':link['clip_id'], 'action_id':link['action_id'], 'aligned':False, 'missing_clip':True})
+            continue
         starts = [clip['at_frame'] + i * clip.get('every_frames', clip['frames']) for i in range(clip.get('repeat', 1))]
         positions = [f*rate/fps + link['offset_samples'] for f in link['picture_frames']]
         if any(n != round(n) for n in positions): raise ValueError('Picture cue falls between PCM samples; choose explicit sample-aligned picture/offset timing')
         expected = list(map(round, positions))
         rows.append({'clip_id': link['clip_id'], 'action_id': link['action_id'], 'actual_start_samples': starts,
                      'picture_anchor_samples': expected, 'delta_samples': [a-b for a,b in zip(starts, expected)],
-                     'aligned': starts == expected})
+                     'unmapped_repeat_count':abs(len(starts)-len(expected)), 'aligned': starts == expected})
     return rows
 
 

@@ -35,11 +35,23 @@ def replay(out):
                          'warnings':warnings,'outcome':'hit' if predicted and expected else 'false_warning' if predicted else 'miss' if expected else 'correct_clear',
                          'receipt':result['report'],'receipt_sha256':result['report_sha256'],'response_bytes':size,'observation_status':'unreviewed'})
     project=out/'visible';cost=[]
+    benchmark=create(out/'benchmark','visible')
+    base=json.loads((benchmark/'scene/scene.json').read_text())['layers'][0]
+    operations=[]
+    for i in range(15):
+        values={k:v for k,v in base.items() if k not in ['id','asset']}
+        values.update(x=.15+(i%4)*.22,y=.15+(i//4)*.22,width=.12,height=.12,phase_frames=i%2,
+                      motion={'x_amplitude':.02,'y_amplitude':.008,'cycles':1+i%3,'phase':i*.3})
+        operations.append({'op':'add','id':f'actor-{i+1}','asset':'actor','values':values})
+    batch=benchmark/'workload.json';batch.write_text(json.dumps({'version':1,'operations':operations}))
+    command=subprocess.run([str(ROOT/'ambiance'),'--project',str(benchmark),'scene','apply',str(batch)],capture_output=True,text=True)
+    if command.returncode:raise ValueError(command.stdout)
     for label,views in [('single',['portrait']),('paired',['portrait','landscape'])]:
         for cache in ['cold-process','warm-os-cache']:
             extra=[arg for view in views for arg in ['--view',view]]
-            result,size=run(project,out/(label+'-'+cache),*extra)
-            cost.append({'workload':label,'cache_label':cache,'process_policy':'fresh Node process each run; OS caches not flushed',
+            result,size=run(benchmark,out/(label+'-'+cache),*extra,'--long-edge','320')
+            cost.append({'workload':label,'layers':16,'stage_side_pixels':320,'production_fps':12,'production_frames':48,
+                         'cache_label':cache,'process_policy':'fresh Node process each run; OS caches not flushed',
                          'response_bytes':size,**result['performance'],'report':result['report']})
     matched,_=run(project,out/'matched','--view','portrait','--view','landscape','--compare',project/'comparison.json')
     held=[r for r in rows if r['split'].startswith('held-out')]

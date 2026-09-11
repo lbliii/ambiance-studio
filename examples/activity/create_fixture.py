@@ -74,7 +74,7 @@ def create(out, case='visible', fps=12):
     if case=='visible':
         def batch(amplitude,cycles=1):return {'version':1,'operations':[{'op':'set','layer':'actor','values':{'motion':{'x_amplitude':amplitude,'y_amplitude':0,'cycles':cycles,'phase':0}}}]}
         (out/'comparison.json').write_text(json.dumps({'version':1,'strength':[{'id':'quieter','batch':batch(.015)},{'id':'stronger','batch':batch(.15)}],
-                                                     'cadence':[{'id':'less-often','batch':batch(.07,1)},{'id':'more-often','batch':batch(.07,2)}]}))
+                                                     'cadence':[{'id':'twice-often','batch':batch(.07,2)},{'id':'four-times-often','batch':batch(.07,4)}]}))
     return out
 
 
