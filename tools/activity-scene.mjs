@@ -113,7 +113,7 @@ async function main(){
     performance:{elapsed_seconds:(performance.now()-started)/1000,raster_seconds:rasterSeconds,peak_rss_bytes:process.resourceUsage().maxRSS*1024,stage_pixel_samples:req.raster?frames*renderers.size*viewPlan.internal_canvas.width*viewPlan.internal_canvas.height:0,saved_frames:panes.reduce((n,p)=>n+p.files.length,0)},
     summary:state.views.map(v=>({view:v.view.id,actions:v.actions.map(a=>({id:a.id,applicable:a.applicable,warnings:a.warnings,max_sampled_rest_seconds:a.max_sampled_rest_seconds,status:'unreviewed'}))})),
     raster_performed:req.raster,joins,visual_review_performed:false,attribution:'Unresolved nonlinear/overlap/source-follower attribution; global frame change cannot satisfy character or environmental action.'};
-  await fs.writeFile(path.join(out,'activity-report.json'),json(report));
+  await fs.writeFile(path.join(out,'activity-report.json'),json(report),{flag:'wx'});
   return {ok:true,report:path.join(out,'activity-report.json'),report_sha256:sha(json(report)),proof:req.raster?path.join(out,'index.html'):null,summary:report.summary,performance:report.performance};
 }
 try{console.log(JSON.stringify(await main()));}catch(error){console.log(JSON.stringify({ok:false,error:error.message}));process.exitCode=1;}

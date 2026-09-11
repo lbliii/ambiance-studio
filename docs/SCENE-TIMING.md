@@ -30,3 +30,5 @@ For compatibility, `project check` retains `cycles[].seconds` as declared fallba
 Reports are bounded to two million layer samples and 100,000 automatic authored cel intervals per layer. Exceeding either limit is an explicit failure, never a truncated success. A layer filter limits output rows but still evaluates the full dependency graph.
 
 Create the [independent placement fixture](../examples/source-placement/create_fixture.py) for a runnable project and regular gesture clock. The [rat-route batch](../examples/scene-transactions/rat-route-batch.json) supplies explicit cell/visibility tracks. `node tests/test-source-placement.mjs` covers automatic and static clocks, 10/15-rate segments, repeated values, variable holds, inherited visibility, fractional key times, missed holds and a hidden join.
+
+Use [scene activity](SCENE-ACTIVITY.md) for decoded painted bounds, per-view sampled action windows, inherited/local travel, real raster contributions and separate exact-proof observations. It consumes this clock; it does not infer readability from cel transitions.

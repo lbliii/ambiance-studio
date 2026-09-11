@@ -84,6 +84,18 @@ class ActivityTests(unittest.TestCase):
         self.assertFalse((self.root/'proof-1/activity-report.json').exists())
         self.assertFalse((self.root/'proof-2/activity-report.json').exists())
 
+    def test_partial_raster_run_resumes_and_never_overwrites_changed_frames(self):
+        _,_,out=self.measure('--raster')
+        original=(out/'frames/target/authored/00000.png').read_bytes()
+        (out/'activity-report.json').unlink();(out/'frames/target/authored/00002.png').unlink()
+        request=args('scene','activity','--layer','actor','--long-edge','128','--out',out,'--raster','--resume')
+        activity.run(request,self.project)
+        self.assertEqual(original,(out/'frames/target/authored/00000.png').read_bytes())
+        activity.verify_receipt(out)
+        (out/'activity-report.json').unlink();(out/'frames/target/authored/00000.png').write_bytes(b'corrupt')
+        with self.assertRaises(Exception):activity.run(request,self.project)
+        self.assertEqual((out/'frames/target/authored/00000.png').read_bytes(),b'corrupt')
+
     def test_actual_observation_requires_exact_raster_view_and_speed(self):
         _, report, out=self.measure('--raster','--view','portrait')
         doc={'kind':'ambiance-activity-observation','schema_version':1,'receipt':str(out/'activity-report.json'),
@@ -119,12 +131,28 @@ class ActivityTests(unittest.TestCase):
         scene_path=self.project/'scene/scene.json';scene=json.loads(scene_path.read_text())
         scene['layers'][0]['motion']['cycles']=2;scene_path.write_text(json.dumps(scene))
         _,_,changed=self.measure();self.assertFalse(check(changed)['ok'])
-        self.assertTrue(any(i['code'].startswith('picture_action_') for i in check(changed)['issues']))
+        self.assertIn('picture_action_repeated_or_removed',[i['code'] for i in check(changed)['issues']])
+        scene['layers'][0]['motion']['cycles']=1;scene['layers'][0]['motion']['phase']=.5;scene_path.write_text(json.dumps(scene))
+        _,_,shifted=self.measure();self.assertIn('picture_action_retimed',[i['code'] for i in check(shifted)['issues']])
+        scene['canvas']['loop_seconds']=8;scene_path.write_text(json.dumps(scene))
+        _,_,longer=self.measure();self.assertIn('picture_loop_changed',[i['code'] for i in check(longer)['issues']])
         # Explicitly delete the measured action from a new receipt through CLI selection.
         empty=self.root/'empty';activity.run(args('scene','activity','--out',empty),self.project)
         self.assertIn('picture_action_deleted',[i['code'] for i in check(empty)['issues']])
         session_data=json.loads(bound.read_text());session_data['clips'][0]['at_frame']+=1;bound.write_text(json.dumps(session_data))
         self.assertIn('cue_session_retimed',[i['code'] for i in check(out)['issues']])
+
+    @unittest.skipUnless(os.environ.get('AMBIANCE_TEST_NATIVE')=='1' and sys.platform=='darwin','Requires native media services')
+    def test_paired_movies_preserve_selected_pcm_and_exact_sample_clock(self):
+        _,pcm,_=self.make_session();identity=audio_cues.pcm_identity(pcm)
+        for view in ['portrait','landscape']:
+            result=rendering.run(args('render','video','--view',view,'--audio',pcm,'--out',self.root/view),self.project)
+            self.assertTrue(result['ok'])
+            selected=audio_cues.pcm_identity(result['audio_source']['snapshot'])
+            self.assertEqual(selected['pcm_sha256'],identity['pcm_sha256'])
+            self.assertEqual(selected['sha256'],identity['sha256'])
+            self.assertEqual(result['verification']['audio']['presented_samples'],192000)
+            self.assertTrue(result['verification']['audio']['contiguous_presented_samples'])
 
     def test_public_cli_out_is_artifact_directory(self):
         out=self.root/'cli'

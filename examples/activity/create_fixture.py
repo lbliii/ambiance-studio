@@ -5,6 +5,7 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+import shutil
 
 from PIL import Image, ImageDraw
 
@@ -56,6 +57,18 @@ def create(out, case='visible', fps=12):
                'sha256':hashlib.sha256((art/f'{id}.png').read_bytes()).hexdigest()}
         if id=='actor': asset['atlas']={'columns':2,'rows':1,'cell_width':24,'cell_height':24,'frame_count':2}
         assets.append(asset)
+    if case.startswith('painted-'):
+        original=next(a for a in json.loads((ROOT/'assets/catalog.json').read_text())['assets'] if a['id']=='cloud-cels')
+        destination=art/'cloud-cels.png';shutil.copyfile(ROOT/original['file'],destination)
+        assets[0]={k:v for k,v in original.items() if k in ['width','height','atlas','sha256']}
+        assets[0].update(id='actor',file='assets/source/cloud-cels.png')
+        layer['cycle_seconds']=4
+        layer['width']=.65;layer['height']=.32
+        if case=='painted-barely': layer['opacity']=.02
+        if case=='painted-invisible': layer['x']=1.7
+        if case=='painted-excessive': layer['motion']['x_amplitude']=.45;layer['motion']['cycles']=4
+        (out/'source-ledger.json').write_text(json.dumps({'scope':'Read-only copy of repository-cleared painted cloud cels; no accepted asset modified',
+            'source_catalog':'assets/catalog.json','asset_id':'cloud-cels','sha256':original['sha256']}))
     (out/'scene/scene.json').write_text(json.dumps(scene))
     (out/'assets/catalog.json').write_text(json.dumps({'version':1,'assets':assets}))
     if case=='visible':
@@ -67,5 +80,5 @@ def create(out, case='visible', fps=12):
 
 if __name__ == '__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--out',type=Path,required=True)
-    parser.add_argument('--case',choices=['visible','duplicate','offscreen','tiny','hidden','occluded','low-contrast','pulse','excessive'],default='visible')
+    parser.add_argument('--case',choices=['visible','duplicate','offscreen','tiny','hidden','occluded','low-contrast','pulse','excessive','painted-visible','painted-barely','painted-invisible','painted-excessive'],default='visible')
     args=parser.parse_args();print(json.dumps({'project':str(create(args.out,args.case)),'scope':'Independent engineering fixture, no artistic film approval'}))

@@ -22,7 +22,9 @@ def replay(out):
     # cutoffs. Labels are synthetic conditions, not claimed perceptual judgments.
     labels=[('visible','tuning',False),('offscreen','tuning',True),('tiny','tuning',True),
             ('hidden','held-out',True),('occluded','held-out',True),('duplicate','held-out',True),
-            ('low-contrast','held-out',True),('excessive','held-out',True),('pulse','held-out',True)]
+            ('low-contrast','held-out',True),('excessive','held-out',True),('pulse','held-out',True),
+            ('painted-visible','held-out-painted',False),('painted-barely','held-out-painted',True),
+            ('painted-invisible','held-out-painted',True),('painted-excessive','held-out-painted',True)]
     rows=[]
     for case,split,expected in labels:
         project=create(out/case,case)
@@ -40,11 +42,11 @@ def replay(out):
             cost.append({'workload':label,'cache_label':cache,'process_policy':'fresh Node process each run; OS caches not flushed',
                          'response_bytes':size,**result['performance'],'report':result['report']})
     matched,_=run(project,out/'matched','--view','portrait','--view','landscape','--compare',project/'comparison.json')
-    held=[r for r in rows if r['split']=='held-out']
+    held=[r for r in rows if r['split'].startswith('held-out')]
     report={'kind':'ambiance-activity-calibration','schema_version':1,'cases':rows,
             'held_out_counts':{name:sum(r['outcome']==name for r in held) for name in ['hit','false_warning','miss','correct_clear']},
             'benchmark':cost,'matched_comparison':matched['report'],
-            'limits':['All sources are locally generated independent brush-mark fixtures; no held-out real-film artistic calibration is claimed.',
+            'limits':['Synthetic brush-mark cases plus held-out copies of repository-cleared painted cloud cels. Conditions are authored fixture labels; no real-film artistic calibration is claimed.',
                       'Excessive activity has no automatic salience detector. A pulse can change an actor residual through overlap; unresolved attribution remains visible as misses.',
                       'No universal score, threshold, listening review or artistic pass. Inspect flagged and unflagged proofs at normal speed.',
                       'Wall time and memory are measurements, never flaky CI thresholds. No renderer optimization was justified by this bounded workload.']}

@@ -17,6 +17,8 @@ Audition selected sources; note hiss, warble, unwanted voices, harsh attacks and
 
 Use the executable [audio-session contract](../../../docs/AUDIO-SESSION.md) and `audio inspect/mix/compare/check` for selected PCM sources, clips, gains, pan automation and circular tails. EQ, convolution and other unsupported processing need preserved external preparation. Keep legacy descriptive sessions intact; `audio import-stems` creates an executable derivative without claiming to reproduce their processing.
 
+Bind picture-linked clips with `audio cue-bind` against a complete stride-one activity receipt. After scene timing, action or loop changes, run `audio cue-check`; explicitly revise affected anchors/session timing and preserve source/PCM identities. Reuse the same soundtrack across compatible views without inventing a new audition. See [activity and cues](../../../docs/SCENE-ACTIVITY.md).
+
 Choose a master period that avoids distracting event repetition. Edit compatible musical phrase/harmony positions and retain room tails across the join; requesting matching endpoints does not guarantee continuity.
 
 Measure the actual sources before setting gain. Quiet generated effects can still contain isolated high peaks. Use level, spectral balance, stereo width, and reverberation to imply distance. Protect mono readability and low-volume comfort. The reference's −22.5 LUFS is an artistic result, not a mandatory target for every project.

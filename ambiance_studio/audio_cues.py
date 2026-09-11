@@ -19,15 +19,21 @@ def snapshot(path):
     if clock['start_frame'] != 0 or clock['stride'] != 1 or clock['frames'] != round(clock['fps']*clock['picture_seconds']):
         raise ValueError('Cue binding/checking requires a full-loop activity receipt at every production frame')
     state = json.loads((path.parent/'state.json').read_text())
+    scene = json.loads((path.parent/'scene.snapshot.json').read_text())
     actions = {}
     for action in report['actions']:
         rows = [row for row in state['views'][0]['layers'] if row['layer'] in action['layers']]
-        # Projected crop/camera is deliberately excluded from shared sound identity.
-        signatures = {row['layer']: [{k: sample[k] for k in ['cell', 'painted_sha256', 'visible', 'opacity', 'local_matrix', 'channels', 'binding_values']}
+        # Output crop is excluded; inherited/world travel remains picture action.
+        signatures = {row['layer']: [{k: sample[k] for k in ['cell', 'painted_sha256', 'visible', 'opacity', 'local_matrix', 'world_matrix', 'channels', 'binding_values']}
                                       for sample in row['samples']] for row in rows}
         changes = [any(samples[i] != samples[i-1] for samples in signatures.values()) if i else False for i in range(clock['frames'])]
         onsets = [i for i, changed in enumerate(changes) if changed and (i == 0 or not changes[i-1])]
-        actions[action['id']] = {'state_sha256': canonical(signatures), 'onset_frames': onsets, 'layers': action['layers']}
+        authored = {l['id']: {'cycle_seconds':l.get('cycle_seconds'), 'phase_frames':l.get('phase_frames'),
+                    'motion_cycles':l.get('motion', {}).get('cycles') if l.get('motion') else None,
+                    'motion_phase':l.get('motion', {}).get('phase') if l.get('motion') else None,
+                    'track_times':{k:[v[0] for v in t['keys']] for k,t in l.get('tracks', {}).items()}}
+                    for l in scene['layers'] if l['id'] in action['layers']}
+        actions[action['id']] = {'state_sha256': canonical(signatures), 'onset_frames': onsets, 'layers': action['layers'], 'authored_cadence':authored}
     return {'receipt': str(path), 'receipt_sha256': activity.digest(path), 'clock': clock, 'actions': actions,
             'scene_sha256': report['scene_sha256'], 'catalog_sha256': report['catalog_sha256'], 'plan': report.get('plan')}
 
@@ -111,7 +117,10 @@ def check(args, project):
     for link in sync['links']:
         id = link['action_id']; before = old['actions'][id]; after = current['actions'].get(id)
         if after is None: code = 'picture_action_deleted'
-        elif before['state_sha256'] == after['state_sha256']: continue
+        elif before == after: continue
+        elif any(before['authored_cadence'].get(l, {}).get(k) != after['authored_cadence'].get(l, {}).get(k)
+                 for l in set(before['layers']+after['layers']) for k in ['cycle_seconds', 'motion_cycles']): code = 'picture_action_repeated_or_removed'
+        elif before['authored_cadence'] != after['authored_cadence']: code = 'picture_action_retimed'
         elif len(before['onset_frames']) != len(after['onset_frames']): code = 'picture_action_repeated_or_removed'
         elif before['onset_frames'] != after['onset_frames']: code = 'picture_action_retimed'
         else: code = 'picture_action_changed'

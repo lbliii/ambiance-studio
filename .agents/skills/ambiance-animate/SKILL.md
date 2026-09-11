@@ -9,6 +9,8 @@ Read the production assets, [scene contract](../../../docs/SCENE-CONTRACT.md), a
 
 Assemble the selected output compositions before movement, preserving the reference's identity and intended relationships. Use `scene place` for recorded source mappings and `scene reparent --keep-world --at` for an explicit reference pose; see [scene transactions](../../../docs/architecture/SCENE-TRANSACTIONS.md). These use the same dry-run/hash-checked mutation path as `scene apply`. Keep paint order separate from attachment and depth; preserving one pose does not preserve a whole trajectory.
 
+Use [scene activity](../../../docs/SCENE-ACTIVITY.md) to measure semantic actions in each intended view, then produce bounded raster/disabled-element and matched strength/cadence proofs. Inspect warnings and misses; state activity and changed pixels never establish observed readability. Record only actual normal-speed observations bound to the exact receipt.
+
 Use `scene timing` to inspect the actual timing driver before tuning cadence: a cell track overrides the fallback cycle. Sample absolute time; use compatible periods, deterministic paths and deliberate hidden resets where needed.
 
 Animate shape changes with cels and rigid movement with transforms. Offset phases where reused sequences would otherwise look synchronized. Use the [motion direction scale](../../../docs/MOTION-DIRECTION.md) for a primary feature, readable supporting/environmental life and stable references. Judge amplitude and cadence separately. Quietness alone does not justify tiny, infrequent actions; every selected story action must read in the intended composition.

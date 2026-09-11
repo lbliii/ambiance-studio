@@ -58,7 +58,7 @@ export function measureActivity(scene, catalog, {views, painted, actions = [], s
         const changed=!!prev&&(cornerTravel>1e-7||paint.sha256!==prev.painted_sha256||s.opacity!==prev.opacity||s.visible!==prev.visible);
         data.push({frame:start_frame+i*stride,time_seconds:(start_frame+i*stride)/fps,cell:s.cell,painted_sha256:paint.sha256,
           visible:s.visible,opacity:s.opacity,render_eligible:eligible,intersects_view:inView,depth:s.depth,
-          anchor_display_px:anchor,local_anchor_scene_px:local,local_matrix:localMatrix,polygon_display_px:polygon,painted_bounds_display_px:bounds,
+          anchor_display_px:anchor,local_anchor_scene_px:local,local_matrix:localMatrix,world_matrix:s.matrix.map(n=>Math.round(n*1e9)/1e9),polygon_display_px:polygon,painted_bounds_display_px:bounds,
           world_anchor_travel_px:travel,local_anchor_travel_scene_px:localTravel,painted_corner_travel_px:cornerTravel,
           travel_subject_diagonals:bounds&&magnitude(bounds.slice(2))?cornerTravel/magnitude(bounds.slice(2)):null,
           travel_output_diagonals:cornerTravel/Math.hypot(view.output.width,view.output.height),speed_px_per_second:cornerTravel/dt,
@@ -76,8 +76,14 @@ export function measureActivity(scene, catalog, {views, painted, actions = [], s
     }
     const actionRows=actions.map(a=>{
       const members=rows.filter(r=>a.layers.includes(r.layer)),windows=intervals(samples.map((_,i)=>members.some(r=>r.samples[i].projected_state_activity)),dt,start_frame/fps);
+      const bouts=windows.filter(w=>w.active),onsets=bouts.map(w=>w.start_seconds),longestRest=Math.max(0,...windows.filter(w=>!w.active).map(w=>w.duration_seconds));
+      const targetDiagnostics=[];
+      if(a.timing?.onset_max_seconds!=null&&(!onsets.length||onsets[0]>a.timing.onset_max_seconds))targetDiagnostics.push('sampled_onset_exceeds_authored_target');
+      if(a.timing?.rest_max_seconds!=null&&longestRest>a.timing.rest_max_seconds)targetDiagnostics.push('sampled_rest_exceeds_authored_target');
+      if(a.timing?.duration_min_seconds!=null&&(!bouts.length||bouts.every(w=>w.duration_seconds<a.timing.duration_min_seconds)))targetDiagnostics.push('no_sampled_bout_reaches_authored_duration');
       return {...a,applicable:!a.views?.length||a.views.includes(view.view.id),sampled_windows:windows,
-        state_onsets_seconds:windows.filter(w=>w.active).map(w=>w.start_seconds),max_sampled_rest_seconds:Math.max(0,...windows.filter(w=>!w.active).map(w=>w.duration_seconds)),
+        state_onsets_seconds:onsets,state_repeat_intervals_seconds:onsets.slice(1).map((n,i)=>n-onsets[i]),max_sampled_rest_seconds:longestRest,
+        timing_target_diagnostics:targetDiagnostics,comparison_scope:'Sampled projected-state candidates only; neither an artistic verdict nor proof of unsampled cadence.',
         observation:{status:'unreviewed',observed_level:null,observer:null,evidence:null}};
     });
     report.views.push({...view,layers:rows,actions:actionRows});
