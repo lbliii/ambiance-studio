@@ -88,6 +88,7 @@ export function reparentAtTime(scene,catalog,op){
   const layer=scene.layers.find(l=>l.id===op.layer);
   if(!layer||!scene.layers.some(l=>l.id===op.to))throw Error('Unknown child or parent layer');
   if(['x','y','scale','rotation'].some(k=>layer.tracks?.[k]))throw Error('Reparent cannot rebase child transform tracks; use an explicit authored-track revision');
+  if(scene.bindings?.links.some(b=>b.target.layer===layer.id&&['x','y','scale','rotation','opacity'].includes(b.target.channel)))throw Error('Reparent cannot rebase bound child channels; author an explicit binding revision');
   const beforeLayer=structuredClone(layer),before=compileScene(scene,catalog).sample(op.at_seconds),old=before.find(s=>s.id===op.layer),parent=before.find(s=>s.id===op.to);
   if(!parent.socketLocal[op.socket])throw Error('Missing target socket');
   const parentMatrix=multiply(parent.matrix,translation(...parent.socketLocal[op.socket]));

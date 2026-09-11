@@ -126,7 +126,7 @@ def validate(scene_path, catalog_path=None):
                     timing=result['data'];by_layer={r['layer']:r for r in timing['layers']}
                     for entry in cycles:
                         row=by_layer[entry['layer']];fallback=row['fallback_cycle']
-                        entry.update(cel_fps=None if row['timing_driver']=='cell_track' else fallback['nominal_cel_fps'],
+                        entry.update(cel_fps=fallback['nominal_cel_fps'] if row['timing_driver']=='cycle' else None,
                             timing_driver=row['timing_driver'],fallback_cycle=fallback,
                             timing_summary={'authored_rate_segments':row['authored']['rate_segments'],
                                 'sampled_cel_transitions':row['sampled']['cel_transitions'],

@@ -16,7 +16,7 @@ def handler_for(directory):
     evaluation_slot = BoundedSemaphore(1)
     # Source originals and compiler records stay on disk; only viewer assets are mounted.
     public = {name: data for name, data in files.items()
-              if name in ('index.html', 'workbench.json', 'engine.mjs', 'finishing.mjs',
+              if name in ('index.html', 'workbench.json', 'engine.mjs', 'finishing.mjs', 'bindings.mjs', 'views.mjs',
                           'preparation-workbench.mjs', 'preparation-workbench.css') or name.startswith('images/')}
 
     class Handler(BaseHTTPRequestHandler):
