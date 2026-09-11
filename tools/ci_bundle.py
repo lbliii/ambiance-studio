@@ -54,6 +54,7 @@ def bundle(run, replay, out, combined=None):
         select(combined, Path('combined.json'), Path('combined/combined.json'))
         # These roots are created by repository fixture builders, never a user project glob.
         proof_paths = {
+            'intent': ['reports/production-intent-replay.json', 'reports/replay-transcript.json', 'reports/fake.json', 'render/paired'],
             'bindings': ['reports/binding.json', 'render/paired', 'render/source-hidden', 'render/browser-parity/packet.json'],
             'paired-recovery': ['recovery.json', 'interrupted-run.json', 'commands',
                                 'synthetic-project/deliveries/recovery-pair.json'],
@@ -90,9 +91,10 @@ def bundle(run, replay, out, combined=None):
                     for source in sorted(candidate.rglob('*')) if candidate.is_dir() else [candidate]:
                         if source.suffix in {'.png', '.json', '.html', '.mjs', '.css'}:
                             select(combined, source.relative_to(combined), Path('combined') / source.relative_to(combined))
-                if feature == 'paired-recovery':
+                if feature in {'paired-recovery', 'intent'}:
+                    run_path = 'synthetic-project/runs/recovery-pair' if feature == 'paired-recovery' else 'runs/paired'
                     for view in ['portrait', 'landscape']:
-                        for encode in sorted((attempt / 'synthetic-project/runs/recovery-pair').glob(view + '.picture.silent-*')):
+                        for encode in sorted((attempt / run_path).glob(view + '.picture.silent-*')):
                             if not re.fullmatch(view + r'\.picture\.silent-\d+', encode.name):
                                 continue
                             for relative in ['render-report.json', 'encode-checkpoint.json', 'picture.mp4', 'verification/media-report.json', 'verification/contacts/decoded-0000.png']:

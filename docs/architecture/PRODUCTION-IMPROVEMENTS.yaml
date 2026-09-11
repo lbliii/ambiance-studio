@@ -133,7 +133,8 @@ tasks:
   title: Reconcile stage-specific expectations with exact production evidence
   phase: 3
   priority: P0
-  status: planned
+  status: implemented
+  evidence: docs/PRODUCTION-PLAN.md
   relative_size: L
   depends_on:
   - DATA-01
@@ -337,8 +338,9 @@ tasks:
   title: Produce, resume and present exact paired movie editions
   phase: 3
   priority: P0
-  status: implemented_with_scope_integration_remaining
-  integration_note: PR 5 implements paired exports and delivery. DATA-02 owns remaining production-plan scope and evidence integration.
+  status: implemented
+  evidence: docs/STUDIO-LIBRARY.md
+  integration_note: PR 5 supplies paired editions; PR 12 proves actual interrupted recovery; PR 13 integrates exact plan evidence and proof/review/final scope without blocking smaller review movies.
   relative_size: L
   depends_on:
   - VIEW-01
