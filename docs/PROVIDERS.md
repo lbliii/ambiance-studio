@@ -33,3 +33,23 @@ In the original run, the main music page failed, the home-page generator worked,
 Recheck current docs when changing models, output formats, endpoints, or billing assumptions. Keep the renderer and asset contract independent of the supplier. Test an adapter with a small authorized request and retain a manual source-import path.
 
 The original capability references are [ElevenLabs sound effects](https://elevenlabs.io/docs/api-reference/text-to-sound-effects/convert) and [music composition](https://elevenlabs.io/docs/api-reference/music/compose). They are starting points for verification, not permanent promises about an account's access or plan.
+
+## Executable local recording and reconciliation
+
+`asset request` maintains managed records inside the existing `plans/generation-ledger.json`; legacy records remain unchanged. These commands make no network/provider calls and grant no generation authority.
+
+```sh
+./ambiance --project PROJECT asset request record request.json
+./ambiance --project PROJECT asset request reconcile take-1 --receipt timeout.json
+./ambiance --project PROJECT asset request inspect take-1
+./ambiance --project PROJECT asset request reconcile take-1 --receipt retrieved.json
+./ambiance --project PROJECT asset request reconcile take-1 --receipt selected.json
+```
+
+Start with `templates/generation-request.json`. Source references are explicit project-relative `{file,sha256}` records. Preserve unknown provider/model/price/job IDs as null. Managed states are `pending`, `submitted`, `uncertain`, `retrieved`, `selected`; the earlier descriptive lifecycle remains historical guidance for legacy records. Submission is an externally performed action recorded by an event, never a CLI adapter capability.
+
+A receipt has `version:1`, a stable `event_id`, `state`, and optional returned `provider_request_id`, `actual_model_returned`, `reported_cost`, `note`. A `retrieved` event adds `outputs:[{file,sha256,provider_output_id:null}]` for actual local decodable images. A `selected` event names `selected_output_sha256` from retrieved outputs. A tool-returned image can move directly from pending to retrieved without inventing a provider job ID. Managed image snapshots are byte-preserved at `assets/raw/generation/REQUEST/SHA.bin`; the extension does not change their decoded media format. Audio/video use their existing import/verification paths.
+
+Recording the same request/event is idempotent. Reusing an ID with different contents fails. Identical request fingerprints cannot silently be recorded under another ID; an uncertain job cannot transition back to submitted. Inspect/reconcile its existing result first. A fingerprint does not imply remote provider idempotency. Confirmed intentional regeneration requires a separately reviewed request with changed explicit settings or source/prompt; no automatic retry request is synthesized.
+
+Returned content is deduplicated by hash while preserving receipt aliases. Original returned files may disappear after retrieval; selection uses the verified local snapshot. Changed input sources or tampered snapshots block new retrieval/selection. Interrupted snapshot writes publish atomically, and interrupted ledger updates can safely replay the same event. Known reported cost stays separate from estimated cost/authority; missing costs are unknown, never zero. `inspect` returns the exact ledger path, current state, unknown fields and next recovery action.
