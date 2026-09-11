@@ -20,3 +20,5 @@ Use cels for deformation or internal changes; transforms for rigid motion; deter
 Create a layer proof or labeled layout only when it resolves composition or occlusion uncertainty. Preserve a clean approved still as the visual reference. Do not regenerate the original solely to force it into a preset template.
 
 Evidence for `intent` and `layout`: preserved reference, completed brief, layer plan, clean-plate/occlusion notes, attachment decisions, and explicit review observations. A generated plan is not evidence that its assets exist or that a camera move is already safe.
+
+Plan every requested saved view together: focal subject, exclusions, overlap, backing reveals and effective source resolution at the largest output. Preserve the authored stage and place view crops within it; a wide crop of portrait art may need further artwork or a new stage to tell the same story. Record that limitation in layout notes and inspect paired crops before accepting the composition.

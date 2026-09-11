@@ -80,9 +80,9 @@ def seal(data):
     data = dict(data); data['payload_sha256'] = studio.encoded_hash(data); return data
 
 
-def read_sealed(path, kind):
+def read_sealed(path, kind, versions=(1,)):
     data = studio.read(path)
-    if data.get('format') != kind or data.get('schema_version') != 1: raise ValueError(f'Unsupported {kind} contract: {path}')
+    if data.get('format') != kind or data.get('schema_version') not in versions: raise ValueError(f'Unsupported {kind} contract: {path}')
     if data.get('payload_sha256') != studio.encoded_hash({k: v for k, v in data.items() if k != 'payload_sha256'}):
         raise ValueError(f'Manifest integrity changed: {path}')
     return data
@@ -338,21 +338,55 @@ def edition_path(project, revision, edition):
 
 
 def load_edition(project, revision, edition):
-    data = read_sealed(edition_path(project, revision, edition), EDITION)
+    data = read_sealed(edition_path(project, revision, edition), EDITION, versions=(1, 2))
     if data['revision'] != revision or data['id'] != edition: raise ValueError('Edition identity mismatch')
     if data['revision_sha256'] != studio.digest(manifest_path(project, revision)): raise ValueError('Edition refers to a different revision manifest')
+    if data['schema_version'] == 2:
+        if data.get('view') != captured_view(project, revision, data.get('view', {}).get('id')):
+            raise ValueError('Edition view differs from the captured scene')
+        expected=data.get('output_expectations', {})
+        fields(expected, ['width','height','fps','frames','loop_frames','audio_tracks'], 'edition expectations')
+        if set(expected) != {'width','height','fps','frames','loop_frames','audio_tracks'} or any(type(v) is not int or v < (0 if k=='audio_tracks' else 1) for k,v in expected.items()):
+            raise ValueError('Edition requires exact integer output expectations')
+        if expected['audio_tracks'] not in [0,1] or expected['frames'] % expected['loop_frames']:
+            raise ValueError('Edition requires whole picture loops and zero or one audio track')
+        dimensions=data['view']['definition']['output']
+        if expected['width']*dimensions['height'] != expected['height']*dimensions['width']:
+            raise ValueError('Edition dimensions differ from its view aspect ratio')
     return data
 
 
-def prepare_edition(project, args):
-    """Freeze declared inputs before rendering; publication checks them again."""
-    edition = getattr(args, 'edition', None)
-    if not edition: return None
-    id = getattr(args, 'revision', None)
-    if not id: raise ValueError('--edition requires --revision')
-    identifier(edition); context = render_context(project, id); data = load(project, id)
-    if edition_path(project, id, edition).exists(): raise ValueError('Edition exists; choose a new ID')
-    relative(project, args.out)
+def captured_view(project, revision, id='authored'):
+    """Resolve captured control documents without making stale art unreadable."""
+    from . import scene_runtime
+    if not isinstance(id,str):raise ValueError('A view ID is required')
+    data=load(project, revision)
+    scene=scene_runtime.load_scene_json(studio.inside(project,data['controls']['scene']).read_bytes())
+    catalog=scene_runtime.load_scene_json(studio.inside(project,data['controls']['catalog']).read_bytes())
+    row=scene_runtime.scene_bridge('view-inspect',scene,catalog,{'id':id})['views'][id]
+    definition={key:row[key] for key in ['resolver_version','id','source_canvas','rect_scene_px','output']}
+    return {'id':id,'sha256':row['view_sha256'],'definition':definition}
+
+
+def edition_view(project, edition):
+    return edition['view'] if edition['schema_version']==2 else captured_view(project,edition['revision'],'authored')
+
+
+def report_view(project, revision, report):
+    """A receipt may assert a view only when it matches captured geometry."""
+    row=report.get('view')
+    if row is None:return captured_view(project,revision,'authored')
+    selected=captured_view(project,revision,row.get('view',{}).get('id'))
+    if row.get('view')!=selected['definition'] or row.get('view_sha256')!=selected['sha256']:
+        raise ValueError('Picture receipt view differs from the captured view')
+    output=row.get('output',{});expected=selected['definition']['output']
+    if any(type(output.get(k)) is not int or output[k]<=0 for k in ['width','height']) or output['width']*expected['height']!=output['height']*expected['width']:
+        raise ValueError('Picture receipt dimensions differ from its view')
+    return selected
+
+
+def collect_edition_audio(project, data, args):
+    """Validate selected PCM provenance for both job preflight and edition capture."""
     c = Collector(project)
     if getattr(args, 'audio_session', None): c.session(studio.inside(project, str(args.audio_session)))
     if getattr(args, 'audio_run', None): c.audio_run(studio.inside(project, str(args.audio_run)), 'edition')
@@ -367,7 +401,22 @@ def prepare_edition(project, args):
         if master['path'] in data['sound_complete']:
             c.refs += [r for r in data['dependencies'] if r['section'] in ['sound-design', 'mix']]
         c.sound_complete.add(master['path'])
-    picture = None
+    return c, master
+
+
+def prepare_edition(project, args):
+    """Freeze declared inputs before rendering; publication checks them again."""
+    edition = getattr(args, 'edition', None)
+    if not edition: return None
+    if args.command=='media' and args.action=='verify':return None
+    id = getattr(args, 'revision', None)
+    if not id: raise ValueError('--edition requires --revision')
+    identifier(edition); context = render_context(project, id); data = load(project, id)
+    selected_view=captured_view(project,id,getattr(args,'view',None) or 'authored')
+    if edition_path(project, id, edition).exists(): raise ValueError('Edition exists; choose a new ID')
+    relative(project, args.out)
+    c, master = collect_edition_audio(project, data, args)
+    picture = None; picture_dimensions = None
     if args.command == 'media' and args.action == 'compose':
         picture = c.pin(Path(args.picture).resolve(), 'export', 'picture_input')
         proof = getattr(args, 'picture_receipt', None); bound = False
@@ -381,6 +430,8 @@ def prepare_edition(project, args):
             for key in ['scene', 'catalog']:
                 if report.get(key+'_sha256') != studio.digest(context[key]): raise ValueError('Picture receipt belongs to a different captured '+key)
             if picture['sha256'] not in [report.get('picture_sha256'), report.get('output_sha256')]: raise ValueError('Picture bytes differ from the render receipt')
+            selected_view=report_view(project,id,report)
+            if report.get('view'):picture_dimensions=report['view']['output']
             bound = True
         else:
             for previous in sorted((manifest_path(project, id).parent/'editions').glob('*.json')):
@@ -389,9 +440,14 @@ def prepare_edition(project, args):
                     dependencies = [r for r in ed['dependencies'] if r['section'] == 'export']
                     if changed(project, dependencies): raise ValueError('Selected prior picture edition dependencies changed')
                     c.refs += dependencies; c.pin(previous, 'export', 'picture_edition'); bound = True; break
+            if bound:
+                selected_view=edition_view(project,ed)
+                if ed['schema_version']==2:picture_dimensions={k:ed['output_expectations'][k] for k in ['width','height']}
         if not bound: raise ValueError('Picture is not bound to this revision; supply --picture-receipt or reuse a recorded edition of this revision')
+        if getattr(args,'view',None) is not None and args.view!=selected_view['id']:
+            raise ValueError('Selected picture view differs from --view; composition cannot relabel its framing')
     return {'revision': id, 'id': edition, 'manifest_sha256': context['manifest_sha256'], 'collector': c, 'audio': master, 'picture': picture,
-            'inputs': unique(c.refs+c.origins)}
+            'inputs': unique(c.refs+c.origins), 'view':selected_view, 'picture_dimensions':picture_dimensions}
 
 
 def record_edition(project, prepared, result, args):
@@ -409,6 +465,26 @@ def record_edition(project, prepared, result, args):
         verification = result.get('verification')
         if not isinstance(verification, dict) or not verification.get('ok'):
             raise ValueError('Edition requires successful actual media verification')
+        view=prepared['view']; expectations=None
+        if view['id']!='authored':
+            if args.command=='render' and report_view(project,id,result)!=view:
+                raise ValueError('Rendered view differs from the prepared edition view')
+            expectations={key:verification.get(source) for key,source in [('width','width'),('height','height'),('fps','fps'),('frames','decoded_frames'),('loop_frames','loop_frames')]}
+            if any(type(v) not in [int,float] or v<=0 or v!=int(v) for v in expectations.values()):
+                raise ValueError('Named-view edition requires exact decoded output dimensions and timing')
+            expectations={k:int(v) for k,v in expectations.items()}
+            expectations['audio_tracks']=verification.get('audio',{}).get('tracks')
+            if type(expectations['audio_tracks']) is not int or expectations['audio_tracks'] not in [0,1]:raise ValueError('Named-view edition requires verified audio-track identity')
+            size={k:expectations[k] for k in ['width','height']}
+            intended=view['definition']['output']
+            if size['width']*intended['height']!=size['height']*intended['width']:raise ValueError('Decoded picture does not match its view aspect ratio')
+            if prepared['picture_dimensions'] and size!=prepared['picture_dimensions']:raise ValueError('Composition changed the bound picture dimensions')
+            if args.command=='render' and result['view']['output']!=size:raise ValueError('Render receipt and decoded dimensions differ')
+            result['view']={**result.get('view',{}),'view':view['definition'],'view_sha256':view['sha256'],'output':size}
+            result['output_expectations']=expectations
+            production_report=Path(args.out).resolve()/('compose-report.json' if args.command=='media' else 'render-report.json')
+            if not production_report.is_file():raise ValueError('Named-view edition needs its saved production report')
+            studio.write(production_report,result)
         output_path = Path(result['output']).resolve()
         output = ref(project, output_path, 'export', 'edition_output', result.get('output_sha256'))
         refs = list(c.refs)
@@ -436,17 +512,18 @@ def record_edition(project, prepared, result, args):
             target = doc_dir/name; target.write_bytes(doc['bytes'])
             refs.append(ref(project, target, doc['section'], doc['role']))
         if changed(project, prepared['inputs']): raise ValueError('Inputs changed before edition publication')
-        receipt = seal({'format': EDITION, 'schema_version': 1, 'id': edition, 'revision': id,
+        receipt = seal({'format': EDITION, 'schema_version': 2 if expectations else 1, 'id': edition, 'revision': id,
             'revision_sha256': prepared['manifest_sha256'], 'created_utc': datetime.now(timezone.utc).isoformat(),
             'picture': picture, 'audio': prepared['audio'], 'output': output, 'dependencies': unique(refs),
             'sound_complete': sorted(c.sound_complete), 'recipe': {'command': args.command, 'action': args.action,
             'repeats': getattr(args, 'repeats', 1)}, 'verification': {'path': relative(project, report_path), 'sha256': studio.digest(report_path)},
-            'limits': ['Technical verification only. No creative verdict, listening, phone observation or publication is inferred.']})
+            'limits': ['Technical verification only. No creative verdict, listening, phone observation or publication is inferred.'],
+            **({'view':view,'output_expectations':expectations} if expectations else {})})
         studio.write(path, receipt)
     return {**result, 'edition': {'id': edition, 'revision': id, 'receipt': str(path), 'sha256': studio.digest(path)}}
 
 
-def review_context(project, id, edition=None):
+def review_context(project, id, edition=None, view=None):
     data = load(project, id)
     controls = data['controls']; refs = list(data['dependencies']); final_files = []
     subject = {'mode': 'revision', 'revision': id, 'revision_sha256': studio.digest(manifest_path(project, id)),
@@ -454,6 +531,11 @@ def review_context(project, id, edition=None):
     if edition:
         ed = load_edition(project, id, edition); refs += ed['dependencies']; final_files = [ed['output']['path']]
         subject['edition_sha256'] = studio.digest(edition_path(project, id, edition))
+        inherited=ed['view']['id'] if ed['schema_version']==2 else 'authored'
+        if view is not None and view!=inherited:raise ValueError('Review view differs from the selected edition')
+        view=inherited
+    selected=captured_view(project,id,view) if view not in [None,'authored'] else None
+    if selected:subject.update(view=selected['id'],view_sha256=selected['sha256'])
     gates = studio.read(studio.inside(project, controls['pipeline']))
     settings = studio.read(studio.inside(project, controls['settings']))
     all_roles = {r['role'] for r in refs}
@@ -473,12 +555,12 @@ def review_context(project, id, edition=None):
             if not chosen or any(path not in complete for path in chosen): errors.append('Selected master lacks an explicit audio-run or external-preparation dependency record')
         return errors
     return {'settings': settings, 'pipeline': gates, 'subject': subject,
-            'review_dir': studio.inside(project, f'reviews/revisions/{id}/'+(f'editions/{identifier(edition)}' if edition else 'picture')),
+            'review_dir': studio.inside(project, f'reviews/revisions/{id}/'+(f'editions/{identifier(edition)}' if edition else f'views/{selected["id"]}/picture' if selected else 'picture')),
             'snapshot': snapshot, 'issues': issues, 'final_files': final_files}
 
 
-def status(project, id, edition=None):
-    return studio.gate_status(project, review_context(project, id, edition))
+def status(project, id, edition=None, view=None):
+    return studio.gate_status(project, review_context(project, id, edition, view))
 
 
 def project_status(project):
@@ -487,6 +569,11 @@ def project_status(project):
         id = path.parent.name; item = {'id': id, 'integrity': check(project, id)}
         try:
             item['working'] = compare(project, id); item['reviews'] = status(project, id); item['editions'] = []
+            manifest=load(project,id);scene=studio.read(studio.inside(project,manifest['controls']['scene']))
+            item['views']=[]
+            for view_id in scene.get('framing',{}).get('views',{}):
+                try:item['views'].append({'id':view_id,'reviews':status(project,id,view=view_id)})
+                except (OSError,ValueError,KeyError,TypeError) as error:item['views'].append({'id':view_id,'ok':False,'error':str(error)})
             for ed in sorted((path.parent/'editions').glob('*.json')):
                 try: item['editions'].append({'id': ed.stem, 'reviews': status(project, id, ed.stem)})
                 except (OSError, ValueError, KeyError, TypeError) as error: item['editions'].append({'id': ed.stem, 'ok': False, 'error': str(error)})

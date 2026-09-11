@@ -145,13 +145,19 @@ def handler_for(root, path, instance, shutdown_token):
                     if len(parts) == 5 and parts[3] == 'deliveries':
                         data = deliveries.inspect(project, parts[4], fingerprints)
                         data['feedback'] = deliveries.feedback_list(project, parts[4])
+                        data['entry_checks'] = deliveries.review_states(project, data)
                         self.respond(data); return
                 if len(parts) == 4 and parts[0] in ['media', 'files']:
                     project = self.project(parts[1]); data = deliveries.load(project, parts[2]); key = parts[3]
-                    if parts[0] == 'media':
-                        item = data['poster'] if key == 'poster' else data['editions'][key]['movie']
+                    query=parse_qs(urlsplit(self.path).query)
+                    if key=='poster':
+                        if data['schema_version']==2 and query.get('entry'):
+                            _,entry=deliveries.resolve_entry(data,entry_id=query['entry'][0]);item=entry['poster']
+                        else:item=data['poster']
                     else:
-                        item = data['editions'][key]['verification']
+                        # v2 media paths identify an exact entry; legacy role paths remain valid only on v1.
+                        _,entry=deliveries.resolve_entry(data,entry_id=key)
+                        item=entry['movie'] if parts[0]=='media' else entry['verification']
                     if item is None:
                         self.respond({'error': 'No cover recorded'}, 404); return
                     self.stream(project, item, parse_qs(urlsplit(self.path).query).get('download') == ['1']); return
@@ -198,7 +204,7 @@ def handler_for(root, path, instance, shutdown_token):
                     raise ValueError('Feedback request too large or empty')
                 body = json.loads(self.rfile.read(size))
                 if len(parts) == 4 and parts[:2] == ['api', 'projects'] and parts[3] == 'feedback':
-                    result = deliveries.feedback(self.project(parts[2]), body['delivery'], body['role'], body['seconds'], body['note'], body['observer'])
+                    result = deliveries.feedback(self.project(parts[2]), body['delivery'], body['role'], body['seconds'], body['note'], body['observer'], body.get('view'))
                     self.respond(result, 201); return
                 self.respond({'error': 'Not found'}, 404)
             except (OSError, ValueError, KeyError, TypeError) as error:
