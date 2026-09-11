@@ -180,5 +180,25 @@ class ActivityTests(unittest.TestCase):
         self.assertEqual(report['actions'][0]['targets'][1]['readability_target'],3)
         self.assertEqual(report['actions'][0]['layers'],['actor'])
 
+    def test_binding_samples_and_disabled_source_include_coupled_receiver(self):
+        project=self.root/'binding'
+        process=subprocess.run(['node',str(ROOT/'examples/bindings/create_fixture.mjs'),str(project)],capture_output=True,text=True)
+        self.assertEqual(process.returncode,0,process.stdout+process.stderr)
+        out=self.root/'binding-activity'
+        activity.run(args('scene','activity','--layer','flame','--view','portrait','--view','landscape','--raster',
+                          '--revision','bindings-v1','--long-edge','128','--out',out),project)
+        report=activity.verify_receipt(out);state=json.loads((out/'state.json').read_text())
+        self.assertIn('editor/bindings.mjs',report['modules'])
+        floor=next(r for r in state['views'][0]['layers'] if r['layer']=='floor-paint')
+        self.assertEqual(floor['samples'][12]['channels']['cell'],1)
+        self.assertEqual(floor['samples'][24]['channels']['opacity'],0)
+        self.assertEqual(len(state['driver_samples']),48)
+        self.assertTrue(all(j['zero_to_endpoint_rgba_exact'] for j in report['joins']))
+        rows=json.loads((out/'raster.json').read_text())['rows']
+        high=next(r for r in rows if r['action']=='layer-flame' and r['view']=='landscape' and r['frame']==12)
+        flame=next(r for r in state['views'][1]['layers'] if r['layer']=='flame')['samples'][12]
+        width,height=flame['painted_bounds_display_px'][2:]
+        self.assertGreater(high['contribution_pixels'],width*height)
+
 
 if __name__=='__main__': unittest.main()

@@ -93,7 +93,7 @@ async function main(){
       saved_last_to_first:pixelMetrics(firstSaved.get(variant+'/'+id),previous.get(variant+'/'+id)).metrics,
       saved_segment_is_full_loop:req.start_frame===0&&req.frames===scene.canvas.fps*scene.canvas.loop_seconds});}
   for(const [key,values] of maps){const view=viewPlan.views.find(v=>v.view.id===key.split('/')[1]);const canvas=rt.createCanvas(view.output.width,view.output.height),ctx=canvas.getContext('2d'),pixels=ctx.createImageData(canvas.width,canvas.height);values.forEach((n,i)=>{pixels.data[i*4]=Math.min(255,n);pixels.data[i*4+3]=255;});ctx.putImageData(pixels,0,0);await save('maps/'+key+'.png',canvas.toBuffer('image/png'));}
-  if(req.raster)await save('index.html',viewsProofPage(panes,scene.canvas.fps/req.stride,req.start_frame/scene.canvas.fps,frames,scene.canvas.loop_seconds)
+  if(req.raster)await save('index.html',viewsProofPage(panes,scene.canvas.fps/req.stride,req.start_frame/scene.canvas.fps,frames,scene.canvas.loop_seconds,{measurePlayback:true})
     .replace('Portrait and landscape proof','Motion activity proof').replace('One scene, shared timing','Motion activity proof')
     .replace('Each view comes from the same finished scene at the same time.',`Target, explicit variants and disabled-layer interventions share the same picture clock and views. Strength and cadence are separate experiments. Sampling: every ${req.stride} production frame(s); playback remains 1×.`));
   for(const v of state.views)for(const a of v.actions){const raster=rows.filter(r=>r.view===v.view.id&&r.action===a.id);a.warnings=diagnosticWarnings({layers:v.layers.filter(l=>a.layers.includes(l.layer))},raster);a.raster_sample_count=raster.length;
@@ -102,7 +102,7 @@ async function main(){
   }
   await save('state.json',json(state));await save('raster.json',json({version:1,rows,units:'8-bit sRGB maximum absolute RGB channel delta; alpha excluded',first_sample:'No temporal comparison before first saved sample',map:'Maximum per-pixel sampled temporal difference; action maps use signed residual difference',warnings:'Diagnostic thresholds are fixture-calibrated prompts to inspect, never salience levels or requirement satisfaction'}));
   await save('painted-cells.json',json(painted));
-  const modules={};for(const name of ['editor/engine.mjs','editor/timing.mjs','editor/activity.mjs','editor/views.mjs','editor/stage-raster.mjs','editor/finishing.mjs','tools/activity-scene.mjs'])modules[name]=sha(await fs.readFile(path.join(root,name)));
+  const modules={};for(const name of ['editor/engine.mjs','editor/timing.mjs','editor/activity.mjs','editor/views.mjs','editor/stage-raster.mjs','editor/finishing.mjs','tools/activity-scene.mjs','tools/views-proof.mjs'])modules[name]=sha(await fs.readFile(path.join(root,name)));
   if(rig.inspectBindings)modules['editor/bindings.mjs']=sha(await fs.readFile(path.join(root,'editor/bindings.mjs')));
   const inputsUnchanged=sha(await fs.readFile(scenePath))===req.scene_sha256&&sha(await fs.readFile(catalogPath))===req.catalog_sha256&&(!req.plan||sha(await fs.readFile(req.plan.path))===req.plan.plan_sha256)&&(await Promise.all(assets.map(async a=>sha(await fs.readFile(a.path))===a.sha256))).every(Boolean);
   if(!inputsUnchanged)throw Error('Inputs changed during activity proof; completed receipt was not published');
