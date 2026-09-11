@@ -7,6 +7,8 @@ description: "Produce and prepare reusable painted cutouts, masks, clean plates,
 
 Read the layer plan and [asset workflow](../../../docs/workflows/02-assets-and-cels.md). Use `plan next` to identify ready parts and `library find/inspect` to examine reusable sources. Use the host's image skill/tool for applicable generation or creative edits; existing files need no regeneration.
 
+Read the selected compositions and story requirements before choosing crops or generation framing. Prepare the production parts and hidden paint needed by both views and the intended motion envelope; retain useful source paint and create missing geometry/poses. See [seed-to-stage production](../../../docs/SEED-TO-STAGE.md). An easy cutout is a useful first test, not the complete asset scope. Record missing art as production work instead of reducing the action to what a static patch can perform.
+
 For each asset, choose reuse, derived edit, or new generation. Inspect reference art before edits. Preserve originals in `assets/raw/`; produce versioned derivatives in `assets/production/`. Record a generation request before sending it, then its actual result and selected take in `plans/generation-ledger.json`. Missing output, timeout, and confirmed provider failure are different states.
 
 Inspect a named prior film's actual motion assets and their scene use before choosing a replacement method. Follow the workflow's flame example when the requested effect depends on changing silhouette; brightness-only cels are a different choice. Show the key poses, atlas and contextual preview, distinguishing new drawings, interpolation and holds.

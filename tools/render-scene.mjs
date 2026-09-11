@@ -191,6 +191,7 @@ async function main(){
     }
     child.stdin.end();await done;}catch(error){child.stdin.destroy();try{await done;}catch(nativeError){throw nativeError;}throw error;}
     report.native_encoder=JSON.parse(stdout);report.encoder_preroll_frames=prerollFrames;
+    await fs.writeFile(path.join(out,'encode-checkpoint.json'),JSON.stringify({...report,ok:false,stage:'encoded-before-trim',intermediate,intermediate_sha256:sha(await fs.readFile(intermediate))},null,2)+'\n');
     report.preroll_trim=await native(nativePath,['trim',intermediate,video,prerollFrames,frames,fps]);
     report.output=video;report.output_sha256=sha(await fs.readFile(video));
   }
