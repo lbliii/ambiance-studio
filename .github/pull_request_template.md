@@ -4,7 +4,7 @@ Describe the production problem and resulting behavior.
 
 ## Validation
 
-Record the commands and any visual/audio review actually performed. Identify relevant limitations.
+Record commands, exact test head, CI artifact links and any visual/audio review actually performed. Separate state/raster/native evidence from normal-speed artistic observations. Identify injected failures, unperformed trials and relevant limitations; upload only allowlisted synthetic/cleared proofs.
 
 ## Compatibility
 
