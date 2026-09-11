@@ -245,6 +245,8 @@ def collect(project, selection):
             raise ValueError('Canonical production intent uses plans/asset-inventory.json')
         docs['inventory'] = 'plans/asset-inventory.json'
         for source in plan['sources']: c.pin(studio.inside(project, source['path']), 'layout', 'production_source', source['sha256'])
+        for source in plan.get('migration', {}).get('originals', []):
+            c.pin(studio.inside(project, source['path']), 'layout', 'production_source', source['sha256'])
         for relation in plan['relations']:
             for dep in relation['dependencies']: c.pin(studio.inside(project, dep['path']), 'animation', 'production_driver', dep['sha256'])
     for role, name in docs.items(): c.document(role+Path(name).suffix, studio.inside(project, name), DOCUMENTS[role], role)

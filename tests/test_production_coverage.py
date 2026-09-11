@@ -170,6 +170,17 @@ class CoverageTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'MP4'):
             coverage.register_evidence(self.p,'movie','portrait',str(path.relative_to(self.p)),'v1','silent')
 
+    def test_zero_warning_activity_receipt_is_not_an_observation(self):
+        data=plan.load(self.p); exp=copy.deepcopy(data['expectations'][1]); exp['id']='composition';exp['requirement']={'type':'observed','check':'composition'}
+        data['expectations'].append(exp);studio.write(self.p/plan.PATH,data);self.capture()
+        ctx=coverage.context(self.p,'v1')
+        receipt={key:ctx[key] for key in ['scene_sha256','catalog_sha256','revision']}
+        receipt.update(kind='ambiance-scene-activity',schema_version=1,ok=True,
+                       summary=[{'view':'portrait','actions':[{'id':'primary','warnings':[],'status':'unreviewed'}]}])
+        path=self.p/'zero-warnings.json';studio.write(path,receipt)
+        with self.assertRaisesRegex(ValueError,'captured revision review'):
+            self.register(path,revision='v1',id='composition')
+
     @unittest.skipUnless(os.environ.get('AMBIANCE_TEST_NATIVE') == '1' and sys.platform == 'darwin', 'Requires actual native encode/decode')
     def test_full_native_iteration_registers_exact_movies_and_partial_review_stays_presentable(self):
         self.capture(); report = self.proof(revision='v1')['report']

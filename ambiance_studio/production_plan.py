@@ -281,6 +281,13 @@ def complexity(plan):
     return {'elements': len(plan['elements']), 'dimensions': {key: counts(key) for key in DIMENSIONS},
             'actions': len(plan['actions']), 'output_pairs': sum(len(o['roles']) for o in plan['outputs']),
             'relations': len(plan['relations']), 'required_art': len([a for e in plan['elements'] for a in e['required_art']]),
+            'art_by_role': {role: sum(a['role'] == role for e in plan['elements'] for a in e['required_art'])
+                            for role in ['source', 'cutout', 'backing', 'occluder', 'mask', 'painted-effect']},
+            'relations_by_kind': {kind: sum(r['kind'] == kind for r in plan['relations'])
+                                  for kind in ['attachment', 'occlusion', 'light-source', 'receiver', 'driver']},
+            'unresolved_references': {'elements_without_layers': sum(not e['realization']['layer_ids'] for e in plan['elements']),
+                                      'relations_without_runtime_ref': sum(not r['scene_ref'] for r in plan['relations']),
+                                      'missing_action_view_targets': sum(not any(t['view_id'] == o['view_id'] for t in a['targets']) for a in plan['actions'] for o in plan['outputs'])},
             'realized_layer_refs': len({l for e in plan['elements'] for l in e['realization']['layer_ids']}),
             'inventory_part_refs': len({(p['item_id'], p['part_id']) for e in plan['elements'] for p in e['realization']['inventory_parts']}),
             'expectations_by_stage': {stage: sum(e['stage'] == stage for e in plan['expectations']) for stage in STAGES},
@@ -327,6 +334,7 @@ def apply(project, source, *, dry_run=False, expected=None):
 def migrate(project, proposal, originals, out):
     """Explicit authored mapping; preserve notes without guessing semantics from prose."""
     project = Path(project).resolve(); out = Path(out).resolve()
+    if not out.is_relative_to(project): raise ValueError('Keep the preserved migration artifact directory inside the project')
     if out.exists(): raise ValueError('Migration artifact directory must be fresh')
     candidate = read(proposal)
     if 'migration' in candidate: raise ValueError('Proposal already has a migration record')
@@ -336,18 +344,20 @@ def migrate(project, proposal, originals, out):
         if not path.is_file(): raise ValueError(f'Missing migration original: {name}')
         records.append({'path': name, 'sha256': studio.digest(path)})
     if not records: raise ValueError('At least one original census/inventory/note is required')
-    candidate['migration'] = {'version': 1, 'originals': records, 'unresolved': []}
     validate(project, candidate)
-    conflicts = contradictions(project, candidate)
     out.mkdir(parents=True)
+    preserved = []
     for index, ref in enumerate(records):
         target = out/'originals'/f'{index}-{Path(ref["path"]).name}'; target.parent.mkdir(exist_ok=True)
         source = studio.inside(project, ref['path']); raw = source.read_bytes()
         if hashlib.sha256(raw).hexdigest() != ref['sha256']: raise ValueError('Migration source changed')
         target.write_bytes(raw)
+        preserved.append({'path': target.relative_to(project).as_posix(), 'sha256': ref['sha256']})
+    candidate['migration'] = {'version': 1, 'originals': preserved, 'unresolved': []}
+    validate(project, candidate)
     studio.write(out/'candidate.json', candidate)
     result = apply(project, out/'candidate.json', dry_run=True)
-    result.update(artifact=str(out), candidate=str(out/'candidate.json'), originals=records,
+    result.update(artifact=str(out), candidate=str(out/'candidate.json'), originals=preserved, original_inputs=records,
                   migration_version=1, instructions='Review the mapping/diff, reconcile contradictions, then plan spec apply candidate.json.')
     studio.write(out/'report.json', result)
     return {k: v for k, v in result.items() if k != 'diff'} | {'report': str(out/'report.json')}
