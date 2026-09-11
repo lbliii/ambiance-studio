@@ -35,9 +35,9 @@ Example direction: “Clouds: environment; broad slow travel; readable level 2; 
 4. Inspect the scene without pointing at the animated object. If the viewer must search for the primary or supporting action, record that miss and revise amplitude, silhouette, staging, contrast, cadence, or layer separation at the responsible source.
 5. Review excessive activity as well as insufficient activity. Fixed structure and resting characters can coexist with continuous environmental motion. Do not increase every channel or repeat a conspicuous unique gesture mechanically.
 
-## Next executable tools
+## Executable activity evidence
 
-Useful additions would be a CLI motion inventory with role/target/cadence, measurements at declared display sizes, an action timeline showing long rests, and synchronized strength comparisons. Any automatic warning should cite its measurements and distinguish authored targets from human/agent observations. No salience detector, new CLI command, or enforced score is implemented by this document.
+Use [scene activity](SCENE-ACTIVITY.md) for action-linked per-view state, painted bounds, real disabled-element raster contributions, temporal maps and matched strength/cadence proofs. The warning calibration retains misses and false warnings. Actual readability/composition observations remain named, exact-artifact reviews; these measurements do not implement a salience classifier or aggregate artistic score.
 
 ## Window motion
 
