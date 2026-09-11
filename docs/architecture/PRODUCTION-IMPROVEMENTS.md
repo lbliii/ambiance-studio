@@ -2,6 +2,8 @@
 
 Consolidated September 11, 2026 from the A Quieter Tomorrow reviews. This is an implementation plan, not a claim that the proposed commands, schemas or rendering features exist. The authoritative work items, dependencies and acceptance criteria are in [PRODUCTION-IMPROVEMENTS.yaml](PRODUCTION-IMPROVEMENTS.yaml). This document owns the design decisions and rationale; the YAML owns task status. Existing detailed plans remain the specifications for their referenced components.
 
+For the subsequently shipped interfaces and executable validation path, use the [integration handoff](PRODUCTION-INTEGRATION-HANDOFF.md) and [capability index](../CAPABILITIES.json). The starting-point table below preserves historical evidence; it is not the current capability inventory.
+
 ## Outcome and failure to correct
 
 Given a seed, an agent should survey the whole scene, identify story opportunities, plan portrait and landscape compositions, prepare independent art and hidden surfaces, assemble readable motion and connected light, inspect the actual result, then produce exact, reviewable movies. Good source fidelity and technical correctness must coexist with noticeable, well-paced animation.
