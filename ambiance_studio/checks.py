@@ -140,6 +140,7 @@ def run_suite(artifacts=None, require_native=False):
         report['checks'].append(row)
         if check_id == 'CI-PYTHON' and (directory / 'python.json').exists():
             python = json.loads((directory / 'python.json').read_text())
+            row['ok'] = row['ok'] and python.get('state') == 'completed' and python.get('tests_run', 0) > 0
             report['cases'].extend(python['cases'])
             if required and python['skipped']:
                 report['cases'].append({'id': 'CI-REQUIRED-TEST-SKIPPED', 'status': 'failed', 'detail': 'Required native/raster lane skipped tests; see python.json'})

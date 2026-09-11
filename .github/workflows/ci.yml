@@ -34,7 +34,7 @@ jobs:
         run: python tools/ci_bundle.py --run .ambiance/ci/checks --replay .ambiance/ci/replay --out .ambiance/ci/upload
       - name: Retain attributable evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: studio-${{ runner.os }}-${{ matrix.python || 'native' }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: .ambiance/ci/upload/
@@ -68,7 +68,7 @@ jobs:
         run: python tools/ci_bundle.py --run .ambiance/ci/checks --replay .ambiance/ci/replay --out .ambiance/ci/upload
       - name: Retain attributable evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: studio-${{ runner.os }}-${{ matrix.python || 'native' }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: .ambiance/ci/upload/

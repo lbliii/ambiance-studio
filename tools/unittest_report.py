@@ -12,6 +12,12 @@ from ambiance_studio.checks import scrub, write
 
 
 class Result(unittest.TextTestResult):
+    report_path = None
+
+    def checkpoint(self, active=None):
+        if self.report_path:
+            write(self.report_path, {"ok": False, "state": "running", "active_test": scrub(active) if active else None, "tests_run": self.testsRun, "skipped": len(self.skipped), "cases": self.cases})
+
     def __init__(self, *args):
         super().__init__(*args)
         self.cases = []
@@ -20,11 +26,13 @@ class Result(unittest.TextTestResult):
     def startTest(self, test):
         super().startTest(test)
         self.started = time.monotonic()
+        self.checkpoint(test.id())
 
     def record(self, test, status, detail=''):
         self.cases.append({'id': scrub(test.id()), 'status': status,
                            'seconds': round(time.monotonic() - self.started, 4),
                            'detail': scrub(detail)[-4096:]})
+        self.checkpoint()
 
     def addSuccess(self, test):
         super().addSuccess(test); self.record(test, 'passed')
@@ -56,8 +64,9 @@ def main():
     parser.add_argument('--directory', type=Path, default=ROOT / 'tests')
     args = parser.parse_args()
     suite = unittest.defaultTestLoader.discover(str(args.directory), pattern='test_*.py')
+    Result.report_path = args.out
     result = unittest.TextTestRunner(stream=sys.stderr, resultclass=Result, verbosity=1).run(suite)
-    report = {'ok': result.wasSuccessful(), 'tests_run': result.testsRun, 'skipped': len(result.skipped),
+    report = {'ok': result.wasSuccessful(), 'state': 'completed', 'tests_run': result.testsRun, 'skipped': len(result.skipped),
               'cases': result.cases}
     write(args.out, report)
     return 0 if report['ok'] else 1
