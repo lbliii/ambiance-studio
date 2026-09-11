@@ -11,6 +11,17 @@ from ambiance_studio import checks
 
 
 class CheckArtifactsTests(unittest.TestCase):
+    def test_invalid_utf8_and_multibyte_tails_remain_valid_and_byte_bounded(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for expression in ['bytes([255])*40000', "'雪'.encode('utf-8')*20000"]:
+                result = checks.execute('CI-UTF8', [sys.executable, '-c', 'import os;os.write(1,' + expression + ')'], root)
+                log = result['logs']['stdout']
+                raw = (root / log['path']).read_bytes()
+                self.assertLessEqual(len(raw), checks.LOG_LIMIT)
+                self.assertTrue(raw.decode('utf-8'))
+                self.assertTrue(log['truncated'])
+
     def test_real_failure_has_stable_id_bounded_scrubbed_logs_and_hash(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

@@ -73,11 +73,12 @@ def execute(check_id, command, directory, *, timeout=600, env=None):
         for name, stream in [('stdout', stdout), ('stderr', stderr)]:
             size = stream.tell()
             stream.seek(max(0, size - LOG_LIMIT))
-            content = scrub(stream.read().decode('utf-8', errors='replace'))
+            encoded = scrub(stream.read().decode('utf-8', errors='replace')).encode('utf-8')
+            content = encoded[-LOG_LIMIT:].decode('utf-8', errors='ignore')
             path = directory / (check_id + '.' + name + '.txt')
-            path.write_text(content)
+            path.write_text(content, encoding='utf-8')
             outputs[name] = {'path': path.name, 'captured_bytes': path.stat().st_size,
-                             'original_bytes': size, 'truncated': size > LOG_LIMIT, 'sha256': digest(path)}
+                             'original_bytes': size, 'truncated': size > LOG_LIMIT or len(encoded) > LOG_LIMIT, 'sha256': digest(path)}
     return {'id': check_id, 'command': [scrub(str(c)) for c in command], 'exit_code': code,
             'ok': code == 0 and not timed_out, 'timed_out': timed_out,
             'elapsed_seconds': round(time.monotonic() - start, 3), 'logs': outputs}

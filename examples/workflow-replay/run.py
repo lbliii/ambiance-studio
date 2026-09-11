@@ -106,7 +106,7 @@ def replay(directory, resume=False):
         state['state'] = 'passed'
         state['ok'] = True
         state['unperformed'] = ['autonomous unfamiliar-seed agent trial', 'normal-speed artistic review', 'human/phone checks',
-                                'feature-owned semantic, light binding, activity and interrupted paired-delivery replay (integration pending)']
+                                'feature-owned replays run separately through examples/workflow-replay/combined.py']
     except BaseException as error:
         state['state'] = 'interrupted' if isinstance(error, KeyboardInterrupt) else 'failed'
         state['ok'] = False
