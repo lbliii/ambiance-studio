@@ -7,6 +7,7 @@ import sys
 import tempfile
 import unittest
 from unittest.mock import patch
+from types import SimpleNamespace
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -204,6 +205,25 @@ class CoverageTests(unittest.TestCase):
         draft=studio.review_template(self.p,'animation',context);draft['verdict']='pass'
         with self.assertRaisesRegex(ValueError,'Passing review'):
             coverage.normalize_observations(self.p,draft,context)
+
+    def test_activity_adapter_enforces_provider_timing_and_exact_action_realization(self):
+        data=plan.load(self.p); data['elements'][0]['action_ids']=['gesture']
+        action={'id':'gesture','element_id':'room','description':'Contract fixture','method':'transform','targets':[{'view_id':'portrait','readability_target':2}]}
+        data['actions']=[action]
+        exp=copy.deepcopy(data['expectations'][1]);exp.update(id='activity',action_ids=['gesture'],requirement={'type':'measured','check':'activity'})
+        data['expectations'].append(exp);studio.write(self.p/plan.PATH,data)
+        ctx=coverage.context(self.p); row={'id':'gesture','applicable':True,'warnings':[],'timing_target_diagnostics':[]}
+        report={key:ctx[key] for key in ['scene_sha256','catalog_sha256','revision']}
+        report.update(plan=plan.load_context(self.p),views=[{'view':ctx['views']['portrait']['view'],'view_sha256':ctx['views']['portrait']['view_sha256']}],
+            clock={'start_frame':0,'frames':6,'fps':6,'picture_seconds':1,'stride':1},actions=[action],summary=[{'view':'portrait','actions':[row]}])
+        file=self.p/'activity-contract.json';studio.write(file,{'fixture':'Provider interface is mocked here; no measured runtime claim'})
+        provider=SimpleNamespace(verify_receipt=lambda path:report,actions_from_plan=lambda p:p['actions'])
+        with patch.dict(sys.modules,{'ambiance_studio.activity':provider}):
+            self.assertEqual(coverage.activity_receipt(self.p,file,ctx,exp,'portrait')['kind'],'activity')
+            row['timing_target_diagnostics']=['sampled_onset_exceeds_authored_target']
+            with self.assertRaisesRegex(ValueError,'timing targets'):coverage.activity_receipt(self.p,file,ctx,exp,'portrait')
+            row['timing_target_diagnostics']=[];report['actions']=[{**action,'method':'wrong realization'}]
+            with self.assertRaisesRegex(ValueError,'realization'):coverage.activity_receipt(self.p,file,ctx,exp,'portrait')
 
     @unittest.skipUnless(os.environ.get('AMBIANCE_TEST_NATIVE') == '1' and sys.platform == 'darwin', 'Requires actual native encode/decode')
     def test_full_native_iteration_registers_exact_movies_and_partial_review_stays_presentable(self):

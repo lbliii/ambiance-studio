@@ -6,6 +6,7 @@ never infer an artistic pass from counters, filenames or untyped evidence.
 from pathlib import Path
 import hashlib
 import json
+import math
 
 import studio
 from . import production_plan as spec, revisions, scene_runtime
@@ -191,12 +192,18 @@ def activity_receipt(project, path, ctx, exp, view):
     if clock['start_frame'] != 0 or clock['frames'] != clock['fps']*clock['picture_seconds'] or clock['stride'] != 1:
         raise ValueError('Required activity evidence needs the full picture loop at every output frame; reduced sampling remains diagnostic')
     actions = {r['id']: r for r in summary.get('actions', [])}
+    planned_actions = {r['id']: r for r in activity.actions_from_plan(ctx['plan'])}
+    reported_actions = {r['id']: r for r in receipt['actions']}
     for id in exp['action_ids']:
+        if reported_actions.get(id) != planned_actions.get(id): raise ValueError('Activity action realization/targets differ from the captured plan: '+id)
         if not actions.get(id, {}).get('applicable'): raise ValueError('Activity is missing required action '+id)
+        diagnostics = actions[id].get('timing_target_diagnostics')
+        if not isinstance(diagnostics, list): raise ValueError('Activity receipt lacks authored timing target diagnostics')
+        if diagnostics: raise ValueError('Activity violates authored timing targets: '+id+': '+', '.join(diagnostics))
         req = exp['requirement']; metric = req.get('metric')
         if metric:
             value = actions[id].get(metric)
-            if type(value) not in [int, float]: raise ValueError('Activity metric unavailable: '+metric)
+            if type(value) not in [int, float] or not math.isfinite(value): raise ValueError('Activity metric unavailable/nonfinite: '+metric)
             if 'minimum' in req and value < req['minimum'] or 'maximum' in req and value > req['maximum']:
                 raise ValueError('Activity metric outside authored bounds: '+id+'/'+metric)
     return {'kind': 'activity', 'references': [pinned(project, path)]}
@@ -219,6 +226,9 @@ def observed_receipt(project, path, ctx, exp, view):
             raise ValueError('Activity observation has wrong plan/expectation identity')
         if observation['view_id'] != view or observation['action_id'] not in exp['action_ids'] or len(exp['action_ids']) != 1:
             raise ValueError('Activity observation must identify the sole required action/view')
+        planned = next((r for r in activity.actions_from_plan(ctx['plan']) if r['id'] == observation['action_id']), None)
+        reported = next((r for r in receipt['actions'] if r['id'] == observation['action_id']), None)
+        if planned is None or reported != planned: raise ValueError('Observed action realization/targets differ from the captured plan')
         if observation['status'] != 'meets-direction' or observation.get('criterion', 'readability') != exp['requirement']['check']:
             raise ValueError('Activity observation does not meet this observed requirement')
         if exp['requirement']['check'] == 'readability' and observation.get('observed_level') is None:
