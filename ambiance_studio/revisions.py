@@ -560,6 +560,7 @@ def review_context(project, id, edition=None, view=None):
     all_roles = {r['role'] for r in refs}
     required = {'intent': {'reference', 'brief'}, 'layout': {'layer_plan'}, 'assets': {'image'}, 'animation': {'scene'},
                 'sound-design': {'sound_plan', 'audio_source'}, 'mix': {'master'}, 'export': {'edition_output'}, 'release': {'edition_output'}}
+    if plan_context: required['layout'] = {'production_plan'}
     def relevant(gate): return unique([r for r in refs if r['section'] in [gate, 'policy'] or
                                       (plan_context and r['role'] in ['production_plan', 'production_source', 'production_driver'])])
     def snapshot(gate):

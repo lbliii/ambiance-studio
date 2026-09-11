@@ -26,14 +26,19 @@ def context(project, revision=None):
         scene_path, catalog_path = locations(project)
         result['revision_sha256'] = None
         result['inventory_path'] = project/'plans/asset-inventory.json'
+    scene_bytes, catalog_bytes = scene_path.read_bytes(), catalog_path.read_bytes()
     result.update(scene_path=scene_path, catalog_path=catalog_path,
-                  scene=scene_runtime.load_scene_json(scene_path.read_bytes()),
-                  catalog=scene_runtime.load_scene_json(catalog_path.read_bytes()),
-                  scene_sha256=studio.digest(scene_path), catalog_sha256=studio.digest(catalog_path))
+                  scene=scene_runtime.load_scene_json(scene_bytes), catalog=scene_runtime.load_scene_json(catalog_bytes),
+                  scene_sha256=hashlib.sha256(scene_bytes).hexdigest(), catalog_sha256=hashlib.sha256(catalog_bytes).hexdigest())
     info = scene_runtime.scene_bridge('view-inspect', result['scene'], result['catalog'], {})
     result['views'] = {id: {'view': {k: v for k, v in row.items() if k not in ['projection', 'view_sha256']},
                             'output': row['output'], 'view_sha256': row['view_sha256']}
                        for id, row in info['views'].items()}
+    from .assets import read_asset
+    result['asset_references'] = []
+    for asset in result['catalog']['assets']:
+        read_asset(asset, project)
+        result['asset_references'].append({'path': asset['file'], 'sha256': asset['sha256']})
     return result
 
 
@@ -78,13 +83,12 @@ def raster_receipt(project, path, ctx, view):
     if receipt.get('mode') not in ['frame', 'views-proof'] or receipt.get('ok') is not True:
         raise ValueError('Raster evidence requires a successful render frame or synchronized views-proof receipt')
     same_picture(receipt, ctx)
-    from .assets import read_asset
-    for asset in ctx['catalog']['assets']: read_asset(asset, project)
     for key in ['scene', 'catalog']:
         snapshot = path.parent/(key+'.snapshot.json')
         if not snapshot.is_file() or studio.digest(snapshot) != ctx[key+'_sha256']:
             raise ValueError('Raster evidence needs exact '+key+' snapshot')
-    refs = [pinned(project, path)]
+    refs = [pinned(project, path), *ctx['asset_references'],
+            pinned(project, path.parent/'scene.snapshot.json'), pinned(project, path.parent/'catalog.snapshot.json')]
     def image(file, digest, size):
         name = relative_file(project, file); target = studio.inside(Path(project).resolve(), name)
         if studio.digest(target) != digest: raise ValueError('Raster artifact changed: '+name)
@@ -278,6 +282,8 @@ def normalize_observations(project, review, review_context):
         if row['view_id'] != view or row['expectation_sha256'] != expected[id]['expectation_sha256']:
             raise ValueError('Observation view or expectation identity differs from captured subject')
         spec.enum(row['status'], ['unreviewed', 'revise', 'meets-direction'], 'observation status')
+        if review['verdict'] == 'pass' and row['status'] != 'meets-direction':
+            raise ValueError('Passing review requires all applicable observed expectations to meet direction')
         normalized = dict(row)
         if row['status'] != 'unreviewed':
             spec.obj(row['observed_by'], ['kind', 'name'], label='observer')
@@ -293,7 +299,12 @@ def normalize_observations(project, review, review_context):
                 observation_media(project, ref, ctx, view)
                 refs.append({**ref, **pinned(project, studio.inside(project, ref['path']))})
             normalized['evidence'] = refs
-            if expectation(ctx, id)['requirement']['check'] == 'readability': spec.level(row.get('observed_level'))
+            exp = expectation(ctx, id)
+            if exp['requirement']['check'] == 'readability':
+                spec.level(row.get('observed_level'))
+                targets = [t['readability_target'] for a in ctx['plan']['actions'] if a['id'] in exp['action_ids'] for t in a['targets'] if t['view_id'] == view]
+                if row['status'] == 'meets-direction' and (not targets or row['observed_level'] < max(targets)):
+                    raise ValueError('Observed readability is below the exact per-action/view target')
         result.append(normalized)
     return result
 
@@ -321,6 +332,7 @@ def register_evidence(project, id, view, receipt, revision=None, role=None):
         if not isinstance(refs, list): raise ValueError('Inventory expectation_evidence must be an array')
         current = context(project, revision)
         if subject(current, expectation(current, id), view) != record['subject']: raise ValueError('Evidence inputs changed during registration')
+        for ref in provider['references']: spec.file_ref(project, ref)
         if inventory_path.read_bytes() != inventory_raw: raise ValueError('Inventory changed during evidence registration')
         if target.exists() and studio.read(target) != record: raise ValueError('Evidence record changed')
         if not target.exists(): studio.write(target, record)
@@ -394,9 +406,12 @@ def evaluate(project, stage='animation', view=None, revision=None, *, details=Fa
     spec.enum(phase, ['current', 'preflight'], 'coverage phase')
     issues = []; fulfilled = []; rows = []; deferred = []
     def gap(id, action, **detail): issues.append({'id': id, 'action': action, **detail})
-    ctx = None
+    ctx = None; inputs = {}
     try:
         ctx = context(project, revision)
+        inputs = {key: ctx[key] for key in ['scene_sha256', 'catalog_sha256', 'revision_sha256']}
+        inputs['asset_dependencies_sha256'] = studio.encoded_hash(ctx['asset_references'])
+        inputs['view_sha256'] = {id: row['view_sha256'] for id, row in ctx['views'].items()}
         plan = ctx['plan']; elements = {e['id']: e for e in plan['elements']}; layers = {l['id']: l for l in ctx['scene']['layers']}
         intended = {o['view_id']: o['roles'] for o in plan['outputs']}
         selected = [view] if view is not None else list(intended)
@@ -408,7 +423,9 @@ def evaluate(project, stage='animation', view=None, revision=None, *, details=Fa
         for conflict in spec.contradictions(project, plan): issues.append(conflict)
         for id in selected:
             if id not in ctx['views']: gap('plan.view-missing.'+id, 'Create the intended saved view through view apply.')
-        inventory_path = project/'plans/asset-inventory.json'; inventory = studio.read(inventory_path)
+        inventory_path = project/'plans/asset-inventory.json'; inventory_bytes = inventory_path.read_bytes(); inventory = json.loads(inventory_bytes)
+        inputs['evidence_index_sha256'] = hashlib.sha256(inventory_bytes).hexdigest()
+        inputs['fulfillment_inventory_sha256'] = studio.digest(ctx['inventory_path'])
         refs = inventory.get('expectation_evidence', [])
         if not isinstance(refs, list): raise ValueError('Inventory expectation_evidence must be an array')
         applicable = [e for e in plan['expectations'] if spec.STAGES.index(e['stage']) <= spec.STAGES.index(stage)]
@@ -491,11 +508,18 @@ def evaluate(project, stage='animation', view=None, revision=None, *, details=Fa
             for v in selected:
                 if not any(e['requirement']['check'] == 'movie' and v in e['view_ids'] for e in applicable):
                     gap('plan.movie-unplanned.'+v, 'Declare an encoded-movie expectation for the intended output.')
+        tracked = [(Path(ctx['path']), ctx['plan_sha256']), (ctx['scene_path'], ctx['scene_sha256']),
+                   (ctx['catalog_path'], ctx['catalog_sha256']), (inventory_path, inputs['evidence_index_sha256']),
+                   (ctx['inventory_path'], inputs['fulfillment_inventory_sha256'])]
+        if any(not path.is_file() or studio.digest(path) != digest for path, digest in tracked):
+            gap('plan.inputs-changed', 'Inputs changed during coverage; rerun against one stable revision or working snapshot.')
+        for ref in ctx['asset_references']: spec.file_ref(project, ref)
+        spec.validate(project, plan)
     except (OSError, ValueError, KeyError, TypeError, CommandError) as error:
         gap('plan.unavailable', 'Inspect or explicitly create/migrate the production plan.', reasons=[str(error)])
     issues = list({r['id']: r for r in issues}.values())
     result = {'ok': not issues, 'ready': not issues, 'stage': stage, 'view': view, 'revision': revision, 'phase': phase,
-              'full_scope': view is None, 'plan_sha256': ctx['plan_sha256'] if ctx else None,
+              'full_scope': view is None, 'plan_sha256': ctx['plan_sha256'] if ctx else None, 'inputs': inputs,
               'blocked': issues, 'fulfilled': fulfilled, 'future_outputs': deferred, 'counts': {'blocked': len(issues), 'fulfilled': len(fulfilled), 'future_outputs': len(deferred)},
               'limits': ['Readiness is scoped to the requested stage and views.', 'Draft renders and review presentations remain available.', 'Structural/measured evidence does not imply an artistic observation.']}
     report = project/'.ambiance/coverage'/f'{studio.encoded_hash(result)}.json'

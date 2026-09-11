@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -180,6 +181,29 @@ class CoverageTests(unittest.TestCase):
         path=self.p/'zero-warnings.json';studio.write(path,receipt)
         with self.assertRaisesRegex(ValueError,'captured revision review'):
             self.register(path,revision='v1',id='composition')
+
+    def test_readiness_reports_pin_exact_inputs_and_reject_mid_check_edits(self):
+        before=coverage.evaluate(self.p); scene_path=self.p/'scene/scene.json'
+        scene=studio.read(scene_path);scene['title']='New working draft';studio.write(scene_path,scene)
+        after=coverage.evaluate(self.p)
+        self.assertNotEqual(before['report'],after['report'])
+        self.assertNotEqual(before['inputs']['scene_sha256'],after['inputs']['scene_sha256'])
+        bridge=coverage.scene_runtime.scene_bridge
+        def edit(*args,**kwargs):
+            result=bridge(*args,**kwargs)
+            scene['title']='Concurrent edit';studio.write(scene_path,scene)
+            return result
+        with patch.object(coverage.scene_runtime,'scene_bridge',side_effect=edit):
+            changed=coverage.evaluate(self.p,'layout')
+        self.assertIn('plan.inputs-changed',[r['id'] for r in changed['blocked']])
+
+    def test_unperformed_expectation_cannot_be_a_passing_review(self):
+        data=plan.load(self.p);exp=copy.deepcopy(data['expectations'][1]);exp['id']='composition';exp['requirement']={'type':'observed','check':'composition'}
+        data['expectations'].append(exp);studio.write(self.p/plan.PATH,data);self.capture()
+        context=revisions.review_context(self.p,'v1',view='portrait')
+        draft=studio.review_template(self.p,'animation',context);draft['verdict']='pass'
+        with self.assertRaisesRegex(ValueError,'Passing review'):
+            coverage.normalize_observations(self.p,draft,context)
 
     @unittest.skipUnless(os.environ.get('AMBIANCE_TEST_NATIVE') == '1' and sys.platform == 'darwin', 'Requires actual native encode/decode')
     def test_full_native_iteration_registers_exact_movies_and_partial_review_stays_presentable(self):
