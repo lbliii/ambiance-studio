@@ -6,7 +6,7 @@ The preparation workbench brings source paint, replacement backing, three separa
 
 The agent's primary interface is the saved JSON recipe and `asset prepare`. Author or revise masks, the backing affine and proof motion directly in that recipe, then build into a fresh directory. Read the command's facts, warnings and artifact paths, inspect the resulting PNGs, and use the existing render commands for rest, movement and hidden-part proofs. This path requires no browser session or recipe download.
 
-Localhost is the observation and optional visual-editing surface over the same operation. It helps the human judge the prepared parts and movement; the agent may also use it when computer-driven visual inspection is useful. The next planned engineering pass adds more convenient recipe inspection, validation and bounded edits; those dedicated interfaces are not implemented yet.
+Localhost is the observation and optional visual-editing surface over the same operation. It helps the human judge the prepared parts and movement; the agent may also use it when computer-driven visual inspection is useful. The [agent operation pass](AGENT-PREPARATION.md) adds dedicated inspect/check/edit/build/proof/place commands, compound cutouts and shared backing/companion dependencies. The legacy browser remains a one-part draft workbench.
 
 ## Start and rebuild
 

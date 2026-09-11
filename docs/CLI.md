@@ -43,6 +43,8 @@ Revision selections and asset/placement manifests use project-relative reference
 | `asset inspect PACK` | Inspect metadata/report and verify built output hashes |
 | `asset proof PACK_OR_ID --out DIR [--catalog FILE --landmark NAME --fps N --width N]` | Produce contact sheet, onion skin, playback and an HTML source-anchor editor |
 | `asset preflight SOURCE --out DIR` | Decode image/channel/alpha facts and produce light/dark/alpha previews |
+| `asset request record/reconcile/inspect` | Durable local generation-result recording and selection; never submits requests; see [provider recovery](PROVIDERS.md) |
+| `asset prepare init/inspect/check/edit/build/proof/place` | Structured compound preparation, bounded immutable edits, source-mapped placement and resumable saved-view proofs; see [agent preparation](AGENT-PREPARATION.md) |
 | `asset prepare [SOURCE --backing FILE] [--recipe FILE] --out DIR` | Create or rebuild an interactive separation workspace with distinct masks, alignment, compiler recipes and a shared-engine movement scene |
 | `asset crop SOURCE --recipe FILE --out DIR` | Export a source crop with preserved coordinate/identity mapping |
 | `asset return EDIT --mapping FILE --out DIR` | Return explicitly registered edited art as a native patch and composite derivative |

@@ -9,13 +9,15 @@ Read the layer plan and [asset workflow](../../../docs/workflows/02-assets-and-c
 
 Read the selected compositions and story requirements before choosing crops or generation framing. Prepare the production parts and hidden paint needed by both views and the intended motion envelope; retain useful source paint and create missing geometry/poses. See [seed-to-stage production](../../../docs/SEED-TO-STAGE.md). An easy cutout is a useful first test, not the complete asset scope. Record missing art as production work instead of reducing the action to what a static patch can perform.
 
-For each asset, choose reuse, derived edit, or new generation. Inspect reference art before edits. Preserve originals in `assets/raw/`; produce versioned derivatives in `assets/production/`. Record a generation request before sending it, then its actual result and selected take in `plans/generation-ledger.json`. Missing output, timeout, and confirmed provider failure are different states.
+For each asset, choose reuse, derived edit, or new generation. Inspect reference art before edits. Preserve originals in `assets/raw/`; produce versioned derivatives in `assets/production/`. Use `asset request record/reconcile/inspect` to preserve a generation request before any authorized external submission, then its actual returned image and selected take in `plans/generation-ledger.json`. A timeout is uncertain: reconcile existing results before any new charged request. Missing output, timeout, and confirmed provider failure are different states.
 
 Inspect a named prior film's actual motion assets and their scene use before choosing a replacement method. Follow the workflow's flame example when the requested effect depends on changing silhouette; brightness-only cels are a different choice. Show the key poses, atlas and contextual preview, distinguishing new drawings, interpolation and holds.
 
 For a cel sequence, lock framing, camera, lighting, palette, pivot, and stable geometry. Specify the changing shape, cell count/layout, margins, transparent-background request, and closing motion. Generate a master pose first when the object's identity is not established. Do not promise that a prompt guarantees correct alpha, frame registration, or an exact loop.
 
 Start with `asset preflight` for decoded alpha facts and light/dark proofs. For enlarged repairs, use `asset crop/return` with explicit registration and masks; see [raster preparation](../../../docs/ASSET-PREPARATION.md). Follow the workflow's local preparation guidance, preserving raw pixels and any derived-alpha recipe.
+
+For compound subjects, use `asset prepare init/inspect/check/edit/build/proof/place`; see [agent preparation](../../../docs/AGENT-PREPARATION.md). Bind parts to the canonical plan element/inventory part and every intended saved view. Keep cutouts, fixed occluders and shared reconstructed backing independent; missing hidden paint is explicit preparation work. Inspect normal/hidden/rest/extreme rasters and actual full-speed playback in each view, recording observations separately from structural facts.
 
 Retain unlit geometry and separate illumination where needed. Preserve exact source mappings, masks and sockets. Register against one pivot and sequence scale; independent fitting must not erase intentional flame/smoke deformation.
 

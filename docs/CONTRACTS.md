@@ -28,6 +28,8 @@ Identity: immutable ID/version, asset kind, content hash, raw source and product
 
 Store an unknown value as unknown/null. Do not invent a seed, model, license conclusion, cost, or exact generation method. A content hash identifies what was used; a prompt alone does not guarantee the same asset can be regenerated later.
 
+Compound preparation recipes and typed compiler receipts are documented in [agent preparation](AGENT-PREPARATION.md). They preserve separate source/backing/cutout/occluder/companion identities, canonical production bindings, saved view envelopes and immutable rebuild dependencies.
+
 ## Rig record
 
 A rig names child asset versions, local placements, pivots/sockets, masks, and parent relationships. Expose a small set of useful controls, such as window warmth, smoke rate, or branch sway. Include a preview and safe camera/scale ranges determined by review.
@@ -44,7 +46,7 @@ A falling leaf can have a periodic path plus rigid spin and a flip sequence. Its
 
 Use `templates/generation-request.json` within the project ledger. Record a local request ID/fingerprint before submission, intended asset, provider/capability, exact prompt and references, requested settings, authorized cost scope, status, returned IDs, output paths/hashes, selected take, and known cost. Keep request attempts and retrieval attempts distinguishable.
 
-The record is currently maintained by the agent; no paid request queue is implemented. See [provider operations](PROVIDERS.md) for the state transitions and retry rules.
+The executable `asset request record/reconcile/inspect` commands preserve managed requests and returned local image identities in the existing ledger; they do not submit requests or implement a paid queue. Legacy records are retained unchanged. See [provider operations](PROVIDERS.md) for the state transitions and retry rules.
 
 ## Audio session
 
