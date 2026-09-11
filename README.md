@@ -13,7 +13,7 @@ The [asset preparation workbench](docs/PREPARATION-WORKBENCH.md) combines source
 Run these commands from this repository. No CLI installation or account is required. Use Python 3.10+ and Node 18+. Install Pillow for asset preparation and Node Canvas for raster rendering and the full test suite:
 
 ```sh
-python3 -m pip install -r requirements-assets.txt
+python3 -m pip install -r requirements-checks.txt
 npm ci --ignore-scripts
 ```
 

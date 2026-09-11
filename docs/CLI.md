@@ -101,7 +101,7 @@ Revision selections and asset/placement manifests use project-relative reference
 | `audio mix SESSION [--run-id ID --start N --duration N --solo STEM --mute STEM --gain STEM=DB]` | Render a versioned circular arrangement, aligned stems and numerical reports |
 | `audio compare SESSION --variant-b FILE [--run-id ID --start N --duration N]` | Create matching A/B excerpts without automatic normalization |
 | `audio check WAV_OR_RUN` | Inspect PCM or verify a saved run's hashes, timing and stem reconstruction |
-| `test [--out FILE]` | Run Python regressions, legacy/rig Node checks and package audit |
+| `test [--out FILE --artifacts DIR --require-native]` | Run Python/Node regressions and package audit; save bounded JSON/JUnit/log evidence with exact inputs |
 
 A blank project is the default for new artwork. It has no layers; its technical check deliberately reports incomplete until prepared assets and a scene are added. The explicit Last Lantern template copies the existing assets into the project, so editing one project cannot modify another's catalog or artwork.
 
@@ -147,3 +147,5 @@ Version 0.7 adds opt-in [finishing](FINISHING.md), [edge quality](EDGE-QUALITY.m
 The renderer uses Node Canvas for images/proofs and macOS AVFoundation for video/verification. This does not port all historical Last Lantern effects into the shared scene automatically. Audio arrangement accepts explicit PCM WAV sources and performs no source synthesis, resampling or automatic normalization. Provider queues and automatic image decomposition remain unimplemented. Browser pixel audits, human visual/listening review and encoded-video checks establish different evidence.
 
 The [preparation workbench](PREPARATION-WORKBENCH.md) combines existing source/backing images, independent removal/cutout/occluder masks, an explicit backing affine and a standalone movement proof. `asset prepare` accepts either source/backing inputs (with optional `--backing-to-source A B C D E F`) or a saved `--recipe`, and always writes a fresh directory. `preview --prepare` needs no selected project; drafts use the captured inputs and the saved preparation implementation. Export and rebuild the recipe to save a new version.
+
+Test diagnostics: `--artifacts` names a fresh immutable directory; without it, a temporary evidence directory is returned. Each check has a stable ID, bounded scrubbed logs and exact source/runtime identity. `--require-native` (also implied by `AMBIANCE_TEST_NATIVE=1`) fails unavailable media capability and any skipped required test. Native availability is not a successful encode; the native regression cases actually exercise encode/decode. See [CI evidence](CI-EVIDENCE.md) and the [public CLI replay](../examples/workflow-replay/README.md).
