@@ -87,6 +87,16 @@ class ActivityTests(unittest.TestCase):
         self.assertFalse((self.root/'proof-1/activity-report.json').exists())
         self.assertFalse((self.root/'proof-2/activity-report.json').exists())
 
+    def test_full_loop_raster_uses_last_sample_predecessor_but_partial_does_not(self):
+        _,_,full=self.measure('--raster')
+        full_rows=json.loads((full/'raster.json').read_text())
+        first=next(r for r in full_rows['rows'] if r['action']=='layer-actor')
+        self.assertTrue(full_rows['circular']);self.assertGreater(first['residual_changed_pixels'],0)
+        _,_,partial=self.measure('--raster','--start-frame','1','--frames','6')
+        partial_rows=json.loads((partial/'raster.json').read_text())
+        first=next(r for r in partial_rows['rows'] if r['action']=='layer-actor')
+        self.assertFalse(partial_rows['circular']);self.assertIsNone(first['residual_changed_pixels'])
+
     def test_partial_raster_run_resumes_and_never_overwrites_changed_frames(self):
         _,_,out=self.measure('--raster')
         original=(out/'frames/target/authored/00000.png').read_bytes()

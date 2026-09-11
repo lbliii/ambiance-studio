@@ -26,8 +26,8 @@ def snapshot(path):
         # Output crop is excluded; inherited/world travel remains picture action.
         signatures = {row['layer']: [{k: sample[k] for k in ['cell', 'painted_sha256', 'visible', 'opacity', 'local_matrix', 'world_matrix', 'channels', 'binding_values']}
                                       for sample in row['samples']] for row in rows}
-        changes = [any(samples[i] != samples[i-1] for samples in signatures.values()) if i else False for i in range(clock['frames'])]
-        onsets = [i for i, changed in enumerate(changes) if changed and (i == 0 or not changes[i-1])]
+        changes = [any(samples[i] != samples[i-1] for samples in signatures.values()) for i in range(clock['frames'])]
+        onsets = [i for i, changed in enumerate(changes) if changed and not changes[i-1]]
         authored = {l['id']: {'cycle_seconds':l.get('cycle_seconds'), 'phase_frames':l.get('phase_frames'),
                     'motion_cycles':l.get('motion', {}).get('cycles') if l.get('motion') else None,
                     'motion_phase':l.get('motion', {}).get('phase') if l.get('motion') else None,

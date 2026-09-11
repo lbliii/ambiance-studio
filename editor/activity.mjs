@@ -13,6 +13,15 @@ export function intervals(flags, step, start = 0) {
   }
   return rows;
 }
+export function activityIntervals(flags, step, start=0, circular=false) {
+  const rows=intervals(flags,step,start);
+  if(!circular||rows.length<2||rows[0].active!==rows.at(-1).active)return rows;
+  const head=rows[0],tail=rows.at(-1);
+  // A wrapped interval ends on the next traversal of the same clock. An
+  // all-still/all-active loop is already one interval and is never doubled.
+  return [...rows.slice(1,-1),{...tail,end_seconds:head.end_seconds+flags.length*step,
+    duration_seconds:tail.duration_seconds+head.duration_seconds,wraps_loop:true}];
+}
 const magnitude = a => Math.hypot(...a);
 const subtract = (a, b) => a.map((n, i) => n - b[i]);
 const range = a => [Math.min(...a), Math.max(...a)];
@@ -21,6 +30,12 @@ function corners(state, paint, projection) {
   const [u,v,w,h] = paint.bounds_uv, [x,y,W,H] = state.rect;
   const m = multiply(projection, state.matrix);
   return [[u,v],[u+w,v],[u+w,v+h],[u,v+h]].map(([a,b]) => point(m,x+a*W,y+b*H));
+}
+function geometry(state,paint,projection){
+  const polygon=corners(state,paint,projection),xs=polygon.map(p=>p[0]),ys=polygon.map(p=>p[1]);
+  const localMatrix=multiply(inverseMatrix(state.parent),state.matrix).map(n=>Math.round(n*1e9)/1e9);
+  return {polygon_display_px:polygon,painted_bounds_display_px:polygon.length?[Math.min(...xs),Math.min(...ys),Math.max(...xs)-Math.min(...xs),Math.max(...ys)-Math.min(...ys)]:null,
+    local_matrix:localMatrix,anchor_display_px:point(multiply(projection,state.matrix),0,0),local_anchor_scene_px:point(localMatrix,0,0)};
 }
 
 export function measureActivity(scene, catalog, {views, painted, actions = [], stride = 1, start_frame = 0, frames = null}) {
@@ -33,9 +48,10 @@ export function measureActivity(scene, catalog, {views, painted, actions = [], s
     throw Error('Activity exceeds two views or 200000 projected layer samples; reduce duration, layers or increase stride');
   const rig = compileScene(scene,catalog), samples = [];
   for (let f = start_frame; f < start_frame + frames; f += stride) samples.push(rig.sample(f/fps));
-  const dt = stride/fps, timing = sceneTiming(scene,catalog);
+  const dt = stride/fps, timing = sceneTiming(scene,catalog),fullLoop=start_frame===0&&frames===N;
   const report = {kind:'ambiance-state-activity',version:1,picture_seconds:loop_seconds,output_fps:fps,
-    start_frame,frames,stride,sampling_hz:fps/stride,interval_semantics:'Half-open sampled windows; transitions describe the interval ending at the current sample. No unsampled motion is inferred.',
+    start_frame,frames,stride,sampling_hz:fps/stride,full_loop_sampled:fullLoop,
+    interval_semantics:'Half-open sampled windows. Full-loop frame zero compares the last sampled frame; wrapped intervals may end beyond T on the next traversal. Partial segments are linear and have no predecessor for their first sample. No unsampled motion is inferred.',
     units:{bounds:'display pixels',travel:'display pixels',speed:'display pixels/second',opacity:'unit interval'},
     timing,views:[],driver_samples:[],limits:['State movement is not observed readability. Bounds use decoded nonzero alpha before finishing and cannot establish occlusion.',
       'Local transform travel excludes inherited parent/camera motion; world travel includes both. Neither classifies a gesture.',
@@ -47,42 +63,45 @@ export function measureActivity(scene, catalog, {views, painted, actions = [], s
       for (let i=0;i<samples.length;i++) {
         const s=samples[i][j], paint=painted[s.asset]?.[s.cell];
         if (!paint) throw Error(`Missing decoded painted-cell facts: ${s.asset}/${s.cell}`);
-        const polygon=corners(s,paint,projection), xs=polygon.map(p=>p[0]),ys=polygon.map(p=>p[1]);
-        const bounds=polygon.length?[Math.min(...xs),Math.min(...ys),Math.max(...xs)-Math.min(...xs),Math.max(...ys)-Math.min(...ys)]:null;
-        const localMatrix=multiply(inverseMatrix(s.parent),s.matrix).map(n=>Math.round(n*1e9)/1e9);
-        const anchor=point(multiply(projection,s.matrix),0,0),local=point(localMatrix,0,0);
-        const prev=data.at(-1),travel=prev?magnitude(subtract(anchor,prev.anchor_display_px)):0;
+        const geo=geometry(s,paint,projection),polygon=geo.polygon_display_px,bounds=geo.painted_bounds_display_px;
+        const anchor=geo.anchor_display_px,local=geo.local_anchor_scene_px;
+        const last=samples.at(-1)[j],lastPaint=painted[last.asset]?.[last.cell];
+        const prev=data.at(-1)??(fullLoop?{...geometry(last,lastPaint,projection),painted_sha256:lastPaint.sha256,opacity:last.opacity,visible:last.visible}:null);
+        const travel=prev?magnitude(subtract(anchor,prev.anchor_display_px)):0;
         const localTravel=prev?magnitude(subtract(local,prev.local_anchor_scene_px)):0;
         const cornerTravel=prev&&polygon.length&&prev.polygon_display_px.length?Math.max(...polygon.map((p,k)=>magnitude(subtract(p,prev.polygon_display_px[k])))):0;
         const eligible=s.visible&&s.opacity>0, inView=!!bounds&&bounds[0]<view.output.width&&bounds[1]<view.output.height&&bounds[0]+bounds[2]>0&&bounds[1]+bounds[3]>0;
         const changed=!!prev&&(cornerTravel>1e-7||paint.sha256!==prev.painted_sha256||s.opacity!==prev.opacity||s.visible!==prev.visible);
         data.push({frame:start_frame+i*stride,time_seconds:(start_frame+i*stride)/fps,cell:s.cell,painted_sha256:paint.sha256,
           visible:s.visible,opacity:s.opacity,render_eligible:eligible,intersects_view:inView,depth:s.depth,
-          anchor_display_px:anchor,local_anchor_scene_px:local,local_matrix:localMatrix,world_matrix:s.matrix.map(n=>Math.round(n*1e9)/1e9),polygon_display_px:polygon,painted_bounds_display_px:bounds,
+          ...geo,world_matrix:s.matrix.map(n=>Math.round(n*1e9)/1e9),
           world_anchor_travel_px:travel,local_anchor_travel_scene_px:localTravel,painted_corner_travel_px:cornerTravel,
           travel_subject_diagonals:bounds&&magnitude(bounds.slice(2))?cornerTravel/magnitude(bounds.slice(2)):null,
           travel_output_diagonals:cornerTravel/Math.hypot(view.output.width,view.output.height),speed_px_per_second:cornerTravel/dt,
           sampled_state_changed:changed,projected_state_activity:changed&&eligible&&inView,binding_values:s.bindings??null,channels:s.channels??null});
       }
-      const windows=intervals(data.map(d=>d.projected_state_activity),dt,start_frame/fps);
+      const windows=activityIntervals(data.map(d=>d.projected_state_activity),dt,start_frame/fps,fullLoop);
       rows.push({layer:layer.id,asset:layer.asset,group:layer.group??null,depth_range:range(data.map(d=>d.depth)),
         semantic_actions:actions.filter(a=>a.layers.includes(layer.id)).map(a=>a.id),
-        summary:{cel_index_changes:data.slice(1).filter((d,i)=>d.cell!==data[i].cell).length,
+        summary:{cel_index_changes:data.filter((d,i)=>i?d.cell!==data[i-1].cell:fullLoop&&d.cell!==data.at(-1).cell).length,
           distinct_painted_cels:new Set(data.map(d=>d.painted_sha256)).size,world_anchor_travel_px:data.reduce((n,d)=>n+d.world_anchor_travel_px,0),
           local_anchor_travel_scene_px:data.reduce((n,d)=>n+d.local_anchor_travel_scene_px,0),max_speed_px_per_second:Math.max(...data.map(d=>d.speed_px_per_second)),
           opacity_range:range(data.map(d=>d.opacity)),eligible_samples:data.filter(d=>d.render_eligible).length,
           in_view_samples:data.filter(d=>d.intersects_view&&d.render_eligible).length,max_sampled_rest_seconds:Math.max(0,...windows.filter(w=>!w.active).map(w=>w.duration_seconds))},
-        sampled_windows:windows,samples:data});
+        sampled_windows:windows,circular:fullLoop,samples:data});
     }
     const actionRows=actions.map(a=>{
-      const members=rows.filter(r=>a.layers.includes(r.layer)),windows=intervals(samples.map((_,i)=>members.some(r=>r.samples[i].projected_state_activity)),dt,start_frame/fps);
-      const bouts=windows.filter(w=>w.active),onsets=bouts.map(w=>w.start_seconds),longestRest=Math.max(0,...windows.filter(w=>!w.active).map(w=>w.duration_seconds));
+      const members=rows.filter(r=>a.layers.includes(r.layer)),flags=samples.map((_,i)=>members.some(r=>r.samples[i].projected_state_activity));
+      const windows=activityIntervals(flags,dt,start_frame/fps,fullLoop),continuous=fullLoop&&flags.every(Boolean);
+      const bouts=windows.filter(w=>w.active),onsets=continuous?[]:bouts.map(w=>w.start_seconds),longestRest=Math.max(0,...windows.filter(w=>!w.active).map(w=>w.duration_seconds));
+      const repeatIntervals=onsets.slice(1).map((n,i)=>n-onsets[i]);if(fullLoop&&onsets.length)repeatIntervals.push(loop_seconds-onsets.at(-1)+onsets[0]);
+      const firstActivity=flags[0]?start_frame/fps:onsets[0];
       const targetDiagnostics=[];
-      if(a.timing?.onset_max_seconds!=null&&(!onsets.length||onsets[0]>a.timing.onset_max_seconds))targetDiagnostics.push('sampled_onset_exceeds_authored_target');
+      if(a.timing?.onset_max_seconds!=null&&(firstActivity===undefined||firstActivity>a.timing.onset_max_seconds))targetDiagnostics.push('sampled_onset_exceeds_authored_target');
       if(a.timing?.rest_max_seconds!=null&&longestRest>a.timing.rest_max_seconds)targetDiagnostics.push('sampled_rest_exceeds_authored_target');
       if(a.timing?.duration_min_seconds!=null&&(!bouts.length||bouts.every(w=>w.duration_seconds<a.timing.duration_min_seconds)))targetDiagnostics.push('no_sampled_bout_reaches_authored_duration');
       return {...a,applicable:!a.views?.length||a.views.includes(view.view.id),sampled_windows:windows,
-        state_onsets_seconds:onsets,state_repeat_intervals_seconds:onsets.slice(1).map((n,i)=>n-onsets[i]),max_sampled_rest_seconds:longestRest,
+        circular:fullLoop,continuous_sampled_activity:continuous,active_at_start:flags[0],state_onsets_seconds:onsets,state_repeat_intervals_seconds:repeatIntervals,max_sampled_rest_seconds:longestRest,
         timing_target_diagnostics:targetDiagnostics,comparison_scope:'Sampled projected-state candidates only; neither an artistic verdict nor proof of unsampled cadence.',
         observation:{status:'unreviewed',observed_level:null,observer:null,evidence:null}};
     });
@@ -124,7 +143,8 @@ export function diagnosticWarnings(state, raster) {
   if(state.layers.some(l=>l.summary.cel_index_changes>0&&l.summary.distinct_painted_cels===1))warnings.push('cel_indices_repeat_identical_paint');
   if(!state.layers.some(l=>l.summary.in_view_samples))warnings.push('no_projected_painted_presence');
   if(raster?.length&&raster.every(r=>r.contribution_pixels===0))warnings.push('no_measured_contribution');
-  if(raster?.length>1&&raster.slice(1).every(r=>r.residual_changed_pixels===0))warnings.push('no_measured_residual_change');
+  const temporal=raster?.filter(r=>r.residual_changed_pixels!==null)??[];
+  if(temporal.length&&temporal.every(r=>r.residual_changed_pixels===0))warnings.push('no_measured_residual_change');
   if(raster?.length&&Math.max(...raster.map(r=>r.contribution_pixels??0))>0&&Math.max(...raster.map(r=>(r.contribution_pixels??0)/r.pixels))<.0005)warnings.push('small_measured_support');
   if(raster?.length&&Math.max(...raster.map(r=>r.contribution_mean_max_channel_delta??0))>0&&Math.max(...raster.map(r=>r.contribution_mean_max_channel_delta??0))<.05)warnings.push('low_frame_average_contribution');
   return warnings;

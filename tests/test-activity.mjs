@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {measureActivity,pixelMetrics,intervals} from '../editor/activity.mjs';
+import {measureActivity,pixelMetrics,intervals,activityIntervals} from '../editor/activity.mjs';
 import {planViews} from '../editor/views.mjs';
 import {compileScene} from '../editor/engine.mjs';
 
@@ -20,6 +20,22 @@ layer.visible=true;layer.attach={layer:'parent',socket:'tip'};delete layer.depth
 row=report().views[0].layers.find(l=>l.layer==='child');assert.ok(row.summary.world_anchor_travel_px>0);assert.equal(row.summary.local_anchor_travel_scene_px,0);assert.equal(row.samples[2].visible,false);
 assert.throws(()=>measureActivity(scene,catalog,{views:[],painted}));
 assert.deepEqual(intervals([false,true,true,false],.5),[{active:false,start_seconds:0,end_seconds:.5,duration_seconds:.5},{active:true,start_seconds:.5,end_seconds:1.5,duration_seconds:1},{active:false,start_seconds:1.5,end_seconds:2,duration_seconds:.5}]);
+const resting=[false,false,true,true,false,false];
+assert.equal(Math.max(...activityIntervals(resting,1,0,true).filter(r=>!r.active).map(r=>r.duration_seconds)),4);
+assert.equal(activityIntervals(Array(6).fill(false),1,0,true)[0].duration_seconds,6);
+assert.equal(Math.max(...activityIntervals(resting,1,0,false).filter(r=>!r.active).map(r=>r.duration_seconds)),2);
+const cyclicLayer={...parent,id:'child',motion:undefined,tracks:{x:{interpolation:'hold',keys:[[0,.5],[2,.6],[3,.5],[6,.5]]}}};
+const cyclicScene={...scene,canvas:{...scene.canvas,fps:1,loop_seconds:6},layers:[cyclicLayer]};
+const cycleReport=(options={})=>measureActivity(cyclicScene,catalog,{views:planViews(cyclicScene,[{id:'authored'}]).views,painted,actions:[{id:'gesture',layers:['child'],timing:{rest_max_seconds:3}}],...options});
+let cycle=cycleReport();assert.deepEqual(cycle.views[0].layers[0].samples.map(s=>s.projected_state_activity),resting);
+assert.equal(cycle.views[0].layers[0].summary.max_sampled_rest_seconds,4);assert.equal(cycle.views[0].actions[0].max_sampled_rest_seconds,4);
+assert.ok(cycle.views[0].actions[0].timing_target_diagnostics.includes('sampled_rest_exceeds_authored_target'));
+assert.deepEqual(cycle.views[0].actions[0].state_repeat_intervals_seconds,[6]);
+cycle=cycleReport({frames:5});assert.equal(cycle.full_loop_sampled,false);assert.equal(cycle.views[0].actions[0].max_sampled_rest_seconds,2);
+cyclicLayer.tracks={x:{interpolation:'linear',keys:[[0,.5],[3,.6],[6,.5]]}};
+cycle=cycleReport();assert.equal(cycle.views[0].layers[0].samples[0].sampled_state_changed,true);assert.equal(cycle.views[0].actions[0].max_sampled_rest_seconds,0);
+cyclicLayer.tracks=undefined;
+cycle=cycleReport();assert.equal(cycle.views[0].actions[0].max_sampled_rest_seconds,6);assert.deepEqual(cycle.views[0].actions[0].state_onsets_seconds,[]);
 const a=new Uint8Array([100,100,100,255]), b=new Uint8Array([80,80,80,255]);
 const same=pixelMetrics(a,b,a,b).metrics;assert.equal(same.frame_changed_pixels,1);assert.equal(same.residual_changed_pixels,0);assert.equal(same.contribution_pixels,0);
 console.log(JSON.stringify({ok:true,checks:'actual clock, duplicate paint, inherited versus local travel, offscreen, hidden, signed raster residual, interval units'}));

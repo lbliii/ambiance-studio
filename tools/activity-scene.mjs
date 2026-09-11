@@ -9,7 +9,7 @@ import {compileScene} from '../editor/engine.mjs';
 import {finishingAssetIds} from '../editor/finishing.mjs';
 import {planViews,canonicalView} from '../editor/views.mjs';
 import {createStageRenderer} from '../editor/stage-raster.mjs';
-import {measureActivity,pixelMetrics,intervals,diagnosticWarnings} from '../editor/activity.mjs';
+import {measureActivity,pixelMetrics,activityIntervals,diagnosticWarnings} from '../editor/activity.mjs';
 import {viewsProofPage} from './views-proof.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),require=createRequire(import.meta.url);
 const sha=b=>createHash('sha256').update(b).digest('hex');
@@ -51,8 +51,9 @@ async function main(){
   }
   const state=measureActivity(scene,catalog,{views:viewPlan.views,painted,actions:req.actions,stride:req.stride,start_frame:req.start_frame,frames:req.frames});
   if(rig.inspectBindings)for(let f=req.start_frame;f<req.start_frame+req.frames;f+=req.stride)state.driver_samples.push({frame:f,values:rig.inspectBindings(f/scene.canvas.fps)});
-  const frames=req.frames/req.stride,actions=req.raster?(req.actions??[]):[];
-  if(req.raster&&(actions.length>8||frames>600||(actions.length+variants.length)*viewPlan.views.length>16||frames*(actions.length+variants.length)*viewPlan.internal_canvas.width*viewPlan.internal_canvas.height>400000000))
+  const frames=req.frames/req.stride,actions=req.raster?(req.actions??[]):[],fullLoop=req.start_frame===0&&req.frames===scene.canvas.fps*scene.canvas.loop_seconds;
+  const workSamples=frames+(fullLoop?1:0)+2;
+  if(req.raster&&(actions.length>8||frames>600||(actions.length+variants.length)*viewPlan.views.length>16||workSamples*(actions.length+variants.length)*viewPlan.internal_canvas.width*viewPlan.internal_canvas.height>400000000))
     throw Error('Raster workload exceeds 8 actions, 16 panes, 600 samples or 400 million stage pixels; shorten proof, filter actions, increase stride or lower --long-edge');
   const renderers=new Map();
   if(req.raster){
@@ -71,6 +72,8 @@ async function main(){
   const makePane=(variant,view)=>({id:variant+' / '+view.view.id,variant,view:view.view.id,output:view.output,files:[],hashes:[]});
   if(req.raster)for(const variant of renderers.keys())for(const view of viewPlan.views)panes.push(makePane(variant,view));
   const rasterStarted=performance.now();
+  if(fullLoop)for(const [variant,renderer] of renderers){renderer.render((req.frames-req.stride)/scene.canvas.fps);
+    for(const [id,canvas] of renderer.outputs)previous.set(variant+'/'+id,Buffer.from(canvas.data()));}
   for(let i=0;req.raster&&i<frames;i++){
     const frame=req.start_frame+i*req.stride,time=frame/scene.canvas.fps,now=new Map();
     for(const [variant,renderer] of renderers){renderer.render(time);for(const v of viewPlan.views){
@@ -97,10 +100,10 @@ async function main(){
     .replace('Portrait and landscape proof','Motion activity proof').replace('One scene, shared timing','Motion activity proof')
     .replace('Each view comes from the same finished scene at the same time.',`Target, explicit variants and disabled-layer interventions share the same picture clock and views. Strength and cadence are separate experiments. Sampling: every ${req.stride} production frame(s); playback remains 1×.`));
   for(const v of state.views)for(const a of v.actions){const raster=rows.filter(r=>r.view===v.view.id&&r.action===a.id);a.warnings=diagnosticWarnings({layers:v.layers.filter(l=>a.layers.includes(l.layer))},raster);a.raster_sample_count=raster.length;
-    a.candidate_quiet_intervals=intervals(raster.map(r=>r.residual_changed_pixels===0),req.stride/scene.canvas.fps,req.start_frame/scene.canvas.fps).filter(r=>r.active).map(({active,...r})=>r);
+    a.candidate_quiet_intervals=activityIntervals(raster.map(r=>r.residual_changed_pixels===0),req.stride/scene.canvas.fps,req.start_frame/scene.canvas.fps,fullLoop).filter(r=>r.active).map(({active,...r})=>r);
     a.attribution='Disabled layer set includes attached descendants and coupled lighting. Residual change is an intervention result, not exclusive gesture attribution or an artistic pass.';
   }
-  await save('state.json',json(state));await save('raster.json',json({version:1,rows,units:'8-bit sRGB maximum absolute RGB channel delta; alpha excluded',first_sample:'No temporal comparison before first saved sample',map:'Maximum per-pixel sampled temporal difference; action maps use signed residual difference',warnings:'Diagnostic thresholds are fixture-calibrated prompts to inspect, never salience levels or requirement satisfaction'}));
+  await save('state.json',json(state));await save('raster.json',json({version:1,rows,circular:fullLoop,units:'8-bit sRGB maximum absolute RGB channel delta; alpha excluded',first_sample:fullLoop?'Compared with last sampled frame of the same loop':'No temporal comparison before first saved sample of this partial segment',map:'Maximum per-pixel sampled temporal difference; action maps use signed residual difference',warnings:'Diagnostic thresholds are fixture-calibrated prompts to inspect, never salience levels or requirement satisfaction'}));
   await save('painted-cells.json',json(painted));
   const modules={};for(const name of ['editor/engine.mjs','editor/timing.mjs','editor/activity.mjs','editor/views.mjs','editor/stage-raster.mjs','editor/finishing.mjs','tools/activity-scene.mjs','tools/views-proof.mjs'])modules[name]=sha(await fs.readFile(path.join(root,name)));
   if(rig.inspectBindings)modules['editor/bindings.mjs']=sha(await fs.readFile(path.join(root,'editor/bindings.mjs')));
@@ -110,7 +113,7 @@ async function main(){
     views:viewPlan.views.map(v=>({...v,view_sha256:sha(canonicalView(v.view))})),clock:{picture_seconds:scene.canvas.loop_seconds,fps:scene.canvas.fps,start_frame:req.start_frame,frames:req.frames,stride:req.stride,sampling_hz:scene.canvas.fps/req.stride},
     actions:req.actions,variants:variants.map(v=>({id:v.id,experiment:v.experiment??'target',scene_sha256:sha(json(v.scene))})),
     artifacts:files,source_assets:assets,modules,runtime:{node:process.version,canvas:rt.version,platform:process.platform},
-    performance:{elapsed_seconds:(performance.now()-started)/1000,raster_seconds:rasterSeconds,peak_rss_bytes:process.resourceUsage().maxRSS*1024,stage_pixel_samples:req.raster?frames*renderers.size*viewPlan.internal_canvas.width*viewPlan.internal_canvas.height:0,saved_frames:panes.reduce((n,p)=>n+p.files.length,0)},
+    performance:{elapsed_seconds:(performance.now()-started)/1000,raster_seconds:rasterSeconds,peak_rss_bytes:process.resourceUsage().maxRSS*1024,stage_pixel_samples:req.raster?workSamples*renderers.size*viewPlan.internal_canvas.width*viewPlan.internal_canvas.height:0,raster_predecessor_samples:fullLoop&&req.raster?1:0,join_samples_per_variant:req.raster?2:0,saved_frames:panes.reduce((n,p)=>n+p.files.length,0)},
     summary:state.views.map(v=>({view:v.view.id,actions:v.actions.map(a=>({id:a.id,applicable:a.applicable,warnings:a.warnings,timing_target_diagnostics:a.timing_target_diagnostics,max_sampled_rest_seconds:a.max_sampled_rest_seconds,status:'unreviewed'}))})),
     raster_performed:req.raster,joins,visual_review_performed:false,review_required:true,
     diagnostic_coverage:{no_warning_is_readability:false,known_missed_conditions:['low contrast','barely visible paint','excessive movement','global pulse ambiguity'],
