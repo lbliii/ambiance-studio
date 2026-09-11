@@ -2,11 +2,15 @@
 
 **Input:** the user's image and creative intent. **Output:** preserved reference, brief, object/layer plan, clean-plate plan, and proposed motion/sound roles. **Gates:** intent and layout.
 
+For a complete seed film, start with [seed-to-stage production](../SEED-TO-STAGE.md): whole-scene census, story choices and requested output compositions before narrowing asset scope. Portrait and landscape are the studio defaults unless the user specifies otherwise. Full-frame staging may require expanded paint and independent objects; preserve identity while adapting composition.
+
 ## Inspect before inventing
 
 Read the image at its native framing and at a small portrait preview. Identify focal subject, horizon/perspective, major light sources, warm/cool relationships, depth cues, and foreground silhouettes. Record observations separately from additions. If the image contains no city, a hilltop city is a creative proposal, not an extracted fact.
 
 Keep the source unchanged. Copy it into project inputs and record its hash. Record reference provenance/usage context when known. Ask only for missing decisions that would materially change the result; infer routine production details and label the assumptions.
+
+Complete the [layer-and-light planning pass](../LAYER-AND-LIGHT-PLANNING.md): distinguish depth planes, independently controlled parts and light-source/receiver relationships. Inventory steady sources as well as changing ones. The tram review demonstrated that listing animation opportunities without preparing their required separations can leave an otherwise clean film almost still.
 
 ## Break down relationships
 
@@ -54,3 +58,5 @@ The same decision applies to a cat statue, pottery or a distant figure: choose a
 Save a layer proof or labeled layout when the relationships are hard to communicate. Check that the still composition works at phone size and the reference's identity remains intact. Review proposed camera limits and hidden-pixel work before generation. Record dependencies so assets can be prepared independently where possible.
 
 Evidence should let another operator answer: what exists, what must be made, what moves, what stays attached, and which invisible areas must be painted. Close the two planning gates only to that scope; no generated asset or render is implied.
+
+For multi-format production, record the authored stage separately from every requested [saved view](../VIEWS.md). Design the focal area and reveal budget for both crops together; neither orientation is automatically the master. Judge subjects, overlaps and available pixels at each output size. A contained alternate crop can omit important scenery; identify expanded-art or restaging work explicitly before accepting it.

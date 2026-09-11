@@ -77,8 +77,29 @@ def look_routes(directory):
     return routes
 
 
-def serve_look(directory,port):
-    routes=look_routes(directory)
+def views_proof_routes(directory):
+    directory=Path(directory).resolve()
+    report=json.loads((directory/'render-report.json').read_text())
+    if report.get('mode')!='views-proof' or not report.get('ok'):raise ValueError('Expected a completed views-proof artifact')
+    routes={}
+    def add(name,digest):
+        file=(directory/name).resolve()
+        if not file.is_relative_to(directory) or Path(name).is_absolute():raise ValueError('View proof path escapes its directory')
+        data=file.read_bytes()
+        if hashlib.sha256(data).hexdigest()!=digest:raise ValueError(f'View proof changed: {name}')
+        if '/'+name in routes:raise ValueError('Duplicate view proof file')
+        routes['/'+name]=data
+    add('index.html',report['output_sha256'])
+    if not report['outputs']:raise ValueError('View proof has no outputs')
+    for output in report['outputs']:
+        if len(output['files'])!=report['frames'] or len(output['hashes'])!=report['frames']:raise ValueError('View proof frame list is incomplete')
+        for name,digest in zip(output['files'],output['hashes']):add(name,digest)
+    routes['/']=routes['/index.html']
+    return routes
+
+
+def serve_look(directory,port,kind='look'):
+    routes=views_proof_routes(directory) if kind=='views-proof' else look_routes(directory)
     class Handler(BaseHTTPRequestHandler):
         def do_GET(self):
             route=unquote(urlsplit(self.path).path)
@@ -87,7 +108,7 @@ def serve_look(directory,port):
             self.send_response(200);self.send_header('Content-Type',mime);self.send_header('Content-Length',str(len(data)))
             self.send_header('Cache-Control','no-store');self.send_header('X-Content-Type-Options','nosniff');self.end_headers();self.wfile.write(data)
     server=ThreadingHTTPServer(('127.0.0.1',port),Handler)
-    print(json.dumps({'ok':True,'schema_version':1,'command':'preview','data':{'url':f'http://127.0.0.1:{server.server_port}/','look':str(Path(directory).resolve()),'read_only':True,'verified_files':len(routes)-1}}),flush=True)
+    print(json.dumps({'ok':True,'schema_version':1,'command':'preview','data':{'url':f'http://127.0.0.1:{server.server_port}/',kind:str(Path(directory).resolve()),'read_only':True,'verified_files':len(routes)-1}}),flush=True)
     try:server.serve_forever()
     except KeyboardInterrupt:pass
     finally:server.server_close()

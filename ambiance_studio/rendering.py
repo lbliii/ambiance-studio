@@ -22,14 +22,20 @@ NATIVE_SOURCE = ROOT / 'native/media/media.m'
 
 def add_parsers(sub):
     group = sub.add_parser('render', help='Render saved scene frames, motion proofs, or video').add_subparsers(dest='action', required=True)
-    for action in ['frame', 'proof', 'rig-proof', 'look-proof', 'video']:
+    for action in ['frame', 'proof', 'rig-proof', 'look-proof', 'video', 'views-proof']:
         q = group.add_parser(action)
         q.add_argument('--revision', help='Verified captured revision ID; never falls back to working scene')
         if action in ['rig-proof', 'look-proof']:
             q.add_argument('recipe', type=Path)
         q.add_argument('--out', type=Path, required=True, help='Fresh output directory; never overwrites')
-        q.add_argument('--width', type=int, default=360 if action in ['proof','rig-proof','look-proof'] else None)
-        q.add_argument('--height', type=int, help='Defaults to exact authored aspect ratio')
+        if action == 'views-proof':
+            q.add_argument('--view', action='append', dest='views', required=True, help='Saved view ID; repeat for synchronized outputs')
+            q.add_argument('--long-edge', type=int, default=640, help='Maximum preview side; preserve an integer aspect ratio')
+        else:
+            q.add_argument('--width', type=int, default=360 if action in ['rig-proof','look-proof'] else None)
+            q.add_argument('--height', type=int, help='Defaults to the selected view or authored aspect ratio')
+            if action in ['frame', 'proof', 'video']:
+                q.add_argument('--view', help='Saved view ID; omission preserves the full authored canvas')
         if action != 'rig-proof':
             q.add_argument('--supersample', type=int, choices=[1, 2, 4], default=1, help='Render geometry at this scale then downsample once; internal dimensions must remain <=4096')
         if action == 'frame':
@@ -47,10 +53,11 @@ def add_parsers(sub):
     group = sub.add_parser('media', help='Decode and inspect actual encoded deliverables').add_subparsers(dest='action', required=True)
     q = group.add_parser('verify')
     q.add_argument('file', type=Path)
+    q.add_argument('--revision'); q.add_argument('--edition'); q.add_argument('--view')
     q.add_argument('--out', type=Path, required=True, help='Fresh report/contact directory')
     for field in ['width', 'height', 'fps', 'frames', 'loop-frames']:
         q.add_argument('--'+field, type=int, help='Defaults to the selected scene')
-    q.add_argument('--audio-tracks', type=int, choices=[0, 1], default=0)
+    q.add_argument('--audio-tracks', type=int, choices=[0, 1])
     q.add_argument('--contact-time', type=float, action='append', default=[])
     q.add_argument('--contact-frame', type=int, action='append', default=[])
     q = group.add_parser('compose', help='Reuse encoded CFR H.264 picture with selected PCM, then verify')
@@ -60,6 +67,7 @@ def add_parsers(sub):
     q.add_argument('--repeats', type=int, default=1)
     q.add_argument('--out', type=Path, required=True)
     q.add_argument('--revision')
+    q.add_argument('--view', help='Assert the picture view when binding a revision edition')
     _edition_arguments(q)
 
 
@@ -88,6 +96,7 @@ def capabilities():
               'media_services_tested': False}
     return {'raster': canvas, 'native_media': native,
             'frame_render': bool(canvas.get('ok')), 'motion_proof': bool(canvas.get('ok')),
+            'named_view_render': bool(canvas.get('ok')), 'views_proof': bool(canvas.get('ok')),
             'final_video_export': bool(canvas.get('ok') and native['available']),
             'media_verify': native['available'], 'media_compose': native['available'], 'rig_proof': bool(canvas.get('ok')), 'look_proof': bool(canvas.get('ok')), 'supersampled_render': bool(canvas.get('ok'))}
 
@@ -206,12 +215,13 @@ def _verify(project, binary, source, out, width, height, fps, frames, audio_trac
 
 
 def run(args, project):
-    from .scene_runtime import require_node
+    from .scene_runtime import require_node, load_scene_json, scene_bridge
     project = Path(project).resolve()
     if args.command == 'media' and args.action == 'compose':
         return compose(args, project)
     context = _context(project, getattr(args, 'revision', None))
-    scene = json.loads(Path(context['scene']).read_text())
+    scene_bytes = Path(context['scene']).read_bytes()
+    scene = load_scene_json(scene_bytes)
     canvas = scene['canvas']
     loop_frames = canvas['fps'] * canvas['loop_seconds']
     if args.command == 'media':
@@ -219,29 +229,68 @@ def run(args, project):
         source = args.file.resolve()
         if not source.is_file():
             _error(f'Media file does not exist: {source}')
-        expected = {field: getattr(args, field) if getattr(args, field, None) is not None else canvas.get(field) for field in ['width', 'height', 'fps']}
-        return _verify(project, _native_binary(project), source, out, **expected,
-                       frames=args.frames if args.frames is not None else int(loop_frames), audio_tracks=args.audio_tracks,
-                       loop_frames=args.loop_frames if args.loop_frames is not None else int(loop_frames),
-                       contact_times=args.contact_time, contact_frames=args.contact_frame)
+        defaults={**canvas,'frames':int(loop_frames),'loop_frames':int(loop_frames),'audio_tracks':0};subject=None;edition_path=None
+        if getattr(args,'edition',None):
+            from . import revisions
+            if not args.revision:_error('--edition requires --revision')
+            edition=revisions.load_edition(project,args.revision,args.edition)
+            if _digest(source)!=edition['output']['sha256']:_error('Media bytes differ from the selected edition')
+            view=revisions.edition_view(project,edition)
+            if args.view is not None and args.view!=view['id']:_error('Verification view differs from the selected edition')
+            edition_path=revisions.edition_path(project,args.revision,args.edition);edition_hash=_digest(edition_path)
+            if edition['schema_version']==2:defaults.update(edition['output_expectations'])
+            else:
+                verification_path=_project_input(project,edition['verification']['path'])
+                if _digest(verification_path)!=edition['verification']['sha256']:_error('Selected edition verification receipt changed')
+                verified=json.loads(verification_path.read_text())
+                for key,source_key in [('width','width'),('height','height'),('fps','fps'),('frames','decoded_frames'),('loop_frames','loop_frames')]:
+                    if source_key in verified:defaults[key]=int(verified[source_key])
+                defaults['audio_tracks']=verified.get('audio',{}).get('tracks',0)
+            subject={'revision':args.revision,'revision_sha256':context['manifest_sha256'],'edition':args.edition,'edition_sha256':edition_hash,'view':view['id'],'view_sha256':view['sha256']}
+        elif getattr(args,'view',None):
+            from . import views
+            row=views.inspect(project,args.view,getattr(args,'revision',None))['views'][args.view]
+            defaults.update(row['output']);subject={'revision':getattr(args,'revision',None),'view':args.view,'view_sha256':row['view_sha256']}
+        expected={field:getattr(args,field) if getattr(args,field,None) is not None else defaults[field] for field in ['width','height','fps','frames','loop_frames','audio_tracks']}
+        result=_verify(project,_native_binary(project),source,out,**expected,contact_times=args.contact_time,contact_frames=args.contact_frame)
+        if getattr(args,'revision',None):_context(project,args.revision)
+        if edition_path and _digest(edition_path)!=edition_hash:_error('Edition receipt changed during verification')
+        if subject:
+            result['subject']=subject;Path(result['report']).write_text(json.dumps(result,indent=2,allow_nan=False)+'\n')
+        return result
     out = _fresh(args.out)
-    width = args.width if args.width is not None else canvas['width']
-    height = args.height if args.height is not None else width * canvas['height'] / canvas['width']
+    supersample = getattr(args, 'supersample', 1)
+    selected = getattr(args, 'views', None) or ([args.view] if getattr(args, 'view', None) else None)
+    view_requests = None
+    if selected:
+        catalog_bytes = Path(context['catalog']).read_bytes()
+        view_requests = [{'id': id} for id in selected]
+        view_options = {'supersample': supersample}
+        if args.action == 'views-proof':
+            view_options['long_edge'] = args.long_edge
+        elif args.action == 'proof' and args.width is None and args.height is None:
+            view_options['long_edge'] = 640
+        else:
+            view_requests[0].update(width=args.width, height=args.height)
+        plan = scene_bridge('view-plan', scene, load_scene_json(catalog_bytes), {'requests': view_requests, 'options': view_options})
+        width, height = (plan['views'][0]['output'][key] for key in ['width', 'height'])
+    else:
+        width = args.width if args.width is not None else (360 if args.action == 'proof' else canvas['width'])
+        height = args.height if args.height is not None else width * canvas['height'] / canvas['width']
     if not isinstance(height, (int, float)) or not math.isfinite(height) or height != int(height):
         _error('Width must permit integer dimensions at the authored aspect ratio; provide a matching width and height.')
     height = int(height)
     _positive_integer(width, 'width'); _positive_integer(height, 'height')
-    if width*canvas['height'] != height*canvas['width']:
+    if not selected and width*canvas['height'] != height*canvas['width']:
         _error('Render dimensions must preserve the authored aspect ratio.')
     if width > 4096 or height > 4096:
         _error('Render dimensions cannot exceed the shared engine limit of 4096 pixels per side.')
-    supersample = getattr(args, 'supersample', 1)
     if supersample not in [1, 2, 4] or isinstance(supersample, bool) or width*supersample > 4096 or height*supersample > 4096:
         _error('Supersample must be 1, 2, or 4, with internal dimensions no larger than 4096 pixels per side.')
     start = getattr(args, 'time', getattr(args, 'start', 0))
     seconds = getattr(args, 'seconds', None)
     if seconds is None:
-        seconds = min(3, canvas['loop_seconds']) if args.action == 'proof' else canvas['loop_seconds']
+        seconds = min(3, canvas['loop_seconds']) if args.action in ['proof', 'views-proof'] else canvas['loop_seconds']
     if not math.isfinite(start) or start < 0 or not math.isfinite(seconds) or seconds <= 0:
         _error('Render time/duration must be finite and nonnegative, with positive duration.')
     frames = seconds * canvas['fps']
@@ -253,6 +302,10 @@ def run(args, project):
     request = {'project': str(project), 'out': str(out), 'mode': args.action, 'width': width, 'height': height,
                'start': start, 'seconds': seconds, 'disable': disable, 'supersample': supersample,
                'scene_path':str(context['scene']), 'catalog_path':str(context['catalog'])}
+    if selected:
+        request.update(views=view_requests, view_options=view_options,
+                       expected_scene_sha256=hashlib.sha256(scene_bytes).hexdigest(),
+                       expected_catalog_sha256=hashlib.sha256(catalog_bytes).hexdigest())
     if args.action == 'rig-proof':
         recipe_path = args.recipe.resolve()
         recipe_bytes = recipe_path.read_bytes()
@@ -334,6 +387,10 @@ def run(args, project):
     data['resolved_path'] = data['output']
     data['report'] = str(out/'render-report.json')
     (out/'render-report.json').write_text(json.dumps(data, indent=2, allow_nan=False)+'\n')
+    if args.action == 'views-proof':
+        return {key:data[key] for key in ['ok','mode','output','resolved_path','path_base','report','revision',
+                'scene_sha256','catalog_sha256','views','frames','seconds','start_seconds',
+                'review_needed','stage_frames_rendered','elapsed_seconds','peak_rss_bytes']}
     return data
 
 
@@ -396,6 +453,8 @@ def _pcm_bytes(source, seconds):
 
 def compose(args, project):
     """Compose encoded picture without invoking Canvas or the raster renderer."""
+    if getattr(args,'view',None) is not None and not getattr(args,'edition',None):
+        _error('--view on composition requires --revision and --edition so the picture identity can be checked')
     out = _fresh(args.out)
     picture = args.picture.resolve(); audio = args.audio.resolve()
     for source in [picture, audio]:

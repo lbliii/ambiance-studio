@@ -2,6 +2,9 @@
 
 This is a personal studio for painted, layered ambiance films. Start an end-to-end film with `.agents/skills/ambiance-produce/SKILL.md`. For a focused revision, read only the relevant stage skill and workflow reference.
 
+- For end-to-end seed films, follow `docs/SEED-TO-STAGE.md`: survey the whole scene, choose story actions, plan full-frame portrait 9:16 and landscape 16:9 compositions, then prepare the independent art and backing they need. These are studio defaults; explicit user scope takes precedence. Preserve the seed's identity while staging for the outputs.
+- Keep chosen creative requirements in the inventory with `required: true`. A small component prototype does not reduce the full film's scope. Before claiming that scope complete, run `plan check --require-complete` and review actual motion in both requested compositions. Clean assets, restrained intent and a successful encode do not establish visible life or complete coverage.
+
 - User direction sets the scope, artistic choices, and authority. The playbook does not authorize paid generations, account changes, sending files, or publishing. Preserve authorization already given; do not request it again without a material change.
 - Keep project state in its project directory: brief, layer plan, source ledger, scene, sound session, evidence, reviews, and handoff. Read current files instead of relying on a previous conversation.
 - Quality gates describe readiness, not permission. Continue independent reversible work while a review is open. Existing user feedback can satisfy a criterion when it actually addresses that criterion and the reviewed files are identified. Never invent a human audition or phone check.

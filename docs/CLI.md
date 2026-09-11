@@ -21,7 +21,7 @@ Revision selections and asset/placement manifests use project-relative reference
 | Command | Effect |
 | --- | --- |
 | `doctor` | Report runtime paths and executable capability availability |
-| `project init DIR [--reference FILE] [--title NAME] [--template blank or last-lantern]` | Create an isolated workspace atomically; preserve a reference and initialize pending gates |
+| `project init DIR [--reference FILE] [--title NAME] [--template blank or last-lantern] [--format dual]` | Create an isolated workspace atomically; optional dual framing requires the blank template |
 | `project list [--directory DIR]` | List registered/main-checkout projects, or limit discovery to child projects in DIR |
 | `studio register PATH [--id ID --relocate]` | Register or explicitly relocate a canonical local project address |
 | `studio open [--port N --no-browser]` / `studio serve [--port N]` | Start/reuse the background film library, or serve it in the foreground |
@@ -52,7 +52,11 @@ Revision selections and asset/placement manifests use project-relative reference
 | `library find [QUERY] [--directory DIR]` | Find assets and real proof paths across bundled and initialized project catalogs |
 | `library inspect ID [--catalog FILE]` | Inspect exact source metadata, integrity and decoded cel counts |
 | `plan inspect/check/next [--inventory PATH --out FILE]` | Reconcile intended parts, actual evidence, dependencies and remaining work; next returns five ready items by default (`--limit N`) |
+| `plan check --require-complete [--inventory PATH --out FILE]` | Also fail empty or unfinished declared production scope; report remaining items without certifying artistic quality |
 | `scene inspect [--full]` | Return the summary, or complete authored scene including camera/groups |
+| `view inspect [ID] [--revision ID]` | Inspect saved framing, preferred dimensions, projection and exact view identity |
+| `view apply FILE [--dry-run --expect-sha256 HASH]` | Replace framing through a validated, restorable scene transaction |
+| `view check [--view ID ... --revision ID --out FILE]` | Check geometric coverage/attachments for selected view rectangles at every output frame |
 | `scene apply FILE [--dry-run --expect-sha256 HASH]` | Validate an atomic batch; preview or save one restorable transaction |
 | `scene track LAYER FILE [--dry-run --expect-sha256 HASH]` | Author deterministic movement/cel tracks through the same transaction path |
 | `scene timing [--layer ID --out FILE]` | Report actual timing, holds, authored rates, output-frame sampling and inherited visibility |
@@ -63,28 +67,29 @@ Revision selections and asset/placement manifests use project-relative reference
 | `scene set LAYER [--x N --y N --scale N --rotation-deg N --opacity N --depth N --cycle-seconds N --phase-frames N]` | Validate and atomically save an authored change |
 | `scene socket LAYER NAME --u N --v N` | Define an object-local normalized static socket |
 | `scene attach CHILD --to PARENT --socket NAME [--offset-x N --offset-y N]` | Attach a child, inheriting its parent's depth/group; preserve its authored motion |
-| `scene check [--out FILE]` | Same technical check as project check |
+| `scene check [--out FILE]` | Technical asset and authored-stage check; project check also inspects intended views when configured |
 | `scene history` | List preserved snapshots |
 | `scene restore SHA256` | Validate and restore a snapshot; preserve the current scene first |
 | `revision capture ID --selection FILE [--dry-run --expect-selection-sha256 HASH]` | Capture control snapshots and pin typed dependencies; never transfer pass verdicts |
 | `revision inspect ID` / `revision check ID [--out FILE]` | Inspect a captured manifest or verify actual pinned dependencies |
 | `revision compare ID --working [--out FILE]` | Show working divergence separately from captured integrity |
 | `revision handoff ID [--edition ID] --out DIR` | Save a new handoff with exact artifacts and outstanding checks |
-| `review draft GATE [--revision ID --edition ID] --out FILE` | Create an unperformed legacy or revision-bound review draft |
+| `review draft GATE [--revision ID --edition ID --view ID] --out FILE` | Create an unperformed legacy or revision-bound review draft |
 | `review record FILE` | Record actual criteria/evidence with the existing gate tool |
 | `binding inspect/check [--time N --out FILE]` / `binding apply FILE [--dry-run --expect-sha256 HASH]` | Inspect or atomically replace source/follower bindings; see [bindings](BINDINGS.md) |
 | `look inspect/check [--time N --out FILE]` | Validate grades, light signals, receiving surfaces and actual typed dependencies |
 | `look apply FILE [--dry-run --expect-sha256 HASH]` | Save a complete finishing recipe through the scene transaction path |
 | `look export --out DIR [--include-rig]` | Package a look and optionally its mounting, cel/track, group and layer definitions |
 | `look import PACKAGE --bindings FILE [--include-rig --dry-run --expect-sha256 HASH]` | Rebind a package to explicit targets; rig adoption requires matching canvas/clock and exact rig assets |
-| `preview [--port N] [--look DIR or --prepare DIR]` | Serve the selected project or verified artifact; preparation supports in-memory draft editing and recipe downloads without project writes |
-| `render frame --time N --out DIR [--revision ID]` | Render an actual PNG from the shared scene evaluator and drawing code |
-| `render proof --out DIR [--revision ID --start N --seconds N --disable LAYER --width N]` | Render a normal-speed HTML comparison with frame seeking and optional disabled layers |
+| `preview [--port N] [--look DIR or --prepare DIR or --views-proof DIR]` | Serve the selected project or verified artifact; preparation supports in-memory draft editing and recipe downloads without project writes |
+| `render frame --time N --out DIR [--revision ID --view ID]` | Render an actual PNG from the shared scene evaluator and drawing code |
+| `render proof --out DIR [--revision ID --view ID --start N --seconds N --disable LAYER --width N]` | Render a normal-speed HTML comparison with frame seeking and optional disabled layers |
+| `render views-proof --view ID --view ID --out DIR [--revision ID --start N --seconds N --long-edge N --supersample 1/2/4]` | Save synchronized crops of each finished stage frame with per-view coverage, seam and frame-hash evidence |
 | `render rig-proof FILE --out DIR [--revision ID --width N]` | Render named poses/hidden-part variants, detail crops, differences and optional playback |
 | `render look-proof FILE --out DIR [--revision ID --width N --supersample 1/2/4]` | Save interactive baseline/variant comparison, grading/light controls, passes and downloadable transactions |
-| `render video --out DIR [--revision ID --edition ID --seconds N --repeats N --audio WAV --width N --height N --bitrate N]` | Encode H.264, optionally mux PCM, verify output and optionally bind an edition |
-| `media compose PICTURE --audio PCM --repeats N --out DIR [--revision ID --edition ID --picture-receipt FILE]` | Reuse compressed picture samples with selected PCM; verify the resulting edition |
-| `media verify FILE --out DIR [--frames N --loop-frames N --audio-tracks 0/1 --contact-time N --contact-frame N]` | Completely decode video/audio, check timing and save join/requested-contact evidence |
+| `render video --out DIR [--revision ID --view ID --edition ID --seconds N --repeats N --audio WAV --width N --height N --bitrate N]` | Encode H.264, optionally mux PCM, and verify output; edition binding retains exact named-view identity |
+| `media compose PICTURE --audio PCM --repeats N --out DIR [--revision ID --edition ID --view ID --picture-receipt FILE]` | Reuse compressed picture samples with selected PCM; verify the resulting edition |
+| `media verify FILE [--revision ID --edition ID --view ID] --out DIR [--frames N --loop-frames N --audio-tracks 0/1 --contact-time N --contact-frame N]` | Completely decode video/audio, check timing and save join/requested-contact evidence |
 | `audio inspect SESSION` | Validate explicit selected PCM sources and inspect arrangement/levels |
 | `audio import-stems SESSION --session-id ID` | Preserve a legacy session and create a new executable session from its rendered stems |
 | `audio mix SESSION [--run-id ID --start N --duration N --solo STEM --mute STEM --gain STEM=DB]` | Render a versioned circular arrangement, aligned stems and numerical reports |
@@ -93,6 +98,8 @@ Revision selections and asset/placement manifests use project-relative reference
 | `test [--out FILE]` | Run Python regressions, legacy/rig Node checks and package audit |
 
 A blank project is the default for new artwork. It has no layers; its technical check deliberately reports incomplete until prepared assets and a scene are added. The explicit Last Lantern template copies the existing assets into the project, so editing one project cannot modify another's catalog or artwork.
+
+[Saved views](VIEWS.md) support portrait/landscape project setup, framing edits, checks, synchronized previews, paired raster proofs and single-view video export. Omitting `--view` preserves full authored-canvas rendering. Version-2 iteration recipes produce the Cartesian product of views and soundtrack editions, with resumable steps and one combined delivery.
 
 Detailed contracts and examples: [inventory and asset proofs](PRODUCTION-INVENTORY.md), [crop/return preparation](ASSET-PREPARATION.md), [scene transactions](architecture/SCENE-TRANSACTIONS.md), [authored tracks](SCENE-CONTRACT.md), [rendering/media](RENDERING.md), [audio sessions](AUDIO-SESSION.md), [revisions and editions](REVISIONS.md). Edition audio may cite `--audio-run`, `--audio-provenance` or additional `--audio-session` inputs; their provenance requirements are described in the revision contract.
 

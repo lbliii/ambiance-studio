@@ -58,6 +58,37 @@ class ProductionTests(unittest.TestCase):
         self.plan([{'id':'floor','state':'static-deferred'},{'id':'rat','required_parts':['gait'],'dependencies':['floor']}])
         result=planning.inspect(self.p);self.assertTrue(result['ok'])
         self.assertEqual(result['items'][1]['blocked_by'],['floor'])
+    def test_completion_check_catches_missing_scope_without_changing_integrity_checks(self):
+        self.plan([{'id':'clouds','required':True,'required_parts':['cloud cels']},
+                   {'id':'optional-prop','state':'static-deferred'}])
+        code,data=self.run_cli('plan','check');self.assertEqual(code,0,data)
+        code,data=self.run_cli('plan','check','--require-complete');self.assertEqual(code,1,data)
+        self.assertEqual([r['id'] for r in data['data']['completion']['outstanding']],['clouds'])
+        self.assertFalse(data['data']['completion']['complete'])
+        self.plan([])
+        code,data=self.run_cli('plan','check','--require-complete');self.assertEqual(code,1,data)
+        self.assertTrue(any('empty' in e for e in data['data']['errors']))
+    def test_required_scope_cannot_be_dismissed_or_claimed_without_parts(self):
+        for item in [{'id':'clouds','required':True,'state':'static-deferred','required_parts':['cloud cels']},
+                     {'id':'clouds','required':True,'state':'keep','existing_asset_ids':['paint']},
+                     {'id':'clouds','required':'yes','required_parts':['cloud cels']}]:
+            with self.subTest(item=item):
+                self.plan([item]);code,data=self.run_cli('plan','next');self.assertEqual(code,1,data)
+                self.assertEqual(data['data']['ready'],[])
+    def test_completion_accepts_produced_scope_but_rejects_changed_or_revision_evidence(self):
+        evidence={'file':'assets/source.png','sha256':self.catalog['assets'][0]['sha256']}
+        part={'id':'cut','stage':'placed','files':[evidence],'asset_id':'paint','layer_ids':['base']}
+        self.plan([{'id':'prop','required':True,'required_parts':[part]}, {'id':'optional','state':'static-deferred'}])
+        code,data=self.run_cli('plan','check','--require-complete');self.assertEqual(code,0,data)
+        self.assertEqual(data['data']['items'][0]['required_parts'][0]['review']['state'],'pending')
+        part['review']={'state':'needs-revision','evidence':[evidence]}
+        self.plan([{'id':'prop','required':True,'required_parts':[part]}])
+        code,data=self.run_cli('plan','check','--require-complete');self.assertEqual(code,1,data)
+        self.assertEqual(data['data']['completion']['outstanding'][0]['id'],'prop')
+        del part['review'];self.plan([{'id':'prop','required':True,'required_parts':[part]}])
+        self.img.write_bytes(b'changed')
+        code,data=self.run_cli('plan','check','--require-complete');self.assertEqual(code,1,data)
+        self.assertTrue(any('changed' in e for e in data['data']['errors']))
     def test_batch_dry_run_stale_hash_atomic_failure_and_restore(self):
         before=self.scene.read_bytes();sha=hashlib.sha256(before).hexdigest();batch=self.root/'batch.json'
         batch.write_text(json.dumps({'version':1,'operations':[{'op':'set','layer':'base','values':{'x':.3}},{'op':'set','layer':'absent','values':{'x':.4}}]}))

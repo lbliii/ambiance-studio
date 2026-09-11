@@ -1,8 +1,13 @@
 import {drawScene,compileScene,point,inverseVector,validateScene} from './engine.mjs';
-import {auditScene,auditPixels} from './audit.mjs';
+import {auditScene,auditPixels,auditViews,auditViewPixels} from './audit.mjs';
+import {viewIds,resolveView,planViews} from './views.mjs';
+import {createStageRenderer} from './stage-raster.mjs';
 const $=id=>document.getElementById(id);
 let scene,catalog,original,selected='cottage',time=0,playing=false,last=0,states=[],drag=null,exportUrl=null;
 let compiled=null,placingSocket=false,auditInput=null;
+let viewRenderer=null,viewInput=null;
+const makeCanvas=(width,height)=>{const canvas=document.createElement('canvas');canvas.width=width;canvas.height=height;return canvas;};
+const viewColors=['#e4be82','#79e1db','#dba5df'];
 const images=new Map();
 const selectedLayer=()=>scene.layers.find(l=>l.id===selected);
 const groupFor=l=>scene.groups.find(g=>g.id===l?.group);
@@ -31,6 +36,12 @@ function refreshFields(){
   }
   options($('attachment'),entries,l.attach?JSON.stringify([l.attach.layer,l.attach.socket]):'');
   $('edit-group').disabled=!g;
+  $('group-control').hidden=!g;
+  const parent=scene.layers.find(p=>p.id===l.attach?.layer);
+  $('placement-hint').textContent=g?
+    ($('edit-group').checked?`Position and scale now affect all layers in ${g.name}.`:`Select this to adjust all layers in ${g.name} together.`):
+    parent?`Select “${parent.name}” to move or scale this layer together with its parent.`:
+    scene.layers.some(child=>child.attach?.layer===l.id)?'Moving or scaling this layer also moves its attached layers.':'Position and scale affect this layer only.';
   $('cel-panel').hidden=!a.atlas;
   if(a.atlas){
     const T=scene.canvas.loop_seconds;
@@ -45,20 +56,46 @@ function render(changed=true){
   if(changed||!compiled)compiled=compileScene(scene,catalog);
   if(changed&&auditInput&&auditInput!==JSON.stringify(scene))$('audit-status').textContent='Scene changed since inspection. Run the checks again.';
   states=drawScene($('stage'),scene,catalog,images,time,{selected,grid:$('grid').checked,solo:$('solo').checked,sockets:$('sockets').checked,sampler:compiled.sample});
+  const ids=viewIds(scene).filter(id=>id!=='authored');
+  if(ids.length&&$('view-guides').checked){
+    const ctx=$('stage').getContext('2d');ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
+    ctx.lineWidth=Math.max(scene.canvas.width,scene.canvas.height)/400;ctx.setLineDash([ctx.lineWidth*4,ctx.lineWidth*3]);ctx.font=`${Math.max(scene.canvas.width,scene.canvas.height)/48}px sans-serif`;
+    ids.forEach((id,index)=>{const [x,y,w,h]=resolveView(scene,id).rect_scene_px;ctx.strokeStyle=ctx.fillStyle=viewColors[index%viewColors.length];ctx.strokeRect(x,y,w,h);ctx.fillText(id,x+ctx.lineWidth*3,y+ctx.lineWidth*12);});ctx.restore();
+  }
+  if(ids.length&&$('show-views').checked){
+    try{
+      const input=JSON.stringify(scene);
+      if(input!==viewInput){
+        const plan=planViews(scene,ids.map(id=>({id})),{long_edge:640});
+        viewRenderer=createStageRenderer(scene,catalog,images,plan,makeCanvas);viewInput=input;
+        $('view-panes').replaceChildren(...plan.views.map((v,index)=>{const figure=document.createElement('figure'),label=document.createElement('figcaption'),canvas=viewRenderer.outputs.get(v.view.id);label.textContent=`${v.view.id} · ${v.view.output.width} × ${v.view.output.height}`;label.style.color=viewColors[index%viewColors.length];canvas.setAttribute('aria-label',`${v.view.id} output view`);figure.append(label,canvas);return figure;}));
+      }
+      viewRenderer.render(time);
+      for(const canvas of viewRenderer.outputs.values()){canvas.dataset.frame=Math.floor(time*scene.canvas.fps);canvas.dataset.time=time;}
+      $('view-status').textContent=`Shared time ${time.toFixed(3)} s · preview ceiling 640 px. Saved output dimensions are shown above.`;
+    }catch(e){$('view-status').textContent=`Output preview unavailable: ${e.message}`;}
+  }
   $('time').value=`${time.toFixed(2)} / ${scene.canvas.loop_seconds} s`;
+  $('view-time').value=$('time').value;
   $('timeline').value=Math.round(time*scene.canvas.fps);
+  $('view-timeline').value=$('timeline').value;
   const s=states.find(s=>s.id===selected),a=catalog.assets.find(a=>a.id===s?.asset);
   if(a?.atlas)$('cel-state').value=`Cel ${s.cell+1} / ${a.atlas.frame_count}`;
 }
-function stop(){playing=false;$('play').textContent='Play';}
+function setPlaying(next){playing=next;last=performance.now();$('play').textContent=$('view-play').textContent=playing?'Pause':'Play';}
+function stop(){setPlaying(false);}
 function install(next){
   validateScene(next,catalog);scene=structuredClone(next);
   if(!scene.layers.length)throw Error('The editor requires at least one layer.');
   selected=scene.layers.some(l=>l.id==='cottage')?'cottage':scene.layers[0].id;
   time=0;stop();$('edit-group').checked=false;
   $('timeline').max=Math.round(scene.canvas.loop_seconds*scene.canvas.fps)-1;
+  $('view-timeline').max=$('timeline').max;
   $('title').textContent=scene.title;
-  $('format').textContent=`${scene.canvas.width} × ${scene.canvas.height}`;
+  $('stage-size').textContent=`${scene.canvas.width} × ${scene.canvas.height}`;
+  $('stage').setAttribute('aria-label','Authored painting with independently animated layers. Select a layer, then drag in the picture to move it.');
+  const hasViews=viewIds(scene).length>1;
+  $('output-views').hidden=$('view-guide-control').hidden=!hasViews;viewRenderer=null;viewInput=null;
   refreshList();refreshFields();render();
 }
 function save(){
@@ -92,11 +129,13 @@ function tick(now){
   if(playing){time=(time+(now-last)/1000)%scene.canvas.loop_seconds;render(false);}
   last=now;requestAnimationFrame(tick);
 }
-$('play').onclick=()=>{playing=!playing;last=performance.now();$('play').textContent=playing?'Pause':'Play';};
-$('timeline').oninput=()=>{stop();time=Number($('timeline').value)/scene.canvas.fps;render();};
+$('play').onclick=$('view-play').onclick=()=>setPlaying(!playing);
+for(const id of ['timeline','view-timeline'])$(id).oninput=()=>{stop();time=Number($(id).value)/scene.canvas.fps;render();};
 $('layer').onchange=()=>{selected=$('layer').value;$('edit-group').checked=false;refreshFields();render();};
 $('edit-group').onchange=()=>{refreshFields();render();};
 for(const id of ['grid','solo','sockets'])$(id).onchange=()=>render(false);
+$('view-guides').onchange=()=>render(false);
+$('show-views').onchange=()=>{$('view-panes').hidden=!$('show-views').checked;render(false);};
 for(const id of ['x','y','scale','rotation','opacity','depth','anchor-x','anchor-y','phase'])$(id).oninput=()=>{
   if(!scene)return;
   const n=Number($(id).value);if(!Number.isFinite(n)||$(id).value==='')return;
@@ -178,13 +217,15 @@ $('audit').onclick=async()=>{
     const state=auditScene(snapshot,catalog);
     const pixels=await auditPixels(snapshot,catalog,images,(n,total)=>{$('audit-status').textContent=`Inspecting frame ${n} / ${total}…`;});
     const report={scene:snapshot,asset_hashes:Object.fromEntries(catalog.assets.map(a=>[a.id,a.sha256])),state,pixels};
+    const ids=viewIds(snapshot).filter(id=>id!=='authored');
+    if(ids.length){report.views={geometry:auditViews(snapshot,catalog,ids),pixels:await auditViewPixels(snapshot,catalog,images,ids,makeCanvas,(n,total)=>{$('audit-status').textContent=`Inspecting output views, frame ${n} / ${total}…`;})};}
     $('audit-report').value=JSON.stringify(report,null,2);$('audit-json').hidden=false;auditInput=input;
     const stale=input!==JSON.stringify(scene);
     $('audit-status').textContent=stale?'Scene changed during inspection. Report refers to the earlier snapshot; run again.':
-      `${state.frame_count} frames checked · ${state.attachment_count} attachments · ${pixels.uncovered_frames} frames with exposed canvas · ${state.ok&&pixels.ok?'technical checks passed':'review needed'}.${pixels.seam_review_suggested?' The join has a larger change than typical frames; inspect it.':''} Visual review is still required.`;
+      `${state.frame_count} frames checked · ${state.attachment_count} attachments · authored stage: ${pixels.uncovered_frames} frames with exposed canvas · ${state.ok&&pixels.ok?'stage checks passed':'stage review needed'}.${report.views?' Views: '+Object.entries(report.views.pixels.views).map(([id,row])=>`${id}: ${row.uncovered_frames} exposed frames${report.views.geometry.views[id].ok?'':', geometry review needed'}`).join('; ')+'.':''}${pixels.seam_review_suggested?' The join has a larger change than typical frames; inspect it.':''} Visual review is still required.`;
   }catch(e){error(e.message);$('audit-status').textContent='Inspection could not complete.';}
   finally{$('audit').disabled=false;}
 };
 $('audit-json').onclick=()=>{$('audit-report').hidden=!$('audit-report').hidden;};
-$('join').onclick=()=>{time=scene.canvas.loop_seconds-1;playing=true;last=performance.now();$('play').textContent='Pause';render(false);};
+$('join').onclick=()=>{time=scene.canvas.loop_seconds-1;setPlaying(true);render(false);};
 start().catch(e=>error(e.message));

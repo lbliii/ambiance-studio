@@ -18,12 +18,12 @@
         },
         {
           "id": "creative-direction",
-          "description": "Focal point, palette, edge treatment, movement restraint, sound story, and intended audience are specified.",
+          "description": "Focal point, palette, edge treatment, story actions, intended motion readability/cadence, sound story, and audience are specified.",
           "kind": "review"
         },
         {
           "id": "production-scope",
-          "description": "Format, durations, tool availability, reuse scope, and generation spending authority are recorded.",
+          "description": "Authored stage, requested portrait/landscape or explicitly chosen views and output sizes, durations, required creative work, tool gaps, reuse scope, and generation authority are recorded.",
           "kind": "review"
         }
       ]
@@ -36,7 +36,9 @@
       ],
       "watch": [
         "plans/layer-plan.json",
-        "plans/layout-notes.md"
+        "plans/layout-notes.md",
+        "plans/scene-census.json",
+        "plans/asset-inventory.json"
       ],
       "criteria": [
         {
@@ -46,12 +48,22 @@
         },
         {
           "id": "occlusion-coverage",
-          "description": "Hidden backgrounds and borders that camera motion can reveal have clean-plate or mask plans.",
+          "description": "Every requested view has clean-plate or mask plans for hidden backgrounds and borders revealed by its full camera/motion cycle.",
           "kind": "review"
         },
         {
           "id": "attachments",
           "description": "Groups and attachment sockets keep architecture, smoke, lights, and ground consistent.",
+          "kind": "review"
+        },
+        {
+          "id": "scene-census",
+          "description": "Meaningful visible object families and light sources were surveyed before selecting assets; story roles, deliberate stillness, chosen actions, source/receiver relationships and required production parts are recorded.",
+          "kind": "review"
+        },
+        {
+          "id": "output-compositions",
+          "description": "Small blocking/composition proofs show the intended subjects, action room and hidden-paint needs in every requested output format, preserving proportions and reference identity.",
           "kind": "review"
         }
       ]
@@ -80,7 +92,7 @@
         },
         {
           "id": "style-and-edges",
-          "description": "Cutouts and cels fit the reference style; alpha edges and the unlit/emissive relationship were visually reviewed.",
+          "description": "Cutouts and cels fit the reference style; alpha edges and the unlit/emissive relationship were visually reviewed at the largest required scale across requested views.",
           "kind": "review"
         },
         {
@@ -99,7 +111,8 @@
       "watch": [
         "scene",
         "reports/animation",
-        "deliverables/picture"
+        "deliverables/picture",
+        "plans/asset-inventory.json"
       ],
       "criteria": [
         {
@@ -109,12 +122,17 @@
         },
         {
           "id": "loop-and-coverage",
-          "description": "Zero/end state and last-to-first transition were checked; camera extremes reveal no missing artwork.",
+          "description": "Zero/end state and last-to-first transition were checked for each requested view; camera extremes reveal no missing artwork.",
           "kind": "review"
         },
         {
           "id": "picture-review",
-          "description": "A full draft was reviewed at phone size for attachment drift, flicker, frame jitter, visual hierarchy, and motion density.",
+          "description": "A full draft was reviewed at normal speed/size in each requested composition for noticeable story/environment actions, unintended still intervals, visual hierarchy, contacts, flicker and jitter; actual observations are stated.",
+          "kind": "review"
+        },
+        {
+          "id": "scope-coverage",
+          "description": "plan check --require-complete passes for the selected production scope, with actual picture evidence for required actions and output compositions; a partial prototype has not silently replaced the intended film.",
           "kind": "review"
         }
       ]
@@ -193,7 +211,7 @@
       "criteria": [
         {
           "id": "decoded-file",
-          "description": "The actual final video was decoded completely; picture count, dimensions, frame rate, ordered timing, and presented audio length were verified.",
+          "description": "Each requested view/soundtrack movie was decoded completely; its exact picture count, dimensions, frame rate, ordered timing, and presented audio length were verified.",
           "kind": "review"
         },
         {
@@ -203,7 +221,7 @@
         },
         {
           "id": "editions",
-          "description": "Requested editions, cover, masters, and labels match the brief; no silent or stale mix is mislabeled as final.",
+          "description": "Requested view/soundtrack pairs, each view cover, masters, labels and exact watch links match the brief; no silent, wrong-format or stale mix is mislabeled as final.",
           "kind": "review"
         }
       ]
@@ -221,12 +239,12 @@
       "criteria": [
         {
           "id": "human-look-listen",
-          "description": "A person reviewed the exact final file for the intended cozy/spooky balance and comfortable repetition.",
+          "description": "A person reviewed the exact final file for each requested view/soundtrack pair for the intended cozy/spooky balance and comfortable repetition.",
           "kind": "human"
         },
         {
           "id": "phone-check",
-          "description": "A person checked the exact final file on a phone, including picture crop, readable detail, and speaker sound.",
+          "description": "A person checked the exact requested final views on a phone, including picture crop, readable detail, and speaker sound.",
           "kind": "human"
         },
         {
@@ -259,7 +277,7 @@
         },
         {
           "id": "handoff",
-          "description": "A new operator can locate the final files, next actions, known limits, and reusable pieces without this chat.",
+          "description": "A new operator can locate each requested view/soundtrack movie, its exact/current links, open checks, next actions, known limits, and reusable pieces without this chat.",
           "kind": "review"
         }
       ]

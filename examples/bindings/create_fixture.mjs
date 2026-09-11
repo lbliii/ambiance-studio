@@ -6,6 +6,7 @@ import {createRequire} from 'node:module';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
+import {browserPacket} from './browser-packet.mjs';
 import {bindingFixture} from '../../tests/fixtures/binding-scene.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..'),require=createRequire(import.meta.url);
 let runtime;for(const p of [process.env.AMBIANCE_CANVAS_MODULE,'@napi-rs/canvas',path.join(os.homedir(),'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/@napi-rs/canvas')].filter(Boolean))try{runtime=require(p);break;}catch{}
@@ -37,4 +38,5 @@ const look=run('render','look-proof',path.join(project,'plans/look.json'),'--rev
 const hidden=run('render','proof','--revision','bindings-v1','--disable','pumpkin','--seconds','4','--width','256','--out',path.join(project,'render/source-hidden'));
 for(const time of [0,1,2,3])run('render','frame','--revision','bindings-v1','--time',String(time),'--width','128','--out',path.join(project,`render/state-${time}`));
 const pkg=run('look','export','--include-rig','--out',path.join(project,'looks/painted-floor'));
-console.log(JSON.stringify({project,paired:pair,look:look.output,hidden:hidden.output,package:pkg.package,limits:['Synthetic tool proof, not a completed film. No human or phone review recorded.']},null,2));
+const browser=browserPacket(project,root);
+console.log(JSON.stringify({project,browser,paired:pair,look:look.output,hidden:hidden.output,package:pkg.package,limits:['Synthetic tool proof, not a completed film. No human or phone review recorded.']},null,2));
