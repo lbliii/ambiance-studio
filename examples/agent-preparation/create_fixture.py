@@ -76,7 +76,7 @@ def create(out,subject='tea',proof=True):
     run(out,'asset','build',raw/'base-recipe.json','--out',out/'assets/production/reference');run(out,'asset','admit',out/'assets/production/reference')
     scene={'version':1,'id':'compound-fixture','title':old['title'],'canvas':canvas,
            'camera':{'overscan':1,'x_amplitude':0,'y_amplitude':0,'zoom_amplitude':0},'groups':[],'framing':framing,
-           'layers':[{'id':'base','asset':'fixture-reference','x':.5+.25/w,'y':.5+.125/h,'width':(w+4)/w,'height':(h+4)/h,
+           'layers':[{'id':'base','asset':'fixture-reference','cycle_seconds':2,'phase_frames':0,'x':.5+.25/w,'y':.5+.125/h,'width':(w+4)/w,'height':(h+4)/h,
                       'anchor':[.5,.5],'scale':1,'rotation':0,'opacity':1,'visible':True,'depth':0,'blend':'source-over'}]}
     p.write(out/'scene/scene.json',scene)
     inventory={'version':1,'items':[{'id':name,'required_parts':[{'id':'paint','role':'occluder' if name=='rail' else 'cutout'}]} for name in part_names]}

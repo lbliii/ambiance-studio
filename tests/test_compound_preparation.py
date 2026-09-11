@@ -68,6 +68,29 @@ class CompoundPreparationTests(unittest.TestCase):
         _,facts,warnings=c.evaluate(r,c.load_inputs(self.root,r))
         self.assertTrue(facts['cutout_occluder_overlaps']);self.assertGreater(facts['parts']['body']['removal_without_opaque_backing_pixels'],0)
         self.assertTrue(any('does not fully cover' in w['message'] for w in warnings))
+    def test_public_place_replaces_baked_base_and_preserves_subpixel_source_anchor(self):
+        self.build()
+        source=self.recipe['source'];mapping={'format':'ambiance-asset-source-mapping','version':1,'path_base':'project','reference':source,'image':source,'image_to_reference':[1,0,0,1,0,0]}
+        p.write(self.root/'mapping.json',mapping)
+        recipe={'version':1,'id':'base-source','input':{'frames':['source.png'],'allow_opaque':True},'source_mapping':{'file':'mapping.json','sha256':p.sha((self.root/'mapping.json').read_bytes())},
+                'registration':{'mode':'fixed','point':[24,32],'target':[.5,.5]},'output':{'cell_size':[52,68],'columns':1,'padding':2}}
+        p.write(self.root/'base-recipe.json',recipe);asset_tool.build(self.root/'base-recipe.json',self.root/'base-pack');asset_tool.admit(self.root/'base-pack',self.root/'assets/catalog.json')
+        scene={'version':1,'id':'fixture','title':'Placement','canvas':{'width':48,'height':64,'fps':30,'loop_seconds':2,'background':'#102030'},'groups':[],
+               'camera':{'overscan':1,'x_amplitude':0,'y_amplitude':0,'zoom_amplitude':0},
+               'layers':[{'id':'base','asset':'base-source','cycle_seconds':2,'phase_frames':0,'x':.5+.25/48,'y':.5+.125/64,'width':52/48,'height':68/64,'anchor':[.5,.5],
+                          'scale':1,'rotation':0,'opacity':1,'visible':True,'blend':'source-over','depth':0}]}
+        p.write(self.root/'scene.json',scene)
+        before=p.sha((self.root/'scene.json').read_bytes())
+        result=commands.cli(self.root,'asset','prepare','place',self.root/'prepared','--base','base','--prefix','fixture','--expect-sha256',before)
+        placed=p.load(self.root/'scene.json');self.assertEqual(placed['layers'][0]['asset'],'prepared-backing')
+        self.assertEqual(len(placed['layers']),4);self.assertTrue((self.root/'.ambiance/scene-history'/f'{before}.json').is_file())
+        sampled=commands.cli(self.root,'scene','sample','--time',0)
+        body=next(row for row in sampled if row['id']=='fixture-body')
+        # Registration anchor remains at fractional source coordinates + base translation.
+        self.assertAlmostEqual(body['matrix'][4],18.5);self.assertAlmostEqual(body['matrix'][5],35.25)
+        cached=commands.cli(self.root,'asset','prepare','place',self.root/'prepared','--base','base','--prefix','fixture','--resume')
+        self.assertTrue(cached['cached']);self.assertEqual(cached['sha256'],result['sha256'])
+
     def test_public_inspect_edit_build_and_rest_raster(self):
         inspect=commands.cli(self.root,'asset','prepare','inspect',self.file)
         self.assertEqual(inspect['parts'][0]['pivot_source_px'],[18.25,35.125])

@@ -157,7 +157,11 @@ def context_inputs(project, recipe):
         if id not in info['views']: raise ValueError(f'Saved composition is missing: {id}')
         selected[id] = info['views'][id]
     from . import production_plan
+    if ap.project_file(project,context['inventory']['file'])!=project/'plans/asset-inventory.json':
+        raise ValueError('Preparation must bind the canonical plans/asset-inventory.json')
     production_plan.validate(project, plan)
+    intended={row['view_id'] for row in plan['outputs']}
+    if intended!=set(context['views']): raise ValueError('Preparation context must include every intended production view exactly')
     for part in recipe['parts']:
         if not part.get('binding'): raise ValueError(f'Bound preparation requires element/inventory references for {part["id"]}')
         production_plan.validate_binding(project, part['binding'], plan)

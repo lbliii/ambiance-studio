@@ -89,7 +89,7 @@ def proof(project, directory, out, long_edge=640, resume=False):
     return {'ok':True,'report':str(out/'proof-run.json'),'html':str(out/'index.html'),'status':'complete','views':views,'steps':{k:v['directory'] for k,v in run['steps'].items()},'review_status':'unreviewed'}
 
 
-def place(project, directory, base, prefix=None, expected=None, dry_run=False):
+def place(project, directory, base, prefix=None, expected=None, dry_run=False, resume=False):
     from .scene_transactions import scene_transaction
     from .scene_commands import apply_batch
     from . import assets, scene_authoring
@@ -103,6 +103,14 @@ def place(project, directory, base, prefix=None, expected=None, dry_run=False):
         cli(project,'asset','admit',pack_dir/id)
     with scene_transaction(project,expected) as transaction:
         cp.artifact(directory)
+        journal=Path(project)/'.ambiance/preparation-placements'/(prefix+'.json')
+        receipt_hash=ap.sha((directory/'preparation-receipt.json').read_bytes())
+        if journal.exists():
+            saved=ap.load(journal)
+            if saved['receipt_sha256']!=receipt_hash or saved['base']!=base: raise ValueError('Placement prefix belongs to a different preparation/base')
+            if not resume: raise ValueError('Placement already recorded; use --resume to verify the completed scene')
+            if saved['candidate_sha256']!=transaction.previous_sha256: raise ValueError('Scene diverged after preparation placement; inspect its history before resuming')
+            return {'ok':True,'cached':True,'scene':str(transaction.scene_path),'sha256':transaction.previous_sha256,'journal':str(journal)}
         dependencies=[]
         verified=cp.validate_preparation_receipt(directory/'preparation-receipt.json',ap.sha((directory/'preparation-receipt.json').read_bytes()),
                                                [ap.project_file(project,receipt['outputs']['backing']['image']['file'])])
@@ -134,9 +142,18 @@ def place(project, directory, base, prefix=None, expected=None, dry_run=False):
             if any(v<0 or v>1 for v in anchor): raise ValueError('Prepared anchor falls outside padded cell')
             batch['operations'].append({'op':'place_from_source','id':prefix+'-'+id,'asset':asset['id'],'base':base,
                                         'mode':'native','reference':recipe['source'],'anchor':anchor})
-        return apply_batch(transaction,batch,'prepare-place',dry_run=dry_run,dependencies=dependencies,
-                           details={'preparation_receipt':str(directory/'preparation-receipt.json'),'proof_motion_adopted':False,
-                                    'companions':'Compiled and admitted with owner metadata; bind their receiving surface explicitly.'})
+        details={'preparation_receipt':str(directory/'preparation-receipt.json'),'proof_motion_adopted':False,
+                 'companions':'Compiled and admitted with owner metadata; bind their receiving surface explicitly.'}
+        if dry_run: return apply_batch(transaction,batch,'prepare-place',dry_run=True,dependencies=dependencies,details=details)
+        candidate=apply_batch(transaction,batch,'prepare-place',dry_run=True,dependencies=dependencies)['scene']
+        candidate_hash=ap.sha((json.dumps(candidate,indent=2)+'\n').encode())
+        # A journal before the scene write recognizes a crash immediately after the atomic transaction.
+        studio.write(journal,{'version':1,'receipt_sha256':receipt_hash,'base':base,'previous_sha256':transaction.previous_sha256,'candidate_sha256':candidate_hash})
+        try:
+            return apply_batch(transaction,batch,'prepare-place',dependencies=dependencies,details={**details,'journal':str(journal)})
+        except BaseException:
+            if transaction.scene_path.read_bytes()==transaction.previous_bytes: journal.unlink(missing_ok=True)
+            raise
 
 
 def run(args, project):
@@ -148,7 +165,7 @@ def run(args, project):
         return preparation.build(project,args.out,args.recipe,args.source,args.backing,args.backing_to_source)
     if args.target is None: raise ValueError(f'prepare {action} requires a recipe/artifact path')
     if action in ['inspect','check']: return cp.inspect(project,args.target,check=action=='check')
-    if action=='place': return place(project,args.target,args.base,args.prefix,args.expect_sha256,args.dry_run)
+    if action=='place': return place(project,args.target,args.base,args.prefix,args.expect_sha256,args.dry_run,args.resume)
     if args.out is None: raise ValueError(f'prepare {action} requires --out')
     if action=='init': return cp.initialize(project,args.target,args.out,args.context)
     if action=='build': return cp.build(project,args.target,args.out)
