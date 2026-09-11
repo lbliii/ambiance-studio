@@ -1,6 +1,56 @@
 """Validate roadmap references without treating planned capabilities as executable commands."""
+import argparse
+import json
 import re
 from pathlib import Path
+
+
+def check_capabilities(root, cli_parser=None):
+    """Check documented command routes by inspecting argparse; never run a command."""
+    root = Path(root).resolve()
+    data = json.loads((root / 'docs/CAPABILITIES.json').read_text())
+    errors = []
+    if data.get('format') != 'ambiance-capability-index' or data.get('schema_version') != 1:
+        errors.append('Unsupported capability index format/version')
+    if cli_parser is None:
+        from .cli import parser
+        cli_parser = parser()
+    seen = set()
+    for row in data.get('capabilities', []):
+        id = row.get('id')
+        if not isinstance(id, str) or not re.fullmatch(r'[a-z][a-z0-9-]+', id) or id in seen:
+            errors.append('Capability IDs must be unique lowercase identifiers')
+        seen.add(id)
+        status = row.get('status')
+        if status not in {'implemented', 'limited', 'planned'}:
+            errors.append(str(id) + ': unsupported status')
+        routes = row.get('public_cli', [])
+        if status == 'planned' and routes:
+            errors.append(str(id) + ': planned capability must not advertise callable routes')
+            continue
+        if status != 'planned' and not routes:
+            errors.append(str(id) + ': implemented capability needs a public CLI route')
+        for route in routes:
+            current = cli_parser
+            if not isinstance(route, list) or not route or any(not isinstance(x, str) for x in route):
+                errors.append(str(id) + ': command route must be nonempty tokens'); continue
+            for token in route:
+                choices = [a.choices for a in current._actions if isinstance(a, argparse._SubParsersAction)]
+                child = next((options[token] for options in choices if token in options), None)
+                if child is None:
+                    errors.append(str(id) + ': unregistered command route ' + ' '.join(route)); break
+                current = child
+        for ref in row.get('references', []):
+            path = (root / ref).resolve()
+            if not path.is_relative_to(root) or not path.is_file():
+                errors.append(str(id) + ': missing/escaped capability reference ' + str(ref))
+        if not row.get('references') or not row.get('limits'):
+            errors.append(str(id) + ': references and capability limits are required')
+    if not seen:
+        errors.append('Capability index is empty')
+    return {'ok': not errors, 'count': len(seen), 'errors': errors,
+            'limits': ['Routes are inspected without executing production operations.',
+                       'Registered routes and references do not establish readiness or artistic approval.']}
 
 
 def check(root):

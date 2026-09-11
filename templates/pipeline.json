@@ -8,6 +8,7 @@
       "watch": [
         "inputs",
         "plans/brief.md",
+        "plans/production-plan.json",
         "project.json"
       ],
       "criteria": [
@@ -37,7 +38,7 @@
       "watch": [
         "plans/layer-plan.json",
         "plans/layout-notes.md",
-        "plans/scene-census.json",
+        "plans/production-plan.json",
         "plans/asset-inventory.json"
       ],
       "criteria": [
@@ -132,7 +133,7 @@
         },
         {
           "id": "scope-coverage",
-          "description": "plan check --require-complete passes for the selected production scope, with actual picture evidence for required actions and output compositions; a partial prototype has not silently replaced the intended film.",
+          "description": "plan coverage --stage animation is ready for the selected canonical production scope, with exact picture evidence and actual observations for required actions and output compositions. Legacy unmigrated inventories use plan check --require-complete with its narrower meaning; a partial prototype has not silently replaced the intended film.",
           "kind": "review"
         }
       ]

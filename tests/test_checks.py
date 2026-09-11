@@ -61,6 +61,25 @@ class Injected(unittest.TestCase):
             self.assertEqual(len(xml.findall('.//skipped')), 1)
 
 class BundleTests(unittest.TestCase):
+    def test_combined_bundle_keeps_named_recovery_evidence_and_excludes_unlisted_media(self):
+        from tools.ci_bundle import bundle
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); run = root / 'checks'; replay = root / 'replay'; combined = root / 'combined'
+            run.mkdir(); replay.mkdir(); combined.mkdir()
+            (combined / 'combined.json').write_text('{"state":"failed"}')
+            attempt = combined / 'paired-recovery/attempt-001'
+            attempt.mkdir(parents=True)
+            (attempt / 'recovery.json').write_text('{"ok":false}')
+            (attempt / 'private-film.mp4').write_bytes(b'excluded')
+            result = bundle(run, replay, root / 'upload', combined)
+            self.assertEqual(result['files'], 2)
+            self.assertTrue((root / 'upload/combined/paired-recovery/attempt-001/recovery.json').is_file())
+            self.assertFalse((root / 'upload/combined/paired-recovery/attempt-001/private-film.mp4').exists())
+            (attempt / 'recovery.json').unlink()
+            (attempt / 'recovery.json').symlink_to(attempt / 'private-film.mp4')
+            with self.assertRaisesRegex(ValueError, 'Symlink'):
+                bundle(run, replay, root / 'escaped', combined)
+
     def test_allowlist_ignores_private_project_and_rejects_symlinks_and_oversize(self):
         from tools.ci_bundle import bundle, MAX_FILE_BYTES
         with tempfile.TemporaryDirectory() as tmp:

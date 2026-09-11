@@ -97,7 +97,8 @@ tasks:
   title: Version the production intent, semantic census and expectations contract
   phase: 1
   priority: P0
-  status: planned
+  status: implemented
+  evidence: docs/PRODUCTION-PLAN.md
   relative_size: M
   depends_on:
   - KIT-01
@@ -165,8 +166,9 @@ tasks:
   title: Implement saved views and synchronized portrait/landscape picture proofs
   phase: 1
   priority: P0
-  status: implemented_pending_integration
-  integration_note: PR 5 head ca5a6e6 implements this stream; resolve conflicts and revalidate, do not duplicate.
+  status: implemented
+  evidence: docs/architecture/DUAL-FORMAT-VALIDATION.md
+  integration_note: PR 5 merged at d65bdada26e6d205428145fd45a7ce59f7613194 after conflict resolution and native/browser validation.
   relative_size: L
   depends_on:
   - KIT-01
@@ -198,7 +200,8 @@ tasks:
   title: Make source reconstruction and multi-part preparation practical for the agent
   phase: 2
   priority: P0
-  status: planned
+  status: implemented_artistic_pilot_remaining
+  evidence: docs/architecture/AGENT-PREPARATION-HANDOFF.md
   relative_size: L
   depends_on:
   - DATA-01
@@ -232,7 +235,8 @@ tasks:
   title: Add reusable painted illumination and explicit source-to-follower bindings
   phase: 2
   priority: P0
-  status: planned
+  status: implemented
+  evidence: docs/BINDINGS.md
   relative_size: L
   depends_on:
   - DATA-01
@@ -397,7 +401,8 @@ tasks:
   title: Make generation and asset retrieval resumable without redundant requests
   phase: 3
   priority: P1
-  status: planned
+  status: implemented_local_recording_and_reconciliation
+  evidence: docs/PROVIDERS.md
   relative_size: M
   depends_on:
   - DATA-01

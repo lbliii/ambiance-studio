@@ -4,6 +4,8 @@ on:
   pull_request:
 permissions:
   contents: read
+env:
+  AMBIANCE_CI_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
 jobs:
   tests:
     runs-on: ubuntu-latest
@@ -29,9 +31,12 @@ jobs:
       - name: Public CLI synthetic replay
         if: always()
         run: python examples/workflow-replay/run.py --out .ambiance/ci/replay
+      - name: Integrated feature replay
+        if: always()
+        run: python examples/workflow-replay/combined.py --out .ambiance/ci/combined
       - name: Assemble allowlisted evidence
         if: always()
-        run: python tools/ci_bundle.py --run .ambiance/ci/checks --replay .ambiance/ci/replay --out .ambiance/ci/upload
+        run: python tools/ci_bundle.py --run .ambiance/ci/checks --replay .ambiance/ci/replay --combined .ambiance/ci/combined --out .ambiance/ci/upload
       - name: Retain attributable evidence
         if: always()
         uses: actions/upload-artifact@v7.0.1
@@ -63,9 +68,12 @@ jobs:
       - name: Public CLI synthetic replay
         if: always()
         run: python examples/workflow-replay/run.py --out .ambiance/ci/replay
+      - name: Integrated feature replay with actual native recovery
+        if: always()
+        run: python examples/workflow-replay/combined.py --out .ambiance/ci/combined --native
       - name: Assemble allowlisted evidence
         if: always()
-        run: python tools/ci_bundle.py --run .ambiance/ci/checks --replay .ambiance/ci/replay --out .ambiance/ci/upload
+        run: python tools/ci_bundle.py --run .ambiance/ci/checks --replay .ambiance/ci/replay --combined .ambiance/ci/combined --out .ambiance/ci/upload
       - name: Retain attributable evidence
         if: always()
         uses: actions/upload-artifact@v7.0.1

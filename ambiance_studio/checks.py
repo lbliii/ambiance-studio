@@ -124,6 +124,7 @@ def run_suite(artifacts=None, require_native=False):
               'runtime': {'python': platform.python_version(), 'node': subprocess.run(['node', '--version'], capture_output=True, text=True).stdout.strip(), 'platform': platform.system()},
               'source': {'commit': identity['commit'], 'tracked_tree_sha256': identity['tracked_tree_sha256'], 'manifest': 'inputs.json'},
               'native_required': required, 'checks': [native], 'cases': [],
+              'ci': {key: os.environ.get(env) for key, env in [('run_id', 'GITHUB_RUN_ID'), ('attempt', 'GITHUB_RUN_ATTEMPT'), ('event', 'GITHUB_EVENT_NAME'), ('head_sha', 'AMBIANCE_CI_HEAD_SHA'), ('checkout_sha', 'GITHUB_SHA')]},
               'limits': ['Regression checks and artifact replay are not autonomous agent trials or artistic reviews.',
                          'Retained logs are scrubbed bounded tails; detailed synthetic proofs require an explicit allowlist.']}
     if not native['ok']:
