@@ -181,13 +181,15 @@ class ActivityTests(unittest.TestCase):
         element['realization']={'method':'rig','inventory_parts':[],'layer_ids':['actor']}
         plan['actions']=[{'id':action_id,'element_id':'room','description':'Turn and travel','method':'cel and rigid motion','layer_ids':['actor'],
                           'targets':[{'view_id':'portrait','readability_target':2},{'view_id':'landscape','readability_target':3}],
-                          'timing':{'rest_max_seconds':1}}]
+                          'timing':{'rest_max_seconds':3}}]
         plan['outputs']=[{'view_id':v,'roles':['silent']} for v in ['portrait','landscape']]
         plan['expectations']=[{**plan['expectations'][0],'id':'activity','view_ids':['portrait','landscape'],'action_ids':[action_id],
                                'requirement':{'type':'measured','check':'activity'}}]
+        plan['expectations'].append({**plan['expectations'][0],'id':'composition',
+                                     'requirement':{'type':'observed','check':'composition'}})
         proposal=self.root/'plan.json';proposal.write_text(json.dumps(plan))
         cli.run(args('--project',self.project,'plan','spec','apply',proposal,'--expect-sha256','absent'))
-        out=self.root/'semantic';activity.run(args('scene','activity','--action-id',action_id,'--view','portrait','--view','landscape','--out',out),self.project)
+        out=self.project/'semantic';activity.run(args('scene','activity','--action-id',action_id,'--view','portrait','--view','landscape','--raster','--long-edge','128','--out',out),self.project)
         report=activity.verify_receipt(out)
         self.assertEqual(report['plan']['plan_sha256'],activity.digest(self.project/production_plan.PATH))
         self.assertIn('activity',report['plan']['expectation_sha256'])
@@ -195,10 +197,40 @@ class ActivityTests(unittest.TestCase):
         self.assertEqual(report['actions'][0]['layers'],['actor'])
         state=json.loads((out/'state.json').read_text())
         self.assertEqual(state['views'][0]['profile']['kind']['character']['action_ids'],[action_id])
+        for view in ['portrait','landscape']:
+            registered=cli.run(args('--project',self.project,'plan','evidence','activity','--view',view,
+                                    '--receipt','semantic/activity-report.json'))
+            self.assertTrue(registered['ok'])
+        self.assertTrue(all(not row['actions'][0]['warnings'] for row in report['summary']))
+        with self.assertRaisesRegex(ValueError,'captured revision review'):
+            cli.run(args('--project',self.project,'plan','evidence','composition','--view','portrait',
+                         '--receipt','semantic/activity-report.json'))
+        observation={'kind':'ambiance-activity-observation','schema_version':1,'receipt':str(out/'activity-report.json'),
+                     'receipt_sha256':activity.digest(out/'activity-report.json'),'action_id':action_id,'view_id':'portrait',
+                     'criterion':'composition','status':'unreviewed','observed_level':None}
+        unreviewed=self.project/'unreviewed.json';unreviewed.write_text(json.dumps(observation))
+        with self.assertRaisesRegex(ValueError,'does not meet'):
+            cli.run(args('--project',self.project,'plan','evidence','composition','--view','portrait',
+                         '--receipt','unreviewed.json'))
         scene_path=self.project/'scene/scene.json';scene=json.loads(scene_path.read_text());scene['layers'][0]['visible']=False;scene_path.write_text(json.dumps(scene))
-        hidden=self.root/'semantic-hidden';activity.run(args('scene','activity','--action-id',action_id,'--view','portrait','--out',hidden),self.project)
+        hidden=self.project/'semantic-hidden';activity.run(args('scene','activity','--action-id',action_id,'--view','portrait','--out',hidden),self.project)
         hidden_report=activity.verify_receipt(hidden)
         self.assertIn('sampled_rest_exceeds_authored_target',hidden_report['summary'][0]['actions'][0]['timing_target_diagnostics'])
+        with self.assertRaisesRegex(ValueError,'timing targets'):
+            cli.run(args('--project',self.project,'plan','evidence','activity','--view','portrait',
+                         '--receipt','semantic-hidden/activity-report.json'))
+        scene['canvas'].update(fps=1,loop_seconds=6)
+        actor=scene['layers'][0];actor['visible']=True;actor.pop('motion')
+        actor['tracks']={'x':{'interpolation':'hold','keys':[[0,.5],[2,.6],[3,.5],[6,.5]]},
+                         'cell':{'interpolation':'hold','keys':[[0,0],[6,0]]}}
+        scene_path.write_text(json.dumps(scene))
+        wrapped=self.project/'semantic-wrapped'
+        activity.run(args('scene','activity','--action-id',action_id,'--view','portrait','--out',wrapped),self.project)
+        measured=activity.verify_receipt(wrapped)['summary'][0]['actions'][0]
+        self.assertEqual(measured['max_sampled_rest_seconds'],4)
+        with self.assertRaisesRegex(ValueError,'timing targets'):
+            cli.run(args('--project',self.project,'plan','evidence','activity','--view','portrait',
+                         '--receipt','semantic-wrapped/activity-report.json'))
 
     def test_binding_samples_and_disabled_source_include_coupled_receiver(self):
         project=self.root/'binding'
