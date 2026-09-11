@@ -36,7 +36,7 @@ export function createStageRenderer(source, catalog, images, plan, createCanvas)
   const outputs = new Map(plan.views.map(v => [v.view.id, createCanvas(v.output.width, v.output.height)]));
   function render(time, {coverage = false} = {}) {
     const states = coverage ? compiled.sample(time) : drawScene(stage, scene, catalog, images, time, {sampler: compiled.sample, createCanvas});
-    if (coverage) drawCoverage(stage, states, images);
+    if (coverage) drawCoverage(stage, states.filter(s => !(scene.finishing?.illuminations || []).some(e => e.layer === s.id)), images);
     for (const view of plan.views) extractView(stage, outputs.get(view.view.id), view);
     return {stage, outputs, states};
   }
