@@ -76,6 +76,9 @@ def scene_candidate(context,candidate):
         if effect['caster']==selected['id'] and effect.get('mask_asset'):issues.append(f'Effect {effect["id"]}: caster mask needs a shared correction')
     for light in finish.get('lights',[]):
         if light.get('anchor_layer')==selected['id']:issues.append(f'Light {light["id"]}: art-bound light rectangle needs an explicit correction binding')
+    for effect in finish.get('illuminations', []):
+        if effect['layer']==selected['id'] or (effect['receiver']==selected['id'] and effect.get('mask_asset')):
+            issues.append(f'Illumination {effect["id"]}: receiver/contribution registration needs an explicit companion correction')
     if issues:return {'ok':False,'unresolved':issues}
     catalog=copy.deepcopy(catalog)
     existing=next((a for a in catalog['assets'] if a['id']==candidate['id']),None)
@@ -138,7 +141,7 @@ def proof(context,file,out,candidate=None,finding=None,region=None,offset=0,limi
         _,after=assets.read_asset(candidate_asset,project)
         if [x.tobytes() for x in after]!=[x.tobytes() for x in motion.raster(context)]:raise ValueError('Candidate raster differs from same-runtime source correction')
     if region and region not in context['study']['regions']:raise ValueError('Unknown region')
-    request={'implementation':{name:studio.digest(motion.ROOT/name) for name in ['ambiance_studio/asset_motion.py','ambiance_studio/motion_proof.py','tools/asset_tool.py','editor/motion-workbench.html','editor/motion-workbench.mjs','editor/engine.mjs','editor/finishing.mjs']},'study_sha256':study_hash,'candidate':motion.identity(project,candidate/'asset.json') if candidate else None,'context_seconds':context_seconds}
+    request={'implementation':{name:studio.digest(motion.ROOT/name) for name in ['ambiance_studio/asset_motion.py','ambiance_studio/motion_proof.py','tools/asset_tool.py','editor/motion-workbench.html','editor/motion-workbench.mjs','editor/engine.mjs','editor/finishing.mjs','editor/bindings.mjs']},'study_sha256':study_hash,'candidate':motion.identity(project,candidate/'asset.json') if candidate else None,'context_seconds':context_seconds}
     if out.exists():
         report=verify(out)
         if report['request']!=request:raise ValueError('Proof directory belongs to different inputs/settings')
