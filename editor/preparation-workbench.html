@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Asset preparation · Ambiance Studio</title>
+  <link rel="stylesheet" href="preparation-workbench.css">
+  <script type="module" src="preparation-workbench.mjs"></script>
+</head>
+<body>
+  <header><a class="brand" href="/">AMBIANCE <span>STUDIO</span></a><span class="badge">ASSET PREPARATION</span><span id="saved-state">Loading captured inputs…</span></header>
+  <div class="intro"><div><p class="eyebrow">FROM PAINTING TO MOVEMENT</p><h1 id="title">Prepare a movable part</h1><p>Separate the old paint, the moving object, and the foreground that stays in place.</p></div><form id="export-form" action="/api/export" method="post"><input type="hidden" id="export-recipe" name="recipe"><button id="download" class="primary" disabled>Export recipe ↓</button></form></div>
+  <p id="message" role="status" aria-live="polite">Opening the workbench…</p>
+  <main>
+    <aside>
+      <fieldset id="editing" disabled>
+        <legend>01 / Define the parts</legend>
+        <label>Mask<select id="mask"><option value="cutout">Moving object · cutout</option><option value="removal">Old paint · removal</option><option value="occluder">Fixed foreground · occluder</option></select></label>
+        <p id="mask-help" class="hint"></p>
+        <label>Region operation<select id="operation"><option value="add">Add to mask</option><option value="subtract">Subtract from mask</option></select></label>
+        <p class="hint">Click around a region on the source. Close the polygon to apply it.</p>
+        <div class="buttons"><button id="close-polygon">Close polygon</button><button id="undo-point">Undo point</button><button id="cancel-polygon">Cancel points</button></div>
+        <div class="buttons"><button id="undo">Undo edit</button><button id="clear-mask">Clear polygons</button></div>
+        <p id="points-info" class="hint"></p>
+        <hr>
+        <h2>02 / Align the backing</h2>
+        <p class="hint">Maps replacement-image pixels into the original painting. Inspect the registered backing view.</p>
+        <div id="alignment" class="fields"></div>
+        <button id="apply-alignment">Apply alignment</button>
+        <hr>
+        <h2>03 / Try a movement</h2>
+        <p class="hint">A separate proof loop: rest → maximum → rest.</p>
+        <div id="motion" class="fields"></div>
+        <button id="apply-motion">Apply movement</button>
+      </fieldset>
+    </aside>
+    <section class="workspace">
+      <div class="view-options"><label>Inspection<select id="inspection"><option value="context">Movement in context</option><option value="registered-backing">Registered backing</option><option value="backing">Repaired background</option><option value="cutout">Isolated cutout</option><option value="occluder">Isolated foreground</option><option value="difference">Changed pixels at rest</option><option value="cutout-mask">Cutout alpha</option><option value="removal-mask">Removal mask</option><option value="occluder-mask">Foreground alpha</option></select></label><label>Transparency<select id="background"><option value="dark">Dark</option><option value="light">Light</option><option value="checker">Checker</option></select></label><label>Display<select id="display"><option value="fit">Fit</option><option value="phone">360 px wide</option><option value="native">Source pixels</option></select></label></div>
+      <div id="views" class="views fit dark">
+        <figure><figcaption><span>Original + selected mask</span><span id="dimensions"></span></figcaption><div class="canvas-scroll"><canvas id="source" aria-label="Source image polygon editor"></canvas></div></figure>
+        <figure><figcaption><span id="candidate-label">Movement in context</span><span id="draft-label">Saved recipe</span></figcaption><div class="canvas-scroll"><canvas id="candidate" aria-label="Prepared movement preview"></canvas></div></figure>
+      </div>
+      <div class="transport"><button id="play" disabled>Play</button><button id="rest" disabled>Rest</button><button id="extreme" disabled>Maximum</button><input id="seek" type="range" aria-label="Frame" min="0" value="0"><output id="time">0.00 s</output><label><input id="hide-object" type="checkbox">Hide object</label><label><input id="hide-foreground" type="checkbox">Hide foreground</label></div>
+      <p id="playback-info" class="hint">Movement uses the shared scene renderer.</p>
+      <div class="facts"><div><strong id="changed-count">—</strong><span>changed pixels at rest</span></div><div><strong id="uncovered-count">—</strong><span>cutout pixels outside removal</span></div><div><strong id="missing-count">—</strong><span>repair pixels without opaque backing</span></div></div>
+      <ul id="warnings"></ul>
+      <details><summary>Recipe and rebuild</summary><p>Edit or paste a recipe. Source identities must match this workspace; create a new workspace for different source files.</p><textarea id="recipe" aria-label="Preparation recipe" spellcheck="false"></textarea><div class="buttons"><button id="apply-recipe">Apply recipe</button><button id="reset">Reset to saved recipe</button></div><p>Export, then rebuild in a fresh directory:</p><pre id="command"></pre><p class="hint">Browser edits are drafts. Keep the complete saved artifact with the compiler recipes and source snapshots.</p></details>
+    </section>
+  </main>
+  <footer>Source artwork stays intact. Masks use source-pixel coordinates. Inspect normal-speed motion and exposed paint before using a part in a film.</footer>
+</body>
+</html>

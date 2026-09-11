@@ -41,6 +41,7 @@ Revision selections and asset/placement manifests use project-relative reference
 | `asset inspect PACK` | Inspect metadata/report and verify built output hashes |
 | `asset proof PACK_OR_ID --out DIR [--catalog FILE --landmark NAME --fps N --width N]` | Produce contact sheet, onion skin, playback and an HTML source-anchor editor |
 | `asset preflight SOURCE --out DIR` | Decode image/channel/alpha facts and produce light/dark/alpha previews |
+| `asset prepare [SOURCE --backing FILE] [--recipe FILE] --out DIR` | Create or rebuild an interactive separation workspace with distinct masks, alignment, compiler recipes and a shared-engine movement scene |
 | `asset crop SOURCE --recipe FILE --out DIR` | Export a source crop with preserved coordinate/identity mapping |
 | `asset return EDIT --mapping FILE --out DIR` | Return explicitly registered edited art as a native patch and composite derivative |
 | `asset edges PACK_OR_ID --display-width N --out DIR` | Inspect every cel at intended display size on light/dark backgrounds, with optional explicit context placement |
@@ -73,7 +74,7 @@ Revision selections and asset/placement manifests use project-relative reference
 | `look apply FILE [--dry-run --expect-sha256 HASH]` | Save a complete finishing recipe through the scene transaction path |
 | `look export --out DIR [--include-rig]` | Package a look and optionally its mounting, cel/track, group and layer definitions |
 | `look import PACKAGE --bindings FILE [--include-rig --dry-run --expect-sha256 HASH]` | Rebind a package to explicit targets; rig adoption requires matching canvas/clock and exact rig assets |
-| `preview [--port N] [--look DIR]` | Serve the selected project, or receipt-verified look artifact, on localhost read-only |
+| `preview [--port N] [--look DIR or --prepare DIR]` | Serve the selected project or verified artifact; preparation supports in-memory draft editing and recipe downloads without project writes |
 | `render frame --time N --out DIR [--revision ID]` | Render an actual PNG from the shared scene evaluator and drawing code |
 | `render proof --out DIR [--revision ID --start N --seconds N --disable LAYER --width N]` | Render a normal-speed HTML comparison with frame seeking and optional disabled layers |
 | `render rig-proof FILE --out DIR [--revision ID --width N]` | Render named poses/hidden-part variants, detail crops, differences and optional playback |
@@ -128,3 +129,5 @@ The read-only preview never saves over a CLI change. Export browser JSON deliber
 Version 0.7 adds opt-in [finishing](FINISHING.md), [edge quality](EDGE-QUALITY.md), and a [look workbench](LOOK-WORKBENCH.md). `render frame/proof/video` also accept `--supersample 1/2/4`; internal dimensions must remain at most 4096 per side, and output size/aspect ratio stay unchanged. A 1080 × 1920 export supports scale 2. `preview --look DIR` needs no selected project; it loads only receipt-listed files and rejects altered artifacts.
 
 The renderer uses Node Canvas for images/proofs and macOS AVFoundation for video/verification. This does not port all historical Last Lantern effects into the shared scene automatically. Audio arrangement accepts explicit PCM WAV sources and performs no source synthesis, resampling or automatic normalization. Provider queues and automatic image decomposition remain unimplemented. Browser pixel audits, human visual/listening review and encoded-video checks establish different evidence.
+
+The [preparation workbench](PREPARATION-WORKBENCH.md) combines existing source/backing images, independent removal/cutout/occluder masks, an explicit backing affine and a standalone movement proof. `asset prepare` accepts either source/backing inputs (with optional `--backing-to-source A B C D E F`) or a saved `--recipe`, and always writes a fresh directory. `preview --prepare` needs no selected project; drafts use the captured inputs and the saved preparation implementation. Export and rebuild the recipe to save a new version.

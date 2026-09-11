@@ -17,6 +17,8 @@ For registration or rig changes, read `docs/RIG-WORKBENCH.md`. Run `python3 test
 
 ## CLI development
 
+Design for agent operation first. The agent pilots production through structured tools, CLI commands and saved project state; the human observes, directs and judges quality. Localhost provides observable progress, visual inspection, comparisons and optional human or agent computer-driven editing over the same capabilities. A production operation must be usable without browser interaction. Prefer compact actionable results, direct artifact paths, batchable changes and resumable work; retain detailed evidence separately. Validate new workflows through an agent-operated CLI path before prioritizing additional UI controls.
+
 Use `./ambiance` as the main production entry point; read `docs/CLI.md`. New projects have `ambiance-project.json`. Prefer existing library/evaluator functions over reimplementing rules in a command. Commands emit JSON, validate before saving, preserve restorable scene snapshots and expose nonzero failures. Run `./ambiance test` after shared-code changes, and inspect the browser when preview behavior changes. Read `docs/architecture/CLI-FIRST.md` for the next slices. The local `archive/` is historical evidence, not active instructions or source code to execute blindly.
 
 Use `project list/overview/latest` and `docs/STUDIO-LIBRARY.md` to find the actual project and selected movie across worktrees. Finish a movie review iteration with an explicit delivery presentation and exact/current watch links. File names, timestamps and scratch renders do not select the current review; pending human checks do not prevent presenting a labeled review movie.
