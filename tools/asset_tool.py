@@ -11,7 +11,7 @@ import re
 import sys
 from PIL import Image, ImageDraw, __version__ as PILLOW_VERSION
 
-VERSION = '1.2.0'
+VERSION = '1.3.0'
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -38,8 +38,26 @@ def multiply_affine(a,b):
     return [x*u+z*v,y*u+w*v,x*r+z*s,y*r+w*s,x*px+z*py+tx,y*px+w*py+ty]
 
 
+def resample_cel(frame, size, scale, offset):
+    # Shared by compilation and interactive draft evaluation; always raw input.
+    return frame.convert('RGBa').transform(tuple(size), Image.Transform.AFFINE,
+        (1/scale,0,-offset[0]/scale,0,1/scale,-offset[1]/scale), Image.Resampling.BICUBIC).convert('RGBA')
+
+
 def build(recipe_path, out):
+    recipe_path,out=Path(recipe_path).resolve(),Path(out).resolve()
+    if json.loads(recipe_path.read_text()).get('motion_preparation') and not out.exists():
+        sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+        from ambiance_studio.edge_quality import fresh_output
+        with fresh_output(out) as stage:
+            result=_build(recipe_path,stage,logical_out=out)
+        return {**result,'pack':str(out)}
+    return _build(recipe_path,out)
+
+
+def _build(recipe_path, out, logical_out=None):
     recipe_path, out = Path(recipe_path).resolve(), Path(out).resolve()
+    destination=Path(logical_out).resolve() if logical_out else out
     recipe_bytes = recipe_path.read_bytes()
     recipe = json.loads(recipe_bytes)
     if recipe.get('version') != 1 or not re.fullmatch(r'[a-z0-9][a-z0-9-]*', recipe.get('id', '')):
@@ -90,7 +108,7 @@ def build(recipe_path, out):
         if 'sheet' not in inputs or any(inputs.get(key) != edge_layout[key] for key in ['columns', 'rows', 'frame_count']):
             raise ValueError('Compiler sheet selection must match the edge preparation layout exactly')
         edge_dependencies = checked_edge['dependencies']
-        edge_source = {'file': os.path.relpath(edge_path, out), 'sha256': edge_ref['sha256']}
+        edge_source = {'file': os.path.relpath(edge_path, destination), 'sha256': edge_ref['sha256']}
     mapping_source = None
     source_mapping = None
     if recipe.get('source_mapping'):
@@ -113,7 +131,7 @@ def build(recipe_path, out):
             if key=='image' and (len(source_paths)!=1 or file!=source_paths[0]):
                 raise ValueError('Source mapping must identify the exact single compiler input image')
         invert_affine(source_mapping['image_to_reference'])
-        mapping_source={'file':os.path.relpath(mapping_path,out),'sha256':sha(mapping_path)}
+        mapping_source={'file':os.path.relpath(mapping_path,destination),'sha256':sha(mapping_path)}
     spec, registration = recipe['output'], recipe['registration']
     landmark_source = None
     if recipe.get('registration_source'):
@@ -124,7 +142,7 @@ def build(recipe_path, out):
         prior_data = json.loads(prior_path.read_text())
         if prior_data.get('version') != 1 or prior_data.get('landmarks', {}).get(prior.get('name')) != registration.get('points'):
             raise ValueError('Embedded registration points differ from the recorded named landmark source; author a new landmark file.')
-        landmark_source = {**prior, 'file': os.path.relpath(prior_path, out)}
+        landmark_source = {**prior, 'file': os.path.relpath(prior_path, destination)}
     if 'landmarks_file' in registration:
         if registration.get('mode') != 'landmarks' or 'points' in registration:
             raise ValueError('A named landmark file requires landmarks mode and no inline points.')
@@ -133,7 +151,7 @@ def build(recipe_path, out):
         name = registration.get('landmark')
         if landmark_data.get('version') != 1 or not isinstance(name, str) or name not in landmark_data.get('landmarks', {}):
             raise ValueError('Named landmark file must contain version 1 and the selected landmark.')
-        landmark_source = {'file': os.path.relpath(landmark_path, out), 'sha256': sha(landmark_path), 'name': name}
+        landmark_source = {'file': os.path.relpath(landmark_path, destination), 'sha256': sha(landmark_path), 'name': name}
         # Embed the resolved points in the portable recipe; retain the source identity
         # in provenance so the authoring file is not silently forgotten.
         registration = {k:v for k,v in registration.items() if k not in ['landmarks_file', 'landmark']}
@@ -160,8 +178,19 @@ def build(recipe_path, out):
     rows = math.ceil(len(frames)/columns)
     if cw*columns > 16384 or ch*rows > 16384 or cw*columns*ch*rows > 64_000_000:
         raise ValueError('Atlas exceeds the compiler memory budget; use smaller cells or split the pack.')
+    motion = None
+    if recipe.get('motion_preparation') is not None:
+        sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+        from ambiance_studio.asset_motion import validate_preparation, compiler_settings
+        ref=recipe['motion_preparation']
+        if not isinstance(ref,dict) or set(ref)!={'file','sha256'} or Path(ref['file']).is_absolute(): raise ValueError('motion_preparation needs a recipe-relative file and sha256')
+        motion_path=(recipe_path.parent/ref['file']).resolve()
+        motion=validate_preparation(motion_path,ref['sha256'],source_paths)
+        compiler_settings(motion,recipe)
+        recipe['motion_preparation']={'file':os.path.relpath(motion_path,destination),'sha256':ref['sha256']}
     # Input locations are portable; order, bytes, settings, code and Pillow determine the build.
     canonical = json.loads(json.dumps(recipe))
+    if 'motion_preparation' in canonical: canonical['motion_preparation']['file']='motion-preparation'
     if 'edge_preparation' in canonical:
         canonical['edge_preparation']['file'] = 'edge-preparation'
     if 'source_mapping' in canonical:
@@ -172,11 +201,14 @@ def build(recipe_path, out):
     else: canonical['input']['frames'] = [f'source-{i}' for i in range(len(sources))]
     key_data = {'recipe': canonical, 'sources': [s['sha256'] for s in sources], 'compiler': sha(Path(__file__)), 'pillow': PILLOW_VERSION}
     cache_key = hashlib.sha256(json.dumps(key_data, sort_keys=True).encode()).hexdigest()
-    if out.exists():
+    if out.exists() and logical_out is None:
         report_file = out/'report.json'
         if report_file.is_file():
             report = json.loads(report_file.read_text())
             if report['cache_key'] == cache_key and all((out/f).is_file() and sha(out/f) == h for f, h in report['outputs'].items()):
+                if motion:
+                    validate_preparation(motion_path,recipe['motion_preparation']['sha256'],source_paths)
+                    if recipe_path.read_bytes()!=recipe_bytes: raise ValueError('Recipe changed during motion cache lookup')
                 return {'status': 'cached', 'pack': str(out), 'cache_key': cache_key}
         raise ValueError('Output exists but differs. Choose a new version directory; accepted packs are immutable.')
     tx, ty = target[0]*cw, target[1]*ch
@@ -204,7 +236,7 @@ def build(recipe_path, out):
         if bounds[0] == 0 or bounds[1] == 0 or bounds[2] == frame.width or bounds[3] == frame.height:
             warnings.append(f'Cel {i}: source alpha touches a cell edge; inspect for pre-existing clipping.')
         records.append({'index': i, 'source_size': list(frame.size), 'alpha_bounds': list(bounds), 'measured_bounds': list(measured), 'source_pivot': list(pivot)})
-    scale = min(limits)
+    scale = motion['geometry']['scale'] if motion else min(limits)
     if scale <= 0:
         raise ValueError('The target pivot leaves insufficient padding.')
     if mode == 'bottom-center':
@@ -213,15 +245,14 @@ def build(recipe_path, out):
         raise ValueError('Recipe/source changed during asset preparation')
     if any(not record['path'].is_file() or sha(record['path']) != record['sha256'] for record in edge_dependencies):
         raise ValueError('Edge preparation dependency changed during asset preparation')
-    out.mkdir(parents=True)
+    out.mkdir(parents=True,exist_ok=logical_out is not None)
     atlas = Image.new('RGBA', (cw*columns, ch*rows))
     normalized = []
     for frame, record in zip(frames, records):
         px, py = record['source_pivot']
-        offset = [tx-px*scale, ty-py*scale]
+        offset = motion['geometry']['offsets'][record['index']] if motion else [tx-px*scale, ty-py*scale]
         # Resample premultiplied color to avoid halos from transparent RGB.
-        cel = frame.convert('RGBa').transform((cw,ch), Image.Transform.AFFINE,
-            (1/scale,0,-offset[0]/scale,0,1/scale,-offset[1]/scale), Image.Resampling.BICUBIC).convert('RGBA')
+        cel = resample_cel(frame,(cw,ch),scale,offset)
         i = record['index']
         atlas.paste(cel, (i%columns*cw, i//columns*ch))
         normalized.append(cel)
@@ -249,7 +280,7 @@ def build(recipe_path, out):
     packed_recipe = json.loads(json.dumps(recipe))
     if edge_source:
         packed_recipe['edge_preparation'] = edge_source
-    references = [os.path.relpath(p, out) for p in source_paths]
+    references = [os.path.relpath(p, destination) for p in source_paths]
     if 'sheet' in inputs: packed_recipe['input']['sheet'] = references[0]
     else: packed_recipe['input']['frames'] = references
     packed_sources = [{'file':f,'sha256':s['sha256']} for f,s in zip(references,sources)]
@@ -272,6 +303,7 @@ def build(recipe_path, out):
         'sha256': sha(out/'atlas.png'), 'atlas': {'columns': columns,'rows':rows,'cell_width':cw,'cell_height':ch,'frame_count':len(frames)},
         'registration_mapping':mapping, 'pivot':target, 'sockets':recipe.get('sockets',{}), 'provenance': {'recipe':'recipe.json','cache_key':cache_key,'sources':packed_sources},
         'rights':recipe.get('rights','Unspecified; inherits source restrictions.')}
+    if motion: asset['provenance']['motion_preparation']=recipe['motion_preparation']
     if mapping_source:
         asset['provenance']['source_mapping'] = mapping_source
     if edge_source:
@@ -284,6 +316,9 @@ def build(recipe_path, out):
         'registration_mapping':mapping,'shared_scale':scale,'frames':records,'warnings':warnings,'outputs':outputs,
         'limits':['Does not remove backgrounds, track moving features, infer fake checkerboards, or judge the closing gesture.','Preview GIF timing is for inspection; the scene owns production timing.']}
     write(out/'report.json',report)
+    if motion:
+        validate_preparation(motion_path,recipe['motion_preparation']['sha256'],source_paths)
+        if recipe_path.read_bytes()!=recipe_bytes: raise ValueError('Recipe changed before motion publication')
     return {'status':'built','pack':str(out),'frames':len(frames),'shared_scale':scale,'warnings':warnings}
 
 def admit(pack, catalog_path):
@@ -293,6 +328,10 @@ def admit(pack, catalog_path):
     if not all((pack/f).is_file() and sha(pack/f) == h for f,h in report['outputs'].items()):
         raise ValueError('Pack bytes no longer match its build report.')
     asset = json.loads((pack/'asset.json').read_text())
+    if asset.get('provenance',{}).get('motion_preparation'):
+        sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+        from ambiance_studio.assets import inspect_pack
+        inspect_pack(pack)
     asset['file'] = str((pack/'atlas.png').relative_to(root))
     asset['provenance']['recipe'] = str((pack/'recipe.json').relative_to(root))
     catalog = json.loads(catalog_path.read_text())

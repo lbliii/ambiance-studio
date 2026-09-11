@@ -38,6 +38,8 @@ Revision selections and asset/placement manifests use project-relative reference
 | `project check [--out FILE]` | Check this project's asset integrity, scene graph, timing, attachments and geometric coverage |
 | `asset list` | Inspect this project's catalog |
 | `asset build RECIPE --out DIR` | Run the existing Pillow compiler with its immutable cache policy |
+| `asset motion init/inspect/check/edit/analyze/solve/track/proof` | Source-bound cel studies, validated observations, bounded translation, patch proposals and synchronized proofs; see [cel motion](CEL-MOTION.md) |
+| `preview --motion DIR [--port N]` | Serve a verified motion proof with in-memory draft recalculation |
 | `asset inspect PACK` | Inspect metadata/report and verify built output hashes |
 | `asset proof PACK_OR_ID --out DIR [--catalog FILE --landmark NAME --fps N --width N]` | Produce contact sheet, onion skin, playback and an HTML source-anchor editor |
 | `asset preflight SOURCE --out DIR` | Decode image/channel/alpha facts and produce light/dark/alpha previews |

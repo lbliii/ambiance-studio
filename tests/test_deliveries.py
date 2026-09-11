@@ -161,7 +161,8 @@ class DeliveryTests(unittest.TestCase):
         other = self.root/'other'; init_project(other, None, 'Other', 'blank')
         with self.assertRaises(ValueError): registry.register(self.registry, other, 'film')
         self.project.rename(self.root/'moved')
-        self.assertFalse(registry.projects(ROOT, self.registry)[0]['available'])
+        # Discovery may include other local projects; assert the registered fixture by ID.
+        self.assertFalse(next(item for item in registry.projects(ROOT, self.registry) if item['id']=='film')['available'])
         registry.register(self.registry, self.root/'moved', 'film', relocate=True)
         self.assertTrue(registry.resolve(ROOT, self.registry, 'film').samefile(self.root/'moved'))
 

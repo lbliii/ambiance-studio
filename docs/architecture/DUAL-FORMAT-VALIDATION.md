@@ -59,3 +59,9 @@ The pilot registry is `projects/dual-production-pilot/.ambiance/registry.json`. 
 - [Midnight Collection portrait](http://127.0.0.1:8798/projects/dual-the-midnight-collection-pilot/deliveries/crop-review?view=portrait&role=silent) and [landscape](http://127.0.0.1:8798/projects/dual-the-midnight-collection-pilot/deliveries/crop-review?view=landscape&role=silent); [current crop study](http://127.0.0.1:8798/projects/dual-the-midnight-collection-pilot).
 
 These are labeled review deliveries. Human look/listen and phone checks remain open. New-project templates now address every requested view; existing copied project pipelines and accepted source-project selections were not migrated.
+
+## Integration with cel motion and canvas sizing
+
+PR #5 was reconciled with main `dae0e18` on September 11, 2026. CLI registration retains both motion-study and synchronized-view previews; doctor reports both capabilities. Editor canvas dimensions continue to determine its displayed aspect ratio. The integrated `AMBIANCE_TEST_NATIVE=1 ./ambiance test` passed all 240 Python tests and all subsequent Node/package checks, with no skipped native tests (Python 3.14.0, Node 24.9.0, macOS media services enabled). A restricted first run failed explicitly on unavailable encoder/localhost access; it was not counted as passing validation.
+
+The repository synthetic moving fixture was inspected in the merged browser editor. Both output panes displayed their distinct crops, seeking to frame 8 produced shared time 1.000 s, and both timelines followed playback/pause together. No browser error logs appeared. These integration observations concern UI synchronization and rendered fixture behavior, not artistic film approval. The source-only merge does not modify pilot projects or captured deliveries.
