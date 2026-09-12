@@ -22,7 +22,7 @@ Choose picture and sound master periods intentionally. In the reference: a 16-se
 
 ## Make the loop test concrete
 
-Run `scene timing` to identify the active cel driver, authored holds and frame-sampled visibility before judging cadence. An inactive fallback cycle is not the played sprite rate. Use `render rig-proof` for saved rest/extreme/hidden-part comparisons when motion exposes overlaps; the result supplements the full-scene loop review. See [timing](../SCENE-TIMING.md) and [rig proofs](../RENDERING.md).
+Run `scene timing` to identify the active cel driver, authored holds and frame-sampled visibility before judging cadence. An inactive fallback cycle is not the played sprite rate. Before tuning motion, use `render rig-proof` for the [whole-object isolation/removal proof](../LAYER-AND-LIGHT-PLANNING.md#whole-object-ownership-and-proof), then internal-part rest/extreme comparisons. A complete still body is part of the character rig even when only its head moves. These proofs supplement the full-scene loop review. See [timing](../SCENE-TIMING.md) and [rig proofs](../RENDERING.md).
 
 - Check state at time zero and exactly one period. They should agree for an exact loop.
 - Inspect frame N−1 flowing into frame zero. Those frames normally differ; the change should be consistent with nearby motion.

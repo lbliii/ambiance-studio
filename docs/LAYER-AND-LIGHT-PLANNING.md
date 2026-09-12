@@ -14,7 +14,23 @@ The historical analogy is Disney's multiplane camera: separated painted planes s
 
 ## Layer and extraction pass
 
-List the back-to-front spatial families, then split each family only where intended action, overlap or lighting requires independent control. Include explicitly requested exploration even if its first pose is still. Name the source painting, cutout/removal masks, clean backing, foreground occluders, attachments, contact surfaces and maximum reveal for each moving part.
+For a complete layered film in this studio, establish whole objects and environment surfaces before choosing animated subparts. Each character must be an independent complete character or compound rig, including its still body. Give meaningful props, receiving surfaces and depth families explicit production ownership. Repeated details can form coherent groups. A focused component prototype may implement less, but leaves the full film's extraction requirements open; follow explicit user scope.
+
+Then split within each object where action, overlap or lighting requires further control. A head-only gesture changes the internal rig, not the character's extraction boundary. Deliberate stillness does not justify baking a character's body, a prop or a foreground occluder into unrelated scenery. Name the source painting, full-object cutout/removal masks, clean backing, internal parts, foreground occluders, attachments, contact surfaces and maximum reveal.
+
+### Whole-object ownership and proof
+
+The skeleton review exposed this distinction: its head was extracted, while its seated body remained in the carriage plate. A neck/coat patch repaired one overlap without providing an independent character. That partial patch must not fulfill a required full-body part. The newspaper's knee pixels and the mouse head retained in ghost cloth also show why every contributing layer needs inspection, not only the lowest backing.
+
+Prepare the skeleton as one complete character rig with an independent seated body, a head attached within that rig, and appropriate neck/coat overlap. Preserve the bench and scenery behind it as separate repaired surfaces. Held objects belong to the character's documented attachment hierarchy or independent prop layers; neighboring flowers, bags, poles and seat edges keep their own ownership. Complete extraction means the whole visible subject plus hidden paint needed by the specified views and reveal envelope; it does not promise unseen angles or arbitrary deformation.
+
+Before polishing motion, save and visually inspect these proofs in the requested views:
+
+- **Production only:** exclude the seed and any full-scene fallback, including a renamed derivative. The assembled production scene remains complete. Legitimate background surfaces can span the frame, but must not carry unrelated foreground subjects. Production rigs must not inherit visibility from a removable reference layer.
+- **Whole object isolated and hidden:** show the complete object/rig alone, then hide all of its parts in context. The first image excludes unrelated paint; the second shows its repaired surroundings with no residual body or duplicate. Hiding only the animated head does not test the skeleton. Where a legacy rig is incomplete, explicitly hide all claimed layers and record what remains.
+- **Internal part and reveal:** inspect head/body, paper/knees and similar boundaries at rest and intended extremes. Whole-character extraction prevents the body from sharing the scenery's draw order, but correct internal occlusion and hidden paint still need proof.
+
+Use existing `render rig-proof` overrides and comparisons for these inspections; inspect the report's effective hidden layers as well as the rasters. Technical render success is not a semantic pass. The current independent-control check validates declared methods and layer references, not which objects their pixels contain. Keep whole-object, backing and internal-part obligations explicit in the canonical plan and required inventory, and retain failed observations until the actual art is corrected. A layer count or an agent-authored completion flag cannot replace this proof.
 
 | Planning field | Answer required before claiming the part is ready |
 | --- | --- |
