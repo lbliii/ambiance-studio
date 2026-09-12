@@ -7,12 +7,18 @@ from threading import BoundedSemaphore
 from urllib.parse import parse_qs, unquote, urlsplit
 
 from . import preparation
+from . import workbench_http as http
 
 MAX_REQUEST = 1_000_000
+CSP = "default-src 'self'; img-src 'self' data: blob:; script-src 'self'; style-src 'self'; connect-src 'self'; frame-ancestors 'none'"
 
 
 def handler_for(directory):
     original, inputs, files = preparation.artifact(directory)
+    body_policy = http.BodyPolicy(
+        maximum=MAX_REQUEST, missing_length='-1',
+        bounds_error='Preview recipe is too large or has no bounded length',
+        reject_transfer_encoding=True, timeout=10, incomplete_error='Incomplete preview recipe')
     evaluation_slot = BoundedSemaphore(1)
     # Source originals and compiler records stay on disk; only viewer assets are mounted.
     public = {name: data for name, data in files.items()
@@ -21,27 +27,18 @@ def handler_for(directory):
 
     class Handler(BaseHTTPRequestHandler):
         def local_request(self):
-            expected = f'127.0.0.1:{self.server.server_port}'
-            if self.headers.get('Host') != expected:
+            violation = http.local_origin_violation(self)
+            if violation == 'Host':
                 self.send_error(403, 'Use the exact local preview address')
                 return False
-            origin = self.headers.get('Origin')
-            if origin is not None and origin != f'http://{expected}':
+            if violation == 'Origin':
                 self.send_error(403, 'Cross-origin preview requests are not supported')
                 return False
             return True
 
         def respond(self, data, mime, status=200, download=False):
-            self.send_response(status)
-            self.send_header('Content-Type', mime)
-            self.send_header('Content-Length', str(len(data)))
-            self.send_header('Cache-Control', 'no-store')
-            self.send_header('X-Content-Type-Options', 'nosniff')
-            if download:
-                self.send_header('Content-Disposition', 'attachment; filename="preparation-recipe.json"')
-            self.send_header('Content-Security-Policy', "default-src 'self'; img-src 'self' data: blob:; script-src 'self'; style-src 'self'; connect-src 'self'; frame-ancestors 'none'")
-            self.end_headers()
-            self.wfile.write(data)
+            http.respond(self, data, mime, status=status, csp=CSP,
+                         disposition='attachment; filename="preparation-recipe.json"' if download else None)
 
         def do_GET(self):
             if not self.local_request():
@@ -64,13 +61,8 @@ def handler_for(directory):
             if not evaluation_slot.acquire(blocking=False):
                 self.send_error(429, 'A preparation preview is already being calculated'); return
             try:
-                length = int(self.headers.get('Content-Length', '-1'))
-                if not 0 < length <= MAX_REQUEST or self.headers.get('Transfer-Encoding'):
-                    self.send_error(413, 'Preview recipe is too large or has no bounded length'); return
-                self.connection.settimeout(10)
-                body = self.rfile.read(length)
-                if len(body) != length:
-                    raise ValueError('Incomplete preview recipe')
+                length = http.body_length(self, body_policy)
+                body = http.read_body(self, length, body_policy)
                 if route == '/api/export':
                     values = parse_qs(body.decode(), strict_parsing=True, max_num_fields=1)
                     if set(values) != {'recipe'} or len(values['recipe']) != 1:
@@ -85,6 +77,8 @@ def handler_for(directory):
                 candidate = json.loads(body)
                 data = preparation.preview_result(candidate, original, inputs)
                 self.respond(json.dumps({'ok': True, 'data': data}, allow_nan=False).encode(), 'application/json')
+            except http.BodyBoundsError as error:
+                self.send_error(413, str(error))
             except (ValueError, KeyError, TypeError, OSError) as error:
                 self.respond(json.dumps({'ok': False, 'error': str(error)}).encode(), 'application/json', 400)
             finally:
@@ -99,9 +93,4 @@ def serve(directory, port):
     print(json.dumps({'ok': True, 'schema_version': 1, 'command': 'preview', 'data': {
         'url': f'http://127.0.0.1:{server.server_port}/', 'prepare': str(Path(directory).resolve()),
         'project_writes': False, 'draft_evaluation': True}}), flush=True)
-    try:
-        server.serve_forever()
-    except KeyboardInterrupt:
-        pass
-    finally:
-        server.server_close()
+    http.serve_until_interrupt(server)
