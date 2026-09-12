@@ -6,6 +6,7 @@ import {compileScene,validateScene} from '../editor/engine.mjs';
 import {sceneTiming} from '../editor/timing.mjs';
 import {finishingDiagnostics} from '../editor/finishing.mjs';
 import {placeFromSource,reparentAtTime} from '../editor/source-placement.mjs';
+import {regionDemand} from '../editor/region-sizing.mjs';
 import {resolveView,viewIds,viewProjection,canonicalView,dualFraming,planViews} from '../editor/views.mjs';
 import {auditViews} from '../editor/audit.mjs';
 
@@ -97,6 +98,7 @@ try{
   validateScene(scene,catalog);
   let result;
   if(action==='sample')result=compileScene(scene,catalog).sample(args.time);
+  else if(action==='region-demand')result=regionDemand(scene,catalog,args);
   else if(action==='binding-check')result=compileScene(scene,catalog).inspectBindings(args.time??0);
   else if(action==='view-defaults')result=dualFraming();
   else if(action==='view-plan')result=planViews(scene,args.requests,args.options);

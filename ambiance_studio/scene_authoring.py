@@ -92,7 +92,7 @@ def resolve_batch(project,scene,catalog,batch):
             for key in ['id','sha256','width','height','atlas','pivot','registration_mapping']:
                 if packed.get(key)!=asset.get(key):raise ValueError(f'Catalog/pack placement metadata differs: {aid} ({key})')
             packed_provenance=packed.get('provenance',{})
-            for key in ['sources','registration_source','source_mapping','edge_preparation','motion_preparation','preparation_receipt']:
+            for key in ['sources','registration_source','source_mapping','edge_preparation','motion_preparation','preparation_receipt','region_receipt']:
                 if provenance.get(key)!=packed_provenance.get(key):raise ValueError(f'Catalog/pack source provenance differs: {aid} ({key})')
             for name in ['asset.json','report.json']:
                 pin(str((recipe_file.parent/name).relative_to(project)),None,f'compiler record {aid}')
@@ -102,12 +102,16 @@ def resolve_batch(project,scene,catalog,batch):
             for name,ref in zip(source_names,refs):
                 if recipe_relative(recipe_file,name)!=recipe_relative(recipe_file,ref['file']):raise ValueError(f'Recipe input/source provenance path differs: {aid}')
                 pin(recipe_relative(recipe_file,ref['file']),ref['sha256'],f'prepared source {aid}')
-            for label in ['registration_source','source_mapping','edge_preparation','motion_preparation','preparation_receipt']:
+            for label in ['registration_source','source_mapping','edge_preparation','motion_preparation','preparation_receipt','region_receipt']:
                 ref=packed_provenance.get(label)
                 if recipe.get(label)!=ref:raise ValueError(f'Recipe/pack {label} provenance differs: {aid}')
                 if ref:
                     relative=recipe_relative(recipe_file,ref['file'])
                     pin(relative,ref['sha256'],f'{label} {aid}')
+                    if label=='region_receipt':
+                        from .art_regions import validate_region_receipt
+                        region=validate_region_receipt(_path(project,relative),ref['sha256'],[_path(project,recipe_relative(recipe_file,name)) for name in source_names],recipe)
+                        for dep in region['dependencies']: pin(str(dep['path'].relative_to(project)),dep['sha256'],dep['role'])
                     if label=='preparation_receipt':
                         from .compound_preparation import validate_preparation_receipt
                         checked=validate_preparation_receipt(_path(project,relative),ref['sha256'],[_path(project,recipe_relative(recipe_file,name)) for name in source_names],recipe)
@@ -157,7 +161,7 @@ def resolve_batch(project,scene,catalog,batch):
         elif action=='finishing':finishing_config=op.get('value');has_finishing=True
         elif action=='bindings':has_finishing=True
     for aid in set(layers.values()):
-        if any(assets.get(aid,{}).get('provenance',{}).get(k) for k in ['motion_preparation','preparation_receipt']): check_asset(aid)
+        if any(assets.get(aid,{}).get('provenance',{}).get(k) for k in ['motion_preparation','preparation_receipt','region_receipt']): check_asset(aid)
     if has_finishing:
         from .finishing import dependency_roles
         for aid,roles in dependency_roles({'layers':[{'asset':aid} for aid in layers.values()], 'finishing':finishing_config}).items():

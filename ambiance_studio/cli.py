@@ -135,6 +135,8 @@ def parser():
     q=group.add_parser('proof');q.add_argument('asset');q.add_argument('--out',type=Path,required=True);q.add_argument('--catalog',type=Path)
     q.add_argument('--fps',type=float,default=6);q.add_argument('--width',type=int,default=180);q.add_argument('--landmark',default='anchor')
     assets.add_preparation_parsers(group)
+    from . import region_commands
+    region_commands.add_parsers(group)
     from . import generation_ledger
     generation_ledger.add_parsers(group)
     from . import asset_motion
@@ -169,6 +171,7 @@ def parser():
     preview_kind.add_argument('--views-proof',type=Path,help='Serve a saved synchronized view proof with verified frame hashes')
     preview_kind.add_argument('--motion',type=Path,help='Inspect a motion proof and evaluate in-memory drafts')
     preview_kind.add_argument('--prepare',type=Path,help='Inspect and edit a verified preparation draft without writing project files')
+    preview_kind.add_argument('--region',type=Path,help='Inspect and edit a saved art region without writing project files')
     q=sub.add_parser('test',help='Run local regression checks without paid providers');q.add_argument('--out',type=Path)
     q.add_argument('--artifacts',type=Path,help='Fresh directory for bounded JSON/JUnit/log diagnostics')
     q.add_argument('--require-native',action='store_true',help='Fail on unavailable native media capability or any skipped required test')
@@ -195,7 +198,7 @@ def run(args):
         pillow=importlib.util.find_spec('PIL') is not None
         return {'version':__version__,'root':str(ROOT),'python':platform.python_version(),'python_executable':sys.executable,
             'node':shutil.which('node'),'pillow':pillow,'ffmpeg':shutil.which('ffmpeg'),'ffprobe':shutil.which('ffprobe'),
-            'capabilities':{'project_and_reviews':True,'revision_binding':True,'production_inventory':True,'asset_preparation':pillow,'asset_preflight_and_crop_return':pillow,'edge_inspection_and_repair':pillow,'finishing_and_look_packages':render_caps['frame_render'],'cel_motion':{'manual':pillow,'tracking':'pillow-patch-ncc' if pillow else None,'version':'1.0.0'},'asset_proofs':pillow,'scene_operations':bool(shutil.which('node')),'scene_tracks':bool(shutil.which('node')),'saved_views':bool(shutil.which('node')),'source_placement_and_reparent':bool(shutil.which('node')),'scene_timing':bool(shutil.which('node')),'preview':bool(shutil.which('node')),'final_video_export':render_caps['final_video_export'],'audio_arrangement':audio_caps['audio_arrangement'],'rendering':render_caps,'audio':audio_caps},
+            'capabilities':{'project_and_reviews':True,'revision_binding':True,'production_inventory':True,'asset_preparation':pillow,'art_regions':{'local':pillow,'scene_sizing':pillow and bool(shutil.which('node'))},'asset_preflight_and_crop_return':pillow,'edge_inspection_and_repair':pillow,'finishing_and_look_packages':render_caps['frame_render'],'cel_motion':{'manual':pillow,'tracking':'pillow-patch-ncc' if pillow else None,'version':'1.0.0'},'asset_proofs':pillow,'scene_operations':bool(shutil.which('node')),'scene_tracks':bool(shutil.which('node')),'saved_views':bool(shutil.which('node')),'source_placement_and_reparent':bool(shutil.which('node')),'scene_timing':bool(shutil.which('node')),'preview':bool(shutil.which('node')),'final_video_export':render_caps['final_video_export'],'audio_arrangement':audio_caps['audio_arrangement'],'rendering':render_caps,'audio':audio_caps},
             'note':'Optional dependency availability does not imply a renderer or provider adapter is implemented.'}
     if command=='test':
         require_node();asset_tool()
@@ -227,7 +230,14 @@ def run(args):
     if command=='preview' and args.prepare is not None:
         from .preparation_server import serve
         serve(args.prepare,args.port);return None
+    if command=='preview' and args.region is not None:
+        from .region_server import serve
+        serve(args.region,args.port);return None
     project=project_path(args.project,args.registry)
+    if command=='asset' and action=='region':
+        asset_tool()
+        from . import region_commands
+        return region_commands.run(args,project)
     if command=='asset' and action=='motion':
         asset_tool()
         from . import asset_motion

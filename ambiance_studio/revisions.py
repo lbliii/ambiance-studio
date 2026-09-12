@@ -170,7 +170,7 @@ class Collector:
             if item.get(key) != packed.get(key): raise ValueError(f'Catalog/pack {key} mismatch for {item["id"]}')
         if item.get('provenance', {}).get('sources') != packed.get('provenance', {}).get('sources'):
             raise ValueError('Catalog and pack source provenance differ')
-        for key in ['registration_source', 'source_mapping', 'edge_preparation', 'motion_preparation', 'preparation_receipt']:
+        for key in ['registration_source', 'source_mapping', 'edge_preparation', 'motion_preparation', 'preparation_receipt', 'region_receipt']:
             if item.get('provenance', {}).get(key) != packed.get('provenance', {}).get(key): raise ValueError(f'Catalog and pack {key} provenance differ')
         for name, hash_value in checked['build']['outputs'].items():
             self.pin(studio.inside(pack, name), 'assets', 'pack_output', hash_value)
@@ -183,12 +183,16 @@ class Collector:
             target = (pack/name).resolve()
             if target != (pack/source['file']).resolve(): raise ValueError('Recipe input/source path differs')
             self.pin(target, 'assets', 'asset_source', source['sha256'])
-        for key in ['registration_source', 'source_mapping', 'edge_preparation', 'motion_preparation', 'preparation_receipt']:
+        for key in ['registration_source', 'source_mapping', 'edge_preparation', 'motion_preparation', 'preparation_receipt', 'region_receipt']:
             source = packed.get('provenance', {}).get(key)
             if source:
                 source_path = (pack/source['file']).resolve()
                 self.pin(source_path, 'assets', key, source['sha256'])
                 if key == 'source_mapping': self.source_mapping(source_path)
+                if key == 'region_receipt':
+                    from .art_regions import validate_region_receipt
+                    region=validate_region_receipt(source_path,source['sha256'],[(pack/name).resolve() for name in paths],recipe)
+                    for dep in region['dependencies']: self.pin(dep['path'],'assets',dep['role'],dep['sha256'])
                 if key == 'preparation_receipt':
                     from .compound_preparation import validate_preparation_receipt
                     prepared=validate_preparation_receipt(source_path,source['sha256'],[(pack/name).resolve() for name in paths],recipe)

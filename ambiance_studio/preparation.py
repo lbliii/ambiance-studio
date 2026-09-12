@@ -151,13 +151,8 @@ def evaluate(recipe, inputs):
     original = decoded['source']
     masks = {}
     for name in MASKS:
-        mask = decoded[name].copy() if name in decoded else Image.new('L', original.size)
-        draw = ImageDraw.Draw(mask)
-        for poly in recipe['masks'][name]['polygons']:
-            # Pixel centers, nearest integer, deterministic in saved and live previews.
-            points = [(math.floor(x+.5), math.floor(y+.5)) for x, y in poly['points']]
-            draw.polygon(points, fill=255 if poly['operation'] == 'add' else 0)
-        masks[name] = mask
+        from .masks import rasterize
+        masks[name] = rasterize(recipe['masks'][name], original.size, decoded.get(name))
     registered = prep.resample(decoded['backing'], original.size, recipe['backing_to_source'], recipe['resampling'])
     patch = registered.copy()
     patch.putalpha(ImageChops.multiply(patch.getchannel('A'), masks['removal']))

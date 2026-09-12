@@ -44,6 +44,8 @@ The selected [portrait/landscape implementation plan](DUAL-FORMAT-IMPLEMENTATION
 
 The [preparation workbench plan](ASSET-PREPARATION-WORKBENCH.md) turns the museum's mask and alignment lessons into an integrated CLI/browser workflow. The [compound preparation interface](../AGENT-PREPARATION.md) now provides direct recipe inspection, validation, bounded edits, multi-part preparation, mapped placement and resumable paired proofs. The browser draft editor remains the earlier one-part workflow. Synthetic cabinet/tea fixtures establish the command and raster path; a measured artistic pilot on another painting remains separate.
 
+The [region art workbench](REGION-ART-WORKBENCH.md) connects tracing, generation framing, output-size guidance and registered high-resolution returns before replacement paint exists. The [implemented CLI and browser contract](../ART-REGIONS.md) covers region authoring, sizing, packet export and high-resolution returns, with local painted-pilot evidence in the [handoff](REGION-ART-HANDOFF.md). Animated clipping and provider submission remain separate capabilities.
+
 Version 0.7 adds the [finishing/edge implementation](CLI-FINISHING-PLAN.md), with opt-in shared rendering, reproducible appearance packages, all-cel matte inspection/repair, supersampling and browser look development. Future physical lighting or additional color spaces must extend the explicit contract; existing painted shadows and parallax depths do not establish full scene geometry.
 
 1. Port the remaining historical Last Lantern effects into the supported scene contract and compare raster/encoded proofs; the new exporter only renders authored supported content.
