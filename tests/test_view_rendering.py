@@ -8,7 +8,7 @@ import unittest
 from unittest.mock import patch
 
 from test_rendering import fixture, parse, Image
-from ambiance_studio import rendering, preview, cli, revisions
+from ambiance_studio import native_media, rendering, preview, cli, revisions
 from ambiance_studio.errors import CommandError
 
 
@@ -61,11 +61,11 @@ class ViewRenderTests(unittest.TestCase):
             self.assertFalse((self.root/'invalid').exists())
 
     def test_source_change_after_planning_rejects_before_output(self):
-        original=rendering._json_command
+        original=native_media.json_command
         def changed(command,*args,**kwargs):
             if command[-1]=='--probe':self.scene_path.write_bytes(self.source+b' ')
             return original(command,*args,**kwargs)
-        with patch.object(rendering,'_json_command',side_effect=changed),self.assertRaisesRegex(CommandError,'changed after view preflight'):
+        with patch.object(native_media,'json_command',side_effect=changed),self.assertRaisesRegex(CommandError,'changed after view preflight'):
             self.render('frame','--view','landscape','--width','160','--out',self.root/'changed')
         self.assertFalse((self.root/'changed').exists())
 

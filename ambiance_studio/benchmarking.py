@@ -7,6 +7,8 @@ import time
 from types import SimpleNamespace
 import studio
 from . import production, rendering, scene_runtime, project_references, record_contracts, revision_capture
+from .render_plan import render_context
+from .media_inputs import fresh_output
 
 
 def benchmark(project, request, out):
@@ -17,13 +19,13 @@ def benchmark(project, request, out):
     if type(count) is not int or not 3 <= count <= 20: raise ValueError('Benchmark sample count must be 3–20')
     if type(encode_seconds) not in (int, float) or not math.isfinite(encode_seconds) or not 0 <= encode_seconds <= 5: raise ValueError('Encode sample must be 0–5 seconds')
     revision = recipe['revision'] if revision_capture.manifest_path(project, recipe['revision']).exists() else None
-    context = rendering._context(project, revision); scene = studio.read(context['scene']); catalog = studio.read(context['catalog'])
+    context = render_context(project, revision); scene = studio.read(context['scene']); catalog = studio.read(context['catalog'])
     T = scene['canvas']['loop_seconds']; fps = scene['canvas']['fps']; frames = round(T*fps)
     if encode_seconds > T or encode_seconds*fps != round(encode_seconds*fps): raise ValueError('Encode sample must fit an integer number of frames inside the picture loop')
     plan = scene_runtime.scene_bridge('view-plan', scene, catalog, {'requests': [{'id': v} for v in recipe.get('views', ['authored'])],
         'options': {k: recipe[k] for k in ['long_edge', 'supersample'] if k in recipe}})
     if encode_seconds and any(v['output'][axis] % 2 for v in plan['views'] for axis in ['width', 'height']): raise ValueError('Encoded sample dimensions must be even')
-    out = rendering._fresh(Path(out)); records = []
+    out = fresh_output(Path(out)); records = []
     for view in plan['views']:
         args = dict(command='render', action='benchmark', revision=revision, view=view['view']['id'], width=view['output']['width'], height=view['output']['height'],
                     supersample=recipe.get('supersample', 1), start=0, seconds=T, out=out/view['view']['id'],

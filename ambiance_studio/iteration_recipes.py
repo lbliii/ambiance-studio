@@ -5,7 +5,7 @@ import studio
 from . import scene_runtime, project_references, record_contracts, revision_capture, revision_dependencies
 from .iteration_plan import validate_recipe
 from .project import locations, project_lock
-from .rendering import _pcm_bytes
+from .media_inputs import pcm_bytes
 
 
 def build(project, request, destination):
@@ -26,7 +26,7 @@ def build(project, request, destination):
     audio = dict(request.get('audio_selection', {})); masters = list(audio.get('masters', []))
     for edition in recipe['editions']:
         if edition['role'] != 'silent':
-            _pcm_bytes(studio.inside(project, edition['audio']), scene['canvas']['loop_seconds']*edition.get('repeats', 1))
+            pcm_bytes(studio.inside(project, edition['audio']), scene['canvas']['loop_seconds']*edition.get('repeats', 1))
             if edition['audio'] not in masters: masters.append(edition['audio'])
     if masters: audio['masters'] = masters
     selection = dict(format=revision_dependencies.SELECTION, schema_version=1, scene=str(scene_path.relative_to(project)), catalog=str(catalog_path.relative_to(project)),

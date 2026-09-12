@@ -142,7 +142,7 @@ class MotionTests(unittest.TestCase):
         stage=self.root/'clock-proof';stage.mkdir()
         proposal={'ok':True,'scene':{'canvas':{'width':128,'height':128,'fps':12,'loop_seconds':2}},'catalog':{},'batch':{},'expected_scene_sha256':'fixture'}
         context={'project':self.root,'study':{'view':{'scene':{'scene':{},'catalog':{}}}}}
-        with patch('ambiance_studio.motion_proof.scene_candidate',return_value=proposal), patch('ambiance_studio.motion_proof.motion.checked',return_value=self.file), patch('ambiance_studio.rendering._json_command') as render:
+        with patch('ambiance_studio.motion_proof.scene_candidate',return_value=proposal), patch('ambiance_studio.motion_proof.motion.checked',return_value=self.file), patch('ambiance_studio.native_media.json_command') as render:
             result=context_render(context,{},stage,5/12)
         self.assertEqual(len(result['frames'][0]),5)
         self.assertEqual(result['start']*12,22)

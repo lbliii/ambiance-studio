@@ -89,7 +89,7 @@ def validate_recipe(recipe):
 
 def view_job_plan(project, recipe, directory, state):
     """Preflight every view, PCM master and destination before starting any encoder."""
-    from . import rendering, scene_runtime
+    from . import media_inputs, scene_runtime
     context=revision_capture.render_context(project,recipe['revision']);data=revision_capture.load(project,recipe['revision'])
     scene=scene_runtime.load_scene_json(context['scene'].read_bytes());catalog=scene_runtime.load_scene_json(context['catalog'].read_bytes())
     options={'supersample':recipe.get('supersample',1)}
@@ -100,7 +100,7 @@ def view_job_plan(project, recipe, directory, state):
         if entry['role']=='silent':continue
         args=SimpleNamespace(**{**entry,'audio':studio.inside(project,entry['audio'])})
         collector,master=editions.collect_edition_audio(project,data,args)
-        rendering._pcm_bytes(args.audio,scene['canvas']['loop_seconds']*entry.get('repeats',1))
+        media_inputs.pcm_bytes(args.audio,scene['canvas']['loop_seconds']*entry.get('repeats',1))
         sound.extend(collector.refs+collector.origins)
     jobs=[]
     for resolved in raster['views']:
