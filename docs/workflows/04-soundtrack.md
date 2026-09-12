@@ -33,7 +33,11 @@ Before a full remix, render a short controlled study: the same isolated cue near
 
 ## Source and audition separately
 
+Inspect existing film source/retrieval records before requesting new sounds. Resolve actual files and audition candidates; a prompt or filename does not establish availability or quality. Current visual `library find/inspect` commands are not an audio catalog. Record reuse with hashes and preparation notes in the existing source ledger/session while the [audio-library work](../architecture/TV-QUALITY-AND-SOUND-LIBRARY.md) remains planned. Materialize pinned sources within the target project for portable sessions and handoffs.
+
 Request music, continuous beds, and isolated events separately. Record the exact prompt, loop control if present, requested duration, provider/model returned, file format, request ID, and selected variation. Current provider support must be checked at use time; the original production used a browser fallback because callable ElevenLabs tools were unavailable in that session.
+
+Separate generation quality, download format and mix processing. Check the selected route's actual model/format controls, entitlement, and returned codec/rate/channels; public API options may not be exposed by the connected tool. Preserve the best practical original. Decode/resample through explicit preparation when needed; the mixer does not resample. Compare formats using the same take where possible, and different models/takes at documented audition levels. Change provider to address an audible or control limitation, not merely a larger format label.
 
 An instrumental request and a sound-effects loop switch solve different problems. Generated music still needs phrase/harmony review and editing. Keep enough source duration around a proposed join to overlap compatible material.
 
@@ -42,6 +46,8 @@ Audition at sensible levels. Listen for static-like hiss, artificial shimmer, un
 ## Arrange a circular session
 
 Give music, beds, and one-shots their own tracks. Place events on an explicit timeline. Use a longer master when a unique event would otherwise recur too often. Avoid a start-up gesture or closing cadence that announces the loop boundary.
+
+Keep picture period, soundtrack/master period and viewing duration separate. Choose a compact audio master spanning whole picture cycles; audition with playback repetition. `media compose --repeats` repeats picture and requires audio already matching the final duration. It does not extend sound. Hour-long assembly is a separate requested delivery; the current in-memory/ordinary-WAV path does not establish support for it.
 
 Edit music at compatible rhythmic and harmonic positions. Overlap the continuation and opening without producing an audible dip or doubling. Carry room/reverb tails through the circular boundary. Do not fade the entire film to silence just to avoid a click.
 
@@ -52,6 +58,8 @@ Save source offsets, cue times, gains, pan/width, processing, master duration, a
 ## Measure and listen
 
 Measure actual sample counts, clipped samples, loudness with method, peaks with true-peak/oversampling method stated, seam deltas, mono behavior, and aligned stem duration. Compare stem reconstruction where the delivery promises it. A PCM master preserves the edited mix but cannot recreate information lost in a lossy source.
+
+Executable audio checks currently report RMS and sample peaks, not LUFS or oversampled true peaks. Use an identified external measurement backend or leave those measurements unavailable; never relabel existing results. Current mixing/export is stereo. Depth treatment and pan movement do not establish surround, binaural rendering, or overhead placement.
 
 Listen to at least three consecutive repetitions with picture. Check for a click, gap, obvious musical restart, repeated-event fatigue, pumping, harshness, or a distracting change in distance. Human final review includes the actual phone speaker and intended crop. Keep those observations distinct from measurements.
 
@@ -64,3 +72,9 @@ The reference's −22.5 LUFS and generous headroom are examples of its quiet art
 ## Export evidence
 
 Store masters and aligned stems separately from original sources. Identify whether master gain/processing is included in the stems and whether unity gain reconstructs the master. Record exactly which file was auditioned. Check the AAC/MP4 version after encoding, because the final container and its presentation timeline can introduce different constraints than the WAV.
+
+## Select reusable ingredients
+
+Favor isolated object cues, simple beds, complete tails and a few variants of noticeable events. Label baked-in distance, room sound and unrelated events; do not assume they can be removed. Preserve relatively dry direct sources where useful. Keep music tied to the film's identity; pitched loops need harmonic/tempo context before combining them.
+
+Promote only auditioned, useful versions with source identities, loop/tail notes and known limits. Save recipes as source references plus editable gains, pan and cue timing; these adjustments do not require duplicate source files. A starter-collection target is a curation plan, not a requirement for each film or generation authority.

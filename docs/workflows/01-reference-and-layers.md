@@ -31,11 +31,11 @@ List every area movement may expose. A clean sky behind clouds, landscape behind
 | Branch | Rotation around hinge, optional leaf cels | Attachment point |
 | Falling leaves | Seeded circular paths, rotation, optional flip cels | Reproducible schedule and depth size |
 
-Choose separation for the intended scene and any explicitly requested exploration. A subject can be prepared as a reusable rig while resting in the first loop. Avoid speculative cutouts with no intended behavior, but do not let the first restrained animation silently remove the ability to move objects the user wants to explore. Prioritize the focal feature and a few readable supporting actions.
+Establish [whole-object production layers](../LAYER-AND-LIGHT-PLANNING.md#whole-object-ownership-and-proof) for the intended scene before selecting internal motion controls. A subject can remain still while belonging to its own complete rig. Avoid speculative internal articulation or unseen views, but do not reduce a character's extraction to the one part moving in the first loop. Prioritize motion only after its production boundaries are clear.
 
 ## Judge framing and movement before choosing cuts
 
-Use `plans/layout-notes.md` to explain the consequential decisions; the existing layer-plan fields can hold the resulting objects, backing, rigs and bounds. This is artistic planning, not a new executable scene schema or a requirement to separate every visible object.
+Use `plans/layout-notes.md` to explain the consequential decisions; the existing layer-plan fields can hold the resulting objects, backing, rigs and bounds. Meaningful objects and surfaces need independent production ownership; repeated details may be grouped. This is artistic planning, not a new executable scene schema or a requirement for a file per leaf.
 
 - **Framing:** judge the subject's screen size, silhouette, perspective, negative space and overlap at the intended display size. Keep enough room for the proposed action. Preserving a composition means preserving its visual relationships, not blindly retaining coordinates when the user requests a new format or staging.
 - **Action and parts:** name what the subject could do in this cycle or requested exploration. Choose a rigid cutout, compound rig, changing cels, or a retained plate accordingly. A rocking vase needs a pivot and backing; a turning head needs new views. More atlas cells do not create missing geometry.

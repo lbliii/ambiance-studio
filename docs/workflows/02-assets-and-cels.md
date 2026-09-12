@@ -14,6 +14,10 @@ Write a generation request with references and desired output before sending it.
 
 ## Source generation contract
 
+Choose source detail from each layer's largest displayed size across requested views, camera/parent scaling and cel poses. Record original dimensions and crop/registration/enlargement history; a large derivative may already be an upscale. Missing original mappings remain unknown. Small props do not each need 4K source files. Inspect deliberate upscales rather than treating their pixel count as recovered paint.
+
+For TV/4K work, check the internal stage and output against [saved-view raster limits](../VIEWS.md). Use small staging previews, then full-resolution stills and short encoded motion. Supersampling can smooth edges but cannot supply absent texture. The automatic source-resolution audit and named TV profile in the [quality roadmap](../architecture/TV-QUALITY-AND-SOUND-LIBRARY.md) remain planned; use existing mappings, scene samples and proofs until implemented.
+
 For a rigid cutout: specify framing, intended scene location, lighting, perspective, complete silhouette, margins, transparency request, and the attachment/pivot. For a clean plate: identify the removed objects and the scenery that should continue behind them.
 
 For cels: establish a master pose, fixed camera and canvas, grid/cell order, frame count, margins, palette, light, common scale, pivot, and exactly what changes. Describe the continuous action across the last-to-first transition. A rising smoke sequence should not be made to reverse downward merely because ping-pong playback is convenient.
@@ -32,7 +36,7 @@ Keep source images and chosen takes intact. A generator may return apparent tran
 
 Use `asset build/inspect/proof/admit` for registration, fixed-grid packing and proofs; see the [workbench guide](../RIG-WORKBENCH.md). Authorized sprite preparation includes applicable local decode, crop, registration, packing and deterministic matte cleanup on derivatives. Continue within existing authority; creative repaint or a different generation route follows the host's image-tool instructions. Preserve raw output and identify derived alpha honestly. These commands do not infer segmentation or automatically remove checkerboards.
 
-Keep a backing's **removal mask** separate from the **retained object's alpha**. Removal may need a wider region to clear old fragments and reveal clean paint; the cutout must exclude neighboring rims or fixtures. Inspect isolated parts and a contextual body-hidden proof, including inherited child visibility. A scene flag cannot remove imagery baked into another layer.
+Keep a backing's **removal mask** separate from the **retained object's alpha**. Remove the whole subject's footprint, not just the animated subpart; extraction must follow [whole-object ownership](../LAYER-AND-LIGHT-PLANNING.md#whole-object-ownership-and-proof). Removal may need a wider region to clear old fragments and reveal clean paint; the cutout must exclude neighboring rims or fixtures. Inspect the complete subject and its parts isolated, then hide the whole subject in context, including inherited child visibility. A neck patch is not a full body, and a scene flag cannot remove imagery baked into another layer.
 
 When a full-frame edit leaves a tiny ghost, try an enlarged, bounded repair crop before another full-frame request. Use `asset crop/return` with recorded source coordinates, inspected return registration and a local blend mask; see [raster preparation](../ASSET-PREPARATION.md). Use only the needed hidden/reveal paint and retain original foreground rails or cup lips. Returned dimensions alone do not prove alignment.
 
