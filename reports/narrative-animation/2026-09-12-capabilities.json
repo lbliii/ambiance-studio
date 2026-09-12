@@ -1,0 +1,72 @@
+{
+  "date": "2026-09-12",
+  "method": "Read-only connected ElevenLabs tool metadata; no generation calls",
+  "tts_models": [
+    {
+      "id": "eleven_multilingual_v2",
+      "name": "ElevenLabs Multilingual v2",
+      "modality": "audio"
+    },
+    {
+      "id": "eleven_turbo_v2_5",
+      "name": "ElevenLabs Turbo v2.5",
+      "modality": "audio"
+    },
+    {
+      "id": "eleven_flash_v2_5",
+      "name": "ElevenLabs Flash v2.5",
+      "modality": "audio"
+    },
+    {
+      "id": "eleven_v3",
+      "name": "ElevenLabs v3",
+      "modality": "audio"
+    },
+    {
+      "id": "eleven_v4",
+      "name": "ElevenLabs v4",
+      "modality": "audio"
+    }
+  ],
+  "voice_changer": [
+    {
+      "id": "eleven_multilingual_sts_v2",
+      "name": "ElevenLabs Voice Changer",
+      "modality": "audio"
+    }
+  ],
+  "model_schema": {
+    "model_id": "eleven_v3",
+    "model_name": "ElevenLabs v3",
+    "node_type": "tts",
+    "parameters": [
+      {
+        "name": "voice_id",
+        "type": "text",
+        "required": false,
+        "description": "Deprecated: legacy alias of `voice`. Accepted on input only; not written by new clients."
+      },
+      {
+        "name": "language_code",
+        "type": "text",
+        "required": false,
+        "description": "BCP-47 language code for multilingual models."
+      }
+    ],
+    "input_ports": [
+      {
+        "key": "prompt",
+        "modality": "text",
+        "required": false
+      }
+    ]
+  },
+  "model_guide": {
+    "model_id": "eleven_v3",
+    "guide": "# ElevenLabs TTS family — eleven_multilingual_v2, eleven_turbo_v2_5, eleven_v3\n\nThe \"prompt\" for a TTS node is the text the voice will speak. There is no scene description.\n\n## Rules\n\n- **Punctuate for delivery.** Commas and periods create natural pauses. Ellipses (…) create longer thoughtful pauses. Em-dashes (—) create short beats.\n- **For emphasis, capitalize key words sparingly** (e.g. \"I told you NOT to do that\") rather than describing the emphasis.\n- **Spell tricky names phonetically** the first time if pronunciation matters.\n- **Format technical content for natural delivery:**\n  - URLs: \"example dot com slash support\"\n  - Phone numbers: pause-separated (\"five five five… one two three… four five six seven\")\n  - Currency: \"nineteen dollars and ninety-nine cents\"\n- **For `eleven_v3`**, you can include short audio direction tags inline (e.g. `[whispering]`, `[laughs softly]`) where the model supports them.\n- **Voice choice is at least as important as the text.** Pick a voice whose character matches the intended delivery before iterating on wording.",
+    "source": "family"
+  },
+  "alignment_contract": "The inspected creative speech/status schemas do not promise character/word/phoneme timing or editable mouth cues; use direct API timing where available or analyze final saved audio.",
+  "runtime": "command -v rhubarb returned no executable on current PATH",
+  "code_revision": "23f9ca7d8ecb89708520a7b9042b09640eeb623c"
+}
