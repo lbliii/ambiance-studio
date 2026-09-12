@@ -14,7 +14,7 @@ import wave
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from ambiance_studio import rendering
+from ambiance_studio import native_media, media_verification, rendering
 from ambiance_studio.cli import CommandError
 try:
     from PIL import Image
@@ -113,8 +113,8 @@ class CapabilityTests(unittest.TestCase):
             def fake_decode(*args,**kwargs):
                 source.write_bytes(b'different encoded file')
                 return {'ok':True,'decoded_frames':12}
-            with patch('ambiance_studio.rendering._json_command',side_effect=fake_decode):
-                result=rendering._verify(root,ROOT/'native/media/media.m',source,root/'report',64,96,6,12,0,12)
+            with patch('ambiance_studio.native_media.json_command',side_effect=fake_decode):
+                result=media_verification.verify_media(ROOT/'native/media/media.m',source,root/'report',64,96,6,12,0,12)
             self.assertFalse(result['ok']);self.assertFalse(result['input_unchanged'])
             self.assertEqual(result['input_sha256'],before)
             self.assertNotEqual(result['input_sha256'],result['input_sha256_after'])
@@ -123,9 +123,9 @@ class CapabilityTests(unittest.TestCase):
             result=rendering.capabilities()
         self.assertFalse(result['frame_render']);self.assertIn('AMBIANCE_CANVAS_MODULE',result['raster']['error'])
     def test_unsupported_native_platform_is_explicit(self):
-        with patch('ambiance_studio.rendering.platform.system',return_value='Linux'):
+        with patch('ambiance_studio.native_media.platform.system',return_value='Linux'):
             with self.assertRaisesRegex(CommandError,'requires macOS'):
-                rendering._native_binary(Path('/tmp/unused'))
+                native_media.native_binary(Path('/tmp/unused'))
 
 
 @unittest.skipUnless(Image and os.environ.get('AMBIANCE_TEST_NATIVE')=='1' and sys.platform=='darwin','Set AMBIANCE_TEST_NATIVE=1 with macOS media-service access')
