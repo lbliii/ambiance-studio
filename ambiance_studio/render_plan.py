@@ -132,4 +132,3 @@ def plan_render(args, project):
             audio_bytes = pcm_bytes(audio, seconds * args.repeats)
     return RenderPlan(project, out, context, request, canvas['fps'], int(frames),
                       getattr(args, 'repeats', 1), audio, audio_bytes)
-
