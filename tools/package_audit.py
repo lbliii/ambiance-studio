@@ -15,7 +15,7 @@ versions={'package.json':json.loads((ROOT/'package.json').read_text())['version'
           'pyproject.toml':re.search(r'^version\s*=\s*"([^"]+)"',(ROOT/'pyproject.toml').read_text(),re.M)[1]}
 for name,version in versions.items():
     if version!=__version__:errors.append(f'{name}: version {version} differs from CLI {__version__}')
-for name in ['studio/studio.mjs','editor/editor.mjs','editor/preparation-workbench.mjs','editor/motion-workbench.mjs']:
+for name in ['studio/studio.mjs','editor/editor.mjs','editor/preparation-workbench.mjs','editor/motion-workbench.mjs','editor/region-workbench.mjs']:
     check=subprocess.run(['node','--check',str(ROOT/name)],capture_output=True,text=True)
     if check.returncode:errors.append(f'{name}: {check.stderr}')
 for md in ROOT.rglob('*.md'):

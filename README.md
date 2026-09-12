@@ -8,6 +8,8 @@ Version 0.8.0 adds a [local film library](docs/STUDIO-LIBRARY.md): projects shar
 
 The [asset preparation workbench](docs/PREPARATION-WORKBENCH.md) combines source/backing inspection, separate removal/cutout/foreground masks, alignment and a shared-engine movement preview. Author its JSON recipe directly and run `asset prepare` to build fresh, reproducible parts. The browser can inspect the result or export optional visual edits through the same recipe. Try the [independent example](examples/preparation-workbench/README.md).
 
+Before requesting replacement paint, use [art regions](docs/ART-REGIONS.md) to trace its opening, square or reframe the reference without stretching, calculate output demand, and build a packet with masks and return mappings. `asset region` and `preview --region` share saved recipes; the returned production asset retains its higher resolution.
+
 ## Start here
 
 Run these commands from this repository. No CLI installation or account is required. Use Python 3.10+ and Node 18+. Install Pillow for asset preparation and Node Canvas for raster rendering and the full test suite:
@@ -75,6 +77,7 @@ Small reusable PNG assets are tracked in this repository. Large media, working p
 - [Rig workbench](docs/RIG-WORKBENCH.md): registration choices, sockets and visual inspection.
 - [Start a film with an agent](START-HERE.md): production workflow and creative checkpoints.
 - [Architecture](docs/architecture/CLI-FIRST.md): boundaries and next engineering steps.
+- [TV quality and sound library plan](docs/architecture/TV-QUALITY-AND-SOUND-LIBRARY.md): proposed 4K asset checks, compact masters, audio quality, reusable sounds, and deferred surround/long exports.
 - [Contributing](CONTRIBUTING.md): conventions and validation.
 - [Quality gates](docs/QUALITY-GATES.md): evidence, freshness and creative review.
 - [Tool strategy](docs/TOOL-STRATEGY.md): research and priorities behind this direction.

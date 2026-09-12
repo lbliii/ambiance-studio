@@ -9,6 +9,8 @@ Inspect `project latest`, exact edition evidence and `project next`. Verify actu
 
 Use `media verify` for complete decode, expected dimensions/frame rate/count, timestamps, audio tracks and duration. Request meaningful action contacts and inspect encoded audio separately from WAV; raw extraction can include priming/padding outside the presented interval. `media compose` reuses supported encoded picture with explicit PCM. Keep score, effects-only and silent editions unambiguous; see [media operations](../../../docs/RENDERING.md).
 
+Deliver the complete short master specified by the brief; longer files are separately requested derivatives. State picture/audio/delivery durations and verify matching audio. For TV targets, follow the workflow's full-resolution and device/platform review guidance. Preserve final files separately from scratch renders.
+
 Use [captured revisions and editions](../../../docs/REVISIONS.md) for exact render/review subjects. Capture does not migrate legacy verdicts. Actual look/listen and phone requirements remain unperformed until observed. Applicable prior feedback can satisfy a criterion; a resolved work item or played video alone cannot. Open human checks do not stop independent authorized work.
 
 Feedback can target a delivery with no timestamp/view or one exact movie with a point/range. `feedback resolve` records the change or disposition while quality gates stay separate. See [current production operations](../../../docs/MIDNIGHT-OPERATIONS.md). Preserve uncertainty rather than multiplying one report into several claimed auditions.

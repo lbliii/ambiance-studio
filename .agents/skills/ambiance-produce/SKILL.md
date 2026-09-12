@@ -9,6 +9,10 @@ Use `./ambiance --project PROJECT` from the studio root. Locate the actual proje
 
 For a new film, preserve the seed, initialize/register its project and follow [seed-to-stage](../../../docs/SEED-TO-STAGE.md): survey the whole scene, choose story actions, plan both requested compositions, and identify their independent art and backing. User scope overrides defaults. Give details and motion a physical reason or thematic purpose, with cues establishing it and an appropriate limit on emphasis; use the [style](../../../docs/STYLE-GUIDE.md) and [motion](../../../docs/MOTION-DIRECTION.md) guidance.
 
+For full layered films, require [whole-object ownership and proof](../../../docs/LAYER-AND-LIGHT-PLANNING.md#whole-object-ownership-and-proof) before motion polish: complete characters, meaningful props/surfaces and clean surroundings, followed by internal articulation. A still body cannot be fulfilled by a neck patch or by imagery retained in a full-scene plate. Explicit component-only prototypes may remain partial.
+
+Keep working picture and audio masters short and complete; extended viewing belongs to playback or a separately requested delivery. Preserve all required actions/views. For TV targets, inspect source detail and internal raster limits before promising 4K.
+
 Route only the active stage: deconstruct → assets → animate → sound → release. These are workflow roles, not delegation instructions. Check `doctor` before relying on a backend; plugin installation/login does not establish callable access. Preserve originals and useful generated results. Keep existing authority; the workflow does not grant paid generation, sending or publishing. Reconcile uncertain requests before retrying.
 
 Use the [canonical plan](../../../docs/PRODUCTION-PLAN.md) for intent, inventory for fulfillment, scene for runtime and reviews for actual observations. Selected requirements remain required until explicitly revised. `plan coverage` and `iteration preflight` reuse the shared readiness evaluator; a successful encode or a small prototype does not complete the full scope. `plan check --require-complete` retains its inventory meaning.

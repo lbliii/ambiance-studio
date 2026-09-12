@@ -48,7 +48,7 @@ def resample_cel(frame, size, scale, offset):
 
 def build(recipe_path, out):
     recipe_path,out=Path(recipe_path).resolve(),Path(out).resolve()
-    if any(json.loads(recipe_path.read_text()).get(k) for k in ['motion_preparation', 'preparation_receipt', 'cel_trim']) and not out.exists():
+    if any(json.loads(recipe_path.read_text()).get(k) for k in ['motion_preparation', 'preparation_receipt', 'cel_trim', 'region_receipt']) and not out.exists():
         sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
         from ambiance_studio.edge_quality import fresh_output
         with fresh_output(out) as stage:
@@ -94,6 +94,16 @@ def _build(recipe_path, out, logical_out=None):
             source_rects.append((len(source_paths)-1,[0,0,frames[-1].width,frames[-1].height]))
     if not frames or len(frames) > 256:
         raise ValueError('Supply 1–256 explicitly ordered frames.')
+    region = None
+    if recipe.get('region_receipt') is not None:
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+        from ambiance_studio.art_regions import validate_region_receipt
+        ref = recipe['region_receipt']
+        if not isinstance(ref, dict) or set(ref) != {'file', 'sha256'} or not isinstance(ref['file'], str) or Path(ref['file']).is_absolute():
+            raise ValueError('region_receipt needs recipe-relative file and sha256')
+        region_path = (recipe_path.parent/ref['file']).resolve()
+        region = validate_region_receipt(region_path, ref['sha256'], source_paths, recipe)
+        recipe['region_receipt'] = {'file': os.path.relpath(region_path, destination), 'sha256': ref['sha256']}
     compound = None
     if recipe.get('preparation_receipt') is not None:
         sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -208,6 +218,7 @@ def _build(recipe_path, out, logical_out=None):
         recipe['motion_preparation']={'file':os.path.relpath(motion_path,destination),'sha256':ref['sha256']}
     # Input locations are portable; order, bytes, settings, code and Pillow determine the build.
     canonical = json.loads(json.dumps(recipe))
+    if 'region_receipt' in canonical: canonical['region_receipt']['file']='region-receipt'
     if 'preparation_receipt' in canonical: canonical['preparation_receipt']['file']='preparation-receipt'
     if 'motion_preparation' in canonical: canonical['motion_preparation']['file']='motion-preparation'
     if 'edge_preparation' in canonical:
@@ -225,6 +236,9 @@ def _build(recipe_path, out, logical_out=None):
         if report_file.is_file():
             report = json.loads(report_file.read_text())
             if report['cache_key'] == cache_key and all((out/f).is_file() and sha(out/f) == h for f, h in report['outputs'].items()):
+                if region:
+                    validate_region_receipt(region_path,recipe['region_receipt']['sha256'],source_paths,recipe)
+                    if recipe_path.read_bytes()!=recipe_bytes: raise ValueError('Recipe changed during region cache lookup')
                 if compound:
                     validate_preparation_receipt(compound_path,recipe['preparation_receipt']['sha256'],source_paths,recipe)
                     if recipe_path.read_bytes()!=recipe_bytes: raise ValueError('Recipe changed during preparation cache lookup')
@@ -325,7 +339,7 @@ def _build(recipe_path, out, logical_out=None):
         'sha256': sha(out/'atlas.png'), 'atlas': {'columns': columns,'rows':rows,'cell_width':cw,'cell_height':ch,'frame_count':len(frames)},
         'registration_mapping':mapping, 'pivot':target, 'sockets':recipe.get('sockets',{}), 'provenance': {'recipe':'recipe.json','cache_key':cache_key,'sources':packed_sources},
         'rights':recipe.get('rights','Unspecified; inherits source restrictions.')}
-    if recipe.get('cel_trim'): asset['provenance']['cel_trim']=recipe['cel_trim']
+    if recipe.get('cel_trim', 'region_receipt'): asset['provenance']['cel_trim', 'region_receipt']=recipe['cel_trim', 'region_receipt']
     if compound: asset['provenance']['preparation_receipt']=recipe['preparation_receipt']
     if motion: asset['provenance']['motion_preparation']=recipe['motion_preparation']
     if mapping_source:
@@ -340,6 +354,9 @@ def _build(recipe_path, out, logical_out=None):
         'registration_mapping':mapping,'shared_scale':scale,'frames':records,'warnings':warnings,'outputs':outputs,
         'limits':['Does not remove backgrounds, track moving features, infer fake checkerboards, or judge the closing gesture.','Preview GIF timing is for inspection; the scene owns production timing.']}
     write(out/'report.json',report)
+    if region:
+        validate_region_receipt(region_path,recipe['region_receipt']['sha256'],source_paths,recipe)
+        if recipe_path.read_bytes()!=recipe_bytes: raise ValueError('Recipe changed before region publication')
     if compound:
         validate_preparation_receipt(compound_path,recipe['preparation_receipt']['sha256'],source_paths,recipe)
         if recipe_path.read_bytes()!=recipe_bytes: raise ValueError('Recipe changed before preparation publication')
@@ -355,7 +372,7 @@ def admit(pack, catalog_path):
     if not all((pack/f).is_file() and sha(pack/f) == h for f,h in report['outputs'].items()):
         raise ValueError('Pack bytes no longer match its build report.')
     asset = json.loads((pack/'asset.json').read_text())
-    if any(asset.get('provenance',{}).get(k) for k in ['motion_preparation', 'preparation_receipt', 'cel_trim']):
+    if any(asset.get('provenance',{}).get(k) for k in ['motion_preparation', 'preparation_receipt', 'cel_trim', 'region_receipt']):
         sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
         from ambiance_studio.assets import inspect_pack
         inspect_pack(pack)

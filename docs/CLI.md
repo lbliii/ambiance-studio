@@ -49,6 +49,7 @@ Revision selections and asset/placement manifests use project-relative reference
 | `asset prepare init/inspect/check/edit/build/proof/place` | Structured compound preparation, bounded immutable edits, source-mapped placement and resumable saved-view proofs; see [agent preparation](AGENT-PREPARATION.md) |
 | `asset prepare [SOURCE --backing FILE] [--recipe FILE] --out DIR` | Create or rebuild an interactive separation workspace with distinct masks, alignment, compiler recipes and a shared-engine movement scene |
 | `asset crop SOURCE --recipe FILE --out DIR` | Export a source crop with preserved coordinate/identity mapping |
+| `asset region init/inspect/check/edit/build/return` | Trace an opening, prepare a uniformly framed/sized generation packet and retain a mapped high-resolution return; see [art regions](ART-REGIONS.md) |
 | `asset return EDIT --mapping FILE --out DIR` | Return explicitly registered edited art as a native patch and composite derivative |
 | `asset edges PACK_OR_ID --display-width N --out DIR` | Inspect every cel at intended display size on light/dark backgrounds, with optional explicit context placement |
 | `asset edge-repair SOURCE --recipe FILE --out DIR` | Prepare an immutable, registered alpha/matte-color repair with source and recipe snapshots |

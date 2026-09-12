@@ -4,6 +4,8 @@
 
 ## Build the actual deliverables
 
+Default to the complete short audiovisual master chosen in the brief, with separate sources and stems. State picture, audio/master and delivered durations; long playback does not require a long file. Preserve the full requested creative/view scope. Longer exports are explicit derivatives with matching audio and their own verification; repeated picture alone does not establish a seamless long soundtrack.
+
 For a project with multiple working versions, explicitly [capture a revision](../REVISIONS.md) and render from it. Record editions against the exact picture and selected PCM, leaving working changes separate. `media compose` can reuse encoded picture for another soundtrack, and requested contact times in `media verify` make short actions inspectable in the actual movie.
 
 Use a tested export backend appropriate to the host. Keep format settings and tool versions explicit. When picture is already accepted and only the sound changes, copy the encoded picture during muxing where supported instead of re-encoding it unnecessarily.
@@ -19,6 +21,8 @@ Inspect the encoded audio join and its relationship to the PCM master. Account f
 Inspect visible motion and the seam in the delivered file, not only the source canvas. Revisit color, alpha/resampling, and frame pacing if the encoded output differs materially from the preview.
 
 ## Human release review
+
+For TV-targeted editions, inspect full-resolution encoded detail and normal-speed motion, then record any actual TV/soundbar observation against that edition. Local decode does not prove platform processing or Repeat behavior. Leave unperformed device/platform checks explicit while presenting a labeled review; existing authorization governs any upload. The [quality roadmap](../architecture/TV-QUALITY-AND-SOUND-LIBRARY.md) describes planned profile/surround/long-duration work, not implemented export switches.
 
 Present the exact final file and a short set of questions: does it preserve the intended feeling, remain comfortable over three repeats, and work on a phone? Record real observations and their source. Existing user feedback can establish a criterion when it identifies the relevant review; do not rewrite it to imply tests that never happened.
 

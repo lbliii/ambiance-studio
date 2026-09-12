@@ -47,6 +47,13 @@ def inspect_pack(pack):
     changed=[f for f,h in report['outputs'].items() if not studio.inside(pack,f).is_file() or studio.digest(studio.inside(pack,f))!=h]
     result={'ok':not changed,'asset':asset,'build':report,'changed_outputs':changed,
             'proofs':{f:str(pack/f) for f in ['contact-sheet.png','preview.gif'] if (pack/f).is_file()}}
+    if not changed and asset.get('provenance',{}).get('region_receipt'):
+        from .art_regions import validate_region_receipt
+        ref=asset['provenance']['region_receipt'];recipe=studio.read(pack/'recipe.json')
+        if ref!=recipe.get('region_receipt'): raise ValueError('Region recipe/provenance differ')
+        spec=recipe['input'];paths=[(pack/f).resolve() for f in ([spec['sheet']] if 'sheet' in spec else spec['frames'])]
+        validate_region_receipt(pack/ref['file'],ref['sha256'],paths,recipe)
+        if asset['registration_mapping']['shared_scale']!=1: raise ValueError('Region pack changed the requested density')
     if not changed and asset.get('provenance',{}).get('preparation_receipt'):
         from .compound_preparation import validate_preparation_receipt
         ref=asset['provenance']['preparation_receipt'];recipe=studio.read(pack/'recipe.json')
