@@ -1,4 +1,5 @@
 """Identity-bound activity evidence; sampled state, raster and observation stay separate."""
+from .command_output import Output, add_output
 import hashlib
 import json
 import math
@@ -17,7 +18,7 @@ def fields(value, allowed, label):
 
 def add_parsers(group):
     p = group.add_parser('activity', help='Measure per-view state and optional bounded raster contribution')
-    p.add_argument('--out', type=Path, required=True)
+    add_output(p, Output.ARTIFACT, type=Path, required=True)
     p.add_argument('--view', action='append', default=[])
     p.add_argument('--layer', action='append', default=[])
     p.add_argument('--action-id', action='append', default=[])
@@ -31,7 +32,7 @@ def add_parsers(group):
     p.add_argument('--resume', action='store_true')
     p = group.add_parser('activity-review', help='Record an actual observation of an exact normal-speed proof')
     p.add_argument('file', type=Path)
-    p.add_argument('--out', type=Path, required=True)
+    add_output(p, Output.FILE, type=Path, required=True)
 
 
 def actions_from_plan(plan):

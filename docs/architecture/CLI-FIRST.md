@@ -20,6 +20,10 @@ Scene changes validate before writing, preserve the previous content by hash and
 
 The initial source launcher needs no installer. Distributable packages will require moving runtime resources into a deliberate package/resource layout; an incomplete wheel is not offered as an installation path.
 
+Command-family adapters now register their arguments beside their execution adapters. `cli.py` retains project selection, dispatch and JSON/error envelopes; project initialization/checks, asset routing, library presentation, reviews and preview selection have focused owners. Existing scene, plan, region and media services remain authoritative. The former `cli.init_project`, `cli.check_project`, `cli.asset_tool` and `cli.scene_bridge` imports remain available.
+
+Every `--out` registration uses [command_output.py](../../ambiance_studio/command_output.py) to declare a result envelope, command-owned file or artifact directory. Only result envelopes are written at the CLI boundary. Command-owned destinations retain their existing shell/project path rules, serializers, freshness checks and recovery behavior. This metadata stays on the parser action and never enters scene arguments or saved recipes. The CLI contract fixtures preserve all existing routes/options and exercise output ownership for each declared `--out` route.
+
 ## Production additions in 0.5
 
 The [production design](CLI-PRODUCTION-PLAN.md) adds inventory reconciliation, actual asset proofs/library lookup, named landmark files, atomic scene batches, authored tracks, shared-engine raster proofs, macOS encode/verify and explicit PCM arrangements. The [command reference](../CLI.md) links each saved contract and its executable interface. The museum pilot and independent fixtures exercise different aspects; neither mathematical sampling nor a catalog entry implies creative approval.

@@ -1,4 +1,5 @@
 """Portable early movie reviews over the existing iteration and edition services."""
+from .command_output import Output, add_output
 import html
 import json
 import math
@@ -16,7 +17,7 @@ FORMAT = 'ambiance-review-packet'
 
 def add_parsers(group):
     sub = group.add_parser('packet').add_subparsers(dest='packet_action', required=True)
-    q = sub.add_parser('init'); q.add_argument('file', type=Path); q.add_argument('--out', type=Path, required=True)
+    q = sub.add_parser('init'); q.add_argument('file', type=Path); add_output(q, Output.ARTIFACT, type=Path, required=True)
     q = sub.add_parser('run'); q.add_argument('file', type=Path); q.add_argument('--by', required=True)
     q = sub.add_parser('inspect'); q.add_argument('file', type=Path)
 

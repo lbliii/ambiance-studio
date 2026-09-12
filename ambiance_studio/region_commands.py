@@ -1,4 +1,5 @@
 """Agent-facing operations for saved art regions."""
+from .command_output import Output, add_output
 import copy
 from pathlib import Path
 
@@ -7,14 +8,14 @@ from . import art_regions as ar
 
 def add_parsers(group):
     sub=group.add_parser('region',help='Trace, frame, size and return artwork for a source region').add_subparsers(dest='region_action',required=True)
-    q=sub.add_parser('init');q.add_argument('source',type=Path);q.add_argument('--id',required=True);q.add_argument('--out',type=Path,required=True)
+    q=sub.add_parser('init');q.add_argument('source',type=Path);q.add_argument('--id',required=True);add_output(q, Output.ARTIFACT, type=Path,required=True)
     q.add_argument('--rect',type=int,nargs=4,help='Half-open source pixel-edge rectangle')
     q.add_argument('--base',help='Bind sizing to this existing mapped source layer');q.add_argument('--view',action='append',dest='views')
     for name in ('inspect','check'):
         q=sub.add_parser(name);q.add_argument('directory',type=Path)
-    q=sub.add_parser('edit');q.add_argument('directory',type=Path);q.add_argument('--batch',type=Path,required=True);q.add_argument('--expect-sha256');q.add_argument('--out',type=Path,required=True)
-    q=sub.add_parser('build');q.add_argument('directory',type=Path,help='Saved draft directory or authored recipe JSON');q.add_argument('--out',type=Path,required=True)
-    q=sub.add_parser('return');q.add_argument('directory',type=Path);q.add_argument('returned',type=Path);q.add_argument('--recipe',type=Path,required=True);q.add_argument('--out',type=Path,required=True)
+    q=sub.add_parser('edit');q.add_argument('directory',type=Path);q.add_argument('--batch',type=Path,required=True);q.add_argument('--expect-sha256');add_output(q, Output.ARTIFACT, type=Path,required=True)
+    q=sub.add_parser('build');q.add_argument('directory',type=Path,help='Saved draft directory or authored recipe JSON');add_output(q, Output.ARTIFACT, type=Path,required=True)
+    q=sub.add_parser('return');q.add_argument('directory',type=Path);q.add_argument('returned',type=Path);q.add_argument('--recipe',type=Path,required=True);add_output(q, Output.ARTIFACT, type=Path,required=True)
 
 
 def edit_recipe(recipe,batch):
