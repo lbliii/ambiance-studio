@@ -8,6 +8,12 @@ from threading import BoundedSemaphore
 from urllib.parse import urlsplit
 
 from . import art_regions as ar
+from . import workbench_http as http
+
+CSP = "default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'"
+BODY_POLICY = http.BodyPolicy(
+    maximum=1_000_000, missing_length='-1', bounds_error='Supply a bounded region recipe',
+    reject_transfer_encoding=True, timeout=10, incomplete_error='Incomplete recipe')
 
 
 def image_url(im):
@@ -36,15 +42,11 @@ def handler_for(directory):
     class Handler(BaseHTTPRequestHandler):
         def log_message(self,*args): pass
         def local(self):
-            expected=f'127.0.0.1:{self.server.server_port}'
-            if self.headers.get('Host')!=expected or self.headers.get('Origin',f'http://{expected}')!=f'http://{expected}':
+            if http.local_origin_violation(self):
                 self.send_error(403,'Use the exact local preview origin');return False
             return True
         def send(self,data,mime='application/json',status=200):
-            self.send_response(status);self.send_header('Content-Type',mime);self.send_header('Content-Length',str(len(data)))
-            self.send_header('Cache-Control','no-store');self.send_header('X-Content-Type-Options','nosniff')
-            self.send_header('Content-Security-Policy',"default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'")
-            self.end_headers();self.wfile.write(data)
+            http.respond(self, data, mime, status=status, csp=CSP)
         def do_GET(self):
             if not self.local(): return
             route=urlsplit(self.path).path
@@ -58,10 +60,8 @@ def handler_for(directory):
             if self.headers.get('Content-Type')!='application/json': return self.send_error(415)
             if not slot.acquire(blocking=False): return self.send_error(429,'A draft is being evaluated')
             try:
-                length=int(self.headers.get('Content-Length','-1'))
-                if not 0<length<=1_000_000 or self.headers.get('Transfer-Encoding'): raise ValueError('Supply a bounded region recipe')
-                self.connection.settimeout(10);body=self.rfile.read(length)
-                if len(body)!=length: raise ValueError('Incomplete recipe')
+                length = http.body_length(self, BODY_POLICY)
+                body = http.read_body(self, length, BODY_POLICY)
                 candidate=ar.load_scene_json(body);ar.validate(candidate)
                 if dict(ar.references(candidate))!=dict(ar.references(recipe)): raise ValueError('Drafts must retain captured input identities')
                 result=preview(candidate,inputs)
@@ -75,6 +75,4 @@ def handler_for(directory):
 def serve(directory,port):
     server=ThreadingHTTPServer(('127.0.0.1',port),handler_for(directory))
     print(json.dumps({'ok':True,'schema_version':1,'command':'preview','data':{'url':f'http://127.0.0.1:{server.server_port}/','region':str(Path(directory).resolve()),'project_writes':False}}),flush=True)
-    try: server.serve_forever()
-    except KeyboardInterrupt: pass
-    finally: server.server_close()
+    http.serve_until_interrupt(server)

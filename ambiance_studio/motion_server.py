@@ -10,6 +10,14 @@ from urllib.parse import urlsplit
 from . import asset_motion as motion
 from .motion_proof import verify
 from .edge_quality import isolated_resize
+from . import workbench_http as http
+
+CSP = "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'"
+# Motion's existing contract neither sets a read timeout nor checks short reads
+# or Transfer-Encoding. Keep those choices explicit rather than inheriting them.
+BODY_POLICY = http.BodyPolicy(
+    maximum=1_000_000, missing_length='0', bounds_error='Draft request must be 1–1000000 bytes',
+    reject_transfer_encoding=False, timeout=None, incomplete_error=None)
 
 
 def evaluate(packet,request):
@@ -34,10 +42,9 @@ def handler(directory):
     class Handler(BaseHTTPRequestHandler):
         def log_message(self,*args):pass
         def respond(self,code,body,kind='application/json'):
-            self.send_response(code);self.send_header('Content-Type',kind);self.send_header('Content-Length',str(len(body)));self.send_header('Cache-Control','no-store');self.send_header('X-Content-Type-Options','nosniff');self.send_header('Content-Security-Policy',"default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'");self.end_headers();self.wfile.write(body)
+            http.respond(self, body, kind, status=code, csp=CSP)
         def allowed(self):
-            host=self.headers.get('Host');origin=self.headers.get('Origin');expected=f'127.0.0.1:{self.server.server_port}'
-            return host==expected and (origin is None or origin=='http://'+expected)
+            return http.local_origin_violation(self) is None
         def do_GET(self):
             if not self.allowed():return self.respond(403,b'{"error":"Local origin required"}')
             route=urlsplit(self.path).path
@@ -47,10 +54,9 @@ def handler(directory):
             if not self.allowed():return self.respond(403,b'{"error":"Local origin required"}')
             if self.path!='/api/draft':return self.respond(404,b'{"error":"Unknown operation"}')
             try:
-                n=int(self.headers.get('Content-Length','0'))
-                if not 0<n<=1_000_000:raise ValueError('Draft request must be 1–1000000 bytes')
+                n = http.body_length(self, BODY_POLICY)
                 if not slot.acquire(blocking=False):return self.respond(409,b'{"error":"Draft evaluator busy"}')
-                try:result=evaluate(packet,json.loads(self.rfile.read(n)))
+                try:result=evaluate(packet,json.loads(http.read_body(self, n, BODY_POLICY)))
                 finally:slot.release()
                 self.respond(200,motion.encode(result))
             except (ValueError,OSError,KeyError,TypeError) as exc:self.respond(422,motion.encode({'error':str(exc)}))
@@ -60,6 +66,4 @@ def handler(directory):
 def serve(directory,port):
     server=ThreadingHTTPServer(('127.0.0.1',port),handler(directory));server.daemon_threads=True
     print(json.dumps({'ok':True,'url':f'http://127.0.0.1:{server.server_port}','mode':'motion-proof','draft_writes_project':False}),flush=True)
-    try:server.serve_forever()
-    except KeyboardInterrupt:pass
-    finally:server.server_close()
+    http.serve_until_interrupt(server)
