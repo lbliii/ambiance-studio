@@ -11,6 +11,7 @@ import shutil
 
 from . import native_media, render_plan
 from .errors import CommandError
+from .native_sources import source_identity as native_source_identity
 from .file_identity import digest
 from .media_inputs import fresh_output, positive_integer, input_identity, pcm_bytes
 from .media_verification import verify_media
@@ -102,6 +103,7 @@ def compose(args, project):
               'repeats':args.repeats, 'input_video_tracks':probe['video_tracks'], 'input_audio_tracks':probe['audio_tracks'],
               'input_audio_policy':'The selected PCM replaces any input movie audio.',
               'native_binary':input_identity(binary), 'native_source':input_identity(NATIVE_SOURCE),
+              'native_sources':native_source_identity(NATIVE_SOURCE.parent),
               'backend':'macOS AVFoundation', 'host_platform':platform.platform(), 'adapter_sha256':digest(Path(__file__).with_name('rendering.py')),
               'revision':{k:context[k] for k in ['revision_id','manifest_sha256'] if k in context} or None}
     (out/'composition-recipe.json').write_text(json.dumps(recipe,indent=2)+'\n')

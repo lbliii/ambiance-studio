@@ -72,7 +72,7 @@ refactor, not an exhaustive correctness or security review.
   compatible. Provider verification can produce measured facts; it cannot grant
   an observed artistic pass or decide stage readiness.
 
-## Remaining work, in recommended order
+## Refactor workstream status
 
 The Python rendering workstream is now implemented. [rendering.py](../../ambiance_studio/rendering.py)
 retains parser and compatibility entry points; [render_plan.py](../../ambiance_studio/render_plan.py)
@@ -80,13 +80,14 @@ owns validated requests, and [render_execution.py](../../ambiance_studio/render_
 owns execution and media reports. Public [native media](../../ambiance_studio/native_media.py),
 [verification](../../ambiance_studio/media_verification.py) and
 [media input](../../ambiance_studio/media_inputs.py) services replace private
-rendering imports. Edition lifecycle remains at `MediaExecutor`. Native and
-JavaScript implementation decomposition remains the separate runtime workstream.
+rendering imports. Edition lifecycle remains at `MediaExecutor`. The runtime
+workstream adds JavaScript render-job/proof/transport owners and separate native
+command implementations, with source closure included in build and evidence identity.
 
 | Priority | Evidence and impact | Next bounded refactor | Verification needed |
 | --- | --- | --- | --- |
 | Completed | [revisions.py](../../ambiance_studio/revisions.py) previously held 644 lines owning schema helpers, path/reference utilities, dependency collection, captures, editions, review contexts and command routing. Many unrelated modules import `fields`, `identifier`, `seal`, `relative` and other helpers from this domain module. | Extracted record_contracts, project_references, revision_dependencies, revision_capture, editions and revision_reviews; revisions retains CLI routing and compatibility exports. See [ownership](../REVISIONS.md#python-ownership-and-compatibility). | Existing revision/edition/tamper tests plus compatibility fixtures for persisted seals, schema versions and path containment. |
-| Medium | [tools/render-scene.mjs](../../tools/render-scene.mjs) is only 227 lines but about 24 KB. Its main routine mixes filesystem snapshots, mode branching, raster loops, child-process coordination, receipts and generated proof HTML. [native/media/media.m](../../native/media/media.m) is 315 lines but about 36 KB. | Split by actual runtime responsibilities: proof presentation, render job execution, native process transport; then native encode/compose/verify commands. Expand dense control flow while touching each extracted owner. | Shared-engine parity, proof output integrity, cancellation and real native regression checks. A formatting-only diff should be separate from semantic changes. |
+| Completed | [tools/render-scene.mjs](../../tools/render-scene.mjs) previously mixed filesystem snapshots, raster modes, child processes, receipts and proof HTML in about 24 KB. [native/media/media.m](../../native/media/media.m) held about 36 KB of command implementations. | The entry points now delegate to render input/raster/output/receipt/proof/transport owners and native encode, compose/trim, video/audio verification and inspection. Narrow shared native helpers preserve writer and JSON behavior. All local native sources and headers participate in compilation/cache identity; extracted JavaScript modules participate in receipts and proof recovery. See [render ownership](../RENDERING.md#dependencies-and-regression-checks). | Formatting was expanded in a separate commit. Native encode/decode, incomplete streams, AAC/packet inspection, compressed-sample passthrough, source/header cache invalidation, real child cancellation/backpressure, proof byte parity and native recovery are covered. |
 | Completed | [cli.py](../../ambiance_studio/cli.py) previously mixed command adapters with parsing and a growing negative condition deciding `--out` ownership. | Extracted focused project, asset, review, preview, diagnostic and production-presentation adapters. [Output registrations](../../ambiance_studio/command_output.py) explicitly distinguish result envelopes, command-owned files and artifact directories without adding metadata to command namespaces. The CLI retains parsing, project resolution and envelopes. | Compatibility fixtures cover all 158 existing option/help routes and 60 output routes, including failure envelopes and protected destinations. Public CLI replay, browser preview smoke, and the full required-native suite passed before predecessor integration; final integrated checks are recorded in the PR. |
 
 ## Extraction constraints

@@ -5,6 +5,7 @@ from pathlib import Path
 
 from . import native_media, render_plan
 from .errors import CommandError
+from .native_sources import source_identity as native_source_identity
 from .file_identity import digest
 from .media_inputs import fresh_output, positive_integer, project_input
 from .native_media import NATIVE_SOURCE
@@ -38,6 +39,7 @@ def verify_media(binary, source, out, width, height, fps, frames, audio_tracks, 
     data.update({'input_sha256': source_hash, 'input_sha256_after': after_hash,
                  'native_binary_sha256': digest(binary),
                  'native_source_sha256': digest(NATIVE_SOURCE),
+                 'native_sources': native_source_identity(NATIVE_SOURCE.parent),
                  'report': str(report), 'contacts': str(contacts)})
     data['requested_contacts'] = []
     for request in requests:
