@@ -1,4 +1,5 @@
 """Binding commands use the shared evaluator and ordinary scene transactions."""
+from .command_output import Output, add_output
 from pathlib import Path
 
 import studio
@@ -11,7 +12,7 @@ from .finishing import fields
 def add_parsers(sub):
     group = sub.add_parser('binding', help='Inspect and apply explicit source/follower mappings').add_subparsers(dest='action', required=True)
     for action in ['inspect', 'check']:
-        q = group.add_parser(action); q.add_argument('--time', type=float, default=0); q.add_argument('--out', type=Path)
+        q = group.add_parser(action); q.add_argument('--time', type=float, default=0); add_output(q, Output.REPORT, type=Path)
     q = group.add_parser('apply'); q.add_argument('file', type=Path)
     q.add_argument('--dry-run', action='store_true'); q.add_argument('--expect-sha256')
 

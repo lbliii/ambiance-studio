@@ -3,6 +3,7 @@
 Edition lifecycle remains in media_operations; request planning, native runtime
 transport and decode verification have independent public service owners.
 """
+from .command_output import Output, add_output
 from pathlib import Path
 import json
 
@@ -24,13 +25,13 @@ from .render_plan import render_context as _context
 
 def add_parsers(sub):
     group = sub.add_parser('render', help='Render saved scene frames, motion proofs, or video').add_subparsers(dest='action', required=True)
-    q = group.add_parser('benchmark'); q.add_argument('file', type=Path); q.add_argument('--out', type=Path, required=True)
+    q = group.add_parser('benchmark'); q.add_argument('file', type=Path); add_output(q, Output.ARTIFACT, type=Path, required=True)
     for action in ['frame', 'proof', 'rig-proof', 'look-proof', 'video', 'views-proof']:
         q = group.add_parser(action)
         q.add_argument('--revision', help='Verified captured revision ID; never falls back to working scene')
         if action in ['rig-proof', 'look-proof']:
             q.add_argument('recipe', type=Path)
-        q.add_argument('--out', type=Path, required=True, help='Fresh output directory; never overwrites')
+        add_output(q, Output.ARTIFACT, type=Path, required=True, help='Fresh output directory; never overwrites')
         if action == 'views-proof':
             q.add_argument('--view', action='append', dest='views', required=True, help='Saved view ID; repeat for synchronized outputs')
             q.add_argument('--long-edge', type=int, default=640, help='Maximum preview side; preserve an integer aspect ratio')
@@ -57,7 +58,7 @@ def add_parsers(sub):
     q = group.add_parser('verify')
     q.add_argument('file', type=Path)
     q.add_argument('--revision'); q.add_argument('--edition'); q.add_argument('--view')
-    q.add_argument('--out', type=Path, required=True, help='Fresh report/contact directory')
+    add_output(q, Output.ARTIFACT, type=Path, required=True, help='Fresh report/contact directory')
     for field in ['width', 'height', 'fps', 'frames', 'loop-frames']:
         q.add_argument('--'+field, type=int, help='Defaults to the selected scene')
     q.add_argument('--audio-tracks', type=int, choices=[0, 1])
@@ -68,7 +69,7 @@ def add_parsers(sub):
     q.add_argument('--picture-receipt', help='Project-relative existing render report binding this picture to the selected revision')
     q.add_argument('--audio', type=Path, required=True)
     q.add_argument('--repeats', type=int, default=1)
-    q.add_argument('--out', type=Path, required=True)
+    add_output(q, Output.ARTIFACT, type=Path, required=True)
     q.add_argument('--revision')
     q.add_argument('--view', help='Assert the picture view when binding a revision edition')
     _edition_arguments(q)

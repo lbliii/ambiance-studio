@@ -1,4 +1,5 @@
 """Inspect existing packs and render derivative proof artifacts; never alter source art."""
+from .command_output import Output, add_output
 import base64
 import hashlib
 import html
@@ -221,13 +222,13 @@ def add_preparation_parsers(group):
     q.add_argument('--base');q.add_argument('--prefix');q.add_argument('--dry-run',action='store_true')
     q.add_argument('--long-edge',type=int,default=640);q.add_argument('--resume',action='store_true')
     q.add_argument('--recipe',type=Path);q.add_argument('--backing-to-source',type=float,nargs=6)
-    q.add_argument('--out',type=Path)
-    q=group.add_parser('preflight',help='Decode transparency facts and make light/dark previews');q.add_argument('source',type=Path);q.add_argument('--out',type=Path,required=True)
-    q=group.add_parser('trim-cels');q.add_argument('layer');q.add_argument('--id',required=True);q.add_argument('--out',type=Path,required=True)
-    q=group.add_parser('crop',help='Export a mapped source crop into a fresh directory');q.add_argument('source',type=Path);q.add_argument('--recipe',type=Path,required=True);q.add_argument('--out',type=Path,required=True)
-    q=group.add_parser('return',help='Register a returned edit and blend into a source derivative');q.add_argument('edit',type=Path);q.add_argument('--mapping',type=Path,required=True);q.add_argument('--out',type=Path,required=True)
-    q=group.add_parser('edges',help='Inspect all isolated cels at explicit display size and magnified');q.add_argument('asset');q.add_argument('--out',type=Path,required=True);q.add_argument('--catalog',type=Path);q.add_argument('--display-width',type=int,required=True);q.add_argument('--background',type=Path);q.add_argument('--context-rect',type=int,nargs=4,metavar=('X','Y','W','H'));q.add_argument('--fps',type=float,default=6);q.add_argument('--magnify',type=int,default=4)
-    q=group.add_parser('edge-repair',help='Derive a fresh sprite sheet with explicit edge operations');q.add_argument('source',type=Path);q.add_argument('--recipe',type=Path,required=True);q.add_argument('--out',type=Path,required=True)
+    add_output(q, Output.ARTIFACT, type=Path)
+    q=group.add_parser('preflight',help='Decode transparency facts and make light/dark previews');q.add_argument('source',type=Path);add_output(q, Output.ARTIFACT, type=Path,required=True)
+    q=group.add_parser('trim-cels');q.add_argument('layer');q.add_argument('--id',required=True);add_output(q, Output.ARTIFACT, type=Path,required=True)
+    q=group.add_parser('crop',help='Export a mapped source crop into a fresh directory');q.add_argument('source',type=Path);q.add_argument('--recipe',type=Path,required=True);add_output(q, Output.ARTIFACT, type=Path,required=True)
+    q=group.add_parser('return',help='Register a returned edit and blend into a source derivative');q.add_argument('edit',type=Path);q.add_argument('--mapping',type=Path,required=True);add_output(q, Output.ARTIFACT, type=Path,required=True)
+    q=group.add_parser('edges',help='Inspect all isolated cels at explicit display size and magnified');q.add_argument('asset');add_output(q, Output.ARTIFACT, type=Path,required=True);q.add_argument('--catalog',type=Path);q.add_argument('--display-width',type=int,required=True);q.add_argument('--background',type=Path);q.add_argument('--context-rect',type=int,nargs=4,metavar=('X','Y','W','H'));q.add_argument('--fps',type=float,default=6);q.add_argument('--magnify',type=int,default=4)
+    q=group.add_parser('edge-repair',help='Derive a fresh sprite sheet with explicit edge operations');q.add_argument('source',type=Path);q.add_argument('--recipe',type=Path,required=True);add_output(q, Output.ARTIFACT, type=Path,required=True)
 
 
 def run_preparation(args,project):

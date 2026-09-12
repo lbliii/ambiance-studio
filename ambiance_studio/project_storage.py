@@ -1,4 +1,5 @@
 """Inventory and reversible retirement of unreferenced generated artifact bundles."""
+from .command_output import Output, add_output
 from collections import defaultdict
 import json
 from pathlib import Path
@@ -19,7 +20,7 @@ METADATA = ('.ambiance/cleanup/', '.ambiance/trash/')
 def add_parsers(group):
     group.add_parser('storage')
     sub = group.add_parser('cleanup').add_subparsers(dest='cleanup_action', required=True)
-    q = sub.add_parser('plan'); q.add_argument('--keep-days', type=int, default=30); q.add_argument('--include', action='append', default=[]); q.add_argument('--out', type=Path, required=True)
+    q = sub.add_parser('plan'); q.add_argument('--keep-days', type=int, default=30); q.add_argument('--include', action='append', default=[]); add_output(q, Output.FILE, type=Path, required=True)
     q = sub.add_parser('apply'); q.add_argument('file', type=Path)
     q = sub.add_parser('restore'); q.add_argument('id')
     q = sub.add_parser('inspect'); q.add_argument('id')

@@ -1,4 +1,5 @@
 """Saved framing commands over the shared evaluator and scene transactions."""
+from .command_output import Output, add_output
 import hashlib
 from pathlib import Path
 
@@ -12,7 +13,7 @@ from .scene_transactions import scene_transaction
 def add_parsers(sub):
     group = sub.add_parser('view', help='Inspect, author and check saved output framing').add_subparsers(dest='action', required=True)
     q = group.add_parser('inspect'); q.add_argument('id', nargs='?'); q.add_argument('--revision')
-    q = group.add_parser('check'); q.add_argument('--view', action='append', dest='views'); q.add_argument('--revision'); q.add_argument('--out', type=Path)
+    q = group.add_parser('check'); q.add_argument('--view', action='append', dest='views'); q.add_argument('--revision'); add_output(q, Output.REPORT, type=Path)
     q = group.add_parser('apply'); q.add_argument('file', type=Path); q.add_argument('--dry-run', action='store_true'); q.add_argument('--expect-sha256')
 
 

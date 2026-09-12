@@ -3,6 +3,7 @@
 New consumers import the owning record, reference, capture, edition or review
 module directly. These aliases retain the original public revision entry points.
 """
+from .command_output import Output, add_output
 from pathlib import Path
 
 from .record_contracts import (
@@ -31,9 +32,9 @@ def add_parsers(sub):
     q.add_argument('--dry-run', action='store_true'); q.add_argument('--expect-selection-sha256')
     for action in ['inspect', 'check', 'compare', 'handoff']:
         q = group.add_parser(action); q.add_argument('id')
-        if action in ['check', 'compare']: q.add_argument('--out', type=Path)
+        if action in ['check', 'compare']: add_output(q, Output.REPORT, type=Path)
         if action == 'compare': q.add_argument('--working', action='store_true', required=True)
-        if action == 'handoff': q.add_argument('--edition'); q.add_argument('--out', type=Path, required=True)
+        if action == 'handoff': q.add_argument('--edition'); add_output(q, Output.ARTIFACT, type=Path, required=True)
 
 
 def run(args, project):

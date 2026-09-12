@@ -3,6 +3,7 @@
 The JavaScript engine owns grading/projection semantics. This adapter validates
 file identities and remaps declared IDs; it never guesses a rig or copies art.
 """
+from .command_output import Output, add_output
 import copy
 import hashlib
 import json
@@ -21,10 +22,10 @@ BINDINGS = 'ambiance-finishing-bindings'
 def add_parsers(sub):
     group = sub.add_parser('look', help='Inspect and reuse authored finishing').add_subparsers(dest='action', required=True)
     for action in ['inspect', 'check']:
-        q = group.add_parser(action); q.add_argument('--time', type=float, default=0); q.add_argument('--out', type=Path)
+        q = group.add_parser(action); q.add_argument('--time', type=float, default=0); add_output(q, Output.REPORT, type=Path)
     q = group.add_parser('apply'); q.add_argument('file', type=Path)
     q.add_argument('--dry-run', action='store_true'); q.add_argument('--expect-sha256')
-    q = group.add_parser('export'); q.add_argument('--out', type=Path, required=True); q.add_argument('--include-rig', action='store_true')
+    q = group.add_parser('export'); add_output(q, Output.ARTIFACT, type=Path, required=True); q.add_argument('--include-rig', action='store_true')
     q = group.add_parser('import'); q.add_argument('package', type=Path); q.add_argument('--bindings', type=Path, required=True)
     q.add_argument('--dry-run', action='store_true'); q.add_argument('--expect-sha256'); q.add_argument('--include-rig', action='store_true')
 

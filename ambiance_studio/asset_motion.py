@@ -1,4 +1,5 @@
 """Source-bound cel studies and bounded corrections. No scene mutation or art generation."""
+from .command_output import Output, add_output
 import copy
 import hashlib
 import json
@@ -389,10 +390,10 @@ def validate_preparation(report_path, expected_sha, input_paths=None):
 
 def add_parsers(group):
     sub=group.add_parser('motion',help='Inspect, track and stabilize source-backed cels').add_subparsers(dest='motion_action',required=True)
-    q=sub.add_parser('init');q.add_argument('asset',nargs='?');q.add_argument('--layer');q.add_argument('--display-width',type=int);q.add_argument('--fps',type=float,default=6);q.add_argument('--out',type=Path,required=True)
+    q=sub.add_parser('init');q.add_argument('asset',nargs='?');q.add_argument('--layer');q.add_argument('--display-width',type=int);q.add_argument('--fps',type=float,default=6);add_output(q, Output.FILE, type=Path,required=True)
     for action in ['inspect','check','edit','analyze','solve','track','proof']:
         q=sub.add_parser(action);q.add_argument('file',type=Path)
-        if action not in ['inspect','check']: q.add_argument('--out',type=Path,required=True)
+        if action not in ['inspect','check']: add_output(q, Output.FILE if action == 'edit' else Output.ARTIFACT, type=Path,required=True)
         if action=='edit': q.add_argument('--changes',type=Path,required=True);q.add_argument('--expect-study',required=True)
         if action=='solve': q.add_argument('--id',required=True)
         if action in ['analyze','proof']: q.add_argument('--finding');q.add_argument('--region');q.add_argument('--offset',type=int,default=0);q.add_argument('--limit',type=int,default=5)

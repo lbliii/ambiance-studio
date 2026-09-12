@@ -1,4 +1,5 @@
 """Reconcile authored production intentions with current project evidence."""
+from .command_output import Output, add_output
 from pathlib import Path
 import json
 import studio
@@ -14,7 +15,7 @@ def add_parsers(sub):
     plan_commands.add_parsers(group)
     q=group.add_parser('fulfill');q.add_argument('file',type=Path);q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256',required=True)
     for action in ['inspect','check','next']:
-        q=group.add_parser(action);q.add_argument('--inventory',default='plans/asset-inventory.json');q.add_argument('--out',type=Path)
+        q=group.add_parser(action);q.add_argument('--inventory',default='plans/asset-inventory.json');add_output(q, Output.REPORT, type=Path)
         if action=='next':q.add_argument('--limit',type=int,default=5)
         if action=='check':q.add_argument('--require-complete',action='store_true',help='Fail when declared production scope is empty or unfinished; does not certify aesthetics')
 

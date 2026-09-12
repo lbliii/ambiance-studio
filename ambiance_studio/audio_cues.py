@@ -1,4 +1,5 @@
 """Explicit cue alignment snapshots; never retime or stretch selected PCM."""
+from .command_output import Output, add_output
 import hashlib
 import json
 from pathlib import Path
@@ -147,5 +148,5 @@ def check(args, project):
 def add_parsers(group):
     for name in ['cue-bind', 'cue-check']:
         p = group.add_parser(name); p.add_argument('session', type=Path); p.add_argument('--activity', type=Path, required=True)
-        p.add_argument('--pcm', type=Path); p.add_argument('--out', type=Path, required=name == 'cue-bind')
+        p.add_argument('--pcm', type=Path); add_output(p, Output.FILE if name == 'cue-bind' else Output.REPORT, type=Path, required=name == 'cue-bind')
         if name == 'cue-bind': p.add_argument('--links', type=Path, required=True)

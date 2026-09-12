@@ -1,11 +1,47 @@
 """Scene/look command adapters over the evaluator and transaction service."""
+from .command_output import Output, add_output
 import re
+from pathlib import Path
 
 import studio
 from .errors import CommandError
 from .project import locations, project_lock
 from . import finishing, scene_authoring, scene_runtime
 from .scene_transactions import scene_transaction
+
+
+def add_parsers(sub):
+    group=sub.add_parser('scene').add_subparsers(dest='action',required=True)
+    q=group.add_parser('clock');q.add_argument('--loop-seconds',type=float,required=True);q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256')
+    q=group.add_parser('inspect');q.add_argument('--full',action='store_true');q=group.add_parser('sample');q.add_argument('--time',type=float,required=True)
+    q=group.add_parser('apply');q.add_argument('file',type=Path);q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256')
+    q=group.add_parser('track');q.add_argument('layer');q.add_argument('file',type=Path);q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256')
+    from . import activity
+    activity.add_parsers(group)
+    q=group.add_parser('timing');q.add_argument('--layer');add_output(q, Output.REPORT, type=Path)
+    q=group.add_parser('place');q.add_argument('file',type=Path);q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256')
+    q=group.add_parser('reparent');q.add_argument('layer');q.add_argument('--to',required=True);q.add_argument('--socket',required=True)
+    q.add_argument('--keep-world',action='store_true',required=True);q.add_argument('--at',type=float,required=True)
+    q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256')
+    q=group.add_parser('check');add_output(q, Output.REPORT, type=Path)
+    q=group.add_parser('set');q.add_argument('layer')
+    for name in ['x','y','scale','rotation-deg','opacity','depth','cycle-seconds']:q.add_argument('--'+name,type=float)
+    q.add_argument('--phase-frames',type=int)
+    q=group.add_parser('socket');q.add_argument('layer');q.add_argument('name');q.add_argument('--u',type=float,required=True);q.add_argument('--v',type=float,required=True)
+    q=group.add_parser('attach');q.add_argument('layer');q.add_argument('--to',required=True);q.add_argument('--socket',required=True);q.add_argument('--offset-x',type=float,default=0);q.add_argument('--offset-y',type=float,default=0)
+    q=group.add_parser('add');q.add_argument('asset');q.add_argument('--id',required=True);q.add_argument('--name')
+    for name in ['x','y','width','depth']:q.add_argument('--'+name,type=float)
+    group.add_parser('history');q=group.add_parser('restore');q.add_argument('sha256')
+
+
+def run(args, project):
+    if args.action == 'check':
+        from .project_commands import check_project
+        return check_project(project, include_views=False)
+    if args.action in ['activity', 'activity-review']:
+        from . import activity
+        return activity.run(args, project)
+    return run_scene(args, project)
 
 
 def scene_batch(args, transaction):

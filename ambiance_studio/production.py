@@ -1,4 +1,5 @@
 """Production command adapters, project overview and delivery handoffs."""
+from .command_output import Output, add_output
 from pathlib import Path
 import os
 
@@ -19,14 +20,14 @@ def add_parsers(sub):
     q = group.add_parser('import'); q.add_argument('file', type=Path); q.add_argument('--dry-run', action='store_true')
     group.add_parser('list')
     q = group.add_parser('inspect'); q.add_argument('id')
-    q = group.add_parser('handoff'); q.add_argument('id'); q.add_argument('--out', type=Path, required=True)
+    q = group.add_parser('handoff'); q.add_argument('id'); add_output(q, Output.ARTIFACT, type=Path, required=True)
     q = group.add_parser('present'); q.add_argument('id'); q.add_argument('--by', required=True)
     q.add_argument('--note', default=''); q.add_argument('--channel', choices=['review', 'release'], default='review'); q.add_argument('--expect-selection')
     group = sub.add_parser('iteration', help='Produce and present a recorded local iteration').add_subparsers(dest='action', required=True)
-    q = group.add_parser('init'); q.add_argument('file', type=Path); q.add_argument('--out', type=Path, required=True)
+    q = group.add_parser('init'); q.add_argument('file', type=Path); add_output(q, Output.ARTIFACT, type=Path, required=True)
     q = group.add_parser('resolve'); q.add_argument('file', type=Path)
     q = group.add_parser('run'); q.add_argument('file', type=Path); q.add_argument('--by', required=True)
-    q = group.add_parser('preflight'); q.add_argument('file', type=Path); q.add_argument('--stage', choices=['layout', 'assets', 'animation', 'export']); q.add_argument('--out', type=Path)
+    q = group.add_parser('preflight'); q.add_argument('file', type=Path); q.add_argument('--stage', choices=['layout', 'assets', 'animation', 'export']); add_output(q, Output.REPORT, type=Path)
     q = group.add_parser('list'); q.add_argument('--details', action='store_true'); q.add_argument('--limit', type=int, default=20); q.add_argument('--offset', type=int, default=0)
     q = group.add_parser('inspect'); q.add_argument('id')
     q = group.add_parser('cancel'); q.add_argument('id'); q.add_argument('--expect-run', required=True)
