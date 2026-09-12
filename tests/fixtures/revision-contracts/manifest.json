@@ -1,0 +1,112 @@
+{
+  "format": "ambiance-revision",
+  "schema_version": 1,
+  "id": "fixture",
+  "created_utc": "2026-09-12T12:00:00+00:00",
+  "selection": {
+    "format": "ambiance-revision-selection",
+    "schema_version": 1,
+    "scene": "scene.json",
+    "catalog": "catalog.json",
+    "documents": {
+      "brief": "brief.md"
+    }
+  },
+  "selection_sha256": "9813d54e053ca3cacb81d32bb56999e037d6bce04916f63684b349f663635ffa",
+  "origins": [
+    {
+      "path": "project.json",
+      "sha256": "b4b4c89753e8a320ab2d471a21798bb5c6d5e05ee29287c85a53bc76eedd8d68",
+      "bytes": 79,
+      "section": "intent",
+      "role": "settings",
+      "path_base": "project"
+    },
+    {
+      "path": "pipeline.json",
+      "sha256": "c9b4ff11d688fb9308cfd35b093080ca64ba46c3908126902c4257533e954e34",
+      "bytes": 272,
+      "section": "policy",
+      "role": "pipeline",
+      "path_base": "project"
+    },
+    {
+      "path": "brief.md",
+      "sha256": "a318b96520a095536c5f4d1855cae55fb24dd3da0b19b181236ab05523561979",
+      "bytes": 40,
+      "section": "intent",
+      "role": "brief",
+      "path_base": "project"
+    },
+    {
+      "path": "scene.json",
+      "sha256": "6885ff866b6e27101d5adb004af2524873715dba83be2a9354bf4e93f2a6570a",
+      "bytes": 538,
+      "section": "animation",
+      "role": "scene",
+      "path_base": "project"
+    },
+    {
+      "path": "catalog.json",
+      "sha256": "a8174f5941573d1acd5d5df5dee4bca235701e21c29685694d143512d3247acf",
+      "bytes": 35,
+      "section": "assets",
+      "role": "catalog",
+      "path_base": "project"
+    }
+  ],
+  "controls": {
+    "settings": "revisions/fixture/controls/project.json",
+    "pipeline": "revisions/fixture/controls/pipeline.json",
+    "brief": "revisions/fixture/controls/brief.md",
+    "scene": "revisions/fixture/controls/scene.json",
+    "catalog": "revisions/fixture/controls/catalog.json"
+  },
+  "dependencies": [
+    {
+      "path": "revisions/fixture/controls/project.json",
+      "sha256": "b4b4c89753e8a320ab2d471a21798bb5c6d5e05ee29287c85a53bc76eedd8d68",
+      "bytes": 79,
+      "section": "intent",
+      "role": "settings",
+      "path_base": "project"
+    },
+    {
+      "path": "revisions/fixture/controls/pipeline.json",
+      "sha256": "c9b4ff11d688fb9308cfd35b093080ca64ba46c3908126902c4257533e954e34",
+      "bytes": 272,
+      "section": "policy",
+      "role": "pipeline",
+      "path_base": "project"
+    },
+    {
+      "path": "revisions/fixture/controls/brief.md",
+      "sha256": "a318b96520a095536c5f4d1855cae55fb24dd3da0b19b181236ab05523561979",
+      "bytes": 40,
+      "section": "intent",
+      "role": "brief",
+      "path_base": "project"
+    },
+    {
+      "path": "revisions/fixture/controls/scene.json",
+      "sha256": "6885ff866b6e27101d5adb004af2524873715dba83be2a9354bf4e93f2a6570a",
+      "bytes": 538,
+      "section": "animation",
+      "role": "scene",
+      "path_base": "project"
+    },
+    {
+      "path": "revisions/fixture/controls/catalog.json",
+      "sha256": "a8174f5941573d1acd5d5df5dee4bca235701e21c29685694d143512d3247acf",
+      "bytes": 35,
+      "section": "assets",
+      "role": "catalog",
+      "path_base": "project"
+    }
+  ],
+  "masters": [],
+  "sound_complete": [],
+  "notes": [],
+  "meaning": "Captured inputs, not approval. Binary dependencies remain pinned to their project paths.",
+  "payload_sha256": "f940bb2f3a4222ae1750cecfce5c7afc4777d8efcc73e0b22fb14db564dc3813"
+}

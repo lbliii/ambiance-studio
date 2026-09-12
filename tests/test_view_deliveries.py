@@ -8,7 +8,7 @@ import unittest
 from unittest.mock import patch
 
 import studio
-from ambiance_studio import cli, deliveries, production, registry, revisions
+from ambiance_studio import cli, deliveries, production, registry, revisions, revision_reviews
 import test_deliveries as legacy_fixtures
 import test_view_editions as view_fixtures
 
@@ -86,7 +86,7 @@ class ViewDeliveryTests(unittest.TestCase):
         production.handoff(self.p,'pair',self.p/'reports/handoff',alias='film')
         md=(self.p/'reports/handoff/handoff.md').read_text()
         self.assertIn('view=portrait&role=score',md);self.assertIn('view=landscape&role=score',md)
-        with patch.object(revisions,'status',side_effect=[{'release_ready':True}, {'release_ready':False,'gates':{'release':{'state':'pending'}}}]):
+        with patch.object(revision_reviews,'status',side_effect=[{'release_ready':True}, {'release_ready':False,'gates':{'release':{'state':'pending'}}}]):
             self.assertFalse(deliveries.release_state(self.p,deliveries.load(self.p,'pair'))['approved'])
 
     def test_whole_job_preflight_rejects_bad_second_view_audio_and_foreign_destinations(self):

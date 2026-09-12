@@ -12,7 +12,7 @@ from unittest.mock import patch
 import wave
 
 from test_rendering import ROOT, Image, fixture, parse
-from ambiance_studio import rendering
+from ambiance_studio import native_media, rendering
 from ambiance_studio.cli import CommandError
 
 
@@ -83,7 +83,7 @@ class RigProofTests(unittest.TestCase):
         catalog_path=self.project/'art/library.json'
         changed=json.loads(self.original);changed['layers']=[];self.scene_path.write_text(json.dumps(changed))
         context={'scene':scene_copy,'catalog':catalog_path,'revision_id':'frozen','manifest_sha256':'f'*64}
-        with patch('ambiance_studio.rendering._context',return_value=context) as selected:
+        with patch('ambiance_studio.render_plan.render_context',return_value=context) as selected:
             result=rendering.run(parse('render','frame','--revision','frozen','--out',self.root/'frozen'),self.project)
         self.assertTrue(result['ok']);self.assertEqual(result['scene'],str(scene_copy.resolve()))
         self.assertEqual(result['revision']['revision_id'],'frozen');self.assertEqual(selected.call_count,2)
@@ -122,12 +122,12 @@ class CompositionNativeTests(unittest.TestCase):
             root=Path(directory);project=fixture(root)
             picture=Path(rendering.run(parse('render','video','--out',root/'picture'),project)['output'])
             audio=root/'audio.wav';pcm(audio,2)
-            original=rendering._json_command
+            original=native_media.json_command
             def mutate_after_compose(command,*args,**kwargs):
                 result=original(command,*args,**kwargs)
                 if str(command[1])=='compose':picture.write_bytes(picture.read_bytes()+b'changed during mux')
                 return result
-            with patch('ambiance_studio.rendering._json_command',side_effect=mutate_after_compose):
+            with patch('ambiance_studio.native_media.json_command',side_effect=mutate_after_compose):
                 result=rendering.run(parse('media','compose',picture,'--audio',audio,'--out',root/'changed'),project)
             self.assertFalse(result['ok']);self.assertFalse(result['inputs_unchanged']);self.assertTrue(result['snapshots_unchanged'])
             self.assertTrue(Path(result['report']).is_file())

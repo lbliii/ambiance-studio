@@ -2,17 +2,17 @@
 import tempfile
 from pathlib import Path
 import studio
-from . import revisions, scene_runtime
+from . import scene_runtime, project_references, record_contracts, revision_capture, revision_dependencies
 from .iteration_plan import validate_recipe
 from .project import locations, project_lock
-from .rendering import _pcm_bytes
+from .media_inputs import pcm_bytes
 
 
 def build(project, request, destination):
     from . import recipe_config
     resolution = recipe_config.resolve(project, request) if request.get('format') == recipe_config.FORMAT else None
     if resolution: request = resolution['request']
-    revisions.fields(request, {'format', 'schema_version', 'id', 'revision', 'title', 'notes', 'views', 'default', 'scope',
+    record_contracts.fields(request, {'format', 'schema_version', 'id', 'revision', 'title', 'notes', 'views', 'default', 'scope',
                               'long_edge', 'supersample', 'editions', 'documents', 'audio_selection'}, 'iteration request')
     if request.get('format') != 'ambiance-iteration-request' or request.get('schema_version') != 1:
         raise ValueError('Expected ambiance-iteration-request schema_version 1')
@@ -22,21 +22,21 @@ def build(project, request, destination):
     recipe = {k: request[k] for k in ['id', 'revision', 'title', 'notes', 'views', 'default', 'scope', 'long_edge', 'supersample', 'editions'] if k in request}
     recipe.update(format='ambiance-iteration', schema_version=2, capture_selection=str((destination/'capture-selection.json').relative_to(project)))
     validate_recipe(recipe)
-    if revisions.manifest_path(project, recipe['revision']).exists(): raise ValueError('Initializer needs a fresh revision ID; existing recipes can still resume captured work')
+    if revision_capture.manifest_path(project, recipe['revision']).exists(): raise ValueError('Initializer needs a fresh revision ID; existing recipes can still resume captured work')
     audio = dict(request.get('audio_selection', {})); masters = list(audio.get('masters', []))
     for edition in recipe['editions']:
         if edition['role'] != 'silent':
-            _pcm_bytes(studio.inside(project, edition['audio']), scene['canvas']['loop_seconds']*edition.get('repeats', 1))
+            pcm_bytes(studio.inside(project, edition['audio']), scene['canvas']['loop_seconds']*edition.get('repeats', 1))
             if edition['audio'] not in masters: masters.append(edition['audio'])
     if masters: audio['masters'] = masters
-    selection = dict(format=revisions.SELECTION, schema_version=1, scene=str(scene_path.relative_to(project)), catalog=str(catalog_path.relative_to(project)),
+    selection = dict(format=revision_dependencies.SELECTION, schema_version=1, scene=str(scene_path.relative_to(project)), catalog=str(catalog_path.relative_to(project)),
                      documents=request.get('documents', {}), audio=audio)
-    collector = revisions.collect(project, selection)
+    collector = revision_dependencies.collect(project, selection)
     plan = scene_runtime.scene_bridge('view-plan', scene, catalog, {'requests': [{'id': v} for v in recipe['views']],
         'options': {k: recipe[k] for k in ['long_edge', 'supersample'] if k in recipe}})
     if any(any(view['output'][axis] % 2 for axis in ['width', 'height']) for view in plan['views']):
         raise ValueError('Movie dimensions must be even')
-    inputs = revisions.unique(collector.refs+collector.origins+(resolution['inputs'] if resolution else []))
+    inputs = project_references.unique(collector.refs+collector.origins+(resolution['inputs'] if resolution else []))
     return {'recipe': recipe, 'selection': selection, 'plan': plan, 'inputs': inputs, 'resolution': resolution}
 
 
@@ -52,7 +52,7 @@ def initialize(project, request, out, *, complete_bundle=None):
             studio.write(bundle/'inputs.json', built['inputs']); studio.write(bundle/'job-plan.json', built['plan'])
             if built['resolution']: studio.write(bundle/'config-resolution.json', built['resolution'])
             if complete_bundle is not None: complete_bundle(bundle, built)
-            if revisions.changed(project, built['inputs']): raise ValueError('Recipe inputs changed during initialization')
+            if project_references.changed(project, built['inputs']): raise ValueError('Recipe inputs changed during initialization')
             if out.exists(): raise ValueError('Recipe destination appeared during initialization')
             bundle.rename(out)
     return {'ok': True, 'recipe': str(out/'iteration.json'), 'selection': str(out/'capture-selection.json'),

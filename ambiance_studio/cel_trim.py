@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 import tempfile
 import studio
-from . import assets, revisions
+from . import assets, record_contracts
 from .project import locations, project_lock
 
 
@@ -43,7 +43,7 @@ def validate(path, expected, source_paths, recipe):
 
 
 def prepare(project, layer_id, asset_id, out):
-    project = project.resolve(); out = Path(out).resolve(); revisions.identifier(asset_id)
+    project = project.resolve(); out = Path(out).resolve(); record_contracts.identifier(asset_id)
     if out.exists() or not out.is_relative_to(project): raise ValueError('Choose a fresh trim directory inside the project')
     with project_lock(project):
         scene_path, catalog_path = locations(project); scene = studio.read(scene_path); catalog = studio.read(catalog_path)

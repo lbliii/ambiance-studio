@@ -8,7 +8,7 @@ import shutil
 import tempfile
 from urllib.parse import quote
 import studio
-from . import deliveries, revisions, iteration_recipes, production
+from . import deliveries, iteration_recipes, production, project_references, record_contracts, revision_capture
 from .project import project_lock, locations
 
 REQUEST = 'ambiance-review-packet-request'
@@ -23,7 +23,7 @@ def add_parsers(group):
 
 
 def initialize(project, request, out):
-    revisions.fields(request, {'format', 'schema_version', 'iteration', 'audible_role', 'interval', 'auditions', 'questions', 'feedback_ids'}, 'packet request')
+    record_contracts.fields(request, {'format', 'schema_version', 'iteration', 'audible_role', 'interval', 'auditions', 'questions', 'feedback_ids'}, 'packet request')
     if request.get('format') != REQUEST or request.get('schema_version') != 1: raise ValueError('Expected ambiance-review-packet-request schema_version 1')
     out = Path(out).resolve(); project = project.resolve()
     if out.exists() or not out.is_relative_to(project): raise ValueError('Choose a fresh packet bundle inside the project')
@@ -39,7 +39,7 @@ def initialize(project, request, out):
     for id in feedback_ids: feedback.inspect(project, id)
     auditions = request.get('auditions', [])
     if not isinstance(auditions, list) or len(auditions) > 20: raise ValueError('Packet auditions must be a bounded list')
-    sources = [revisions.ref(project, studio.inside(project, name), 'review-packet', 'audition') for name in auditions]
+    sources = [project_references.ref(project, studio.inside(project, name), 'review-packet', 'audition') for name in auditions]
     scene, _ = locations(project)
     duration = studio.read(scene)['canvas']['loop_seconds']*next(e.get('repeats', 1) for e in iteration['editions'] if e['role'] == role)
     interval = interval if interval is not None else [0, duration]
@@ -48,11 +48,11 @@ def initialize(project, request, out):
     # Publish the complete packet request and recipe bundle in one rename.
     def complete_bundle(bundle, built):
         def ref(name, role):
-            value = revisions.ref(bundle, bundle/name, 'review-packet', role)
+            value = project_references.ref(bundle, bundle/name, 'review-packet', role)
             value['path'] = str((out/name).relative_to(project))
             return value
-        if revisions.changed(project, sources): raise ValueError('Audition sources changed during initialization')
-        document = revisions.seal(dict(format=REQUEST, schema_version=1, recipe=ref('iteration.json', 'recipe'),
+        if project_references.changed(project, sources): raise ValueError('Audition sources changed during initialization')
+        document = record_contracts.seal(dict(format=REQUEST, schema_version=1, recipe=ref('iteration.json', 'recipe'),
             inputs=ref('inputs.json', 'inputs'), selection=ref('capture-selection.json', 'selection'),
             interval=interval, audible_role=role, auditions=sources, questions=questions, feedback_ids=feedback_ids))
         studio.write(bundle/'packet-request.json', document)
@@ -61,7 +61,7 @@ def initialize(project, request, out):
 
 
 def verify(project, path):
-    path = Path(path).resolve(); data = revisions.read_sealed(path, FORMAT)
+    path = Path(path).resolve(); data = record_contracts.read_sealed(path, FORMAT)
     for ref in data['artifacts']:
         relative = ref['path']; target = studio.inside(path.parent, relative)
         if studio.digest(target) != ref['sha256'] or target.stat().st_size != ref['bytes']: raise ValueError('Packet artifact changed: '+relative)
@@ -105,12 +105,12 @@ playbackStatus.textContent=!lead.paused&&now-advanced>2000?'Playback is waiting 
 def execute(project, request_path, actor):
     project = project.resolve(); request_path = Path(request_path).resolve()
     if not request_path.is_relative_to(project): raise ValueError('Packet request must be inside the project')
-    request = revisions.read_sealed(request_path, REQUEST)
-    if revisions.changed(project, [request['recipe'], request['inputs'], request['selection'], *request['auditions']]): raise ValueError('Packet inputs changed')
+    request = record_contracts.read_sealed(request_path, REQUEST)
+    if project_references.changed(project, [request['recipe'], request['inputs'], request['selection'], *request['auditions']]): raise ValueError('Packet inputs changed')
     recipe = studio.read(studio.inside(project, request['recipe']['path'])); out = request_path.parent/'packet'
     if out.exists():
         verify(project, out/'packet.json'); return {'ok': True, 'reused': True, 'packet': str(out/'packet.json'), 'player': str(out/'index.html')}
-    if not revisions.manifest_path(project, recipe['revision']).exists() and revisions.changed(project, studio.read(studio.inside(project, request['inputs']['path']))):
+    if not revision_capture.manifest_path(project, recipe['revision']).exists() and project_references.changed(project, studio.read(studio.inside(project, request['inputs']['path']))):
         raise ValueError('Working inputs changed since packet initialization; initialize a new packet')
     production.iteration(project, recipe, actor, present=False)
     delivery = deliveries.load(project, recipe['id'])
@@ -135,7 +135,7 @@ def execute(project, request_path, actor):
             if studio.digest(bundle/movie['file']) != movie['source']['sha256']: raise ValueError('Movie changed while packaging')
         for audition in auditions:
             if studio.digest(bundle/audition['file']) != audition['source']['sha256']: raise ValueError('Audition source changed while packaging')
-        studio.write(bundle/'packet.json', revisions.seal(data)); bundle.rename(out)
+        studio.write(bundle/'packet.json', record_contracts.seal(data)); bundle.rename(out)
     return {'ok': True, 'packet': str(out/'packet.json'), 'player': str(out/'index.html'), 'delivery': delivery['id'],
             'movies': [str(out/m['file']) for m in movies], 'current_review_changed': False}
 

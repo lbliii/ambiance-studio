@@ -116,3 +116,19 @@ Named-view movies write edition schema 2: `view` stores its ID, canonical defini
 `media compose` inherits the picture view through a matching render receipt or prior captured edition. It cannot relabel portrait bytes as landscape. `media verify FILE --revision ID --edition ID` validates the movie identity and uses the bound expectations, even after working framing changes.
 
 Before encoding, picture review scopes can use `review draft GATE --revision ID --view portrait --out FILE` (and separately landscape). Their paths are `reviews/revisions/ID/views/VIEW/picture/`. Edition review scopes retain their existing paths and add the exact view/hash to the subject. Explicit `--view` must match the selected edition. Review observations and pass verdicts remain separate; a delivery is release ready only when every requested entry has current release evidence.
+
+## Python ownership and compatibility
+
+`revisions.py` retains the CLI registration/dispatch and existing Python imports.
+New consumers use the module that owns the operation:
+
+- `record_contracts.py`: record fields, identifiers and seals; each record kind chooses its accepted schema versions.
+- `project_references.py`: contained file references, section/role identities and change detection.
+- `revision_dependencies.py`: source/provenance collection and exact control-document bytes.
+- `revision_capture.py`: immutable capture, manifest loading, integrity checks and rendering context.
+- `editions.py`: captured views and the prepare/verify/register edition lifecycle.
+- `revision_reviews.py`: review contexts, status and handoffs through the existing studio gate validator.
+
+These boundaries preserve the existing JSON encoding, project lock, snapshot
+publication and review verdict rules. They do not migrate stored revisions or
+editions. Baseline byte fixtures cover both edition versions and revision seals.

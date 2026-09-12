@@ -3,7 +3,7 @@ from .command_output import Output, add_output
 from pathlib import Path
 
 import studio
-from . import revisions
+from . import revision_reviews
 from .errors import CommandError
 from .project import locations, project_lock
 
@@ -27,7 +27,7 @@ def run(args, project):
             raise CommandError('--edition requires --revision')
         if args.view and not args.revision:
             raise CommandError('--view requires --revision')
-        context = revisions.review_context(project, args.revision, args.edition, args.view) if args.revision else None
+        context = revision_reviews.review_context(project, args.revision, args.edition, args.view) if args.revision else None
         draft = studio.review_template(project, args.gate, context)
         if args.out.exists():
             raise CommandError('Review draft already exists.')
@@ -37,6 +37,6 @@ def run(args, project):
         with project_lock(project):
             source = studio.read(args.file)
             subject = source.get('subject', {})
-            context = revisions.review_context(project, subject['revision'], subject.get('edition'), subject.get('view')) if source.get('version') == 2 else None
+            context = revision_reviews.review_context(project, subject['revision'], subject.get('edition'), subject.get('view')) if source.get('version') == 2 else None
             return studio.record_review(project, args.file, context)
     raise CommandError('Unsupported command')

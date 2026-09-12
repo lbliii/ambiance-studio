@@ -2,7 +2,7 @@
 import copy
 import hashlib
 import json
-from . import planning, revisions
+from . import planning, record_contracts
 from .project import project_lock, locations
 from .errors import CommandError
 import studio
@@ -10,7 +10,7 @@ import studio
 
 def fulfill(project, patch, expected, dry_run=False):
     project = project.resolve()
-    revisions.fields(patch, {'format', 'schema_version', 'parts'}, 'fulfillment patch')
+    record_contracts.fields(patch, {'format', 'schema_version', 'parts'}, 'fulfillment patch')
     if patch.get('format') != 'ambiance-fulfillment' or patch.get('schema_version') != 1 or not isinstance(patch.get('parts'), list) or not patch['parts']:
         raise ValueError('Expected ambiance-fulfillment schema_version 1 with parts')
     with project_lock(project):
@@ -20,14 +20,14 @@ def fulfill(project, patch, expected, dry_run=False):
         inputs = {p: studio.digest(p) for p in [path, scene_path, catalog_path, project/'ambiance-project.json']}
         seen = set(); changes = []
         for update in patch['parts']:
-            revisions.fields(update, {'item', 'part', 'values'}, 'fulfillment update')
+            record_contracts.fields(update, {'item', 'part', 'values'}, 'fulfillment update')
             key = (update.get('item'), update.get('part'))
             if not all(isinstance(k, str) for k in key) or key in seen: raise ValueError('Unique stable item/part IDs required')
             seen.add(key)
             items = [i for i in candidate['items'] if i['id'] == key[0]]
             parts = [p for p in items[0].get('required_parts', []) if isinstance(p, dict) and p.get('id') == key[1]] if len(items) == 1 else []
             if len(parts) != 1: raise ValueError('Unknown or legacy fulfillment part: '+str(key))
-            values = update.get('values'); revisions.fields(values, {'stage', 'files', 'asset_id', 'layer_ids'}, 'fulfillment values')
+            values = update.get('values'); record_contracts.fields(values, {'stage', 'files', 'asset_id', 'layer_ids'}, 'fulfillment values')
             if not values: raise ValueError('Fulfillment values cannot be empty')
             old = copy.deepcopy(parts[0]); parts[0].update(values)
             changes.append({'item': key[0], 'part': key[1], 'before': old, 'after': copy.deepcopy(parts[0])})

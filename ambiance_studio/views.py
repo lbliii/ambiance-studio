@@ -4,7 +4,7 @@ import hashlib
 from pathlib import Path
 
 import studio
-from . import revisions, scene_runtime
+from . import scene_runtime, revision_capture
 from .project import locations
 from .scene_commands import apply_batch
 from .scene_transactions import scene_transaction
@@ -19,7 +19,7 @@ def add_parsers(sub):
 
 def inspect(project, id=None, revision=None, check=False, selected=None):
     if revision:
-        context = revisions.render_context(project, revision)
+        context = revision_capture.render_context(project, revision)
         scene_path, catalog_path = context['scene'], context['catalog']
     else:
         scene_path, catalog_path = locations(project)
@@ -37,7 +37,7 @@ def inspect(project, id=None, revision=None, check=False, selected=None):
     if scene_path.read_bytes() != scene_bytes or catalog_path.read_bytes() != catalog_bytes:
         raise ValueError('Scene or catalog changed during view inspection; rerun the check')
     if revision:
-        revisions.render_context(project, revision)
+        revision_capture.render_context(project, revision)
     return result
 
 

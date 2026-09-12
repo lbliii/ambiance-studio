@@ -87,7 +87,7 @@ def add_parsers(sub):
 
 
 def run(args, project, root, registry_file):
-    from . import deliveries, registry, revisions
+    from . import deliveries, registry, revision_reviews
     if args.action == 'init':
         return init_project(args.destination, args.reference, args.title, args.template, args.output_format)
     if args.action == 'list':
@@ -99,7 +99,7 @@ def run(args, project, root, registry_file):
         from . import production_commands
         return production_commands.run(args, project, root, registry_file)
     if args.action == 'status':
-        result = revisions.project_status(project)
+        result = revision_reviews.project_status(project)
         result['current_delivery'] = deliveries.latest(project)
         return result
     if args.action == 'check':

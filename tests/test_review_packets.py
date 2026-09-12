@@ -9,7 +9,7 @@ import unittest
 from unittest.mock import patch
 
 import studio
-from ambiance_studio import review_packets, revisions, deliveries, rendering, run_control, production
+from ambiance_studio import native_media, review_packets, revisions, deliveries, rendering, run_control, production
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('midnight_replay', ROOT/'examples/midnight-production/replay.py')
@@ -52,7 +52,7 @@ class PacketTests(unittest.TestCase):
         # before the next decode. Process termination itself has subprocess tests.
         for phase in ['render', 'verify']:
             request = review_packets.initialize(self.project, example.packet_request('cancel-'+phase), self.project/'recipes'/phase)
-            original = rendering._json_command; fired = False
+            original = native_media.json_command; fired = False
             def interrupt(command, *args, **kwargs):
                 nonlocal fired
                 is_renderer = len(command) > 1 and str(command[1]).endswith('render-scene.mjs')
@@ -63,7 +63,7 @@ class PacketTests(unittest.TestCase):
                 if not fired and phase == 'render' and is_renderer:
                     fired = True; raise KeyboardInterrupt('Native render boundary fixture')
                 return result
-            with patch('ambiance_studio.rendering._json_command', side_effect=interrupt):
+            with patch('ambiance_studio.native_media.json_command', side_effect=interrupt):
                 with self.assertRaises(KeyboardInterrupt): review_packets.execute(self.project, request['request'], 'Native interruption fixture')
             self.assertTrue(fired)
             state = studio.read(production.run_file(self.project, 'cancel-'+phase))

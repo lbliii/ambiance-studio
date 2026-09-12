@@ -100,7 +100,7 @@ def project_asset(project, pack):
 
 
 def dependencies(project, asset, scene=None, catalog=None):
-    from .revisions import Collector
+    from .revision_dependencies import Collector
     collector = Collector(project)
     for item in catalog['assets'] if scene is not None else [asset]: collector.asset(item)
     return list({r['path']: {'file': r['path'], 'sha256': r['sha256']} for r in collector.refs}.values())
