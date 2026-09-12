@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "canonical_intent": "plans/production-plan.json",
+  "stage": [
+    1448,
+    1086
+  ],
+  "groups": {
+    "sky": [
+      "sky",
+      "cloud-veil"
+    ],
+    "valley": [
+      "valley"
+    ],
+    "cottage": [
+      "cottage"
+    ],
+    "path": [
+      "path"
+    ],
+    "tree": [
+      "tree"
+    ],
+    "fences": [
+      "fence-left",
+      "fence-right"
+    ],
+    "cat": [
+      "cat"
+    ],
+    "chair": [
+      "chair"
+    ],
+    "planters": [
+      "planter-left",
+      "planter-right",
+      "hanging-basket",
+      "pumpkin-shelf"
+    ],
+    "wreath": [
+      "wreath"
+    ],
+    "pumpkins": [
+      "pumpkin-near",
+      "pumpkin-left",
+      "pumpkin-right",
+      "pumpkin-step",
+      "pumpkin-near-emission",
+      "pumpkin-left-emission",
+      "pumpkin-right-emission",
+      "pumpkin-step-emission"
+    ],
+    "lanterns": [
+      "lantern-left",
+      "lantern-step",
+      "lantern-step-low",
+      "lantern-right-low",
+      "lantern-post",
+      "sconce-0",
+      "sconce-1",
+      "sconce-2",
+      "lantern-left-flame",
+      "lantern-step-flame",
+      "lantern-step-low-flame",
+      "lantern-right-low-flame",
+      "lantern-post-flame",
+      "sconce-0-flame",
+      "sconce-1-flame",
+      "sconce-2-flame"
+    ],
+    "leaves": [
+      "leaf-0",
+      "leaf-1",
+      "leaf-2",
+      "leaf-3",
+      "leaf-4",
+      "leaf-5",
+      "leaf-6",
+      "leaf-7",
+      "leaf-8",
+      "leaf-9",
+      "leaf-10",
+      "leaf-11",
+      "leaf-12",
+      "leaf-13"
+    ],
+    "sound": [],
+    "delivery": []
+  },
+  "art_sources": "assets/source",
+  "prepared_manifest": "assets/derivatives/v1/preparation-manifest.json",
+  "assembly_manifest": "assets/derivatives/v2/assembly-assets.json",
+  "camera": "Fixed",
+  "contacts": {
+    "cat": "Paw anchor [676,452] on railing; shared cel scale, source paw landmarks in compiler recipe."
+  },
+  "backing": "Generated clean architecture plus independent sky, valley and ground reconstructed behind objects.",
+  "proof": "plans/whole-object-proof-v3.json"
+}

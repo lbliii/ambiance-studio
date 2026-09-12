@@ -1,0 +1,290 @@
+{
+  "format": "ambiance-component-triage-evidence",
+  "version": 1,
+  "captured_at_utc": "2026-09-12T16:31:49.911237+00:00",
+  "code_commit": "77ba9f9482b54b7a3074ca48f43682fbdfa978a8",
+  "active_project_access": "Read-only file inspection; no active project commands or job operations",
+  "evidence": [
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/scripts/prepare_art.py",
+      "snapshot": "evidence/amberwatch/scripts/prepare_art.py",
+      "sha256": "a434edb5226e8b6d87344bcb4fad992d41906f7b7f5fa9324dd5552be4f6d611",
+      "bytes": 13433
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/scripts/assemble.py",
+      "snapshot": "evidence/amberwatch/scripts/assemble.py",
+      "sha256": "282b471ebbe5d1fdde9cba64f00d9eef6f93b158b8cfaa13b54bd2b7658ec855",
+      "bytes": 10391
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/scripts/painted_lighting.py",
+      "snapshot": "evidence/amberwatch/scripts/painted_lighting.py",
+      "sha256": "b091c6f111abd6989b3b6cc211d0be5c7094737e2eac6c2eaa39658a85012ec6",
+      "bytes": 6654
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/plans/production-plan.json",
+      "snapshot": "evidence/amberwatch/plans/production-plan.json",
+      "sha256": "9f303a8005104ac099f6c3db7a29a5ba2515cd85dafa601cb97af9f779282b72",
+      "bytes": 37228
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/plans/layer-plan.json",
+      "snapshot": "evidence/amberwatch/plans/layer-plan.json",
+      "sha256": "8f91a2b3088857cb43ee770e3607fb3644905ce452cf56bcc41dcb4cd3e90d26",
+      "bytes": 2038
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/plans/layout-notes.md",
+      "snapshot": "evidence/amberwatch/plans/layout-notes.md",
+      "sha256": "3e0a101a86a95eb1faadc85afa28e7df9b8b4ed79beb3b831d9533613875119e",
+      "bytes": 1666
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/plans/brief.md",
+      "snapshot": "evidence/amberwatch/plans/brief.md",
+      "sha256": "ff87c36630008f76d908d509aaf2a4b465939f6691e559e83e295fd9b50756a9",
+      "bytes": 2150
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/plans/generation/complete-prompt-set.json",
+      "snapshot": "evidence/amberwatch/plans/generation/complete-prompt-set.json",
+      "sha256": "75716e7a2d8108e724642776505a77ff5eab34140aa50e1f80761aabfe9e0f6b",
+      "bytes": 10077
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/plans/generation/saved-prompts.json",
+      "snapshot": "evidence/amberwatch/plans/generation/saved-prompts.json",
+      "sha256": "eb0b93b697281cd279249e048b74d6170a6803b8bfe082a1b0d9f86c273f7e51",
+      "bytes": 2819
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/plans/generation-ledger.json",
+      "snapshot": "evidence/amberwatch/plans/generation-ledger.json",
+      "sha256": "0acc80db40f45b5e408387c3f710ffacff957b9f5e170667a07c7f29f1b6d1fc",
+      "bytes": 37
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/assets/derivatives/v1/preparation-manifest.json",
+      "snapshot": "evidence/amberwatch/assets/derivatives/v1/preparation-manifest.json",
+      "sha256": "5af20ff94adf4a5ebcb08fd9b34fcd8da34b99ea2b504db3a9bfdce66ee5098a",
+      "bytes": 84276
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/assets/derivatives/v2/assembly-assets.json",
+      "snapshot": "evidence/amberwatch/assets/derivatives/v2/assembly-assets.json",
+      "sha256": "7a8a609134846b4bbd7ade1ad39b9328b9e05fba4fc7f9c64111416f5c59d969",
+      "bytes": 87308
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/assets/derivatives/v4/lighting-receipt.json",
+      "snapshot": "evidence/amberwatch/assets/derivatives/v4/lighting-receipt.json",
+      "sha256": "2d2167642f737d1c5d9bf1e537e8549f369bf538bae4e12574533a6d7f8e193d",
+      "bytes": 10807
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/reviews/production-observations-v4.md",
+      "snapshot": "evidence/amberwatch/reviews/production-observations-v4.md",
+      "sha256": "e453d5b540056054d726aca43341682ebfdacff05803320560bc1907e6f7a0fc",
+      "bytes": 2380
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/scene/scene.json",
+      "snapshot": "evidence/amberwatch/scene/scene.json",
+      "sha256": "322e726142f7d4412144a0333d970cea84e0d5da5e5edd20cec753ca71a3d20c",
+      "bytes": 76756
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v3/scene.snapshot.json",
+      "snapshot": "evidence/whole-object-v3/scene.snapshot.json",
+      "sha256": "21ed8b16476efab8aff8e525ba0ecd4b4ea29a4893d0c62fbc85a07e499e5224",
+      "bytes": 87347
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v3/catalog.snapshot.json",
+      "snapshot": "evidence/whole-object-v3/catalog.snapshot.json",
+      "sha256": "a36fb575c5511d014b415cbcc5b9d04d157ad41ad43673c12e0c802491cda23c",
+      "bytes": 129849
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v3/rig-proof-recipe.json",
+      "snapshot": "evidence/whole-object-v3/rig-proof-recipe.json",
+      "sha256": "fa4b9cef7b2fb1e782088429bba0febd032b092b03e2e2fa7acd20935683230b",
+      "bytes": 32939
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v3/render-report.json",
+      "snapshot": "evidence/whole-object-v3/render-report.json",
+      "sha256": "bea6637cd4f7c3110da97a1744434c18871f4177a7c7eebd7d8623051a1bab18",
+      "bytes": 120843
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v3/samples/lanterns-isolated/context.png",
+      "snapshot": "evidence/whole-object-v3/samples/lanterns-isolated/context.png",
+      "sha256": "06481b37d6c262157c252e521e87011594046b5516cadd0cfc776b18220de3d8",
+      "bytes": 43059,
+      "matches_render_receipt": true
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v4/scene.snapshot.json",
+      "snapshot": "evidence/whole-object-v4/scene.snapshot.json",
+      "sha256": "8eb218df757cafc43525a6d8e474b695c99b155dac3669f368f36c9a8b6018f7",
+      "bytes": 76758
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v4/catalog.snapshot.json",
+      "snapshot": "evidence/whole-object-v4/catalog.snapshot.json",
+      "sha256": "691f7603661465ea337f6f7f692c5957e6a901b814810c4f46ead3a2e5bff8b7",
+      "bytes": 208464
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v4/rig-proof-recipe.json",
+      "snapshot": "evidence/whole-object-v4/rig-proof-recipe.json",
+      "sha256": "fa4b9cef7b2fb1e782088429bba0febd032b092b03e2e2fa7acd20935683230b",
+      "bytes": 32939
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v4/render-report.json",
+      "snapshot": "evidence/whole-object-v4/render-report.json",
+      "sha256": "5bf332ccd17c4cb7701bee6218a9880be48d687a374b486d288c2974a0c2f6da",
+      "bytes": 152986
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v4/samples/lanterns-isolated/context.png",
+      "snapshot": "evidence/whole-object-v4/samples/lanterns-isolated/context.png",
+      "sha256": "6e0d7362cbf60a3720c4437c9e71e1e61e7b93a0df17474ddca75ed2e9c04d6d",
+      "bytes": 38637,
+      "matches_render_receipt": true
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v4/samples/lanterns-hidden/context.png",
+      "snapshot": "evidence/whole-object-v4/samples/lanterns-hidden/context.png",
+      "sha256": "19ffcf3276bccb9d1889ea31d34e4c60b9f303aaa847f359c611ae906aa9247b",
+      "bytes": 1433615,
+      "matches_render_receipt": true
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v4/samples/planters-isolated/context.png",
+      "snapshot": "evidence/whole-object-v4/samples/planters-isolated/context.png",
+      "sha256": "edc0836262d5d3451efb8968e0da93ca24b1c70a7c702449697737ecab410a4d",
+      "bytes": 54111,
+      "matches_render_receipt": true
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v4/samples/tree-isolated/context.png",
+      "snapshot": "evidence/whole-object-v4/samples/tree-isolated/context.png",
+      "sha256": "cbe7e77764d7a83037ce40e79fb84b022ffd5e3c6da55250caf6cf859a8846de",
+      "bytes": 162403,
+      "matches_render_receipt": true
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v4/samples/pumpkins-isolated/context.png",
+      "snapshot": "evidence/whole-object-v4/samples/pumpkins-isolated/context.png",
+      "sha256": "a9e7a95b1e76732a9cf5c658e4cfded0666daa47887e86fb07a9378bc9e8710a",
+      "bytes": 53427,
+      "matches_render_receipt": true
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v4/samples/fences-isolated/context.png",
+      "snapshot": "evidence/whole-object-v4/samples/fences-isolated/context.png",
+      "sha256": "112c7416dd3c6ae58d1a65cbb0709da77719ecbd5b55875857ed367093fb6940",
+      "bytes": 142079,
+      "matches_render_receipt": true
+    },
+    {
+      "source": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v4/samples/production-only/context.png",
+      "snapshot": "evidence/whole-object-v4/samples/production-only/context.png",
+      "sha256": "5e360fe1d4f6a642428cc6378f078ca37acc225ee487309cba3d7d3e9fb7647d",
+      "bytes": 1437929,
+      "matches_render_receipt": true
+    }
+  ],
+  "code": [
+    {
+      "path": "/Users/lb/.codex/worktrees/8a59/ambiance-studio/tools/asset_tool.py",
+      "sha256": "8549a3b6b203df48afbc4010646c5f1d639211785e2f80f0dabe704c08951278",
+      "matches_active_checkout": true
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/8a59/ambiance-studio/ambiance_studio/compound_preparation.py",
+      "sha256": "e537ca9f17d4f88914434e979127ef6a2ef0e70e0b84a265ad6f61c6ca3c4c23",
+      "matches_active_checkout": true
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/8a59/ambiance-studio/ambiance_studio/preparation_commands.py",
+      "sha256": "d7c3c3d6bd9130def430e0288a3b6e3ca3c6a0b567e5f4c1e0d6a0dda01e9905",
+      "matches_active_checkout": true
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/8a59/ambiance-studio/ambiance_studio/scene_transactions.py",
+      "sha256": "a56913ba6443d286760f5b1ae5bbbe3dba0a5ec8a97f52b432da9f0e7a8df696",
+      "matches_active_checkout": true
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/8a59/ambiance-studio/ambiance_studio/scene_authoring.py",
+      "sha256": "e4b1bcaeeac321069af54d24876bdbf9a6e1584ee9784e28d1ed487bb2222978",
+      "matches_active_checkout": true
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/8a59/ambiance-studio/ambiance_studio/finishing.py",
+      "sha256": "fe09a5a665787b2beec39add919b71e989ee320b044e909a24d1de2e5c2cad5c",
+      "matches_active_checkout": true
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/8a59/ambiance-studio/ambiance_studio/assets.py",
+      "sha256": "485d278bca9e1b6fe7e5640f1e17ea71a2f6d2681e31b7f8ecfcf23b10101141",
+      "matches_active_checkout": true
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/8a59/ambiance-studio/ambiance_studio/production_coverage.py",
+      "sha256": "c4c77154b4841876c92617077b18d185d742e3a9fce0c294ba07fdc29f5fc7f1",
+      "matches_active_checkout": true
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/8a59/ambiance-studio/editor/engine.mjs",
+      "sha256": "8e00118001ba38a3f3e2ffe38d84037b29beb7e3e2f3e80d09ed21b661af29ab",
+      "matches_active_checkout": true
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/8a59/ambiance-studio/tools/scene-command.mjs",
+      "sha256": "88791ec078053bb5368389f109c590ce928cf308727638b5b1b5c995a5b8b05a",
+      "matches_active_checkout": true
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/8a59/ambiance-studio/tools/rig-proof.mjs",
+      "sha256": "8799d29c7466c6bccd222ff4b0f4fed2f05bd01c1b04051a260e045743e360c9",
+      "matches_active_checkout": true
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/8a59/ambiance-studio/editor/bindings.mjs",
+      "sha256": "b891db88f3f65d1457c251456b63465f70b8f583c21235b1de8a7aa1fd1c3cb7",
+      "matches_active_checkout": true
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/8a59/ambiance-studio/editor/finishing.mjs",
+      "sha256": "06491f5e8565e5e716e75dfcb527fb47b3c93a88070566ef1969504ffe96160c",
+      "matches_active_checkout": true
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/8a59/ambiance-studio/editor/editor.mjs",
+      "sha256": "cf73279d8655075c05e3ce20ad46fb72eaa9396b836cc690ebb97d52376e6aff",
+      "matches_active_checkout": true
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/8a59/ambiance-studio/AGENTS.md",
+      "sha256": "0fc17cdb4a0f2d839f8be6ab0f2dabb4d85c3a28e8dabe3788d38fa45ae05b75",
+      "matches_active_checkout": true
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/8a59/ambiance-studio/docs/LAYER-AND-LIGHT-PLANNING.md",
+      "sha256": "adb4cc4bf9c061f4e8b154bddafce30fd8effb7796010516394d6f1efbfc12d8",
+      "matches_active_checkout": true
+    }
+  ],
+  "limits": [
+    "Static raster inspection at 960x720; no new movie playback or full-resolution artistic acceptance.",
+    "Stored production observations belong to their named earlier review, not to this audit.",
+    "Working files were captured individually; proof snapshot identities define the raster evidence."
+  ]
+}

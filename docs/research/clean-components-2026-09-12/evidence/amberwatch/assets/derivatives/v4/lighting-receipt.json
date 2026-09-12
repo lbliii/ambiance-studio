@@ -1,0 +1,349 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "file": "scene/scene.json",
+      "sha256": "3d35b40ef74a4874c28f18895b6fd06f57e23a14ee22e3300d0d504ec4f152e1"
+    }
+  ],
+  "script_sha256": "b091c6f111abd6989b3b6cc211d0be5c7094737e2eac6c2eaa39658a85012ec6",
+  "contributions": [
+    {
+      "layer": "pumpkin-near-stones-path-paint",
+      "driver": "pumpkin-near-emission",
+      "receiver": "path",
+      "source_asset": "path",
+      "crop": [
+        60,
+        643,
+        399,
+        729
+      ],
+      "region": [
+        0.040469613259668503,
+        0.9228821362799263,
+        0.2335635359116022,
+        0.12914364640883977
+      ],
+      "mask": "elliptical 45% feather \u00d7 receiver alpha; screen contribution retains source texture",
+      "file": "assets/derivatives/v4/pumpkin-near-stones-path-paint.png",
+      "sha256": "4f439ddca9f9a5254e552384578e13ac5866250f6dad9b22424c7e50a718d4a5"
+    },
+    {
+      "layer": "pumpkin-left-stones-path-paint",
+      "driver": "pumpkin-left-emission",
+      "receiver": "path",
+      "source_asset": "path",
+      "crop": [
+        601,
+        366,
+        801,
+        444
+      ],
+      "region": [
+        0.41401933701657456,
+        0.6678176795580111,
+        0.13777624309392264,
+        0.07113259668508287
+      ],
+      "mask": "elliptical 45% feather \u00d7 receiver alpha; screen contribution retains source texture",
+      "file": "assets/derivatives/v4/pumpkin-left-stones-path-paint.png",
+      "sha256": "71145e318b9d3f6e8776d7617717564a833974d2766d0cf2c8ddb273fc0896b1"
+    },
+    {
+      "layer": "pumpkin-right-stones-path-paint",
+      "driver": "pumpkin-right-emission",
+      "receiver": "path",
+      "source_asset": "path",
+      "crop": [
+        975,
+        430,
+        1189,
+        520
+      ],
+      "region": [
+        0.6722375690607735,
+        0.7267495395948435,
+        0.14696132596685083,
+        0.08218232044198895
+      ],
+      "mask": "elliptical 45% feather \u00d7 receiver alpha; screen contribution retains source texture",
+      "file": "assets/derivatives/v4/pumpkin-right-stones-path-paint.png",
+      "sha256": "223469d5f502698f9b1dc69ce07b4b691e3a520da1d4bcee31591c84f283c89f"
+    },
+    {
+      "layer": "pumpkin-step-stones-path-paint",
+      "driver": "pumpkin-step-emission",
+      "receiver": "path",
+      "source_asset": "path",
+      "crop": [
+        1013,
+        267,
+        1190,
+        336
+      ],
+      "region": [
+        0.6982734806629834,
+        0.576427255985267,
+        0.12203038674033148,
+        0.06353591160220995
+      ],
+      "mask": "elliptical 45% feather \u00d7 receiver alpha; screen contribution retains source texture",
+      "file": "assets/derivatives/v4/pumpkin-step-stones-path-paint.png",
+      "sha256": "3b34bbbd14f76246c784ca7440ad41ca93a534fd03b52a1d2557a2814d5c81d8"
+    },
+    {
+      "layer": "pumpkin-step-stones-cottage-paint",
+      "driver": "pumpkin-step-emission",
+      "receiver": "cottage",
+      "source_asset": "cottage-v2",
+      "crop": [
+        574,
+        628,
+        751,
+        697
+      ],
+      "region": [
+        0.6982734806629834,
+        0.576427255985267,
+        0.12203038674033148,
+        0.06353591160220995
+      ],
+      "mask": "elliptical 45% feather \u00d7 receiver alpha; screen contribution retains source texture",
+      "file": "assets/derivatives/v4/pumpkin-step-stones-cottage-paint.png",
+      "sha256": "3604d18f0fee8df238c29d29fe0a2c816e234d56e0dd7eec92eb09b2a3798e1b"
+    },
+    {
+      "layer": "lantern-left-receiver-path-paint",
+      "driver": "lantern-left-flame",
+      "receiver": "path",
+      "source_asset": "path",
+      "crop": [
+        471,
+        394,
+        579,
+        505
+      ],
+      "region": [
+        0.3244475138121547,
+        0.6935543278084715,
+        0.07348066298342541,
+        0.1014732965009208
+      ],
+      "mask": "elliptical 45% feather \u00d7 receiver alpha; screen contribution retains source texture",
+      "file": "assets/derivatives/v4/lantern-left-receiver-path-paint.png",
+      "sha256": "278a56876b838aaa9eecd6b987cc114b21b50fdac82d139e8000af949567942a"
+    },
+    {
+      "layer": "lantern-step-receiver-path-paint",
+      "driver": "lantern-step-flame",
+      "receiver": "path",
+      "source_asset": "path",
+      "crop": [
+        808,
+        198,
+        893,
+        283
+      ],
+      "region": [
+        0.5566298342541437,
+        0.5134438305709024,
+        0.058011049723756904,
+        0.07697974217311233
+      ],
+      "mask": "elliptical 45% feather \u00d7 receiver alpha; screen contribution retains source texture",
+      "file": "assets/derivatives/v4/lantern-step-receiver-path-paint.png",
+      "sha256": "98e9415d5e29eaff6573c3360c3b167b099ba4c5fd00089b539f1c1df07686ee"
+    },
+    {
+      "layer": "lantern-step-receiver-cottage-paint",
+      "driver": "lantern-step-flame",
+      "receiver": "cottage",
+      "source_asset": "cottage-v2",
+      "crop": [
+        369,
+        559,
+        454,
+        644
+      ],
+      "region": [
+        0.5566298342541437,
+        0.5134438305709024,
+        0.058011049723756904,
+        0.07697974217311233
+      ],
+      "mask": "elliptical 45% feather \u00d7 receiver alpha; screen contribution retains source texture",
+      "file": "assets/derivatives/v4/lantern-step-receiver-cottage-paint.png",
+      "sha256": "4eaf9afc325b1c89e845b5b8666a0b52fd9134284e3fa9f59c8a90d2d05879d9"
+    },
+    {
+      "layer": "lantern-step-low-receiver-path-paint",
+      "driver": "lantern-step-low-flame",
+      "receiver": "path",
+      "source_asset": "path",
+      "crop": [
+        770,
+        275,
+        838,
+        351
+      ],
+      "region": [
+        0.5306629834254144,
+        0.583793738489871,
+        0.04640883977900552,
+        0.06998158379373849
+      ],
+      "mask": "elliptical 45% feather \u00d7 receiver alpha; screen contribution retains source texture",
+      "file": "assets/derivatives/v4/lantern-step-low-receiver-path-paint.png",
+      "sha256": "613a20dc092b6823d9a1216ad35b57a45282493c151566319cb46344cf1ca8f8"
+    },
+    {
+      "layer": "lantern-step-low-receiver-cottage-paint",
+      "driver": "lantern-step-low-flame",
+      "receiver": "cottage",
+      "source_asset": "cottage-v2",
+      "crop": [
+        331,
+        636,
+        399,
+        712
+      ],
+      "region": [
+        0.5306629834254144,
+        0.583793738489871,
+        0.04640883977900552,
+        0.06998158379373849
+      ],
+      "mask": "elliptical 45% feather \u00d7 receiver alpha; screen contribution retains source texture",
+      "file": "assets/derivatives/v4/lantern-step-low-receiver-cottage-paint.png",
+      "sha256": "577f12f9dce697c4bf59d7a737605a1fe88782f20eaf3840e9baa9c8f48c7f11"
+    },
+    {
+      "layer": "lantern-right-low-receiver-path-paint",
+      "driver": "lantern-right-low-flame",
+      "receiver": "path",
+      "source_asset": "path",
+      "crop": [
+        996,
+        380,
+        1076,
+        465
+      ],
+      "region": [
+        0.6870165745856354,
+        0.6810313075506446,
+        0.05414364640883977,
+        0.07697974217311233
+      ],
+      "mask": "elliptical 45% feather \u00d7 receiver alpha; screen contribution retains source texture",
+      "file": "assets/derivatives/v4/lantern-right-low-receiver-path-paint.png",
+      "sha256": "964ccb5faab064131eef06cde30e63fdda962084e50a3e6137d18911bfd49679"
+    },
+    {
+      "layer": "lantern-post-receiver-path-paint",
+      "driver": "lantern-post-flame",
+      "receiver": "path",
+      "source_asset": "path",
+      "crop": [
+        1268,
+        325,
+        1436,
+        512
+      ],
+      "region": [
+        0.8743093922651933,
+        0.6300184162062615,
+        0.11602209944751381,
+        0.1714548802946593
+      ],
+      "mask": "elliptical 45% feather \u00d7 receiver alpha; screen contribution retains source texture",
+      "file": "assets/derivatives/v4/lantern-post-receiver-path-paint.png",
+      "sha256": "e29e8c2121838f01007ba3dc6bc690975d7f305806a08a01e5ce5d0f751938a9"
+    },
+    {
+      "layer": "lantern-post-receiver-fence-right-paint",
+      "driver": "lantern-post-flame",
+      "receiver": "fence-right",
+      "source_asset": "fence-right",
+      "crop": [
+        14,
+        157,
+        182,
+        344
+      ],
+      "region": [
+        0.8743093922651933,
+        0.6300184162062615,
+        0.11602209944751381,
+        0.1714548802946593
+      ],
+      "mask": "elliptical 45% feather \u00d7 receiver alpha; screen contribution retains source texture",
+      "file": "assets/derivatives/v4/lantern-post-receiver-fence-right-paint.png",
+      "sha256": "87062ad5f111e36bcfc4482f8ced8963f4b78beca6fbc272df44d4c7513ed153"
+    },
+    {
+      "layer": "sconce-0-receiver-cottage-paint",
+      "driver": "sconce-0-flame",
+      "receiver": "cottage",
+      "source_asset": "cottage-v2",
+      "crop": [
+        390,
+        319,
+        464,
+        404
+      ],
+      "region": [
+        0.5715469613259668,
+        0.2924493554327809,
+        0.05027624309392265,
+        0.07697974217311233
+      ],
+      "mask": "elliptical 45% feather \u00d7 receiver alpha; screen contribution retains source texture",
+      "file": "assets/derivatives/v4/sconce-0-receiver-cottage-paint.png",
+      "sha256": "808511267514a3cbb9136d4cc29ed465416554f416999104ca18c77a76dff7b1"
+    },
+    {
+      "layer": "sconce-1-receiver-cottage-paint",
+      "driver": "sconce-1-flame",
+      "receiver": "cottage",
+      "source_asset": "cottage-v2",
+      "crop": [
+        625,
+        311,
+        693,
+        396
+      ],
+      "region": [
+        0.7337016574585636,
+        0.2850828729281768,
+        0.04640883977900552,
+        0.07697974217311233
+      ],
+      "mask": "elliptical 45% feather \u00d7 receiver alpha; screen contribution retains source texture",
+      "file": "assets/derivatives/v4/sconce-1-receiver-cottage-paint.png",
+      "sha256": "71655ef2ec1a8919a50ae5a478733e1b1a1c1b5a8f30779f386943ba51a61b85"
+    },
+    {
+      "layer": "sconce-2-receiver-cottage-paint",
+      "driver": "sconce-2-flame",
+      "receiver": "cottage",
+      "source_asset": "cottage-v2",
+      "crop": [
+        682,
+        308,
+        750,
+        393
+      ],
+      "region": [
+        0.7730662983425415,
+        0.2823204419889503,
+        0.04640883977900552,
+        0.07697974217311233
+      ],
+      "mask": "elliptical 45% feather \u00d7 receiver alpha; screen contribution retains source texture",
+      "file": "assets/derivatives/v4/sconce-2-receiver-cottage-paint.png",
+      "sha256": "d1b53cdb3ad55c8187f21eff2badaf9025d768882d510e583d36339b5d403615"
+    }
+  ],
+  "decision": "Use source-textured bounded paint and actual flame/face cel bindings. Static full-frame source grading is unnecessary; project still uses the shared studio renderer."
+}
