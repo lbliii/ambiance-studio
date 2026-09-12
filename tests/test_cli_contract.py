@@ -94,7 +94,9 @@ class CLIContractTests(unittest.TestCase):
                         with patch.object(cli, 'run', return_value={'ok': ok, 'result': 'fixture'}):
                             code, payload = invoke(argv)
                         self.assertEqual(code, 0 if ok else 1)
-                        self.assertEqual(payload['ok'], ok)
+                        self.assertEqual(payload, {'ok': ok, 'schema_version': 1,
+                                                  'command': case['command'],
+                                                  'data': {'ok': ok, 'result': 'fixture'}})
                         if policy is Output.REPORT:
                             self.assertEqual(json.loads(out.read_text()), payload)
                         elif policy is Output.ARTIFACT:
