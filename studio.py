@@ -10,16 +10,13 @@ import shutil
 import sys
 import uuid
 
+from ambiance_studio.file_identity import digest
+
 ROOT = Path(__file__).resolve().parent
 
 def read(path):
     return json.loads(Path(path).read_text())
 
-def digest(path):
-    h=hashlib.sha256()
-    with Path(path).open('rb') as f:
-        for chunk in iter(lambda:f.read(1024*1024),b''): h.update(chunk)
-    return h.hexdigest()
 
 def encoded_hash(value):
     return hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':')).encode()).hexdigest()

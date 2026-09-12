@@ -15,6 +15,8 @@ import subprocess
 import tempfile
 import wave
 
+from .file_identity import digest as _digest
+
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / 'tools/render-scene.mjs'
 NATIVE_SOURCE = ROOT / 'native/media/media.m'
@@ -194,16 +196,16 @@ def _verify(project, binary, source, out, width, height, fps, frames, audio_trac
     contacts = out/'contacts'
     contacts.mkdir()
     report = out/'media-report.json'
-    source_hash = hashlib.sha256(source.read_bytes()).hexdigest()
+    source_hash = _digest(source)
     data = _json_command([binary, 'verify', source, width, height, fps, frames, audio_tracks, report, contacts, loop_frames, ','.join(str(r['frame_index']) for r in requests)], allow_check_failure=True)
-    after_hash = hashlib.sha256(source.read_bytes()).hexdigest()
+    after_hash = _digest(source)
     data['input_unchanged'] = source_hash == after_hash
     if not data['input_unchanged']:
         data['ok'] = False
         data['error'] = 'Media input changed while it was being decoded; this report is not valid for either version.'
     data.update({'input_sha256': source_hash, 'input_sha256_after': after_hash,
-                 'native_binary_sha256': hashlib.sha256(Path(binary).read_bytes()).hexdigest(),
-                 'native_source_sha256': hashlib.sha256(NATIVE_SOURCE.read_bytes()).hexdigest(),
+                 'native_binary_sha256': _digest(binary),
+                 'native_source_sha256': _digest(NATIVE_SOURCE),
                  'report': str(report), 'contacts': str(contacts)})
     data['requested_contacts'] = []
     for request in requests:
@@ -346,15 +348,7 @@ def run(args, project):
             request['bitrate'] = args.bitrate
         if args.audio:
             audio = args.audio.resolve()
-            audio_bytes = audio.read_bytes()
-            try:
-                with wave.open(io.BytesIO(audio_bytes), 'rb') as source:
-                    if source.getcomptype() != 'NONE' or source.getnchannels() != 2 or source.getframerate() != 48000:
-                        _error('Selected audio must be stereo 48 kHz PCM WAV.')
-                    if abs(source.getnframes() - round(seconds * args.repeats * 48000)) > 1:
-                        _error('Selected PCM audio must exactly match the final repeated picture duration.')
-            except (wave.Error, EOFError) as error:
-                _error(f'Selected audio must be an existing PCM WAV, not pre-encoded AAC: {error}')
+            audio_bytes = _pcm_bytes(audio, seconds * args.repeats)
         request['native'] = str(_native_binary(project))
     node = require_node()
     probe = _json_command([node, RENDERER, '--probe'])
@@ -375,10 +369,10 @@ def run(args, project):
         if args.repeats != 1 or audio:
             final = out/'video.mp4'
             data['composition'] = _json_command([binary, 'compose', data['output'], audio_snapshot or '-', final, args.repeats])
-            if audio_snapshot and hashlib.sha256(audio_snapshot.read_bytes()).digest() != hashlib.sha256(audio_bytes).digest():
+            if audio_snapshot and _digest(audio_snapshot) != hashlib.sha256(audio_bytes).hexdigest():
                 _error('Selected audio snapshot changed during mux; output identity is unverified.', 'check_failed', 1)
             data['output'] = str(final)
-            data['output_sha256'] = hashlib.sha256(final.read_bytes()).hexdigest()
+            data['output_sha256'] = _digest(final)
         data['picture'] = str(out/'picture.mp4')
         data['picture_sha256'] = _digest(out/'picture.mp4')
         data['repeats'] = args.repeats
@@ -397,14 +391,6 @@ def run(args, project):
                 'scene_sha256','catalog_sha256','views','frames','seconds','start_seconds',
                 'review_needed','stage_frames_rendered','elapsed_seconds','peak_rss_bytes']}
     return data
-
-
-def _digest(path):
-    digest = hashlib.sha256()
-    with Path(path).open('rb') as file:
-        for chunk in iter(lambda: file.read(1024 * 1024), b''):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def _identity(path, path_base='absolute'):

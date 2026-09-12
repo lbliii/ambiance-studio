@@ -12,6 +12,7 @@ import tempfile
 import time
 import xml.etree.ElementTree as ET
 
+from .file_identity import digest
 from .errors import CommandError
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,10 +25,6 @@ def scrub(text):
     for path, label in [(str(ROOT), '$REPO'), (str(Path.home()), '$HOME'), (tempfile.gettempdir(), '$TMP')]:
         text = text.replace(path, label)
     return re.sub(r'/(?:private/)?(?:tmp|var/folders)/[^\s\"\'<>]+', '$TMP', text)
-
-
-def digest(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
 def write(path, value):

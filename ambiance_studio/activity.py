@@ -5,12 +5,9 @@ import math
 from pathlib import Path
 import re
 
+from .file_identity import digest
 from .scene_runtime import ROOT, require_node, scene_bridge
 from .rendering import _json_command
-
-
-def digest(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
 def fields(value, allowed, label):

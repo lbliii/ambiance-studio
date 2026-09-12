@@ -112,22 +112,25 @@ class ViewDeliveryTests(unittest.TestCase):
 
     @unittest.skipUnless(os.environ.get('AMBIANCE_TEST_NATIVE')=='1' and sys.platform=='darwin','Requires native encode/decode')
     def test_native_pair_recovers_after_receipt_save_and_reuses_both_soundtracks(self):
-        recipe=self.recipe();original=cli.run;calls=[]
-        def interrupted(args):
-            calls.append((args.command,getattr(args,'view',None)))
-            result=original(args)
+        from ambiance_studio.media_operations import execute_job
+        recipe=self.recipe();calls=[]
+        def interrupted(project, request, out):
+            calls.append((request.command,request.view))
+            result=execute_job(project, request, out)
             if len(calls)==2:raise KeyboardInterrupt('Fixture interruption after edition receipt')
             return result
-        with patch.object(cli,'run',side_effect=interrupted):
-            with self.assertRaises(KeyboardInterrupt):production.iteration(self.p,recipe,'Fixture')
+        with patch.object(cli,'parser',side_effect=AssertionError('Production must not parse CLI arguments')):
+            with self.assertRaises(KeyboardInterrupt):production.iteration(self.p,recipe,'Fixture',executor=interrupted)
         path=production.run_file(self.p,'pair');state=studio.read(path)
         self.assertEqual(len(state['steps']),1);self.assertIsNone(deliveries.current(self.p))
         before=state['steps']['portrait.picture.silent']['outputs']
         # A dead coordinator lock is recoverable; a live coordinator is not displaced.
         (path.parent/'active.lock').touch();state['pid']=os.getpid();studio.write(path,state)
         with self.assertRaisesRegex(ValueError,'Run owner is present or unverified'):production.iteration(self.p,recipe,'Fixture')
-        with patch.object(production.os,'kill',side_effect=ProcessLookupError), patch.object(cli,'run',wraps=original) as resumed:
-            result=production.iteration(self.p,recipe,'Fixture')
+        from unittest.mock import Mock
+        resumed=Mock(wraps=execute_job)
+        with patch.object(production.os,'kill',side_effect=ProcessLookupError), patch.object(cli,'parser',side_effect=AssertionError('Production must not parse CLI arguments')):
+            result=production.iteration(self.p,recipe,'Fixture',executor=resumed)
         self.assertTrue(result['ok']);self.assertEqual(resumed.call_count,2)
         self.assertEqual(studio.read(path)['steps']['portrait.picture.silent']['outputs'],before)
         data=deliveries.latest(self.p);self.assertTrue(data['ok']);self.assertEqual(len(data['delivery']['entries']),4)

@@ -2,7 +2,8 @@
 import tempfile
 from pathlib import Path
 import studio
-from . import production, revisions, scene_runtime
+from . import revisions, scene_runtime
+from .iteration_plan import validate_recipe
 from .project import locations, project_lock
 from .rendering import _pcm_bytes
 
@@ -20,7 +21,7 @@ def build(project, request, destination):
     scene_path, catalog_path = locations(project); scene = studio.read(scene_path); catalog = studio.read(catalog_path)
     recipe = {k: request[k] for k in ['id', 'revision', 'title', 'notes', 'views', 'default', 'scope', 'long_edge', 'supersample', 'editions'] if k in request}
     recipe.update(format='ambiance-iteration', schema_version=2, capture_selection=str((destination/'capture-selection.json').relative_to(project)))
-    production.validate_recipe(recipe)
+    validate_recipe(recipe)
     if revisions.manifest_path(project, recipe['revision']).exists(): raise ValueError('Initializer needs a fresh revision ID; existing recipes can still resume captured work')
     audio = dict(request.get('audio_selection', {})); masters = list(audio.get('masters', []))
     for edition in recipe['editions']:
