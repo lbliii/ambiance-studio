@@ -407,32 +407,10 @@ def latest(project, channel='review', fingerprints=None):
 
 
 def feedback(project, id, role, seconds, note, observer, view=None):
-    from .project import project_lock
-    data = load(project, id)
-    selected_id,edition=resolve_entry(data,view,role,unambiguous=True)
-    if isinstance(seconds, bool) or not isinstance(seconds, (float, int)) or not math.isfinite(seconds) or not 0 <= seconds < edition['duration_seconds']:
-        raise ValueError('Feedback time must fall inside the selected movie')
-    if not isinstance(note, str) or not note.strip() or len(note) > 10000:
-        raise ValueError('Feedback needs 1–10000 characters')
-    if not isinstance(observer, str) or not observer.strip() or len(observer) > 200:
-        raise ValueError('Identify the observer')
-    if not intact(project, edition['movie'])['ok']:
-        raise ValueError('Movie changed; cannot attach feedback to these bytes')
-    record = {'format': 'ambiance-movie-feedback', 'schema_version': data['schema_version'], 'id': uuid.uuid4().hex,
-              'created_utc': now(), 'delivery': id, 'role': role, 'seconds': seconds,
-              'movie': edition['movie'], 'observer': observer.strip(), 'note': note.strip(),
-              'state': 'open', 'meaning': 'An observation, not an automatic gate pass.'}
-    if data['schema_version']==2:record.update(entry=selected_id,view=edition['view'],view_sha256=edition['view_sha256'],revision=edition['revision'],edition=edition['edition'])
-    with project_lock(project):
-        path = project/'feedback/movies'/f'{record["id"]}.json'
-        studio.write(path, revisions.seal(record))
-    return {'ok': True, 'feedback': record, 'path': str(path)}
+    from .feedback import add
+    return add(project, id, note, observer, role=role, seconds=seconds, observer=observer, view=view)
 
 
 def feedback_list(project, id):
-    results = []
-    for path in (project/'feedback/movies').glob('*.json'):
-        data = revisions.read_sealed(path, 'ambiance-movie-feedback', versions=(1,2))
-        if data['delivery'] == id:
-            results.append(data)
-    return sorted(results, key=lambda row: row['created_utc'], reverse=True)
+    from .feedback import listing
+    return listing(project, id)['feedback']

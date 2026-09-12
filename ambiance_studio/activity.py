@@ -69,6 +69,8 @@ def load_actions(project, revision=None):
 
 def variants_from_recipe(path, scene, catalog):
     recipe = json.loads(Path(path).read_text())
+    if recipe.get('version') == 2:
+        return cel_variants(recipe, scene, catalog)
     fields(recipe, ['version', 'strength', 'cadence'], 'activity comparison')
     if recipe.get('version') != 1:
         raise ValueError('Activity comparison requires version 1')
@@ -112,6 +114,77 @@ def variants_from_recipe(path, scene, catalog):
             if candidate['canvas'] != scene['canvas'] or candidate.get('framing') != scene.get('framing'):
                 raise ValueError('Comparisons must preserve picture clock and exact view identity')
             variants.append({'id': identifier, 'experiment': experiment, 'scene': candidate})
+    return variants
+
+
+def cel_variants(recipe, scene, catalog):
+    """Explicit cel choices at unchanged geometry; never scale cloth to quiet it."""
+    import copy
+    fields(recipe, ['version', 'variants'], 'cel comparison')
+    rows = recipe.get('variants')
+    if not isinstance(rows, list) or not 1 <= len(rows) <= 4:
+        raise ValueError('Cel comparison needs 1–4 explicit variants')
+    assets = {a['id']: a for a in catalog['assets']}; layers = {l['id']: l for l in scene['layers']}
+    variants = []; ids = set()
+    timing = {l['layer']: l for l in scene_bridge('timing', scene, catalog, {})['layers']}
+    for row in rows:
+        fields(row, ['id', 'kind', 'layers'], 'cel variant')
+        id = row.get('id'); kind = row.get('kind')
+        if not isinstance(id, str) or not re.fullmatch(r'[a-z][a-z0-9_-]{0,31}', id) or id == 'target' or id in ids:
+            raise ValueError('Variant IDs must be unique and distinct from target')
+        ids.add(id)
+        if kind not in ['held-pose', 'cel-alternative']: raise ValueError('Unknown cel comparison kind')
+        if not isinstance(row.get('layers'), list) or not row['layers']: raise ValueError('Declare target layers')
+        operations = []; targets = set()
+        for change in row['layers']:
+            fields(change, ['layer', 'cell'] if kind == 'held-pose' else ['layer', 'asset', 'cell_map'], 'cel change')
+            lid = change.get('layer')
+            if lid not in layers or lid in targets: raise ValueError('Unknown or repeated cel target')
+            targets.add(lid); original = layers[lid]; baseline = assets[original['asset']]
+            if not baseline.get('atlas'): raise ValueError('Cel comparisons require an atlas')
+            for link in scene.get('bindings', {}).get('links', []):
+                if (link['source'].get('layer') == lid and link['source'].get('channel') == 'cell') or (link['target'].get('layer') == lid and link['target'].get('channel') == 'cell'):
+                    raise ValueError('Cell-bound companions require an explicit coordinated study; independent cel substitution is unsupported')
+            if any(isinstance(v, dict) and 'frames' in v for v in {**baseline.get('sockets', {}), **original.get('sockets', {})}.values()):
+                raise ValueError('Per-cel sockets require a registered coordinated companion study')
+            for signal in scene.get('finishing', {}).get('signals', []):
+                if signal.get('layer') == lid or signal.get('source', {}).get('layer') == lid:
+                    raise ValueError('Cel-driven finishing needs a coordinated companion study')
+            duration = scene['canvas']['loop_seconds']; values = {}; tracks = copy.deepcopy(original.get('tracks', {}))
+            if kind == 'held-pose':
+                cell = change.get('cell')
+                if type(cell) is not int or not 0 <= cell < baseline['atlas']['frame_count']: raise ValueError('Held cel is outside the atlas')
+                keys = [[0, cell], [duration, cell]]
+            else:
+                aid = change.get('asset'); alternate = assets.get(aid); mapping = change.get('cell_map')
+                if not alternate or not alternate.get('atlas'): raise ValueError('Alternative must already be a catalog atlas')
+                if not isinstance(mapping, list) or len(mapping) != baseline['atlas']['frame_count'] or any(type(c) is not int or not 0 <= c < alternate['atlas']['frame_count'] for c in mapping):
+                    raise ValueError('Cell map must cover every original cel with valid alternate cells')
+                for key in ['cell_width', 'cell_height']:
+                    if alternate['atlas'][key] != baseline['atlas'][key]:
+                        raise ValueError('Changed cell dimensions require source placement before comparison; object resizing is forbidden')
+                if aid != original['asset']:
+                    first, second = baseline.get('registration_mapping'), alternate.get('registration_mapping')
+                    if not first or not second: raise ValueError('Alternate atlases require compiler registration mappings')
+                    sources = lambda asset: {ref['sha256'] for ref in asset.get('provenance', {}).get('sources', [])}
+                    if not sources(baseline) & sources(alternate): raise ValueError('Alternative source family is unverified')
+                    for index, cell in enumerate(mapping):
+                        for key in ['raw_cel_to_cell', 'source_to_cell']:
+                            if first['cels'][index].get(key) != second['cels'][cell].get(key):
+                                raise ValueError('Alternative registration differs; prepare a compatible atlas')
+                    if baseline.get('pivot') != alternate.get('pivot'): raise ValueError('Alternative pivot differs')
+                    if baseline.get('sockets', {}) != alternate.get('sockets', {}): raise ValueError('Alternative socket registration differs')
+                authored = timing[lid]['authored']
+                if not authored['available'] or not authored['holds']: raise ValueError('Cannot establish exact authored cel timing')
+                keys = [[h['start_seconds'], mapping[h['cell']]] for h in authored['holds']]
+                keys.append([duration, keys[0][1]])
+                values['asset'] = aid
+            tracks['cell'] = {'interpolation': 'hold', 'keys': keys}; values['tracks'] = tracks
+            operations.append({'op': 'set', 'layer': lid, 'values': values})
+        batch = {'version': 1, 'operations': operations}
+        candidate = scene_bridge('apply', scene, catalog, {'batch': batch})
+        variants.append({'id': id, 'experiment': kind, 'scene': candidate, 'batch': batch,
+                         'difference': 'Held painted pose; cadence changed.' if kind == 'held-pose' else 'Registered cel choices; authored schedule and object geometry retained.'})
     return variants
 
 

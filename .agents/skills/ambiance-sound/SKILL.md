@@ -5,24 +5,14 @@ description: "Design, source, edit, and mix a looping ambiance soundtrack with a
 
 # Give the scene a sound story
 
-Read the brief, picture draft if available, and [sound workflow](../../../docs/workflows/04-soundtrack.md). Start sound identity early; a finished animation is not required to sketch it.
+Inspect the brief, picture clock and available takes. Start sound identity before finished animation. Use `audio inspect/mix/compare/check`, then present an early [review packet](../../../docs/MIDNIGHT-OPERATIONS.md) with explicit source audition links and one selected audible soundtrack across compatible views.
 
-Write one emotional sentence and assign near, middle, and distant sound roles. Preserve quiet space. Nostalgia can come from melody, timbre, pacing, and room tone; do not add hiss or crackle by default. The reference film's guiding idea was “A light is still on for you,” not a generic Halloween effects bed.
+Write one emotional sentence and locate listener, near/middle/distant sources and selected cues. Preserve quiet space; do not add hiss, crackle or generic spooky effects by default. Use the [sound workflow](../../../docs/workflows/04-soundtrack.md) for spatial trials and circular editing. Draw order is not an acoustic model; distinguish measured stereo travel from auditioned distance.
 
-For spatial storytelling, use the workflow's **Map depth and stereo movement** section. Locate the listener and selected cues; compare near/far and travel treatments before a full mix. Keep direct sound and room return distinct, preserve cue identity in mono, and distinguish measured movement from auditioned distance. Scene draw order is not an acoustic model.
+Generate/import music, beds and isolated events separately through available, authorized provider capabilities. A login does not establish API access. Preserve request/source identities and uncertain outcomes through [provider operations](../../../docs/PROVIDERS.md). Audition sources for unwanted voices, hiss, warble, harsh attacks and musical restarts. If listening is unavailable, retain that uncertainty and continue useful preparation.
 
-Generate or import music, ambience beds, and isolated events separately. Use the available provider's dedicated music/sound-effect tools and skills; inspect current capabilities and account format limits. A browser login does not prove a callable connector is available. [Provider operations](../../../docs/PROVIDERS.md) covers ledgers, spending, uncertain outcomes, and retrieval.
+Use the [PCM session contract](../../../docs/AUDIO-SESSION.md) for selected sources, sample-frame clips, gains, pan and circular tails. Unsupported EQ, convolution, decoding or other processing needs preserved external preparation. `audio import-stems` creates a derivative from a legacy session without claiming to reproduce its processing.
 
-Audition selected sources; note hiss, warble, unwanted voices, harsh attacks and musical restarts. If audition is unavailable, label sources unlistened and continue useful preparation while that observation remains open. Signal plots cannot establish listening quality.
+Bind picture-linked clips with `audio cue-bind` against a complete stride-one activity receipt. After timing/action edits, run `audio cue-check` and explicitly revise affected cue/session timing. Choose a master period and phrase positions that avoid distracting repetition, retaining room tails at joins. Matching requested endpoints does not guarantee musical continuity.
 
-Use the executable [audio-session contract](../../../docs/AUDIO-SESSION.md) and `audio inspect/mix/compare/check` for selected PCM sources, clips, gains, pan automation and circular tails. EQ, convolution and other unsupported processing need preserved external preparation. Keep legacy descriptive sessions intact; `audio import-stems` creates an executable derivative without claiming to reproduce their processing.
-
-Bind picture-linked clips with `audio cue-bind` against a complete stride-one activity receipt. After scene timing, action or loop changes, run `audio cue-check`; explicitly revise affected anchors/session timing and preserve source/PCM identities. Reuse the same soundtrack across compatible views without inventing a new audition. See [activity and cues](../../../docs/SCENE-ACTIVITY.md).
-
-Choose a master period that avoids distracting event repetition. Edit compatible musical phrase/harmony positions and retain room tails across the join; requesting matching endpoints does not guarantee continuity.
-
-Measure the actual sources before setting gain. Quiet generated effects can still contain isolated high peaks. Use level, spectral balance, stereo width, and reverberation to imply distance. Protect mono readability and low-volume comfort. The reference's −22.5 LUFS is an artistic result, not a mandatory target for every project.
-
-Export exact-length PCM masters and aligned stems, then inspect sample counts, clipping, peak method, seam, mono compatibility, and reconstruction. Listen with picture across three repeats. Keep numerical checks separate from actual listening and phone-speaker observations.
-
-Close `sound-design` after source selection and audition evidence; close `mix` after the circular edit, measurements, and repeated listening. Do not claim that a 24-bit export recovers detail lost in a compressed source.
+Measure before setting gain; quiet sources may have high peaks. Preserve mono cue identity and low-volume comfort. There is no universal LUFS target. Export exact-length masters and stems; inspect sample counts, clipping, declared peak method, seam and reconstruction. Listen with picture across three repeats. Source selection/audition supports sound-design; circular edit, measurements and actual listening support mix. Numerical reports and playback events never substitute for listening or phone observations.

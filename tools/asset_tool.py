@@ -11,7 +11,7 @@ import re
 import sys
 from PIL import Image, ImageDraw, __version__ as PILLOW_VERSION
 
-VERSION = '1.3.0'
+VERSION = '1.3.1'
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -39,6 +39,8 @@ def multiply_affine(a,b):
 
 
 def resample_cel(frame, size, scale, offset):
+    if scale == 1 and all(float(v).is_integer() for v in offset):
+        output = Image.new('RGBA', tuple(size)); output.paste(frame.convert('RGBA'), tuple(map(int, offset))); return output
     # Shared by compilation and interactive draft evaluation; always raw input.
     return frame.convert('RGBa').transform(tuple(size), Image.Transform.AFFINE,
         (1/scale,0,-offset[0]/scale,0,1/scale,-offset[1]/scale), Image.Resampling.BICUBIC).convert('RGBA')
@@ -46,7 +48,7 @@ def resample_cel(frame, size, scale, offset):
 
 def build(recipe_path, out):
     recipe_path,out=Path(recipe_path).resolve(),Path(out).resolve()
-    if any(json.loads(recipe_path.read_text()).get(k) for k in ['motion_preparation', 'preparation_receipt']) and not out.exists():
+    if any(json.loads(recipe_path.read_text()).get(k) for k in ['motion_preparation', 'preparation_receipt', 'cel_trim']) and not out.exists():
         sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
         from ambiance_studio.edge_quality import fresh_output
         with fresh_output(out) as stage:
@@ -142,6 +144,12 @@ def _build(recipe_path, out, logical_out=None):
                 raise ValueError('Source mapping must identify the exact single compiler input image')
         invert_affine(source_mapping['image_to_reference'])
         mapping_source={'file':os.path.relpath(mapping_path,destination),'sha256':sha(mapping_path)}
+    if recipe.get('cel_trim'):
+        sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+        from ambiance_studio.cel_trim import validate as validate_trim
+        trim_ref=recipe['cel_trim'];trim_path=(recipe_path.parent/trim_ref['file']).resolve()
+        validate_trim(trim_path,trim_ref['sha256'],source_paths,recipe)
+        recipe['cel_trim']={'file':os.path.relpath(trim_path,destination),'sha256':trim_ref['sha256']}
     spec, registration = recipe['output'], recipe['registration']
     landmark_source = None
     if recipe.get('registration_source'):
@@ -317,6 +325,7 @@ def _build(recipe_path, out, logical_out=None):
         'sha256': sha(out/'atlas.png'), 'atlas': {'columns': columns,'rows':rows,'cell_width':cw,'cell_height':ch,'frame_count':len(frames)},
         'registration_mapping':mapping, 'pivot':target, 'sockets':recipe.get('sockets',{}), 'provenance': {'recipe':'recipe.json','cache_key':cache_key,'sources':packed_sources},
         'rights':recipe.get('rights','Unspecified; inherits source restrictions.')}
+    if recipe.get('cel_trim'): asset['provenance']['cel_trim']=recipe['cel_trim']
     if compound: asset['provenance']['preparation_receipt']=recipe['preparation_receipt']
     if motion: asset['provenance']['motion_preparation']=recipe['motion_preparation']
     if mapping_source:
@@ -346,7 +355,7 @@ def admit(pack, catalog_path):
     if not all((pack/f).is_file() and sha(pack/f) == h for f,h in report['outputs'].items()):
         raise ValueError('Pack bytes no longer match its build report.')
     asset = json.loads((pack/'asset.json').read_text())
-    if any(asset.get('provenance',{}).get(k) for k in ['motion_preparation', 'preparation_receipt']):
+    if any(asset.get('provenance',{}).get(k) for k in ['motion_preparation', 'preparation_receipt', 'cel_trim']):
         sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
         from ambiance_studio.assets import inspect_pack
         inspect_pack(pack)

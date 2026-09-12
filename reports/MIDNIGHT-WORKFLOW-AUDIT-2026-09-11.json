@@ -1,0 +1,239 @@
+{
+  "format": "ambiance-workflow-audit",
+  "schema_version": 1,
+  "audit_date_local": "2026-09-11",
+  "source": {
+    "commit": "31390fbe7c8039aca9f39ef9695cc9a55a41343a",
+    "tracked_tree_sha256": "9e256b3b5bc105b3412d404e81efaff922f2ba7538e9f8aa5d3ef464c5700644",
+    "manifest": "inputs.json"
+  },
+  "scope": "Analysis only; no implementation or film revision. Existing motion/style edits were part of the audited checkout.",
+  "project_context": {
+    "id": "midnight-reading-room",
+    "delivery": "painted-review",
+    "revision": "midnight-v2",
+    "source_note": "Local production evidence, not a controlled agent trial."
+  },
+  "query_measurements": [
+    {
+      "command": "project latest",
+      "stdout_bytes": 18261,
+      "elapsed_seconds": 4.278,
+      "original_diagnostic": "/tmp/midnight-audit-project-latest.json"
+    },
+    {
+      "command": "project overview",
+      "stdout_bytes": 1173801,
+      "elapsed_seconds": 13.432,
+      "original_diagnostic": "/tmp/midnight-audit-project-overview.json"
+    },
+    {
+      "command": "plan next",
+      "stdout_bytes": 2668,
+      "elapsed_seconds": 0.221,
+      "original_diagnostic": "/tmp/midnight-audit-plan-next.json"
+    },
+    {
+      "command": "feedback list painted review",
+      "stdout_bytes": 122,
+      "elapsed_seconds": 0.124,
+      "original_diagnostic": "/tmp/midnight-audit-feedback-list-painted-review.json"
+    }
+  ],
+  "measurement_limits": "Single local query observations while regression checks were also running; not isolated benchmarks.",
+  "overview_compact_value_bytes": {
+    "ok": 4,
+    "project": 23,
+    "current_url": 54,
+    "current": 13814,
+    "release": 49,
+    "history": 13100,
+    "working": 233,
+    "open_checks": 908,
+    "ready_work": 2,
+    "inventory_errors": 2,
+    "errors": 2,
+    "runs": 867324,
+    "entry_checks": 19531,
+    "release_ready": 5,
+    "check_subject": 2204,
+    "framing": 1150,
+    "production_readiness": 3511
+  },
+  "run_status": [
+    {
+      "id": "painted-review",
+      "state": "complete",
+      "stage": "complete",
+      "process_state": "finished",
+      "elapsed_seconds": 654.6598526659945
+    },
+    {
+      "id": "first-review",
+      "state": "running",
+      "stage": "portrait.picture.silent",
+      "process_state": "unknown-or-interrupted",
+      "elapsed_seconds": 57.309160542004975
+    }
+  ],
+  "ready_work_count": 0,
+  "open_gate_count": 9,
+  "listed_movie_feedback_count": 0,
+  "untimed_feedback_file": "projects/midnight-reading-room/feedback/curtain-motivation.md",
+  "project_scripts": [
+    {
+      "file": "projects/midnight-reading-room/tools/assemble_motion.py",
+      "lines": 65,
+      "description": null
+    },
+    {
+      "file": "projects/midnight-reading-room/tools/author_intent.py",
+      "lines": 108,
+      "description": null
+    },
+    {
+      "file": "projects/midnight-reading-room/tools/bake_fixed_look.py",
+      "lines": 47,
+      "description": "Bake fixed source-bound receiver grades into cels for a fast Canvas render.\n\nThis is local scene-look preparation from preserved art and the saved light mask.\nIt does not generate new objects, move painted geometry, or replace raw sources."
+    },
+    {
+      "file": "projects/midnight-reading-room/tools/capture_review_setup.py",
+      "lines": 35,
+      "description": "Author concrete first-review documents and an executable dual-view iteration."
+    },
+    {
+      "file": "projects/midnight-reading-room/tools/download_generated_audio.py",
+      "lines": 22,
+      "description": null
+    },
+    {
+      "file": "projects/midnight-reading-room/tools/prepare_art.py",
+      "lines": 193,
+      "description": "Source-bound masks, matte cleanup and compiler preparation for this film.\n\nCreative paint comes from preserved imagegen sources. This script only prepares\nderivatives, records geometry and invokes the existing studio production CLI.\nRun with the bundled Python runtime (NumPy and Pillow)."
+    },
+    {
+      "file": "projects/midnight-reading-room/tools/prepare_audio.py",
+      "lines": 77,
+      "description": "Decode preserved takes and author an explicitly unlistened first mix."
+    },
+    {
+      "file": "projects/midnight-reading-room/tools/reconcile_production.py",
+      "lines": 57,
+      "description": "Bind authored scope to the actual first motion build, preserving prior plans."
+    },
+    {
+      "file": "projects/midnight-reading-room/tools/record_first_reviews.py",
+      "lines": 41,
+      "description": "Record performed checks without turning unperformed viewing/listening into passes."
+    },
+    {
+      "file": "projects/midnight-reading-room/tools/record_image.py",
+      "lines": 27,
+      "description": "Preserve a returned built-in image and reconcile its existing request."
+    },
+    {
+      "file": "projects/midnight-reading-room/tools/select_fast_build.py",
+      "lines": 47,
+      "description": "Capture the inspected painted-light build without weakening required scope."
+    },
+    {
+      "file": "projects/midnight-reading-room/tools/trim_runtime_cells.py",
+      "lines": 34,
+      "description": "Remove unused transparent atlas area while preserving every painted pixel and source anchor."
+    }
+  ],
+  "script_count": 12,
+  "script_lines": 753,
+  "validation": {
+    "initial_command": "./ambiance test --artifacts /tmp/midnight-repo-audit-checks --out /tmp/midnight-repo-audit-tests.json",
+    "aggregate_ok": false,
+    "python_initial_counts": {
+      "passed": 301,
+      "skipped": 13,
+      "error": 2
+    },
+    "separate_retry": {
+      "command": "python3 -m unittest -v test_asset_motion.MotionTests.test_draft_http_origin_and_tamper test_preparation.PreparationTests.test_preview_http_rejects_other_origins_paths_and_changed_sources",
+      "working_directory": "tests",
+      "reason": "Both tests failed at localhost socket bind under the sandbox; retried with localhost access.",
+      "tests_run": 2,
+      "passed": 2,
+      "exit_code": 0,
+      "observed_output": "Ran 2 tests in 1.340s; OK"
+    },
+    "python_total_executed_passing_across_runs": 303,
+    "native_tests_skipped": 13,
+    "check_groups": [
+      {
+        "id": "CI-NATIVE-CAPABILITY",
+        "ok": true,
+        "state": "not-required"
+      },
+      {
+        "id": "CI-PYTHON",
+        "ok": false,
+        "exit_code": 1
+      },
+      {
+        "id": "CI-ENGINE",
+        "ok": true,
+        "exit_code": 0
+      },
+      {
+        "id": "CI-ACTIVITY",
+        "ok": true,
+        "exit_code": 0
+      },
+      {
+        "id": "CI-BINDINGS",
+        "ok": true,
+        "exit_code": 0
+      },
+      {
+        "id": "CI-FINISHING",
+        "ok": true,
+        "exit_code": 0
+      },
+      {
+        "id": "CI-RIG",
+        "ok": true,
+        "exit_code": 0
+      },
+      {
+        "id": "CI-SOURCE-PLACEMENT",
+        "ok": true,
+        "exit_code": 0
+      },
+      {
+        "id": "CI-TRACKS",
+        "ok": true,
+        "exit_code": 0
+      },
+      {
+        "id": "CI-VIEW-RASTER",
+        "ok": true,
+        "exit_code": 0
+      },
+      {
+        "id": "CI-VIEWS",
+        "ok": true,
+        "exit_code": 0
+      },
+      {
+        "id": "CI-PACKAGE",
+        "ok": true,
+        "exit_code": 0
+      },
+      {
+        "id": "CI-FAILURE-CONTRACT",
+        "ok": true,
+        "exit_code": 0
+      }
+    ],
+    "limits": [
+      "The initial failed aggregate report is preserved as failed.",
+      "No fresh native-media suite, real browser playback review or controlled agent trial was performed.",
+      "Current film creative review gaps remain open."
+    ]
+  }
+}

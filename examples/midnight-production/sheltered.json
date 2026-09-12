@@ -1,0 +1,111 @@
+{
+  "format": "ambiance-production-plan",
+  "schema_version": 1,
+  "story": {
+    "premise": "A sheltered reading room, with a closed intact window and no established haunting.",
+    "direction": "Hold the curtain as painted. Let combustion in the fireplace, heat-driven steam and outdoor weather carry life."
+  },
+  "sources": [],
+  "elements": [
+    {
+      "id": "curtain",
+      "kind": "prop",
+      "depth_band": "midground",
+      "motion_role": "stable",
+      "cadence": "still",
+      "readability_target": 0,
+      "origin": "proposed",
+      "purpose": "The closed window gives no visible airflow cue; cloth should not pull attention from the warm refuge.",
+      "source_ids": [],
+      "action_ids": [
+        "cloth-presence"
+      ],
+      "realization": {
+        "method": "cutout",
+        "inventory_parts": [
+          {
+            "item_id": "cloth",
+            "part_id": "cutout"
+          }
+        ],
+        "layer_ids": [
+          "curtain"
+        ]
+      },
+      "required_art": [
+        {
+          "id": "cloth-cutout",
+          "role": "cutout",
+          "purpose": "Preserve the painted curtain and its fixed support.",
+          "inventory_part": {
+            "item_id": "cloth",
+            "part_id": "cutout"
+          }
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "cloth-presence",
+      "element_id": "curtain",
+      "description": "Hold the curtain as painted. Let combustion in the fireplace, heat-driven steam and outdoor weather carry life.",
+      "method": "Explicit held or source-registered painted cel choices",
+      "layer_ids": [
+        "curtain"
+      ],
+      "targets": [
+        {
+          "view_id": "portrait",
+          "readability_target": 0
+        },
+        {
+          "view_id": "landscape",
+          "readability_target": 0
+        }
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "view_id": "portrait",
+      "roles": [
+        "silent"
+      ]
+    },
+    {
+      "view_id": "landscape",
+      "roles": [
+        "silent"
+      ]
+    }
+  ],
+  "relations": [],
+  "expectations": [
+    {
+      "id": "cloth-emphasis",
+      "rationale": "The closed window gives no visible airflow cue; cloth should not pull attention from the warm refuge.",
+      "direction": "Hold the curtain as painted. Let combustion in the fireplace, heat-driven steam and outdoor weather carry life.",
+      "stage": "animation",
+      "view_ids": [
+        "portrait",
+        "landscape"
+      ],
+      "element_ids": [
+        "curtain"
+      ],
+      "action_ids": [
+        "cloth-presence"
+      ],
+      "relation_ids": [],
+      "requirement": {
+        "type": "observed",
+        "check": "composition"
+      }
+    }
+  ],
+  "change": {
+    "reason": "Authored sheltered direction example; required visual cues are part of the brief, not observed evidence.",
+    "supersedes_sha256": null
+  }
+}

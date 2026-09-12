@@ -23,12 +23,13 @@ function applyOperations(scene,catalog,operations,report=false){
   const layer=id=>{const l=scene.layers.find(l=>l.id===id);if(!l)throw Error(`Unknown layer: ${id}`);return l;};
   function apply(op){
     if(!object(op)||typeof op.op!=='string')throw Error('Each operation needs an op name');
-    const shapes={add:['op','asset','id','values'],set:['op','layer','values','unset'],replace:['op','layer','value'],remove:['op','layer','cascade'],order:['op','layers'],group:['op','id','value'],camera:['op','values'],socket:['op','layer','name','value'],attach:['op','layer','to','socket','offset_x','offset_y'],coverage:['op','layers'],
+    const shapes={add:['op','asset','id','values'],set:['op','layer','values','unset'],replace:['op','layer','value'],remove:['op','layer','cascade'],order:['op','layers'],group:['op','id','value'],clock:['op','values'],camera:['op','values'],socket:['op','layer','name','value'],attach:['op','layer','to','socket','offset_x','offset_y'],coverage:['op','layers'],
       place_from_source:['op','id','asset','base','mode','reference','mapping','base_mapping','source_anchor','source_size','anchor','order','values'],
       reparent:['op','layer','to','socket','preserve','at_seconds'],finishing:['op','value'],bindings:['op','value'],framing:['op','value']};
     if(!shapes[op.op])throw Error(`Unsupported scene operation: ${op.op}`);
     fields(op,shapes[op.op],op.op);
     if(['finishing','framing','bindings'].includes(op.op)){if(op.value===null)delete scene[op.op];else scene[op.op]=structuredClone(op.value);}
+    else if(op.op==='clock'){fields(op.values,['loop_seconds'],'clock');if(typeof op.values.loop_seconds!=='number'||!Number.isFinite(op.values.loop_seconds)||op.values.loop_seconds<=0)throw Error('Clock needs positive finite loop_seconds');scene.canvas.loop_seconds=op.values.loop_seconds;}
     else if(op.op==='place_from_source')diagnostics.push(placeFromSource(scene,catalog,op));
     else if(op.op==='reparent')diagnostics.push(reparentAtTime(scene,catalog,op));
     else if(op.op==='add'){

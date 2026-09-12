@@ -66,6 +66,11 @@ def inspect_pack(pack):
         if mapping['shared_scale']!=g['scale'] or len(mapping['cels'])!=len(g['offsets']): raise ValueError('Motion pack mapping differs')
         for cel,original,offset in zip(mapping['cels'],baseline['registration_mapping']['cels'],g['offsets']):
             if cel['raw_cel_to_cell']!=[g['scale'],0,0,g['scale'],*offset] or any(cel[k]!=original[k] for k in ['index','source_index','source_rect','source_pivot']): raise ValueError('Motion pack cel mapping differs')
+    if not changed and asset.get('provenance',{}).get('cel_trim'):
+        from .cel_trim import validate
+        ref=asset['provenance']['cel_trim'];recipe=studio.read(pack/'recipe.json')
+        if ref!=recipe.get('cel_trim'):raise ValueError('Trim recipe/provenance differ')
+        validate(pack/ref['file'],ref['sha256'],[(pack/f).resolve() for f in recipe['input']['frames']],recipe)
     if not changed:
         _,frames=read_asset(asset,pack);result['cel_analysis']=stats(frames)
     return result
@@ -211,6 +216,7 @@ def add_preparation_parsers(group):
     q.add_argument('--recipe',type=Path);q.add_argument('--backing-to-source',type=float,nargs=6)
     q.add_argument('--out',type=Path)
     q=group.add_parser('preflight',help='Decode transparency facts and make light/dark previews');q.add_argument('source',type=Path);q.add_argument('--out',type=Path,required=True)
+    q=group.add_parser('trim-cels');q.add_argument('layer');q.add_argument('--id',required=True);q.add_argument('--out',type=Path,required=True)
     q=group.add_parser('crop',help='Export a mapped source crop into a fresh directory');q.add_argument('source',type=Path);q.add_argument('--recipe',type=Path,required=True);q.add_argument('--out',type=Path,required=True)
     q=group.add_parser('return',help='Register a returned edit and blend into a source derivative');q.add_argument('edit',type=Path);q.add_argument('--mapping',type=Path,required=True);q.add_argument('--out',type=Path,required=True)
     q=group.add_parser('edges',help='Inspect all isolated cels at explicit display size and magnified');q.add_argument('asset');q.add_argument('--out',type=Path,required=True);q.add_argument('--catalog',type=Path);q.add_argument('--display-width',type=int,required=True);q.add_argument('--background',type=Path);q.add_argument('--context-rect',type=int,nargs=4,metavar=('X','Y','W','H'));q.add_argument('--fps',type=float,default=6);q.add_argument('--magnify',type=int,default=4)
@@ -224,6 +230,9 @@ def run_preparation(args,project):
         from . import preparation_commands
         return preparation_commands.run(args,project)
     if args.action=='preflight': return asset_prep.preflight(args.source,args.out)
+    if args.action=='trim-cels':
+        from .cel_trim import prepare
+        return prepare(project,args.layer,args.id,args.out)
     if args.action=='crop': return asset_prep.crop(project,args.source,args.recipe,args.out)
     if args.action=='return': return asset_prep.return_edit(project,args.edit,args.mapping,args.out)
     if args.action in ['edges','edge-repair']:

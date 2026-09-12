@@ -12,6 +12,7 @@ def add_parsers(sub):
     group=sub.add_parser('plan',help='Reconcile production intentions with current evidence').add_subparsers(dest='action',required=True)
     from . import plan_commands
     plan_commands.add_parsers(group)
+    q=group.add_parser('fulfill');q.add_argument('file',type=Path);q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256',required=True)
     for action in ['inspect','check','next']:
         q=group.add_parser(action);q.add_argument('--inventory',default='plans/asset-inventory.json');q.add_argument('--out',type=Path)
         if action=='next':q.add_argument('--limit',type=int,default=5)
@@ -21,10 +22,15 @@ def add_parsers(sub):
 def inspect(project, inventory='plans/asset-inventory.json', *, scene_path=None, catalog_path=None):
     project=Path(project).resolve();path=studio.inside(project,inventory)
     plan=studio.read(path)
-    if plan.get('version')!=1 or not isinstance(plan.get('items'),list):raise ValueError('Expected inventory version 1 with items.')
     conf=studio.read(project/'ambiance-project.json')
     catalog_path=catalog_path or studio.inside(project,conf['catalog']);scene_path=scene_path or studio.inside(project,conf['scene'])
     catalog=studio.read(catalog_path);scene=studio.read(scene_path)
+    return evaluate(project,plan,catalog,scene,path,{str(f.relative_to(project)):studio.digest(f) for f in [path,catalog_path,scene_path]})
+
+
+def evaluate(project,plan,catalog,scene,path,bindings):
+    if plan.get('version')!=1 or not isinstance(plan.get('items'),list):raise ValueError('Expected inventory version 1 with items.')
+    evidence_bindings={}
     assets={a['id']:a for a in catalog['assets']};layers={l['id']:l for l in scene['layers']}
     errors=[];warnings=[];ids=set();rows=[];asset_coverage=set()
     def evidence(ref,context):
@@ -35,6 +41,7 @@ def inspect(project, inventory='plans/asset-inventory.json', *, scene_path=None,
             if not target.is_file() or studio.digest(target)!=ref['sha256']:
                 errors.append(f'{context}: missing or changed evidence {ref["file"]}');return False
         except ValueError as e:errors.append(f'{context}: {e}');return False
+        evidence_bindings[ref['file']]=ref['sha256']
         return True
     if plan.get('reference'):
         ref=plan['reference'];evidence({'file':ref.get('file',ref.get('path')),'sha256':ref.get('sha256')},'reference')
@@ -132,11 +139,13 @@ def inspect(project, inventory='plans/asset-inventory.json', *, scene_path=None,
         computed.add(id);return r['complete_for_scope']
     for id in byid:completion(id,set())
     uncovered=sorted(set(assets)-asset_coverage)
-    if uncovered:warnings.append('Catalog assets missing from the authored inventory: '+', '.join(uncovered))
-    return {'ok':not errors,'inventory':str(path),'bindings':{str(f.relative_to(project)):studio.digest(f) for f in [path,catalog_path,scene_path]},
+    active_unmapped=sorted(set(uncovered)&{layer['asset'] for layer in layers.values()})
+    retained_unmapped=sorted(set(uncovered)-set(active_unmapped))
+    if active_unmapped:warnings.append('Active scene assets missing from the authored inventory: '+', '.join(active_unmapped))
+    return {'ok':not errors,'inventory':str(path),'bindings':bindings,'evidence_bindings':evidence_bindings,
         'summary':{'items':len(rows),'catalog_assets':len(assets),'scene_layers':len(layers),'incomplete_items':sum(not r['complete_for_scope'] for r in rows),
                    'deferred_items':sum(r['disposition']=='deferred' for r in rows)},
-        'items':rows,'unmapped_asset_ids':uncovered,'errors':errors,'warnings':warnings,
+        'items':rows,'unmapped_asset_ids':uncovered,'active_unmapped_asset_ids':active_unmapped,'retained_unmapped_asset_ids':retained_unmapped,'errors':errors,'warnings':warnings,
         'limits':['Production evidence is separate from artistic approval.','Object/method declarations are authored; this command does not infer every object from an image.','Planned work is normal incompleteness, not a failed integrity check.']}
 
 
@@ -147,6 +156,9 @@ def ready_work(result, limit=5):
 
 
 def run(args,project):
+    if args.action=='fulfill':
+        from .inventory_authoring import fulfill
+        return fulfill(project,studio.read(args.file),args.expect_sha256,args.dry_run)
     if args.action in ['spec', 'complexity', 'coverage', 'evidence']:
         from . import plan_commands
         return plan_commands.run(args, project)

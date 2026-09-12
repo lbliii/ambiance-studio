@@ -16,6 +16,7 @@ from urllib.request import Request, urlopen
 import webbrowser
 
 import studio
+from .errors import CommandError
 from . import __version__, deliveries, production, registry
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -137,11 +138,20 @@ def handler_for(root, path, instance, shutdown_token):
                 if len(parts) >= 3 and parts[:2] == ['api', 'projects']:
                     alias = parts[2]; project = self.project(alias)
                     if len(parts) == 3:
-                        result = production.overview(project, alias, origin, fingerprints)
+                        result = production.overview(project, alias, origin, fingerprints, details=parse_qs(urlsplit(self.path).query).get('details') == ['1'])
                         result['title'] = registry.describe(project)['title']
                         self.respond(result); return
+                    if parts[3:] == ['feedback']:
+                        from .feedback import listing
+                        query = parse_qs(urlsplit(self.path).query)
+                        self.respond(listing(project, query.get('delivery', [None])[0], query.get('state', [None])[0],
+                                             int(query.get('limit', [20])[0]), int(query.get('offset', [0])[0]))); return
+                    if len(parts) == 5 and parts[3] == 'feedback':
+                        from .feedback import inspect
+                        self.respond({'ok': True, 'feedback': inspect(project, parts[4])}); return
                     if parts[3:] == ['current']:
-                        self.respond({'selection': deliveries.current(project), 'runs': production.runs(project)[:5]}); return
+                        from .production_queries import run_summary
+                        self.respond({'selection': deliveries.current(project), 'runs': [run_summary(r, project) for r in production.runs(project)[:5]]}); return
                     if len(parts) == 5 and parts[3] == 'deliveries':
                         data = deliveries.inspect(project, parts[4], fingerprints)
                         data['feedback'] = deliveries.feedback_list(project, parts[4])
@@ -181,8 +191,13 @@ def handler_for(root, path, instance, shutdown_token):
                     file = root/parts[0]/('index.html' if len(parts) == 1 else parts[-1])
                     if len(parts) <= 2 and file.resolve().parent == root/parts[0] and file.suffix in ['.html', '.mjs', '.css']:
                         self.send_bytes(file.read_bytes(), 'text/javascript' if file.suffix == '.mjs' else mimetypes.guess_type(file.name)[0]); return
+                if len(parts) == 6 and parts[:2] == ['api', 'projects'] and parts[3] == 'feedback' and parts[5] in ['resolve', 'reopen']:
+                    from .feedback import transition
+                    result = transition(self.project(parts[2]), parts[4], 'resolved' if parts[5] == 'resolve' else 'open',
+                                        body['reporter'], body['note'], body['expected'], body.get('resolution'))
+                    self.respond(result); return
                 self.respond({'error': 'Not found'}, 404)
-            except (OSError, ValueError, KeyError, TypeError) as error:
+            except (OSError, ValueError, KeyError, TypeError, CommandError) as error:
                 self.respond({'error': str(error)}, 400)
 
         def do_POST(self):
@@ -204,10 +219,21 @@ def handler_for(root, path, instance, shutdown_token):
                     raise ValueError('Feedback request too large or empty')
                 body = json.loads(self.rfile.read(size))
                 if len(parts) == 4 and parts[:2] == ['api', 'projects'] and parts[3] == 'feedback':
-                    result = deliveries.feedback(self.project(parts[2]), body['delivery'], body['role'], body['seconds'], body['note'], body['observer'], body.get('view'))
+                    if 'scope' in body:
+                        from .feedback import add
+                        result = add(self.project(parts[2]), body['delivery'], body['note'], body['reporter'],
+                                     scope=body['scope'], view=body.get('view'), role=body.get('role'), seconds=body.get('seconds'),
+                                     start=body.get('start'), end=body.get('end'), observer=body.get('observer'), request_id=body.get('request_id'))
+                    else:
+                        result = deliveries.feedback(self.project(parts[2]), body['delivery'], body['role'], body['seconds'], body['note'], body['observer'], body.get('view'))
                     self.respond(result, 201); return
+                if len(parts) == 6 and parts[:2] == ['api', 'projects'] and parts[3] == 'feedback' and parts[5] in ['resolve', 'reopen']:
+                    from .feedback import transition
+                    result = transition(self.project(parts[2]), parts[4], 'resolved' if parts[5] == 'resolve' else 'open',
+                                        body['reporter'], body['note'], body['expected'], body.get('resolution'))
+                    self.respond(result); return
                 self.respond({'error': 'Not found'}, 404)
-            except (OSError, ValueError, KeyError, TypeError) as error:
+            except (OSError, ValueError, KeyError, TypeError, CommandError) as error:
                 self.respond({'error': str(error)}, 400)
 
         def handle(self):

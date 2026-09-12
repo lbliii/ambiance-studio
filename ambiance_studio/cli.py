@@ -120,8 +120,11 @@ def parser():
     q=group.add_parser('list');q.add_argument('--directory',type=Path)
     group.add_parser('status');q=group.add_parser('check');q.add_argument('--out',type=Path)
     q=group.add_parser('latest');q.add_argument('--channel',choices=['review','release'],default='review')
-    q=group.add_parser('overview');q.add_argument('--out',type=Path)
+    q=group.add_parser('overview');q.add_argument('--out',type=Path);q.add_argument('--details',action='store_true')
     q.add_argument('--stage',choices=['layout','assets','animation','export'],default='animation');q.add_argument('--view');q.add_argument('--revision')
+    q=group.add_parser('next');q.add_argument('--limit',type=int,default=8);q.add_argument('--offset',type=int,default=0);q.add_argument('--kind')
+    from . import project_storage
+    project_storage.add_parsers(group)
     group=sub.add_parser('studio',help='Open the shared local film library').add_subparsers(dest='action',required=True)
     q=group.add_parser('register');q.add_argument('path',type=Path);q.add_argument('--id');q.add_argument('--relocate',action='store_true')
     q=group.add_parser('open');q.add_argument('--port',type=int,default=8783);q.add_argument('--no-browser',action='store_true')
@@ -140,6 +143,7 @@ def parser():
     from . import asset_motion
     asset_motion.add_parsers(group)
     group=sub.add_parser('scene').add_subparsers(dest='action',required=True)
+    q=group.add_parser('clock');q.add_argument('--loop-seconds',type=float,required=True);q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256')
     q=group.add_parser('inspect');q.add_argument('--full',action='store_true');q=group.add_parser('sample');q.add_argument('--time',type=float,required=True)
     q=group.add_parser('apply');q.add_argument('file',type=Path);q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256')
     q=group.add_parser('track');q.add_argument('layer');q.add_argument('file',type=Path);q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256')
@@ -160,6 +164,8 @@ def parser():
     for name in ['x','y','width','depth']:q.add_argument('--'+name,type=float)
     group.add_parser('history');q=group.add_parser('restore');q.add_argument('sha256')
     group=sub.add_parser('review').add_subparsers(dest='action',required=True)
+    from . import review_packets
+    review_packets.add_parsers(group)
     q=group.add_parser('draft');q.add_argument('gate');q.add_argument('--out',type=Path,required=True)
     q.add_argument('--revision');q.add_argument('--edition');q.add_argument('--view')
     q=group.add_parser('record');q.add_argument('file',type=Path)
@@ -228,16 +234,22 @@ def run(args):
         from .preparation_server import serve
         serve(args.prepare,args.port);return None
     project=project_path(args.project,args.registry)
+    if command=='project' and action in ['storage','cleanup']:
+        from .project_storage import run as storage_run
+        return storage_run(args,project)
     if command=='asset' and action=='motion':
         asset_tool()
         from . import asset_motion
         return asset_motion.run(args,project)
-    if command in ['delivery','iteration','feedback'] or (command=='project' and action in ['latest','overview']):
+    if command in ['delivery','iteration','feedback'] or (command=='project' and action in ['latest','overview','next']):
         from . import production, deliveries
         matches=[item['id'] for item in registry.projects(ROOT,registry_file) if item['path']==str(project)]
         alias=matches[0] if matches else studio.read(project/'project.json')['id']
         base=studio_server.base_url(registry_file)
-        if command=='project' and action=='overview':return production.overview(project,alias,base,readiness_options={'stage':args.stage,'view':args.view,'revision':args.revision})
+        if command=='project' and action=='overview':return production.overview(project,alias,base,readiness_options={'stage':args.stage,'view':args.view,'revision':args.revision},details=args.details)
+        if command=='project' and action=='next':
+            from .production_queries import next_work
+            return next_work(project,production.overview(project,alias,base,details=True),args.limit,args.kind,args.offset)
         if command=='project' and action=='latest':
             data=deliveries.latest(project,args.channel)
             data['current_url']=f'{base}/projects/{alias}'
@@ -248,25 +260,34 @@ def run(args):
                 data['file']=str(project/entry['movie']['path'])
             return data
         result=production.handoff(project,args.id,args.out,alias,base) if command=='delivery' and action=='handoff' else production.run_command(args,project)
+        id = None
         if command=='iteration' and action=='run':id=result['run']['id']
-        else:id=result.get('id') or result.get('selection',{}).get('delivery')
+        elif command=='delivery':
+            selection = result.get('selection')
+            id=result.get('id') or (selection.get('delivery') if isinstance(selection,dict) else None)
         if id:result.update(watch_url=f'{base}/projects/{alias}/deliveries/{id}',current_url=f'{base}/projects/{alias}')
         return result
     if command=='asset' and action=='request':
         from . import generation_ledger
         return generation_ledger.run(args,project)
-    if command=='asset' and action in ['prepare','preflight','crop','return','edges','edge-repair']:return assets.run_preparation(args,project)
+    if command=='asset' and action in ['prepare','preflight','crop','return','edges','edge-repair','trim-cels']:return assets.run_preparation(args,project)
     if command=='binding':
         from . import bindings
         return bindings.run(args,project)
     if command=='revision':return revisions.run(args,project)
     if command=='view':return views.run(args,project)
     if command=='plan':return planning.run(args,project)
+    if command=='render' and action=='benchmark':
+        from .benchmarking import benchmark
+        return benchmark(project,studio.read(args.file),args.out)
     if command in ['render','media']:
         from . import rendering
         prepared=revisions.prepare_edition(project,args)
         result=rendering.run(args,project)
         return revisions.record_edition(project,prepared,result,args)
+    if command=='review' and action=='packet':
+        from .review_packets import run as run_packet
+        return run_packet(args,project)
     if command=='audio':
         from . import audio
         return audio.run(args,project)
@@ -313,7 +334,7 @@ def main(argv=None):
         command=' '.join(filter(None,[args.command,getattr(args,'action',None),getattr(args,'motion_action',None)]))
         ok=result.get('ok',True) if isinstance(result,dict) else True
         payload={'ok':ok,'schema_version':1,'command':command,'data':result}
-        if getattr(args,'out',None) and args.command not in ['asset','render','media'] and not(args.command=='scene' and args.action in ['activity','activity-review']) and not(args.command=='audio' and args.action=='cue-bind') and not(args.command=='look' and args.action=='export') and not(args.command=='review' and args.action=='draft') and not(args.command in ['revision','delivery'] and args.action=='handoff') and not(args.command=='plan' and getattr(args,'spec_action',None)=='migrate'):
+        if getattr(args,'out',None) and not(args.command=='project' and args.action=='cleanup') and not(args.command=='iteration' and args.action=='init') and not(args.command=='review' and args.action=='packet') and args.command not in ['asset','render','media'] and not(args.command=='scene' and args.action in ['activity','activity-review']) and not(args.command=='audio' and args.action=='cue-bind') and not(args.command=='look' and args.action=='export') and not(args.command=='review' and args.action=='draft') and not(args.command in ['revision','delivery'] and args.action=='handoff') and not(args.command=='plan' and getattr(args,'spec_action',None)=='migrate'):
             studio.write(args.out,payload)
         emit(command,result,ok)
         return 0 if ok else 1

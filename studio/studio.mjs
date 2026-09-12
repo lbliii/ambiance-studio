@@ -20,6 +20,7 @@ async function get(url) {
   return result;
 }
 function duration(seconds) { return `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`; }
+function feedbackTime(row) { const seconds=n=>`${Number(n.toFixed(3))}s`; return row.time?.kind==='range' ? `${seconds(row.time.start_seconds)}–${seconds(row.time.end_seconds)}` : seconds(row.seconds); }
 function link(text, href, cls = '') { return el('a', {href, class: cls}, text); }
 function mediaURL(project, delivery, role) { return `/media/${project}/${delivery}/${role}`; }
 function entries(data) { return data.entries || data.editions || {}; }
@@ -71,50 +72,79 @@ function history(project, overview, selected) {
       item.id !== selected?.id && selected ? link('Compare with this version', exactURL(project, selected, pair(selected)?.[1] || pair(selected, null, null)[1])+'&compare='+item.id) : null))) : el('p', {class: 'muted'}, 'Registered movies will appear here.'));
 }
 function feedbackPanel(project, data, key, player, notes) {
-  const entry = entries(data)[key]; const role = entry.role;
-  const list = el('div');
-  function showNotes(rows) {
-    list.replaceChildren(...rows.map(row => el('article', {class: 'feedback-note'},
-      el('button', {onclick: () => { if ((row.view || 'authored') === entry.view && row.role === role && player.tagName === 'VIDEO') player.currentTime = row.seconds; else location.href = exactURL(project, data, {...row, view: row.view || 'authored'})+'&time='+row.seconds; }}, `${duration(row.seconds)} · ${entryLabel(row)}`),
-      el('p', {}, row.note), el('small', {class: 'muted'}, row.observer))));
+  const entry = entries(data)[key]; const role = entry.role; const list = el('div');
+  async function post(suffix, body) {
+    const response = await fetch(`/api/projects/${project}/feedback${suffix}`, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)});
+    const result = await response.json(); if (!response.ok) throw Error(result.error); return result.feedback;
   }
-  showNotes(notes);
+  function replace(row) { const i = notes.findIndex(n => n.id === row.id); if (i >= 0) notes[i] = row; else notes.unshift(row); showNotes(); }
+  function showNotes() {
+    list.replaceChildren(...notes.map(row => {
+      const seek = row.seconds == null ? el('small', {}, row.subject?.kind === 'delivery' ? 'Whole delivery' : entryLabel(row)) :
+        el('button', {onclick: () => { if ((row.view || 'authored') === entry.view && row.role === role && player.tagName === 'VIDEO') player.currentTime = row.seconds; else location.href = exactURL(project, data, {...row, view: row.view || 'authored'})+'&time='+row.seconds; }}, `${feedbackTime(row)} · ${entryLabel(row)}`);
+      const reason = el('input', {placeholder: 'What changed, or why reopen?', required: true, 'aria-label': 'Disposition reason'});
+      const target = el('input', {placeholder: 'Delivery ID that addresses this', 'aria-label': 'Resolution delivery'});
+      const outcome = el('select', {'aria-label': 'Resolution outcome'}, el('option', {value: 'addressed'}, 'Addressed in a delivery'), el('option', {value: 'withdrawn'}, 'Withdrawn'));
+      const status = el('p', {role: 'status'});
+      const form = el('form', {onsubmit: async event => {
+        event.preventDefault();
+        try {
+          const resolution = {outcome: outcome.value, note: reason.value};
+          if (outcome.value === 'addressed') resolution.delivery = target.value;
+          replace(await post(`/${row.id}/${row.state === 'resolved' ? 'reopen' : 'resolve'}`, {reporter: name.value, note: reason.value, expected: row.head, resolution: row.state === 'resolved' ? null : resolution}));
+        } catch (error) { status.textContent = error.message; }
+      }}, reason, row.state === 'resolved' ? null : [outcome, target], el('button', {type: 'submit'}, row.state === 'resolved' ? 'Reopen' : 'Record resolution'), status);
+      return el('article', {class: 'feedback-note'}, seek, el('span', {class: 'pill'}, row.state || 'open'), el('p', {}, row.note),
+        el('small', {class: 'muted'}, `Reported by ${row.reporter || row.observer}${row.observer ? ' · Observer: '+row.observer : ''}`),
+        row.integrity?.ok === false ? el('p', {class: 'warning'}, row.integrity.errors.join('; ')) : null,
+        el('details', {}, el('summary', {}, 'Disposition'), el('p', {class: 'caption'}, 'Records work addressing this note. Movie reviews remain separate.'), form));
+    }));
+  }
   const note = el('textarea', {placeholder: 'What would you change, or like to keep?', 'aria-label': 'Movie feedback', required: true, maxlength: 10000});
-  const name = el('input', {value: 'Local viewer', 'aria-label': 'Your name', maxlength: 200, required: true});
-  const status = el('p', {role: 'status', class: 'caption'});
-  const save = el('button', {type: 'submit'}, 'Save note at current time');
+  const name = el('input', {value: 'Local viewer', 'aria-label': 'Reporter name', maxlength: 200, required: true});
+  const scope = el('select', {'aria-label': 'Feedback scope'}, el('option', {value: 'delivery'}, 'Whole delivery'), el('option', {value: 'entry'}, 'This movie'), el('option', {value: 'point'}, 'This movie at current time'), el('option', {value: 'range'}, 'Time range in this movie'));
+  const start = el('input', {type: 'number', min: 0, step: .01, placeholder: 'Range start (seconds)', 'aria-label': 'Range start'});
+  const end = el('input', {type: 'number', min: 0, step: .01, placeholder: 'Range end (seconds)', 'aria-label': 'Range end'});
+  const range = el('div', {hidden: true}, start, end); scope.addEventListener('change', () => { range.hidden = scope.value !== 'range'; });
+  const status = el('p', {role: 'status', class: 'caption'}); const save = el('button', {type: 'submit'}, 'Save note');
+  let requestId = crypto.randomUUID(), pendingBody = null;
+  for (const field of [note, name, scope, start, end]) field.addEventListener('input', () => { requestId = crypto.randomUUID(); pendingBody = null; });
   const form = el('form', {onsubmit: async event => {
     event.preventDefault(); save.disabled = true;
     try {
-      const seconds = player.tagName === 'VIDEO' ? Math.min(player.currentTime || 0, entry.duration_seconds - .001) : 0;
-      const response = await fetch(`/api/projects/${project}/feedback`, {method: 'POST', headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({delivery: data.id, view: entry.view, role, seconds, note: note.value, observer: name.value})});
-      const result = await response.json();
-      if (!response.ok) throw Error(result.error);
-      notes.unshift(result.feedback); showNotes(notes); note.value = '';
-      status.textContent = `Saved against ${data.title} at ${duration(seconds)}.`;
+      const body = {delivery: data.id, scope: scope.value === 'delivery' ? 'delivery' : 'entry', note: note.value, reporter: name.value, request_id: requestId};
+      if (body.scope === 'entry') Object.assign(body, {view: entry.view, role});
+      if (scope.value === 'point') {
+        if (player.tagName !== 'VIDEO') throw Error('An intact movie is required for timed feedback.');
+        body.seconds = Math.min(player.currentTime || 0, entry.duration_seconds - .001);
+      }
+      if (scope.value === 'range') { if (!start.value || !end.value) throw Error('Supply both range boundaries.'); body.start = Number(start.value); body.end = Number(end.value); }
+      pendingBody ||= body;
+      replace(await post('', pendingBody)); requestId = crypto.randomUUID(); pendingBody = null; note.value = ''; status.textContent = `Saved against ${data.title}.`;
     } catch (error) { status.textContent = error.message; }
     finally { save.disabled = false; }
-  }}, note, el('details', {}, el('summary', {}, 'Observer'), el('label', {}, 'Your name', name)), save, status);
-  return el('section', {class: 'side-section'}, el('h2', {}, 'Review notes'), el('p', {class: 'caption'}, 'Notes stay with this exact format, movie, and soundtrack.'), form, list);
+  }}, note, scope, range, el('label', {}, 'Reported by', name), save, status);
+  showNotes();
+  return el('section', {class: 'side-section'}, el('h2', {}, 'Review notes'), el('p', {class: 'caption'}, 'Notes stay with this exact delivery or movie.'), form, list);
 }
+
 function productionPanel(project, overview, data = null) {
   const open = overview.open_checks.filter(item => item.criteria.length || item.reasons.length);
   return el('details', {}, el('summary', {}, 'Production and checks'),
     el('p', {class: 'caption'}, Object.values(overview.working).some(item => item.matches_selected === false) ? 'Working inputs have changes beyond this movie.' : Object.values(overview.working).some(item => item.matches_selected === true) ? 'Working inputs match the selected movie snapshots.' : 'No working-input comparison is recorded.'),
     Object.entries(data?.entry_checks || overview.entry_checks || {}).map(([key, state]) => el('details', {}, el('summary', {}, `${key}: ${state.release_ready ? 'Release ready' : 'Review pending'}`),
       state.error ? el('p', {class: 'warning'}, state.error) : null, state.open_checks.map(item => el('p', {class: 'caption'}, `${item.gate}: ${item.state}${item.reasons.length ? ' · '+item.reasons.join('; ') : ''}`)))),
-    overview.runs.map(run => el('p', {}, `${run.id}: ${run.state}${run.stage ? ' · '+run.stage : ''}`, run.error ? el('span', {class: 'warning'}, ' — '+run.error) : null)),
+    overview.runs.map(run => el('p', {}, `${run.id}: ${run.effective_state || run.state}${run.stage ? ' · '+run.stage : ''}`, run.error ? el('span', {class: 'warning'}, ' — '+run.error) : null)),
     open.map(item => el('details', {}, el('summary', {}, `${item.gate}: ${item.state}`),
       item.reasons.map(reason => el('p', {class: 'caption'}, reason)),
       item.criteria.map(check => el('p', {class: 'caption'}, `${check.id}: ${check.result}${check.note ? ' — '+check.note : ''}`)))),
-    overview.ready_work.length ? el('div', {}, el('h3', {}, 'Available next work'), overview.ready_work.map(item => el('p', {}, item.action))) : null,
+    overview.next_work?.items.length ? el('div', {}, el('h3', {}, 'Next work'), overview.next_work.items.map(item => el('p', {}, item.reason, item.decision ? ' · '+item.decision : ''))) : null,
     overview.errors.map(error => el('p', {class: 'warning'}, error)));
 }
-async function compare(project, data, otherId, overview) {
-  const other = await get(`/api/projects/${project}/deliveries/${otherId}`);
+async function compare(project, data, otherId, overview, paired = false) {
+  const other = paired ? data : await get(`/api/projects/${project}/deliveries/${otherId}`);
   const chosen=pair(data); if (!chosen) throw Error('This version does not contain the requested format and soundtrack.');
-  const [key, entry]=chosen; const matching=pair(other, entry.view, entry.role);
+  const [key, entry]=chosen; const matching=paired ? Object.entries(entries(other)).find(([, e])=>e.view!==entry.view && e.role===entry.role) : pair(other, entry.view, entry.role);
   const left = video(project, data, key), right = video(project, other, matching?.[0], true);
   const play = el('button', {}, 'Play both');
   const slider = el('input', {type: 'range', min: 0, max: Math.min(entry.duration_seconds, matching?.[1].duration_seconds || 0), step: .033, value: 0, 'aria-label': 'Comparison time'});
@@ -127,17 +157,30 @@ async function compare(project, data, otherId, overview) {
   left.addEventListener('timeupdate', () => {
     slider.value = left.currentTime;
     if (right.tagName === 'VIDEO' && Math.abs(left.currentTime - right.currentTime) > .15) right.currentTime = left.currentTime;
-    if (left.currentTime >= Number(slider.max)) { left.pause(); if (right.tagName === 'VIDEO') right.pause(); play.textContent = 'Play both'; }
+    if (left.currentTime >= Number(slider.max)-.02) { if(loop.checked){left.currentTime=0;if(right.tagName==='VIDEO')right.currentTime=0;left.play().catch(()=>{});}else{left.pause(); if (right.tagName === 'VIDEO') right.pause(); play.textContent = 'Play both';} }
   });
-  app.replaceChildren(el('div', {class: 'project-head'}, el('div', {}, el('p', {class: 'eyebrow'}, 'Version comparison'), el('h1', {}, overview.title)), link('Back to movie', `/projects/${project}/deliveries/${data.id}`, 'button')),
+  const loop = el('input', {type: 'checkbox', 'aria-label': 'Loop comparison'});
+  left.addEventListener('play', () => { if (right.tagName === 'VIDEO') { right.currentTime = left.currentTime; right.play().catch(()=>left.pause()); } });
+  left.addEventListener('pause', () => { if (right.tagName === 'VIDEO') right.pause(); });
+  left.addEventListener('seeking', () => { if (right.tagName === 'VIDEO') right.currentTime = left.currentTime; });
+  if (right.tagName === 'VIDEO') { right.controls=false; right.addEventListener('volumechange', () => { if(!right.muted)right.muted=true; }); }
+  left.addEventListener('ended', () => { if(loop.checked){left.currentTime=0;left.play().catch(()=>{});} });
+  const playbackStatus = el('p', {role:'status', class:'caption'}); let lastTime=0, advanced=performance.now();
+  const syncTimer=setInterval(()=>{if(!left.isConnected){clearInterval(syncTimer);return;}const now=performance.now();
+    if(left.paused||left.currentTime!==lastTime)advanced=now;lastTime=left.currentTime;
+    if(!left.paused&&right.tagName==='VIDEO'&&Math.abs(right.currentTime-left.currentTime)>.15)right.currentTime=left.currentTime;
+    playbackStatus.textContent=!left.paused&&now-advanced>2000?'Playback is waiting for the first movie. Check its play or sound controls.':'';
+  },250);
+  app.replaceChildren(el('div', {class: 'project-head'}, el('div', {}, el('p', {class: 'eyebrow'}, paired ? 'Paired formats' : 'Version comparison'), el('h1', {}, overview.title)), link('Back to movie', `/projects/${project}/deliveries/${data.id}`, 'button')),
     el('p', {class: 'caption'}, `${entryLabel(entry)} · Sound plays from the left movie. This comparison follows playback time; use a paired scene proof to check exact synchronization.`),
     el('div', {class: 'comparison'}, el('section', {}, el('h2', {}, data.title), left), el('section', {}, el('h2', {}, other.title), right)),
-    el('div', {class: 'compare-controls'}, play, slider));
+    el('div', {class: 'compare-controls'}, play, slider, el('label', {}, loop, 'Loop comparison')), playbackStatus);
 }
 async function projectPage(project) {
   const overview = await get(`/api/projects/${project}`);
   const selectedId = parts[2] === 'deliveries' ? parts[3] : overview.current.selection?.delivery;
   const data = selectedId && (parts[2] === 'deliveries' || overview.current.delivery) ? await get(`/api/projects/${project}/deliveries/${selectedId}`) : null;
+  if (data && query.get('paired')) return compare(project, data, data.id, overview, true);
   if (data && query.get('compare')) return compare(project, data, query.get('compare'), overview);
   const heading = el('div', {class: 'project-head'}, el('div', {}, el('p', {class: 'eyebrow'}, selectedId === overview.current.selection?.delivery ? 'Current review' : data ? 'Earlier version' : 'Project'), el('h1', {}, overview.title)),
     link('Open working scene', `/editor/?project=${project}`, 'button'));
@@ -180,7 +223,7 @@ async function projectPage(project) {
   const releaseSelected = overview.release.selection?.delivery === data.id && overview.release.release?.approved;
   app.replaceChildren(heading, el('div', {id: 'update'}), el('div', {class: 'watch-layout'},
     el('section', {}, el('div', {class: 'screen'}, player), viewControls, controls, metadata(entry), el('p', {class: 'caption'}, state),
-      el('div', {class: 'actions'}, copy, !isCurrent ? link('Watch current version', `/projects/${project}`, 'button') : null), files),
+      el('div', {class: 'actions'}, copy, data.schema_version === 2 ? link('Watch paired formats', exactURL(project,data,entry)+'&paired=1', 'button') : null, !isCurrent ? link('Watch current version', `/projects/${project}`, 'button') : null), files),
     el('aside', {}, el('section', {class: 'side-section'}, el('p', {class: 'eyebrow'}, releaseSelected ? 'Approved release' : 'Review movie'),
       el('h2', {}, data.title), el('p', {class: 'muted'}, data.notes || 'No change note was recorded.'),
       data.issues.length ? el('div', {class: 'notice warning'}, 'Some registered inputs have changed or are missing. Intact movies remain available.', data.issues.map(issue => el('p', {class: 'caption'}, `${issue.path}: ${issue.error}`))) : null),
@@ -189,7 +232,7 @@ async function projectPage(project) {
   setInterval(async () => {
     try {
       const fresh = await get(`/api/projects/${project}/current`);
-      document.getElementById('connection').textContent = fresh.runs.some(run => run.state === 'running') ? 'An iteration is in progress' : 'Local studio · Connected';
+      document.getElementById('connection').textContent = fresh.runs.some(run => run.effective_state === 'running') ? 'An iteration is in progress' : 'Local studio · Connected';
       if (fresh.selection?.payload_sha256 !== token) document.getElementById('update').replaceChildren(el('div', {class: 'notice'}, 'The current review has changed. ', link('Open current version', `/projects/${project}`, 'button primary')));
     } catch { document.getElementById('connection').textContent = 'Studio disconnected · Reopen with ambiance studio open'; }
   }, 5000);
