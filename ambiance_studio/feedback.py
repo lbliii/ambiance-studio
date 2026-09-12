@@ -4,7 +4,7 @@ import uuid
 from pathlib import Path
 
 import studio
-from . import deliveries, revisions
+from . import deliveries, project_references, record_contracts, revision_capture
 from .project import project_lock
 from .errors import CommandError
 
@@ -19,14 +19,14 @@ def _text(value, label, maximum=10000):
 
 
 def _path(project, id):
-    return studio.inside(project, f'feedback/movies/{revisions.identifier(id)}.json')
+    return studio.inside(project, f'feedback/movies/{record_contracts.identifier(id)}.json')
 
 
 def _references(project, refs):
     if not isinstance(refs, list):
         raise ValueError('Feedback references must be a list')
     for ref in refs:
-        revisions.fields(ref, {'kind', 'file', 'sha256', 'revision', 'element_ids', 'action_ids'}, 'feedback reference')
+        record_contracts.fields(ref, {'kind', 'file', 'sha256', 'revision', 'element_ids', 'action_ids'}, 'feedback reference')
         if ref.get('kind') == 'source':
             if set(ref) != {'kind', 'file', 'sha256'}:
                 raise ValueError('Source reference needs file and sha256')
@@ -51,7 +51,7 @@ def add(project, delivery, note, reporter, *, scope='entry', view=None, role=Non
         seconds=None, start=None, end=None, observer=None, references=None, request_id=None):
     note = _text(note, 'Feedback'); reporter = _text(reporter, 'Reporter', 200)
     if observer is not None: observer = _text(observer, 'Observer', 200)
-    if request_id is not None: revisions.identifier(request_id)
+    if request_id is not None: record_contracts.identifier(request_id)
     with project_lock(project):
         data = deliveries.load(project, delivery)
         subject = {'kind': scope, 'delivery': delivery, 'delivery_sha256': data['payload_sha256']}
@@ -85,18 +85,18 @@ def add(project, delivery, note, reporter, *, scope='entry', view=None, role=Non
         id = uuid.uuid5(uuid.NAMESPACE_URL, 'ambiance-feedback:'+request_id).hex if request_id else uuid.uuid4().hex
         path = _path(project, id)
         if path.exists():
-            old = revisions.read_sealed(path, FORMAT, versions=(3,))
+            old = record_contracts.read_sealed(path, FORMAT, versions=(3,))
             if any(old.get(k) != v for k, v in content.items()):
                 raise ValueError('Feedback request ID already has different content')
             return {'ok': True, 'reused': True, 'feedback': inspect(project, id), 'path': str(path)}
-        record = revisions.seal(dict(format=FORMAT, schema_version=3, id=id, created_utc=deliveries.now(), **content))
+        record = record_contracts.seal(dict(format=FORMAT, schema_version=3, id=id, created_utc=deliveries.now(), **content))
         studio.write(path, record)
     return {'ok': True, 'reused': False, 'feedback': inspect(project, id), 'path': str(path)}
 
 
 def inspect(project, id):
     path = _path(project, id)
-    raw = revisions.read_sealed(path, FORMAT, versions=(1, 2, 3))
+    raw = record_contracts.read_sealed(path, FORMAT, versions=(1, 2, 3))
     if raw['id'] != id: raise ValueError('Feedback identity mismatch')
     row = dict(raw)
     if raw['schema_version'] < 3:
@@ -108,9 +108,9 @@ def inspect(project, id):
     row.update({k: subject[k] for k in ['delivery', 'entry', 'movie', 'role', 'view', 'view_sha256', 'revision', 'edition'] if k in subject})
     row['seconds'] = timeline.get('seconds', timeline.get('start_seconds')) if timeline else None
     row.update(state='open', head=raw['payload_sha256'], events=[], path=str(path), integrity={'ok': True, 'errors': []})
-    events = studio.inside(project, f'feedback/events/{revisions.identifier(id)}')
+    events = studio.inside(project, f'feedback/events/{record_contracts.identifier(id)}')
     for number, event_path in enumerate(sorted(events.glob('*.json')), 1):
-        event = revisions.read_sealed(event_path, EVENT)
+        event = record_contracts.read_sealed(event_path, EVENT)
         if (event.get('feedback') != id or event.get('observation_sha256') != raw['payload_sha256'] or
                 event.get('sequence') != number or event.get('previous_sha256') != row['head'] or
                 event.get('from_state') != row['state'] or event.get('state') not in ['open', 'resolved'] or
@@ -152,7 +152,7 @@ def transition(project, id, state, reporter, reason, expected, resolution=None):
         if row['state'] == state: raise ValueError('Feedback is already '+state)
         evidence = []
         if state == 'resolved':
-            revisions.fields(resolution, {'outcome', 'note', 'revision', 'delivery', 'feedback'}, 'feedback resolution')
+            record_contracts.fields(resolution, {'outcome', 'note', 'revision', 'delivery', 'feedback'}, 'feedback resolution')
             outcome = resolution.get('outcome')
             if outcome not in ['addressed', 'withdrawn', 'superseded']: raise ValueError('Unknown feedback outcome')
             if outcome == 'addressed':
@@ -161,18 +161,18 @@ def transition(project, id, state, reporter, reason, expected, resolution=None):
                     if resolution.get(kind):
                         target = resolution[kind]
                         if kind == 'revision':
-                            revisions.load(project, target); path = revisions.manifest_path(project, target)
+                            revision_capture.load(project, target); path = revision_capture.manifest_path(project, target)
                         else:
                             data = deliveries.load(project, target); path = deliveries.record_path(project, target)
                             if any(not deliveries.intact(project, e['movie'])['ok'] for e in deliveries.entries(data).values()):
                                 raise ValueError('Resolution delivery movie changed')
-                        evidence.append(revisions.ref(project, path, 'feedback-resolution', kind))
+                        evidence.append(project_references.ref(project, path, 'feedback-resolution', kind))
             elif outcome == 'superseded':
                 target = resolution.get('feedback')
                 if target == id: raise ValueError('Feedback cannot supersede itself')
-                inspect(project, target); evidence.append(revisions.ref(project, _path(project, target), 'feedback-resolution', 'feedback'))
+                inspect(project, target); evidence.append(project_references.ref(project, _path(project, target), 'feedback-resolution', 'feedback'))
             if not row['integrity']['ok']: raise ValueError('Feedback references need attention before resolution')
-        event = revisions.seal(dict(format=EVENT, schema_version=1, id=uuid.uuid4().hex,
+        event = record_contracts.seal(dict(format=EVENT, schema_version=1, id=uuid.uuid4().hex,
             feedback=id, observation_sha256=row['payload_sha256'], sequence=len(row['events'])+1,
             previous_sha256=row['head'], from_state=row['state'], state=state, reporter=reporter,
             created_utc=deliveries.now(), reason=reason, resolution=resolution, evidence=evidence))
