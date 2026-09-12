@@ -32,6 +32,7 @@ def proof(project, directory, out, long_edge=640, resume=False):
     runtime_files=['tools/render-scene.mjs','tools/views-proof.mjs','editor/engine.mjs','editor/finishing.mjs',
                    'editor/views.mjs','editor/stage-raster.mjs','editor/audit.mjs','ambiance_studio/rendering.py']
     if (ROOT/'editor/bindings.mjs').exists(): runtime_files.append('editor/bindings.mjs')
+    runtime_files.extend(str(path.relative_to(ROOT)) for path in sorted((ROOT/'tools/render').glob('*.mjs')))
     runtime_identity=lambda: {name:ap.sha((ROOT/name).read_bytes()) for name in runtime_files}
     identity={'runtime':runtime_identity(),'preparation_receipt_sha256':ap.sha((directory/'preparation-receipt.json').read_bytes()),
               'artifact_sha256':ap.sha((directory/'artifact.json').read_bytes()),'long_edge':long_edge,'views':views,

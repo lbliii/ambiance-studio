@@ -117,6 +117,12 @@ class CompoundPreparationTests(unittest.TestCase):
         original=run['steps']['normal'];report=commands.proof(project,prepared,out,128,resume=True)
         self.assertEqual(report['status'],'complete');run=p.load(out/'proof-run.json');self.assertEqual(original,run['steps']['normal'])
         self.assertEqual(commands.validate_proof(out/'proof-run.json')['scope'],'isolated preparation raster study')
+        self.assertIn('tools/render/raster.mjs', run['identity']['runtime'])
+        renderer_bytes = (ROOT/'tools/render/raster.mjs').read_bytes()
+        real_sha = p.sha
+        with patch.object(p, 'sha', side_effect=lambda data: '0'*64 if data == renderer_bytes else real_sha(data)):
+            with self.assertRaisesRegex(ValueError, 'runtime changed'):
+                commands.proof(project, prepared, out, 128, resume=True)
         for view,size in [('portrait',(72,128)),('landscape',(128,72))]:
             normal=Path(run['steps']['normal']['directory']);hidden=Path(run['steps']['subjects-hidden']['directory'])
             with Image.open(normal/f'rest-{view}/frame.png') as rest,Image.open(normal/f'extreme-{view}/frame.png') as extreme,Image.open(hidden/f'rest-{view}/frame.png') as absent:

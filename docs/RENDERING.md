@@ -32,7 +32,7 @@ Use `preview --views-proof DIR` to serve the verified paired artifact. These pro
 ./ambiance --project projects/the-midnight-collection render video --repeats 3 --audio projects/the-midnight-collection/audio/masters/midnight-collection-v2.wav --out projects/the-midnight-collection/render/score-review-01
 ```
 
-`render video` currently requires **macOS AVFoundation and Xcode command-line tools**. It compiles the checked-in native source into a cache under the selected project's `.ambiance/native/`, keyed by source bytes, compiler version and host platform. It does not assume ffmpeg. `ambiance doctor` reports separate raster and native capabilities; runtime discovery does not imply media-service execution has been tested. A restricted host may require access to local macOS media services to encode or decode.
+`render video` currently requires **macOS AVFoundation and Xcode command-line tools**. It compiles every `.m` translation unit in `native/media/` into a cache under the selected project's `.ambiance/native/`. The cache key includes the filenames and hashes of all `.m` and `.h` files, compiler version and host platform. A change to an extracted command or shared header creates a fresh cache entry. It does not assume ffmpeg. `ambiance doctor` reports separate raster and native capabilities; runtime discovery does not imply media-service execution has been tested. A restricted host may require access to local macOS media services to encode or decode.
 
 The output uses H.264 High, BT.709 color tags, fixed frame timestamps, and no frame reordering. Default bitrate scales from 12 Mb/s at 1080×1920; `--bitrate` overrides it. Native dimensions must be even. `--seconds` can make a short encoder check; the default renders one whole authored visual loop. `--repeats` copies the compressed picture without a second image encode. It does not make a partial-loop segment seamless.
 
@@ -68,6 +68,38 @@ AMBIANCE_TEST_NATIVE=1 python3 -m unittest discover -s tests -p test_rendering.p
 The native tests require actual macOS media-service access. They render an independent tiny scene, retain sync-frame warmup, compose a known PCM source, verify exact decoded presentation counts and repeated-picture equality, and prove wrong counts and compressed-audio inputs fail. The ordinary suite explicitly skips native execution where it is not requested. Canvas-dependent tests skip when that optional dependency is absent.
 
 Sources: [Python CLI adapter](../ambiance_studio/rendering.py), [shared-engine raster adapter](../tools/render-scene.mjs), [native backend](../native/media/media.m), [regressions](../tests/test_rendering.py).
+
+The JavaScript entry point handles stdin/stdout and cancellation setup. The
+[render job](../tools/render/job.mjs) coordinates validated inputs, shared-engine
+rasterization, output modes and receipt finalization. Proof presentation and
+[native process transport](../tools/render/native-process.mjs) have separate
+owners; the transport retains child ownership, backpressure and encoder failure
+propagation. Relative Canvas overrides retain their original entry-directory
+resolution. Saved proof HTML and PNG naming remain unchanged.
+
+Native command dispatch delegates to [encode](../native/media/encode.m),
+[compose and trim](../native/media/compose.m), [decode verification](../native/media/verify.m),
+[audio presentation verification](../native/media/verify_audio.m), and
+[inspection](../native/media/inspect.m). Shared helpers are limited to native
+failure, fresh-output checks, asset opening, JSON emission and writer readiness
+and completion. Compressed picture payloads and PCM presentation calculations
+retain their existing contracts.
+
+New render reports add `renderer_sources`, mapping the entry point and extracted
+JavaScript owners to their hashes. Preparation-proof resume checks those files
+as well. Native verification and composition recipes add `native_sources`, with
+per-file hashes and a combined `sha256` from the
+[native source inventory](../ambiance_studio/native_sources.py). Existing
+entry-file hash fields keep their original meaning, and existing artifacts are
+not rewritten. An explicitly selected native binary is identified separately
+by its executable hash; source inventory does not certify how an override was
+built.
+
+`tests/test-render-transport.mjs` exercises real child-process failures,
+backpressure and cancellation. `tests/test_native_sources.py` covers source and
+header cache invalidation and native raw-stream rejection, AAC encoding and
+inspection. These are part of `./ambiance test --require-native` alongside the
+existing native compose, recovery and proof-integrity cases.
 
 ## Captured revision rendering
 

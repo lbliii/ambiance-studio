@@ -16,6 +16,7 @@ import tempfile
 import wave
 
 from .file_identity import digest as _digest
+from .native_sources import compilation_sources, source_identity as native_source_identity
 
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / 'tools/render-scene.mjs'
@@ -137,7 +138,8 @@ def _native_binary(project):
     if not compiler:
         _error('Native media requires Xcode command-line tools (xcrun clang).', 'missing_dependency', 3)
     version = subprocess.run([compiler, 'clang', '--version'], capture_output=True).stdout
-    identity = hashlib.sha256(NATIVE_SOURCE.read_bytes()+platform.platform().encode()+version).hexdigest()
+    sources = native_source_identity(NATIVE_SOURCE.parent)
+    identity = hashlib.sha256(sources['sha256'].encode()+platform.platform().encode()+version).hexdigest()
     cache = project / '.ambiance/native' / identity
     binary = cache / 'media'
     if not binary.exists():
@@ -147,7 +149,7 @@ def _native_binary(project):
             command = [compiler, 'clang', '-O2', '-fobjc-arc', '-Wno-deprecated-declarations']
             for framework in ['Foundation', 'AVFoundation', 'CoreMedia', 'CoreVideo', 'ImageIO', 'CoreGraphics']:
                 command += ['-framework', framework]
-            command += [str(NATIVE_SOURCE), '-o', str(output)]
+            command += [*map(str, compilation_sources(NATIVE_SOURCE.parent)), '-o', str(output)]
             result = subprocess.run(command, capture_output=True, text=True)
             if result.returncode:
                 _error('Native media build failed: '+result.stderr.strip(), 'runtime_error', 3)
@@ -206,6 +208,7 @@ def _verify(project, binary, source, out, width, height, fps, frames, audio_trac
     data.update({'input_sha256': source_hash, 'input_sha256_after': after_hash,
                  'native_binary_sha256': _digest(binary),
                  'native_source_sha256': _digest(NATIVE_SOURCE),
+                 'native_sources': native_source_identity(NATIVE_SOURCE.parent),
                  'report': str(report), 'contacts': str(contacts)})
     data['requested_contacts'] = []
     for request in requests:
@@ -474,6 +477,7 @@ def compose(args, project):
               'repeats':args.repeats, 'input_video_tracks':probe['video_tracks'], 'input_audio_tracks':probe['audio_tracks'],
               'input_audio_policy':'The selected PCM replaces any input movie audio.',
               'native_binary':_identity(binary), 'native_source':_identity(NATIVE_SOURCE),
+              'native_sources':native_source_identity(NATIVE_SOURCE.parent),
               'backend':'macOS AVFoundation', 'host_platform':platform.platform(), 'adapter_sha256':_digest(Path(__file__)),
               'revision':{k:context[k] for k in ['revision_id','manifest_sha256'] if k in context} or None}
     (out/'composition-recipe.json').write_text(json.dumps(recipe,indent=2)+'\n')
