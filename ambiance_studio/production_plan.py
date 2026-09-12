@@ -212,9 +212,9 @@ def load(project):
 def load_context(project, revision=None, *, verify=True):
     project = Path(project).resolve()
     if revision:
-        from . import revisions
-        manifest = revisions.load(project, revision)
-        if verify and not revisions.check(project, revision)['ok']: raise ValueError('Captured revision dependencies changed')
+        from . import revision_capture
+        manifest = revision_capture.load(project, revision)
+        if verify and not revision_capture.check(project, revision)['ok']: raise ValueError('Captured revision dependencies changed')
         name = manifest['controls'].get('production_plan')
         if not name: raise ValueError('Revision has no captured production plan; legacy records are unchanged')
         path = studio.inside(project, name)

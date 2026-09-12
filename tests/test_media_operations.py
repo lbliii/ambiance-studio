@@ -35,18 +35,18 @@ class MediaOperationsTests(unittest.TestCase):
                 self.assertEqual(execute.call_args.args[1], project)
 
     def test_invalid_edition_inputs_never_reach_renderer(self):
-        with patch.object(media.revisions, 'prepare_edition', side_effect=ValueError('changed input')), \
+        with patch.object(media.editions, 'prepare_edition', side_effect=ValueError('changed input')), \
              patch.object(media.rendering, 'run') as render, \
-             patch.object(media.revisions, 'record_edition') as record:
+             patch.object(media.editions, 'record_edition') as record:
             with self.assertRaisesRegex(ValueError, 'changed input'):
                 media.execute_job(Path('/tmp/film'), media.PictureRequest(revision='v1', edition='picture'), Path('/tmp/out'))
         render.assert_not_called()
         record.assert_not_called()
 
     def test_runtime_failure_does_not_record_an_edition(self):
-        with patch.object(media.revisions, 'prepare_edition', return_value={'captured': True}), \
+        with patch.object(media.editions, 'prepare_edition', return_value={'captured': True}), \
              patch.object(media.rendering, 'run', side_effect=RuntimeError('encoder failed')), \
-             patch.object(media.revisions, 'record_edition') as record:
+             patch.object(media.editions, 'record_edition') as record:
             with self.assertRaisesRegex(RuntimeError, 'encoder failed'):
                 media.execute_job(Path('/tmp/film'), media.PictureRequest(revision='v1', edition='picture'), Path('/tmp/out'))
         record.assert_not_called()

@@ -1,0 +1,111 @@
+{
+  "format": "ambiance-edition",
+  "schema_version": 2,
+  "id": "portrait",
+  "revision": "fixture",
+  "revision_sha256": "51a746fddc92a1dff959042185e8b6ad25f7462c19ecb98abdb0f7f4eabf9c76",
+  "created_utc": "2026-09-12T12:00:00+00:00",
+  "picture": {
+    "path": "reports/portrait/picture.mp4",
+    "sha256": "dc7ad9e9f8620a024b5fd0b40e86aee06260d224643b38bb4435139ecb940904",
+    "bytes": 47,
+    "section": "export",
+    "role": "picture_input",
+    "path_base": "project"
+  },
+  "audio": null,
+  "output": {
+    "path": "reports/portrait/picture.mp4",
+    "sha256": "dc7ad9e9f8620a024b5fd0b40e86aee06260d224643b38bb4435139ecb940904",
+    "bytes": 47,
+    "section": "export",
+    "role": "edition_output",
+    "path_base": "project"
+  },
+  "dependencies": [
+    {
+      "path": "reports/portrait/picture.mp4",
+      "sha256": "dc7ad9e9f8620a024b5fd0b40e86aee06260d224643b38bb4435139ecb940904",
+      "bytes": 47,
+      "section": "export",
+      "role": "edition_output",
+      "path_base": "project"
+    },
+    {
+      "path": "reports/portrait/picture.mp4",
+      "sha256": "dc7ad9e9f8620a024b5fd0b40e86aee06260d224643b38bb4435139ecb940904",
+      "bytes": 47,
+      "section": "release",
+      "role": "edition_output",
+      "path_base": "project"
+    },
+    {
+      "path": "reports/portrait/verification.json",
+      "sha256": "7d4e8c3e286e64aa4685f61cfa8f01295e459d02be7a5c43b19ca46b18248e32",
+      "bytes": 224,
+      "section": "export",
+      "role": "media_verification",
+      "path_base": "project"
+    },
+    {
+      "path": "reports/portrait/picture.mp4",
+      "sha256": "dc7ad9e9f8620a024b5fd0b40e86aee06260d224643b38bb4435139ecb940904",
+      "bytes": 47,
+      "section": "export",
+      "role": "picture_input",
+      "path_base": "project"
+    },
+    {
+      "path": "reports/portrait/render-report.json",
+      "sha256": "7ed372cfa2fd1e73e7b64d8aba43014132a666f31018dc2ce3fed9ba326ce873",
+      "bytes": 1027,
+      "section": "export",
+      "role": "production_record",
+      "path_base": "project"
+    }
+  ],
+  "sound_complete": [],
+  "recipe": {
+    "command": "render",
+    "action": "video",
+    "repeats": 1
+  },
+  "verification": {
+    "path": "reports/portrait/verification.json",
+    "sha256": "7d4e8c3e286e64aa4685f61cfa8f01295e459d02be7a5c43b19ca46b18248e32"
+  },
+  "limits": [
+    "Technical verification only. No creative verdict, listening, phone observation or publication is inferred."
+  ],
+  "view": {
+    "id": "portrait",
+    "sha256": "a0262a654169af5474dce3817f6b34d47122ad8527e0856668252b2a689f8eed",
+    "definition": {
+      "resolver_version": 1,
+      "id": "portrait",
+      "source_canvas": {
+        "width": 160,
+        "height": 160
+      },
+      "rect_scene_px": [
+        35,
+        0,
+        90,
+        160
+      ],
+      "output": {
+        "width": 90,
+        "height": 160
+      }
+    }
+  },
+  "output_expectations": {
+    "width": 90,
+    "height": 160,
+    "fps": 6,
+    "frames": 12,
+    "loop_frames": 12,
+    "audio_tracks": 0
+  },
+  "payload_sha256": "aaad5736e01deb4f6e67060fc00b13eb36f39d4648e22da5996b771857c0f0ce"
+}

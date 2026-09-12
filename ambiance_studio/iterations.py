@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 
 import studio
-from . import deliveries, revisions
+from . import deliveries, project_references, revision_capture
 from .errors import CommandError
 from .iteration_plan import (
     iteration_preflight, production_readiness, record_iteration_scope,
@@ -16,7 +16,7 @@ from .iteration_steps import IterationProgress, run_file
 def _composition(project, recipe, entry, picture, edition, view=None):
     return ComposeRequest(
         revision=recipe['revision'], edition=edition, view=view,
-        picture=Path(picture['output']), picture_receipt=revisions.relative(project, picture['report']),
+        picture=Path(picture['output']), picture_receipt=project_references.relative(project, picture['report']),
         audio=studio.inside(project, entry['audio']), repeats=entry.get('repeats', 1),
         audio_run=entry.get('audio_run'), audio_provenance=entry.get('audio_provenance'),
     )
@@ -43,7 +43,7 @@ def _produce_delivery(project, recipe, progress):
     pictures = {}
     selected = []
     for job in plan['jobs']:
-        if revisions.changed(project, plan['audio_inputs']):
+        if project_references.changed(project, plan['audio_inputs']):
             raise ValueError('Audio inputs changed after job preflight')
         view, role = job['view'], job['role']
         if job['stage'] == 'picture':
@@ -73,11 +73,11 @@ def _produce_delivery(project, recipe, progress):
     picture = next(iter(pictures.values()))
     picture_dir = Path(picture['report']).parent
     for kind in ['scene', 'catalog']:
-        declaration[kind+'_snapshot'] = revisions.relative(project, picture_dir/(kind+'.snapshot.json'))
+        declaration[kind+'_snapshot'] = project_references.relative(project, picture_dir/(kind+'.snapshot.json'))
     if not paired:
         contacts = Path(picture['verification']['report']).parent/'contacts/decoded-0000.png'
         if contacts.exists():
-            declaration['poster'] = revisions.relative(project, contacts)
+            declaration['poster'] = project_references.relative(project, contacts)
     deliveries.register(project, declaration)
     return declaration
 
@@ -134,11 +134,11 @@ def iteration(project, recipe, actor, *, present=True, executor: MediaExecutor =
         if recipe.get('capture_selection'):
             save('capture')
             selection = studio.inside(project, recipe['capture_selection'])
-            if not revisions.manifest_path(project, recipe['revision']).exists():
-                revisions.capture(project, recipe['revision'], selection)
-            elif revisions.load(project, recipe['revision'])['selection'] != studio.read(selection):
+            if not revision_capture.manifest_path(project, recipe['revision']).exists():
+                revision_capture.capture(project, recipe['revision'], selection)
+            elif revision_capture.load(project, recipe['revision'])['selection'] != studio.read(selection):
                 raise ValueError('Existing revision selection differs from the iteration recipe')
-        revisions.render_context(project, recipe['revision'])
+        revision_capture.render_context(project, recipe['revision'])
         preflight = iteration_preflight(project, recipe)
         state['production_preflight'] = preflight; save('production-preflight')
         if not preflight['may_render']:

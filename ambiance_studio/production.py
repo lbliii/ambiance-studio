@@ -3,7 +3,7 @@ from pathlib import Path
 import os
 
 import studio
-from . import deliveries, revisions
+from . import deliveries, revision_reviews
 from .errors import CommandError
 # Compatibility exports for existing operators; implementation has one owner.
 from .iteration_plan import (
@@ -87,7 +87,7 @@ def overview(project, alias, base_url, fingerprints=None, readiness_options=None
         if current_data:
             _, edition = deliveries.resolve_entry(current_data)
             if edition['revision']:
-                context = revisions.review_context(project, edition['revision'], edition['edition'])
+                context = revision_reviews.review_context(project, edition['revision'], edition['edition'])
         gates = studio.gate_status(project, context)
         if current_data:entry_checks=deliveries.review_states(project,current_data)
         review_dir = context['review_dir'] if context else project/'reviews'

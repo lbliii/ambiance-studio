@@ -5,7 +5,7 @@ from pathlib import Path
 import subprocess
 
 import studio
-from .revisions import identifier
+from .record_contracts import identifier
 
 
 def registry_path(value=None):

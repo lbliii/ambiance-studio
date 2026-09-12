@@ -2,13 +2,13 @@
 import time
 
 import studio
-from . import deliveries, revisions
+from . import deliveries, editions, project_references, record_contracts
 from .media_operations import MediaExecutor, MediaRequest, request_argv
 from .production_queries import saved_step_result
 
 
 def run_file(project, id):
-    return studio.inside(project, f'runs/{revisions.identifier(id)}/run.json')
+    return studio.inside(project, f'runs/{record_contracts.identifier(id)}/run.json')
 
 
 class IterationProgress:
@@ -32,7 +32,7 @@ class IterationProgress:
         files = [result['output'], result['report'], result['verification']['report']]
         if result.get('edition'):
             files.append(result['edition']['receipt'])
-        outputs = [deliveries.reference(self.project, revisions.relative(self.project, file)) for file in files]
+        outputs = [deliveries.reference(self.project, project_references.relative(self.project, file)) for file in files]
         record = {'result': saved_step_result(result), 'outputs': outputs}
         if elapsed is not None:
             record['elapsed_seconds'] = elapsed
@@ -42,10 +42,10 @@ class IterationProgress:
 
     def recover(self, request: MediaRequest):
         """An edition may have been committed just before the last checkpoint."""
-        path = revisions.edition_path(self.project, request.revision, request.edition)
+        path = editions.edition_path(self.project, request.revision, request.edition)
         if not path.exists():
             return None
-        receipt = revisions.load_edition(self.project, request.revision, request.edition)
+        receipt = editions.load_edition(self.project, request.revision, request.edition)
         output_dir = studio.inside(self.project, receipt['output']['path']).parent
         if output_dir.parent != self.directory:
             raise ValueError('Existing edition belongs to a different production run')

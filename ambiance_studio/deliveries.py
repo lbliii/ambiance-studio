@@ -10,7 +10,7 @@ import threading
 import uuid
 
 import studio
-from . import revisions
+from . import editions as edition_records, project_references, record_contracts, revision_capture, revision_reviews
 
 FORMAT = 'ambiance-delivery'
 SELECTION = 'ambiance-delivery-selection'
@@ -64,11 +64,11 @@ def intact(project, item, fingerprints=None):
 
 
 def record_path(project, id):
-    return studio.inside(project, f'deliveries/{revisions.identifier(id)}.json')
+    return studio.inside(project, f'deliveries/{record_contracts.identifier(id)}.json')
 
 
 def load(project, id):
-    data = revisions.read_sealed(record_path(project, id), FORMAT, versions=(1,2))
+    data = record_contracts.read_sealed(record_path(project, id), FORMAT, versions=(1,2))
     if data['id'] != id:
         raise ValueError('Delivery identity mismatch')
     if data['schema_version']==2:
@@ -81,7 +81,7 @@ def load(project, id):
 
 def entry_key(view, role):
     if role not in ROLES:raise ValueError('Unknown soundtrack role')
-    return revisions.identifier(f'{view}.{role}')
+    return record_contracts.identifier(f'{view}.{role}')
 
 
 def entries(data):
@@ -126,10 +126,10 @@ def metadata(report):
 def _prepare_legacy(project, declaration, allow_named=False):
     allowed = {'format', 'schema_version', 'id', 'title', 'notes', 'default_role', 'editions',
                'poster', 'provenance', 'scene_snapshot', 'catalog_snapshot'}
-    revisions.fields(declaration, allowed, 'delivery selection')
+    record_contracts.fields(declaration, allowed, 'delivery selection')
     if declaration.get('format') != SELECTION or declaration.get('schema_version') != 1:
         raise ValueError('Expected ambiance-delivery-selection schema_version 1')
-    id = revisions.identifier(declaration['id'])
+    id = record_contracts.identifier(declaration['id'])
     title = declaration.get('title', id)
     notes = declaration.get('notes', '')
     if not isinstance(title, str) or not title.strip() or not isinstance(notes, str):
@@ -139,18 +139,18 @@ def _prepare_legacy(project, declaration, allow_named=False):
         raise ValueError('A delivery needs at least one verified movie')
     editions = {}; dependencies = []
     for entry in entries:
-        revisions.fields(entry, {'role', 'file', 'verification', 'revision', 'edition'}, 'delivery edition')
+        record_contracts.fields(entry, {'role', 'file', 'verification', 'revision', 'edition'}, 'delivery edition')
         role = entry.get('role')
         if role not in ROLES or role in editions:
             raise ValueError('Use each of score, effects, silent at most once per delivery')
         bound = None
         if entry.get('revision') or entry.get('edition'):
-            bound = revisions.load_edition(project, entry['revision'], entry['edition'])
+            bound = edition_records.load_edition(project, entry['revision'], entry['edition'])
             if bound['schema_version']==2 and not allow_named:raise ValueError('Named-view editions require delivery selection schema_version 2')
             if entry.get('file', bound['output']['path']) != bound['output']['path']:
                 raise ValueError('Selected movie differs from captured edition output')
             file = bound['output']['path']; verification = bound['verification']['path']
-            receipt = reference(project, revisions.relative(project, revisions.edition_path(project, entry['revision'], entry['edition'])))
+            receipt = reference(project, project_references.relative(project, edition_records.edition_path(project, entry['revision'], entry['edition'])))
             dependencies.append(receipt)
         else:
             file = entry['file']; verification = entry['verification']
@@ -199,22 +199,22 @@ def _prepare_legacy(project, declaration, allow_named=False):
 def prepare(project, declaration):
     if declaration.get('schema_version')!=2:return _prepare_legacy(project,declaration)
     allowed={'format','schema_version','id','title','notes','default','entries','provenance','scene_snapshot','catalog_snapshot'}
-    revisions.fields(declaration,allowed,'view delivery selection')
+    record_contracts.fields(declaration,allowed,'view delivery selection')
     if declaration.get('format')!=SELECTION:raise ValueError('Expected ambiance-delivery-selection schema_version 2')
-    id=revisions.identifier(declaration['id']);selected=declaration.get('entries')
+    id=record_contracts.identifier(declaration['id']);selected=declaration.get('entries')
     if not isinstance(selected,list) or not selected:raise ValueError('Delivery requires view entries')
     result_entries={};dependencies=[];working={}
     for entry in selected:
-        revisions.fields(entry,{'view','role','revision','edition','poster'},'view delivery entry')
+        record_contracts.fields(entry,{'view','role','revision','edition','poster'},'view delivery entry')
         if not entry.get('revision') or not entry.get('edition'):raise ValueError('View deliveries require captured edition receipts')
-        bound=revisions.load_edition(project,entry['revision'],entry['edition']);view=revisions.edition_view(project,bound)
+        bound=edition_records.load_edition(project,entry['revision'],entry['edition']);view=edition_records.edition_view(project,bound)
         if entry.get('view')!=view['id']:raise ValueError('Delivery view differs from its edition')
         key=entry_key(view['id'],entry.get('role'))
         if key in result_entries:raise ValueError('Each view and soundtrack pair must be unique')
         poster=entry.get('poster')
         if poster is None:
             contact=studio.inside(project,bound['verification']['path']).parent/'contacts/decoded-0000.png'
-            if contact.is_file():poster=revisions.relative(project,contact)
+            if contact.is_file():poster=project_references.relative(project,contact)
         one={k:v for k,v in declaration.items() if k in {'id','title','notes','provenance','scene_snapshot','catalog_snapshot'}}
         one.update(format=SELECTION,schema_version=1,editions=[{k:entry[k] for k in ['role','revision','edition']}],default_role=entry['role'])
         if poster:one['poster']=poster
@@ -225,11 +225,11 @@ def prepare(project, declaration):
             facts=parsed['editions'][entry['role']]
             if image.size!=(facts['width'],facts['height']):raise ValueError('Entry poster dimensions differ from its movie')
         item=parsed['editions'][entry['role']]
-        receipt=reference(project,revisions.relative(project,revisions.edition_path(project,entry['revision'],entry['edition'])))
+        receipt=reference(project,project_references.relative(project,edition_records.edition_path(project,entry['revision'],entry['edition'])))
         result_entries[key]={**item,'id':key,'view':view['id'],'view_sha256':view['sha256'],'poster':parsed['poster'],'edition_receipt':receipt}
         dependencies.extend(parsed['dependencies']);working=parsed['working_inputs']
     default=declaration.get('default')
-    revisions.fields(default,{'view','role'},'default delivery pair')
+    record_contracts.fields(default,{'view','role'},'default delivery pair')
     if set(default)!={'view','role'} or entry_key(default['view'],default['role']) not in result_entries:raise ValueError('Default view and soundtrack must exist')
     default_entry=result_entries[entry_key(default['view'],default['role'])]
     return {'format':FORMAT,'schema_version':2,'id':id,'title':parsed['title'],'notes':parsed['notes'],'created_utc':now(),
@@ -253,7 +253,7 @@ def register(project, declaration, dry_run=False):
             if not intact(project, item)['ok']:
                 raise ValueError('Delivery input changed during registration')
         if not dry_run:
-            studio.write(path, revisions.seal(candidate))
+            studio.write(path, record_contracts.seal(candidate))
         return {'ok': True, 'id': candidate['id'], 'dry_run': dry_run, 'record': str(path),
                 ('entries' if candidate['schema_version']==2 else 'editions'): list(entries(candidate))}
 
@@ -264,7 +264,7 @@ def current(project, channel='review'):
     paths = sorted((project/'presentations'/channel).glob('*.json'))
     if not paths:
         return None
-    result = revisions.read_sealed(paths[-1], PRESENTATION)
+    result = record_contracts.read_sealed(paths[-1], PRESENTATION)
     if result['channel'] != channel or paths[-1].stem != f'{result["sequence"]:08d}':
         raise ValueError('Presentation identity mismatch')
     return result
@@ -279,7 +279,7 @@ def review_states(project, data):
     result={}
     for key,entry in entries(data).items():
         try:
-            context=revisions.review_context(project,entry['revision'],entry['edition']) if entry['revision'] else None
+            context=revision_reviews.review_context(project,entry['revision'],entry['edition']) if entry['revision'] else None
             state=studio.gate_status(project,context)
             review_dir=context['review_dir'] if context else project/'reviews'
             checks=[]
@@ -302,7 +302,7 @@ def release_state(project, data):
             reasons.append(f'{role}: legacy export has no edition-bound release review')
             continue
         try:
-            state = revisions.status(project, edition['revision'], edition['edition'])
+            state = revision_reviews.status(project, edition['revision'], edition['edition'])
             if not state['release_ready']:
                 reasons.append(f'{role}: release review is {state["gates"]["release"]["state"]}')
         except (OSError, ValueError, KeyError, TypeError) as error:
@@ -319,7 +319,7 @@ def production_scope(project, data):
     enforced = (project/production_plan.PATH).exists()
     reports = []; blocked = []
     for revision in revisions_used:
-        manifest = revisions.load(project, revision)
+        manifest = revision_capture.load(project, revision)
         if 'production_plan' not in manifest['controls'] and not enforced: continue
         enforced = True
         outputs = {}
@@ -351,7 +351,7 @@ def present(project, id, actor, note='', channel='review', expected=None):
         if channel == 'release' and not release_state(project, data)['approved']:
             raise ValueError('Release selection needs current edition-bound release evidence for every edition')
         sequence = previous['sequence']+1 if previous else 1
-        selected = revisions.seal({'format': PRESENTATION, 'schema_version': 1, 'channel': channel,
+        selected = record_contracts.seal({'format': PRESENTATION, 'schema_version': 1, 'channel': channel,
             'sequence': sequence, 'delivery': id, 'delivery_sha256': studio.digest(record_path(project, id)),
             'selected_utc': now(), 'selected_by': actor.strip(), 'note': note, 'previous': token})
         studio.write(project/'presentations'/channel/f'{sequence:08d}.json', selected)
