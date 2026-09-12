@@ -157,14 +157,15 @@ def movie_receipt(project, path, ctx, view, role=None):
         raise ValueError('Movie decode dimensions/clock differ from expected view')
     if verification.get('loop_frames') != ctx['scene']['canvas']['fps']*ctx['scene']['canvas']['loop_seconds']:
         raise ValueError('Movie evidence does not cover the full captured picture loop')
-    from . import rendering
+    from .native_media import native_binary
+    from .media_verification import verify_media
     # Run the existing decoder once per exact movie/expectations. Warm readiness
     # uses the hashed result and never repeats encoding or full media decoding.
     key = studio.encoded_hash({'movie': receipt['output'], 'facts': facts, 'loop_frames': verification['loop_frames']})
     cache = Path(project)/'.ambiance/evidence-decode'/key
     report_path = cache/'media-report.json'
     if not report_path.exists():
-        rendering._verify(project, rendering._native_binary(project), movie, cache,
+        verify_media(native_binary(project), movie, cache,
                           int(facts['width']), int(facts['height']), int(facts['fps']), int(facts['frames']),
                           facts['audio_tracks'], int(verification['loop_frames']))
     decoded = studio.read(report_path)
