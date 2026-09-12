@@ -10,7 +10,7 @@ import sys
 import tempfile
 
 from . import __version__
-from . import planning, assets, revisions, views
+from . import planning, assets, revisions, views, revision_reviews
 from .errors import CommandError
 from .project import locations, project_lock
 from .scene_runtime import require_node, scene_bridge
@@ -301,7 +301,7 @@ def run(args):
         return audio.run(args,project)
     if command=='project' and action=='status':
         from . import deliveries
-        result=revisions.project_status(project)
+        result=revision_reviews.project_status(project)
         result['current_delivery']=deliveries.latest(project)
         return result
     if command in ['project','scene'] and action=='check':return check_project(project,include_views=command=='project')
@@ -324,13 +324,13 @@ def run(args):
         if action=='draft':
             if args.edition and not args.revision:raise CommandError('--edition requires --revision')
             if args.view and not args.revision:raise CommandError('--view requires --revision')
-            context=revisions.review_context(project,args.revision,args.edition,args.view) if args.revision else None
+            context=revision_reviews.review_context(project,args.revision,args.edition,args.view) if args.revision else None
             draft=studio.review_template(project,args.gate,context)
             if args.out.exists():raise CommandError('Review draft already exists.')
             studio.write(args.out,draft);return {'draft':str(args.out.resolve()),'review':draft}
         with project_lock(project):
             source=studio.read(args.file);subject=source.get('subject',{})
-            context=revisions.review_context(project,subject['revision'],subject.get('edition'),subject.get('view')) if source.get('version')==2 else None
+            context=revision_reviews.review_context(project,subject['revision'],subject.get('edition'),subject.get('view')) if source.get('version')==2 else None
             return studio.record_review(project,args.file,context)
     raise CommandError('Unsupported command')
 

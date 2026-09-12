@@ -8,7 +8,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from typing import Any, ClassVar, Protocol
 
-from . import rendering, revisions
+from . import rendering, editions
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -76,9 +76,9 @@ def request_argv(project: Path, request: MediaRequest, out: Path) -> list[str]:
 
 def execute_media(args, project):
     """One authoritative prepare → render/compose/verify → record sequence."""
-    prepared = revisions.prepare_edition(project, args)
+    prepared = editions.prepare_edition(project, args)
     result = rendering.run(args, project)
-    return revisions.record_edition(project, prepared, result, args)
+    return editions.record_edition(project, prepared, result, args)
 
 
 def execute_job(project: Path, request: MediaRequest, out: Path) -> dict[str, Any]:

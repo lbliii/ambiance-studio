@@ -5,7 +5,7 @@ from pathlib import Path
 import re
 
 import studio
-from . import revisions
+from . import project_references, record_contracts
 
 FORMAT = 'ambiance-iteration-config'
 LAYER = 'ambiance-iteration-layer'
@@ -50,16 +50,16 @@ def merge(base, override, origins, source, prefix=''):
 
 
 def resolve(project, config):
-    revisions.fields(config, {'format', 'schema_version', 'layers', 'values', 'overrides'}, 'iteration config')
+    record_contracts.fields(config, {'format', 'schema_version', 'layers', 'values', 'overrides'}, 'iteration config')
     if config.get('format') != FORMAT or config.get('schema_version') != 1: raise ValueError('Expected ambiance-iteration-config schema_version 1')
     project = project.resolve(); files = config.get('layers', [])
     if (not isinstance(files, list) or len(files) > 20 or any(not isinstance(value, str) for value in files)
             or len(set(files)) != len(files)): raise ValueError('Choose at most 20 distinct ordered layer paths')
     recipe = {}; values = {}; origins = {}; value_origins = {}; inputs = []
     for relative in files:
-        path = studio.inside(project, relative); source = revisions.ref(project, path, 'configuration', 'layer')
+        path = studio.inside(project, relative); source = project_references.ref(project, path, 'configuration', 'layer')
         layer = read(path)
-        revisions.fields(layer, {'format', 'schema_version', 'recipe', 'values'}, 'iteration layer')
+        record_contracts.fields(layer, {'format', 'schema_version', 'recipe', 'values'}, 'iteration layer')
         if layer.get('format') != LAYER or layer.get('schema_version') != 1: raise ValueError('Expected ambiance-iteration-layer schema_version 1')
         recipe = merge(recipe, layer.get('recipe', {}), origins, relative)
         values = merge(values, layer.get('values', {}), value_origins, relative)
@@ -91,7 +91,7 @@ def resolve(project, config):
     from .iteration_plan import validate_recipe
     validate_recipe({**{key: value for key, value in request.items() if key not in ['documents', 'audio_selection']},
                      'format': 'ambiance-iteration', 'schema_version': 2})
-    if revisions.changed(project, inputs): raise ValueError('Config layers changed during resolution')
+    if project_references.changed(project, inputs): raise ValueError('Config layers changed during resolution')
     return {'format': 'ambiance-iteration-resolution', 'schema_version': 1, 'ok': True, 'request': request, 'inputs': inputs,
             'recipe_origins': origins, 'value_origins': value_origins, 'used_values': sorted(used), 'values': values,
             'merge_policy': 'Ordered object merge; later values win, arrays replace in full, null removes a key; values are literal typed substitutions.'}

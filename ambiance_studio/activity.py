@@ -53,8 +53,8 @@ def load_actions(project, revision=None):
     if not revision and not (Path(project)/'plans/production-plan.json').exists():
         return [], None
     if revision:
-        from . import revisions
-        if not revisions.load(project, revision)['controls'].get('production_plan'):
+        from . import revision_capture
+        if not revision_capture.load(project, revision)['controls'].get('production_plan'):
             return [], None
     from . import production_plan
     context = production_plan.load_context(project, revision=revision)

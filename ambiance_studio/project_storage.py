@@ -7,7 +7,7 @@ import time
 import uuid
 
 import studio
-from . import revisions
+from . import record_contracts
 from .project import project_lock
 
 PLAN = 'ambiance-cleanup-plan'
@@ -157,7 +157,7 @@ def plan(project, selected, keep_days, out):
         raise ValueError('Save project-local cleanup plans under .ambiance/cleanup/plans, or choose an external output file')
     with project_lock(project):
         result = analyze(project, selected, keep_days)
-        data = revisions.seal({'format': PLAN, 'schema_version': 1, 'id': uuid.uuid4().hex,
+        data = record_contracts.seal({'format': PLAN, 'schema_version': 1, 'id': uuid.uuid4().hex,
             'project': str(project), 'created_utc': time.time(), 'keep_days': keep_days, **result,
             'operation': 'Move eligible bundles to project-local recoverable trash. No permanent deletion.'})
         studio.write(out, data)
@@ -168,11 +168,11 @@ def plan(project, selected, keep_days, out):
 
 
 def receipt_path(project, id):
-    return studio.inside(project, '.ambiance/cleanup/'+revisions.identifier(id)+'.json')
+    return studio.inside(project, '.ambiance/cleanup/'+record_contracts.identifier(id)+'.json')
 
 
 def apply(project, path):
-    project = project.resolve(); path = Path(path).resolve(); data = revisions.read_sealed(path, PLAN)
+    project = project.resolve(); path = Path(path).resolve(); data = record_contracts.read_sealed(path, PLAN)
     if data['project'] != str(project): raise ValueError('Cleanup plan belongs to another project')
     if not data['eligible']: return {'ok': True, 'moved_bundles': 0, 'meaning': 'Nothing eligible under this plan.'}
     with project_lock(project):
@@ -182,7 +182,7 @@ def apply(project, path):
         current = analyze(project, [c['path'] for c in data['eligible']], data['keep_days'])
         if current['eligible'] != data['eligible']: raise ValueError('Cleanup inputs, age or references changed; make a fresh plan')
         saved = dict(format=RECEIPT, schema_version=1, id=data['id'], project=str(project), state='moving', bundles=data['eligible'])
-        studio.write(receipt, revisions.seal(saved)); destination.mkdir(parents=True)
+        studio.write(receipt, record_contracts.seal(saved)); destination.mkdir(parents=True)
         moved = []
         try:
             for candidate in data['eligible']:
@@ -190,8 +190,8 @@ def apply(project, path):
                 target.parent.mkdir(parents=True, exist_ok=True); source.rename(target); moved.append((source, target))
         except BaseException:
             for source, target in reversed(moved): target.rename(source)
-            saved['state'] = 'rolled-back'; studio.write(receipt, revisions.seal(saved)); raise
-        saved['state'] = 'quarantined'; studio.write(receipt, revisions.seal(saved))
+            saved['state'] = 'rolled-back'; studio.write(receipt, record_contracts.seal(saved)); raise
+        saved['state'] = 'quarantined'; studio.write(receipt, record_contracts.seal(saved))
     return {'ok': True, 'id': data['id'], 'moved_bundles': len(moved), 'receipt': str(receipt),
             'restore_argv': ['./ambiance', '--project', str(project), 'project', 'cleanup', 'restore', data['id']],
             'meaning': 'Recoverable project-local trash; disk space is retained until explicitly purged outside this command.'}
@@ -200,7 +200,7 @@ def apply(project, path):
 def restore(project, id):
     project = project.resolve()
     with project_lock(project):
-        path = receipt_path(project, id); saved = revisions.read_sealed(path, RECEIPT)
+        path = receipt_path(project, id); saved = record_contracts.read_sealed(path, RECEIPT)
         if saved['project'] != str(project) or saved['state'] not in ['moving', 'quarantined', 'restoring']: raise ValueError('Cleanup is not recoverable in this state')
         pending = []
         for bundle in saved['bundles']:
@@ -214,9 +214,9 @@ def restore(project, id):
             actual = {str(p.relative_to(source)): (studio.digest(p), p.stat().st_size) for p in source.rglob('*') if p.is_file()}
             if actual != expected: raise ValueError('Quarantined bundle changed: '+bundle['path'])
             pending.append((source, target))
-        saved['state'] = 'restoring'; studio.write(path, revisions.seal(saved))
+        saved['state'] = 'restoring'; studio.write(path, record_contracts.seal(saved))
         for source, target in pending: target.parent.mkdir(parents=True, exist_ok=True); source.rename(target)
-        saved['state'] = 'restored'; studio.write(path, revisions.seal(saved))
+        saved['state'] = 'restored'; studio.write(path, record_contracts.seal(saved))
     return {'ok': True, 'id': id, 'restored_bundles': len(pending), 'receipt': str(path)}
 
 
@@ -225,4 +225,4 @@ def run(args, project):
     if args.cleanup_action == 'plan': return plan(project, args.include, args.keep_days, args.out)
     if args.cleanup_action == 'apply': return apply(project, args.file)
     if args.cleanup_action == 'restore': return restore(project, args.id)
-    return {'ok': True, 'receipt': revisions.read_sealed(receipt_path(project, args.id), RECEIPT)}
+    return {'ok': True, 'receipt': record_contracts.read_sealed(receipt_path(project, args.id), RECEIPT)}
