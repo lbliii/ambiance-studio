@@ -2,6 +2,8 @@
 
 Proposed September 12, 2026. This is a design for implementation, not a description of shipped commands. The user requested a plan and design; this change does not implement the feature or alter any project's requirements. The [implementation backlog](WORKFLOW-CLI.yaml) owns task status, dependencies and acceptance criteria.
 
+The [studio alignment](STUDIO-PLAN-ALIGNMENT.md) connects this plan to reusable models, narrative tools and quality/library work. Workflow owns guidance and native input resolution; model/instance operations own assembly. The [Amberwatch audit](AMBERWATCH-GLUE-AUDIT.md) shows that reading the available guide did not prevent replacement code. The operator pilot must test actual capability selection and observations, including the clean-component failures, rather than count documentation reads as success.
+
 ## Recommendation
 
 Make the CLI the primary guide for operating a film project. It should explain the current expectations, resolve the inputs for a bounded action, describe its outputs, and give the appropriate continuation or repair after execution. Keep skills for artistic methods, examples and judgment that cannot be established by a validator.
@@ -251,6 +253,8 @@ Proposed modules are a small `workflow.py` service, a `workflow_commands.py` par
 
 First extract a pure coverage computation service and an explicit report-persistence wrapper. Maintain parity with existing coverage results, preflight deferral, error/exit behavior and stored report identity. Do not implement coverage rules again inside workflow. Guided reads use pure computations and existing read services without acquiring a writer lock or creating `.ambiance` files. Explicit report output is the only query write.
 
+At the reconciled `a7dae5a` baseline, coverage context/evidence/records and command adapters are extracted, but `production_coverage.evaluate()` still calls `save_report`. WF-01 remains work. Integrate parser/dispatch and optional guidance through the settled command adapters and `command_output` boundary; do not recreate the old monolithic CLI or confuse an output refactor with guided operation.
+
 The catalog validator checks stage/operation IDs, known resolver keys and documentation references. Gate IDs come from the selected pipeline; unknown criterion bindings produce compatibility diagnostics. Operation bindings reuse the actual parser/native validators, and tests ensure that a route is implemented before recommending it. No automatic execution of returned `argv` is introduced.
 
 Preserve the existing outer envelope and exit-code convention. Read commands return exit 0 when they successfully describe a project with pending or blocked work; failed checks remain data. Invalid selectors, stale actions/assessment tokens or invalid packet inputs return 2. An essential runtime failure returns 3; a missing optional renderer merely makes its operation unavailable. A partially assessable project returns scoped diagnostics with unknown values, never `release_ready: true` from incomplete evidence.
@@ -276,6 +280,8 @@ Each shared-code slice runs `./ambiance test`, including the existing studio, CL
 The public CLI replay covers fresh intent, a produced asset, a failed proof/observation, corrective work, per-view evidence, interrupted iteration recovery and an exact review presentation with open human criteria. Deterministic fixtures validate routing and evidence; an actual operator trial assesses whether the guidance makes decisions easier without concealing creative judgment. Supply local art/audio and bounded resources; no live paid generation is required.
 
 Compare current CLI plus skills with the guided path on matched tasks: a blank project, a changed/wrong-view proof, and a partially completed dual-view iteration. Record calls, emitted bytes, necessary documentation lookups, unresolved inputs, repeated questions, repair rounds and what the operator actually inspected. Use a second project to avoid fitting the workflow to one room. Measure artistic completeness separately; a smaller call count cannot compensate for reduced scope or invented observations.
+
+Add the [shared model/operator acceptance cases](STUDIO-PLAN-ALIGNMENT.md#shared-acceptance-cases). Before a model API exists, route source separation and already-isolated art through the appropriate current operations, with genuine unsupported behavior explicit. After model operations ship, resolve exact definitions/instances and their native inputs through adapters; do not let workflow construct a second ownership graph or recommend the research's proposed commands prematurely. A receipt-derived fulfillment/proof packet is a bounded extension when demonstrated, not a universal recipe schema or an expansion of the initial three packet adapters.
 
 Success means an operator can identify what to do, obtain usable inputs, understand the resulting evidence and recover from a failure without reconstructing the workflow from chat history. Criteria, scope and artifact identity must remain as reliable as the existing authoritative services. Observed trials, not instruction-file validation alone, establish whether skills can be shortened and guided output should become the default.
 

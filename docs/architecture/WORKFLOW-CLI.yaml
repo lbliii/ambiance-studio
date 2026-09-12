@@ -3,6 +3,7 @@ schema_version: 1
 updated: '2026-09-12'
 status: proposed
 design: docs/architecture/WORKFLOW-CLI.md
+alignment: docs/architecture/STUDIO-PLAN-ALIGNMENT.md
 size_meaning: Relative implementation scope and integration risk, not a calendar estimate.
 meaning: >-
   Implementation plan only. This file is not an executable production workflow,
@@ -54,6 +55,7 @@ tasks:
     deliverables:
       - Validated advisory catalog and workflow inspect/stage commands.
       - Distinct work, gate and coverage projections for the actual project pipeline.
+      - Relevant native help exposes supported operation verbs and input-contract examples, including compound preparation's currently hidden suboperations.
     acceptance:
       - All nine default gates have practical input/output guidance and source references.
       - Gate criteria and verdicts come from the selected working or captured pipeline without editable duplicates.
@@ -86,6 +88,8 @@ tasks:
       - A pending human review cannot hide independent preparation, proof or handoff work.
       - Working actions do not silently adopt historical movie feedback or transfer a selected movie's verdict.
       - All emitted argv vectors parse against real supported routes; unresolved inputs produce no pretend runnable command.
+      - Source-separation and already-isolated-art cases resolve appropriate current operations; proposed model commands are never emitted as executable routes.
+      - A demonstrated capability mismatch identifies the closest supported operation and missing behavior, rather than silently recommending replacement scripts.
       - Changed/no-longer-applicable action IDs produce a diagnostic rather than a substituted subject.
       - Existing unflagged project next stays compatible and the guided schema is explicit.
       - Representative default envelopes fit 16 KiB; omitted data has counts and retrieval commands.
@@ -113,6 +117,7 @@ tasks:
       - Gate drafts contain unperformed observations and do not fabricate recorder identity, authority or acceptance.
       - Changed assessment inputs, symlink/path escape, occupied output directory and failed writes preserve prior files.
       - Preparing inputs performs no capture, admission, render, selection change or provider request.
+      - Later model/fulfillment adapters consume their native identity and ownership contracts; initial intent/review/iteration adapters do not create a second assembly graph or census.
       - Re-preparation writes a new packet and preserves the old packet's exact inputs and guidance identity.
 
   - id: WF-05
@@ -134,6 +139,7 @@ tasks:
       - Recovery uses structured failure identities, preserves the original error and falls back explicitly for unmapped errors.
       - Auto guidance uses bounded operation-local facts and performs no full-project coverage, recursive next-work or library-wide scan.
       - Guidance failure after a successful mutation returns the original success with a guidance diagnostic, preventing duplicate production retries.
+      - Integration preserves explicit output ownership through the settled command adapters; a refactored envelope is not itself evidence of guided behavior.
       - Off mode preserves legacy output and full mode clearly identifies the scope and freshness of its reassessment.
 
   - id: WF-06
@@ -156,6 +162,8 @@ tasks:
       - Pending human release checks remain open while exact review movies and independent handoff work are available.
       - Matched baseline/guided tasks record calls, bytes, documentation lookups, repeated questions and recovery effort.
       - At least one additional project tests generalization beyond the original room and synthetic fixtures.
+      - Supplied-art trials assess actual supported-operation use before custom mechanics, with both source separation and already-isolated art plus a justified opaque-matte exception.
+      - Current-primitive trials observe move/hide and source/receiver behavior and catch opaque ownership contamination; once model operations ship, add nested/version identity cases without blocking initial workflow adoption on the full model rollout.
       - Scope preservation and actual observation quality are assessed independently from lower call count.
       - Supplied local art/audio and bounded execution suffice; no paid/live provider submission is required.
       - Shared regression suite and package audit pass, with native skips or required native evidence stated explicitly.
@@ -182,6 +190,7 @@ tasks:
     acceptance:
       - Only shipped, tested routes are advertised as implemented.
       - Skills retain artistic techniques and link to CLI expectations instead of duplicating operational checklists.
+      - The immediate capability-fit guardrail is reconciled with the proven guided entry point; no second permanent workflow checklist is accumulated.
       - Existing scope, authority, source-protection and honest-observation rules are preserved.
       - Any default output/schema change has an explicit migration path and tested first-party consumers.
       - A browser stage board or custom workflow editor is not required to complete the CLI delivery.

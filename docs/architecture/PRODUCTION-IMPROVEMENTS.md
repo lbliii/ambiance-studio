@@ -6,6 +6,10 @@ For the subsequently shipped interfaces and executable validation path, use the 
 
 The [Midnight Reading Room implementation design](MIDNIGHT-PRODUCTION-DESIGN.md) adds motivated-motion comparisons, ordinary feedback, compact next-work reporting, authoring operations, review packets, and measured run control. Its MRR tasks extend the same YAML backlog without resetting the completed foundation or unperformed pilot criteria.
 
+The September 12 [Amberwatch custom-code audit](AMBERWATCH-GLUE-AUDIT.md) records eight production scripts and separates bypassed capabilities from genuine gaps. Reconciled against fetched main `a7dae5a`, its findings now feed the workflow, reusable-model and quality/library plans rather than a separate backlog. It distinguishes source separation from editable model/instance support and supplies operation-choice, ownership, move/hide, alpha and reuse acceptance cases. The audit does not change roadmap implementation statuses or settle the model plan's deferred architecture.
+
+Use the [studio alignment](STUDIO-PLAN-ALIGNMENT.md) to coordinate those owners and the first-short packages. Existing DATA/ASSET/BIND/MRR capabilities remain foundations; the model plan owns the new definition/instance contract and WF owns guided operation. Outstanding artistic/operator trials should consume the shared cases rather than duplicate a new checklist or pass on structural evidence alone.
+
 ## Outcome and failure to correct
 
 Given a seed, an agent should survey the whole scene, identify story opportunities, plan portrait and landscape compositions, prepare independent art and hidden surfaces, assemble readable motion and connected light, inspect the actual result, then produce exact, reviewable movies. Good source fidelity and technical correctness must coexist with noticeable, well-paced animation.

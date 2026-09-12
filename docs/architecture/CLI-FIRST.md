@@ -1,5 +1,7 @@
 # CLI-first studio architecture
 
+For coordinated engineering across workflow guidance, reusable models, narrative films and quality/library work, use the [studio plan alignment](STUDIO-PLAN-ALIGNMENT.md). It identifies current owners, shared contracts and acceptance dependencies without duplicating task statuses or advertising planned routes as implemented.
+
 ## Product priority: agent operation, human observation
 
 User direction, September 11, 2026: the agent is the primary production operator. Optimize the toolkit for how an agent inspects state, authors bounded changes, runs tools, reads concise results, inspects rendered artifacts and resumes work. The human supplies creative direction and judges the quality of concrete results. Human observability is essential, with implementation priority following the agent's operational capabilities.
