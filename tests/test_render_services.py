@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from ambiance_studio import media_inputs, media_verification, native_media, render_plan, rendering, run_control
 from ambiance_studio.errors import CommandError
+from ambiance_studio.native_sources import source_identity
 from test_rendering import parse
 
 
@@ -98,7 +99,7 @@ class NativeServiceTests(unittest.TestCase):
                  patch.object(native_media.shutil, 'which', return_value='/fixture/xcrun'), \
                  patch.object(native_media.subprocess, 'run', side_effect=compiler):
                 binary = native_media.native_binary(project)
-                identity = hashlib.sha256(source.read_bytes()+b'fixture macOS'+b'fixture clang').hexdigest()
+                identity = hashlib.sha256(source_identity(source.parent)['sha256'].encode()+b'fixture macOS'+b'fixture clang').hexdigest()
                 self.assertEqual(binary, project/'.ambiance/native'/identity/'media')
                 self.assertEqual(native_media.native_binary(project), binary)
                 self.assertEqual(len(builds), 1)
@@ -131,6 +132,7 @@ class NativeServiceTests(unittest.TestCase):
             self.assertTrue(result['input_unchanged'])
             self.assertEqual(result['native_binary_sha256'], hashlib.sha256(binary.read_bytes()).hexdigest())
             self.assertEqual(result['native_source_sha256'], hashlib.sha256(native_media.NATIVE_SOURCE.read_bytes()).hexdigest())
+            self.assertEqual(result['native_sources'], source_identity(native_media.NATIVE_SOURCE.parent))
             self.assertEqual(Path(result['report']).read_bytes(), (json.dumps(result, indent=2, allow_nan=False)+'\n').encode())
             self.assertEqual(decode.call_args.args[0][-1], '7')
             self.assertTrue(decode.call_args.kwargs['allow_check_failure'])

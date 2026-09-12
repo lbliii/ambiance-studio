@@ -60,5 +60,3 @@ def relative_file(project, path):
 def pinned(project, path):
     path = Path(path).resolve()
     return {'path': relative_file(project, path), 'sha256': studio.digest(path)}
-
-

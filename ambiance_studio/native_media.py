@@ -1,7 +1,7 @@
 """Native discovery/build and tracked JSON process transport for media jobs.
 
-Capability discovery is not an encode/decode test. Builds retain the existing
-source/platform/compiler cache identity and install a binary with a hard link.
+Capability discovery is not an encode/decode test. Builds identify every native
+source/header plus platform/compiler and install a binary with a hard link.
 """
 import hashlib
 import json
@@ -13,6 +13,7 @@ import subprocess
 import tempfile
 
 from .errors import CommandError
+from .native_sources import compilation_sources, source_identity as native_source_identity
 
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / 'tools/render-scene.mjs'
@@ -75,7 +76,8 @@ def native_binary(project):
     if not compiler:
         raise CommandError('Native media requires Xcode command-line tools (xcrun clang).', 'missing_dependency', 3)
     version = subprocess.run([compiler, 'clang', '--version'], capture_output=True).stdout
-    identity = hashlib.sha256(NATIVE_SOURCE.read_bytes()+platform.platform().encode()+version).hexdigest()
+    sources = native_source_identity(NATIVE_SOURCE.parent)
+    identity = hashlib.sha256(sources['sha256'].encode()+platform.platform().encode()+version).hexdigest()
     cache = project / '.ambiance/native' / identity
     binary = cache / 'media'
     if not binary.exists():
@@ -85,7 +87,7 @@ def native_binary(project):
             command = [compiler, 'clang', '-O2', '-fobjc-arc', '-Wno-deprecated-declarations']
             for framework in ['Foundation', 'AVFoundation', 'CoreMedia', 'CoreVideo', 'ImageIO', 'CoreGraphics']:
                 command += ['-framework', framework]
-            command += [str(NATIVE_SOURCE), '-o', str(output)]
+            command += [*map(str, compilation_sources(NATIVE_SOURCE.parent)), '-o', str(output)]
             result = subprocess.run(command, capture_output=True, text=True)
             if result.returncode:
                 raise CommandError('Native media build failed: '+result.stderr.strip(), 'runtime_error', 3)

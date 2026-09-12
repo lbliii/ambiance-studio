@@ -33,8 +33,9 @@ def proof(project, directory, out, long_edge=640, resume=False):
                    'editor/views.mjs','editor/stage-raster.mjs','editor/audit.mjs','ambiance_studio/rendering.py',
                    'ambiance_studio/render_plan.py','ambiance_studio/render_execution.py',
                    'ambiance_studio/media_inputs.py','ambiance_studio/media_verification.py',
-                   'ambiance_studio/native_media.py']
+                   'ambiance_studio/native_media.py','ambiance_studio/native_sources.py']
     if (ROOT/'editor/bindings.mjs').exists(): runtime_files.append('editor/bindings.mjs')
+    runtime_files.extend(str(path.relative_to(ROOT)) for path in sorted((ROOT/'tools/render').glob('*.mjs')))
     runtime_identity=lambda: {name:ap.sha((ROOT/name).read_bytes()) for name in runtime_files}
     identity={'runtime':runtime_identity(),'preparation_receipt_sha256':ap.sha((directory/'preparation-receipt.json').read_bytes()),
               'artifact_sha256':ap.sha((directory/'artifact.json').read_bytes()),'long_edge':long_edge,'views':views,
