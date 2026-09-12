@@ -6,7 +6,7 @@ const fields=(value,allowed,label)=>{if(!value||typeof value!=='object'||Array.i
 const cellSize=a=>a.atlas?[a.atlas.cell_width,a.atlas.cell_height]:[a.width,a.height];
 const corners=s=>{const [x,y,w,h]=s.rect;return [[x,y],[x+w,y],[x+w,y+h],[x,y+h]].map(p=>point(s.matrix,...p));};
 const referenceEqual=(a,b)=>a&&b&&a.sha256===b.sha256&&a.width===b.width&&a.height===b.height;
-function referenceMapping(asset,reference,explicit){
+export function referenceMapping(asset,reference,explicit){
   const dimensions=cellSize(asset);
   if(explicit){
     fields(explicit,['version','asset_sha256','cell_size','reference','reference_to_cell'],'explicit source mapping');
