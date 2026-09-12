@@ -36,6 +36,8 @@ The [library contract](../STUDIO-LIBRARY.md) adds a machine-local registry, proj
 
 ## Remaining engineering slices
 
+The proposed [workflow CLI design](WORKFLOW-CLI.md) and [implementation backlog](WORKFLOW-CLI.yaml) connect existing stage criteria, evidence and next-work reporting to practical input/output guidance and repair loops. The first milestone is read-only stage inspection and concrete next actions; native input packets and optional command-result guidance follow. These commands are proposed, and do not change current project pipelines or command behavior.
+
 The [TV quality and sound-library plan](TV-QUALITY-AND-SOUND-LIBRARY.md) and its [dependency backlog](TV-QUALITY-AND-SOUND-LIBRARY.yaml) cover the proposed opt-in 4K profile, effective source-resolution checks, compact loop masters, source-audio quality, and curated audio reuse. They preserve current project scope and keep surround and hour-long exports as separate follow-ups. These are planned capabilities, not changes to the current command contract.
 
 The [consolidated production improvements](PRODUCTION-IMPROVEMENTS.md) and [dependency backlog](PRODUCTION-IMPROVEMENTS.yaml) organize work across semantic planning, explicit expectations, dual-format staging, asset preparation, source/follower lighting, activity evidence, CI and agent behavior trials. The [capability index](../CAPABILITIES.json) identifies current public command routes, authoritative contracts and limits. Package audit checks those routes and references without executing a production operation or treating a plan as implemented behavior.

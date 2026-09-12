@@ -1,0 +1,187 @@
+format: ambiance-workflow-roadmap
+schema_version: 1
+updated: '2026-09-12'
+status: proposed
+design: docs/architecture/WORKFLOW-CLI.md
+size_meaning: Relative implementation scope and integration risk, not a calendar estimate.
+meaning: >-
+  Implementation plan only. This file is not an executable production workflow,
+  scheduler, project requirement, permission record or claim of implemented commands.
+milestones:
+  - id: guided-inspection
+    requires: [WF-01, WF-02, WF-03]
+    outcome: Read-only stage guidance and concrete next work over existing evidence owners.
+  - id: guided-operation
+    requires: [WF-04, WF-05]
+    outcome: Reviewable native input packets and contextual operation results.
+  - id: operator-validated
+    requires: [WF-06, WF-07]
+    outcome: Measured CLI replay and operator guidance adopted with explicit compatibility decisions.
+tasks:
+  - id: WF-01
+    title: Separate assessment from report persistence
+    status: proposed
+    depends_on: []
+    size: medium
+    paths:
+      - ambiance_studio/production_coverage.py
+      - ambiance_studio/production.py
+      - ambiance_studio/production_queries.py
+      - tests/test_production_coverage.py
+      - tests/test_cli.py
+    deliverables:
+      - Pure shared coverage computation and compatible explicit persistence wrapper.
+      - Reusable scoped assessment inputs with changed-input diagnostics.
+    acceptance:
+      - Existing canonical and legacy coverage, preflight, report identities and exit behavior retain their meaning.
+      - New pure reads create no files, take no writer lock and can inspect a readable project without write access.
+      - Invalid or changing components remain unknown/diagnosed; unrelated readable stage material stays available.
+      - Current selected movie and working scene identities are returned separately.
+      - Tests cover stale, absent, wrong-view and missing-runtime inputs rather than only happy-path counts.
+
+  - id: WF-02
+    title: Add stage catalog and subject-aware inspection
+    status: proposed
+    depends_on: [WF-01]
+    size: medium
+    paths:
+      - templates/workflows/painted-film.v1.json
+      - ambiance_studio/workflow.py
+      - ambiance_studio/workflow_commands.py
+      - ambiance_studio/cli.py
+      - tests/test_workflow.py
+      - tests/test_workflow_cli.py
+    deliverables:
+      - Validated advisory catalog and workflow inspect/stage commands.
+      - Distinct work, gate and coverage projections for the actual project pipeline.
+    acceptance:
+      - All nine default gates have practical input/output guidance and source references.
+      - Gate criteria and verdicts come from the selected working or captured pipeline without editable duplicates.
+      - Updating guidance alone neither writes project files nor invalidates a review receipt.
+      - Unknown/custom criteria remain visible; incompatible catalog bindings do not assert completion.
+      - Working, review, release, revision, edition and view selections resolve explicitly and never silently fall back.
+      - Multi-entry deliveries preserve each entry's revision/view/role and review state.
+      - Missing optional renderer/audio runtimes do not prevent intent or unrelated stage inspection.
+      - Unsupported coverage stages are explicitly unsupported rather than mapped to invented checks.
+
+  - id: WF-03
+    title: Connect expectations to concrete next actions
+    status: proposed
+    depends_on: [WF-02]
+    size: medium
+    paths:
+      - ambiance_studio/workflow.py
+      - ambiance_studio/workflow_operations.py
+      - ambiance_studio/production_queries.py
+      - ambiance_studio/cli.py
+      - tests/test_workflow.py
+      - tests/test_workflow_cli.py
+    deliverables:
+      - Shared versioned action projection for project next --guided and workflow inspect.
+      - workflow explain with stable action IDs and separate assessment identities.
+    acceptance:
+      - A blank project begins with concrete reference/intent work and missing creative fields instead of downstream animation symptoms.
+      - Required prerequisite actions are deduplicated and precede the failures they explain.
+      - Actual work dependencies are populated separately from gate-passage dependencies.
+      - A pending human review cannot hide independent preparation, proof or handoff work.
+      - Working actions do not silently adopt historical movie feedback or transfer a selected movie's verdict.
+      - All emitted argv vectors parse against real supported routes; unresolved inputs produce no pretend runnable command.
+      - Changed/no-longer-applicable action IDs produce a diagnostic rather than a substituted subject.
+      - Existing unflagged project next stays compatible and the guided schema is explicit.
+      - Representative default envelopes fit 16 KiB; omitted data has counts and retrieval commands.
+
+  - id: WF-04
+    title: Prepare native input packets
+    status: proposed
+    depends_on: [WF-03]
+    size: medium
+    paths:
+      - ambiance_studio/workflow_operations.py
+      - ambiance_studio/workflow_commands.py
+      - ambiance_studio/production_plan.py
+      - ambiance_studio/review_packets.py
+      - ambiance_studio/iteration_recipes.py
+      - studio.py
+      - tests/test_workflow_packets.py
+    deliverables:
+      - workflow prepare with fresh immutable packets and native initializer adapters.
+      - Initial intent, review-draft and iteration adapters plus direct-argument manifests where sufficient.
+    acceptance:
+      - Known values carry their origins; unresolved creative choices stay explicit.
+      - Incomplete drafts report ready_to_run false and never masquerade as executable native recipes.
+      - Complete emitted native inputs pass their existing validators and can be consumed by existing commands.
+      - Gate drafts contain unperformed observations and do not fabricate recorder identity, authority or acceptance.
+      - Changed assessment inputs, symlink/path escape, occupied output directory and failed writes preserve prior files.
+      - Preparing inputs performs no capture, admission, render, selection change or provider request.
+      - Re-preparation writes a new packet and preserves the old packet's exact inputs and guidance identity.
+
+  - id: WF-05
+    title: Add bounded guidance to command outcomes
+    status: proposed
+    depends_on: [WF-03]
+    size: medium
+    paths:
+      - ambiance_studio/cli.py
+      - ambiance_studio/errors.py
+      - ambiance_studio/workflow_operations.py
+      - tests/test_workflow_guidance.py
+    deliverables:
+      - Optional global guidance mode and separate versioned envelope extension.
+      - Supported success/failure adapters for initialization, asset build/proof, scene apply/check, review record, iteration run and delivery present.
+    acceptance:
+      - Ordinary data, error codes, exit codes and sealed artifact bytes retain their original semantics.
+      - Successful generation of a proof does not claim an observation or close a gate.
+      - Recovery uses structured failure identities, preserves the original error and falls back explicitly for unmapped errors.
+      - Auto guidance uses bounded operation-local facts and performs no full-project coverage, recursive next-work or library-wide scan.
+      - Guidance failure after a successful mutation returns the original success with a guidance diagnostic, preventing duplicate production retries.
+      - Off mode preserves legacy output and full mode clearly identifies the scope and freshness of its reassessment.
+
+  - id: WF-06
+    title: Validate repair loops and operator usefulness
+    status: proposed
+    depends_on: [WF-04, WF-05]
+    size: medium
+    paths:
+      - examples/workflow-production/README.md
+      - examples/workflow-production/replay.py
+      - tests/test_workflow_replay.py
+      - tests/skill-scenarios.md
+      - reports/workflow-cli/
+    deliverables:
+      - Public CLI replay from initial intent through corrective proof work and exact review presentation.
+      - Baseline/guided operator comparison with retained inputs, outputs and honest observations.
+    acceptance:
+      - Wrong-view evidence, changed sources and stale observations lead to the responsible repair and affected rechecks.
+      - A partially completed dual-view iteration resumes verified work through the existing run service.
+      - Pending human release checks remain open while exact review movies and independent handoff work are available.
+      - Matched baseline/guided tasks record calls, bytes, documentation lookups, repeated questions and recovery effort.
+      - At least one additional project tests generalization beyond the original room and synthetic fixtures.
+      - Scope preservation and actual observation quality are assessed independently from lower call count.
+      - Supplied local art/audio and bounded execution suffice; no paid/live provider submission is required.
+      - Shared regression suite and package audit pass, with native skips or required native evidence stated explicitly.
+
+  - id: WF-07
+    title: Adopt the proven operational entry point
+    status: proposed
+    depends_on: [WF-06]
+    size: small
+    paths:
+      - docs/CLI.md
+      - docs/CAPABILITIES.json
+      - docs/architecture/CLI-FIRST.md
+      - docs/QUALITY-GATES.md
+      - .agents/skills/ambiance-produce/SKILL.md
+      - .agents/skills/ambiance-deconstruct/SKILL.md
+      - .agents/skills/ambiance-assets/SKILL.md
+      - .agents/skills/ambiance-animate/SKILL.md
+      - .agents/skills/ambiance-sound/SKILL.md
+      - .agents/skills/ambiance-release/SKILL.md
+    deliverables:
+      - Current capability/CLI references and short supported operator entry instructions.
+      - Compatibility decision and pilot limitations recorded in a handoff.
+    acceptance:
+      - Only shipped, tested routes are advertised as implemented.
+      - Skills retain artistic techniques and link to CLI expectations instead of duplicating operational checklists.
+      - Existing scope, authority, source-protection and honest-observation rules are preserved.
+      - Any default output/schema change has an explicit migration path and tested first-party consumers.
+      - A browser stage board or custom workflow editor is not required to complete the CLI delivery.
