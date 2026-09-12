@@ -122,6 +122,79 @@ class CoverageTests(unittest.TestCase):
         self.assertFalse(preflight['may_render'])
         self.assertIn('plan.output-missing.landscape.silent', ids(preflight['readiness']))
 
+    def test_stage_view_matrix_keeps_cli_overview_and_preflight_in_parity(self):
+        file = self.p/'recipe.json'; studio.write(file, self.recipe())
+        report = self.proof()['report']
+        ids = lambda value: [row['id'] for row in value['blocked']]
+        for state in ['missing', 'recorded', 'tampered']:
+            if state == 'recorded':
+                for view in ['portrait', 'landscape']: self.register(report, view)
+            elif state == 'tampered':
+                frame = Path(report).parent/'portrait/00000.png'
+                frame.write_bytes(frame.read_bytes()+b'tampered')
+            for stage in ['layout', 'assets', 'animation', 'export']:
+                with self.subTest(state=state, stage=stage):
+                    direct = self.run_cli('plan', 'coverage', '--stage', stage, '--details')
+                    overview = production.overview(self.p, 'fixture', 'http://localhost',
+                        readiness_options={'stage': stage, 'details': True}, details=True)['production_readiness']
+                    self.assertEqual(direct, overview)
+                    pending = self.run_cli('plan', 'coverage', '--stage', stage, '--phase', 'preflight')
+                    preflight = self.run_cli('iteration', 'preflight', file, '--stage', stage)['readiness']
+                    self.assertEqual(pending, preflight)
+                    for view in ['portrait', 'landscape']:
+                        scoped = self.run_cli('plan', 'coverage', '--stage', stage, '--view', view, '--details')
+                        self.assertEqual(ids(scoped), [id for id in ids(direct) if id.endswith('.'+view)])
+
+    def test_verifier_boundary_preserves_history_reuse_and_rejects_failures(self):
+        from ambiance_studio.coverage_evidence import ProviderVerifier
+        from ambiance_studio.errors import CommandError
+        report = Path(self.proof()['report']); calls = []
+        class RecordingVerifier:
+            def verify(self, request):
+                calls.append(request)
+                return ProviderVerifier().verify(request)
+        inventory = self.p/'plans/asset-inventory.json'
+        # Noncanonical whitespace is intentional: the snapshot preserves bytes.
+        original = b'  '+inventory.read_bytes()+b'\n\n'; inventory.write_bytes(original)
+        registered = coverage.register_evidence(self.p, 'pixels', 'portrait', str(report.relative_to(self.p)),
+                                                verifier=RecordingVerifier())
+        record = Path(registered['record']); saved = record.read_bytes(); index = inventory.read_bytes()
+        history = list((self.p/'.ambiance/inventory-history').glob('*.json'))
+        self.assertEqual(len(history), 1); self.assertEqual(history[0].read_bytes(), original)
+        self.assertTrue(coverage.register_evidence(self.p, 'pixels', 'portrait', str(report.relative_to(self.p)),
+                                                  verifier=RecordingVerifier())['reused'])
+        self.assertEqual(record.read_bytes(), saved); self.assertEqual(inventory.read_bytes(), index)
+        self.assertEqual(calls[0].project, self.p); self.assertEqual(calls[0].receipt, report)
+        self.assertEqual(calls[0].expectation['id'], 'pixels'); self.assertEqual(calls[0].view, 'portrait')
+        calls.clear()
+        self.assertTrue(coverage.evaluate(self.p, 'layout', verifier=RecordingVerifier())['ready'])
+        self.assertEqual(calls, [])
+        self.assertTrue(coverage.evaluate(self.p, view='portrait', verifier=RecordingVerifier())['ready'])
+        self.assertEqual(len(calls), 1)
+        class FailedVerifier:
+            def verify(self, request):
+                raise CommandError('Injected provider decode failure', 'runtime_failed', 3)
+        failed = coverage.evaluate(self.p, view='portrait', verifier=FailedVerifier())
+        self.assertFalse(failed['ready']); self.assertIn('Injected provider decode failure', str(failed['blocked']))
+        with self.assertRaises(CommandError):
+            coverage.register_evidence(self.p, 'pixels', 'landscape', str(report.relative_to(self.p)), verifier=FailedVerifier())
+        self.assertEqual(record.read_bytes(), saved); self.assertEqual(inventory.read_bytes(), index)
+        self.assertEqual(len(list(record.parent.glob('*.json'))), 1)
+        self.assertFalse((self.p/'.ambiance/write.lock').exists())
+        calls.clear()
+        changed = plan.load(self.p); changed['expectations'][1]['direction'] = 'New authored requirement'
+        studio.write(self.p/plan.PATH, changed)
+        stale = coverage.evaluate(self.p, view='portrait', verifier=RecordingVerifier())
+        self.assertFalse(stale['ready']); self.assertIn('Stale plan/expectation', str(stale['blocked']))
+        self.assertEqual(calls, [])
+
+    def test_compatibility_exports_retain_their_dedicated_owners(self):
+        from ambiance_studio import coverage_context, coverage_evidence, coverage_records
+        for owner, names in [(coverage_context, ['context', 'subject', 'expectation', 'pinned', 'relative_file']),
+                             (coverage_evidence, ['raster_receipt', 'movie_receipt', 'activity_receipt', 'observed_receipt', 'verify_provider']),
+                             (coverage_records, ['register_evidence', 'evidence_for', 'observation_drafts', 'normalize_observations'])]:
+            for name in names: self.assertIs(getattr(coverage, name), getattr(owner, name))
+
     def test_review_draft_preserves_unperformed_observations_and_binds_plan(self):
         data = plan.load(self.p); exp = copy.deepcopy(data['expectations'][1]); exp['id'] = 'composition'; exp['requirement'] = {'type': 'observed', 'check': 'composition'}
         data['expectations'].append(exp); studio.write(self.p/plan.PATH, data); self.capture()
@@ -221,10 +294,68 @@ class CoverageTests(unittest.TestCase):
         with patch.dict(sys.modules,{'ambiance_studio.activity':provider}), \
              patch.object(sys.modules['ambiance_studio'],'activity',provider,create=True):
             self.assertEqual(coverage.activity_receipt(self.p,file,ctx,exp,'portrait')['kind'],'activity')
+            for key, value in [('start_frame', 1), ('frames', 5), ('stride', 2)]:
+                original = report['clock'][key]; report['clock'][key] = value
+                with self.assertRaisesRegex(ValueError, 'full picture loop'):
+                    coverage.activity_receipt(self.p, file, ctx, exp, 'portrait')
+                report['clock'][key] = original
+            exp['requirement'].update(metric='pixel_change', minimum=1, maximum=5)
+            for value in [None, float('nan'), float('inf'), 0, 6]:
+                row['pixel_change'] = value
+                with self.assertRaisesRegex(ValueError, 'Activity metric'):
+                    coverage.activity_receipt(self.p, file, ctx, exp, 'portrait')
+            row['pixel_change'] = 3
+            self.assertEqual(coverage.activity_receipt(self.p, file, ctx, exp, 'portrait')['kind'], 'activity')
             row['timing_target_diagnostics']=['sampled_onset_exceeds_authored_target']
             with self.assertRaisesRegex(ValueError,'timing targets'):coverage.activity_receipt(self.p,file,ctx,exp,'portrait')
             row['timing_target_diagnostics']=[];report['actions']=[{**action,'method':'wrong realization'}]
             with self.assertRaisesRegex(ValueError,'realization'):coverage.activity_receipt(self.p,file,ctx,exp,'portrait')
+
+    @unittest.skipUnless(os.environ.get('AMBIANCE_TEST_NATIVE') == '1' and sys.platform == 'darwin', 'Requires actual native encode/decode')
+    def test_native_movie_registration_decodes_once_and_rejects_changed_cache(self):
+        from ambiance_studio import media_verification
+        self.capture()
+        self.run_cli('render', 'video', '--revision', 'v1', '--view', 'portrait', '--edition', 'native-cache',
+                     '--out', self.p/'render/native-cache')
+        receipt = revisions.edition_path(self.p, 'v1', 'native-cache')
+        original = (self.p/'plans/asset-inventory.json').read_bytes()
+        from ambiance_studio.errors import CommandError
+        with patch.object(media_verification, 'verify_media', side_effect=CommandError('Injected native decoder failure')):
+            with self.assertRaisesRegex(CommandError, 'native decoder failure'):
+                self.run_cli('plan', 'evidence', 'movie', '--view', 'portrait', '--revision', 'v1',
+                             '--role', 'silent', '--receipt', receipt.relative_to(self.p))
+        self.assertEqual((self.p/'plans/asset-inventory.json').read_bytes(), original)
+        self.assertFalse((self.p/'evidence/expectations').exists())
+        with patch.object(media_verification, 'verify_media', wraps=media_verification.verify_media) as decode:
+            registered = self.run_cli('plan', 'evidence', 'movie', '--view', 'portrait', '--revision', 'v1',
+                                     '--role', 'silent', '--receipt', receipt.relative_to(self.p))
+            self.assertEqual(decode.call_count, 1)
+            record = Path(registered['record']); saved = record.read_bytes()
+            cached = list((self.p/'.ambiance/evidence-decode').glob('*/media-report.json'))
+            self.assertEqual(len(cached), 1)
+            report = studio.read(cached[0])
+            self.assertTrue(report['fully_decoded']); self.assertTrue(report['input_unchanged'])
+            for _ in range(2):
+                state = self.run_cli('plan', 'coverage', '--stage', 'export', '--revision', 'v1', '--view', 'portrait', '--details')
+                self.assertIn('plan.expectation.movie.portrait', state['fulfilled'])
+            self.assertEqual(decode.call_count, 1)
+            reused = self.run_cli('plan', 'evidence', 'movie', '--view', 'portrait', '--revision', 'v1',
+                                 '--role', 'silent', '--receipt', receipt.relative_to(self.p))
+            self.assertTrue(reused['reused']); self.assertEqual(record.read_bytes(), saved)
+            with self.assertRaisesRegex(ValueError, 'soundtrack'):
+                self.run_cli('plan', 'evidence', 'movie', '--view', 'portrait', '--revision', 'v1',
+                             '--role', 'score', '--receipt', receipt.relative_to(self.p))
+            history = list((self.p/'.ambiance/inventory-history').glob('*.json'))
+            self.assertEqual(len(history), 1); self.assertEqual(history[0].read_bytes(), original)
+            # Even a semantically harmless cache edit must break the sealed identity.
+            report['extra'] = 'altered'; studio.write(cached[0], report)
+            state = self.run_cli('plan', 'coverage', '--stage', 'export', '--revision', 'v1', '--view', 'portrait', '--details')
+            gap = next(r for r in state['blocked'] if r['id'] == 'plan.expectation.movie.portrait')
+            self.assertIn('Evidence artifact identity changed', str(gap))
+            self.assertEqual(decode.call_count, 1)
+            # Preflight defers encoded evidence and must not consume the bad cache.
+            pending = self.run_cli('plan', 'coverage', '--stage', 'export', '--phase', 'preflight', '--revision', 'v1', '--view', 'portrait')
+            self.assertIn('plan.expectation.movie.portrait', pending['future_outputs'])
 
     @unittest.skipUnless(os.environ.get('AMBIANCE_TEST_NATIVE') == '1' and sys.platform == 'darwin', 'Requires actual native encode/decode')
     def test_small_review_movie_is_presented_without_claiming_final_evidence(self):
