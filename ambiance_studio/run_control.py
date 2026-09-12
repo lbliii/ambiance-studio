@@ -180,7 +180,7 @@ def live_children(project, row):
 
 
 def cancel(project, id, expected):
-    from .production import run_file
+    from .iteration_steps import run_file
     path = run_file(project, id)
     with project_lock(project):
         row = studio.read(path)
@@ -207,8 +207,9 @@ def cancel(project, id, expected):
 
 
 def reconcile(project, id):
-    from . import production, deliveries
-    path = production.run_file(project, id)
+    from . import deliveries
+    from .iteration_steps import run_file
+    path = run_file(project, id)
     with project_lock(project):
         row = studio.read(path)
         if row['state'] != 'running': return {'ok': True, 'state': row['state'], 'changed': False}

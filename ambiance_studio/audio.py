@@ -16,6 +16,8 @@ import tempfile
 import uuid
 import wave
 
+from .file_identity import digest
+
 FORMAT = 'ambiance-audio-session'
 LIMITS = ['Measurements are not listening, phone-speaker review, or artistic approval.',
           'Peak values are sample peaks, not oversampled true peaks; RMS is not LUFS.',
@@ -46,13 +48,6 @@ def add_parsers(sub):
         else:
             p.add_argument('--variant-b', type=Path, required=True, help='JSON containing solo, mute and/or gain_db_by_stem')
     p = group.add_parser('check'); p.add_argument('path', type=Path)
-
-
-def digest(path):
-    h = hashlib.sha256()
-    with open(path, 'rb') as f:
-        for block in iter(lambda: f.read(1024 * 1024), b''): h.update(block)
-    return h.hexdigest()
 
 
 def read_json(path):

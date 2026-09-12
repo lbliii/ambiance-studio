@@ -1,13 +1,13 @@
 """Exercise the review recorder with synthetic evidence, not real film approvals."""
-import importlib.util
 import json
 from pathlib import Path
+import sys
 import tempfile
 import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
-spec=importlib.util.spec_from_file_location('studio',ROOT/'studio.py')
-studio=importlib.util.module_from_spec(spec);spec.loader.exec_module(studio)
+sys.path.insert(0, str(ROOT))
+import studio
 
 class StudioTests(unittest.TestCase):
     def setUp(self):

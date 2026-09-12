@@ -88,7 +88,7 @@ def resolve(project, config):
     request = expand(recipe)
     if request.get('format') != 'ambiance-iteration-request' or request.get('schema_version') != 1:
         raise ValueError('Layers must resolve to ambiance-iteration-request schema_version 1')
-    from .production import validate_recipe
+    from .iteration_plan import validate_recipe
     validate_recipe({**{key: value for key, value in request.items() if key not in ['documents', 'audio_selection']},
                      'format': 'ambiance-iteration', 'schema_version': 2})
     if revisions.changed(project, inputs): raise ValueError('Config layers changed during resolution')

@@ -92,7 +92,7 @@ Acceptance: benchmark and progress records bind the actual render recipe; cancel
 
 ### MRR-06 — Replace repeated manifest surgery with narrow authoring operations
 
-The project's [art preparation script](../projects/midnight-reading-room/tools/prepare_art.py) directly changes `canvas.loop_seconds` because the supported transaction operation list has no canvas-clock mutation. This is confirmed in [tools/scene-command.mjs](../tools/scene-command.mjs) lines 26–29. Its other preparation steps do use existing CLI/compiler services.
+At the time of this audit, the project-local art preparation script, `projects/midnight-reading-room/tools/prepare_art.py` (not distributed with the repository), directly changed `canvas.loop_seconds` because the supported transaction operation list had no canvas-clock mutation. The corresponding implementation was in [tools/scene-command.mjs](../tools/scene-command.mjs) lines 26–29. Its other preparation steps used existing CLI/compiler services.
 
 Add a clock operation through `SceneTransaction` and the shared scene validator. Make timing consequences explicit: changing a loop duration is distinct from stretching tracks or retiming sound. Preserve snapshots and report affected tracks, bindings, cues and captured subjects; do not silently retime everything.
 

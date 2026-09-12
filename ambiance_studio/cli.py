@@ -291,10 +291,8 @@ def run(args):
         from .benchmarking import benchmark
         return benchmark(project,studio.read(args.file),args.out)
     if command in ['render','media']:
-        from . import rendering
-        prepared=revisions.prepare_edition(project,args)
-        result=rendering.run(args,project)
-        return revisions.record_edition(project,prepared,result,args)
+        from .media_operations import execute_media
+        return execute_media(args,project)
     if command=='review' and action=='packet':
         from .review_packets import run as run_packet
         return run_packet(args,project)
