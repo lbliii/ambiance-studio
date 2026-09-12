@@ -2,6 +2,8 @@
 
 A local studio for painted, layered ambiance films, designed for agent operation first. The agent pilots production through structured CLI/tools and saved project state. Localhost lets the human observe, compare and judge results, with optional visual editing for the human or agent.
 
+For planned development, start with the [studio plan alignment](docs/architecture/STUDIO-PLAN-ALIGNMENT.md): workflow guidance, reusable models, narrative films and quality/sound-library work, with explicit owners and shared acceptance. These plans are separate from the shipped commands below.
+
 Version 0.8.0 adds a [local film library](docs/STUDIO-LIBRARY.md): projects shared across worktrees, explicit current review movies, edition history and comparison, timestamped feedback, and resumable local iteration runs. It preserves the existing rendering, sound, finishing, revision and evidence workflows.
 
 [Dual-format production](docs/VIEWS.md) adds portrait 9:16 and landscape 16:9 views of one scene, synchronized previews, view-bound editions, and one resumable export/delivery job. Start a blank stage with `project init --format dual`, or add contained views to existing artwork. Try the [complete local-art demo](examples/views/README.md) and see the [validation evidence](docs/architecture/DUAL-FORMAT-VALIDATION.md).

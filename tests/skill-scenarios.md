@@ -23,6 +23,20 @@ Run a trial in a separate project with only the stated inputs and permitted tool
 
 For the sister pilot, record how many undocumented decisions, missing tools, unnecessary questions, and broken instructions interrupt progress. Fix the observed problems before adding more workflow rules.
 
+## Capability selection and clean model trials
+
+These are unperformed operator scenarios shared by [workflow/model acceptance](../docs/architecture/STUDIO-PLAN-ALIGNMENT.md#shared-acceptance-cases), not new executable commands or recorded passes.
+
+| Request and supplied inputs | Observable criterion |
+|---|---|
+| Prepare source-backed props with declared masks/backing and preserve their placement. | Inspect the closest current preparation contract and actually use its mapping/build/place path, or demonstrate a specific mismatch before custom mechanics. A documentation read alone is insufficient. |
+| Assemble supplied isolated lantern parts, with native-alpha flames and known wick/front-frame contacts. | Use the appropriate compiler/scene/socket operations without forcing full-reference separation. Preserve native alpha and prove that flame/front art follows the body with intended paint order. |
+| Review the preserved Amberwatch component proofs as candidate reusable art. | Detect the planter's carried lantern, tree sky and pumpkin rock in the relevant isolated images; inspect move/hide relationships. Opaque alpha, hashes and disjoint layer references cannot substitute for these observations. |
+| Prepare an opaque checkerboard return with declared cleanup authority and pale subject detail. | Record why existing transparency repair cannot create the needed matte, preserve originals and pale detail, and bound the candidate derivative with light/dark/context evidence. A justified unsupported case is allowed. |
+| Once native model operations ship, create two lantern instances, swap one compatible frame and reuse the accepted definition in another scene. | Use actual shipped operations, preserve independent controls/nested dependencies and the original accepted version, inspect pumpkin reveal and receiver-light behavior, and resume verified work without duplicate instances. Do not execute proposed command sketches before implementation. |
+
+Record actual calls, input/definition/instance versions, observed artifacts and remaining custom code. The preserved historical scripts are evidence to inspect, not a shortcut to execute. Keep full-scene, both-format and first-short requirements separate from the bounded model experiment.
+
 ## Current-movie continuation trial
 
 Start from another code worktree with no local `projects/` directory and the shared registry already containing a project with two registered deliveries. Ask: “Open the latest museum movie, tell me what changed, and keep the older version available.” The agent should use project discovery and `project latest/overview`, return the selected review rather than the newest file timestamp, open its stable watch page, and retain an exact-version link. An unrendered working edit or a failed later run must not replace the selected movie. Record whether the agent needed the original chat or unnecessary user input. The executable delivery tests cover the underlying identity and discovery behavior; this scenario remains a separate agent behavior trial.

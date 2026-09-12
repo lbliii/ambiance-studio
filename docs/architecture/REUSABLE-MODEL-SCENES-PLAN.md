@@ -6,6 +6,8 @@ September 12, 2026 · Proposed plan · Development deferred pending other studio
 
 This plan sets goals, deliverables, dependencies and acceptance outcomes. Implementation architecture, command names, estimates and development task breakdown remain open until the other planned studio changes settle. The [research and evidence][research] explain the observed failures and candidate technical approaches; those approaches are inputs to the later implementation review, rather than commitments made here. All delivery phases below are planned, not completed.
 
+The [studio alignment](STUDIO-PLAN-ALIGNMENT.md) is the integration map with workflow guidance, narrative character/timing work and quality/library reuse. The [operator audit](AMBERWATCH-GLUE-AUDIT.md) adds capability-selection evidence to the research's art/ownership findings. It does not make source separation equivalent to model construction or turn the research's proposed CLI/schema into a settled design.
+
 ## 1. Product goals
 
 | Goal | Expected outcome | How we will know it works |
@@ -119,9 +121,13 @@ Structural validation, image inspection and normal-speed observation answer diff
 
 At development restart, inspect the settled system and map this plan onto existing work. Produce a short reconciliation note identifying what is already delivered, what can be extended, what still needs design, and the revised work packages/dependencies. Keep the goals and acceptance outcomes stable unless a deliberate product decision changes them.
 
+The alignment note records the initial reconciliation at `a7dae5a`; refresh it against the actual implementation baseline. Resolve shared identity, local/source coordinates, clock consumption and proof/dependency ownership with the first-short P00/P02 interfaces before dependent code diverges. A character package is a specialized use of the shared model/registration foundation, not a competing general object graph. This does not require completing narrative finite-shot or dialogue features before the two-lantern experiment.
+
 | Adjacent work | Integration outcome to preserve |
 | --- | --- |
 | [Production intent and coverage][production-plan] | One authoritative inventory/requirement model with model ownership and exact evidence references. |
+| [Workflow guidance](WORKFLOW-CLI.md) | Native model operations own assembly and recovery; workflow resolves their inputs, exact subjects and continuations. Share the operator/model acceptance case without a second census, resolver or run journal. |
+| [First-short packages](FIRST-SHORT-WORK-PACKAGES.json) | Align model/character/part IDs, registration, overrides, local-cycle time and typed proof identity through P00/P02. Preserve independent story/clock work and existing loop behavior. |
 | [CLI-first architecture][cli-plan] and [scene transactions][transactions] | Structured, resumable edits; reviewable changes; saved state and browser behavior agree. |
 | [Seed-to-stage composition][seed-stage] and [layer/light planning][layer-plan] | Full-scene scope, both formats, finished backing and distinct ownership/mounting/lighting relationships. |
 | [Studio discovery and review delivery][studio-library] | Find the actual project/current review; model versions and proof artifacts connect to the selected revision. The film library and model library have distinct roles. |
@@ -130,6 +136,8 @@ At development restart, inspect the settled system and map this plan onto existi
 Defer schema/storage choices, exact CLI syntax, renderer/compiler boundaries, automatic contour implementation, packaging transport, migration tooling, detailed test lists, performance budgets and estimates to that reconciliation. Establish resource budgets from representative art and target outputs. Nested clipping, interleaved paint handling and roots without paint should be resolved according to the demonstrated model needs; the product acceptance remains correct visible composition and predictable editing.
 
 The first implementation work package should deliver an independently inspectable layered model and its library record, followed by the two-lantern composition experiment. The entire roadmap remains open until full-scene reconstruction, second-scene reuse and the agent-operated adoption trial are demonstrated.
+
+The shared operator trial must use supported operations or demonstrate a specific capability mismatch before custom mechanics, while still identifying contaminated paint and unmounted parts. Use `asset prepare` for an actual source/backing separation problem; clean isolated parts can use current compiler/scene operations directly. Neither instruction compliance nor a structural independence pass replaces the model's visual move/hide, reveal and reuse criteria.
 
 [research]: ../research/clean-components-2026-09-12/report.md
 [production-plan]: PRODUCTION-IMPROVEMENTS.md

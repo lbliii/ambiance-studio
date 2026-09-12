@@ -1,0 +1,150 @@
+# Amberwatch: custom production code and the smallest useful replacements
+
+Date: 2026-09-12. Status: **observed production audit and proposed follow-up work; no new production commands implemented here**.
+
+The earlier postmortem called eight project Python scripts, totaling 529 physical lines, “custom glue.” That description was too broad. They combine authored artistic choices, wrappers around existing commands, duplicated preparation/placement logic, genuinely unsupported raster operations, and one diagnostic server. Eight scripts do not establish eight missing features. The line count includes embedded data and HTML and excludes inline shell/Python/JavaScript used during the task; it is not a measured total of custom effort or an estimate of avoidable time.
+
+The central failure was that the operator used the compiler and scene transactions but bypassed much of the shipped agent preparation path. Several real convenience and diagnostic gaps remain. Promoting these scripts wholesale would preserve their unsafe assumptions and duplicate supported services.
+
+**Latest-main calibration:** this audit has now been reconciled against fetched main `a7dae5a0b8482aef0922073873414d968555007b`. Its findings are inputs to the existing workflow, reusable-model and quality/library plans, not a separate implementation backlog. Existing source preparation does not provide the proposed editable model/instance system. See the reconciliation and incorporation sections below.
+
+For ongoing engineering coordination, use [STUDIO-PLAN-ALIGNMENT.md](STUDIO-PLAN-ALIGNMENT.md). The dated reconciliation below preserves how these conclusions were reached; owning plans now carry the shared acceptance cases and integration references.
+
+## Evidence and version boundary
+
+The film ran on `23f9ca7d8ecb89708520a7b9042b09640eeb623c`, the September 12 11:39:53 EDT merge of PR #20. Both encoded reports pin the same `editor/engine.mjs` hash as that commit. The postmortem's earlier remote-main check identified `ef858ec`; this audit additionally inspected the locally available `origin/main` at `c5b65da` (PR #29). That is an inspected ref, not a new assertion about the live remote's latest commit.
+
+The later changes inspected here primarily separate orchestration, rendering, revision and evidence owners. Relevant preparation, placement, edge-processing, binding and audit capabilities below were already present during the film. `WORKFLOW-CLI.yaml` exists on the later ref and remains **proposed**. Its packet and outcome-guidance adapters were not callable tools that the film failed to use.
+
+Times below are the saved scripts' filesystem creation times on September 12, in EDT. They establish when each helper existed, not exact execution starts, time spent writing it, or an exhaustive command timeline. Script contents are their retained versions, which sometimes include later corrections. The eight audited scripts and their identity record are preserved as non-executable historical evidence under `docs/research/amberwatch-operator-2026-09-12`. Raw production media remains outside this package; these files are not a clean rebuild pipeline.
+
+The preserved [script-identity report](../research/amberwatch-operator-2026-09-12/script-identities.json) records exact SHA-256 hashes, creation/modification times and counts for the eight retained files. The [production roadmap](PRODUCTION-IMPROVEMENTS.yaml) remains the owner of existing milestone statuses.
+
+## Reconciliation with fetched main
+
+`git fetch origin main` succeeded during this follow-up. Its `FETCH_HEAD` is `a7dae5a0b8482aef0922073873414d968555007b`, September 12, 13:14:22 EDT, including the reusable-model plan from PR #30 and the CLI command-adapter integration from PR #26. The production checkout remains at `23f9ca7`; this audit inspected Git objects without merging or replacing the working project. Links to newly added plans are pinned to the fetched commit because those files are not in this older checkout.
+
+| Main source | Verified status | Calibration |
+|---|---|---|
+| [Workflow design][workflow-design] and [WF-01–WF-07 backlog][workflow-backlog] | Proposed; workflow inspection, input packets and contextual guidance are not shipped routes. | This is the owner of agent discovery and operation selection. Use its stage/action projection and native adapters rather than introduce another discovery catalog, script engine or workflow checklist. |
+| [Reusable models and complete scene assembly plan][model-plan] | All seven phases planned; development deferred pending restart alignment. Architecture, CLI names and detailed work packages remain open. | This is the owner of editable definitions, nested assemblies, independent instances, compatible controls/variants, derived masks/bounds and versioned library reuse. The audit supplies observed cases; it does not settle the implementation design. |
+| [Clean-component research and preserved evidence][model-research] | Research and triage; interface sketches are proposals. | Confirms that contaminated crops and missing mounting were real failures. Its candidate implementation approach informs the later design review, while the delivery plan owns goals and acceptance. |
+| [CLI-first integration state][latest-cli] | Command adapters, output ownership, coverage/evidence, revision and render service boundaries have been extracted. | Build on these owners. This refactor is not implementation of WF-01: `production_coverage.evaluate()` still ends in `save_report(...)`. Read-only workflow assessment remains work. |
+| [First-short work packages][short-packages] | Planned; inspected packages have no dispatched baseline. | Reconcile model/character identity, registration and timing with P00/P02 when implementation resumes. The lantern/model experiment does not depend on building dialogue, finite shots or sequence export first. |
+
+The previous diagnosis needs a precise boundary: I failed to apply shipped preparation, sockets and proof tools; the repo also genuinely lacks the higher-level model/instance interface now planned. A flat, source-bound separation workspace cannot be advertised as a nested reusable component library. It would repeat the mistake to force already-isolated art through full-reference preparation merely to prove that an existing command was used.
+
+The research adds material evidence the original postmortem missed. In the pinned v4 planter-isolation image, the left planter contains a lit lantern; this follow-up visually checked that saved image. The research's copied-scene diagnostic reports that moving `lantern-step-low` 80 scene pixels moves its flame zero pixels. That is a recorded transform diagnostic, not a new motion observation or a finding bound to every later edition. The earlier interpretation that outer-mask repairs established satisfactory whole-object ownership was too generous. Actual pixel ownership and mounting must be assessed separately from alpha coverage and structural layer independence.
+
+### How the two plans should meet
+
+- **Workflow owns the next useful operation; models own reusable construction.** A guided action should resolve the available art/model/instance and its exact version, explain missing inputs and route to its native operation. Workflow does not expand an assembly, choose semantic ownership, or maintain another instance graph.
+- **Keep the existing scope owners.** The canonical production plan records required scene elements/actions; inventory records fulfillment; model/instance contracts will own reusable technical assembly. A model checklist or workflow packet must not become a competing editable scene census.
+- **Use model identity for downstream evidence once available.** Definition version, nested dependencies, instance overrides, actual pose/time and view determine which derived masks and isolate/remove proofs are current. The exact schema remains a design decision. Fulfillment and proof adapters should consume that owner rather than infer object membership from layer prefixes.
+- **Keep receiving surfaces distinct from the source model.** A lantern's candle, flame and front frame move together. Its contribution on the ground remains registered to the ground and responds to the source. Hiding the source should remove that contribution without hiding other ground paint or unrelated illumination. Neither selection grouping nor ownership alone should silently change mounting or paint order.
+- **Treat raster derivatives as products of editable art.** Composite alpha, solid/material masks and bounds depend on the selected pose/variant. They do not replace the layered source or recover unseen paint. Decide any new keying/dimming convenience against the representative model; do not lead with a general collection of pixel-processing commands.
+- **Adopt guidance after testing it.** WF-07 already reserves default/skill changes for the measured pilot. The new `AGENTS.md` capability-fit instruction is an immediate guardrail; do not expand it into a second permanent stage playbook or advertise proposed workflow/model commands as usable today.
+
+### Adjusted sequence and acceptance
+
+Workflow WF-01–03 can progress over current native operations independently of new model APIs. WF-04–05 initially retain their documented intent/review/iteration adapters; add model/preparation adapters when the native contract exists and a demonstrated task needs them. At the reusable-model plan's development restart, align contracts, build one independently inspectable layered model and library record, then run the two-lantern experiment. Do not prematurely select the research's proposed command names, serialization or resolver design.
+
+Use one cross-plan pilot to assess the integration: find or prepare a complete lantern with nested candle/flame; create two independent instances and compatible frame variants; mount/move one; hide an independent pumpkin to expose complete lantern paint; hide the source and verify receiving-surface light; inspect all contributing layers for duplicates; preserve native alpha and registered derived masks; save/reload/resume; then reuse the pinned model from its library in another composition. A second, materially different model must broaden the test. The full scene, both compositions and second-scene reuse remain the model plan's later acceptance, not implied passes from two lanterns.
+
+Assess operator behavior as well as mechanics: did the agent select a real supported operation, identify a demonstrated gap before custom mechanics, inspect the relevant pixels and preserve scope? This must catch a planter that carries a lantern even when its alpha is fully opaque and its file hashes are correct. No operator/model trial was run during this reconciliation.
+
+[workflow-design]: https://github.com/lbliii/ambiance-studio/blob/a7dae5a0b8482aef0922073873414d968555007b/docs/architecture/WORKFLOW-CLI.md
+[workflow-backlog]: https://github.com/lbliii/ambiance-studio/blob/a7dae5a0b8482aef0922073873414d968555007b/docs/architecture/WORKFLOW-CLI.yaml
+[model-plan]: https://github.com/lbliii/ambiance-studio/blob/a7dae5a0b8482aef0922073873414d968555007b/docs/architecture/REUSABLE-MODEL-SCENES-PLAN.md
+[model-research]: https://github.com/lbliii/ambiance-studio/blob/a7dae5a0b8482aef0922073873414d968555007b/docs/research/clean-components-2026-09-12/report.md
+[latest-cli]: https://github.com/lbliii/ambiance-studio/blob/a7dae5a0b8482aef0922073873414d968555007b/docs/architecture/CLI-FIRST.md
+[short-packages]: https://github.com/lbliii/ambiance-studio/blob/a7dae5a0b8482aef0922073873414d968555007b/docs/architecture/FIRST-SHORT-WORK-PACKAGES.json
+
+## Follow-up: discovery versus application
+
+A subsequent inspection of the production tool-call record makes the diagnosis stronger than a documentation-discovery failure. These times are recorded tool-call times in EDT, unlike the script creation proxies below:
+
+| Time | Recorded action | What it establishes |
+|---|---|---|
+| 11:44:20 | Read `docs/CLI.md` and requested root CLI help. | The broad supported command surface was requested at startup. |
+| 11:44:29 | Read the asset skill and ran `doctor`. | Returned text explicitly named `asset prepare init/inspect/check/edit/build/proof/place`. |
+| 11:46:23 | Read `docs/ASSET-PREPARATION.md`. | Crop/return and alpha inspection were investigated. |
+| 11:48:49 | Ran `asset preflight` on the cat source. | The operator did inspect the opaque checkerboard case. |
+| 11:51:47 | Read the full `docs/AGENT-PREPARATION.md`. | Returned text included immutable compound preparation, mapped placement and resume. This preceded the custom preparation script by almost five minutes. |
+| 11:56:43 | Printed actual leaf/flame alpha statistics, then launched `prepare_art.py`. | The available native alpha was measured, yet the pipeline replacing it was still executed. |
+
+The inspected production calls show no bounded attempt to use the compound preparation path before the custom script. Merely reading its documentation did not become an operation-selection decision. This is primarily an operator failure to apply known guidance. Large batched documentation reads may have contributed, but the record does not establish the model's internal reason and does not excuse bypassing the supported path.
+
+There is also a reproducible CLI usability weakness: at the production commit, `asset prepare --help` presents generic `source`/`target` positional arguments and flags without enumerating the supported `init/inspect/check/edit/build/proof/place` operations. The stage skill and guide do enumerate them. Better help is warranted, but would not by itself explain or prevent an operator ignoring the full guide already returned.
+
+The immediate repository change is a short instruction in `AGENTS.md` at the point of introducing custom production mechanics: identify the closest current operation, inspect its contract, run a bounded probe when suitability is uncertain, and record the concrete uncovered behavior before a workaround. Use existing operations when they fit; keep artistic decisions in native recipes. This is internal engineering work, with no new permission checkpoint.
+
+The next CLI improvement should expose the existing operation verbs, input contract/example and limitations in relevant help, and use the existing capability index and proposed WF stage/outcome adapters for concise contextual discovery. Do not create a second competing capability catalog or require every task to read all documentation. These CLI changes remain proposed here.
+
+The behavioral acceptance case is deliberately stronger than “the agent read the skill”: give an operator supplied art and a source-mapped extraction task, then inspect whether it actually used the existing preparation/placement path or demonstrated a specific mismatch before writing code. Include one truly unsupported opaque-matte case to test justified exceptions. A successful movie or a documentation-read event does not pass this reuse criterion. A fresh-operator trial remains unperformed; a new instruction alone is not evidence of reliable compliance. Repository guidance also cannot technically intercept every arbitrary shell/Python call the host permits.
+
+## What was written, when and why
+
+| Created | Script | Purpose and immediate reason | Capability diagnosis |
+|---|---|---|---|
+| 11:51:35 | [`author_plan.py`](../research/amberwatch-operator-2026-09-12/scripts/author_plan.py), 50 lines | Expanded a hand-authored scene census into inventory, actions and expectations, to establish the film's scope. | Authoring data plus boilerplate. Existing plan validation/application was available. Generated semantic assumptions were wrong in places. |
+| 11:56:34 | [`prepare_art.py`](../research/amberwatch-operator-2026-09-12/scripts/prepare_art.py), 144 lines | Cut the generated stage into independent surfaces/props; keyed the cat backdrop; split and registered sprite cels; compiled/admitted packs. | Mostly duplicated preparation/compiler mechanics. Opaque-background keying is a narrower unsupported operation. Initial leaf/flame alpha replacement was an operator error. |
+| 12:00:22 | [`assemble.py`](../research/amberwatch-operator-2026-09-12/scripts/assemble.py), 119 lines | Applied cleaner architecture, restored native leaf/flame alpha, made dim fixture/glow derivatives, and placed/articulated the scene. | Existing source placement, sprite placement, tracks and transactions cover much of this. Local emission extraction is an authoring gap; artistic coordinates and timing remain data. |
+| 12:03:04 | [`refine_and_sound.py`](../research/amberwatch-operator-2026-09-12/scripts/refine_and_sound.py), 40 lines | Moved overlapping props, reduced flame size, faded leaves, copied four existing stems and wrote score/effects sessions. | Existing scene and audio operations cover edits/mixing. Cross-project sound materialization/provenance needs a supported library route. |
+| 12:05:19 | [`bind_production.py`](../research/amberwatch-operator-2026-09-12/scripts/bind_production.py), 47 lines | Made a feathered receiver mask, linked layers to semantic objects and built 21 whole-object/contact proof samples. | Existing preparation bindings and proof renderers were available. A helper can derive assembled-object proof recipes from explicit ownership. Mask authoring is separate. |
+| 12:10:01 | [`painted_lighting.py`](../research/amberwatch-operator-2026-09-12/scripts/painted_lighting.py), 64 lines | Repaired fixture mattes and replaced costly full-stage finishing with small painted screen contributions, connected to flame/pumpkin intensity. | Performance-driven change of artistic treatment, plus raster preparation. Runtime bindings and look/rig packaging already exist. Eight scalar brightness copies were avoidable. |
+| 12:17:15 | [`fulfill.py`](../research/amberwatch-operator-2026-09-12/scripts/fulfill.py), 39 lines | Built hashed evidence/asset/layer updates for inventory parts, then invoked `plan fulfill`. It was later revised and used for delivery evidence too. | Existing safe mutation, missing convenient receipt-to-input construction. The script manually re-entered facts the tools already knew. |
+| 12:30:19 | [`coverage_server.py`](../research/amberwatch-operator-2026-09-12/scripts/coverage_server.py), 26 lines | Added a localhost page to locate browser alpha-audit failures while HD output was underway. | Clear missing diagnostic output. It reused the production renderer; the replacement belongs inside the existing audit/proof path. |
+
+### Preparation and placement: avoidable mechanics, with a real alpha exception
+
+`prepare_art.py` lines 34–48 manually rasterize polygons, find bounds, crop, calculate pivots/cell sizes and write a private manifest. Lines 14–33 repeat build/admit coordination. `assemble.py` repeats that wrapper and converts source pixels into normalized layer positions itself. Multiple wrappers skip compilation simply because the output directory exists; that does not verify that its inputs still match. `refine_and_sound.py` computes relative offsets from the current scene, so rerunning it can move objects again.
+
+The shipped [agent preparation path](../AGENT-PREPARATION.md) already accepts additive/subtractive polygons, imported soft masks, reconstructed full-canvas sources, registered companions, explicit production/inventory bindings and both saved views. It produces immutable mappings/compiler recipes and supports journaled `asset prepare place --resume`. [Source placement](../SOURCE-PLACEMENT.md) already handles source mapping, padding, pivots and transforms, and provides explicit sprite placement for generated cels. The [compiler](../RIG-WORKBENCH.md) accepts sheet grids or ordered frames with landmark registration.
+
+The polygons, cat paw landmarks, intended display size and story timing still need an author. They should be recipe values, not new implementations of crop, hashing, placement or caching. Compound preparation has limits—16 parts per recipe and a mapped one-cel base for placement—so replay should use explicit bounded groups. It cannot simply consume every private manifest as-is. The flame sheet also has non-divisible dimensions; its rounded per-cell rectangles need a verified layout decision, not a claim that exact-grid compilation accepts it unchanged.
+
+The alpha mistake is concrete: `prepare_art.py` converted the flame image to RGB and rebuilt alpha; it also replaced leaf alpha with polygons. `assemble.py` lines 26–35 restored the originals' native alpha. The tool-call record confirms leaf/flame alpha was actually inspected before that script ran; this was failure to act on available facts, not simply failure to inspect. Conversely, the cat's opaque painted checkerboard required a candidate matte: the script used a declared neutral-color threshold and alpha ramp. [Edge repair](../EDGE-QUALITY.md) already supports feather/choke/decontamination of **existing transparency**, but deliberately rejects opaque inputs and does not remove checkerboards. Imported masks are supported; automatic segmentation and recovery of obscured fur are not. That is the narrow boundary of a potential new matte operation.
+
+### Lighting: a preparation gap and an unmeasured performance decision
+
+`assemble.py` lines 40–60 uses explicit glass regions and warm-color tests to dim already-lit fixture art and extract pumpkin emission. `bind_production.py` lines 13–23 creates an elliptical falloff mask. `painted_lighting.py` lines 39–58 crops receiver paint, warms its RGB, feathers its alpha and attaches 16 screen contributions to receiving surfaces. Those are unsupported recipe conveniences for making derivatives from existing art; they are not evidence that the renderer lacks lights or source/follower bindings.
+
+The earlier 480-frame linear-finishing proof took 297 seconds; a later, larger proof with painted contributions took 62 seconds. Scene and render conditions changed, so this is motivation for investigation, **not a controlled speedup measurement**. Screen blending also changes the picture; it is not an equivalent implementation of linear finishing. The custom coordinate math assumes the particular axis-aligned scene and is unsafe to generalize to rotated/parented receivers.
+
+The four pumpkin emissions each received eight PNG brightness variants whose only difference is alpha scaling. Existing [shared signals and bindings](../BINDINGS.md) can instead drive one emission image and its receivers together. That replacement still needs a backend benchmark and a visual comparison. Existing finishing/painted illumination and [look/rig packages](../FINISHING.md) should own runtime behavior and reuse. No new lighting engine is justified by this run.
+
+### Plan and evidence: input construction is not a second evaluator
+
+`author_plan.py` copied identical onset/rest/duration values across five different actions, described a translated sky image as `cloud-cels`, and put sound/delivery into a visual-art model. `bind_production.py` then reconstructed ownership from ID prefixes and copied view rectangles into a proof recipe. Later lighting derivatives required further ownership bookkeeping. `fulfill.py` manually listed a representative asset/layer for some grouped parts, with other files added separately; further mapping repairs were needed.
+
+The existing plan validator, coverage evaluator, preparation bindings, `render rig-proof`, review packets and `plan fulfill --expect-sha256` already perform their respective jobs. The gap is carrying **explicitly authored identities** through operations and deriving reviewable inputs from their receipts. A helper should enumerate all bound members and current view identities, while leaving ambiguous ownership, creative targets and unperformed observations unresolved. A successful render cannot author a review verdict.
+
+### Sound and alpha diagnostics
+
+The sound helper copied `music`, `woodland`, `leaves` and `hearth` 48-second stems plus source evidence from a hard-coded archive path. Its gains and cue choices are legitimate session data. Existing `audio mix`/`audio compare` support mute/gain variants; writing a second effects session was not a missing mixer feature. Existing `audio import-stems` handles a specific legacy-session migration, not general sound-library import. The proposed [sound-library materialization](TV-QUALITY-AND-SOUND-LIBRARY.md) is the appropriate home for portable source selection, project copies and provenance receipts.
+
+The diagnostic server loaded the actual stage renderer and highlighted alpha below 254, reporting bounds, minimum alpha and edge/interior counts at three times and two sizes. It localized most failures to preview boundaries and six partially covered interior pixels at the sky/valley join in a 1072×603 landscape render. The existing audit supplied failure counts but insufficient localization. This warrants output from the current audit, not another web server or another definition of coverage. Browser and Node runtime/resolution differences must remain visible; excluding edge pixels is diagnostic classification, not permission to change a failing result to passing.
+
+## Incorporation into the existing plans
+
+AWG IDs below now identify findings and acceptance inputs, not a separately prioritized delivery backlog. This mapping supersedes the earlier recommendation to start an independent AWG-01/AWG-02 implementation sequence. Existing roadmap owners retain status and scheduling.
+
+| Finding | Home in the current plans | Calibrated disposition and acceptance case |
+|---|---|---|
+| **AWG-01: supported operations were bypassed** | **WF-02/03/05/06/07**, existing **MRR-09/10**, model plan **G7 and Phase 7** | Use bounded stage/action guidance and real native commands. Test actual operation choice, not documentation reads. Include source separation and already-isolated model art so the test does not reward forcing every task through `asset prepare`. |
+| **AWG-02: manual ownership/evidence bookkeeping** | Model plan **Phases 1–4**, existing **MRR-06** and coverage owners; a demonstrated **WF-04** adapter extension | Derive isolate/remove/proof and fulfillment inputs from explicit canonical part bindings and, once defined, model/instance ownership. Include nested parts, overrides, external receiver effects and exact views. Do not introduce a private membership graph or fabricate artistic acceptance. |
+| **AWG-03: alpha failures were difficult to locate** | Existing audit/render services; model plan **G4 and Phase 4** diagnostics | Keep this as an independently useful bounded diagnostic improvement: worst-frame heatmap, coordinates, threshold and backend/view identity. Test perimeter filtering and real interior holes. It complements model ownership observations; opaque contamination needs visual inspection. |
+| **AWG-04: missing matte/paint derivative conveniences** | Model plan **G4, Phases 2/4**, existing asset/edge/preparation owners | Prioritize correctly registered composite alpha, role masks and bounds for a specified editable model state. Add declared keying/dim/emission conveniences only where the model pilot demonstrates need. Preserve existing alpha by default; do not treat these derivatives as reconstruction of hidden paint or a substitute for a clean model. |
+| **AWG-05: lighting workaround and duplicate brightness art** | Model plan **G3/G5 and lantern/pumpkin demonstration**, existing **BIND-01, MRR-05/08** | Use supported signals and distinguish internal mounting from external receiving surfaces. Verify move/hide/off behavior before measuring performance. Compare exact inputs for optimization; screen and linear treatments remain an artistic choice. No new lighting engine follows from this audit. |
+| **AWG-06: hard-coded sound-source import** | Existing **TV-quality and sound-library plan**, coordinated with model plan **G6/Phase 6** provenance practices | Keep audio-aware materialization and native session initialization under the sound owner. Reuse version/dependency principles without placing audio into the visual-asset schema. Rebuild a second project without the original archive path and without inventing an audition. |
+
+Use the settled `asset_commands`, `scene_commands`, `project_commands`, `production_commands` and `command_output` boundaries for CLI integration, with the extracted coverage, revision and render owners beneath them. Preserve explicit output/envelope ownership and current error semantics. Workflow guides native operations; any future model resolver is their technical owner, not a workflow script interpreter. Concrete model module/schema choices remain deferred by the delivery plan.
+
+## What remains custom, and what counts as done
+
+The author still chooses what moves, paints missing surfaces, places landmarks, draws masks, sets leaf paths, chooses light falloff and listens to sound. Those decisions are not defects in feature coverage. The target is that these choices become saved, validated data consumed by common tools; the agent should not need to write coordinate transforms, cache rules, provenance walkers, evidence synchronization or a diagnostic server for each film.
+
+Completion should be measured with an observed CLI production replay using Amberwatch art and a second independent case. Retain calls, bytes, documentation lookups, correction attempts and remaining custom executable code. Preserve exact source/review identities and compare the actual output; fewer commands alone do not establish better art. An engineering fixture can use a test harness, but the production operator must not need to author one to use the feature.
+
+Shared-code implementation requires the existing `./ambiance test` suite and appropriate native, asset, rig and browser checks for the owners changed; packaging changes also require the package audit. This audit changes documentation only. It does not rewrite the film, assert new test passes, mark the proposals implemented, or claim the saved scripts are a clean rebuild pipeline.

@@ -6,6 +6,8 @@ The intended product is a short, high-quality ambiance master built from reusabl
 
 This plan consolidates the user's discussion of resolution, scaling, long playback, ElevenLabs quality, spatial sound, and a shared sound library. It is a design and implementation backlog, not a claim of implemented features or approval of existing media. The companion [YAML backlog](TV-QUALITY-AND-SOUND-LIBRARY.yaml) owns task status and dependencies. Existing [production work](PRODUCTION-IMPROVEMENTS.md), scene contracts, revisions, and delivery selection remain authoritative for their current functions.
 
+The [studio alignment](STUDIO-PLAN-ALIGNMENT.md) connects this work to workflow guidance, visual-model reuse and narrative films. Keep audio-aware import/session/library records separate from raster/model schemas while sharing immutable-version and portable-materialization principles. Once native quality/audio operations exist, workflow adapters may explain their exact inputs and continuations. Model/character source-detail audits must trace nested parts, variants and their actual displayed footprint; a composite's dimensions do not establish every source's detail. Neither the lantern-model experiment nor the first short requires the full TV/4K milestone first.
+
 ## Decisions and scope
 
 | Area | Core milestone | Later, separate work |

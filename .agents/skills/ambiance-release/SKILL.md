@@ -19,4 +19,6 @@ Register completed movie sets and select the current review through the [studio 
 
 Follow user authorization for sending/publishing; readiness does not grant permission or account access. Preserve accepted library versions and originals. Catalog reusable rigs, assets, motion and sound recipes with compatibility, source hashes and previews, following [contracts](../../../docs/CONTRACTS.md). Include rebuild/platform requirements and authored creative context in the handoff.
 
+Preserve editable assembly sources, nested dependencies and exact observations alongside compiled outputs. Current raster admission and look/rig packages have their documented limits; do not label them as the proposed model-library system. Reuse still needs fit in the new composition. Future model/workflow adoption follows the [aligned owning plans](../../../docs/architecture/STUDIO-PLAN-ALIGNMENT.md).
+
 After presenting an iteration, use `project storage` and prepare a `project cleanup plan` with the chosen retention period. Referenced captures, media and reviews stay protected; cleanup moves eligible bundles to recoverable trash. Use [production operations](../../../docs/MIDNIGHT-OPERATIONS.md) for cleanup and layered iteration configuration.

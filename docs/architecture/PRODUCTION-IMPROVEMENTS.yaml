@@ -1,8 +1,9 @@
 format: ambiance-improvement-roadmap
 schema_version: 1
-updated: '2026-09-11'
+updated: '2026-09-12'
 status: foundation_integrated_followups_and_observed_pilots_remaining
 design: docs/architecture/PRODUCTION-IMPROVEMENTS.md
+alignment: docs/architecture/STUDIO-PLAN-ALIGNMENT.md
 meaning: Human/agent implementation backlog; not an executable production recipe, scheduler, approval or runtime
   schema.
 decisions:
@@ -949,11 +950,14 @@ tasks:
   - Supplied art/local resources suffice for the initial trial without new paid generation.
   - Trials distinguish appropriate stillness, physically motivated movement and established uncanny action.
   - Reports disclose actual interventions, script volume, bytes, first useful review time and unresolved observations.
+  - Amberwatch follow-ups distinguish reading a capability from using it, and require a concrete mismatch before replacement mechanics.
+  - Shared model/operator cases inspect contamination and move/hide relationships across all contributing paint; opaque alpha and disjoint layer IDs do not establish clean ownership.
   - Synthetic replay and old unperformed CI-02/PILOT-01 criteria are not relabeled as observed passes.
   validation:
   - Existing evaluation harness with actual recorded operator runs and exact review artifacts.
   - Applicable shared-code/native/browser checks and normal-speed paired viewing/listening.
   - MRR-08 measured disposition may retain the baseline; optimization adoption is not a trial prerequisite.
+  - Reuse the workflow/model alignment cases; source-separated and already-isolated art both remain valid production inputs.
   source_specs:
   - docs/architecture/MIDNIGHT-PRODUCTION-DESIGN.md
   - tests/skill-scenarios.md

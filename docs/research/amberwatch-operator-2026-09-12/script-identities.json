@@ -1,0 +1,71 @@
+{
+  "format": "amberwatch-custom-code-audit",
+  "version": 1,
+  "observed_at": "2026-09-12T13:08:45.597657-04:00",
+  "production_commit": "23f9ca7d8ecb89708520a7b9042b09640eeb623c",
+  "inspected_tracking_ref": "fc5ecba2cc86deb6e2da250f3fe96769f8cc06da",
+  "timing_basis": "Filesystem birth times establish script creation, not exact execution times or authoring duration. Contents are retained versions, potentially later edited.",
+  "scripts": [
+    {
+      "file": "scripts/author_plan.py",
+      "sha256": "b005347c4f95e41afa294088379b6559dcdf39b7d0165f1fd920636581cf58ed",
+      "physical_lines": 50,
+      "created_local": "2026-09-12T11:51:35.613230-04:00",
+      "last_modified_local": "2026-09-12T11:51:35.613345-04:00"
+    },
+    {
+      "file": "scripts/prepare_art.py",
+      "sha256": "a434edb5226e8b6d87344bcb4fad992d41906f7b7f5fa9324dd5552be4f6d611",
+      "physical_lines": 144,
+      "created_local": "2026-09-12T11:56:34.938511-04:00",
+      "last_modified_local": "2026-09-12T11:56:34.938820-04:00"
+    },
+    {
+      "file": "scripts/assemble.py",
+      "sha256": "282b471ebbe5d1fdde9cba64f00d9eef6f93b158b8cfaa13b54bd2b7658ec855",
+      "physical_lines": 119,
+      "created_local": "2026-09-12T12:00:22.277801-04:00",
+      "last_modified_local": "2026-09-12T12:00:22.277942-04:00"
+    },
+    {
+      "file": "scripts/refine_and_sound.py",
+      "sha256": "a5990a260fdda747c5be1acb57a4cdb4fbddc5790a80bce5056929a833abb844",
+      "physical_lines": 40,
+      "created_local": "2026-09-12T12:03:04.099661-04:00",
+      "last_modified_local": "2026-09-12T12:03:04.099746-04:00"
+    },
+    {
+      "file": "scripts/bind_production.py",
+      "sha256": "bb4992eb4578b1087a13f54089412ee807d2acc86bf4f1c6bbf68160c4b1a522",
+      "physical_lines": 47,
+      "created_local": "2026-09-12T12:05:19.753431-04:00",
+      "last_modified_local": "2026-09-12T12:05:19.753507-04:00"
+    },
+    {
+      "file": "scripts/painted_lighting.py",
+      "sha256": "b091c6f111abd6989b3b6cc211d0be5c7094737e2eac6c2eaa39658a85012ec6",
+      "physical_lines": 64,
+      "created_local": "2026-09-12T12:10:01.678082-04:00",
+      "last_modified_local": "2026-09-12T12:11:13.699779-04:00"
+    },
+    {
+      "file": "scripts/fulfill.py",
+      "sha256": "53d69e21cc2830431398d3730168b5a17b7ae2f5b730c5dccd9b396083fec7e3",
+      "physical_lines": 39,
+      "created_local": "2026-09-12T12:17:15.162967-04:00",
+      "last_modified_local": "2026-09-12T12:32:17.619100-04:00"
+    },
+    {
+      "file": "scripts/coverage_server.py",
+      "sha256": "40fab1b61927e90f36d5b7b02b7fff0db3cf013e0400054580a2e231523af1c0",
+      "physical_lines": 26,
+      "created_local": "2026-09-12T12:30:19.488750-04:00",
+      "last_modified_local": "2026-09-12T12:30:19.488930-04:00"
+    }
+  ],
+  "saved_script_count": 8,
+  "physical_lines": 529,
+  "count_limits": "Includes embedded art data and HTML; excludes inline snippets. Not a measure of reusable code, total effort or avoidable time.",
+  "analysis": "docs/architecture/AMBERWATCH-GLUE-AUDIT.md",
+  "implementation_status": "Proposals only; no new production commands implemented and no replacement-path artistic replay performed."
+}

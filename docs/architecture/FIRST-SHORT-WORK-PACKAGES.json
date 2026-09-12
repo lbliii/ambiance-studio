@@ -32,7 +32,7 @@
         4,
         7
       ],
-      "prompt": "Establish a shared, versioned interface packet for the first-short work packages. Resolve source/character coordinates, immutable character and drawing IDs, finite-shot and legacy-loop timing, source/shot/edit offsets, frame/sample rounding, mouth-cue and take records, sequence selection, and film-level receipt identity. Use current library/evaluator contracts; document actual required extensions and tiny positive/negative fixtures. Capture one baseline that includes the roadmap, research, work packages and contracts. Resolve the actual production-project location and private-media access before dispatch. Own common CLI/bridge/schema registration and integration. Do not implement every feature or begin paid production as part of this package.",
+      "prompt": "Establish a shared, versioned interface packet for the first-short work packages. Resolve source/character coordinates, immutable character and drawing IDs, finite-shot and legacy-loop timing, source/shot/edit offsets, frame/sample rounding, mouth-cue and take records, sequence selection, and film-level receipt identity. Use current library/evaluator contracts; document actual required extensions and tiny positive/negative fixtures. Capture one baseline that includes the roadmap, research, work packages and contracts. Resolve the actual production-project location and private-media access before dispatch. Own common CLI/bridge/schema registration and integration. Do not implement every feature or begin paid production as part of this package. At restart, use STUDIO-PLAN-ALIGNMENT.md to reconcile reusable-model/instance and character/part IDs, local/source coordinates, nested dependencies, allowed overrides and typed proof identity with the model owner. Register native workflow hooks through the settled command/output adapters; do not introduce a competing assembly graph or make the full model-library rollout a prerequisite for independent story/timing work.",
       "result": "Versioned interface packet, shared fixture identities, integration baseline and dispatch context.",
       "status": "planned",
       "thread_id": null,
@@ -72,7 +72,7 @@
       "milestones": [
         2
       ],
-      "prompt": "Build the smallest CLI character-package and reconstruction-proof workflow needed for the first short. Preserve complete source-character proportions through crop/compiler mappings, padding, pivots, placement and attachments. Prefer existing compound preparation, source placement and rig proofs. Use independent fixtures to expose wrong scale, offset, hidden duplicates, and inconsistent pose registration. Return source/assembly overlays, silhouettes, joint crops and exact proof paths with explicit limits. Coordinate shared CLI hooks with the coordinator. This package establishes technical support; the human and dog art packages separately establish actual character quality.",
+      "prompt": "Build the smallest CLI character-package and reconstruction-proof workflow needed for the first short. Preserve complete source-character proportions through crop/compiler mappings, padding, pivots, placement and attachments. Prefer existing compound preparation, source placement and rig proofs. Use independent fixtures to expose wrong scale, offset, hidden duplicates, and inconsistent pose registration. Return source/assembly overlays, silhouettes, joint crops and exact proof paths with explicit limits. Coordinate shared CLI hooks with the coordinator. This package establishes technical support; the human and dog art packages separately establish actual character quality. Consume the P00-aligned model/registration foundation and extend it with character-specific drawings and controls. Use source preparation when the art needs shared reference/backing separation; already-isolated art may go directly through registered compiler/scene operations. Exercise the shared move/hide and contamination cases without claiming proposed model commands are already callable.",
       "result": "CLI fixture replay, validated registration/package contract and reconstruction/pose evidence; no claim of accepted character art.",
       "status": "planned",
       "thread_id": null,
@@ -162,7 +162,7 @@
         3,
         7
       ],
-      "prompt": "Add the agreed versioned film-level input identity, revision/receipt validation, aggregate required-action coverage and delivery presentation adapters. Start with fixed contract specimens, but complete only against a real P05 output. Reuse existing revision, coverage and studio-library owners rather than duplicating their rules. Prove detection of a changed shot, swapped audio, missing required action, stale edit and wrong receipt. Preserve existing editions and loop-film workflows. Supply an exact watch-link path for a valid multi-shot review and honest outstanding observations; a schema fixture is not a finished integration.",
+      "prompt": "Add the agreed versioned film-level input identity, revision/receipt validation, aggregate required-action coverage and delivery presentation adapters. Start with fixed contract specimens, but complete only against a real P05 output. Reuse existing revision, coverage and studio-library owners rather than duplicating their rules. Prove detection of a changed shot, swapped audio, missing required action, stale edit and wrong receipt. Preserve existing editions and loop-film workflows. Supply an exact watch-link path for a valid multi-shot review and honest outstanding observations; a schema fixture is not a finished integration. Align future model/instance version and override references with the shared proof/dependency owner; workflow guidance consumes these results and does not recreate coverage or assembly state. Use the extracted revision, edition, coverage and iteration services rather than extending obsolete monolithic ownership.",
       "result": "Validated sequence-to-review/delivery path and aggregate readiness against real media.",
       "status": "planned",
       "thread_id": null,
@@ -439,5 +439,6 @@
     ],
     "scheduling": "Follow up with the owning package; do not introduce circular start_after/accept_after dependencies or retain stale acceptance evidence.",
     "scope": "Extra deformation, pose inference or contact solvers require a demonstrated need and explicit impact assessment; repair source drawings when the defect is in the art."
-  }
+  },
+  "alignment": "docs/architecture/STUDIO-PLAN-ALIGNMENT.md"
 }

@@ -23,9 +23,12 @@ These waves communicate useful concurrency, not strict global barriers. Start a 
 
 **Shared setup is short but necessary.** P00 establishes interfaces, fixtures and ownership. It should not become a project to build the whole application before anyone else starts.
 
+Use the [studio alignment](STUDIO-PLAN-ALIGNMENT.md) during setup. Align P00/P02 with reusable-model identity, registration and dependency/proof contracts; coordinate workflow adapters around native operations. Keep the existing start/accept graph: a full model-library release is not an extra prerequisite for every narrative package. Shared-file ownership below is a planning boundary to refresh against current command, rendering and evidence adapters before dispatch.
+
 | Shared decision | Required agreement |
 | --- | --- |
 | Character coordinates | Preserve existing source/reference mappings, full-cell size, padding and pivots; name character, view, part and drawing IDs |
+| Model/instance integration | Align stable definitions, nested parts, allowed overrides and immutable dependencies with the model plan; character-specific drawings and controls extend that foundation |
 | Time | Frame/sample units, one rounding/conversion implementation, end-exclusive edit ranges, finite end behavior, and legacy loop compatibility |
 | Audio and mouth cues | Selected take identity, transcript provenance, cue intervals, drawing-map reference and authored correction ownership |
 | Shot/edit selection | Exact shot revision, source in/out frames, edit position, view and soundtrack references |
@@ -53,12 +56,12 @@ P01's first timed storyboard can use a provisional local slideshow/edit. It must
 
 | Owner | Exclusive area during its package | Interface to other owners |
 | --- | --- | --- |
-| P00 coordinator | ambiance_studio/cli.py, tools/scene-command.mjs, common command and media_operations.py job registration, docs/CLI.md, docs/CAPABILITIES.json, shared templates/test registration and package-audit integration | Workers provide small hook changes; coordinator installs/tests them early |
+| P00 coordinator | CLI parser/command-adapter and command_output.py integration, tools/scene-command.mjs, media_operations.py job registration, docs/CLI.md, docs/CAPABILITIES.json, shared templates/test registration and package-audit integration | Workers provide small hook changes; coordinator installs/tests them early and preserves existing output ownership |
 | P02 character tools | New character modules; necessary changes to assets.py, compound_preparation.py, scene_authoring.py and editor/source-placement.mjs; package-specific fixtures/tests | Consume the public evaluator; request evaluator changes from P03 |
 | P03 clock | editor/engine.mjs, editor/timing.mjs, agreed common time helpers and finite-clock tests | Publish evaluator/time API consumed by P04/P05; do not change movie assembly |
 | P04 speech cues | New take/cue/import/correction modules and their tests | Reuse audio.py/audio_cues.py through existing APIs; request any necessary shared edits explicitly |
-| P05 sequence renderer | New sequence modules; tools/render-scene.mjs, ambiance_studio/rendering.py, required native/media/media.m changes, preview.py and relevant preview/player integration | Consume P03; emit agreed P06 receipts; ask P06 for delivery-serving hooks |
-| P06 film evidence | revisions.py, production_coverage.py, production.py, iterations.py, iteration_plan.py, iteration_steps.py, deliveries.py, studio_server.py, required production-plan adapters and evidence tests | Consume the P05 output contract; preserve existing single-scene editions |
+| P05 sequence renderer | New sequence modules; render_plan.py/render_execution.py, tools/render modules, native media owners and relevant preview/player integration | Consume P03; preserve compatibility wrappers and shared media operations; emit agreed P06 receipts |
+| P06 film evidence | Revision capture/dependency/review and edition owners, coverage context/evidence/records, iteration/delivery owners, required production-plan adapters and evidence tests | Consume the P05 output contract and shared model identities; preserve existing single-scene editions and avoid a second evaluator |
 | Production workers | Their own immutable candidate asset/audio packages or assigned shot projects | Submit manifests; canonical admission/edit/review belongs to the named integrator |
 
 A listed filename is an ownership boundary, not a requirement to edit that file. Prefer smaller modules and existing library functions. No worker should broadly refactor shared files just to make its package easier.

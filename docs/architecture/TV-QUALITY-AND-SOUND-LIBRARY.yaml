@@ -1,9 +1,10 @@
 format: ambiance-quality-roadmap
 schema_version: 1
-updated: '2026-09-11'
+updated: '2026-09-12'
 status: planned
 baseline_commit: '31390fb'
 design: docs/architecture/TV-QUALITY-AND-SOUND-LIBRARY.md
+alignment: docs/architecture/STUDIO-PLAN-ALIGNMENT.md
 meaning: >-
   Human/agent implementation backlog, not an executable production recipe,
   scheduler, implemented capability declaration, or spending authorization.
@@ -116,6 +117,7 @@ tasks:
       - Per-source and per-cel original/prepared dimensions and registration/crop identities.
       - Maximum displayed footprint and enlargement with view, frame/time, layer, and cel identity.
       - Explicit unknowns for missing raw-source mappings or incomplete sampling coverage.
+      - Once model contracts exist, trace nested part/variant source identities and display demand instead of treating a composite's size as native source detail.
       - Actionable art remedies and saved full-resolution still/motion proof references.
     acceptance:
       - A previously enlarged derivative cannot hide an undersized recorded original.
