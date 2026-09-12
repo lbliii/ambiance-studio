@@ -339,7 +339,8 @@ def _build(recipe_path, out, logical_out=None):
         'sha256': sha(out/'atlas.png'), 'atlas': {'columns': columns,'rows':rows,'cell_width':cw,'cell_height':ch,'frame_count':len(frames)},
         'registration_mapping':mapping, 'pivot':target, 'sockets':recipe.get('sockets',{}), 'provenance': {'recipe':'recipe.json','cache_key':cache_key,'sources':packed_sources},
         'rights':recipe.get('rights','Unspecified; inherits source restrictions.')}
-    if recipe.get('cel_trim', 'region_receipt'): asset['provenance']['cel_trim', 'region_receipt']=recipe['cel_trim', 'region_receipt']
+    if recipe.get('cel_trim'): asset['provenance']['cel_trim']=recipe['cel_trim']
+    if region: asset['provenance']['region_receipt']=recipe['region_receipt']
     if compound: asset['provenance']['preparation_receipt']=recipe['preparation_receipt']
     if motion: asset['provenance']['motion_preparation']=recipe['motion_preparation']
     if mapping_source:
