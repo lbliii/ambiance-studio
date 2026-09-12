@@ -14,7 +14,7 @@ sys.path.insert(0, str(ROOT))
 from PIL import Image
 import studio
 from ambiance_studio import scene_runtime
-from ambiance_studio import revisions
+from ambiance_studio import revisions, revision_capture
 from ambiance_studio.cli import init_project, parser, run, main
 
 
@@ -85,7 +85,7 @@ class RevisionTests(unittest.TestCase):
         real = revisions.collect
         def racing(project, selection):
             c = real(project, selection); (project/'plans/brief.md').write_text('changed during collect'); return c
-        with patch.object(revisions, 'collect', side_effect=racing), self.assertRaisesRegex(ValueError, 'Inputs changed'):
+        with patch.object(revision_capture, 'collect', side_effect=racing), self.assertRaisesRegex(ValueError, 'Inputs changed'):
             self.capture()
         self.assertFalse((self.p/'revisions/v1').exists())
 

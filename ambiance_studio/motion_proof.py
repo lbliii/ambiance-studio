@@ -98,7 +98,7 @@ def scene_candidate(context,candidate):
 def context_render(context,candidate,stage,seconds):
     proposal=scene_candidate(context,candidate)
     if proposal is None or not proposal['ok']:return proposal
-    from .rendering import _json_command
+    from .native_media import json_command
     scene=proposal['scene'];fps=scene['canvas']['fps'];duration=scene['canvas']['loop_seconds']
     frames=max(1,min(round(seconds*fps),round(duration*fps)));seconds=frames/fps
     width,height=scene['canvas']['width'],scene['canvas']['height']
@@ -109,7 +109,7 @@ def context_render(context,candidate,stage,seconds):
     sides=[]
     for side,scene_path,catalog_path in [('original',motion.checked(context['project'],binding['scene']),motion.checked(context['project'],binding['catalog'])),('candidate',stage/'candidate.scene.json',stage/'candidate.catalog.json')]:
         out=stage/f'scene-{side}'
-        _json_command([require_node(),str(motion.ROOT/'tools/render-scene.mjs')],{'project':str(context['project']),'scene_path':str(scene_path),'catalog_path':str(catalog_path),
+        json_command([require_node(),str(motion.ROOT/'tools/render-scene.mjs')],{'project':str(context['project']),'scene_path':str(scene_path),'catalog_path':str(catalog_path),
             'out':str(out),'mode':'proof','width':width,'height':height,'start':start,'seconds':seconds,'disable':[],'supersample':1})
         sides.append([f'scene-{side}/current/{i:05d}.png' for i in range(frames)])
     return {'ok':True,'frames':sides,'width':width,'height':height,'fps':fps,'start':start,'seconds':seconds,'loop_seconds':duration,

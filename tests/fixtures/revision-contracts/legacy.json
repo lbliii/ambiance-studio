@@ -1,0 +1,81 @@
+{
+  "format": "ambiance-edition",
+  "schema_version": 1,
+  "id": "legacy",
+  "revision": "fixture",
+  "revision_sha256": "51a746fddc92a1dff959042185e8b6ad25f7462c19ecb98abdb0f7f4eabf9c76",
+  "created_utc": "2026-09-12T12:00:00+00:00",
+  "picture": {
+    "path": "reports/legacy/picture.mp4",
+    "sha256": "dc7ad9e9f8620a024b5fd0b40e86aee06260d224643b38bb4435139ecb940904",
+    "bytes": 47,
+    "section": "export",
+    "role": "picture_input",
+    "path_base": "project"
+  },
+  "audio": null,
+  "output": {
+    "path": "reports/legacy/picture.mp4",
+    "sha256": "dc7ad9e9f8620a024b5fd0b40e86aee06260d224643b38bb4435139ecb940904",
+    "bytes": 47,
+    "section": "export",
+    "role": "edition_output",
+    "path_base": "project"
+  },
+  "dependencies": [
+    {
+      "path": "reports/legacy/picture.mp4",
+      "sha256": "dc7ad9e9f8620a024b5fd0b40e86aee06260d224643b38bb4435139ecb940904",
+      "bytes": 47,
+      "section": "export",
+      "role": "edition_output",
+      "path_base": "project"
+    },
+    {
+      "path": "reports/legacy/picture.mp4",
+      "sha256": "dc7ad9e9f8620a024b5fd0b40e86aee06260d224643b38bb4435139ecb940904",
+      "bytes": 47,
+      "section": "release",
+      "role": "edition_output",
+      "path_base": "project"
+    },
+    {
+      "path": "reports/legacy/verification.json",
+      "sha256": "f43aa8ada03b671a8dbb31aa74c32e8e540dd03318d8f11675a4c236c91d8b5f",
+      "bytes": 223,
+      "section": "export",
+      "role": "media_verification",
+      "path_base": "project"
+    },
+    {
+      "path": "reports/legacy/picture.mp4",
+      "sha256": "dc7ad9e9f8620a024b5fd0b40e86aee06260d224643b38bb4435139ecb940904",
+      "bytes": 47,
+      "section": "export",
+      "role": "picture_input",
+      "path_base": "project"
+    },
+    {
+      "path": "reports/legacy/render-report.json",
+      "sha256": "8717a119dd01f7f0865ef11590e6a307be6049a7af0e1cc0bce700458fd6c577",
+      "bytes": 412,
+      "section": "export",
+      "role": "production_record",
+      "path_base": "project"
+    }
+  ],
+  "sound_complete": [],
+  "recipe": {
+    "command": "render",
+    "action": "video",
+    "repeats": 1
+  },
+  "verification": {
+    "path": "reports/legacy/verification.json",
+    "sha256": "f43aa8ada03b671a8dbb31aa74c32e8e540dd03318d8f11675a4c236c91d8b5f"
+  },
+  "limits": [
+    "Technical verification only. No creative verdict, listening, phone observation or publication is inferred."
+  ],
+  "payload_sha256": "afc6cc279a0ffbdf5c38be4c6b6d39191d89b5323db2d22c5042595db408f727"
+}

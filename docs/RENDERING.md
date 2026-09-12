@@ -4,6 +4,30 @@ Version 0.7 adds [look-development artifacts and supersampling](LOOK-WORKBENCH.m
 
 The CLI renders the selected project's saved scene through the same `compileScene()` and `drawScene()` implementation used by the browser. Project configuration determines the scene and catalog paths. Used atlas files must remain within the project and match their recorded hashes and dimensions. Renders preserve source files and write a **new output directory**, source snapshots, source/tool hashes and a report.
 
+## Python service boundaries
+
+[rendering.py](../ambiance_studio/rendering.py) retains command registration and
+compatible entry points. [render_plan.py](../ambiance_studio/render_plan.py)
+resolves dimensions, saved views, timing, proof recipes and captured PCM into a
+`RenderPlan` before rendering or native compilation. The shared scene evaluator
+continues to validate view geometry. [render_execution.py](../ambiance_studio/render_execution.py)
+consumes the plan, executes raster/native work, composes snapshots and writes
+reports. [media_operations.py](../ambiance_studio/media_operations.py) remains the
+`MediaExecutor` boundary for edition preparation, execution and receipt recording.
+
+[native_media.py](../ambiance_studio/native_media.py) exposes `capabilities`,
+`native_binary(project)` and tracked `json_command` transport.
+[media_verification.py](../ambiance_studio/media_verification.py) exposes
+`verify_media(binary, source, out, width, height, fps, frames, audio_tracks,
+loop_frames, contact_times=None, contact_frames=None)` and `requested_contacts`.
+Verification retains actual decoding, input checks before/after decoding,
+native provenance and exact contact hashes. Failed technical checks return a
+saved unsuccessful report; invalid input or runtime transport raises the existing
+structured command error. [media_inputs.py](../ambiance_studio/media_inputs.py)
+owns the existing media path, identity and PCM rules without changing revision
+reference or audio-session semantics. Preparation proof resume identities include
+the extracted Python implementation files.
+
 ## Frames and motion proofs
 
 ```sh

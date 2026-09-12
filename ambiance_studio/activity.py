@@ -7,7 +7,7 @@ import re
 
 from .file_identity import digest
 from .scene_runtime import ROOT, require_node, scene_bridge
-from .rendering import _json_command
+from .native_media import json_command
 
 
 def fields(value, allowed, label):
@@ -53,8 +53,8 @@ def load_actions(project, revision=None):
     if not revision and not (Path(project)/'plans/production-plan.json').exists():
         return [], None
     if revision:
-        from . import revisions
-        if not revisions.load(project, revision)['controls'].get('production_plan'):
+        from . import revision_capture
+        if not revision_capture.load(project, revision)['controls'].get('production_plan'):
             return [], None
     from . import production_plan
     context = production_plan.load_context(project, revision=revision)
@@ -276,8 +276,8 @@ def record_observation(source, out):
 
 def run(args, project):
     if args.action == 'activity-review': return record_observation(args.file, args.out)
-    from .rendering import _context
-    context = _context(project, args.revision)
+    from .render_plan import render_context
+    context = render_context(project, args.revision)
     scene_path, catalog_path = Path(context['scene']), Path(context['catalog'])
     scene, catalog = json.loads(scene_path.read_text()), json.loads(catalog_path.read_text())
     actions, plan = load_actions(project, args.revision)
@@ -309,7 +309,7 @@ def run(args, project):
         if not (args.out/'activity-report.json').exists():
             if not (args.out/'request.json').is_file() or json.loads((args.out/'request.json').read_text()) != request:
                 raise ValueError('Partial activity request missing or changed; choose a fresh output directory')
-            return _json_command([require_node(), ROOT/'tools/activity-scene.mjs'], {**request, 'resume': True})
+            return json_command([require_node(), ROOT/'tools/activity-scene.mjs'], {**request, 'resume': True})
         report = verify_receipt(args.out)
         if json.loads((args.out/'request.json').read_text()) != request:
             raise ValueError('Activity resume inputs/options changed; choose a fresh output directory')
@@ -320,4 +320,4 @@ def run(args, project):
         return {'ok': True, 'resumed': True, 'report': str(args.out.resolve()/'activity-report.json'), 'summary': report['summary'],
                 'review_required':True, 'diagnostic_coverage':report.get('diagnostic_coverage'), 'next_action':report.get('next_action')}
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    return _json_command([require_node(), ROOT/'tools/activity-scene.mjs'], request)
+    return json_command([require_node(), ROOT/'tools/activity-scene.mjs'], request)

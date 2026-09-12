@@ -77,6 +77,7 @@ Small reusable PNG assets are tracked in this repository. Large media, working p
 - [Rig workbench](docs/RIG-WORKBENCH.md): registration choices, sockets and visual inspection.
 - [Start a film with an agent](START-HERE.md): production workflow and creative checkpoints.
 - [Architecture](docs/architecture/CLI-FIRST.md): boundaries and next engineering steps.
+- [First animated short roadmap](docs/architecture/FIRST-SHORT-ROADMAP.md): the aspiration for vintage-inspired 2D storytelling, proposed tool development, early acting experiments and parallel work packages.
 - [TV quality and sound library plan](docs/architecture/TV-QUALITY-AND-SOUND-LIBRARY.md): proposed 4K asset checks, compact masters, audio quality, reusable sounds, and deferred surround/long exports.
 - [Contributing](CONTRIBUTING.md): conventions and validation.
 - [Quality gates](docs/QUALITY-GATES.md): evidence, freshness and creative review.

@@ -30,7 +30,10 @@ def proof(project, directory, out, long_edge=640, resume=False):
     views=list(receipt['views']) or ['authored']
     if len(views)>8: raise ValueError('Preparation proof supports at most 8 selected views')
     runtime_files=['tools/render-scene.mjs','tools/views-proof.mjs','editor/engine.mjs','editor/finishing.mjs',
-                   'editor/views.mjs','editor/stage-raster.mjs','editor/audit.mjs','ambiance_studio/rendering.py']
+                   'editor/views.mjs','editor/stage-raster.mjs','editor/audit.mjs','ambiance_studio/rendering.py',
+                   'ambiance_studio/render_plan.py','ambiance_studio/render_execution.py',
+                   'ambiance_studio/media_inputs.py','ambiance_studio/media_verification.py',
+                   'ambiance_studio/native_media.py','ambiance_studio/native_sources.py']
     if (ROOT/'editor/bindings.mjs').exists(): runtime_files.append('editor/bindings.mjs')
     runtime_files.extend(str(path.relative_to(ROOT)) for path in sorted((ROOT/'tools/render').glob('*.mjs')))
     runtime_identity=lambda: {name:ap.sha((ROOT/name).read_bytes()) for name in runtime_files}

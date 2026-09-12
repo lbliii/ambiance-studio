@@ -9,7 +9,7 @@ import json
 import math
 
 import studio
-from . import production_plan as spec, revisions, scene_runtime
+from . import production_plan as spec, scene_runtime, editions, project_references, record_contracts, revision_capture, revision_reviews
 from .project import locations, project_lock
 from .errors import CommandError
 
@@ -19,10 +19,10 @@ EVIDENCE = 'ambiance-plan-evidence'
 def context(project, revision=None):
     project = Path(project).resolve(); result = spec.load_context(project, revision)
     if revision:
-        captured = revisions.render_context(project, revision)
+        captured = revision_capture.render_context(project, revision)
         scene_path, catalog_path = captured['scene'], captured['catalog']
         result['revision_sha256'] = captured['manifest_sha256']
-        result['inventory_path'] = studio.inside(project, revisions.load(project, revision)['controls']['inventory'])
+        result['inventory_path'] = studio.inside(project, revision_capture.load(project, revision)['controls']['inventory'])
     else:
         scene_path, catalog_path = locations(project)
         result['revision_sha256'] = None
@@ -59,7 +59,7 @@ def expectation(ctx, id):
 
 
 def relative_file(project, path):
-    return revisions.relative(Path(project).resolve(), path)
+    return project_references.relative(Path(project).resolve(), path)
 
 
 def pinned(project, path):
@@ -128,16 +128,16 @@ def raster_receipt(project, path, ctx, view):
 
 def movie_receipt(project, path, ctx, view, role=None):
     from . import deliveries
-    receipt = revisions.read_sealed(path, revisions.EDITION, versions=(1, 2))
+    receipt = record_contracts.read_sealed(path, editions.EDITION, versions=(1, 2))
     if receipt['revision'] != ctx['revision'] or receipt['revision_sha256'] != ctx['revision_sha256']:
         raise ValueError('Movie evidence belongs to a different captured revision')
-    exact = revisions.edition_path(project, receipt['revision'], receipt['id'])
+    exact = editions.edition_path(project, receipt['revision'], receipt['id'])
     if path != exact: raise ValueError('Movie evidence must select its canonical edition receipt')
-    receipt = revisions.load_edition(project, receipt['revision'], receipt['id'])
-    bound_view = revisions.edition_view(project, receipt)
+    receipt = editions.load_edition(project, receipt['revision'], receipt['id'])
+    bound_view = editions.edition_view(project, receipt)
     if bound_view['id'] != view or bound_view['sha256'] != ctx['views'][view]['view_sha256']:
         raise ValueError('Movie evidence belongs to a different view')
-    if revisions.changed(project, receipt['dependencies']): raise ValueError('Movie edition dependencies changed')
+    if project_references.changed(project, receipt['dependencies']): raise ValueError('Movie edition dependencies changed')
     verification = studio.read(studio.inside(project, receipt['verification']['path']))
     movie = studio.inside(project, receipt['output']['path'])
     # The existing edition checker validates technical expectations; ensure real
@@ -157,14 +157,15 @@ def movie_receipt(project, path, ctx, view, role=None):
         raise ValueError('Movie decode dimensions/clock differ from expected view')
     if verification.get('loop_frames') != ctx['scene']['canvas']['fps']*ctx['scene']['canvas']['loop_seconds']:
         raise ValueError('Movie evidence does not cover the full captured picture loop')
-    from . import rendering
+    from .native_media import native_binary
+    from .media_verification import verify_media
     # Run the existing decoder once per exact movie/expectations. Warm readiness
     # uses the hashed result and never repeats encoding or full media decoding.
     key = studio.encoded_hash({'movie': receipt['output'], 'facts': facts, 'loop_frames': verification['loop_frames']})
     cache = Path(project)/'.ambiance/evidence-decode'/key
     report_path = cache/'media-report.json'
     if not report_path.exists():
-        rendering._verify(project, rendering._native_binary(project), movie, cache,
+        verify_media(native_binary(project), movie, cache,
                           int(facts['width']), int(facts['height']), int(facts['fps']), int(facts['frames']),
                           facts['audio_tracks'], int(verification['loop_frames']))
     decoded = studio.read(report_path)
@@ -237,7 +238,7 @@ def observed_receipt(project, path, ctx, exp, view):
     if data.get('version') != 2 or not ctx['revision']:
         raise ValueError('Observed evidence requires a captured revision review')
     subject_data = data.get('subject', {})
-    context = revisions.review_context(project, ctx['revision'], subject_data.get('edition'), view)
+    context = revision_reviews.review_context(project, ctx['revision'], subject_data.get('edition'), view)
     if subject_data != context['subject']: raise ValueError('Observation has wrong revision/view/plan subject')
     if path != context['review_dir']/(data.get('gate', '')+'.json'):
         raise ValueError('Observation must name its canonical recorded review')
@@ -334,7 +335,7 @@ def register_evidence(project, id, view, receipt, revision=None, role=None):
         ctx = context(project, revision); exp = expectation(ctx, id)
         if view not in exp['view_ids']: raise ValueError('View is not applicable to this expectation')
         provider = verify_provider(project, path, ctx, exp, view, role)
-        record = revisions.seal({'format': EVIDENCE, 'schema_version': 1, 'subject': subject(ctx, exp, view),
+        record = record_contracts.seal({'format': EVIDENCE, 'schema_version': 1, 'subject': subject(ctx, exp, view),
                                  'receipt': pinned(project, path), 'provider': provider})
         target = studio.inside(project, f'evidence/expectations/{record["payload_sha256"]}.json')
         inventory_path = project/'plans/asset-inventory.json'; inventory_raw = inventory_path.read_bytes()
@@ -361,7 +362,7 @@ def evidence_for(project, ctx, exp, view, refs, role=None):
     for ref in refs:
         try:
             path = spec.file_ref(project, ref)
-            record = revisions.read_sealed(path, EVIDENCE)
+            record = record_contracts.read_sealed(path, EVIDENCE)
             spec.obj(record, ['format', 'schema_version', 'payload_sha256', 'subject', 'receipt', 'provider'], label='plan evidence')
             selected = record['subject']
             if not isinstance(selected, dict) or not isinstance(record['provider'], dict): raise ValueError('Plan evidence subject/provider must be typed objects')
