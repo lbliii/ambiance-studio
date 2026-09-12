@@ -45,6 +45,22 @@ refactor, not an exhaustive correctness or security review.
   not check that all declared sample bytes existed. Truncated PCM now fails
   before starting the native encoder or creating the render directory.
 
+- **Separate coverage evidence from stage policy.**
+  [production_coverage.py](../../ambiance_studio/production_coverage.py) retains
+  the authoritative stage/view/phase readiness evaluator used by plan coverage,
+  project overview and iteration preflight. It selects evidence needs and
+  consumes acquired matches. [coverage_context.py](../../ambiance_studio/coverage_context.py)
+  loads exact inputs and subjects; [coverage_evidence.py](../../ambiance_studio/coverage_evidence.py)
+  owns explicit raster, movie, activity and observation adapters behind a single
+  `EvidenceVerifier.verify(EvidenceRequest)` interface. The movie adapter uses
+  the public native verification service and retains the existing cold-decode
+  cache key/location. [coverage_records.py](../../ambiance_studio/coverage_records.py)
+  owns registration, inventory history, sealed-record lookup, review observation
+  normalization and report persistence. Existing coverage imports, sealed bytes,
+  report paths, stale-input rejection and unperformed-review semantics remain
+  compatible. Provider verification can produce measured facts; it cannot grant
+  an observed artistic pass or decide stage readiness.
+
 ## Remaining work, in recommended order
 
 The Python rendering workstream is now implemented. [rendering.py](../../ambiance_studio/rendering.py)
@@ -60,7 +76,6 @@ command implementations, with source closure included in build and evidence iden
 | Priority | Evidence and impact | Next bounded refactor | Verification needed |
 | --- | --- | --- | --- |
 | Completed | [revisions.py](../../ambiance_studio/revisions.py) previously held 644 lines owning schema helpers, path/reference utilities, dependency collection, captures, editions, review contexts and command routing. Many unrelated modules import `fields`, `identifier`, `seal`, `relative` and other helpers from this domain module. | Extracted record_contracts, project_references, revision_dependencies, revision_capture, editions and revision_reviews; revisions retains CLI routing and compatibility exports. See [ownership](../REVISIONS.md#python-ownership-and-compatibility). | Existing revision/edition/tamper tests plus compatibility fixtures for persisted seals, schema versions and path containment. |
-| High | [production_coverage.py](../../ambiance_studio/production_coverage.py), 542 lines, owns context loading, several typed evidence validators, decoding/cache work, registration/history writes and stage readiness decisions. Adding an evidence kind touches the evaluator. | Extract typed evidence adapters behind a small explicit verifier interface; keep stage/readiness policy in one evaluator. Separate evidence acquisition/cache writes from decisions without weakening actual decode requirements. | Existing coverage matrix, stale-evidence cases, readiness parity across CLI/overview/iteration, and native movie evidence tests. |
 | Medium | [preparation_server.py](../../ambiance_studio/preparation_server.py), [region_server.py](../../ambiance_studio/region_server.py) and [motion_server.py](../../ambiance_studio/motion_server.py) repeat origin checks, response headers, bounded body reads, evaluation locks and loopback server startup. Their error/status behavior and CSP policies differ. | Extract small HTTP response/body/origin helpers with explicit per-workbench policy. Retain each handler's route allowlist and draft/source-identity validation. Avoid a generic route/plugin framework. | Existing HTTP tests plus malformed length, unexpected origin, concurrent draft, content type and download behavior; inspect each affected workbench. |
 | Completed | [tools/render-scene.mjs](../../tools/render-scene.mjs) previously mixed filesystem snapshots, raster modes, child processes, receipts and proof HTML in about 24 KB. [native/media/media.m](../../native/media/media.m) held about 36 KB of command implementations. | The entry points now delegate to render input/raster/output/receipt/proof/transport owners and native encode, compose/trim, video/audio verification and inspection. Narrow shared native helpers preserve writer and JSON behavior. All local native sources and headers participate in compilation/cache identity; extracted JavaScript modules participate in receipts and proof recovery. See [render ownership](../RENDERING.md#dependencies-and-regression-checks). | Formatting was expanded in a separate commit. Native encode/decode, incomplete streams, AAC/packet inspection, compressed-sample passthrough, source/header cache invalidation, real child cancellation/backpressure, proof byte parity and native recovery are covered. |
 | Medium | [cli.py](../../ambiance_studio/cli.py) has a long command dispatcher and a growing negative condition in `main` deciding whether `--out` is a JSON file or an artifact directory. | Give command registrations explicit output semantics and narrow execution adapters, following the existing scene/plan/region command modules. Keep the CLI responsible for parsing, project resolution and envelopes. | Public command replay, help/capability audit, error exit codes and representative JSON-file/artifact-directory output cases. |
