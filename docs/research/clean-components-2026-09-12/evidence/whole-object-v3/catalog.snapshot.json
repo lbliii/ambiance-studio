@@ -1,0 +1,5053 @@
+{
+  "version": 1,
+  "assets": [
+    {
+      "id": "sky",
+      "kind": "atlas",
+      "file": "assets/production/sky/atlas.png",
+      "width": 1452,
+      "height": 344,
+      "sha256": "114345337f57f16af45f1d901b034bfb50ca646817340c260cdc319c0c86ddff",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 1452,
+        "cell_height": 344,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/sky.png",
+            "sha256": "d2ec7155b7db34ac136a17aac91838de6bfa724abc88a5a8b1b06ff3384c0da2",
+            "width": 1448,
+            "height": 340
+          }
+        ],
+        "cell_size": [
+          1452,
+          344
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              1448,
+              340
+            ],
+            "source_pivot": [
+              724.0,
+              170
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/sky/recipe.json",
+        "cache_key": "c380dcc58900dbcb3cc3112ffdf93e0ac9c08c225e05030d1fda727767114b5e",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/sky.png",
+            "sha256": "d2ec7155b7db34ac136a17aac91838de6bfa724abc88a5a8b1b06ff3384c0da2"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "valley",
+      "kind": "atlas",
+      "file": "assets/production/valley/atlas.png",
+      "width": 1452,
+      "height": 644,
+      "sha256": "6850a4995d752f81feb8c288bc1b193d463e0d69ebda514d562970a169ea0d23",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 1452,
+        "cell_height": 644,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/valley.png",
+            "sha256": "f984c02eb90a3bd952b96506cae38e0b5ee2b0f576999a983dacd13623315dd0",
+            "width": 1448,
+            "height": 640
+          }
+        ],
+        "cell_size": [
+          1452,
+          644
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              1448,
+              640
+            ],
+            "source_pivot": [
+              724.0,
+              320.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/valley/recipe.json",
+        "cache_key": "12204a62c0c0c1ce3355d0723ccdb5037d5ef63d2dc1bd3deffbfcec29367a6c",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/valley.png",
+            "sha256": "f984c02eb90a3bd952b96506cae38e0b5ee2b0f576999a983dacd13623315dd0"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "path",
+      "kind": "atlas",
+      "file": "assets/production/path/atlas.png",
+      "width": 1452,
+      "height": 729,
+      "sha256": "22ea613a4e8ba8291473da83816cda0296309d98119c13a052f5e48996abd3ef",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 1452,
+        "cell_height": 729,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/path.png",
+            "sha256": "662d3c0d195d1908bbbfc6755db5c65ba8e7abe37277e03ed9d605a9ea8f3f12",
+            "width": 1448,
+            "height": 725
+          }
+        ],
+        "cell_size": [
+          1452,
+          729
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              1448,
+              725
+            ],
+            "source_pivot": [
+              724.0,
+              362.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/path/recipe.json",
+        "cache_key": "4a788568fa64c6b5a987c363afd80529a57ebaaf0ecc3c3a88281abdaac6008d",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/path.png",
+            "sha256": "662d3c0d195d1908bbbfc6755db5c65ba8e7abe37277e03ed9d605a9ea8f3f12"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "cottage",
+      "kind": "atlas",
+      "file": "assets/production/cottage/atlas.png",
+      "width": 1013,
+      "height": 747,
+      "sha256": "16e49d30b494b81a19f176d4f773d878106523816bacb9cfb1bebe5537e20063",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 1013,
+        "cell_height": 747,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/cottage.png",
+            "sha256": "9d50346f703b97baaa1a5a27daa9592fdda9d34ea5a09d119953405d46628fd6",
+            "width": 1009,
+            "height": 743
+          }
+        ],
+        "cell_size": [
+          1013,
+          747
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              1009,
+              743
+            ],
+            "source_pivot": [
+              504.5,
+              371.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/cottage/recipe.json",
+        "cache_key": "ca90b7fc674c0df2e7486a1c38f5b097866794c423d26b46c8f13f24f9632bb1",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/cottage.png",
+            "sha256": "9d50346f703b97baaa1a5a27daa9592fdda9d34ea5a09d119953405d46628fd6"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "tree",
+      "kind": "atlas",
+      "file": "assets/production/tree/atlas.png",
+      "width": 750,
+      "height": 711,
+      "sha256": "c5fd723ba7b3af6feb9aa66ab40b82fc4c3bc255f89e0ed27f29c93a6131788a",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 750,
+        "cell_height": 711,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/tree.png",
+            "sha256": "9868a27ba32797c8f136913da00cb4e99b39e66710cd988276823bce44cd0177",
+            "width": 746,
+            "height": 707
+          }
+        ],
+        "cell_size": [
+          750,
+          711
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              746,
+              707
+            ],
+            "source_pivot": [
+              373.0,
+              353.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/tree/recipe.json",
+        "cache_key": "1c06b92dc02303accad179bbc4f0ea7eabc959e7a5d4a36c1b3a835cf76cb6d5",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/tree.png",
+            "sha256": "9868a27ba32797c8f136913da00cb4e99b39e66710cd988276823bce44cd0177"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "fence-left",
+      "kind": "atlas",
+      "file": "assets/production/fence-left/atlas.png",
+      "width": 227,
+      "height": 508,
+      "sha256": "46fa1db0bf393b7560769912d302e8debb6562c4db13b64a70487559ffaab910",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 227,
+        "cell_height": 508,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/fence-left.png",
+            "sha256": "2707d59bdedb7b0c7d92ffae6e65186b1b8c649fa2d91fed91dc496bd779f1fe",
+            "width": 223,
+            "height": 504
+          }
+        ],
+        "cell_size": [
+          227,
+          508
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              223,
+              504
+            ],
+            "source_pivot": [
+              111.5,
+              252.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/fence-left/recipe.json",
+        "cache_key": "1a272ea0c7294589ab205d41f6d297dc64e610d6b38e03e254183a61ae5e711a",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/fence-left.png",
+            "sha256": "2707d59bdedb7b0c7d92ffae6e65186b1b8c649fa2d91fed91dc496bd779f1fe"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "fence-right",
+      "kind": "atlas",
+      "file": "assets/production/fence-right/atlas.png",
+      "width": 198,
+      "height": 561,
+      "sha256": "cc41c1662a5c5ab43c2311a6e394598cefd18a5ccaf5ea9e738d0126ffe568a8",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 198,
+        "cell_height": 561,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/fence-right.png",
+            "sha256": "7e8ce964a6e2089572e7c05a05fb35b86b03f2fd303c193dcc2d4be29c4ee58c",
+            "width": 194,
+            "height": 557
+          }
+        ],
+        "cell_size": [
+          198,
+          561
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              194,
+              557
+            ],
+            "source_pivot": [
+              97.0,
+              278.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/fence-right/recipe.json",
+        "cache_key": "b87c80947c5d41b661af8528459abf326f764ab5d9dae6547bfaf9138bb9536b",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/fence-right.png",
+            "sha256": "7e8ce964a6e2089572e7c05a05fb35b86b03f2fd303c193dcc2d4be29c4ee58c"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "pumpkin-near",
+      "kind": "atlas",
+      "file": "assets/production/pumpkin-near/atlas.png",
+      "width": 178,
+      "height": 187,
+      "sha256": "150a3c3d507138df3dee4b1c68bad045071b3516da100c324b4a9a34ae988fca",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 178,
+        "cell_height": 187,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/pumpkin-near.png",
+            "sha256": "913726df6e92eb54f8ec9ebc1477d4ca25e8fbcbc62a5f7c11f1d1859180f9f3",
+            "width": 174,
+            "height": 183
+          }
+        ],
+        "cell_size": [
+          178,
+          187
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              174,
+              183
+            ],
+            "source_pivot": [
+              87.0,
+              91.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/pumpkin-near/recipe.json",
+        "cache_key": "eb7c21a9876c323c4626d67e27bd0e904722b349c4b878f262b7005c0255c9c5",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/pumpkin-near.png",
+            "sha256": "913726df6e92eb54f8ec9ebc1477d4ca25e8fbcbc62a5f7c11f1d1859180f9f3"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "pumpkin-left",
+      "kind": "atlas",
+      "file": "assets/production/pumpkin-left/atlas.png",
+      "width": 105,
+      "height": 103,
+      "sha256": "aa482a91a51b40237084de637eba56c8755f2e07f3d077ff955941f4178c8c1e",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 105,
+        "cell_height": 103,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/pumpkin-left.png",
+            "sha256": "91f6724e3c963efbcc37633bfbc3320833071b0a55b8d98e8b1c134434e21e5a",
+            "width": 101,
+            "height": 99
+          }
+        ],
+        "cell_size": [
+          105,
+          103
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              101,
+              99
+            ],
+            "source_pivot": [
+              50.5,
+              49.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/pumpkin-left/recipe.json",
+        "cache_key": "3e9affee3b767948437fed860574d024605eb6a6c5d32650a55362a2e99f2133",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/pumpkin-left.png",
+            "sha256": "91f6724e3c963efbcc37633bfbc3320833071b0a55b8d98e8b1c134434e21e5a"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "pumpkin-right",
+      "kind": "atlas",
+      "file": "assets/production/pumpkin-right/atlas.png",
+      "width": 112,
+      "height": 119,
+      "sha256": "1293c8dcb49b83fc63c06a05105bf01657ad2f876854757cc82e0771894a0078",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 112,
+        "cell_height": 119,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/pumpkin-right.png",
+            "sha256": "9a8d9fb9b5cae6ab8c6643ea91a5a54043b51cb909603c9d2a6cea54cfe0af18",
+            "width": 108,
+            "height": 115
+          }
+        ],
+        "cell_size": [
+          112,
+          119
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              108,
+              115
+            ],
+            "source_pivot": [
+              54.0,
+              57.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/pumpkin-right/recipe.json",
+        "cache_key": "b8e11b495495aa1ecfa2d0bc2cc8e944f8d9ff767f34546e42ca69db30b7016d",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/pumpkin-right.png",
+            "sha256": "9a8d9fb9b5cae6ab8c6643ea91a5a54043b51cb909603c9d2a6cea54cfe0af18"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "pumpkin-step",
+      "kind": "atlas",
+      "file": "assets/production/pumpkin-step/atlas.png",
+      "width": 93,
+      "height": 92,
+      "sha256": "dd79a4880f0b2ceef6621408acc78d1767bfaed51aca254fa69f261902e08db5",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 93,
+        "cell_height": 92,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/pumpkin-step.png",
+            "sha256": "d0715c4f2259312097e56af0541c2184f0db6ceab01a0c74ae37d6457e05243a",
+            "width": 89,
+            "height": 88
+          }
+        ],
+        "cell_size": [
+          93,
+          92
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              89,
+              88
+            ],
+            "source_pivot": [
+              44.5,
+              44.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/pumpkin-step/recipe.json",
+        "cache_key": "3e7212ced9a69bdf9eb7031b3c13384181871720f4f997542bb2263f8d2d97b4",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/pumpkin-step.png",
+            "sha256": "d0715c4f2259312097e56af0541c2184f0db6ceab01a0c74ae37d6457e05243a"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "chair",
+      "kind": "atlas",
+      "file": "assets/production/chair/atlas.png",
+      "width": 107,
+      "height": 144,
+      "sha256": "fd95c482edf344cb925e1ee69cc8e166b23d3e5ade50b9be42b87945ceb69836",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 107,
+        "cell_height": 144,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/chair.png",
+            "sha256": "e3f9bc8888c5b8c8cb7880f4e26cc3b3e8273a9cb87de9efcbe41f3366782c77",
+            "width": 103,
+            "height": 140
+          }
+        ],
+        "cell_size": [
+          107,
+          144
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              103,
+              140
+            ],
+            "source_pivot": [
+              51.5,
+              70.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/chair/recipe.json",
+        "cache_key": "30a7a57bfceece07718cfb5263ef485746cb5d9917960f09db7e3fdec1ea7294",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/chair.png",
+            "sha256": "e3f9bc8888c5b8c8cb7880f4e26cc3b3e8273a9cb87de9efcbe41f3366782c77"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "wreath",
+      "kind": "atlas",
+      "file": "assets/production/wreath/atlas.png",
+      "width": 88,
+      "height": 90,
+      "sha256": "f017b4fd0313c3d3d0048571dc01f6b1a8c5a38c246770ec56765d905dabd001",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 88,
+        "cell_height": 90,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/wreath.png",
+            "sha256": "20c9c439be986c664133bf456c1baac4cef86d0912fd86b353f821e6f7d292b4",
+            "width": 84,
+            "height": 86
+          }
+        ],
+        "cell_size": [
+          88,
+          90
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              84,
+              86
+            ],
+            "source_pivot": [
+              42.0,
+              43.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/wreath/recipe.json",
+        "cache_key": "670f88614d8dbd036d0649052cfe236e6779942275d3fb56f12b3be00e6dbbee",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/wreath.png",
+            "sha256": "20c9c439be986c664133bf456c1baac4cef86d0912fd86b353f821e6f7d292b4"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "planter-left",
+      "kind": "atlas",
+      "file": "assets/production/planter-left/atlas.png",
+      "width": 146,
+      "height": 152,
+      "sha256": "ab2322baca4bef70bc7aa1df848b6baa90b04eab671f88bb205eef9e19dde2b0",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 146,
+        "cell_height": 152,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/planter-left.png",
+            "sha256": "bb74a5f49cedde5cc757c91380ebf2961d59635b96af0aca1620a560f8c6ffb6",
+            "width": 142,
+            "height": 148
+          }
+        ],
+        "cell_size": [
+          146,
+          152
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              142,
+              148
+            ],
+            "source_pivot": [
+              71.0,
+              74.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/planter-left/recipe.json",
+        "cache_key": "84157c5bc24d4e6e7c22efe1f025e524f643b6def768a36a708f7c634c11f2dd",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/planter-left.png",
+            "sha256": "bb74a5f49cedde5cc757c91380ebf2961d59635b96af0aca1620a560f8c6ffb6"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "planter-right",
+      "kind": "atlas",
+      "file": "assets/production/planter-right/atlas.png",
+      "width": 171,
+      "height": 181,
+      "sha256": "8b80c4b2dd0d733dab57d42193be91308e2fd36ce939a2594ea4f97bc1e2f0e3",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 171,
+        "cell_height": 181,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/planter-right.png",
+            "sha256": "bbd0e19eeff200747ee5095c6be46f31d1e8225402b908dcd72e145e57c79347",
+            "width": 167,
+            "height": 177
+          }
+        ],
+        "cell_size": [
+          171,
+          181
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              167,
+              177
+            ],
+            "source_pivot": [
+              83.5,
+              88.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/planter-right/recipe.json",
+        "cache_key": "c67a56514744f5e107876b44866b3fe737617ee414a0d17bd5db2d4ea09101df",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/planter-right.png",
+            "sha256": "bbd0e19eeff200747ee5095c6be46f31d1e8225402b908dcd72e145e57c79347"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "hanging-basket",
+      "kind": "atlas",
+      "file": "assets/production/hanging-basket/atlas.png",
+      "width": 80,
+      "height": 96,
+      "sha256": "d0fe2f2b81b608520b331fc9cb8cf68e476fb2a4dad0e873d07fe19eb177d1fa",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 80,
+        "cell_height": 96,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/hanging-basket.png",
+            "sha256": "b943dbbdc67c46dc02377e0802cf4e5e7dd16e3b279c34ae5466fb75289fc3ae",
+            "width": 76,
+            "height": 92
+          }
+        ],
+        "cell_size": [
+          80,
+          96
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              76,
+              92
+            ],
+            "source_pivot": [
+              38.0,
+              46.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/hanging-basket/recipe.json",
+        "cache_key": "bb7dd640c5163a45c613444a74dc12956081c06d00c905b85d9b7db6d11fef7d",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/hanging-basket.png",
+            "sha256": "b943dbbdc67c46dc02377e0802cf4e5e7dd16e3b279c34ae5466fb75289fc3ae"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "pumpkin-shelf",
+      "kind": "atlas",
+      "file": "assets/production/pumpkin-shelf/atlas.png",
+      "width": 79,
+      "height": 123,
+      "sha256": "451c8b2cc2a1ca1d486b7873ac7a32cf0face1c1994292176204c4801f1415f0",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 79,
+        "cell_height": 123,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/pumpkin-shelf.png",
+            "sha256": "914070c5335a88438616cbf24ee59444db0c3197606a15c20d0e34bf447b330f",
+            "width": 75,
+            "height": 119
+          }
+        ],
+        "cell_size": [
+          79,
+          123
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              75,
+              119
+            ],
+            "source_pivot": [
+              37.5,
+              59.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/pumpkin-shelf/recipe.json",
+        "cache_key": "dfd63f85a9cc3bfacd8818b98e23dde1256e995bcb4a48fe228c5ab2a977a38e",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/pumpkin-shelf.png",
+            "sha256": "914070c5335a88438616cbf24ee59444db0c3197606a15c20d0e34bf447b330f"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "lantern-left",
+      "kind": "atlas",
+      "file": "assets/production/lantern-left/atlas.png",
+      "width": 57,
+      "height": 99,
+      "sha256": "e854ebdd80bee6b7af1d6b217ca2876a602c4210eb670ceca4dcf0416f6b85b4",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 57,
+        "cell_height": 99,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/lantern-left.png",
+            "sha256": "bb8d9ce26a581d12a588bcd4d95dba88137644e39e4dc6e64b49eec63229d3ae",
+            "width": 53,
+            "height": 95
+          }
+        ],
+        "cell_size": [
+          57,
+          99
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              53,
+              95
+            ],
+            "source_pivot": [
+              26.5,
+              47.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/lantern-left/recipe.json",
+        "cache_key": "7a2234194bf55c3bb5c7ccb4f1d233c80e761c970cf0a494f1164c7f8d236b0e",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/lantern-left.png",
+            "sha256": "bb8d9ce26a581d12a588bcd4d95dba88137644e39e4dc6e64b49eec63229d3ae"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "lantern-step",
+      "kind": "atlas",
+      "file": "assets/production/lantern-step/atlas.png",
+      "width": 49,
+      "height": 80,
+      "sha256": "3f37634e4c1d39ef08e933b5ee6f66de3ad30e5c5865cc5ab0985324d5e21970",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 49,
+        "cell_height": 80,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/lantern-step.png",
+            "sha256": "53f2d3fece23a8b1775321857bdf827a175e1cede5a1e7f1ead8c8581118450c",
+            "width": 45,
+            "height": 76
+          }
+        ],
+        "cell_size": [
+          49,
+          80
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              45,
+              76
+            ],
+            "source_pivot": [
+              22.5,
+              38.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/lantern-step/recipe.json",
+        "cache_key": "a95575525526ab8571e5b58ccbd966e864691ed90e6ff8596274267527c0f5f3",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/lantern-step.png",
+            "sha256": "53f2d3fece23a8b1775321857bdf827a175e1cede5a1e7f1ead8c8581118450c"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "lantern-step-low",
+      "kind": "atlas",
+      "file": "assets/production/lantern-step-low/atlas.png",
+      "width": 45,
+      "height": 66,
+      "sha256": "f8e9abc4fdf71834467d8c611817fc889927e1af0ff8bff27888746105b9e9ca",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 45,
+        "cell_height": 66,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/lantern-step-low.png",
+            "sha256": "184aafee6c129bd30b02e60bfd394eab8c137ff76fd705eb56046a83f4a8876e",
+            "width": 41,
+            "height": 62
+          }
+        ],
+        "cell_size": [
+          45,
+          66
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              41,
+              62
+            ],
+            "source_pivot": [
+              20.5,
+              31.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/lantern-step-low/recipe.json",
+        "cache_key": "f65df2b4a8bbb55d5bbb1db6dfdde41029c1abbebd86f218b6816de5e7bb5858",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/lantern-step-low.png",
+            "sha256": "184aafee6c129bd30b02e60bfd394eab8c137ff76fd705eb56046a83f4a8876e"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "lantern-right-low",
+      "kind": "atlas",
+      "file": "assets/production/lantern-right-low/atlas.png",
+      "width": 51,
+      "height": 79,
+      "sha256": "bfe4bb41a90b1cba52a5e72b3da1c41225dd2d43730e6e775b6c0ee7bd1bfb06",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 51,
+        "cell_height": 79,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/lantern-right-low.png",
+            "sha256": "37fc54d9488888e0f20d1850888ef9a35750f15c7fb38df7a91ce1e02c256c02",
+            "width": 47,
+            "height": 75
+          }
+        ],
+        "cell_size": [
+          51,
+          79
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              47,
+              75
+            ],
+            "source_pivot": [
+              23.5,
+              37.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/lantern-right-low/recipe.json",
+        "cache_key": "064e21128b51a271c77634768f54bc625dd7398f0c4d933f65ffea4cb8d458eb",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/lantern-right-low.png",
+            "sha256": "37fc54d9488888e0f20d1850888ef9a35750f15c7fb38df7a91ce1e02c256c02"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "lantern-post",
+      "kind": "atlas",
+      "file": "assets/production/lantern-post/atlas.png",
+      "width": 95,
+      "height": 183,
+      "sha256": "77c0c3b6ce4d2033b0d4382cd72653e9805e7702a170e3e47f2327b4bd866ffc",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 95,
+        "cell_height": 183,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/lantern-post.png",
+            "sha256": "ec02a53d01d043fd7541e3b2b59f4fc4397bfac35e4ede6d2805e5a5bdfec8c9",
+            "width": 91,
+            "height": 179
+          }
+        ],
+        "cell_size": [
+          95,
+          183
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              91,
+              179
+            ],
+            "source_pivot": [
+              45.5,
+              89.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/lantern-post/recipe.json",
+        "cache_key": "49128975addc044330bec1393291e26a76ee445dd65b522fac7e40f74e1442f4",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/lantern-post.png",
+            "sha256": "ec02a53d01d043fd7541e3b2b59f4fc4397bfac35e4ede6d2805e5a5bdfec8c9"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "cat-cels",
+      "kind": "atlas",
+      "file": "assets/production/cat-cels/atlas.png",
+      "width": 1140,
+      "height": 1040,
+      "sha256": "ea415de36012eff131de88cf3c72fbe55d20f3937a8153924b3b7c8e040e26af",
+      "atlas": {
+        "columns": 3,
+        "rows": 2,
+        "cell_width": 380,
+        "cell_height": 520,
+        "frame_count": 6
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/cat-0.png",
+            "sha256": "4300c52535196ac9afae391074695d1aea2a008e88d8ab42a9fb382b667064e7",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "file": "../../derivatives/v1/cat-1.png",
+            "sha256": "1734c05a2723a77dca55d87b317f5f71125a77db2016a54682ae3d6cfe316269",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "file": "../../derivatives/v1/cat-2.png",
+            "sha256": "2bd909500a4b8a7828ada20902341534a4904d885a7d3a74a145621b1a6c57b3",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "file": "../../derivatives/v1/cat-3.png",
+            "sha256": "a5306a2ec0850874d8bd5bb5bcbc6053d01aba842476e1508c77d06cec406867",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "file": "../../derivatives/v1/cat-4.png",
+            "sha256": "362ad86a1626704ff9551d298c41df43393d37b90d9f01cea13754966b8cea8f",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "file": "../../derivatives/v1/cat-5.png",
+            "sha256": "090c6ada3c2e9e0e62a689e4af19050b3e4a569da0637d790507196327c2af1e",
+            "width": 512,
+            "height": 512
+          }
+        ],
+        "cell_size": [
+          380,
+          520
+        ],
+        "shared_scale": 0.6372881355932203,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_pivot": [
+              356,
+              376
+            ],
+            "raw_cel_to_cell": [
+              0.6372881355932203,
+              0,
+              0,
+              0.6372881355932203,
+              -36.87457627118641,
+              20.37966101694917
+            ],
+            "source_to_cell": [
+              0.6372881355932203,
+              0,
+              0,
+              0.6372881355932203,
+              -36.87457627118641,
+              20.37966101694917
+            ]
+          },
+          {
+            "index": 1,
+            "source_index": 1,
+            "source_rect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_pivot": [
+              323,
+              376
+            ],
+            "raw_cel_to_cell": [
+              0.6372881355932203,
+              0,
+              0,
+              0.6372881355932203,
+              -15.844067796610148,
+              20.37966101694917
+            ],
+            "source_to_cell": [
+              0.6372881355932203,
+              0,
+              0,
+              0.6372881355932203,
+              -15.844067796610148,
+              20.37966101694917
+            ]
+          },
+          {
+            "index": 2,
+            "source_index": 2,
+            "source_rect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_pivot": [
+              324,
+              376
+            ],
+            "raw_cel_to_cell": [
+              0.6372881355932203,
+              0,
+              0,
+              0.6372881355932203,
+              -16.48135593220337,
+              20.37966101694917
+            ],
+            "source_to_cell": [
+              0.6372881355932203,
+              0,
+              0,
+              0.6372881355932203,
+              -16.48135593220337,
+              20.37966101694917
+            ]
+          },
+          {
+            "index": 3,
+            "source_index": 3,
+            "source_rect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_pivot": [
+              351,
+              375
+            ],
+            "raw_cel_to_cell": [
+              0.6372881355932203,
+              0,
+              0,
+              0.6372881355932203,
+              -33.68813559322032,
+              21.016949152542395
+            ],
+            "source_to_cell": [
+              0.6372881355932203,
+              0,
+              0,
+              0.6372881355932203,
+              -33.68813559322032,
+              21.016949152542395
+            ]
+          },
+          {
+            "index": 4,
+            "source_index": 4,
+            "source_rect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_pivot": [
+              322,
+              375
+            ],
+            "raw_cel_to_cell": [
+              0.6372881355932203,
+              0,
+              0,
+              0.6372881355932203,
+              -15.206779661016924,
+              21.016949152542395
+            ],
+            "source_to_cell": [
+              0.6372881355932203,
+              0,
+              0,
+              0.6372881355932203,
+              -15.206779661016924,
+              21.016949152542395
+            ]
+          },
+          {
+            "index": 5,
+            "source_index": 5,
+            "source_rect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_pivot": [
+              322,
+              373
+            ],
+            "raw_cel_to_cell": [
+              0.6372881355932203,
+              0,
+              0,
+              0.6372881355932203,
+              -15.206779661016924,
+              22.291525423728842
+            ],
+            "source_to_cell": [
+              0.6372881355932203,
+              0,
+              0,
+              0.6372881355932203,
+              -15.206779661016924,
+              22.291525423728842
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/cat-cels/recipe.json",
+        "cache_key": "ab91de0dd0b09b9a6afaa9fdf736f9aa8a690ad5252eb3febf861aa1f96eae20",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/cat-0.png",
+            "sha256": "4300c52535196ac9afae391074695d1aea2a008e88d8ab42a9fb382b667064e7"
+          },
+          {
+            "file": "../../derivatives/v1/cat-1.png",
+            "sha256": "1734c05a2723a77dca55d87b317f5f71125a77db2016a54682ae3d6cfe316269"
+          },
+          {
+            "file": "../../derivatives/v1/cat-2.png",
+            "sha256": "2bd909500a4b8a7828ada20902341534a4904d885a7d3a74a145621b1a6c57b3"
+          },
+          {
+            "file": "../../derivatives/v1/cat-3.png",
+            "sha256": "a5306a2ec0850874d8bd5bb5bcbc6053d01aba842476e1508c77d06cec406867"
+          },
+          {
+            "file": "../../derivatives/v1/cat-4.png",
+            "sha256": "362ad86a1626704ff9551d298c41df43393d37b90d9f01cea13754966b8cea8f"
+          },
+          {
+            "file": "../../derivatives/v1/cat-5.png",
+            "sha256": "090c6ada3c2e9e0e62a689e4af19050b3e4a569da0637d790507196327c2af1e"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "flame-cels",
+      "kind": "atlas",
+      "file": "assets/production/flame-cels/atlas.png",
+      "width": 1120,
+      "height": 860,
+      "sha256": "01e9ac826f98064494354396ac2bbb07d6b0fd414234d910c96d05d2654c7320",
+      "atlas": {
+        "columns": 4,
+        "rows": 2,
+        "cell_width": 280,
+        "cell_height": 430,
+        "frame_count": 8
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/flame-0.png",
+            "sha256": "38a43a9122f9c175c90afc0226932b596f6eb8f90aa41f502941e6148532ea80",
+            "width": 444,
+            "height": 444
+          },
+          {
+            "file": "../../derivatives/v1/flame-1.png",
+            "sha256": "484bcc399dacf6c075983d2c89cbd99cf358b3bbf2c750fc584f50c600eeea34",
+            "width": 443,
+            "height": 444
+          },
+          {
+            "file": "../../derivatives/v1/flame-2.png",
+            "sha256": "6be2b9c0b0dd9ad56f175758f00f1eb83f44f891b6f30d88ec743b347d4b9e6a",
+            "width": 443,
+            "height": 444
+          },
+          {
+            "file": "../../derivatives/v1/flame-3.png",
+            "sha256": "844f9423110b926829b6e89779538151c08d7b1b7c42020d6289bc94d86e18f1",
+            "width": 444,
+            "height": 444
+          },
+          {
+            "file": "../../derivatives/v1/flame-4.png",
+            "sha256": "cae9077cfe6d4c1a8a9b449f385ca7d8a739894f70146134c1af4190e134cbc4",
+            "width": 444,
+            "height": 443
+          },
+          {
+            "file": "../../derivatives/v1/flame-5.png",
+            "sha256": "fb29a644e13f180e696ae9dc74704ea3675198d7c711e0985cc169629bdae052",
+            "width": 443,
+            "height": 443
+          },
+          {
+            "file": "../../derivatives/v1/flame-6.png",
+            "sha256": "0ccfe09229a03e93758ffb1aaad9680cf985d8129bb955ef918c59e9f3957942",
+            "width": 443,
+            "height": 443
+          },
+          {
+            "file": "../../derivatives/v1/flame-7.png",
+            "sha256": "799e673370a1eee20e77ed7c7575bcefa383502856f2dffb403e4208073db4ad",
+            "width": 444,
+            "height": 443
+          }
+        ],
+        "cell_size": [
+          280,
+          430
+        ],
+        "shared_scale": 0.6147186147186147,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              444,
+              444
+            ],
+            "source_pivot": [
+              221.75,
+              375.5
+            ],
+            "raw_cel_to_cell": [
+              0.6147186147186147,
+              0,
+              0,
+              0.6147186147186147,
+              3.6861471861471955,
+              -15.826839826839802
+            ],
+            "source_to_cell": [
+              0.6147186147186147,
+              0,
+              0,
+              0.6147186147186147,
+              3.6861471861471955,
+              -15.826839826839802
+            ]
+          },
+          {
+            "index": 1,
+            "source_index": 1,
+            "source_rect": [
+              0,
+              0,
+              443,
+              444
+            ],
+            "source_pivot": [
+              221.75,
+              375.5
+            ],
+            "raw_cel_to_cell": [
+              0.6147186147186147,
+              0,
+              0,
+              0.6147186147186147,
+              3.6861471861471955,
+              -15.826839826839802
+            ],
+            "source_to_cell": [
+              0.6147186147186147,
+              0,
+              0,
+              0.6147186147186147,
+              3.6861471861471955,
+              -15.826839826839802
+            ]
+          },
+          {
+            "index": 2,
+            "source_index": 2,
+            "source_rect": [
+              0,
+              0,
+              443,
+              444
+            ],
+            "source_pivot": [
+              221.75,
+              375.5
+            ],
+            "raw_cel_to_cell": [
+              0.6147186147186147,
+              0,
+              0,
+              0.6147186147186147,
+              3.6861471861471955,
+              -15.826839826839802
+            ],
+            "source_to_cell": [
+              0.6147186147186147,
+              0,
+              0,
+              0.6147186147186147,
+              3.6861471861471955,
+              -15.826839826839802
+            ]
+          },
+          {
+            "index": 3,
+            "source_index": 3,
+            "source_rect": [
+              0,
+              0,
+              444,
+              444
+            ],
+            "source_pivot": [
+              221.75,
+              375.5
+            ],
+            "raw_cel_to_cell": [
+              0.6147186147186147,
+              0,
+              0,
+              0.6147186147186147,
+              3.6861471861471955,
+              -15.826839826839802
+            ],
+            "source_to_cell": [
+              0.6147186147186147,
+              0,
+              0,
+              0.6147186147186147,
+              3.6861471861471955,
+              -15.826839826839802
+            ]
+          },
+          {
+            "index": 4,
+            "source_index": 4,
+            "source_rect": [
+              0,
+              0,
+              444,
+              443
+            ],
+            "source_pivot": [
+              221.75,
+              375.5
+            ],
+            "raw_cel_to_cell": [
+              0.6147186147186147,
+              0,
+              0,
+              0.6147186147186147,
+              3.6861471861471955,
+              -15.826839826839802
+            ],
+            "source_to_cell": [
+              0.6147186147186147,
+              0,
+              0,
+              0.6147186147186147,
+              3.6861471861471955,
+              -15.826839826839802
+            ]
+          },
+          {
+            "index": 5,
+            "source_index": 5,
+            "source_rect": [
+              0,
+              0,
+              443,
+              443
+            ],
+            "source_pivot": [
+              221.75,
+              375.5
+            ],
+            "raw_cel_to_cell": [
+              0.6147186147186147,
+              0,
+              0,
+              0.6147186147186147,
+              3.6861471861471955,
+              -15.826839826839802
+            ],
+            "source_to_cell": [
+              0.6147186147186147,
+              0,
+              0,
+              0.6147186147186147,
+              3.6861471861471955,
+              -15.826839826839802
+            ]
+          },
+          {
+            "index": 6,
+            "source_index": 6,
+            "source_rect": [
+              0,
+              0,
+              443,
+              443
+            ],
+            "source_pivot": [
+              221.75,
+              375.5
+            ],
+            "raw_cel_to_cell": [
+              0.6147186147186147,
+              0,
+              0,
+              0.6147186147186147,
+              3.6861471861471955,
+              -15.826839826839802
+            ],
+            "source_to_cell": [
+              0.6147186147186147,
+              0,
+              0,
+              0.6147186147186147,
+              3.6861471861471955,
+              -15.826839826839802
+            ]
+          },
+          {
+            "index": 7,
+            "source_index": 7,
+            "source_rect": [
+              0,
+              0,
+              444,
+              443
+            ],
+            "source_pivot": [
+              221.75,
+              375.5
+            ],
+            "raw_cel_to_cell": [
+              0.6147186147186147,
+              0,
+              0,
+              0.6147186147186147,
+              3.6861471861471955,
+              -15.826839826839802
+            ],
+            "source_to_cell": [
+              0.6147186147186147,
+              0,
+              0,
+              0.6147186147186147,
+              3.6861471861471955,
+              -15.826839826839802
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/flame-cels/recipe.json",
+        "cache_key": "440383714c8f9a06104bf1d35a6db8741d61156c4d760b6797c6a47e421da290",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/flame-0.png",
+            "sha256": "38a43a9122f9c175c90afc0226932b596f6eb8f90aa41f502941e6148532ea80"
+          },
+          {
+            "file": "../../derivatives/v1/flame-1.png",
+            "sha256": "484bcc399dacf6c075983d2c89cbd99cf358b3bbf2c750fc584f50c600eeea34"
+          },
+          {
+            "file": "../../derivatives/v1/flame-2.png",
+            "sha256": "6be2b9c0b0dd9ad56f175758f00f1eb83f44f891b6f30d88ec743b347d4b9e6a"
+          },
+          {
+            "file": "../../derivatives/v1/flame-3.png",
+            "sha256": "844f9423110b926829b6e89779538151c08d7b1b7c42020d6289bc94d86e18f1"
+          },
+          {
+            "file": "../../derivatives/v1/flame-4.png",
+            "sha256": "cae9077cfe6d4c1a8a9b449f385ca7d8a739894f70146134c1af4190e134cbc4"
+          },
+          {
+            "file": "../../derivatives/v1/flame-5.png",
+            "sha256": "fb29a644e13f180e696ae9dc74704ea3675198d7c711e0985cc169629bdae052"
+          },
+          {
+            "file": "../../derivatives/v1/flame-6.png",
+            "sha256": "0ccfe09229a03e93758ffb1aaad9680cf985d8129bb955ef918c59e9f3957942"
+          },
+          {
+            "file": "../../derivatives/v1/flame-7.png",
+            "sha256": "799e673370a1eee20e77ed7c7575bcefa383502856f2dffb403e4208073db4ad"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "leaf-cels",
+      "kind": "atlas",
+      "file": "assets/production/leaf-cels/atlas.png",
+      "width": 1200,
+      "height": 920,
+      "sha256": "795d20c780002fbee734a6d4866d56d5323a296dfbb0e61086a9d568c0862e3d",
+      "atlas": {
+        "columns": 3,
+        "rows": 2,
+        "cell_width": 400,
+        "cell_height": 460,
+        "frame_count": 6
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v1/leaf-0.png",
+            "sha256": "ac451e7c01e476244f7f33c93d9ec4f99b425257ed7ce99ff3948e89bd42db66",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "file": "../../derivatives/v1/leaf-1.png",
+            "sha256": "e79f59926c96cd385b088f5f0d9149fcc5a6c89ffcc72eac8d8d57266c154b51",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "file": "../../derivatives/v1/leaf-2.png",
+            "sha256": "479ade6d9f06113464a17272088aa3ed2f56a3432bd66d2414b7bc17131d3b7f",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "file": "../../derivatives/v1/leaf-3.png",
+            "sha256": "1dd9c02b4360b9a6d0259c16a599bd1617310ab81bc85b4eb10a687e36131bc8",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "file": "../../derivatives/v1/leaf-4.png",
+            "sha256": "74f0a833c6e7ed8b6867adea73e1553ab6ce3434d98d4367f9456ae4354b732a",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "file": "../../derivatives/v1/leaf-5.png",
+            "sha256": "214b653cc5a1344175e4dcf3592c25ee888a01c2bdd25e53ac1130d105a9dfbd",
+            "width": 512,
+            "height": 512
+          }
+        ],
+        "cell_size": [
+          400,
+          460
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_pivot": [
+              256,
+              256
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              -56.0,
+              -26.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              -56.0,
+              -26.0
+            ]
+          },
+          {
+            "index": 1,
+            "source_index": 1,
+            "source_rect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_pivot": [
+              256,
+              256
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              -56.0,
+              -26.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              -56.0,
+              -26.0
+            ]
+          },
+          {
+            "index": 2,
+            "source_index": 2,
+            "source_rect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_pivot": [
+              256,
+              256
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              -56.0,
+              -26.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              -56.0,
+              -26.0
+            ]
+          },
+          {
+            "index": 3,
+            "source_index": 3,
+            "source_rect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_pivot": [
+              256,
+              256
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              -56.0,
+              -26.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              -56.0,
+              -26.0
+            ]
+          },
+          {
+            "index": 4,
+            "source_index": 4,
+            "source_rect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_pivot": [
+              256,
+              256
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              -56.0,
+              -26.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              -56.0,
+              -26.0
+            ]
+          },
+          {
+            "index": 5,
+            "source_index": 5,
+            "source_rect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_pivot": [
+              256,
+              256
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              -56.0,
+              -26.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              -56.0,
+              -26.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/leaf-cels/recipe.json",
+        "cache_key": "e89b16fd2399f1ced46176f94df395652e2f9995328a0fab1e3728405eb6d5e6",
+        "sources": [
+          {
+            "file": "../../derivatives/v1/leaf-0.png",
+            "sha256": "ac451e7c01e476244f7f33c93d9ec4f99b425257ed7ce99ff3948e89bd42db66"
+          },
+          {
+            "file": "../../derivatives/v1/leaf-1.png",
+            "sha256": "e79f59926c96cd385b088f5f0d9149fcc5a6c89ffcc72eac8d8d57266c154b51"
+          },
+          {
+            "file": "../../derivatives/v1/leaf-2.png",
+            "sha256": "479ade6d9f06113464a17272088aa3ed2f56a3432bd66d2414b7bc17131d3b7f"
+          },
+          {
+            "file": "../../derivatives/v1/leaf-3.png",
+            "sha256": "1dd9c02b4360b9a6d0259c16a599bd1617310ab81bc85b4eb10a687e36131bc8"
+          },
+          {
+            "file": "../../derivatives/v1/leaf-4.png",
+            "sha256": "74f0a833c6e7ed8b6867adea73e1553ab6ce3434d98d4367f9456ae4354b732a"
+          },
+          {
+            "file": "../../derivatives/v1/leaf-5.png",
+            "sha256": "214b653cc5a1344175e4dcf3592c25ee888a01c2bdd25e53ac1130d105a9dfbd"
+          }
+        ]
+      },
+      "rights": "Project-owned built-in imagegen artwork derived from the user seed; original and mask recipe preserved."
+    },
+    {
+      "id": "cottage-v2",
+      "kind": "atlas",
+      "file": "assets/production/cottage-v2/atlas.png",
+      "width": 1013,
+      "height": 747,
+      "sha256": "0b1f973322674ca59a9129d33176bb936b9a65dd5c039a16f479ae9af61022d2",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 1013,
+        "cell_height": 747,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/cottage-v2.png",
+            "sha256": "35f5aa044dcccda6b96bf60cc454581e8e114aadc59039dbe98ac2fadec67c9a",
+            "width": 1009,
+            "height": 743
+          }
+        ],
+        "cell_size": [
+          1013,
+          747
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              1009,
+              743
+            ],
+            "source_pivot": [
+              504.5,
+              371.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/cottage-v2/recipe.json",
+        "cache_key": "69580f7a426a6c9607fdf5e80c7bd5e304f8e799fafa20ff2c7168ebdc05b7a3",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/cottage-v2.png",
+            "sha256": "35f5aa044dcccda6b96bf60cc454581e8e114aadc59039dbe98ac2fadec67c9a"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "leaf-native-alpha",
+      "kind": "atlas",
+      "file": "assets/production/leaf-native-alpha/atlas.png",
+      "width": 1560,
+      "height": 1040,
+      "sha256": "98950e7b3ab279e5b486801a0959e7b58d3b6059beaec606b99dd854546c8476",
+      "atlas": {
+        "columns": 3,
+        "rows": 2,
+        "cell_width": 520,
+        "cell_height": 520,
+        "frame_count": 6
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/leaf-0.png",
+            "sha256": "a35499b70f8664518fb7614a64f704323ef0c83e5e9680dcb8f7b9e30d50ec1a",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "file": "../../derivatives/v2/leaf-1.png",
+            "sha256": "e520153bdf3babfe1375d49e5156699df5962e197053fedcb976639c2e60df29",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "file": "../../derivatives/v2/leaf-2.png",
+            "sha256": "929b95125ffbbbb142d7dac42c54a1ac687752705c426d1e52eb96817267c3f7",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "file": "../../derivatives/v2/leaf-3.png",
+            "sha256": "797a4a9aa9d1cddf4fdc84ca7db5affb82fe1ca7ea36b94ca11998641f6bfd7d",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "file": "../../derivatives/v2/leaf-4.png",
+            "sha256": "b46aba2cee0e6669c934beac34576aaa2c554f523b08fcf7a02c9ec4c35fa691",
+            "width": 512,
+            "height": 512
+          },
+          {
+            "file": "../../derivatives/v2/leaf-5.png",
+            "sha256": "e358cf03732523e5e7a89b91961c1a102cabbb448e36e446391622ba4e7c6627",
+            "width": 512,
+            "height": 512
+          }
+        ],
+        "cell_size": [
+          520,
+          520
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_pivot": [
+              256.0,
+              256.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              4.0,
+              4.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              4.0,
+              4.0
+            ]
+          },
+          {
+            "index": 1,
+            "source_index": 1,
+            "source_rect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_pivot": [
+              256.0,
+              256.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              4.0,
+              4.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              4.0,
+              4.0
+            ]
+          },
+          {
+            "index": 2,
+            "source_index": 2,
+            "source_rect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_pivot": [
+              256.0,
+              256.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              4.0,
+              4.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              4.0,
+              4.0
+            ]
+          },
+          {
+            "index": 3,
+            "source_index": 3,
+            "source_rect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_pivot": [
+              256.0,
+              256.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              4.0,
+              4.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              4.0,
+              4.0
+            ]
+          },
+          {
+            "index": 4,
+            "source_index": 4,
+            "source_rect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_pivot": [
+              256.0,
+              256.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              4.0,
+              4.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              4.0,
+              4.0
+            ]
+          },
+          {
+            "index": 5,
+            "source_index": 5,
+            "source_rect": [
+              0,
+              0,
+              512,
+              512
+            ],
+            "source_pivot": [
+              256.0,
+              256.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              4.0,
+              4.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              4.0,
+              4.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/leaf-native-alpha/recipe.json",
+        "cache_key": "094011b758ffbf5a55abb1d2ce3449fe7076b495e8ae963b883cd5569b057142",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/leaf-0.png",
+            "sha256": "a35499b70f8664518fb7614a64f704323ef0c83e5e9680dcb8f7b9e30d50ec1a"
+          },
+          {
+            "file": "../../derivatives/v2/leaf-1.png",
+            "sha256": "e520153bdf3babfe1375d49e5156699df5962e197053fedcb976639c2e60df29"
+          },
+          {
+            "file": "../../derivatives/v2/leaf-2.png",
+            "sha256": "929b95125ffbbbb142d7dac42c54a1ac687752705c426d1e52eb96817267c3f7"
+          },
+          {
+            "file": "../../derivatives/v2/leaf-3.png",
+            "sha256": "797a4a9aa9d1cddf4fdc84ca7db5affb82fe1ca7ea36b94ca11998641f6bfd7d"
+          },
+          {
+            "file": "../../derivatives/v2/leaf-4.png",
+            "sha256": "b46aba2cee0e6669c934beac34576aaa2c554f523b08fcf7a02c9ec4c35fa691"
+          },
+          {
+            "file": "../../derivatives/v2/leaf-5.png",
+            "sha256": "e358cf03732523e5e7a89b91961c1a102cabbb448e36e446391622ba4e7c6627"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "flame-native-alpha",
+      "kind": "atlas",
+      "file": "assets/production/flame-native-alpha/atlas.png",
+      "width": 1840,
+      "height": 940,
+      "sha256": "340e7a56ada7617cd13dcc290c434b20d272cc4ce46dc0b822ab8692becbb287",
+      "atlas": {
+        "columns": 4,
+        "rows": 2,
+        "cell_width": 460,
+        "cell_height": 470,
+        "frame_count": 8
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/flame-0.png",
+            "sha256": "2446eb3ec3158026fd4532075c083cea3219b7d9bf4b0cf6c794a75d23f0dc86",
+            "width": 444,
+            "height": 444
+          },
+          {
+            "file": "../../derivatives/v2/flame-1.png",
+            "sha256": "c2ba0d83f26cfcecf4ee7ee97bbe242e627c0c63939b382f7e896594d47531b8",
+            "width": 443,
+            "height": 444
+          },
+          {
+            "file": "../../derivatives/v2/flame-2.png",
+            "sha256": "a9fa71a759d92b496faa87812dcbbefe5ab1fb2298e54a9b587cfd3288a23bd6",
+            "width": 443,
+            "height": 444
+          },
+          {
+            "file": "../../derivatives/v2/flame-3.png",
+            "sha256": "9d40fef9c2f9b9d9f4cbd9e1f922a2398fdbb3b6fd32a48344afaa883c3a93d5",
+            "width": 444,
+            "height": 444
+          },
+          {
+            "file": "../../derivatives/v2/flame-4.png",
+            "sha256": "82eeb5f7d56a7636fc93097184773656905ae1e94ed241b781862d4c0b8f08f1",
+            "width": 444,
+            "height": 443
+          },
+          {
+            "file": "../../derivatives/v2/flame-5.png",
+            "sha256": "207dc008dc6b78f0f71b316026c2eca53a3cfbc95d335b760df4736dfead8dd1",
+            "width": 443,
+            "height": 443
+          },
+          {
+            "file": "../../derivatives/v2/flame-6.png",
+            "sha256": "e48e3a88c78d856e11104327d5577e5ab7fc00f1826a95dc8bddbc095b50a870",
+            "width": 443,
+            "height": 443
+          },
+          {
+            "file": "../../derivatives/v2/flame-7.png",
+            "sha256": "fb0fea073dac83b709c1eb975efe42dc989d9217c0c73de0e2d888df372504a1",
+            "width": 444,
+            "height": 443
+          }
+        ],
+        "cell_size": [
+          460,
+          470
+        ],
+        "shared_scale": 0.6383561643835617,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              444,
+              444
+            ],
+            "source_pivot": [
+              220,
+              368
+            ],
+            "raw_cel_to_cell": [
+              0.6383561643835617,
+              0,
+              0,
+              0.6383561643835617,
+              89.56164383561642,
+              0.08493150684930129
+            ],
+            "source_to_cell": [
+              0.6383561643835617,
+              0,
+              0,
+              0.6383561643835617,
+              89.56164383561642,
+              0.08493150684930129
+            ]
+          },
+          {
+            "index": 1,
+            "source_index": 1,
+            "source_rect": [
+              0,
+              0,
+              443,
+              444
+            ],
+            "source_pivot": [
+              221,
+              368
+            ],
+            "raw_cel_to_cell": [
+              0.6383561643835617,
+              0,
+              0,
+              0.6383561643835617,
+              88.92328767123286,
+              0.08493150684930129
+            ],
+            "source_to_cell": [
+              0.6383561643835617,
+              0,
+              0,
+              0.6383561643835617,
+              88.92328767123286,
+              0.08493150684930129
+            ]
+          },
+          {
+            "index": 2,
+            "source_index": 2,
+            "source_rect": [
+              0,
+              0,
+              443,
+              444
+            ],
+            "source_pivot": [
+              222,
+              368
+            ],
+            "raw_cel_to_cell": [
+              0.6383561643835617,
+              0,
+              0,
+              0.6383561643835617,
+              88.28493150684932,
+              0.08493150684930129
+            ],
+            "source_to_cell": [
+              0.6383561643835617,
+              0,
+              0,
+              0.6383561643835617,
+              88.28493150684932,
+              0.08493150684930129
+            ]
+          },
+          {
+            "index": 3,
+            "source_index": 3,
+            "source_rect": [
+              0,
+              0,
+              444,
+              444
+            ],
+            "source_pivot": [
+              222,
+              368
+            ],
+            "raw_cel_to_cell": [
+              0.6383561643835617,
+              0,
+              0,
+              0.6383561643835617,
+              88.28493150684932,
+              0.08493150684930129
+            ],
+            "source_to_cell": [
+              0.6383561643835617,
+              0,
+              0,
+              0.6383561643835617,
+              88.28493150684932,
+              0.08493150684930129
+            ]
+          },
+          {
+            "index": 4,
+            "source_index": 4,
+            "source_rect": [
+              0,
+              0,
+              444,
+              443
+            ],
+            "source_pivot": [
+              220,
+              360
+            ],
+            "raw_cel_to_cell": [
+              0.6383561643835617,
+              0,
+              0,
+              0.6383561643835617,
+              89.56164383561642,
+              5.191780821917803
+            ],
+            "source_to_cell": [
+              0.6383561643835617,
+              0,
+              0,
+              0.6383561643835617,
+              89.56164383561642,
+              5.191780821917803
+            ]
+          },
+          {
+            "index": 5,
+            "source_index": 5,
+            "source_rect": [
+              0,
+              0,
+              443,
+              443
+            ],
+            "source_pivot": [
+              221,
+              360
+            ],
+            "raw_cel_to_cell": [
+              0.6383561643835617,
+              0,
+              0,
+              0.6383561643835617,
+              88.92328767123286,
+              5.191780821917803
+            ],
+            "source_to_cell": [
+              0.6383561643835617,
+              0,
+              0,
+              0.6383561643835617,
+              88.92328767123286,
+              5.191780821917803
+            ]
+          },
+          {
+            "index": 6,
+            "source_index": 6,
+            "source_rect": [
+              0,
+              0,
+              443,
+              443
+            ],
+            "source_pivot": [
+              222,
+              360
+            ],
+            "raw_cel_to_cell": [
+              0.6383561643835617,
+              0,
+              0,
+              0.6383561643835617,
+              88.28493150684932,
+              5.191780821917803
+            ],
+            "source_to_cell": [
+              0.6383561643835617,
+              0,
+              0,
+              0.6383561643835617,
+              88.28493150684932,
+              5.191780821917803
+            ]
+          },
+          {
+            "index": 7,
+            "source_index": 7,
+            "source_rect": [
+              0,
+              0,
+              444,
+              443
+            ],
+            "source_pivot": [
+              222,
+              360
+            ],
+            "raw_cel_to_cell": [
+              0.6383561643835617,
+              0,
+              0,
+              0.6383561643835617,
+              88.28493150684932,
+              5.191780821917803
+            ],
+            "source_to_cell": [
+              0.6383561643835617,
+              0,
+              0,
+              0.6383561643835617,
+              88.28493150684932,
+              5.191780821917803
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/flame-native-alpha/recipe.json",
+        "cache_key": "4c95c5fcd88e3e66dbb44368c46e02780b4a4c33ff020d454cec5212d299d7e4",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/flame-0.png",
+            "sha256": "2446eb3ec3158026fd4532075c083cea3219b7d9bf4b0cf6c794a75d23f0dc86"
+          },
+          {
+            "file": "../../derivatives/v2/flame-1.png",
+            "sha256": "c2ba0d83f26cfcecf4ee7ee97bbe242e627c0c63939b382f7e896594d47531b8"
+          },
+          {
+            "file": "../../derivatives/v2/flame-2.png",
+            "sha256": "a9fa71a759d92b496faa87812dcbbefe5ab1fb2298e54a9b587cfd3288a23bd6"
+          },
+          {
+            "file": "../../derivatives/v2/flame-3.png",
+            "sha256": "9d40fef9c2f9b9d9f4cbd9e1f922a2398fdbb3b6fd32a48344afaa883c3a93d5"
+          },
+          {
+            "file": "../../derivatives/v2/flame-4.png",
+            "sha256": "82eeb5f7d56a7636fc93097184773656905ae1e94ed241b781862d4c0b8f08f1"
+          },
+          {
+            "file": "../../derivatives/v2/flame-5.png",
+            "sha256": "207dc008dc6b78f0f71b316026c2eca53a3cfbc95d335b760df4736dfead8dd1"
+          },
+          {
+            "file": "../../derivatives/v2/flame-6.png",
+            "sha256": "e48e3a88c78d856e11104327d5577e5ab7fc00f1826a95dc8bddbc095b50a870"
+          },
+          {
+            "file": "../../derivatives/v2/flame-7.png",
+            "sha256": "fb0fea073dac83b709c1eb975efe42dc989d9217c0c73de0e2d888df372504a1"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "sconce-0",
+      "kind": "atlas",
+      "file": "assets/production/sconce-0/atlas.png",
+      "width": 38,
+      "height": 74,
+      "sha256": "2e19393c6d8309926fb4b6acfe76d2680c6cc532ef2b4cfcb268abf5ee8e84e8",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 38,
+        "cell_height": 74,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/sconce-0.png",
+            "sha256": "e38b8190dd5d1a8cac91d985da4ff4c14b71230e8722a5d443cacb4d7df695b9",
+            "width": 34,
+            "height": 70
+          }
+        ],
+        "cell_size": [
+          38,
+          74
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              34,
+              70
+            ],
+            "source_pivot": [
+              17.0,
+              35.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/sconce-0/recipe.json",
+        "cache_key": "4c97017222b4cae58d76a6da3990aeaac24b1d234642baba20b11a4f01ab78c9",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/sconce-0.png",
+            "sha256": "e38b8190dd5d1a8cac91d985da4ff4c14b71230e8722a5d443cacb4d7df695b9"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "sconce-1",
+      "kind": "atlas",
+      "file": "assets/production/sconce-1/atlas.png",
+      "width": 35,
+      "height": 71,
+      "sha256": "f3371b0aa30c292669e214ef08edd9b2c91058c79faad96890c89091b1a7e24b",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 35,
+        "cell_height": 71,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/sconce-1.png",
+            "sha256": "bc5a889f02e01908d43e564ba2edfae098a6274bd0c38ecf7c4c43badde7add5",
+            "width": 31,
+            "height": 67
+          }
+        ],
+        "cell_size": [
+          35,
+          71
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              31,
+              67
+            ],
+            "source_pivot": [
+              15.5,
+              33.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/sconce-1/recipe.json",
+        "cache_key": "ef77fa4ad264673e0fcc759f3df3ffc4b5679b0f5776194995593d0bffba7eb5",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/sconce-1.png",
+            "sha256": "bc5a889f02e01908d43e564ba2edfae098a6274bd0c38ecf7c4c43badde7add5"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "sconce-2",
+      "kind": "atlas",
+      "file": "assets/production/sconce-2/atlas.png",
+      "width": 36,
+      "height": 71,
+      "sha256": "9076d0c4cf5f3f286fd1c2488db4305a4e1af95735a597ab7cf60495eecd1a8c",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 36,
+        "cell_height": 71,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/sconce-2.png",
+            "sha256": "c9f481e591b9180afeed717909828f27699b38101855191ed06a196814f07135",
+            "width": 32,
+            "height": 67
+          }
+        ],
+        "cell_size": [
+          36,
+          71
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              32,
+              67
+            ],
+            "source_pivot": [
+              16.0,
+              33.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/sconce-2/recipe.json",
+        "cache_key": "27dbd497a226c47955be5f0adf0edffe0e3ddd9219e0051289191a4ef56a5f73",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/sconce-2.png",
+            "sha256": "c9f481e591b9180afeed717909828f27699b38101855191ed06a196814f07135"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "pumpkin-near-dim",
+      "kind": "atlas",
+      "file": "assets/production/pumpkin-near-dim/atlas.png",
+      "width": 178,
+      "height": 187,
+      "sha256": "629e3595cee9fc06d875b37293d9ccfaf9e62e7780b4849166cf9292bbd813d8",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 178,
+        "cell_height": 187,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/pumpkin-near-dim.png",
+            "sha256": "2cfb57b0536180d2449b54d8c83a6e2c4cab1235b5640b1ffaac5d9b9f4a5715",
+            "width": 174,
+            "height": 183
+          }
+        ],
+        "cell_size": [
+          178,
+          187
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              174,
+              183
+            ],
+            "source_pivot": [
+              87.0,
+              91.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/pumpkin-near-dim/recipe.json",
+        "cache_key": "b5617a39518b6a1e7e1b65d380ba0673183b4c3b5fe78f926c7c077124d1ab3a",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/pumpkin-near-dim.png",
+            "sha256": "2cfb57b0536180d2449b54d8c83a6e2c4cab1235b5640b1ffaac5d9b9f4a5715"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "pumpkin-near-emission",
+      "kind": "atlas",
+      "file": "assets/production/pumpkin-near-emission/atlas.png",
+      "width": 178,
+      "height": 187,
+      "sha256": "852036c86bcf448c0580e50079a5888904bcff55c40217b40b33b171706b0254",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 178,
+        "cell_height": 187,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/pumpkin-near-emission.png",
+            "sha256": "061a200305f3e03822c350e506bcf6df06060084553d28016f53ac5644b57b11",
+            "width": 174,
+            "height": 183
+          }
+        ],
+        "cell_size": [
+          178,
+          187
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              174,
+              183
+            ],
+            "source_pivot": [
+              87.0,
+              91.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/pumpkin-near-emission/recipe.json",
+        "cache_key": "ac5141a8145c1b6b33588e8e51fd4c8ca73ccacfeb70b8fc615908b0c3f1ac6e",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/pumpkin-near-emission.png",
+            "sha256": "061a200305f3e03822c350e506bcf6df06060084553d28016f53ac5644b57b11"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "pumpkin-left-dim",
+      "kind": "atlas",
+      "file": "assets/production/pumpkin-left-dim/atlas.png",
+      "width": 105,
+      "height": 103,
+      "sha256": "ded49253262ed0074f4346246871a9e714d92b65b49906bf52942f20c27e9714",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 105,
+        "cell_height": 103,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/pumpkin-left-dim.png",
+            "sha256": "42028eb1715fc78e6ac03f5c22da2ddeb70931d2a70d512413ee68370b0db725",
+            "width": 101,
+            "height": 99
+          }
+        ],
+        "cell_size": [
+          105,
+          103
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              101,
+              99
+            ],
+            "source_pivot": [
+              50.5,
+              49.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/pumpkin-left-dim/recipe.json",
+        "cache_key": "9e73d2615c1eca575382bed4414d24936a4e6db0c34d8fd9c37beea834d9d25c",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/pumpkin-left-dim.png",
+            "sha256": "42028eb1715fc78e6ac03f5c22da2ddeb70931d2a70d512413ee68370b0db725"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "pumpkin-left-emission",
+      "kind": "atlas",
+      "file": "assets/production/pumpkin-left-emission/atlas.png",
+      "width": 105,
+      "height": 103,
+      "sha256": "f01e16f600418f2847cb28f1ae040fa30e31a24017430418cc7a64754522f255",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 105,
+        "cell_height": 103,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/pumpkin-left-emission.png",
+            "sha256": "64b865cd9f1815e22d416348ee8ce2457fd018bb13f46562ae583a3ee7f3d1bc",
+            "width": 101,
+            "height": 99
+          }
+        ],
+        "cell_size": [
+          105,
+          103
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              101,
+              99
+            ],
+            "source_pivot": [
+              50.5,
+              49.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/pumpkin-left-emission/recipe.json",
+        "cache_key": "87cb97ca3e40bc7bb390f14995e9d1739816e7593a81d86822f25f4a77c431cf",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/pumpkin-left-emission.png",
+            "sha256": "64b865cd9f1815e22d416348ee8ce2457fd018bb13f46562ae583a3ee7f3d1bc"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "pumpkin-right-dim",
+      "kind": "atlas",
+      "file": "assets/production/pumpkin-right-dim/atlas.png",
+      "width": 112,
+      "height": 119,
+      "sha256": "7678c1894b3e4cea43fa6ea5235fd36a27a4ea1a902d6664a0047b2a582f528a",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 112,
+        "cell_height": 119,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/pumpkin-right-dim.png",
+            "sha256": "09d487b9f46e7a21dd62b34542c7f8828e58bbb716c103c79af79c64145aefc7",
+            "width": 108,
+            "height": 115
+          }
+        ],
+        "cell_size": [
+          112,
+          119
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              108,
+              115
+            ],
+            "source_pivot": [
+              54.0,
+              57.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/pumpkin-right-dim/recipe.json",
+        "cache_key": "1affb8f81585e14fd10aacd002c189f28161d99a4446f46b77a5853ca9d1763d",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/pumpkin-right-dim.png",
+            "sha256": "09d487b9f46e7a21dd62b34542c7f8828e58bbb716c103c79af79c64145aefc7"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "pumpkin-right-emission",
+      "kind": "atlas",
+      "file": "assets/production/pumpkin-right-emission/atlas.png",
+      "width": 112,
+      "height": 119,
+      "sha256": "27331a69b56a33c64d3ebecad30b3aa4e6dd773c89185425b730bf998ead9d8b",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 112,
+        "cell_height": 119,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/pumpkin-right-emission.png",
+            "sha256": "c5eb1ab7907c89ea4f56b7d9b6e18a41f628acae1ad1b607ace30a79b6bd64c7",
+            "width": 108,
+            "height": 115
+          }
+        ],
+        "cell_size": [
+          112,
+          119
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              108,
+              115
+            ],
+            "source_pivot": [
+              54.0,
+              57.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/pumpkin-right-emission/recipe.json",
+        "cache_key": "e360e410ad8f075fac7e9104e131634f0020ed65ece465c086915c31c5dd8148",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/pumpkin-right-emission.png",
+            "sha256": "c5eb1ab7907c89ea4f56b7d9b6e18a41f628acae1ad1b607ace30a79b6bd64c7"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "pumpkin-step-dim",
+      "kind": "atlas",
+      "file": "assets/production/pumpkin-step-dim/atlas.png",
+      "width": 93,
+      "height": 92,
+      "sha256": "b817e3dbd6cdd6d850e507d50e9b2eea89148010e62a86eb88a0a28829bb97de",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 93,
+        "cell_height": 92,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/pumpkin-step-dim.png",
+            "sha256": "821f52ff9acc06b2de41b22ecbccfb395fdcc7b5f06feb73d7e9eababf24f80e",
+            "width": 89,
+            "height": 88
+          }
+        ],
+        "cell_size": [
+          93,
+          92
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              89,
+              88
+            ],
+            "source_pivot": [
+              44.5,
+              44.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/pumpkin-step-dim/recipe.json",
+        "cache_key": "ed94d114988400223c40e31e84b11a0c9a8b4229c42e634035fc36ef9af34179",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/pumpkin-step-dim.png",
+            "sha256": "821f52ff9acc06b2de41b22ecbccfb395fdcc7b5f06feb73d7e9eababf24f80e"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "pumpkin-step-emission",
+      "kind": "atlas",
+      "file": "assets/production/pumpkin-step-emission/atlas.png",
+      "width": 93,
+      "height": 92,
+      "sha256": "bf86c128dd321633528df6fb6f179803cb70c38e953964502edfba02f3b6f3f0",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 93,
+        "cell_height": 92,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/pumpkin-step-emission.png",
+            "sha256": "76240091f388e996d3a090c54d6f1217c9d66f7274ce6e5392bca0efec99c80e",
+            "width": 89,
+            "height": 88
+          }
+        ],
+        "cell_size": [
+          93,
+          92
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              89,
+              88
+            ],
+            "source_pivot": [
+              44.5,
+              44.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/pumpkin-step-emission/recipe.json",
+        "cache_key": "0e77151c779c5473f1d5e9cc510ff8afb33ca98996cde14850addb0fbae4391e",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/pumpkin-step-emission.png",
+            "sha256": "76240091f388e996d3a090c54d6f1217c9d66f7274ce6e5392bca0efec99c80e"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "lantern-left-dim",
+      "kind": "atlas",
+      "file": "assets/production/lantern-left-dim/atlas.png",
+      "width": 57,
+      "height": 99,
+      "sha256": "d2bbf5eac1bf7c4d2df8bb14d63358093a6c11b0319ff14c62e4e7117e90d2a6",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 57,
+        "cell_height": 99,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/lantern-left-dim.png",
+            "sha256": "a4e5c7efdeca917bff5fe1daf4474ca521afd2f950a1d288959d6be753a08162",
+            "width": 53,
+            "height": 95
+          }
+        ],
+        "cell_size": [
+          57,
+          99
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              53,
+              95
+            ],
+            "source_pivot": [
+              26.5,
+              47.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/lantern-left-dim/recipe.json",
+        "cache_key": "06b4c3facaf3ac8fd89447cb79268195fce736b9b1664a2700aabe2268e668da",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/lantern-left-dim.png",
+            "sha256": "a4e5c7efdeca917bff5fe1daf4474ca521afd2f950a1d288959d6be753a08162"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "lantern-step-dim",
+      "kind": "atlas",
+      "file": "assets/production/lantern-step-dim/atlas.png",
+      "width": 49,
+      "height": 80,
+      "sha256": "f6038c28ebadf83400e173e22e7c73a123a111cd09ad16305eb5db874f191f40",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 49,
+        "cell_height": 80,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/lantern-step-dim.png",
+            "sha256": "662cea4b4e3068ca17c3dc3ee66736fe172b92668bcdefe67ab9428125ca147f",
+            "width": 45,
+            "height": 76
+          }
+        ],
+        "cell_size": [
+          49,
+          80
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              45,
+              76
+            ],
+            "source_pivot": [
+              22.5,
+              38.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/lantern-step-dim/recipe.json",
+        "cache_key": "263a77ba1e887dfc42909e3b9b0911c1e07da0fa2e68cf0e285288b628acc2ee",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/lantern-step-dim.png",
+            "sha256": "662cea4b4e3068ca17c3dc3ee66736fe172b92668bcdefe67ab9428125ca147f"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "lantern-step-low-dim",
+      "kind": "atlas",
+      "file": "assets/production/lantern-step-low-dim/atlas.png",
+      "width": 45,
+      "height": 66,
+      "sha256": "ab5efd48d1cae8b0caa59b844eedfe8c6c9e882b98792eb52fe6d06854cd256b",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 45,
+        "cell_height": 66,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/lantern-step-low-dim.png",
+            "sha256": "796ce1eb62984df561a080976e88d1865f74e5626b43a355a14fb530ee62f5c4",
+            "width": 41,
+            "height": 62
+          }
+        ],
+        "cell_size": [
+          45,
+          66
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              41,
+              62
+            ],
+            "source_pivot": [
+              20.5,
+              31.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/lantern-step-low-dim/recipe.json",
+        "cache_key": "9a0e9ed55a0d1626b08e274395fc4e5fe6bab1c3beb8e2f00e471faa43356666",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/lantern-step-low-dim.png",
+            "sha256": "796ce1eb62984df561a080976e88d1865f74e5626b43a355a14fb530ee62f5c4"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "lantern-right-low-dim",
+      "kind": "atlas",
+      "file": "assets/production/lantern-right-low-dim/atlas.png",
+      "width": 51,
+      "height": 79,
+      "sha256": "7ac358ea31c87d08c5bc866b5c7780c2232deceb55c44641f4ac15b610f78dc9",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 51,
+        "cell_height": 79,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/lantern-right-low-dim.png",
+            "sha256": "5ec040b4f31f845ef4646af80d18bdb7b36711b51640cd32b5b22703773d341f",
+            "width": 47,
+            "height": 75
+          }
+        ],
+        "cell_size": [
+          51,
+          79
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              47,
+              75
+            ],
+            "source_pivot": [
+              23.5,
+              37.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/lantern-right-low-dim/recipe.json",
+        "cache_key": "aaf4100e612bed4c27b6af2370921344bf9df3c8277945753b232757cf540443",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/lantern-right-low-dim.png",
+            "sha256": "5ec040b4f31f845ef4646af80d18bdb7b36711b51640cd32b5b22703773d341f"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "lantern-post-dim",
+      "kind": "atlas",
+      "file": "assets/production/lantern-post-dim/atlas.png",
+      "width": 95,
+      "height": 183,
+      "sha256": "284bdc582a6bbbcbf176aedea0bbf2251010c71521925c33e1fda2bb23a49a8c",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 95,
+        "cell_height": 183,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/lantern-post-dim.png",
+            "sha256": "c77f129e98da2899298e618db6b661e9a90c023760eacaf8499756fe63325acc",
+            "width": 91,
+            "height": 179
+          }
+        ],
+        "cell_size": [
+          95,
+          183
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              91,
+              179
+            ],
+            "source_pivot": [
+              45.5,
+              89.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/lantern-post-dim/recipe.json",
+        "cache_key": "551d001008cd64b280af27923a171accee3566d631226f2584736fc4180ca652",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/lantern-post-dim.png",
+            "sha256": "c77f129e98da2899298e618db6b661e9a90c023760eacaf8499756fe63325acc"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "sconce-0-dim",
+      "kind": "atlas",
+      "file": "assets/production/sconce-0-dim/atlas.png",
+      "width": 38,
+      "height": 74,
+      "sha256": "79c60a801ed385671de4b107022369ee95cbcab1e3b4ad0904f8392c6da75fbf",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 38,
+        "cell_height": 74,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/sconce-0-dim.png",
+            "sha256": "cc3a274e9928fe88dd7c6d773f479074facc3ea8facf21ae3d41100346434a2d",
+            "width": 34,
+            "height": 70
+          }
+        ],
+        "cell_size": [
+          38,
+          74
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              34,
+              70
+            ],
+            "source_pivot": [
+              17.0,
+              35.0
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/sconce-0-dim/recipe.json",
+        "cache_key": "dd61e249b76bff6a694a104267eabaa565802a3634a97ab48b284597b00652e3",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/sconce-0-dim.png",
+            "sha256": "cc3a274e9928fe88dd7c6d773f479074facc3ea8facf21ae3d41100346434a2d"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "sconce-1-dim",
+      "kind": "atlas",
+      "file": "assets/production/sconce-1-dim/atlas.png",
+      "width": 35,
+      "height": 71,
+      "sha256": "91392ce357ed5e50fe33a9fbc28056937e1f5d6dedab66fca92978d3494504cf",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 35,
+        "cell_height": 71,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/sconce-1-dim.png",
+            "sha256": "c45c05de0c689ff6a2ab29a435b1f9c46326d285d9784d20b3ffc6fd91d3f371",
+            "width": 31,
+            "height": 67
+          }
+        ],
+        "cell_size": [
+          35,
+          71
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              31,
+              67
+            ],
+            "source_pivot": [
+              15.5,
+              33.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/sconce-1-dim/recipe.json",
+        "cache_key": "169ed6743b23ebc7897175dd6c81099cd00a06373807260385ca5a766f8fcda0",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/sconce-1-dim.png",
+            "sha256": "c45c05de0c689ff6a2ab29a435b1f9c46326d285d9784d20b3ffc6fd91d3f371"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "sconce-2-dim",
+      "kind": "atlas",
+      "file": "assets/production/sconce-2-dim/atlas.png",
+      "width": 36,
+      "height": 71,
+      "sha256": "05f85cfb8b4190f958202f8df0ec0009c76c6b13a2453e733ab4fb531a2d2060",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 36,
+        "cell_height": 71,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v2/sconce-2-dim.png",
+            "sha256": "9b186392f1455bae7dc37b639d255cf410e3b5b8e6cbb89768d0fc8fd528e6cc",
+            "width": 32,
+            "height": 67
+          }
+        ],
+        "cell_size": [
+          36,
+          71
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              32,
+              67
+            ],
+            "source_pivot": [
+              16.0,
+              33.5
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/sconce-2-dim/recipe.json",
+        "cache_key": "6464aab831a215cb2f324af8042ef1535e6a4ee63eba6ad83706c8060991d34f",
+        "sources": [
+          {
+            "file": "../../derivatives/v2/sconce-2-dim.png",
+            "sha256": "9b186392f1455bae7dc37b639d255cf410e3b5b8e6cbb89768d0fc8fd528e6cc"
+          }
+        ]
+      },
+      "rights": "User seed / built-in imagegen, deterministic project derivative."
+    },
+    {
+      "id": "receiver-falloff",
+      "kind": "atlas",
+      "file": "assets/production/receiver-falloff/atlas.png",
+      "width": 260,
+      "height": 132,
+      "sha256": "c2d97f490e26054a717177028fb0aeaf20d25e76df86f628cbd16c18d9f79a74",
+      "atlas": {
+        "columns": 1,
+        "rows": 1,
+        "cell_width": 260,
+        "cell_height": 132,
+        "frame_count": 1
+      },
+      "registration_mapping": {
+        "version": 1,
+        "input_path_base": "recipe",
+        "input_sources": [
+          {
+            "file": "../../derivatives/v3/receiver-falloff.png",
+            "sha256": "37339797791e84232d9035c0e706f8fb1e0c1d3c12f150e1352b027fde95943b",
+            "width": 256,
+            "height": 128
+          }
+        ],
+        "cell_size": [
+          260,
+          132
+        ],
+        "shared_scale": 1.0,
+        "padding": 2,
+        "cels": [
+          {
+            "index": 0,
+            "source_index": 0,
+            "source_rect": [
+              0,
+              0,
+              256,
+              128
+            ],
+            "source_pivot": [
+              128,
+              64
+            ],
+            "raw_cel_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "source_to_cell": [
+              1.0,
+              0,
+              0,
+              1.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      },
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sockets": {},
+      "provenance": {
+        "recipe": "assets/production/receiver-falloff/recipe.json",
+        "cache_key": "0157eeb16323a534cfc8856ca2cf7856fcebf6b41daf935b60e19f6a1103cb9d",
+        "sources": [
+          {
+            "file": "../../derivatives/v3/receiver-falloff.png",
+            "sha256": "37339797791e84232d9035c0e706f8fb1e0c1d3c12f150e1352b027fde95943b"
+          }
+        ]
+      },
+      "rights": "Unspecified; inherits source restrictions."
+    }
+  ]
+}

@@ -1,0 +1,4384 @@
+{
+  "version": 1,
+  "id": "amberwatch",
+  "title": "Amberwatch \u2014 An Autumn Porch",
+  "canvas": {
+    "width": 1448,
+    "height": 1086,
+    "fps": 30,
+    "loop_seconds": 16,
+    "background": "#1a1733"
+  },
+  "camera": {
+    "overscan": 1,
+    "x_amplitude": 0,
+    "y_amplitude": 0,
+    "zoom_amplitude": 0
+  },
+  "groups": [],
+  "layers": [
+    {
+      "id": "sky",
+      "name": "sky",
+      "asset": "sky",
+      "x": 0.5,
+      "y": 0.15653775322283608,
+      "width": 1.0027624309392265,
+      "height": 0.31675874769797424,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 0.1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "cloud-veil",
+      "name": "cloud-veil",
+      "asset": "sky",
+      "x": 0.5,
+      "y": 0.15653775322283608,
+      "width": 1.0027624309392265,
+      "height": 0.31675874769797424,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 0.1,
+      "cycle_seconds": 16,
+      "phase_frames": 0,
+      "tracks": {
+        "x": {
+          "interpolation": "smoothstep",
+          "keys": [
+            [
+              0,
+              0.5
+            ],
+            [
+              8,
+              0.5124309392265194
+            ],
+            [
+              16,
+              0.5
+            ]
+          ]
+        },
+        "opacity": {
+          "interpolation": "smoothstep",
+          "keys": [
+            [
+              0,
+              0.16
+            ],
+            [
+              8,
+              0.38
+            ],
+            [
+              16,
+              0.16
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "valley",
+      "name": "valley",
+      "asset": "valley",
+      "x": 0.5,
+      "y": 0.3830570902394107,
+      "width": 1.0027624309392265,
+      "height": 0.5930018416206262,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 0.25,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "path",
+      "name": "path",
+      "asset": "path",
+      "x": 0.5,
+      "y": 0.666206261510129,
+      "width": 1.0027624309392265,
+      "height": 0.6712707182320442,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "cottage",
+      "name": "cottage",
+      "asset": "cottage-v2",
+      "x": 0.6515883977900553,
+      "y": 0.34208103130755063,
+      "width": 0.699585635359116,
+      "height": 0.6878453038674033,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "tree",
+      "name": "tree",
+      "asset": "tree",
+      "x": 0.2575966850828729,
+      "y": 0.3255064456721915,
+      "width": 0.5179558011049724,
+      "height": 0.6546961325966851,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "fence-left",
+      "name": "fence-left",
+      "asset": "fence-left",
+      "x": 0.07700276243093923,
+      "y": 0.7679558011049724,
+      "width": 0.15676795580110497,
+      "height": 0.4677716390423573,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "fence-right",
+      "name": "fence-right",
+      "asset": "fence-right",
+      "x": 0.9330110497237569,
+      "y": 0.7435543278084714,
+      "width": 0.13674033149171272,
+      "height": 0.5165745856353591,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "pumpkin-near",
+      "name": "pumpkin-near",
+      "asset": "pumpkin-near-dim",
+      "x": 0.1388121546961326,
+      "y": 0.8798342541436464,
+      "width": 0.12292817679558012,
+      "height": 0.1721915285451197,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "pumpkin-left",
+      "name": "pumpkin-left",
+      "asset": "pumpkin-left-dim",
+      "x": 0.4720303867403315,
+      "y": 0.6441068139963168,
+      "width": 0.07251381215469613,
+      "height": 0.09484346224677716,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "pumpkin-right",
+      "name": "pumpkin-right",
+      "asset": "pumpkin-right-dim",
+      "x": 0.7341160220994476,
+      "y": 0.6993554327808471,
+      "width": 0.07734806629834254,
+      "height": 0.10957642725598526,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "pumpkin-step",
+      "name": "pumpkin-step",
+      "asset": "pumpkin-step-dim",
+      "x": 0.7496546961325967,
+      "y": 0.5552486187845304,
+      "width": 0.06422651933701658,
+      "height": 0.0847145488029466,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "chair",
+      "name": "chair",
+      "asset": "chair",
+      "x": 0.5935773480662984,
+      "y": 0.4539594843462247,
+      "width": 0.0738950276243094,
+      "height": 0.13259668508287292,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "wreath",
+      "name": "wreath",
+      "asset": "wreath",
+      "x": 0.6788674033149171,
+      "y": 0.35451197053406996,
+      "width": 0.06077348066298342,
+      "height": 0.08287292817679558,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "planter-left",
+      "name": "planter-left",
+      "asset": "planter-left",
+      "x": 0.5151933701657458,
+      "y": 0.6104972375690608,
+      "width": 0.10082872928176796,
+      "height": 0.13996316758747698,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "planter-right",
+      "name": "planter-right",
+      "asset": "planter-right",
+      "x": 0.7745165745856354,
+      "y": 0.6597605893186004,
+      "width": 0.1180939226519337,
+      "height": 0.16666666666666666,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "hanging-basket",
+      "name": "hanging-basket",
+      "asset": "hanging-basket",
+      "x": 0.4116022099447514,
+      "y": 0.31767955801104975,
+      "width": 0.055248618784530384,
+      "height": 0.08839779005524862,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "pumpkin-shelf",
+      "name": "pumpkin-shelf",
+      "asset": "pumpkin-shelf",
+      "x": 0.7586325966850829,
+      "y": 0.4654696132596685,
+      "width": 0.054558011049723756,
+      "height": 0.1132596685082873,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "lantern-left",
+      "name": "lantern-left",
+      "asset": "lantern-left-dim",
+      "x": 0.3594613259668508,
+      "y": 0.7140883977900553,
+      "width": 0.0393646408839779,
+      "height": 0.09116022099447514,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "lantern-step",
+      "name": "lantern-step",
+      "asset": "lantern-step-dim",
+      "x": 0.5852900552486188,
+      "y": 0.5340699815837937,
+      "width": 0.03383977900552486,
+      "height": 0.07366482504604052,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "lantern-step-low",
+      "name": "lantern-step-low",
+      "asset": "lantern-step-low-dim",
+      "x": 0.5542127071823204,
+      "y": 0.5994475138121547,
+      "width": 0.031077348066298343,
+      "height": 0.06077348066298342,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "lantern-right-low",
+      "name": "lantern-right-low",
+      "asset": "lantern-right-low-dim",
+      "x": 0.7144337016574586,
+      "y": 0.7002762430939227,
+      "width": 0.03522099447513812,
+      "height": 0.072744014732965,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "lantern-post",
+      "name": "lantern-post",
+      "asset": "lantern-post-dim",
+      "x": 0.9299033149171271,
+      "y": 0.6744935543278086,
+      "width": 0.06560773480662983,
+      "height": 0.1685082872928177,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "sconce-0",
+      "name": "sconce-0",
+      "asset": "sconce-0-dim",
+      "x": 0.5966850828729282,
+      "y": 0.31215469613259667,
+      "width": 0.026243093922651933,
+      "height": 0.06813996316758748,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "sconce-1",
+      "name": "sconce-1",
+      "asset": "sconce-1-dim",
+      "x": 0.756560773480663,
+      "y": 0.3080110497237569,
+      "width": 0.024171270718232045,
+      "height": 0.06537753222836096,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "sconce-2",
+      "name": "sconce-2",
+      "asset": "sconce-2-dim",
+      "x": 0.7962707182320442,
+      "y": 0.30432780847145485,
+      "width": 0.024861878453038673,
+      "height": 0.06537753222836096,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "cat",
+      "name": "cat",
+      "asset": "cat-cels",
+      "x": 0.46685082872928174,
+      "y": 0.4162062615101289,
+      "width": 0.10704419889502763,
+      "height": 0.19521178637200737,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0,
+      "tracks": {
+        "cell": {
+          "interpolation": "hold",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              2.8,
+              0
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              3.25,
+              2
+            ],
+            [
+              5.4,
+              1
+            ],
+            [
+              5.7,
+              0
+            ],
+            [
+              8.9,
+              3
+            ],
+            [
+              9.05,
+              4
+            ],
+            [
+              9.25,
+              3
+            ],
+            [
+              9.45,
+              5
+            ],
+            [
+              11.8,
+              1
+            ],
+            [
+              12.1,
+              2
+            ],
+            [
+              13.3,
+              1
+            ],
+            [
+              13.6,
+              0
+            ],
+            [
+              16,
+              0
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "pumpkin-near-emission",
+      "name": "pumpkin-near-emission",
+      "asset": "pumpkin-near-emission",
+      "x": 0.1388121546961326,
+      "y": 0.8798342541436464,
+      "width": 0.12292817679558012,
+      "height": 0.1721915285451197,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "pumpkin-left-emission",
+      "name": "pumpkin-left-emission",
+      "asset": "pumpkin-left-emission",
+      "x": 0.4720303867403315,
+      "y": 0.6441068139963168,
+      "width": 0.07251381215469613,
+      "height": 0.09484346224677716,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "pumpkin-right-emission",
+      "name": "pumpkin-right-emission",
+      "asset": "pumpkin-right-emission",
+      "x": 0.7341160220994476,
+      "y": 0.6993554327808471,
+      "width": 0.07734806629834254,
+      "height": 0.10957642725598526,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "pumpkin-step-emission",
+      "name": "pumpkin-step-emission",
+      "asset": "pumpkin-step-emission",
+      "x": 0.7496546961325967,
+      "y": 0.5552486187845304,
+      "width": 0.06422651933701658,
+      "height": 0.0847145488029466,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 16,
+      "phase_frames": 0
+    },
+    {
+      "id": "lantern-left-flame",
+      "name": "lantern-left-flame",
+      "asset": "flame-native-alpha",
+      "x": 0.3611878453038674,
+      "y": 0.7322744014732965,
+      "width": 0.03516509932996356,
+      "height": 0.04790607734806629,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 2,
+      "phase_frames": 0
+    },
+    {
+      "id": "lantern-step-flame",
+      "name": "lantern-step-flame",
+      "asset": "flame-native-alpha",
+      "x": 0.585635359116022,
+      "y": 0.5428176795580111,
+      "width": 0.026676971905489597,
+      "height": 0.036342541436464086,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 2,
+      "phase_frames": 1
+    },
+    {
+      "id": "lantern-step-low-flame",
+      "name": "lantern-step-low-flame",
+      "asset": "flame-native-alpha",
+      "x": 0.5538674033149171,
+      "y": 0.6104972375690608,
+      "width": 0.02425179264135418,
+      "height": 0.033038674033149175,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 2,
+      "phase_frames": 2
+    },
+    {
+      "id": "lantern-right-low-flame",
+      "name": "lantern-right-low-flame",
+      "asset": "flame-native-alpha",
+      "x": 0.7140883977900553,
+      "y": 0.7104051565377533,
+      "width": 0.026676971905489597,
+      "height": 0.036342541436464086,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 2,
+      "phase_frames": 3
+    },
+    {
+      "id": "lantern-post-flame",
+      "name": "lantern-post-flame",
+      "asset": "flame-native-alpha",
+      "x": 0.9323204419889503,
+      "y": 0.6954419889502763,
+      "width": 0.059416891971317734,
+      "height": 0.08094475138121547,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 2,
+      "phase_frames": 4
+    },
+    {
+      "id": "sconce-0-flame",
+      "name": "sconce-0-flame",
+      "asset": "flame-native-alpha",
+      "x": 0.5966850828729282,
+      "y": 0.3218232044198895,
+      "width": 0.026676971905489597,
+      "height": 0.036342541436464086,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 2,
+      "phase_frames": 5
+    },
+    {
+      "id": "sconce-1-flame",
+      "name": "sconce-1-flame",
+      "asset": "flame-native-alpha",
+      "x": 0.7569060773480663,
+      "y": 0.31445672191528545,
+      "width": 0.026676971905489597,
+      "height": 0.036342541436464086,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 2,
+      "phase_frames": 6
+    },
+    {
+      "id": "sconce-2-flame",
+      "name": "sconce-2-flame",
+      "asset": "flame-native-alpha",
+      "x": 0.7962707182320442,
+      "y": 0.31169429097605894,
+      "width": 0.026676971905489597,
+      "height": 0.036342541436464086,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1,
+      "cycle_seconds": 2,
+      "phase_frames": 7
+    },
+    {
+      "id": "leaf-0",
+      "name": "leaf-0",
+      "asset": "leaf-native-alpha",
+      "x": 0.3383977900552486,
+      "y": 0.055248618784530384,
+      "width": 0.010359116022099447,
+      "height": 0.013812154696132596,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1.4,
+      "cycle_seconds": 4,
+      "phase_frames": 0,
+      "track_loop": "hidden-reset",
+      "tracks": {
+        "x": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.3383977900552486
+            ],
+            [
+              3,
+              0.22790055248618785
+            ],
+            [
+              16,
+              0.3383977900552486
+            ]
+          ]
+        },
+        "y": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.055248618784530384
+            ],
+            [
+              3,
+              0.2992633517495396
+            ],
+            [
+              16,
+              0.055248618784530384
+            ]
+          ]
+        },
+        "visible": {
+          "interpolation": "hold",
+          "keys": [
+            [
+              0,
+              false
+            ],
+            [
+              0.04,
+              true
+            ],
+            [
+              3,
+              false
+            ],
+            [
+              16,
+              false
+            ]
+          ]
+        },
+        "rotation": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              -0.7
+            ],
+            [
+              3,
+              1.2
+            ],
+            [
+              16,
+              -0.7
+            ]
+          ]
+        },
+        "opacity": {
+          "interpolation": "smoothstep",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              0.04,
+              0
+            ],
+            [
+              0.33999999999999997,
+              0.88
+            ],
+            [
+              2.7,
+              0.88
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              16,
+              0
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "leaf-1",
+      "name": "leaf-1",
+      "asset": "leaf-native-alpha",
+      "x": 0.4053867403314917,
+      "y": 0.16482504604051565,
+      "width": 0.013812154696132596,
+      "height": 0.01841620626151013,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1.4,
+      "cycle_seconds": 4,
+      "phase_frames": 1,
+      "track_loop": "hidden-reset",
+      "tracks": {
+        "x": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.4053867403314917
+            ],
+            [
+              1.13,
+              0.4053867403314917
+            ],
+            [
+              4.68,
+              0.2569060773480663
+            ],
+            [
+              16,
+              0.4053867403314917
+            ]
+          ]
+        },
+        "y": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.16482504604051565
+            ],
+            [
+              1.13,
+              0.16482504604051565
+            ],
+            [
+              4.68,
+              0.43186003683241253
+            ],
+            [
+              16,
+              0.16482504604051565
+            ]
+          ]
+        },
+        "visible": {
+          "interpolation": "hold",
+          "keys": [
+            [
+              0,
+              false
+            ],
+            [
+              1.13,
+              true
+            ],
+            [
+              4.68,
+              false
+            ],
+            [
+              16,
+              false
+            ]
+          ]
+        },
+        "rotation": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              -0.39999999999999997
+            ],
+            [
+              4.68,
+              1.5
+            ],
+            [
+              16,
+              -0.39999999999999997
+            ]
+          ]
+        },
+        "opacity": {
+          "interpolation": "smoothstep",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              1.13,
+              0
+            ],
+            [
+              1.43,
+              0.88
+            ],
+            [
+              4.38,
+              0.88
+            ],
+            [
+              4.68,
+              0
+            ],
+            [
+              16,
+              0
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "leaf-2",
+      "name": "leaf-2",
+      "asset": "leaf-native-alpha",
+      "x": 0.4723756906077348,
+      "y": 0.27440147329650094,
+      "width": 0.017265193370165747,
+      "height": 0.02302025782688766,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1.4,
+      "cycle_seconds": 4,
+      "phase_frames": 2,
+      "track_loop": "hidden-reset",
+      "tracks": {
+        "x": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.4723756906077348
+            ],
+            [
+              2.26,
+              0.4723756906077348
+            ],
+            [
+              6.359999999999999,
+              0.28591160220994477
+            ],
+            [
+              16,
+              0.4723756906077348
+            ]
+          ]
+        },
+        "y": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.27440147329650094
+            ],
+            [
+              2.26,
+              0.27440147329650094
+            ],
+            [
+              6.359999999999999,
+              0.5644567219152854
+            ],
+            [
+              16,
+              0.27440147329650094
+            ]
+          ]
+        },
+        "visible": {
+          "interpolation": "hold",
+          "keys": [
+            [
+              0,
+              false
+            ],
+            [
+              2.26,
+              true
+            ],
+            [
+              6.359999999999999,
+              false
+            ],
+            [
+              16,
+              false
+            ]
+          ]
+        },
+        "rotation": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              -0.09999999999999998
+            ],
+            [
+              6.359999999999999,
+              1.7999999999999998
+            ],
+            [
+              16,
+              -0.09999999999999998
+            ]
+          ]
+        },
+        "opacity": {
+          "interpolation": "smoothstep",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              2.26,
+              0
+            ],
+            [
+              2.5599999999999996,
+              0.88
+            ],
+            [
+              6.06,
+              0.88
+            ],
+            [
+              6.359999999999999,
+              0
+            ],
+            [
+              16,
+              0
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "leaf-3",
+      "name": "leaf-3",
+      "asset": "leaf-native-alpha",
+      "x": 0.539364640883978,
+      "y": 0.3839779005524862,
+      "width": 0.020718232044198894,
+      "height": 0.027624309392265192,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1.4,
+      "cycle_seconds": 4,
+      "phase_frames": 3,
+      "track_loop": "hidden-reset",
+      "tracks": {
+        "x": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.539364640883978
+            ],
+            [
+              3.3899999999999997,
+              0.539364640883978
+            ],
+            [
+              8.04,
+              0.42886740331491713
+            ],
+            [
+              16,
+              0.539364640883978
+            ]
+          ]
+        },
+        "y": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.3839779005524862
+            ],
+            [
+              3.3899999999999997,
+              0.3839779005524862
+            ],
+            [
+              8.04,
+              0.6970534069981584
+            ],
+            [
+              16,
+              0.3839779005524862
+            ]
+          ]
+        },
+        "visible": {
+          "interpolation": "hold",
+          "keys": [
+            [
+              0,
+              false
+            ],
+            [
+              3.3899999999999997,
+              true
+            ],
+            [
+              8.04,
+              false
+            ],
+            [
+              16,
+              false
+            ]
+          ]
+        },
+        "rotation": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.19999999999999996
+            ],
+            [
+              8.04,
+              2.0999999999999996
+            ],
+            [
+              16,
+              0.19999999999999996
+            ]
+          ]
+        },
+        "opacity": {
+          "interpolation": "smoothstep",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              3.3899999999999997,
+              0
+            ],
+            [
+              3.6899999999999995,
+              0.88
+            ],
+            [
+              7.739999999999999,
+              0.88
+            ],
+            [
+              8.04,
+              0
+            ],
+            [
+              16,
+              0
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "leaf-4",
+      "name": "leaf-4",
+      "asset": "leaf-native-alpha",
+      "x": 0.606353591160221,
+      "y": 0.49355432780847147,
+      "width": 0.010359116022099447,
+      "height": 0.013812154696132596,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1.4,
+      "cycle_seconds": 4,
+      "phase_frames": 4,
+      "track_loop": "hidden-reset",
+      "tracks": {
+        "x": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.606353591160221
+            ],
+            [
+              4.52,
+              0.606353591160221
+            ],
+            [
+              7.52,
+              0.4578729281767956
+            ],
+            [
+              16,
+              0.606353591160221
+            ]
+          ]
+        },
+        "y": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.49355432780847147
+            ],
+            [
+              4.52,
+              0.49355432780847147
+            ],
+            [
+              7.52,
+              0.7375690607734806
+            ],
+            [
+              16,
+              0.49355432780847147
+            ]
+          ]
+        },
+        "visible": {
+          "interpolation": "hold",
+          "keys": [
+            [
+              0,
+              false
+            ],
+            [
+              4.52,
+              true
+            ],
+            [
+              7.52,
+              false
+            ],
+            [
+              16,
+              false
+            ]
+          ]
+        },
+        "rotation": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.5
+            ],
+            [
+              7.52,
+              2.4
+            ],
+            [
+              16,
+              0.5
+            ]
+          ]
+        },
+        "opacity": {
+          "interpolation": "smoothstep",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              4.52,
+              0
+            ],
+            [
+              4.819999999999999,
+              0.88
+            ],
+            [
+              7.22,
+              0.88
+            ],
+            [
+              7.52,
+              0
+            ],
+            [
+              16,
+              0
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "leaf-5",
+      "name": "leaf-5",
+      "asset": "leaf-native-alpha",
+      "x": 0.6733425414364641,
+      "y": 0.07826887661141804,
+      "width": 0.013812154696132596,
+      "height": 0.01841620626151013,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1.4,
+      "cycle_seconds": 4,
+      "phase_frames": 5,
+      "track_loop": "hidden-reset",
+      "tracks": {
+        "x": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.6733425414364641
+            ],
+            [
+              5.6499999999999995,
+              0.6733425414364641
+            ],
+            [
+              9.2,
+              0.48687845303867405
+            ],
+            [
+              16,
+              0.6733425414364641
+            ]
+          ]
+        },
+        "y": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.07826887661141804
+            ],
+            [
+              5.6499999999999995,
+              0.07826887661141804
+            ],
+            [
+              9.2,
+              0.3453038674033149
+            ],
+            [
+              16,
+              0.07826887661141804
+            ]
+          ]
+        },
+        "visible": {
+          "interpolation": "hold",
+          "keys": [
+            [
+              0,
+              false
+            ],
+            [
+              5.6499999999999995,
+              true
+            ],
+            [
+              9.2,
+              false
+            ],
+            [
+              16,
+              false
+            ]
+          ]
+        },
+        "rotation": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.8
+            ],
+            [
+              9.2,
+              2.7
+            ],
+            [
+              16,
+              0.8
+            ]
+          ]
+        },
+        "opacity": {
+          "interpolation": "smoothstep",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              5.6499999999999995,
+              0
+            ],
+            [
+              5.949999999999999,
+              0.88
+            ],
+            [
+              8.899999999999999,
+              0.88
+            ],
+            [
+              9.2,
+              0
+            ],
+            [
+              16,
+              0
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "leaf-6",
+      "name": "leaf-6",
+      "asset": "leaf-native-alpha",
+      "x": 0.7403314917127072,
+      "y": 0.1878453038674033,
+      "width": 0.017265193370165747,
+      "height": 0.02302025782688766,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1.4,
+      "cycle_seconds": 4,
+      "phase_frames": 0,
+      "track_loop": "hidden-reset",
+      "tracks": {
+        "x": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.7403314917127072
+            ],
+            [
+              6.779999999999999,
+              0.7403314917127072
+            ],
+            [
+              10.879999999999999,
+              0.6298342541436464
+            ],
+            [
+              16,
+              0.7403314917127072
+            ]
+          ]
+        },
+        "y": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.1878453038674033
+            ],
+            [
+              6.779999999999999,
+              0.1878453038674033
+            ],
+            [
+              10.879999999999999,
+              0.47790055248618785
+            ],
+            [
+              16,
+              0.1878453038674033
+            ]
+          ]
+        },
+        "visible": {
+          "interpolation": "hold",
+          "keys": [
+            [
+              0,
+              false
+            ],
+            [
+              6.779999999999999,
+              true
+            ],
+            [
+              10.879999999999999,
+              false
+            ],
+            [
+              16,
+              false
+            ]
+          ]
+        },
+        "rotation": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              1.0999999999999999
+            ],
+            [
+              10.879999999999999,
+              3
+            ],
+            [
+              16,
+              1.0999999999999999
+            ]
+          ]
+        },
+        "opacity": {
+          "interpolation": "smoothstep",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              6.779999999999999,
+              0
+            ],
+            [
+              7.079999999999999,
+              0.88
+            ],
+            [
+              10.579999999999998,
+              0.88
+            ],
+            [
+              10.879999999999999,
+              0
+            ],
+            [
+              16,
+              0
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "leaf-7",
+      "name": "leaf-7",
+      "asset": "leaf-native-alpha",
+      "x": 0.8073204419889503,
+      "y": 0.2974217311233886,
+      "width": 0.020718232044198894,
+      "height": 0.027624309392265192,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1.4,
+      "cycle_seconds": 4,
+      "phase_frames": 1,
+      "track_loop": "hidden-reset",
+      "tracks": {
+        "x": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.8073204419889503
+            ],
+            [
+              7.909999999999999,
+              0.8073204419889503
+            ],
+            [
+              12.559999999999999,
+              0.6588397790055248
+            ],
+            [
+              16,
+              0.8073204419889503
+            ]
+          ]
+        },
+        "y": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.2974217311233886
+            ],
+            [
+              7.909999999999999,
+              0.2974217311233886
+            ],
+            [
+              12.559999999999999,
+              0.6104972375690608
+            ],
+            [
+              16,
+              0.2974217311233886
+            ]
+          ]
+        },
+        "visible": {
+          "interpolation": "hold",
+          "keys": [
+            [
+              0,
+              false
+            ],
+            [
+              7.909999999999999,
+              true
+            ],
+            [
+              12.559999999999999,
+              false
+            ],
+            [
+              16,
+              false
+            ]
+          ]
+        },
+        "rotation": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              1.4000000000000001
+            ],
+            [
+              12.559999999999999,
+              3.3
+            ],
+            [
+              16,
+              1.4000000000000001
+            ]
+          ]
+        },
+        "opacity": {
+          "interpolation": "smoothstep",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              7.909999999999999,
+              0
+            ],
+            [
+              8.209999999999999,
+              0.88
+            ],
+            [
+              12.259999999999998,
+              0.88
+            ],
+            [
+              12.559999999999999,
+              0
+            ],
+            [
+              16,
+              0
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "leaf-8",
+      "name": "leaf-8",
+      "asset": "leaf-native-alpha",
+      "x": 0.8743093922651933,
+      "y": 0.40699815837937386,
+      "width": 0.010359116022099447,
+      "height": 0.013812154696132596,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1.4,
+      "cycle_seconds": 4,
+      "phase_frames": 2,
+      "track_loop": "hidden-reset",
+      "tracks": {
+        "x": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.8743093922651933
+            ],
+            [
+              9.04,
+              0.8743093922651933
+            ],
+            [
+              12.04,
+              0.6878453038674033
+            ],
+            [
+              16,
+              0.8743093922651933
+            ]
+          ]
+        },
+        "y": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.40699815837937386
+            ],
+            [
+              9.04,
+              0.40699815837937386
+            ],
+            [
+              12.04,
+              0.651012891344383
+            ],
+            [
+              16,
+              0.40699815837937386
+            ]
+          ]
+        },
+        "visible": {
+          "interpolation": "hold",
+          "keys": [
+            [
+              0,
+              false
+            ],
+            [
+              9.04,
+              true
+            ],
+            [
+              12.04,
+              false
+            ],
+            [
+              16,
+              false
+            ]
+          ]
+        },
+        "rotation": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              1.7
+            ],
+            [
+              12.04,
+              3.5999999999999996
+            ],
+            [
+              16,
+              1.7
+            ]
+          ]
+        },
+        "opacity": {
+          "interpolation": "smoothstep",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              9.04,
+              0
+            ],
+            [
+              9.34,
+              0.88
+            ],
+            [
+              11.739999999999998,
+              0.88
+            ],
+            [
+              12.04,
+              0
+            ],
+            [
+              16,
+              0
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "leaf-9",
+      "name": "leaf-9",
+      "asset": "leaf-native-alpha",
+      "x": 0.35428176795580113,
+      "y": 0.5165745856353591,
+      "width": 0.013812154696132596,
+      "height": 0.01841620626151013,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1.4,
+      "cycle_seconds": 4,
+      "phase_frames": 3,
+      "track_loop": "hidden-reset",
+      "tracks": {
+        "x": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.35428176795580113
+            ],
+            [
+              10.169999999999998,
+              0.35428176795580113
+            ],
+            [
+              13.719999999999999,
+              0.24378453038674033
+            ],
+            [
+              16,
+              0.35428176795580113
+            ]
+          ]
+        },
+        "y": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.5165745856353591
+            ],
+            [
+              10.169999999999998,
+              0.5165745856353591
+            ],
+            [
+              13.719999999999999,
+              0.783609576427256
+            ],
+            [
+              16,
+              0.5165745856353591
+            ]
+          ]
+        },
+        "visible": {
+          "interpolation": "hold",
+          "keys": [
+            [
+              0,
+              false
+            ],
+            [
+              10.169999999999998,
+              true
+            ],
+            [
+              13.719999999999999,
+              false
+            ],
+            [
+              16,
+              false
+            ]
+          ]
+        },
+        "rotation": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              1.9999999999999998
+            ],
+            [
+              13.719999999999999,
+              3.8999999999999995
+            ],
+            [
+              16,
+              1.9999999999999998
+            ]
+          ]
+        },
+        "opacity": {
+          "interpolation": "smoothstep",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              10.169999999999998,
+              0
+            ],
+            [
+              10.469999999999999,
+              0.88
+            ],
+            [
+              13.419999999999998,
+              0.88
+            ],
+            [
+              13.719999999999999,
+              0
+            ],
+            [
+              16,
+              0
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "leaf-10",
+      "name": "leaf-10",
+      "asset": "leaf-native-alpha",
+      "x": 0.4212707182320442,
+      "y": 0.10128913443830571,
+      "width": 0.017265193370165747,
+      "height": 0.02302025782688766,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1.4,
+      "cycle_seconds": 4,
+      "phase_frames": 4,
+      "track_loop": "hidden-reset",
+      "tracks": {
+        "x": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.4212707182320442
+            ],
+            [
+              11.299999999999999,
+              0.4212707182320442
+            ],
+            [
+              15.399999999999999,
+              0.27279005524861877
+            ],
+            [
+              16,
+              0.4212707182320442
+            ]
+          ]
+        },
+        "y": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.10128913443830571
+            ],
+            [
+              11.299999999999999,
+              0.10128913443830571
+            ],
+            [
+              15.399999999999999,
+              0.39134438305709024
+            ],
+            [
+              16,
+              0.10128913443830571
+            ]
+          ]
+        },
+        "visible": {
+          "interpolation": "hold",
+          "keys": [
+            [
+              0,
+              false
+            ],
+            [
+              11.299999999999999,
+              true
+            ],
+            [
+              15.399999999999999,
+              false
+            ],
+            [
+              16,
+              false
+            ]
+          ]
+        },
+        "rotation": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              2.3
+            ],
+            [
+              15.399999999999999,
+              4.2
+            ],
+            [
+              16,
+              2.3
+            ]
+          ]
+        },
+        "opacity": {
+          "interpolation": "smoothstep",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              11.299999999999999,
+              0
+            ],
+            [
+              11.6,
+              0.88
+            ],
+            [
+              15.099999999999998,
+              0.88
+            ],
+            [
+              15.399999999999999,
+              0
+            ],
+            [
+              16,
+              0
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "leaf-11",
+      "name": "leaf-11",
+      "asset": "leaf-native-alpha",
+      "x": 0.4882596685082873,
+      "y": 0.21086556169429096,
+      "width": 0.020718232044198894,
+      "height": 0.027624309392265192,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1.4,
+      "cycle_seconds": 4,
+      "phase_frames": 5,
+      "track_loop": "hidden-reset",
+      "tracks": {
+        "x": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.4882596685082873
+            ],
+            [
+              12.43,
+              0.4882596685082873
+            ],
+            [
+              15.7,
+              0.30179558011049723
+            ],
+            [
+              16,
+              0.4882596685082873
+            ]
+          ]
+        },
+        "y": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.21086556169429096
+            ],
+            [
+              12.43,
+              0.21086556169429096
+            ],
+            [
+              15.7,
+              0.5239410681399632
+            ],
+            [
+              16,
+              0.21086556169429096
+            ]
+          ]
+        },
+        "visible": {
+          "interpolation": "hold",
+          "keys": [
+            [
+              0,
+              false
+            ],
+            [
+              12.43,
+              true
+            ],
+            [
+              15.7,
+              false
+            ],
+            [
+              16,
+              false
+            ]
+          ]
+        },
+        "rotation": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              2.5999999999999996
+            ],
+            [
+              15.7,
+              4.5
+            ],
+            [
+              16,
+              2.5999999999999996
+            ]
+          ]
+        },
+        "opacity": {
+          "interpolation": "smoothstep",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              12.43,
+              0
+            ],
+            [
+              12.73,
+              0.88
+            ],
+            [
+              15.399999999999999,
+              0.88
+            ],
+            [
+              15.7,
+              0
+            ],
+            [
+              16,
+              0
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "leaf-12",
+      "name": "leaf-12",
+      "asset": "leaf-native-alpha",
+      "x": 0.5552486187845304,
+      "y": 0.32044198895027626,
+      "width": 0.010359116022099447,
+      "height": 0.013812154696132596,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1.4,
+      "cycle_seconds": 4,
+      "phase_frames": 0,
+      "track_loop": "hidden-reset",
+      "tracks": {
+        "x": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.5552486187845304
+            ],
+            [
+              0.5599999999999987,
+              0.5552486187845304
+            ],
+            [
+              3.5599999999999987,
+              0.4447513812154696
+            ],
+            [
+              16,
+              0.5552486187845304
+            ]
+          ]
+        },
+        "y": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.32044198895027626
+            ],
+            [
+              0.5599999999999987,
+              0.32044198895027626
+            ],
+            [
+              3.5599999999999987,
+              0.5644567219152854
+            ],
+            [
+              16,
+              0.32044198895027626
+            ]
+          ]
+        },
+        "visible": {
+          "interpolation": "hold",
+          "keys": [
+            [
+              0,
+              false
+            ],
+            [
+              0.5599999999999987,
+              true
+            ],
+            [
+              3.5599999999999987,
+              false
+            ],
+            [
+              16,
+              false
+            ]
+          ]
+        },
+        "rotation": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              2.8999999999999995
+            ],
+            [
+              3.5599999999999987,
+              4.8
+            ],
+            [
+              16,
+              2.8999999999999995
+            ]
+          ]
+        },
+        "opacity": {
+          "interpolation": "smoothstep",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              0.5599999999999987,
+              0
+            ],
+            [
+              0.8599999999999988,
+              0.88
+            ],
+            [
+              3.259999999999999,
+              0.88
+            ],
+            [
+              3.5599999999999987,
+              0
+            ],
+            [
+              16,
+              0
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "leaf-13",
+      "name": "leaf-13",
+      "asset": "leaf-native-alpha",
+      "x": 0.6222375690607734,
+      "y": 0.4300184162062615,
+      "width": 0.013812154696132596,
+      "height": 0.01841620626151013,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "scale": 1,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "blend": "source-over",
+      "depth": 1.4,
+      "cycle_seconds": 4,
+      "phase_frames": 1,
+      "track_loop": "hidden-reset",
+      "tracks": {
+        "x": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.6222375690607734
+            ],
+            [
+              1.6899999999999977,
+              0.6222375690607734
+            ],
+            [
+              5.2399999999999975,
+              0.47375690607734805
+            ],
+            [
+              16,
+              0.6222375690607734
+            ]
+          ]
+        },
+        "y": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0.4300184162062615
+            ],
+            [
+              1.6899999999999977,
+              0.4300184162062615
+            ],
+            [
+              5.2399999999999975,
+              0.6970534069981584
+            ],
+            [
+              16,
+              0.4300184162062615
+            ]
+          ]
+        },
+        "visible": {
+          "interpolation": "hold",
+          "keys": [
+            [
+              0,
+              false
+            ],
+            [
+              1.6899999999999977,
+              true
+            ],
+            [
+              5.2399999999999975,
+              false
+            ],
+            [
+              16,
+              false
+            ]
+          ]
+        },
+        "rotation": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              3.2
+            ],
+            [
+              5.2399999999999975,
+              5.1
+            ],
+            [
+              16,
+              3.2
+            ]
+          ]
+        },
+        "opacity": {
+          "interpolation": "smoothstep",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              1.6899999999999977,
+              0
+            ],
+            [
+              1.9899999999999978,
+              0.88
+            ],
+            [
+              4.939999999999998,
+              0.88
+            ],
+            [
+              5.2399999999999975,
+              0
+            ],
+            [
+              16,
+              0
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "framing": {
+    "version": 1,
+    "views": {
+      "portrait": {
+        "rect_scene_px": [
+          531,
+          0,
+          610.875,
+          1086
+        ],
+        "output": {
+          "width": 1080,
+          "height": 1920
+        }
+      },
+      "landscape": {
+        "rect_scene_px": [
+          0,
+          30,
+          1448,
+          814.5
+        ],
+        "output": {
+          "width": 1920,
+          "height": 1080
+        }
+      }
+    }
+  },
+  "finishing": {
+    "version": 1,
+    "working_space": "linear-srgb",
+    "output_space": "srgb",
+    "signals": [
+      {
+        "id": "pumpkin-near-power",
+        "keys": [
+          [
+            0,
+            0.68
+          ],
+          [
+            0.25,
+            0.875491366981121
+          ],
+          [
+            0.5,
+            0.6730343102526546
+          ],
+          [
+            0.75,
+            0.4683575493038907
+          ],
+          [
+            1,
+            0.728552510690791
+          ],
+          [
+            1.25,
+            0.8545987232745449
+          ],
+          [
+            1.5,
+            0.6591622126910763
+          ],
+          [
+            1.75,
+            0.45756743870554556
+          ],
+          [
+            2,
+            0.7756912453247945
+          ],
+          [
+            2.25,
+            0.8296982038343262
+          ],
+          [
+            2.5,
+            0.6454706794351442
+          ],
+          [
+            2.75,
+            0.4526199056587796
+          ],
+          [
+            3,
+            0.8200454301543635
+          ],
+          [
+            3.25,
+            0.8016115003047084
+          ],
+          [
+            3.5,
+            0.6320889256837555
+          ],
+          [
+            3.75,
+            0.45383882375658924
+          ],
+          [
+            4,
+            0.8603289302548319
+          ],
+          [
+            4.25,
+            0.7712202749800702
+          ],
+          [
+            4.5,
+            0.6191586569992938
+          ],
+          [
+            4.75,
+            0.46137482076825004
+          ],
+          [
+            5,
+            0.8953791995700016
+          ],
+          [
+            5.25,
+            0.739437333333909
+          ],
+          [
+            5.5,
+            0.6068375693606531
+          ],
+          [
+            5.75,
+            0.4751948343907823
+          ],
+          [
+            6,
+            0.9241923125196232
+          ],
+          [
+            6.25,
+            0.7071779820210433
+          ],
+          [
+            6.5,
+            0.5953014450497516
+          ],
+          [
+            6.75,
+            0.49507724724089563
+          ],
+          [
+            7,
+            0.9459529744557347
+          ],
+          [
+            7.25,
+            0.6753325085125624
+          ],
+          [
+            7.5,
+            0.5847445699626727
+          ],
+          [
+            7.75,
+            0.5206129326335194
+          ],
+          [
+            8,
+            0.9600585736552892
+          ],
+          [
+            8.25,
+            0.6447406467821121
+          ],
+          [
+            8.5,
+            0.5753782852781056
+          ],
+          [
+            8.75,
+            0.5512123496662742
+          ],
+          [
+            9,
+            0.9661365334457358
+          ],
+          [
+            9.25,
+            0.616168793441872
+          ],
+          [
+            9.5,
+            0.5674275849568495
+          ],
+          [
+            9.75,
+            0.5861186235666211
+          ],
+          [
+            10,
+            0.9640544428132942
+          ],
+          [
+            10.25,
+            0.5902906147983655
+          ],
+          [
+            10.5,
+            0.5611257758969372
+          ],
+          [
+            10.75,
+            0.6244263421535344
+          ],
+          [
+            11,
+            0.953922679979667
+          ],
+          [
+            11.25,
+            0.5676715426122774
+          ],
+          [
+            11.5,
+            0.5567073249987493
+          ],
+          [
+            11.75,
+            0.6651055988277212
+          ],
+          [
+            12,
+            0.9360894879548687
+          ],
+          [
+            12.25,
+            0.548757500627182
+          ],
+          [
+            12.5,
+            0.5543991220288111
+          ],
+          [
+            12.75,
+            0.7070306239010558
+          ],
+          [
+            13,
+            0.9111287057275195
+          ],
+          [
+            13.25,
+            0.5338680412542898
+          ],
+          [
+            13.5,
+            0.5544104841941155
+          ],
+          [
+            13.75,
+            0.7490121761725603
+          ],
+          [
+            14,
+            0.8798205953144486
+          ],
+          [
+            14.25,
+            0.5231939083555933
+          ],
+          [
+            14.5,
+            0.5569223131967306
+          ],
+          [
+            14.75,
+            0.7898327217658744
+          ],
+          [
+            15,
+            0.8431264254484258
+          ],
+          [
+            15.25,
+            0.5167988839312706
+          ],
+          [
+            15.5,
+            0.5620758841310631
+          ],
+          [
+            15.75,
+            0.8282833128842877
+          ],
+          [
+            16,
+            0.68
+          ]
+        ],
+        "interpolation": "smoothstep"
+      },
+      {
+        "id": "pumpkin-left-power",
+        "keys": [
+          [
+            0,
+            0.9301309653758907
+          ],
+          [
+            0.25,
+            0.7014527689711627
+          ],
+          [
+            0.5,
+            0.581591971558705
+          ],
+          [
+            0.75,
+            0.5168782920055859
+          ],
+          [
+            1,
+            0.9362059058954724
+          ],
+          [
+            1.25,
+            0.6827386111804734
+          ],
+          [
+            1.5,
+            0.5588391462959663
+          ],
+          [
+            1.75,
+            0.5568561130092571
+          ],
+          [
+            2,
+            0.9350551908416495
+          ],
+          [
+            2.25,
+            0.6648617769858987
+          ],
+          [
+            2.5,
+            0.538190962147305
+          ],
+          [
+            2.75,
+            0.6006867933022353
+          ],
+          [
+            3,
+            0.9268542533799223
+          ],
+          [
+            3.25,
+            0.6481058245852307
+          ],
+          [
+            3.5,
+            0.5203168746627809
+          ],
+          [
+            3.75,
+            0.6471247579686503
+          ],
+          [
+            4,
+            0.911981108079018
+          ],
+          [
+            4.25,
+            0.632698796758485
+          ],
+          [
+            4.5,
+            0.505844647464021
+          ],
+          [
+            4.75,
+            0.6948357467147468
+          ],
+          [
+            5,
+            0.8910004677985754
+          ],
+          [
+            5.25,
+            0.6188144701265852
+          ],
+          [
+            5.5,
+            0.4953378780144692
+          ],
+          [
+            5.75,
+            0.7424368323743809
+          ],
+          [
+            6,
+            0.8646424208076129
+          ],
+          [
+            6.25,
+            0.6065757270985028
+          ],
+          [
+            6.5,
+            0.4892743760726291
+          ],
+          [
+            6.75,
+            0.7885382850350691
+          ],
+          [
+            7,
+            0.8337764703979196
+          ],
+          [
+            7.25,
+            0.5960596823403229
+          ],
+          [
+            7.5,
+            0.48802621660763496
+          ],
+          [
+            7.75,
+            0.8317859581659693
+          ],
+          [
+            8,
+            0.7993818747076411
+          ],
+          [
+            8.25,
+            0.5873041336476844
+          ],
+          [
+            8.5,
+            0.4918422639659804
+          ],
+          [
+            8.75,
+            0.8709028470485168
+          ],
+          [
+            9,
+            0.7625153256731602
+          ],
+          [
+            9.25,
+            0.5803148670800622
+          ],
+          [
+            9.5,
+            0.5008339080496536
+          ],
+          [
+            9.75,
+            0.9047284884206055
+          ],
+          [
+            10,
+            0.7242770701092611
+          ],
+          [
+            10.25,
+            0.5750733293848621
+          ],
+          [
+            10.5,
+            0.5149646674014619
+          ],
+          [
+            10.75,
+            0.932254933153055
+          ],
+          [
+            11,
+            0.6857766013515224
+          ],
+          [
+            11.25,
+            0.571544187359712
+          ],
+          [
+            11.5,
+            0.5340442007633898
+          ],
+          [
+            11.75,
+            0.9526581290678223
+          ],
+          [
+            12,
+            0.6480990365349015
+          ],
+          [
+            12.25,
+            0.5696823231258459
+          ],
+          [
+            12.5,
+            0.5577271313485545
+          ],
+          [
+            12.75,
+            0.9653236953048435
+          ],
+          [
+            13,
+            0.612273243649771
+          ],
+          [
+            13.25,
+            0.5694388646023424
+          ],
+          [
+            13.5,
+            0.5855169312057465
+          ],
+          [
+            13.75,
+            0.9698662482244469
+          ],
+          [
+            14,
+            0.5792426965357538
+          ],
+          [
+            14.25,
+            0.5707659191818244
+          ],
+          [
+            14.5,
+            0.6167749419557541
+          ],
+          [
+            14.75,
+            0.9661416457817606
+          ],
+          [
+            15,
+            0.5498399186634678
+          ],
+          [
+            15.25,
+            0.5736197623440694
+          ],
+          [
+            15.5,
+            0.6507344287931777
+          ],
+          [
+            15.75,
+            0.9542517457299395
+          ],
+          [
+            16,
+            0.9301309653758907
+          ]
+        ],
+        "interpolation": "smoothstep"
+      },
+      {
+        "id": "pumpkin-right-power",
+        "keys": [
+          [
+            0,
+            0.793747260787423
+          ],
+          [
+            0.25,
+            0.6605858787806593
+          ],
+          [
+            0.5,
+            0.43173857012284556
+          ],
+          [
+            0.75,
+            0.8599021822252283
+          ],
+          [
+            1,
+            0.7684707264995823
+          ],
+          [
+            1.25,
+            0.6431713185716108
+          ],
+          [
+            1.5,
+            0.440439320673888
+          ],
+          [
+            1.75,
+            0.8931916742794623
+          ],
+          [
+            2,
+            0.7420262373471757
+          ],
+          [
+            2.25,
+            0.6256308538491506
+          ],
+          [
+            2.5,
+            0.4560728334807507
+          ],
+          [
+            2.75,
+            0.9201738559228052
+          ],
+          [
+            3,
+            0.7151542113414744
+          ],
+          [
+            3.25,
+            0.6083134446594475
+          ],
+          [
+            3.5,
+            0.4783267896821485
+          ],
+          [
+            3.75,
+            0.9401255591955923
+          ],
+          [
+            4,
+            0.6885646467411364
+          ],
+          [
+            4.25,
+            0.5916041082773452
+          ],
+          [
+            4.5,
+            0.5066843482221378
+          ],
+          [
+            4.75,
+            0.9525386243751299
+          ],
+          [
+            5,
+            0.6629178091907391
+          ],
+          [
+            5.25,
+            0.5759159642305017
+          ],
+          [
+            5.5,
+            0.5404357349583846
+          ],
+          [
+            5.75,
+            0.9571330632202665
+          ],
+          [
+            6,
+            0.6388077390197099
+          ],
+          [
+            6.25,
+            0.561679981618686
+          ],
+          [
+            6.5,
+            0.5786961791026544
+          ],
+          [
+            6.75,
+            0.9538630092973082
+          ],
+          [
+            7,
+            0.6167489942591708
+          ],
+          [
+            7.25,
+            0.5493326846144255
+          ],
+          [
+            7.5,
+            0.6204297374553365
+          ],
+          [
+            7.75,
+            0.9429153437757247
+          ],
+          [
+            8,
+            0.5971669053345421
+          ],
+          [
+            8.25,
+            0.5393021820803144
+          ],
+          [
+            8.5,
+            0.664478342856646
+          ],
+          [
+            8.75,
+            0.9247011238478033
+          ],
+          [
+            9,
+            0.5803914728652373
+          ],
+          [
+            9.25,
+            0.5319929859068496
+          ],
+          [
+            9.5,
+            0.709595228472204
+          ],
+          [
+            9.75,
+            0.8998401730796558
+          ],
+          [
+            10,
+            0.5666548962772434
+          ],
+          [
+            10.25,
+            0.5277701653906787
+          ],
+          [
+            10.5,
+            0.7544817206104028
+          ],
+          [
+            10.75,
+            0.8691394107694229
+          ],
+          [
+            11,
+            0.5560925835668802
+          ],
+          [
+            11.25,
+            0.5269434477260773
+          ],
+          [
+            11.5,
+            0.7978262655597846
+          ],
+          [
+            11.75,
+            0.8335656935605885
+          ],
+          [
+            12,
+            0.5487473667198192
+          ],
+          [
+            12.25,
+            0.5297519141961256
+          ],
+          [
+            12.5,
+            0.8383444652227584
+          ],
+          [
+            12.75,
+            0.7942141107307579
+          ],
+          [
+            13,
+            0.5445765375866578
+          ],
+          [
+            13.25,
+            0.5363499555269936
+          ],
+          [
+            13.5,
+            0.874818845675328
+          ],
+          [
+            13.75,
+            0.7522728093695941
+          ],
+          [
+            14,
+            0.5434612292969891
+          ],
+          [
+            14.25,
+            0.5467951367038357
+          ],
+          [
+            14.5,
+            0.9061370744110849
+          ],
+          [
+            14.75,
+            0.7089855228983842
+          ],
+          [
+            15,
+            0.5452176015261048
+          ],
+          [
+            15.25,
+            0.561038580999735
+          ],
+          [
+            15.5,
+            0.9313273766953674
+          ],
+          [
+            15.75,
+            0.6656130332295933
+          ],
+          [
+            16,
+            0.793747260787423
+          ]
+        ],
+        "interpolation": "smoothstep"
+      },
+      {
+        "id": "pumpkin-step-power",
+        "keys": [
+          [
+            0,
+            0.6830766067740702
+          ],
+          [
+            0.25,
+            0.5019838686945146
+          ],
+          [
+            0.5,
+            0.6506949227327341
+          ],
+          [
+            0.75,
+            0.8923198328549856
+          ],
+          [
+            1,
+            0.668906446395332
+          ],
+          [
+            1.25,
+            0.4839984694600928
+          ],
+          [
+            1.5,
+            0.6993518128486541
+          ],
+          [
+            1.75,
+            0.8732307671709941
+          ],
+          [
+            2,
+            0.655111838411209
+          ],
+          [
+            2.25,
+            0.47077552633226755
+          ],
+          [
+            2.5,
+            0.7475254150680829
+          ],
+          [
+            2.75,
+            0.8494639912403611
+          ],
+          [
+            3,
+            0.6418079961304124
+          ],
+          [
+            3.25,
+            0.4628625100972544
+          ],
+          [
+            3.5,
+            0.7938114144844081
+          ],
+          [
+            3.75,
+            0.8218234815524587
+          ],
+          [
+            4,
+            0.6291025743491386
+          ],
+          [
+            4.25,
+            0.46067002562948267
+          ],
+          [
+            4.5,
+            0.8368604337532647
+          ],
+          [
+            4.75,
+            0.7911976260947382
+          ],
+          [
+            5,
+            0.6171012062248233
+          ],
+          [
+            5.25,
+            0.4644536468389552
+          ],
+          [
+            5.5,
+            0.8754191269669264
+          ],
+          [
+            5.75,
+            0.7585295712015048
+          ],
+          [
+            6,
+            0.6059126164443667
+          ],
+          [
+            6.25,
+            0.4743001035650122
+          ],
+          [
+            6.5,
+            0.9083682966505006
+          ],
+          [
+            6.75,
+            0.724786916181167
+          ],
+          [
+            7,
+            0.5956528972129697
+          ],
+          [
+            7.25,
+            0.4901184412517825
+          ],
+          [
+            7.5,
+            0.9347568234148252
+          ],
+          [
+            7.75,
+            0.6909317670418111
+          ],
+          [
+            8,
+            0.5864485825888249
+          ],
+          [
+            8.25,
+            0.511636621212012
+          ],
+          [
+            8.5,
+            0.9538303340216421
+          ],
+          [
+            8.75,
+            0.6578921159725887
+          ],
+          [
+            9,
+            0.57843822433273
+          ],
+          [
+            9.25,
+            0.5384038554012074
+          ],
+          [
+            9.5,
+            0.9650537052294286
+          ],
+          [
+            9.75,
+            0.6265354361916152
+          ],
+          [
+            10,
+            0.5717722556443556
+          ],
+          [
+            10.25,
+            0.5697987806590512
+          ],
+          [
+            10.5,
+            0.9681267019936394
+          ],
+          [
+            10.75,
+            0.5976452758943348
+          ],
+          [
+            11,
+            0.5666110241410344
+          ],
+          [
+            11.25,
+            0.6050433797701417
+          ],
+          [
+            11.5,
+            0.9629922725891801
+          ],
+          [
+            11.75,
+            0.5719015048530087
+          ],
+          [
+            12,
+            0.5631209778900769
+          ],
+          [
+            12.25,
+            0.6432223573300971
+          ],
+          [
+            12.5,
+            0.9498372624340569
+          ],
+          [
+            12.75,
+            0.5498647180379033
+          ],
+          [
+            13,
+            0.56146909356729
+          ],
+          [
+            13.25,
+            0.6833074843487495
+          ],
+          [
+            13.5,
+            0.9290855547455918
+          ],
+          [
+            13.75,
+            0.5319651383400489
+          ],
+          [
+            14,
+            0.561815739059176
+          ],
+          [
+            14.25,
+            0.7241862437915094
+          ],
+          [
+            14.5,
+            0.9013838913548681
+          ],
+          [
+            14.75,
+            0.5184961913097941
+          ],
+          [
+            15,
+            0.5643062592742206
+          ],
+          [
+            15.25,
+            0.7646939465475111
+          ],
+          [
+            15.5,
+            0.8675808628058735
+          ],
+          [
+            15.75,
+            0.5096127551320399
+          ],
+          [
+            16,
+            0.6830766067740702
+          ]
+        ],
+        "interpolation": "smoothstep"
+      },
+      {
+        "id": "lantern-left-power",
+        "layer": "lantern-left-flame",
+        "values": [
+          0.85,
+          1,
+          0.74,
+          0.62,
+          0.9,
+          0.68,
+          1.08,
+          0.8
+        ]
+      },
+      {
+        "id": "lantern-step-power",
+        "layer": "lantern-step-flame",
+        "values": [
+          0.85,
+          1,
+          0.74,
+          0.62,
+          0.9,
+          0.68,
+          1.08,
+          0.8
+        ]
+      },
+      {
+        "id": "lantern-step-low-power",
+        "layer": "lantern-step-low-flame",
+        "values": [
+          0.85,
+          1,
+          0.74,
+          0.62,
+          0.9,
+          0.68,
+          1.08,
+          0.8
+        ]
+      },
+      {
+        "id": "lantern-right-low-power",
+        "layer": "lantern-right-low-flame",
+        "values": [
+          0.85,
+          1,
+          0.74,
+          0.62,
+          0.9,
+          0.68,
+          1.08,
+          0.8
+        ]
+      },
+      {
+        "id": "lantern-post-power",
+        "layer": "lantern-post-flame",
+        "values": [
+          0.85,
+          1,
+          0.74,
+          0.62,
+          0.9,
+          0.68,
+          1.08,
+          0.8
+        ]
+      },
+      {
+        "id": "sconce-0-power",
+        "layer": "sconce-0-flame",
+        "values": [
+          0.85,
+          1,
+          0.74,
+          0.62,
+          0.9,
+          0.68,
+          1.08,
+          0.8
+        ]
+      },
+      {
+        "id": "sconce-1-power",
+        "layer": "sconce-1-flame",
+        "values": [
+          0.85,
+          1,
+          0.74,
+          0.62,
+          0.9,
+          0.68,
+          1.08,
+          0.8
+        ]
+      },
+      {
+        "id": "sconce-2-power",
+        "layer": "sconce-2-flame",
+        "values": [
+          0.85,
+          1,
+          0.74,
+          0.62,
+          0.9,
+          0.68,
+          1.08,
+          0.8
+        ]
+      }
+    ],
+    "lights": [
+      {
+        "id": "pumpkin-near-stones",
+        "receivers": [
+          "path",
+          "cottage"
+        ],
+        "rect": [
+          0.040469613259668503,
+          0.9228821362799263,
+          0.2335635359116022,
+          0.12914364640883977
+        ],
+        "color": "#ffad51",
+        "gain": 0.42,
+        "feather": 0.45,
+        "signal": "pumpkin-near-power",
+        "mask_asset": "receiver-falloff"
+      },
+      {
+        "id": "pumpkin-left-stones",
+        "receivers": [
+          "path",
+          "cottage"
+        ],
+        "rect": [
+          0.41401933701657456,
+          0.6678176795580111,
+          0.13777624309392264,
+          0.07113259668508287
+        ],
+        "color": "#ffad51",
+        "gain": 0.42,
+        "feather": 0.45,
+        "signal": "pumpkin-left-power",
+        "mask_asset": "receiver-falloff"
+      },
+      {
+        "id": "pumpkin-right-stones",
+        "receivers": [
+          "path",
+          "cottage"
+        ],
+        "rect": [
+          0.6722375690607735,
+          0.7267495395948435,
+          0.14696132596685083,
+          0.08218232044198895
+        ],
+        "color": "#ffad51",
+        "gain": 0.42,
+        "feather": 0.45,
+        "signal": "pumpkin-right-power",
+        "mask_asset": "receiver-falloff"
+      },
+      {
+        "id": "pumpkin-step-stones",
+        "receivers": [
+          "path",
+          "cottage"
+        ],
+        "rect": [
+          0.6982734806629834,
+          0.576427255985267,
+          0.12203038674033148,
+          0.06353591160220995
+        ],
+        "color": "#ffad51",
+        "gain": 0.42,
+        "feather": 0.45,
+        "signal": "pumpkin-step-power",
+        "mask_asset": "receiver-falloff"
+      },
+      {
+        "id": "lantern-left-receiver",
+        "receivers": [
+          "path",
+          "cottage",
+          "fence-right",
+          "fence-left"
+        ],
+        "rect": [
+          0.3244475138121547,
+          0.6935543278084715,
+          0.07348066298342541,
+          0.1014732965009208
+        ],
+        "color": "#ffb766",
+        "gain": 0.24,
+        "feather": 0.45,
+        "signal": "lantern-left-power",
+        "mask_asset": "receiver-falloff"
+      },
+      {
+        "id": "lantern-step-receiver",
+        "receivers": [
+          "path",
+          "cottage",
+          "fence-right",
+          "fence-left"
+        ],
+        "rect": [
+          0.5566298342541437,
+          0.5134438305709024,
+          0.058011049723756904,
+          0.07697974217311233
+        ],
+        "color": "#ffb766",
+        "gain": 0.24,
+        "feather": 0.45,
+        "signal": "lantern-step-power",
+        "mask_asset": "receiver-falloff"
+      },
+      {
+        "id": "lantern-step-low-receiver",
+        "receivers": [
+          "path",
+          "cottage",
+          "fence-right",
+          "fence-left"
+        ],
+        "rect": [
+          0.5306629834254144,
+          0.583793738489871,
+          0.04640883977900552,
+          0.06998158379373849
+        ],
+        "color": "#ffb766",
+        "gain": 0.24,
+        "feather": 0.45,
+        "signal": "lantern-step-low-power",
+        "mask_asset": "receiver-falloff"
+      },
+      {
+        "id": "lantern-right-low-receiver",
+        "receivers": [
+          "path",
+          "cottage",
+          "fence-right",
+          "fence-left"
+        ],
+        "rect": [
+          0.6870165745856354,
+          0.6810313075506446,
+          0.05414364640883977,
+          0.07697974217311233
+        ],
+        "color": "#ffb766",
+        "gain": 0.24,
+        "feather": 0.45,
+        "signal": "lantern-right-low-power",
+        "mask_asset": "receiver-falloff"
+      },
+      {
+        "id": "lantern-post-receiver",
+        "receivers": [
+          "path",
+          "cottage",
+          "fence-right",
+          "fence-left"
+        ],
+        "rect": [
+          0.8743093922651933,
+          0.6300184162062615,
+          0.11602209944751381,
+          0.1714548802946593
+        ],
+        "color": "#ffb766",
+        "gain": 0.24,
+        "feather": 0.45,
+        "signal": "lantern-post-power",
+        "mask_asset": "receiver-falloff"
+      },
+      {
+        "id": "sconce-0-receiver",
+        "receivers": [
+          "path",
+          "cottage",
+          "fence-right",
+          "fence-left"
+        ],
+        "rect": [
+          0.5715469613259668,
+          0.2924493554327809,
+          0.05027624309392265,
+          0.07697974217311233
+        ],
+        "color": "#ffb766",
+        "gain": 0.24,
+        "feather": 0.45,
+        "signal": "sconce-0-power",
+        "mask_asset": "receiver-falloff"
+      },
+      {
+        "id": "sconce-1-receiver",
+        "receivers": [
+          "path",
+          "cottage",
+          "fence-right",
+          "fence-left"
+        ],
+        "rect": [
+          0.7337016574585636,
+          0.2850828729281768,
+          0.04640883977900552,
+          0.07697974217311233
+        ],
+        "color": "#ffb766",
+        "gain": 0.24,
+        "feather": 0.45,
+        "signal": "sconce-1-power",
+        "mask_asset": "receiver-falloff"
+      },
+      {
+        "id": "sconce-2-receiver",
+        "receivers": [
+          "path",
+          "cottage",
+          "fence-right",
+          "fence-left"
+        ],
+        "rect": [
+          0.7730662983425415,
+          0.2823204419889503,
+          0.04640883977900552,
+          0.07697974217311233
+        ],
+        "color": "#ffb766",
+        "gain": 0.24,
+        "feather": 0.45,
+        "signal": "sconce-2-power",
+        "mask_asset": "receiver-falloff"
+      }
+    ],
+    "layers": {
+      "cat": {
+        "exposure": -0.35
+      }
+    },
+    "grade": {
+      "saturation": 0.94
+    }
+  },
+  "bindings": {
+    "version": 1,
+    "links": [
+      {
+        "id": "pumpkin-near-face",
+        "source": {
+          "signal": "pumpkin-near-power",
+          "range": [
+            0,
+            1
+          ]
+        },
+        "target": {
+          "layer": "pumpkin-near-emission",
+          "channel": "opacity",
+          "range": [
+            0,
+            1
+          ]
+        },
+        "map": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        },
+        "off": 0
+      },
+      {
+        "id": "pumpkin-left-face",
+        "source": {
+          "signal": "pumpkin-left-power",
+          "range": [
+            0,
+            1
+          ]
+        },
+        "target": {
+          "layer": "pumpkin-left-emission",
+          "channel": "opacity",
+          "range": [
+            0,
+            1
+          ]
+        },
+        "map": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        },
+        "off": 0
+      },
+      {
+        "id": "pumpkin-right-face",
+        "source": {
+          "signal": "pumpkin-right-power",
+          "range": [
+            0,
+            1
+          ]
+        },
+        "target": {
+          "layer": "pumpkin-right-emission",
+          "channel": "opacity",
+          "range": [
+            0,
+            1
+          ]
+        },
+        "map": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        },
+        "off": 0
+      },
+      {
+        "id": "pumpkin-step-face",
+        "source": {
+          "signal": "pumpkin-step-power",
+          "range": [
+            0,
+            1
+          ]
+        },
+        "target": {
+          "layer": "pumpkin-step-emission",
+          "channel": "opacity",
+          "range": [
+            0,
+            1
+          ]
+        },
+        "map": {
+          "interpolation": "linear",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        },
+        "off": 0
+      }
+    ]
+  }
+}

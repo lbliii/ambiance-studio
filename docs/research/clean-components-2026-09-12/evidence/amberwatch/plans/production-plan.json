@@ -1,0 +1,1289 @@
+{
+  "format": "ambiance-production-plan",
+  "schema_version": 1,
+  "story": {
+    "premise": "A watchful black cat keeps company with the last warm lights of an autumn evening.",
+    "direction": "Amberwatch: inviting painted Halloween porch; 16-second picture, compact 48-second soundtrack; dual full-frame formats; fixed camera, expressive cat and drifting leaves, living combustion and stable architecture."
+  },
+  "sources": [
+    {
+      "id": "seed",
+      "path": "inputs/reference.png",
+      "sha256": "631688de3c2b6a146527e5e509ca03879b1254623beea7dd73a70905947f39c7"
+    },
+    {
+      "id": "staging",
+      "path": "assets/source/stage-composition-v1.png",
+      "sha256": "2a87fe3de2668647749746e5fecfa3fadbd21fe865d61f8c4294bc97b4527893"
+    }
+  ],
+  "elements": [
+    {
+      "id": "sky",
+      "kind": "environment",
+      "depth_band": "far-background",
+      "motion_role": "ambient",
+      "cadence": "continuous",
+      "readability_target": 1,
+      "origin": "observed",
+      "purpose": "Clouded dusk gives cool contrast; cloud veils drift slowly above the stationary valley.",
+      "source_ids": [
+        "seed"
+      ],
+      "action_ids": [
+        "cloud-drift"
+      ],
+      "realization": {
+        "method": "painted-effect",
+        "inventory_parts": [
+          {
+            "item_id": "sky",
+            "part_id": "surface"
+          },
+          {
+            "item_id": "sky",
+            "part_id": "cloud-cels"
+          }
+        ],
+        "layer_ids": [
+          "sky",
+          "cloud-veil"
+        ]
+      },
+      "required_art": [
+        {
+          "id": "sky-surface",
+          "role": "cutout",
+          "purpose": "Clouded dusk gives cool contrast; cloud veils drift slowly above the stationary valley.",
+          "inventory_part": {
+            "item_id": "sky",
+            "part_id": "surface"
+          }
+        },
+        {
+          "id": "sky-cloud-cels",
+          "role": "cutout",
+          "purpose": "Clouded dusk gives cool contrast; cloud veils drift slowly above the stationary valley.",
+          "inventory_part": {
+            "item_id": "sky",
+            "part_id": "cloud-cels"
+          }
+        }
+      ]
+    },
+    {
+      "id": "valley",
+      "kind": "environment",
+      "depth_band": "background",
+      "motion_role": "stable",
+      "cadence": "still",
+      "readability_target": 0,
+      "origin": "observed",
+      "purpose": "Pines, mountains, lake and small remote settlement establish distance. Water receives a subdued shifting reflection.",
+      "source_ids": [
+        "seed"
+      ],
+      "action_ids": [],
+      "realization": {
+        "method": "cutout",
+        "inventory_parts": [
+          {
+            "item_id": "valley",
+            "part_id": "surface"
+          }
+        ],
+        "layer_ids": [
+          "valley"
+        ]
+      },
+      "required_art": [
+        {
+          "id": "valley-surface",
+          "role": "cutout",
+          "purpose": "Pines, mountains, lake and small remote settlement establish distance. Water receives a subdued shifting reflection.",
+          "inventory_part": {
+            "item_id": "valley",
+            "part_id": "surface"
+          }
+        }
+      ]
+    },
+    {
+      "id": "cottage",
+      "kind": "structure",
+      "depth_band": "midground",
+      "motion_role": "stable",
+      "cadence": "still",
+      "readability_target": 0,
+      "origin": "observed",
+      "purpose": "Heavy timber house, chimney, roof, porch posts, windows, door and stairs provide shelter. House windows stay steady.",
+      "source_ids": [
+        "seed"
+      ],
+      "action_ids": [],
+      "realization": {
+        "method": "cutout",
+        "inventory_parts": [
+          {
+            "item_id": "cottage",
+            "part_id": "structure"
+          },
+          {
+            "item_id": "cottage",
+            "part_id": "backing"
+          }
+        ],
+        "layer_ids": [
+          "cottage",
+          "pumpkin-step-stones-cottage-paint",
+          "lantern-step-receiver-cottage-paint",
+          "lantern-step-low-receiver-cottage-paint",
+          "sconce-0-receiver-cottage-paint",
+          "sconce-1-receiver-cottage-paint",
+          "sconce-2-receiver-cottage-paint"
+        ]
+      },
+      "required_art": [
+        {
+          "id": "cottage-structure",
+          "role": "cutout",
+          "purpose": "Heavy timber house, chimney, roof, porch posts, windows, door and stairs provide shelter. House windows stay steady.",
+          "inventory_part": {
+            "item_id": "cottage",
+            "part_id": "structure"
+          }
+        },
+        {
+          "id": "cottage-backing",
+          "role": "backing",
+          "purpose": "Heavy timber house, chimney, roof, porch posts, windows, door and stairs provide shelter. House windows stay steady.",
+          "inventory_part": {
+            "item_id": "cottage",
+            "part_id": "backing"
+          }
+        }
+      ]
+    },
+    {
+      "id": "path",
+      "kind": "environment",
+      "depth_band": "foreground",
+      "motion_role": "stable",
+      "cadence": "still",
+      "readability_target": 0,
+      "origin": "observed",
+      "purpose": "Stone path, boulders, leaf litter and low rooted shrubs guide the eye to the door and receive lantern light.",
+      "source_ids": [
+        "seed"
+      ],
+      "action_ids": [],
+      "realization": {
+        "method": "cutout",
+        "inventory_parts": [
+          {
+            "item_id": "path",
+            "part_id": "surface"
+          },
+          {
+            "item_id": "path",
+            "part_id": "light-receivers"
+          }
+        ],
+        "layer_ids": [
+          "path",
+          "pumpkin-near-stones-path-paint",
+          "pumpkin-left-stones-path-paint",
+          "pumpkin-right-stones-path-paint",
+          "pumpkin-step-stones-path-paint",
+          "lantern-left-receiver-path-paint",
+          "lantern-step-receiver-path-paint",
+          "lantern-step-low-receiver-path-paint",
+          "lantern-right-low-receiver-path-paint",
+          "lantern-post-receiver-path-paint"
+        ]
+      },
+      "required_art": [
+        {
+          "id": "path-surface",
+          "role": "cutout",
+          "purpose": "Stone path, boulders, leaf litter and low rooted shrubs guide the eye to the door and receive lantern light.",
+          "inventory_part": {
+            "item_id": "path",
+            "part_id": "surface"
+          }
+        },
+        {
+          "id": "path-light-receivers",
+          "role": "mask",
+          "purpose": "Stone path, boulders, leaf litter and low rooted shrubs guide the eye to the door and receive lantern light.",
+          "inventory_part": {
+            "item_id": "path",
+            "part_id": "light-receivers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "tree",
+      "kind": "environment",
+      "depth_band": "near-foreground",
+      "motion_role": "stable",
+      "cadence": "still",
+      "readability_target": 0,
+      "origin": "observed",
+      "purpose": "The old trunk and heavy overhead branches frame the valley; scattered detached leaves reveal the breeze.",
+      "source_ids": [
+        "seed"
+      ],
+      "action_ids": [],
+      "realization": {
+        "method": "cutout",
+        "inventory_parts": [
+          {
+            "item_id": "tree",
+            "part_id": "trunk-canopy"
+          }
+        ],
+        "layer_ids": [
+          "tree"
+        ]
+      },
+      "required_art": [
+        {
+          "id": "tree-trunk-canopy",
+          "role": "cutout",
+          "purpose": "The old trunk and heavy overhead branches frame the valley; scattered detached leaves reveal the breeze.",
+          "inventory_part": {
+            "item_id": "tree",
+            "part_id": "trunk-canopy"
+          }
+        }
+      ]
+    },
+    {
+      "id": "fences",
+      "kind": "structure",
+      "depth_band": "near-foreground",
+      "motion_role": "stable",
+      "cadence": "still",
+      "readability_target": 0,
+      "origin": "observed",
+      "purpose": "Edge posts, rails and iron hanging hook frame the approach and remain weighty.",
+      "source_ids": [
+        "seed"
+      ],
+      "action_ids": [],
+      "realization": {
+        "method": "cutout",
+        "inventory_parts": [
+          {
+            "item_id": "fences",
+            "part_id": "left"
+          },
+          {
+            "item_id": "fences",
+            "part_id": "right"
+          }
+        ],
+        "layer_ids": [
+          "fence-left",
+          "fence-right",
+          "lantern-post-receiver-fence-right-paint"
+        ]
+      },
+      "required_art": [
+        {
+          "id": "fences-left",
+          "role": "cutout",
+          "purpose": "Edge posts, rails and iron hanging hook frame the approach and remain weighty.",
+          "inventory_part": {
+            "item_id": "fences",
+            "part_id": "left"
+          }
+        },
+        {
+          "id": "fences-right",
+          "role": "cutout",
+          "purpose": "Edge posts, rails and iron hanging hook frame the approach and remain weighty.",
+          "inventory_part": {
+            "item_id": "fences",
+            "part_id": "right"
+          }
+        }
+      ]
+    },
+    {
+      "id": "cat",
+      "kind": "character",
+      "depth_band": "midground",
+      "motion_role": "primary",
+      "cadence": "recurring",
+      "readability_target": 3,
+      "origin": "observed",
+      "purpose": "The whole perched black cat tracks a leaf, blinks and curls its hanging tail, with paws fixed on the railing.",
+      "source_ids": [
+        "seed"
+      ],
+      "action_ids": [
+        "leaf-watch"
+      ],
+      "realization": {
+        "method": "rig",
+        "inventory_parts": [
+          {
+            "item_id": "cat",
+            "part_id": "whole-character-cels"
+          },
+          {
+            "item_id": "cat",
+            "part_id": "clean-surroundings"
+          },
+          {
+            "item_id": "cat",
+            "part_id": "contact-proof"
+          }
+        ],
+        "layer_ids": [
+          "cat"
+        ]
+      },
+      "required_art": [
+        {
+          "id": "cat-whole-character-cels",
+          "role": "cutout",
+          "purpose": "The whole perched black cat tracks a leaf, blinks and curls its hanging tail, with paws fixed on the railing.",
+          "inventory_part": {
+            "item_id": "cat",
+            "part_id": "whole-character-cels"
+          }
+        },
+        {
+          "id": "cat-clean-surroundings",
+          "role": "backing",
+          "purpose": "The whole perched black cat tracks a leaf, blinks and curls its hanging tail, with paws fixed on the railing.",
+          "inventory_part": {
+            "item_id": "cat",
+            "part_id": "clean-surroundings"
+          }
+        },
+        {
+          "id": "cat-contact-proof",
+          "role": "cutout",
+          "purpose": "The whole perched black cat tracks a leaf, blinks and curls its hanging tail, with paws fixed on the railing.",
+          "inventory_part": {
+            "item_id": "cat",
+            "part_id": "contact-proof"
+          }
+        }
+      ]
+    },
+    {
+      "id": "chair",
+      "kind": "prop",
+      "depth_band": "midground",
+      "motion_role": "stable",
+      "cadence": "still",
+      "readability_target": 0,
+      "origin": "observed",
+      "purpose": "Empty rocking chair and folded blanket suggest someone has just gone indoors. No unsupported rocking.",
+      "source_ids": [
+        "seed"
+      ],
+      "action_ids": [],
+      "realization": {
+        "method": "cutout",
+        "inventory_parts": [
+          {
+            "item_id": "chair",
+            "part_id": "whole-chair"
+          }
+        ],
+        "layer_ids": [
+          "chair"
+        ]
+      },
+      "required_art": [
+        {
+          "id": "chair-whole-chair",
+          "role": "cutout",
+          "purpose": "Empty rocking chair and folded blanket suggest someone has just gone indoors. No unsupported rocking.",
+          "inventory_part": {
+            "item_id": "chair",
+            "part_id": "whole-chair"
+          }
+        }
+      ]
+    },
+    {
+      "id": "planters",
+      "kind": "prop",
+      "depth_band": "foreground",
+      "motion_role": "stable",
+      "cadence": "still",
+      "readability_target": 0,
+      "origin": "observed",
+      "purpose": "Potted rusty chrysanthemums, hanging basket and tucked pumpkin shelf provide seasonal abundance.",
+      "source_ids": [
+        "seed"
+      ],
+      "action_ids": [],
+      "realization": {
+        "method": "cutout",
+        "inventory_parts": [
+          {
+            "item_id": "planters",
+            "part_id": "whole-planters"
+          }
+        ],
+        "layer_ids": [
+          "planter-left",
+          "planter-right",
+          "hanging-basket",
+          "pumpkin-shelf"
+        ]
+      },
+      "required_art": [
+        {
+          "id": "planters-whole-planters",
+          "role": "cutout",
+          "purpose": "Potted rusty chrysanthemums, hanging basket and tucked pumpkin shelf provide seasonal abundance.",
+          "inventory_part": {
+            "item_id": "planters",
+            "part_id": "whole-planters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "wreath",
+      "kind": "prop",
+      "depth_band": "midground",
+      "motion_role": "stable",
+      "cadence": "still",
+      "readability_target": 0,
+      "origin": "observed",
+      "purpose": "The complete wreath centers the welcoming door; its mounting remains fixed.",
+      "source_ids": [
+        "seed"
+      ],
+      "action_ids": [],
+      "realization": {
+        "method": "cutout",
+        "inventory_parts": [
+          {
+            "item_id": "wreath",
+            "part_id": "whole-wreath"
+          }
+        ],
+        "layer_ids": [
+          "wreath"
+        ]
+      },
+      "required_art": [
+        {
+          "id": "wreath-whole-wreath",
+          "role": "cutout",
+          "purpose": "The complete wreath centers the welcoming door; its mounting remains fixed.",
+          "inventory_part": {
+            "item_id": "wreath",
+            "part_id": "whole-wreath"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pumpkins",
+      "kind": "prop",
+      "depth_band": "foreground",
+      "motion_role": "supporting",
+      "cadence": "continuous",
+      "readability_target": 2,
+      "origin": "observed",
+      "purpose": "Four complete carved pumpkins hold separate candles; their shells stay fixed as warm cut faces and nearby stones respond.",
+      "source_ids": [
+        "seed"
+      ],
+      "action_ids": [
+        "pumpkin-light"
+      ],
+      "realization": {
+        "method": "rig",
+        "inventory_parts": [
+          {
+            "item_id": "pumpkins",
+            "part_id": "whole-shells"
+          },
+          {
+            "item_id": "pumpkins",
+            "part_id": "emissive-masks"
+          },
+          {
+            "item_id": "pumpkins",
+            "part_id": "receiver-proof"
+          }
+        ],
+        "layer_ids": [
+          "pumpkin-near",
+          "pumpkin-left",
+          "pumpkin-right",
+          "pumpkin-step",
+          "pumpkin-near-emission",
+          "pumpkin-left-emission",
+          "pumpkin-right-emission",
+          "pumpkin-step-emission"
+        ]
+      },
+      "required_art": [
+        {
+          "id": "pumpkins-whole-shells",
+          "role": "cutout",
+          "purpose": "Four complete carved pumpkins hold separate candles; their shells stay fixed as warm cut faces and nearby stones respond.",
+          "inventory_part": {
+            "item_id": "pumpkins",
+            "part_id": "whole-shells"
+          }
+        },
+        {
+          "id": "pumpkins-emissive-masks",
+          "role": "mask",
+          "purpose": "Four complete carved pumpkins hold separate candles; their shells stay fixed as warm cut faces and nearby stones respond.",
+          "inventory_part": {
+            "item_id": "pumpkins",
+            "part_id": "emissive-masks"
+          }
+        },
+        {
+          "id": "pumpkins-receiver-proof",
+          "role": "mask",
+          "purpose": "Four complete carved pumpkins hold separate candles; their shells stay fixed as warm cut faces and nearby stones respond.",
+          "inventory_part": {
+            "item_id": "pumpkins",
+            "part_id": "receiver-proof"
+          }
+        }
+      ]
+    },
+    {
+      "id": "lanterns",
+      "kind": "prop",
+      "depth_band": "foreground",
+      "motion_role": "supporting",
+      "cadence": "continuous",
+      "readability_target": 2,
+      "origin": "observed",
+      "purpose": "Five portable candle lanterns and three fixed wall sconces enclose changing flame shapes. Portable fixtures retain separate ownership.",
+      "source_ids": [
+        "seed"
+      ],
+      "action_ids": [
+        "candle-flames"
+      ],
+      "realization": {
+        "method": "rig",
+        "inventory_parts": [
+          {
+            "item_id": "lanterns",
+            "part_id": "whole-fixtures"
+          },
+          {
+            "item_id": "lanterns",
+            "part_id": "flame-cels"
+          },
+          {
+            "item_id": "lanterns",
+            "part_id": "receiver-masks"
+          }
+        ],
+        "layer_ids": [
+          "lantern-left",
+          "lantern-step",
+          "lantern-step-low",
+          "lantern-right-low",
+          "lantern-post",
+          "sconce-0",
+          "sconce-1",
+          "sconce-2",
+          "lantern-left-flame",
+          "lantern-step-flame",
+          "lantern-step-low-flame",
+          "lantern-right-low-flame",
+          "lantern-post-flame",
+          "sconce-0-flame",
+          "sconce-1-flame",
+          "sconce-2-flame"
+        ]
+      },
+      "required_art": [
+        {
+          "id": "lanterns-whole-fixtures",
+          "role": "cutout",
+          "purpose": "Five portable candle lanterns and three fixed wall sconces enclose changing flame shapes. Portable fixtures retain separate ownership.",
+          "inventory_part": {
+            "item_id": "lanterns",
+            "part_id": "whole-fixtures"
+          }
+        },
+        {
+          "id": "lanterns-flame-cels",
+          "role": "cutout",
+          "purpose": "Five portable candle lanterns and three fixed wall sconces enclose changing flame shapes. Portable fixtures retain separate ownership.",
+          "inventory_part": {
+            "item_id": "lanterns",
+            "part_id": "flame-cels"
+          }
+        },
+        {
+          "id": "lanterns-receiver-masks",
+          "role": "mask",
+          "purpose": "Five portable candle lanterns and three fixed wall sconces enclose changing flame shapes. Portable fixtures retain separate ownership.",
+          "inventory_part": {
+            "item_id": "lanterns",
+            "part_id": "receiver-masks"
+          }
+        }
+      ]
+    },
+    {
+      "id": "leaves",
+      "kind": "effect",
+      "depth_band": "foreground",
+      "motion_role": "supporting",
+      "cadence": "continuous",
+      "readability_target": 2,
+      "origin": "proposed",
+      "purpose": "An autumn breeze carries a sparse staggered fall of painted maple leaves across near path and porch; one pass motivates the cat.",
+      "source_ids": [
+        "seed"
+      ],
+      "action_ids": [
+        "leaf-fall"
+      ],
+      "realization": {
+        "method": "painted-effect",
+        "inventory_parts": [
+          {
+            "item_id": "leaves",
+            "part_id": "tumbling-cels"
+          },
+          {
+            "item_id": "leaves",
+            "part_id": "routes"
+          }
+        ],
+        "layer_ids": [
+          "leaf-0",
+          "leaf-1",
+          "leaf-2",
+          "leaf-3",
+          "leaf-4",
+          "leaf-5",
+          "leaf-6",
+          "leaf-7",
+          "leaf-8",
+          "leaf-9",
+          "leaf-10",
+          "leaf-11",
+          "leaf-12",
+          "leaf-13"
+        ]
+      },
+      "required_art": [
+        {
+          "id": "leaves-tumbling-cels",
+          "role": "cutout",
+          "purpose": "An autumn breeze carries a sparse staggered fall of painted maple leaves across near path and porch; one pass motivates the cat.",
+          "inventory_part": {
+            "item_id": "leaves",
+            "part_id": "tumbling-cels"
+          }
+        },
+        {
+          "id": "leaves-routes",
+          "role": "cutout",
+          "purpose": "An autumn breeze carries a sparse staggered fall of painted maple leaves across near path and porch; one pass motivates the cat.",
+          "inventory_part": {
+            "item_id": "leaves",
+            "part_id": "routes"
+          }
+        }
+      ]
+    },
+    {
+      "id": "sound",
+      "kind": "effect",
+      "depth_band": "midground",
+      "motion_role": "ambient",
+      "cadence": "still",
+      "readability_target": 1,
+      "origin": "proposed",
+      "purpose": "Listener stands on the path. Soft outdoor air and dry foliage underpin a sparse warm nocturne with space between notes. Continuous soundtrack exists in the separately captured PCM session; still here describes the absence of a visual layer.",
+      "source_ids": [
+        "seed"
+      ],
+      "action_ids": [],
+      "realization": {
+        "method": "painted-effect",
+        "inventory_parts": [
+          {
+            "item_id": "sound",
+            "part_id": "source-selection"
+          },
+          {
+            "item_id": "sound",
+            "part_id": "score-master"
+          },
+          {
+            "item_id": "sound",
+            "part_id": "effects-master"
+          }
+        ],
+        "layer_ids": []
+      },
+      "required_art": [
+        {
+          "id": "sound-source-selection",
+          "role": "source",
+          "purpose": "Listener stands on the path. Soft outdoor air and dry foliage underpin a sparse warm nocturne with space between notes.",
+          "inventory_part": {
+            "item_id": "sound",
+            "part_id": "source-selection"
+          }
+        },
+        {
+          "id": "sound-score-master",
+          "role": "source",
+          "purpose": "Listener stands on the path. Soft outdoor air and dry foliage underpin a sparse warm nocturne with space between notes.",
+          "inventory_part": {
+            "item_id": "sound",
+            "part_id": "score-master"
+          }
+        },
+        {
+          "id": "sound-effects-master",
+          "role": "source",
+          "purpose": "Listener stands on the path. Soft outdoor air and dry foliage underpin a sparse warm nocturne with space between notes.",
+          "inventory_part": {
+            "item_id": "sound",
+            "part_id": "effects-master"
+          }
+        }
+      ]
+    },
+    {
+      "id": "delivery",
+      "kind": "effect",
+      "depth_band": "foreground",
+      "motion_role": "stable",
+      "cadence": "still",
+      "readability_target": 0,
+      "origin": "proposed",
+      "purpose": "Review both requested compositions and expose exact selected movies.",
+      "source_ids": [
+        "seed"
+      ],
+      "action_ids": [],
+      "realization": {
+        "method": "baked",
+        "inventory_parts": [
+          {
+            "item_id": "delivery",
+            "part_id": "portrait-composition"
+          },
+          {
+            "item_id": "delivery",
+            "part_id": "landscape-composition"
+          },
+          {
+            "item_id": "delivery",
+            "part_id": "paired-movies"
+          }
+        ],
+        "layer_ids": []
+      },
+      "required_art": [
+        {
+          "id": "delivery-portrait-composition",
+          "role": "source",
+          "purpose": "Review both requested compositions and expose exact selected movies.",
+          "inventory_part": {
+            "item_id": "delivery",
+            "part_id": "portrait-composition"
+          }
+        },
+        {
+          "id": "delivery-landscape-composition",
+          "role": "source",
+          "purpose": "Review both requested compositions and expose exact selected movies.",
+          "inventory_part": {
+            "item_id": "delivery",
+            "part_id": "landscape-composition"
+          }
+        },
+        {
+          "id": "delivery-paired-movies",
+          "role": "source",
+          "purpose": "Review both requested compositions and expose exact selected movies.",
+          "inventory_part": {
+            "item_id": "delivery",
+            "part_id": "paired-movies"
+          }
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "leaf-watch",
+      "element_id": "cat",
+      "description": "At 3\u20136 seconds a near leaf passes; cat looks up, returns, then blinks at 9 seconds. Tail changes drawing with planted paws.",
+      "method": "painted cels, deterministic tracks and bounded source signals as appropriate",
+      "targets": [
+        {
+          "view_id": "portrait",
+          "readability_target": 3
+        },
+        {
+          "view_id": "landscape",
+          "readability_target": 3
+        }
+      ],
+      "timing": {
+        "onset_max_seconds": 4,
+        "duration_min_seconds": 1,
+        "rest_max_seconds": 8
+      },
+      "layer_ids": [
+        "cat"
+      ]
+    },
+    {
+      "id": "cloud-drift",
+      "element_id": "sky",
+      "description": "Slow periodic opacity exchange and modest travel of painted cloud veil, without moving mountains.",
+      "method": "painted cels, deterministic tracks and bounded source signals as appropriate",
+      "targets": [
+        {
+          "view_id": "portrait",
+          "readability_target": 1
+        },
+        {
+          "view_id": "landscape",
+          "readability_target": 1
+        }
+      ],
+      "timing": {
+        "onset_max_seconds": 4,
+        "duration_min_seconds": 1,
+        "rest_max_seconds": 8
+      },
+      "layer_ids": [
+        "cloud-veil"
+      ]
+    },
+    {
+      "id": "pumpkin-light",
+      "element_id": "pumpkins",
+      "description": "Independent bounded combustion signals animate cut faces and their local stone receivers together.",
+      "method": "painted cels, deterministic tracks and bounded source signals as appropriate",
+      "targets": [
+        {
+          "view_id": "portrait",
+          "readability_target": 2
+        },
+        {
+          "view_id": "landscape",
+          "readability_target": 2
+        }
+      ],
+      "timing": {
+        "onset_max_seconds": 4,
+        "duration_min_seconds": 1,
+        "rest_max_seconds": 8
+      },
+      "layer_ids": [
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission"
+      ]
+    },
+    {
+      "id": "candle-flames",
+      "element_id": "lanterns",
+      "description": "Changing registered flame drawings have differing phases; nearby light follows the source signal.",
+      "method": "painted cels, deterministic tracks and bounded source signals as appropriate",
+      "targets": [
+        {
+          "view_id": "portrait",
+          "readability_target": 2
+        },
+        {
+          "view_id": "landscape",
+          "readability_target": 2
+        }
+      ],
+      "timing": {
+        "onset_max_seconds": 4,
+        "duration_min_seconds": 1,
+        "rest_max_seconds": 8
+      },
+      "layer_ids": [
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame"
+      ]
+    },
+    {
+      "id": "leaf-fall",
+      "element_id": "leaves",
+      "description": "Staggered diagonal wind routes with tumbling drawings; hide each leaf outside its visible journey before resetting.",
+      "method": "painted cels, deterministic tracks and bounded source signals as appropriate",
+      "targets": [
+        {
+          "view_id": "portrait",
+          "readability_target": 2
+        },
+        {
+          "view_id": "landscape",
+          "readability_target": 2
+        }
+      ],
+      "timing": {
+        "onset_max_seconds": 4,
+        "duration_min_seconds": 1,
+        "rest_max_seconds": 8
+      },
+      "layer_ids": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "view_id": "portrait",
+      "roles": [
+        "score",
+        "effects"
+      ]
+    },
+    {
+      "view_id": "landscape",
+      "roles": [
+        "score",
+        "effects"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "pumpkin-to-stones",
+      "kind": "receiver",
+      "source_element": "pumpkins",
+      "target_element": "path",
+      "scene_ref": "binding:pumpkin-left-stones-path-paint-driver",
+      "dependencies": []
+    },
+    {
+      "id": "lantern-to-stones",
+      "kind": "receiver",
+      "source_element": "lanterns",
+      "target_element": "path",
+      "scene_ref": "binding:lantern-left-receiver-path-paint-driver",
+      "dependencies": []
+    }
+  ],
+  "expectations": [
+    {
+      "id": "dual-framing",
+      "rationale": "Portrait and landscape fill frame with useful cat size, visible doorway and warm path. Reposition right hanging lantern upward to avoid lower landscape cut.",
+      "direction": "Portrait and landscape fill frame with useful cat size, visible doorway and warm path. Reposition right hanging lantern upward to avoid lower landscape cut.",
+      "stage": "layout",
+      "view_ids": [
+        "portrait",
+        "landscape"
+      ],
+      "element_ids": [
+        "cat",
+        "cottage",
+        "path"
+      ],
+      "action_ids": [],
+      "relation_ids": [],
+      "requirement": {
+        "type": "structural",
+        "check": "view"
+      }
+    },
+    {
+      "id": "composition-pixels",
+      "rationale": "Save actual painted blocking proof for each output.",
+      "direction": "Save actual painted blocking proof for each output.",
+      "stage": "layout",
+      "view_ids": [
+        "portrait",
+        "landscape"
+      ],
+      "element_ids": [
+        "cat",
+        "cottage",
+        "path"
+      ],
+      "action_ids": [],
+      "relation_ids": [],
+      "requirement": {
+        "type": "measured",
+        "check": "raster"
+      }
+    },
+    {
+      "id": "composition-review",
+      "rationale": "Inspect both whole compositions at normal display size.",
+      "direction": "Inspect both whole compositions at normal display size.",
+      "stage": "layout",
+      "view_ids": [
+        "portrait",
+        "landscape"
+      ],
+      "element_ids": [
+        "cat",
+        "cottage",
+        "path"
+      ],
+      "action_ids": [],
+      "relation_ids": [],
+      "requirement": {
+        "type": "observed",
+        "check": "composition"
+      }
+    },
+    {
+      "id": "independent-art",
+      "rationale": "Complete independent characters, meaningful props and depth surfaces with clean backing and preserved source recipes.",
+      "direction": "Complete independent characters, meaningful props and depth surfaces with clean backing and preserved source recipes.",
+      "stage": "assets",
+      "view_ids": [
+        "portrait",
+        "landscape"
+      ],
+      "element_ids": [
+        "sky",
+        "valley",
+        "cottage",
+        "path",
+        "tree",
+        "fences",
+        "cat",
+        "chair",
+        "planters",
+        "wreath",
+        "pumpkins",
+        "lanterns",
+        "leaves"
+      ],
+      "action_ids": [],
+      "relation_ids": [],
+      "requirement": {
+        "type": "structural",
+        "check": "art"
+      }
+    },
+    {
+      "id": "whole-object-controls",
+      "rationale": "Show production-only scene, whole-object isolation/removal, and cat contact/extreme poses; no seed fallback.",
+      "direction": "Show production-only scene, whole-object isolation/removal, and cat contact/extreme poses; no seed fallback.",
+      "stage": "assets",
+      "view_ids": [
+        "portrait",
+        "landscape"
+      ],
+      "element_ids": [
+        "cat",
+        "cottage",
+        "chair",
+        "pumpkins",
+        "lanterns",
+        "planters",
+        "wreath",
+        "tree",
+        "fences"
+      ],
+      "action_ids": [],
+      "relation_ids": [],
+      "requirement": {
+        "type": "structural",
+        "check": "independent-control"
+      }
+    },
+    {
+      "id": "leaf-watch-readability",
+      "rationale": "At 3\u20136 seconds a near leaf passes; cat looks up, returns, then blinks at 9 seconds. Tail changes drawing with planted paws.",
+      "direction": "At 3\u20136 seconds a near leaf passes; cat looks up, returns, then blinks at 9 seconds. Tail changes drawing with planted paws.",
+      "stage": "animation",
+      "view_ids": [
+        "portrait",
+        "landscape"
+      ],
+      "element_ids": [
+        "cat"
+      ],
+      "action_ids": [
+        "leaf-watch"
+      ],
+      "relation_ids": [],
+      "requirement": {
+        "type": "observed",
+        "check": "readability"
+      }
+    },
+    {
+      "id": "cloud-drift-readability",
+      "rationale": "Slow periodic opacity exchange and modest travel of painted cloud veil, without moving mountains.",
+      "direction": "Slow periodic opacity exchange and modest travel of painted cloud veil, without moving mountains.",
+      "stage": "animation",
+      "view_ids": [
+        "portrait",
+        "landscape"
+      ],
+      "element_ids": [
+        "sky"
+      ],
+      "action_ids": [
+        "cloud-drift"
+      ],
+      "relation_ids": [],
+      "requirement": {
+        "type": "observed",
+        "check": "readability"
+      }
+    },
+    {
+      "id": "pumpkin-light-readability",
+      "rationale": "Independent bounded combustion signals animate cut faces and their local stone receivers together.",
+      "direction": "Independent bounded combustion signals animate cut faces and their local stone receivers together.",
+      "stage": "animation",
+      "view_ids": [
+        "portrait",
+        "landscape"
+      ],
+      "element_ids": [
+        "pumpkins"
+      ],
+      "action_ids": [
+        "pumpkin-light"
+      ],
+      "relation_ids": [],
+      "requirement": {
+        "type": "observed",
+        "check": "readability"
+      }
+    },
+    {
+      "id": "candle-flames-readability",
+      "rationale": "Changing registered flame drawings have differing phases; nearby light follows the source signal.",
+      "direction": "Changing registered flame drawings have differing phases; nearby light follows the source signal.",
+      "stage": "animation",
+      "view_ids": [
+        "portrait",
+        "landscape"
+      ],
+      "element_ids": [
+        "lanterns"
+      ],
+      "action_ids": [
+        "candle-flames"
+      ],
+      "relation_ids": [],
+      "requirement": {
+        "type": "observed",
+        "check": "readability"
+      }
+    },
+    {
+      "id": "leaf-fall-readability",
+      "rationale": "Staggered diagonal wind routes with tumbling drawings; hide each leaf outside its visible journey before resetting.",
+      "direction": "Staggered diagonal wind routes with tumbling drawings; hide each leaf outside its visible journey before resetting.",
+      "stage": "animation",
+      "view_ids": [
+        "portrait",
+        "landscape"
+      ],
+      "element_ids": [
+        "leaves"
+      ],
+      "action_ids": [
+        "leaf-fall"
+      ],
+      "relation_ids": [],
+      "requirement": {
+        "type": "observed",
+        "check": "readability"
+      }
+    },
+    {
+      "id": "light-review",
+      "rationale": "Fixtures remain still; source and local receivers respond together without global exposure pumping.",
+      "direction": "Fixtures remain still; source and local receivers respond together without global exposure pumping.",
+      "stage": "animation",
+      "view_ids": [
+        "portrait",
+        "landscape"
+      ],
+      "element_ids": [
+        "pumpkins",
+        "lanterns",
+        "path"
+      ],
+      "action_ids": [],
+      "relation_ids": [
+        "pumpkin-to-stones",
+        "lantern-to-stones"
+      ],
+      "requirement": {
+        "type": "observed",
+        "check": "lighting"
+      }
+    },
+    {
+      "id": "review-movies",
+      "rationale": "Encode portrait 1080\u00d71920 and landscape 1920\u00d71080, with score and effects options, complete short cycles.",
+      "direction": "Encode portrait 1080\u00d71920 and landscape 1920\u00d71080, with score and effects options, complete short cycles.",
+      "stage": "export",
+      "view_ids": [
+        "portrait",
+        "landscape"
+      ],
+      "element_ids": [
+        "delivery",
+        "sound"
+      ],
+      "action_ids": [],
+      "relation_ids": [],
+      "requirement": {
+        "type": "measured",
+        "check": "movie"
+      }
+    }
+  ],
+  "change": {
+    "reason": "Bind receiver-owned painted contributions to actual source cel drivers; retain the same source/receiver intent. A 0.125-pixel landscape inset avoids floating-point raster edge overflow.",
+    "supersedes_sha256": "cbf7f6666af0b11eef75d748b397103b8782d3c95efa4a347eb19fcb4b6f86c1"
+  }
+}

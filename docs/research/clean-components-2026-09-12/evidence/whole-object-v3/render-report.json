@@ -1,0 +1,4729 @@
+{
+  "ok": true,
+  "mode": "rig-proof",
+  "scene": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/scene/scene.json",
+  "scene_sha256": "21ed8b16476efab8aff8e525ba0ecd4b4ea29a4893d0c62fbc85a07e499e5224",
+  "catalog": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/assets/catalog.json",
+  "catalog_sha256": "a36fb575c5511d014b415cbcc5b9d04d157ad41ad43673c12e0c802491cda23c",
+  "engine_version": "0.7.0",
+  "engine_sha256": "8e00118001ba38a3f3e2ffe38d84037b29beb7e3e2f3e80d09ed21b661af29ab",
+  "source_canvas": {
+    "width": 1448,
+    "height": 1086,
+    "fps": 30,
+    "loop_seconds": 16,
+    "background": "#1a1733"
+  },
+  "render_canvas": {
+    "width": 960,
+    "height": 720,
+    "fps": 30,
+    "loop_seconds": 16,
+    "background": "#1a1733"
+  },
+  "internal_canvas": {
+    "width": 960,
+    "height": 720,
+    "fps": 30,
+    "loop_seconds": 16,
+    "background": "#1a1733"
+  },
+  "supersample": 1,
+  "downsample": null,
+  "bindings_engine_sha256": "b891db88f3f65d1457c251456b63465f70b8f583c21235b1de8a7aa1fd1c3cb7",
+  "finishing_engine_sha256": "06491f5e8565e5e716e75dfcb527fb47b3c93a88070566ef1969504ffe96160c",
+  "views_module_sha256": "3033fd28094b3a0d92415e7fd545708988b500694b03d5c6a19f9488591a60d8",
+  "start_seconds": null,
+  "frames": null,
+  "seconds": null,
+  "source_assets": [
+    {
+      "id": "sky",
+      "file": "assets/production/sky/atlas.png",
+      "sha256": "114345337f57f16af45f1d901b034bfb50ca646817340c260cdc319c0c86ddff"
+    },
+    {
+      "id": "valley",
+      "file": "assets/production/valley/atlas.png",
+      "sha256": "6850a4995d752f81feb8c288bc1b193d463e0d69ebda514d562970a169ea0d23"
+    },
+    {
+      "id": "path",
+      "file": "assets/production/path/atlas.png",
+      "sha256": "22ea613a4e8ba8291473da83816cda0296309d98119c13a052f5e48996abd3ef"
+    },
+    {
+      "id": "tree",
+      "file": "assets/production/tree/atlas.png",
+      "sha256": "c5fd723ba7b3af6feb9aa66ab40b82fc4c3bc255f89e0ed27f29c93a6131788a"
+    },
+    {
+      "id": "fence-left",
+      "file": "assets/production/fence-left/atlas.png",
+      "sha256": "46fa1db0bf393b7560769912d302e8debb6562c4db13b64a70487559ffaab910"
+    },
+    {
+      "id": "fence-right",
+      "file": "assets/production/fence-right/atlas.png",
+      "sha256": "cc41c1662a5c5ab43c2311a6e394598cefd18a5ccaf5ea9e738d0126ffe568a8"
+    },
+    {
+      "id": "chair",
+      "file": "assets/production/chair/atlas.png",
+      "sha256": "fd95c482edf344cb925e1ee69cc8e166b23d3e5ade50b9be42b87945ceb69836"
+    },
+    {
+      "id": "wreath",
+      "file": "assets/production/wreath/atlas.png",
+      "sha256": "f017b4fd0313c3d3d0048571dc01f6b1a8c5a38c246770ec56765d905dabd001"
+    },
+    {
+      "id": "planter-left",
+      "file": "assets/production/planter-left/atlas.png",
+      "sha256": "ab2322baca4bef70bc7aa1df848b6baa90b04eab671f88bb205eef9e19dde2b0"
+    },
+    {
+      "id": "planter-right",
+      "file": "assets/production/planter-right/atlas.png",
+      "sha256": "8b80c4b2dd0d733dab57d42193be91308e2fd36ce939a2594ea4f97bc1e2f0e3"
+    },
+    {
+      "id": "hanging-basket",
+      "file": "assets/production/hanging-basket/atlas.png",
+      "sha256": "d0fe2f2b81b608520b331fc9cb8cf68e476fb2a4dad0e873d07fe19eb177d1fa"
+    },
+    {
+      "id": "pumpkin-shelf",
+      "file": "assets/production/pumpkin-shelf/atlas.png",
+      "sha256": "451c8b2cc2a1ca1d486b7873ac7a32cf0face1c1994292176204c4801f1415f0"
+    },
+    {
+      "id": "cat-cels",
+      "file": "assets/production/cat-cels/atlas.png",
+      "sha256": "ea415de36012eff131de88cf3c72fbe55d20f3937a8153924b3b7c8e040e26af"
+    },
+    {
+      "id": "cottage-v2",
+      "file": "assets/production/cottage-v2/atlas.png",
+      "sha256": "0b1f973322674ca59a9129d33176bb936b9a65dd5c039a16f479ae9af61022d2"
+    },
+    {
+      "id": "leaf-native-alpha",
+      "file": "assets/production/leaf-native-alpha/atlas.png",
+      "sha256": "98950e7b3ab279e5b486801a0959e7b58d3b6059beaec606b99dd854546c8476"
+    },
+    {
+      "id": "flame-native-alpha",
+      "file": "assets/production/flame-native-alpha/atlas.png",
+      "sha256": "340e7a56ada7617cd13dcc290c434b20d272cc4ce46dc0b822ab8692becbb287"
+    },
+    {
+      "id": "pumpkin-near-dim",
+      "file": "assets/production/pumpkin-near-dim/atlas.png",
+      "sha256": "629e3595cee9fc06d875b37293d9ccfaf9e62e7780b4849166cf9292bbd813d8"
+    },
+    {
+      "id": "pumpkin-near-emission",
+      "file": "assets/production/pumpkin-near-emission/atlas.png",
+      "sha256": "852036c86bcf448c0580e50079a5888904bcff55c40217b40b33b171706b0254"
+    },
+    {
+      "id": "pumpkin-left-dim",
+      "file": "assets/production/pumpkin-left-dim/atlas.png",
+      "sha256": "ded49253262ed0074f4346246871a9e714d92b65b49906bf52942f20c27e9714"
+    },
+    {
+      "id": "pumpkin-left-emission",
+      "file": "assets/production/pumpkin-left-emission/atlas.png",
+      "sha256": "f01e16f600418f2847cb28f1ae040fa30e31a24017430418cc7a64754522f255"
+    },
+    {
+      "id": "pumpkin-right-dim",
+      "file": "assets/production/pumpkin-right-dim/atlas.png",
+      "sha256": "7678c1894b3e4cea43fa6ea5235fd36a27a4ea1a902d6664a0047b2a582f528a"
+    },
+    {
+      "id": "pumpkin-right-emission",
+      "file": "assets/production/pumpkin-right-emission/atlas.png",
+      "sha256": "27331a69b56a33c64d3ebecad30b3aa4e6dd773c89185425b730bf998ead9d8b"
+    },
+    {
+      "id": "pumpkin-step-dim",
+      "file": "assets/production/pumpkin-step-dim/atlas.png",
+      "sha256": "b817e3dbd6cdd6d850e507d50e9b2eea89148010e62a86eb88a0a28829bb97de"
+    },
+    {
+      "id": "pumpkin-step-emission",
+      "file": "assets/production/pumpkin-step-emission/atlas.png",
+      "sha256": "bf86c128dd321633528df6fb6f179803cb70c38e953964502edfba02f3b6f3f0"
+    },
+    {
+      "id": "lantern-left-dim",
+      "file": "assets/production/lantern-left-dim/atlas.png",
+      "sha256": "d2bbf5eac1bf7c4d2df8bb14d63358093a6c11b0319ff14c62e4e7117e90d2a6"
+    },
+    {
+      "id": "lantern-step-dim",
+      "file": "assets/production/lantern-step-dim/atlas.png",
+      "sha256": "f6038c28ebadf83400e173e22e7c73a123a111cd09ad16305eb5db874f191f40"
+    },
+    {
+      "id": "lantern-step-low-dim",
+      "file": "assets/production/lantern-step-low-dim/atlas.png",
+      "sha256": "ab5efd48d1cae8b0caa59b844eedfe8c6c9e882b98792eb52fe6d06854cd256b"
+    },
+    {
+      "id": "lantern-right-low-dim",
+      "file": "assets/production/lantern-right-low-dim/atlas.png",
+      "sha256": "7ac358ea31c87d08c5bc866b5c7780c2232deceb55c44641f4ac15b610f78dc9"
+    },
+    {
+      "id": "lantern-post-dim",
+      "file": "assets/production/lantern-post-dim/atlas.png",
+      "sha256": "284bdc582a6bbbcbf176aedea0bbf2251010c71521925c33e1fda2bb23a49a8c"
+    },
+    {
+      "id": "sconce-0-dim",
+      "file": "assets/production/sconce-0-dim/atlas.png",
+      "sha256": "79c60a801ed385671de4b107022369ee95cbcab1e3b4ad0904f8392c6da75fbf"
+    },
+    {
+      "id": "sconce-1-dim",
+      "file": "assets/production/sconce-1-dim/atlas.png",
+      "sha256": "91392ce357ed5e50fe33a9fbc28056937e1f5d6dedab66fca92978d3494504cf"
+    },
+    {
+      "id": "sconce-2-dim",
+      "file": "assets/production/sconce-2-dim/atlas.png",
+      "sha256": "05f85cfb8b4190f958202f8df0ec0009c76c6b13a2453e733ab4fb531a2d2060"
+    },
+    {
+      "id": "receiver-falloff",
+      "file": "assets/production/receiver-falloff/atlas.png",
+      "sha256": "c2d97f490e26054a717177028fb0aeaf20d25e76df86f628cbd16c18d9f79a74"
+    }
+  ],
+  "canvas_module": "/Users/lb/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/@napi-rs/canvas/index.js",
+  "canvas_version": "0.1.100",
+  "node_version": "v24.9.0",
+  "platform": "darwin",
+  "renderer_sha256": "9dffd43e8333315e0617c2d6294b4b8c8639ccf2376e1f61ca2473dceada166e",
+  "rig_proof_renderer_sha256": "8799d29c7466c6bccd222ff4b0f4fed2f05bd01c1b04051a260e045743e360c9",
+  "rgba_endpoint_exact": true,
+  "endpoint_difference": {
+    "rgb_mean_absolute_difference": 0,
+    "rgb_max_difference": 0
+  },
+  "last_to_first": {
+    "rgb_mean_absolute_difference": 0.024234182098765433,
+    "rgb_max_difference": 206
+  },
+  "visual_review_performed": false,
+  "samples": [
+    {
+      "id": "production-only",
+      "label": "Production layers only; no seed or whole-scene fallback exists",
+      "time_seconds": 0,
+      "overrides": {},
+      "hidden_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/production-only/context.png",
+        "sha256": "a7ce3b41cd8817be9b488a4e56f0bc6e289d6c45b3ec5c746a87403ac75f65d4",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/production-only/regions/portrait.png",
+          "sha256": "885c9961d05e4ddbf1076a9e4ba6d3f77b67699b27dc08d5dbff588a3af65a74",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/production-only/regions/landscape.png",
+          "sha256": "98e92aa4b8d9bb4e99d1f99d57a1d1003f318b09ae0fc8ec698fb9c246f09c0d",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/production-only/regions/cat-contact.png",
+          "sha256": "4f05a3bc93f2342833d34aebec3917244869c9ec9549e1fe7063e48132a75605",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "cat-look",
+      "label": "cat-look",
+      "time_seconds": 3.6,
+      "overrides": {},
+      "hidden_layers": [
+        "leaf-0",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12"
+      ],
+      "explicitly_hidden_layers": [],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/cat-look/context.png",
+        "sha256": "1c3f8650485cbe4c5b97d3821ca5e12bdd89dc8615c33910d90dbddde139d7df",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/cat-look/regions/portrait.png",
+          "sha256": "a1129bdce06d06fb8d6802c424ea1cc6032a410cd9f3f72718f3836ceece9d69",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/cat-look/regions/landscape.png",
+          "sha256": "328b3f7646afc7b8583c2ac16dfa56e963a379673944fae40d3d68e4b3a06973",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/cat-look/regions/cat-contact.png",
+          "sha256": "a1fb7491f19f1f2f6da3e1753adf5038e8a112e20669b061fd437f5802b6d031",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "cat-blink",
+      "label": "cat-blink",
+      "time_seconds": 9.1,
+      "overrides": {},
+      "hidden_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/cat-blink/context.png",
+        "sha256": "b78da584f9310a5849668023ca204ac4d19995b501280ad6dcb371a8a2a7fee1",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/cat-blink/regions/portrait.png",
+          "sha256": "8ac4a63d59d50b02e30b9280d391d399c2def35db93563685fb1956212b0ab94",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/cat-blink/regions/landscape.png",
+          "sha256": "809295598b041d3b741689bf235adbd647a5fc1ffd83338f37e6670c06f7f78f",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/cat-blink/regions/cat-contact.png",
+          "sha256": "339bc9510dbd33381343edea765196f37de4df46ddd530cce8308e21430c617f",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "cat-hidden",
+      "label": "cat-hidden",
+      "time_seconds": 0,
+      "overrides": {
+        "cat": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "cat",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "cat"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/cat-hidden/context.png",
+        "sha256": "e2e430d9b437a268c8e11444a5656d71037ced7f743a01c2b64e8f94c26a7463",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/cat-hidden/regions/portrait.png",
+          "sha256": "43d105d4ed0781ccebf0188df33a516d2d506308cce0fa3994e8bfc790de862d",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/cat-hidden/regions/landscape.png",
+          "sha256": "64ca16d92027b59e8a114911cb02d4e1d23e642c9c2ed633021b9b4c8100e6c1",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/cat-hidden/regions/cat-contact.png",
+          "sha256": "9ca1cb0d9fc8489275998aaaa3e701d21518fabf67814c8255f5015e78d1bb0d",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "cat-isolated",
+      "label": "cat-isolated",
+      "time_seconds": 0,
+      "overrides": {
+        "sky": {
+          "visible": false
+        },
+        "cloud-veil": {
+          "visible": false
+        },
+        "valley": {
+          "visible": false
+        },
+        "path": {
+          "visible": false
+        },
+        "cottage": {
+          "visible": false
+        },
+        "tree": {
+          "visible": false
+        },
+        "fence-left": {
+          "visible": false
+        },
+        "fence-right": {
+          "visible": false
+        },
+        "pumpkin-near": {
+          "visible": false
+        },
+        "pumpkin-left": {
+          "visible": false
+        },
+        "pumpkin-right": {
+          "visible": false
+        },
+        "pumpkin-step": {
+          "visible": false
+        },
+        "chair": {
+          "visible": false
+        },
+        "wreath": {
+          "visible": false
+        },
+        "planter-left": {
+          "visible": false
+        },
+        "planter-right": {
+          "visible": false
+        },
+        "hanging-basket": {
+          "visible": false
+        },
+        "pumpkin-shelf": {
+          "visible": false
+        },
+        "lantern-left": {
+          "visible": false
+        },
+        "lantern-step": {
+          "visible": false
+        },
+        "lantern-step-low": {
+          "visible": false
+        },
+        "lantern-right-low": {
+          "visible": false
+        },
+        "lantern-post": {
+          "visible": false
+        },
+        "sconce-0": {
+          "visible": false
+        },
+        "sconce-1": {
+          "visible": false
+        },
+        "sconce-2": {
+          "visible": false
+        },
+        "pumpkin-near-emission": {
+          "visible": false
+        },
+        "pumpkin-left-emission": {
+          "visible": false
+        },
+        "pumpkin-right-emission": {
+          "visible": false
+        },
+        "pumpkin-step-emission": {
+          "visible": false
+        },
+        "lantern-left-flame": {
+          "visible": false
+        },
+        "lantern-step-flame": {
+          "visible": false
+        },
+        "lantern-step-low-flame": {
+          "visible": false
+        },
+        "lantern-right-low-flame": {
+          "visible": false
+        },
+        "lantern-post-flame": {
+          "visible": false
+        },
+        "sconce-0-flame": {
+          "visible": false
+        },
+        "sconce-1-flame": {
+          "visible": false
+        },
+        "sconce-2-flame": {
+          "visible": false
+        },
+        "leaf-0": {
+          "visible": false
+        },
+        "leaf-1": {
+          "visible": false
+        },
+        "leaf-2": {
+          "visible": false
+        },
+        "leaf-3": {
+          "visible": false
+        },
+        "leaf-4": {
+          "visible": false
+        },
+        "leaf-5": {
+          "visible": false
+        },
+        "leaf-6": {
+          "visible": false
+        },
+        "leaf-7": {
+          "visible": false
+        },
+        "leaf-8": {
+          "visible": false
+        },
+        "leaf-9": {
+          "visible": false
+        },
+        "leaf-10": {
+          "visible": false
+        },
+        "leaf-11": {
+          "visible": false
+        },
+        "leaf-12": {
+          "visible": false
+        },
+        "leaf-13": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/cat-isolated/context.png",
+        "sha256": "3b8d6cea293a053605e578fbd569b400bee5b2b60a8a5415afde05a2a5aa2f76",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/cat-isolated/regions/portrait.png",
+          "sha256": "73e3ee733aec6600efd949ca7c5969e2277700834efd8a2277facfe6af044388",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/cat-isolated/regions/landscape.png",
+          "sha256": "b00e22e19d1e4d0cce796f80c25041fbedd22a7b95067bdc0e3a62ac4c2416d5",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/cat-isolated/regions/cat-contact.png",
+          "sha256": "38b671722d6589ee2efbd2975e4a214b4f912b591feebde01fa7869951298537",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "cottage-hidden",
+      "label": "cottage-hidden",
+      "time_seconds": 0,
+      "overrides": {
+        "cottage": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "cottage",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "cottage"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/cottage-hidden/context.png",
+        "sha256": "610196d02af41bd693159db2e5b36d4e164bd91e4de4132e88b3e7f9c0a9b336",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/cottage-hidden/regions/portrait.png",
+          "sha256": "0667f1bfb38a61201ed84a43bc2184286cc68b1d48a39f7e562c611df4beb95c",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/cottage-hidden/regions/landscape.png",
+          "sha256": "a95614a7e6a7e06066729dfe8e0bf1dbceff0f41edba61cdfdafb91c473365f6",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/cottage-hidden/regions/cat-contact.png",
+          "sha256": "ea40f36935e89c7134b4557605a0f8ca28f886bf476e8179d670fec9d2730e50",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "cottage-isolated",
+      "label": "cottage-isolated",
+      "time_seconds": 0,
+      "overrides": {
+        "sky": {
+          "visible": false
+        },
+        "cloud-veil": {
+          "visible": false
+        },
+        "valley": {
+          "visible": false
+        },
+        "path": {
+          "visible": false
+        },
+        "tree": {
+          "visible": false
+        },
+        "fence-left": {
+          "visible": false
+        },
+        "fence-right": {
+          "visible": false
+        },
+        "pumpkin-near": {
+          "visible": false
+        },
+        "pumpkin-left": {
+          "visible": false
+        },
+        "pumpkin-right": {
+          "visible": false
+        },
+        "pumpkin-step": {
+          "visible": false
+        },
+        "chair": {
+          "visible": false
+        },
+        "wreath": {
+          "visible": false
+        },
+        "planter-left": {
+          "visible": false
+        },
+        "planter-right": {
+          "visible": false
+        },
+        "hanging-basket": {
+          "visible": false
+        },
+        "pumpkin-shelf": {
+          "visible": false
+        },
+        "lantern-left": {
+          "visible": false
+        },
+        "lantern-step": {
+          "visible": false
+        },
+        "lantern-step-low": {
+          "visible": false
+        },
+        "lantern-right-low": {
+          "visible": false
+        },
+        "lantern-post": {
+          "visible": false
+        },
+        "sconce-0": {
+          "visible": false
+        },
+        "sconce-1": {
+          "visible": false
+        },
+        "sconce-2": {
+          "visible": false
+        },
+        "cat": {
+          "visible": false
+        },
+        "pumpkin-near-emission": {
+          "visible": false
+        },
+        "pumpkin-left-emission": {
+          "visible": false
+        },
+        "pumpkin-right-emission": {
+          "visible": false
+        },
+        "pumpkin-step-emission": {
+          "visible": false
+        },
+        "lantern-left-flame": {
+          "visible": false
+        },
+        "lantern-step-flame": {
+          "visible": false
+        },
+        "lantern-step-low-flame": {
+          "visible": false
+        },
+        "lantern-right-low-flame": {
+          "visible": false
+        },
+        "lantern-post-flame": {
+          "visible": false
+        },
+        "sconce-0-flame": {
+          "visible": false
+        },
+        "sconce-1-flame": {
+          "visible": false
+        },
+        "sconce-2-flame": {
+          "visible": false
+        },
+        "leaf-0": {
+          "visible": false
+        },
+        "leaf-1": {
+          "visible": false
+        },
+        "leaf-2": {
+          "visible": false
+        },
+        "leaf-3": {
+          "visible": false
+        },
+        "leaf-4": {
+          "visible": false
+        },
+        "leaf-5": {
+          "visible": false
+        },
+        "leaf-6": {
+          "visible": false
+        },
+        "leaf-7": {
+          "visible": false
+        },
+        "leaf-8": {
+          "visible": false
+        },
+        "leaf-9": {
+          "visible": false
+        },
+        "leaf-10": {
+          "visible": false
+        },
+        "leaf-11": {
+          "visible": false
+        },
+        "leaf-12": {
+          "visible": false
+        },
+        "leaf-13": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/cottage-isolated/context.png",
+        "sha256": "97524a0bae1570ea00285fd72f51c9ca3901ed56108580cdda6f57a7d9af5d29",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/cottage-isolated/regions/portrait.png",
+          "sha256": "76b599fc374dbda7c3a6ca5af3e828a8a06da0fecc035118a42af1d4f4a81238",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/cottage-isolated/regions/landscape.png",
+          "sha256": "02b7e3e1c0a9f9aa92b4c6316f9790bd315eaad0c1641696845e5d97377bfb49",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/cottage-isolated/regions/cat-contact.png",
+          "sha256": "3b7eac5b69dba7f6904556b055bbba09a4b5132628ecd065d3ffe2d9971c33cf",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "chair-hidden",
+      "label": "chair-hidden",
+      "time_seconds": 0,
+      "overrides": {
+        "chair": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "chair",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "chair"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/chair-hidden/context.png",
+        "sha256": "24bd71ba56e6276b721db0664251a567d18297817cbe3f36cb7d872fe578d46f",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/chair-hidden/regions/portrait.png",
+          "sha256": "82f8d10266f774ef6ff4d5286ee9b2709a3012d03aa79d1695d9ff949de720f2",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/chair-hidden/regions/landscape.png",
+          "sha256": "63fbdcb055dda7cc4c2daa340e3e0b093ec88de0a110dc42d6d30e5aba3a459a",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/chair-hidden/regions/cat-contact.png",
+          "sha256": "4f05a3bc93f2342833d34aebec3917244869c9ec9549e1fe7063e48132a75605",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "chair-isolated",
+      "label": "chair-isolated",
+      "time_seconds": 0,
+      "overrides": {
+        "sky": {
+          "visible": false
+        },
+        "cloud-veil": {
+          "visible": false
+        },
+        "valley": {
+          "visible": false
+        },
+        "path": {
+          "visible": false
+        },
+        "cottage": {
+          "visible": false
+        },
+        "tree": {
+          "visible": false
+        },
+        "fence-left": {
+          "visible": false
+        },
+        "fence-right": {
+          "visible": false
+        },
+        "pumpkin-near": {
+          "visible": false
+        },
+        "pumpkin-left": {
+          "visible": false
+        },
+        "pumpkin-right": {
+          "visible": false
+        },
+        "pumpkin-step": {
+          "visible": false
+        },
+        "wreath": {
+          "visible": false
+        },
+        "planter-left": {
+          "visible": false
+        },
+        "planter-right": {
+          "visible": false
+        },
+        "hanging-basket": {
+          "visible": false
+        },
+        "pumpkin-shelf": {
+          "visible": false
+        },
+        "lantern-left": {
+          "visible": false
+        },
+        "lantern-step": {
+          "visible": false
+        },
+        "lantern-step-low": {
+          "visible": false
+        },
+        "lantern-right-low": {
+          "visible": false
+        },
+        "lantern-post": {
+          "visible": false
+        },
+        "sconce-0": {
+          "visible": false
+        },
+        "sconce-1": {
+          "visible": false
+        },
+        "sconce-2": {
+          "visible": false
+        },
+        "cat": {
+          "visible": false
+        },
+        "pumpkin-near-emission": {
+          "visible": false
+        },
+        "pumpkin-left-emission": {
+          "visible": false
+        },
+        "pumpkin-right-emission": {
+          "visible": false
+        },
+        "pumpkin-step-emission": {
+          "visible": false
+        },
+        "lantern-left-flame": {
+          "visible": false
+        },
+        "lantern-step-flame": {
+          "visible": false
+        },
+        "lantern-step-low-flame": {
+          "visible": false
+        },
+        "lantern-right-low-flame": {
+          "visible": false
+        },
+        "lantern-post-flame": {
+          "visible": false
+        },
+        "sconce-0-flame": {
+          "visible": false
+        },
+        "sconce-1-flame": {
+          "visible": false
+        },
+        "sconce-2-flame": {
+          "visible": false
+        },
+        "leaf-0": {
+          "visible": false
+        },
+        "leaf-1": {
+          "visible": false
+        },
+        "leaf-2": {
+          "visible": false
+        },
+        "leaf-3": {
+          "visible": false
+        },
+        "leaf-4": {
+          "visible": false
+        },
+        "leaf-5": {
+          "visible": false
+        },
+        "leaf-6": {
+          "visible": false
+        },
+        "leaf-7": {
+          "visible": false
+        },
+        "leaf-8": {
+          "visible": false
+        },
+        "leaf-9": {
+          "visible": false
+        },
+        "leaf-10": {
+          "visible": false
+        },
+        "leaf-11": {
+          "visible": false
+        },
+        "leaf-12": {
+          "visible": false
+        },
+        "leaf-13": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/chair-isolated/context.png",
+        "sha256": "e21a28abf857a22dd62bcee243785ffd456d5dfffb290d47e728f1e9c3e1a8eb",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/chair-isolated/regions/portrait.png",
+          "sha256": "188a53c6eb268a3f3251e73cedeb0ae30c2d1e15419ef47830b39c9f233c832e",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/chair-isolated/regions/landscape.png",
+          "sha256": "1c051bd2e9ed2f4aa2f338c8987cdbd82e8f1611388dd437a740aa64cf669ba0",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/chair-isolated/regions/cat-contact.png",
+          "sha256": "9ca6f5fe8e969f235fdfcae0c095e544e3ad4081dcaa65b6598f4682854568cb",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "pumpkins-hidden",
+      "label": "pumpkins-hidden",
+      "time_seconds": 0,
+      "overrides": {
+        "pumpkin-near": {
+          "visible": false
+        },
+        "pumpkin-left": {
+          "visible": false
+        },
+        "pumpkin-right": {
+          "visible": false
+        },
+        "pumpkin-step": {
+          "visible": false
+        },
+        "pumpkin-near-emission": {
+          "visible": false
+        },
+        "pumpkin-left-emission": {
+          "visible": false
+        },
+        "pumpkin-right-emission": {
+          "visible": false
+        },
+        "pumpkin-step-emission": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/pumpkins-hidden/context.png",
+        "sha256": "9e4b092c24f755395fd322d83b17f6d5c2080662099aa04a7347e3c49582d726",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/pumpkins-hidden/regions/portrait.png",
+          "sha256": "4a7960bdc80cf57dbfbf156b15a2103b081f5327f6cab7835c5e85525b34ac1d",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/pumpkins-hidden/regions/landscape.png",
+          "sha256": "71c1fccba64fb82fc4aac4b9a85262c374000d3d631565f18aa2aaea34be781c",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/pumpkins-hidden/regions/cat-contact.png",
+          "sha256": "4f05a3bc93f2342833d34aebec3917244869c9ec9549e1fe7063e48132a75605",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "pumpkins-isolated",
+      "label": "pumpkins-isolated",
+      "time_seconds": 0,
+      "overrides": {
+        "sky": {
+          "visible": false
+        },
+        "cloud-veil": {
+          "visible": false
+        },
+        "valley": {
+          "visible": false
+        },
+        "path": {
+          "visible": false
+        },
+        "cottage": {
+          "visible": false
+        },
+        "tree": {
+          "visible": false
+        },
+        "fence-left": {
+          "visible": false
+        },
+        "fence-right": {
+          "visible": false
+        },
+        "chair": {
+          "visible": false
+        },
+        "wreath": {
+          "visible": false
+        },
+        "planter-left": {
+          "visible": false
+        },
+        "planter-right": {
+          "visible": false
+        },
+        "hanging-basket": {
+          "visible": false
+        },
+        "pumpkin-shelf": {
+          "visible": false
+        },
+        "lantern-left": {
+          "visible": false
+        },
+        "lantern-step": {
+          "visible": false
+        },
+        "lantern-step-low": {
+          "visible": false
+        },
+        "lantern-right-low": {
+          "visible": false
+        },
+        "lantern-post": {
+          "visible": false
+        },
+        "sconce-0": {
+          "visible": false
+        },
+        "sconce-1": {
+          "visible": false
+        },
+        "sconce-2": {
+          "visible": false
+        },
+        "cat": {
+          "visible": false
+        },
+        "lantern-left-flame": {
+          "visible": false
+        },
+        "lantern-step-flame": {
+          "visible": false
+        },
+        "lantern-step-low-flame": {
+          "visible": false
+        },
+        "lantern-right-low-flame": {
+          "visible": false
+        },
+        "lantern-post-flame": {
+          "visible": false
+        },
+        "sconce-0-flame": {
+          "visible": false
+        },
+        "sconce-1-flame": {
+          "visible": false
+        },
+        "sconce-2-flame": {
+          "visible": false
+        },
+        "leaf-0": {
+          "visible": false
+        },
+        "leaf-1": {
+          "visible": false
+        },
+        "leaf-2": {
+          "visible": false
+        },
+        "leaf-3": {
+          "visible": false
+        },
+        "leaf-4": {
+          "visible": false
+        },
+        "leaf-5": {
+          "visible": false
+        },
+        "leaf-6": {
+          "visible": false
+        },
+        "leaf-7": {
+          "visible": false
+        },
+        "leaf-8": {
+          "visible": false
+        },
+        "leaf-9": {
+          "visible": false
+        },
+        "leaf-10": {
+          "visible": false
+        },
+        "leaf-11": {
+          "visible": false
+        },
+        "leaf-12": {
+          "visible": false
+        },
+        "leaf-13": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/pumpkins-isolated/context.png",
+        "sha256": "56e8b88a11addd9b9770dbd55842d7c47e98f8761ae258a1f655f7621f0882bd",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/pumpkins-isolated/regions/portrait.png",
+          "sha256": "b79e4d3dc4bfe8c4cbd079dba564e8eed3ef46143d0d2113899061387c80a2fe",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/pumpkins-isolated/regions/landscape.png",
+          "sha256": "3bd78948b2b688fffc6194318e9925d0d150e899a7e124b09dfbd24dd81b66a1",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/pumpkins-isolated/regions/cat-contact.png",
+          "sha256": "9ca6f5fe8e969f235fdfcae0c095e544e3ad4081dcaa65b6598f4682854568cb",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "lanterns-hidden",
+      "label": "lanterns-hidden",
+      "time_seconds": 0,
+      "overrides": {
+        "lantern-left": {
+          "visible": false
+        },
+        "lantern-step": {
+          "visible": false
+        },
+        "lantern-step-low": {
+          "visible": false
+        },
+        "lantern-right-low": {
+          "visible": false
+        },
+        "lantern-post": {
+          "visible": false
+        },
+        "sconce-0": {
+          "visible": false
+        },
+        "sconce-1": {
+          "visible": false
+        },
+        "sconce-2": {
+          "visible": false
+        },
+        "lantern-left-flame": {
+          "visible": false
+        },
+        "lantern-step-flame": {
+          "visible": false
+        },
+        "lantern-step-low-flame": {
+          "visible": false
+        },
+        "lantern-right-low-flame": {
+          "visible": false
+        },
+        "lantern-post-flame": {
+          "visible": false
+        },
+        "sconce-0-flame": {
+          "visible": false
+        },
+        "sconce-1-flame": {
+          "visible": false
+        },
+        "sconce-2-flame": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/lanterns-hidden/context.png",
+        "sha256": "6e9d523c51d79de58bd3cdfa69c0e1f320812c77981cb34f6f595a91fd26458b",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/lanterns-hidden/regions/portrait.png",
+          "sha256": "82e0448e4d3da689467ddb6de36ddf00551560a56e7d1e7cf17ed1ad2b488967",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/lanterns-hidden/regions/landscape.png",
+          "sha256": "e3ef3262f95f1943f7157c267d720c74b301a6d977734c8b58475328798f586d",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/lanterns-hidden/regions/cat-contact.png",
+          "sha256": "4f05a3bc93f2342833d34aebec3917244869c9ec9549e1fe7063e48132a75605",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "lanterns-isolated",
+      "label": "lanterns-isolated",
+      "time_seconds": 0,
+      "overrides": {
+        "sky": {
+          "visible": false
+        },
+        "cloud-veil": {
+          "visible": false
+        },
+        "valley": {
+          "visible": false
+        },
+        "path": {
+          "visible": false
+        },
+        "cottage": {
+          "visible": false
+        },
+        "tree": {
+          "visible": false
+        },
+        "fence-left": {
+          "visible": false
+        },
+        "fence-right": {
+          "visible": false
+        },
+        "pumpkin-near": {
+          "visible": false
+        },
+        "pumpkin-left": {
+          "visible": false
+        },
+        "pumpkin-right": {
+          "visible": false
+        },
+        "pumpkin-step": {
+          "visible": false
+        },
+        "chair": {
+          "visible": false
+        },
+        "wreath": {
+          "visible": false
+        },
+        "planter-left": {
+          "visible": false
+        },
+        "planter-right": {
+          "visible": false
+        },
+        "hanging-basket": {
+          "visible": false
+        },
+        "pumpkin-shelf": {
+          "visible": false
+        },
+        "cat": {
+          "visible": false
+        },
+        "pumpkin-near-emission": {
+          "visible": false
+        },
+        "pumpkin-left-emission": {
+          "visible": false
+        },
+        "pumpkin-right-emission": {
+          "visible": false
+        },
+        "pumpkin-step-emission": {
+          "visible": false
+        },
+        "leaf-0": {
+          "visible": false
+        },
+        "leaf-1": {
+          "visible": false
+        },
+        "leaf-2": {
+          "visible": false
+        },
+        "leaf-3": {
+          "visible": false
+        },
+        "leaf-4": {
+          "visible": false
+        },
+        "leaf-5": {
+          "visible": false
+        },
+        "leaf-6": {
+          "visible": false
+        },
+        "leaf-7": {
+          "visible": false
+        },
+        "leaf-8": {
+          "visible": false
+        },
+        "leaf-9": {
+          "visible": false
+        },
+        "leaf-10": {
+          "visible": false
+        },
+        "leaf-11": {
+          "visible": false
+        },
+        "leaf-12": {
+          "visible": false
+        },
+        "leaf-13": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/lanterns-isolated/context.png",
+        "sha256": "06481b37d6c262157c252e521e87011594046b5516cadd0cfc776b18220de3d8",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/lanterns-isolated/regions/portrait.png",
+          "sha256": "25787981f3a8b26c2fa97b03bd8e9e74fe067390f79475340aa0ba24852db2f0",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/lanterns-isolated/regions/landscape.png",
+          "sha256": "ccb185fecf55642587f7e4cf4f220f1e9612d25e53a5b58ca4659e277ab62e0c",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/lanterns-isolated/regions/cat-contact.png",
+          "sha256": "9ca6f5fe8e969f235fdfcae0c095e544e3ad4081dcaa65b6598f4682854568cb",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "planters-hidden",
+      "label": "planters-hidden",
+      "time_seconds": 0,
+      "overrides": {
+        "planter-left": {
+          "visible": false
+        },
+        "planter-right": {
+          "visible": false
+        },
+        "hanging-basket": {
+          "visible": false
+        },
+        "pumpkin-shelf": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/planters-hidden/context.png",
+        "sha256": "3a64b4ada6173ab304f4ff1037f9e5214b9cf52fed6219e1486f2d036913a567",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/planters-hidden/regions/portrait.png",
+          "sha256": "5a9196f008b4047f18afab2b6366d06de8599f06cc9f9ae6551e498b10b0e82d",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/planters-hidden/regions/landscape.png",
+          "sha256": "8deda5cc8a3c1aafe8f55575e5d75c24d0bd6af04a6b748d3dfbc50919e1cb7e",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/planters-hidden/regions/cat-contact.png",
+          "sha256": "a8c9b97bdde1487e47c18f72193133c237e9a33fca445458a16903312cbcf10d",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "planters-isolated",
+      "label": "planters-isolated",
+      "time_seconds": 0,
+      "overrides": {
+        "sky": {
+          "visible": false
+        },
+        "cloud-veil": {
+          "visible": false
+        },
+        "valley": {
+          "visible": false
+        },
+        "path": {
+          "visible": false
+        },
+        "cottage": {
+          "visible": false
+        },
+        "tree": {
+          "visible": false
+        },
+        "fence-left": {
+          "visible": false
+        },
+        "fence-right": {
+          "visible": false
+        },
+        "pumpkin-near": {
+          "visible": false
+        },
+        "pumpkin-left": {
+          "visible": false
+        },
+        "pumpkin-right": {
+          "visible": false
+        },
+        "pumpkin-step": {
+          "visible": false
+        },
+        "chair": {
+          "visible": false
+        },
+        "wreath": {
+          "visible": false
+        },
+        "lantern-left": {
+          "visible": false
+        },
+        "lantern-step": {
+          "visible": false
+        },
+        "lantern-step-low": {
+          "visible": false
+        },
+        "lantern-right-low": {
+          "visible": false
+        },
+        "lantern-post": {
+          "visible": false
+        },
+        "sconce-0": {
+          "visible": false
+        },
+        "sconce-1": {
+          "visible": false
+        },
+        "sconce-2": {
+          "visible": false
+        },
+        "cat": {
+          "visible": false
+        },
+        "pumpkin-near-emission": {
+          "visible": false
+        },
+        "pumpkin-left-emission": {
+          "visible": false
+        },
+        "pumpkin-right-emission": {
+          "visible": false
+        },
+        "pumpkin-step-emission": {
+          "visible": false
+        },
+        "lantern-left-flame": {
+          "visible": false
+        },
+        "lantern-step-flame": {
+          "visible": false
+        },
+        "lantern-step-low-flame": {
+          "visible": false
+        },
+        "lantern-right-low-flame": {
+          "visible": false
+        },
+        "lantern-post-flame": {
+          "visible": false
+        },
+        "sconce-0-flame": {
+          "visible": false
+        },
+        "sconce-1-flame": {
+          "visible": false
+        },
+        "sconce-2-flame": {
+          "visible": false
+        },
+        "leaf-0": {
+          "visible": false
+        },
+        "leaf-1": {
+          "visible": false
+        },
+        "leaf-2": {
+          "visible": false
+        },
+        "leaf-3": {
+          "visible": false
+        },
+        "leaf-4": {
+          "visible": false
+        },
+        "leaf-5": {
+          "visible": false
+        },
+        "leaf-6": {
+          "visible": false
+        },
+        "leaf-7": {
+          "visible": false
+        },
+        "leaf-8": {
+          "visible": false
+        },
+        "leaf-9": {
+          "visible": false
+        },
+        "leaf-10": {
+          "visible": false
+        },
+        "leaf-11": {
+          "visible": false
+        },
+        "leaf-12": {
+          "visible": false
+        },
+        "leaf-13": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/planters-isolated/context.png",
+        "sha256": "68f9f138035604c873537bba64eb9ccaa040275352bd762abcc13421d3cb5aba",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/planters-isolated/regions/portrait.png",
+          "sha256": "a61daff9875f5d0f01b56307713934f05976aec031fe87bbecba8aa18a2d8d30",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/planters-isolated/regions/landscape.png",
+          "sha256": "5f9e8a4f30c46c5e0f3d278098cffb0edf16513898fb7f474640476fd332d931",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/planters-isolated/regions/cat-contact.png",
+          "sha256": "bd912ba55133d8b2566630923b151a952dffd74e9439cea28495ba7a20d205c4",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "wreath-hidden",
+      "label": "wreath-hidden",
+      "time_seconds": 0,
+      "overrides": {
+        "wreath": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "wreath",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "wreath"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/wreath-hidden/context.png",
+        "sha256": "b1f02b4f5c4dfe3ac1c23014b9c47a5a2d66aa00957252aa23e825d4f9b2ef39",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/wreath-hidden/regions/portrait.png",
+          "sha256": "492eb31ff1c4db8a9340f8bdf9e8c45321207227eeb57222e81b4ffea4dad7f3",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/wreath-hidden/regions/landscape.png",
+          "sha256": "a10865844883b3e9ecab8dfb33060d3125981d90e778f877887d55fc5890ac41",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/wreath-hidden/regions/cat-contact.png",
+          "sha256": "4f05a3bc93f2342833d34aebec3917244869c9ec9549e1fe7063e48132a75605",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "wreath-isolated",
+      "label": "wreath-isolated",
+      "time_seconds": 0,
+      "overrides": {
+        "sky": {
+          "visible": false
+        },
+        "cloud-veil": {
+          "visible": false
+        },
+        "valley": {
+          "visible": false
+        },
+        "path": {
+          "visible": false
+        },
+        "cottage": {
+          "visible": false
+        },
+        "tree": {
+          "visible": false
+        },
+        "fence-left": {
+          "visible": false
+        },
+        "fence-right": {
+          "visible": false
+        },
+        "pumpkin-near": {
+          "visible": false
+        },
+        "pumpkin-left": {
+          "visible": false
+        },
+        "pumpkin-right": {
+          "visible": false
+        },
+        "pumpkin-step": {
+          "visible": false
+        },
+        "chair": {
+          "visible": false
+        },
+        "planter-left": {
+          "visible": false
+        },
+        "planter-right": {
+          "visible": false
+        },
+        "hanging-basket": {
+          "visible": false
+        },
+        "pumpkin-shelf": {
+          "visible": false
+        },
+        "lantern-left": {
+          "visible": false
+        },
+        "lantern-step": {
+          "visible": false
+        },
+        "lantern-step-low": {
+          "visible": false
+        },
+        "lantern-right-low": {
+          "visible": false
+        },
+        "lantern-post": {
+          "visible": false
+        },
+        "sconce-0": {
+          "visible": false
+        },
+        "sconce-1": {
+          "visible": false
+        },
+        "sconce-2": {
+          "visible": false
+        },
+        "cat": {
+          "visible": false
+        },
+        "pumpkin-near-emission": {
+          "visible": false
+        },
+        "pumpkin-left-emission": {
+          "visible": false
+        },
+        "pumpkin-right-emission": {
+          "visible": false
+        },
+        "pumpkin-step-emission": {
+          "visible": false
+        },
+        "lantern-left-flame": {
+          "visible": false
+        },
+        "lantern-step-flame": {
+          "visible": false
+        },
+        "lantern-step-low-flame": {
+          "visible": false
+        },
+        "lantern-right-low-flame": {
+          "visible": false
+        },
+        "lantern-post-flame": {
+          "visible": false
+        },
+        "sconce-0-flame": {
+          "visible": false
+        },
+        "sconce-1-flame": {
+          "visible": false
+        },
+        "sconce-2-flame": {
+          "visible": false
+        },
+        "leaf-0": {
+          "visible": false
+        },
+        "leaf-1": {
+          "visible": false
+        },
+        "leaf-2": {
+          "visible": false
+        },
+        "leaf-3": {
+          "visible": false
+        },
+        "leaf-4": {
+          "visible": false
+        },
+        "leaf-5": {
+          "visible": false
+        },
+        "leaf-6": {
+          "visible": false
+        },
+        "leaf-7": {
+          "visible": false
+        },
+        "leaf-8": {
+          "visible": false
+        },
+        "leaf-9": {
+          "visible": false
+        },
+        "leaf-10": {
+          "visible": false
+        },
+        "leaf-11": {
+          "visible": false
+        },
+        "leaf-12": {
+          "visible": false
+        },
+        "leaf-13": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/wreath-isolated/context.png",
+        "sha256": "848be75720c199275e9cce858dd8d8ca1b008383e3689f968389b7a3dec8efdd",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/wreath-isolated/regions/portrait.png",
+          "sha256": "0dabb3f68edb2bd504731a3164d8466154d97071b26f528b3f3cb3da3744de8d",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/wreath-isolated/regions/landscape.png",
+          "sha256": "3f21f0200134444aa9677aead6d898a918f19ba34c17a53453fd9e36f39134e8",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/wreath-isolated/regions/cat-contact.png",
+          "sha256": "9ca6f5fe8e969f235fdfcae0c095e544e3ad4081dcaa65b6598f4682854568cb",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "tree-hidden",
+      "label": "tree-hidden",
+      "time_seconds": 0,
+      "overrides": {
+        "tree": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "tree",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "tree"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/tree-hidden/context.png",
+        "sha256": "4bfb159d41f485d7a6d6a70b2a1b66ce307af68468c62be7ae7a1498f36808d1",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/tree-hidden/regions/portrait.png",
+          "sha256": "50b175e99689e98421731d5757cdb8bfb8358700ab809a5909c6624eaeb69ad2",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/tree-hidden/regions/landscape.png",
+          "sha256": "08f0f8df669f6d3b9b4361c4f39423cf1d04155b5692260d5247f36a702d1848",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/tree-hidden/regions/cat-contact.png",
+          "sha256": "4f05a3bc93f2342833d34aebec3917244869c9ec9549e1fe7063e48132a75605",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "tree-isolated",
+      "label": "tree-isolated",
+      "time_seconds": 0,
+      "overrides": {
+        "sky": {
+          "visible": false
+        },
+        "cloud-veil": {
+          "visible": false
+        },
+        "valley": {
+          "visible": false
+        },
+        "path": {
+          "visible": false
+        },
+        "cottage": {
+          "visible": false
+        },
+        "fence-left": {
+          "visible": false
+        },
+        "fence-right": {
+          "visible": false
+        },
+        "pumpkin-near": {
+          "visible": false
+        },
+        "pumpkin-left": {
+          "visible": false
+        },
+        "pumpkin-right": {
+          "visible": false
+        },
+        "pumpkin-step": {
+          "visible": false
+        },
+        "chair": {
+          "visible": false
+        },
+        "wreath": {
+          "visible": false
+        },
+        "planter-left": {
+          "visible": false
+        },
+        "planter-right": {
+          "visible": false
+        },
+        "hanging-basket": {
+          "visible": false
+        },
+        "pumpkin-shelf": {
+          "visible": false
+        },
+        "lantern-left": {
+          "visible": false
+        },
+        "lantern-step": {
+          "visible": false
+        },
+        "lantern-step-low": {
+          "visible": false
+        },
+        "lantern-right-low": {
+          "visible": false
+        },
+        "lantern-post": {
+          "visible": false
+        },
+        "sconce-0": {
+          "visible": false
+        },
+        "sconce-1": {
+          "visible": false
+        },
+        "sconce-2": {
+          "visible": false
+        },
+        "cat": {
+          "visible": false
+        },
+        "pumpkin-near-emission": {
+          "visible": false
+        },
+        "pumpkin-left-emission": {
+          "visible": false
+        },
+        "pumpkin-right-emission": {
+          "visible": false
+        },
+        "pumpkin-step-emission": {
+          "visible": false
+        },
+        "lantern-left-flame": {
+          "visible": false
+        },
+        "lantern-step-flame": {
+          "visible": false
+        },
+        "lantern-step-low-flame": {
+          "visible": false
+        },
+        "lantern-right-low-flame": {
+          "visible": false
+        },
+        "lantern-post-flame": {
+          "visible": false
+        },
+        "sconce-0-flame": {
+          "visible": false
+        },
+        "sconce-1-flame": {
+          "visible": false
+        },
+        "sconce-2-flame": {
+          "visible": false
+        },
+        "leaf-0": {
+          "visible": false
+        },
+        "leaf-1": {
+          "visible": false
+        },
+        "leaf-2": {
+          "visible": false
+        },
+        "leaf-3": {
+          "visible": false
+        },
+        "leaf-4": {
+          "visible": false
+        },
+        "leaf-5": {
+          "visible": false
+        },
+        "leaf-6": {
+          "visible": false
+        },
+        "leaf-7": {
+          "visible": false
+        },
+        "leaf-8": {
+          "visible": false
+        },
+        "leaf-9": {
+          "visible": false
+        },
+        "leaf-10": {
+          "visible": false
+        },
+        "leaf-11": {
+          "visible": false
+        },
+        "leaf-12": {
+          "visible": false
+        },
+        "leaf-13": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/tree-isolated/context.png",
+        "sha256": "4a84a2ac72901693e1cf1fc07a11d57d4e44b5d8f5b74f68dda408e47db7ea61",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/tree-isolated/regions/portrait.png",
+          "sha256": "96667b9209f2c46487d8456b4d6b0a5036c27237e3ade340859b3bcc179feac8",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/tree-isolated/regions/landscape.png",
+          "sha256": "71ac986ef0d08cbb5c1b6cc93a4dfd64c0c5f7d9c053f3a20fc40a88cdb168c2",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/tree-isolated/regions/cat-contact.png",
+          "sha256": "9ca6f5fe8e969f235fdfcae0c095e544e3ad4081dcaa65b6598f4682854568cb",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "fences-hidden",
+      "label": "fences-hidden",
+      "time_seconds": 0,
+      "overrides": {
+        "fence-left": {
+          "visible": false
+        },
+        "fence-right": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "fence-left",
+        "fence-right",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "fence-left",
+        "fence-right"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/fences-hidden/context.png",
+        "sha256": "eaa5b538dc8614e5a49999905b248fa6bc2691c01085731cf0f03aea2088a209",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/fences-hidden/regions/portrait.png",
+          "sha256": "885c9961d05e4ddbf1076a9e4ba6d3f77b67699b27dc08d5dbff588a3af65a74",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/fences-hidden/regions/landscape.png",
+          "sha256": "c0708791fcf340c01021695b12bceae78f00392c80af2e162eb18ff3712e11ef",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/fences-hidden/regions/cat-contact.png",
+          "sha256": "4f05a3bc93f2342833d34aebec3917244869c9ec9549e1fe7063e48132a75605",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "fences-isolated",
+      "label": "fences-isolated",
+      "time_seconds": 0,
+      "overrides": {
+        "sky": {
+          "visible": false
+        },
+        "cloud-veil": {
+          "visible": false
+        },
+        "valley": {
+          "visible": false
+        },
+        "path": {
+          "visible": false
+        },
+        "cottage": {
+          "visible": false
+        },
+        "tree": {
+          "visible": false
+        },
+        "pumpkin-near": {
+          "visible": false
+        },
+        "pumpkin-left": {
+          "visible": false
+        },
+        "pumpkin-right": {
+          "visible": false
+        },
+        "pumpkin-step": {
+          "visible": false
+        },
+        "chair": {
+          "visible": false
+        },
+        "wreath": {
+          "visible": false
+        },
+        "planter-left": {
+          "visible": false
+        },
+        "planter-right": {
+          "visible": false
+        },
+        "hanging-basket": {
+          "visible": false
+        },
+        "pumpkin-shelf": {
+          "visible": false
+        },
+        "lantern-left": {
+          "visible": false
+        },
+        "lantern-step": {
+          "visible": false
+        },
+        "lantern-step-low": {
+          "visible": false
+        },
+        "lantern-right-low": {
+          "visible": false
+        },
+        "lantern-post": {
+          "visible": false
+        },
+        "sconce-0": {
+          "visible": false
+        },
+        "sconce-1": {
+          "visible": false
+        },
+        "sconce-2": {
+          "visible": false
+        },
+        "cat": {
+          "visible": false
+        },
+        "pumpkin-near-emission": {
+          "visible": false
+        },
+        "pumpkin-left-emission": {
+          "visible": false
+        },
+        "pumpkin-right-emission": {
+          "visible": false
+        },
+        "pumpkin-step-emission": {
+          "visible": false
+        },
+        "lantern-left-flame": {
+          "visible": false
+        },
+        "lantern-step-flame": {
+          "visible": false
+        },
+        "lantern-step-low-flame": {
+          "visible": false
+        },
+        "lantern-right-low-flame": {
+          "visible": false
+        },
+        "lantern-post-flame": {
+          "visible": false
+        },
+        "sconce-0-flame": {
+          "visible": false
+        },
+        "sconce-1-flame": {
+          "visible": false
+        },
+        "sconce-2-flame": {
+          "visible": false
+        },
+        "leaf-0": {
+          "visible": false
+        },
+        "leaf-1": {
+          "visible": false
+        },
+        "leaf-2": {
+          "visible": false
+        },
+        "leaf-3": {
+          "visible": false
+        },
+        "leaf-4": {
+          "visible": false
+        },
+        "leaf-5": {
+          "visible": false
+        },
+        "leaf-6": {
+          "visible": false
+        },
+        "leaf-7": {
+          "visible": false
+        },
+        "leaf-8": {
+          "visible": false
+        },
+        "leaf-9": {
+          "visible": false
+        },
+        "leaf-10": {
+          "visible": false
+        },
+        "leaf-11": {
+          "visible": false
+        },
+        "leaf-12": {
+          "visible": false
+        },
+        "leaf-13": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/fences-isolated/context.png",
+        "sha256": "bc0ec62dcdc8b00666b6c194d30d4bfe03dcbef809678b2122ef75c8884e28a7",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/fences-isolated/regions/portrait.png",
+          "sha256": "3d1559ae18b50b2ffa28fbd16b67e0e5ebdbb6b84973dcc0522e1a302ad22267",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/fences-isolated/regions/landscape.png",
+          "sha256": "fce520e4cc0b7258e1ef7c29a33861ce0c9a82214c4343ac164cec524adc7c63",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/fences-isolated/regions/cat-contact.png",
+          "sha256": "9ca6f5fe8e969f235fdfcae0c095e544e3ad4081dcaa65b6598f4682854568cb",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "cat-reveal",
+      "left": "production-only",
+      "right": "cat-hidden",
+      "difference": true,
+      "context": {
+        "file": "comparisons/cat-reveal/context.png",
+        "sha256": "a859e1ab6fd3c39f2f1196245af55efcbb568e49c24d8176df89acaf8831682b",
+        "width": 1920,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "comparisons/cat-reveal/regions/portrait.png",
+          "sha256": "78a646a823f37a345a78cc6bce36c4ef618492ed9b65dcad50c4cc0b426731c8",
+          "width": 810,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "comparisons/cat-reveal/regions/landscape.png",
+          "sha256": "c3bc5dd4874e32f61714a515c43e0807c0c1e518bd83c3924054d614ea5b42e9",
+          "width": 1920,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "comparisons/cat-reveal/regions/cat-contact.png",
+          "sha256": "a71f5bbf4d3f8655ef291f2e44050cffb5141742e5c4652f0314a5e231988375",
+          "width": 192,
+          "height": 130
+        }
+      ],
+      "difference_image": {
+        "file": "comparisons/cat-reveal/difference.png",
+        "sha256": "4d25d48496b84a15b112d51935e726774ad45960ed3a9828385fa937a42d6e0f",
+        "width": 960,
+        "height": 720
+      },
+      "difference_metrics": {
+        "rgb_mean_absolute_difference": 0.26460985725308644,
+        "rgb_max_difference": 251,
+        "changed_pixels": 2030,
+        "display_gain": 4
+      }
+    },
+    {
+      "id": "cat-extreme",
+      "left": "production-only",
+      "right": "cat-look",
+      "difference": true,
+      "context": {
+        "file": "comparisons/cat-extreme/context.png",
+        "sha256": "c846bc1087858a2980ee78fdf85a490dfaa728dcbebe518d4f141f16fb9c8df1",
+        "width": 1920,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "comparisons/cat-extreme/regions/portrait.png",
+          "sha256": "22cc59fe79bc61d42e6c51a4b8750b300af1067cbf7dece3a7f528c39720cbbb",
+          "width": 810,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "comparisons/cat-extreme/regions/landscape.png",
+          "sha256": "caac026c3b1b88e7d0298030a0ca0acd4b6991913dfd5e207753fc0ddb2194ff",
+          "width": 1920,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "comparisons/cat-extreme/regions/cat-contact.png",
+          "sha256": "e474a1845bfdbb5acafd9e565f0de055d60f0abe0f1ed4a9777bf218485c8021",
+          "width": 192,
+          "height": 130
+        }
+      ],
+      "difference_image": {
+        "file": "comparisons/cat-extreme/difference.png",
+        "sha256": "62d0f2495c56b854a43a11fbd82122c18840e583cc378cadf78350e3a6b8241b",
+        "width": 960,
+        "height": 720
+      },
+      "difference_metrics": {
+        "rgb_mean_absolute_difference": 0.34074411651234565,
+        "rgb_max_difference": 249,
+        "changed_pixels": 46779,
+        "display_gain": 4
+      }
+    },
+    {
+      "id": "house-backing",
+      "left": "production-only",
+      "right": "cottage-hidden",
+      "difference": true,
+      "context": {
+        "file": "comparisons/house-backing/context.png",
+        "sha256": "bdbc28c2ae0c7fa80cf5b88c5ee6c2841a095b407c673fae7a33a4485411a4a3",
+        "width": 1920,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "comparisons/house-backing/regions/portrait.png",
+          "sha256": "549eb4ba3a9d31873873b37baf493275bb3e27732ae25a646a8c1ccdcbe9bf99",
+          "width": 810,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "comparisons/house-backing/regions/landscape.png",
+          "sha256": "a39379a11632ed9cb3701e906a812e1dde312ad142856373815552151e6b05e8",
+          "width": 1920,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "comparisons/house-backing/regions/cat-contact.png",
+          "sha256": "dbe7395918077c13f800fc98673fe2d5c2411afa045d6588c8394516a4331ff6",
+          "width": 192,
+          "height": 130
+        }
+      ],
+      "difference_image": {
+        "file": "comparisons/house-backing/difference.png",
+        "sha256": "a83f0fef5066c0965eca407418b595474db1590e101157e46ddb4cdb6873169a",
+        "width": 960,
+        "height": 720
+      },
+      "difference_metrics": {
+        "rgb_mean_absolute_difference": 16.10311005015432,
+        "rgb_max_difference": 244,
+        "changed_pixels": 250159,
+        "display_gain": 4
+      }
+    }
+  ],
+  "playback": null,
+  "outputs": [
+    {
+      "file": "samples/production-only/context.png",
+      "sha256": "a7ce3b41cd8817be9b488a4e56f0bc6e289d6c45b3ec5c746a87403ac75f65d4",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/production-only/regions/portrait.png",
+      "sha256": "885c9961d05e4ddbf1076a9e4ba6d3f77b67699b27dc08d5dbff588a3af65a74",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/production-only/regions/landscape.png",
+      "sha256": "98e92aa4b8d9bb4e99d1f99d57a1d1003f318b09ae0fc8ec698fb9c246f09c0d",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/production-only/regions/cat-contact.png",
+      "sha256": "4f05a3bc93f2342833d34aebec3917244869c9ec9549e1fe7063e48132a75605",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/cat-look/context.png",
+      "sha256": "1c3f8650485cbe4c5b97d3821ca5e12bdd89dc8615c33910d90dbddde139d7df",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/cat-look/regions/portrait.png",
+      "sha256": "a1129bdce06d06fb8d6802c424ea1cc6032a410cd9f3f72718f3836ceece9d69",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/cat-look/regions/landscape.png",
+      "sha256": "328b3f7646afc7b8583c2ac16dfa56e963a379673944fae40d3d68e4b3a06973",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/cat-look/regions/cat-contact.png",
+      "sha256": "a1fb7491f19f1f2f6da3e1753adf5038e8a112e20669b061fd437f5802b6d031",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/cat-blink/context.png",
+      "sha256": "b78da584f9310a5849668023ca204ac4d19995b501280ad6dcb371a8a2a7fee1",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/cat-blink/regions/portrait.png",
+      "sha256": "8ac4a63d59d50b02e30b9280d391d399c2def35db93563685fb1956212b0ab94",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/cat-blink/regions/landscape.png",
+      "sha256": "809295598b041d3b741689bf235adbd647a5fc1ffd83338f37e6670c06f7f78f",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/cat-blink/regions/cat-contact.png",
+      "sha256": "339bc9510dbd33381343edea765196f37de4df46ddd530cce8308e21430c617f",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/cat-hidden/context.png",
+      "sha256": "e2e430d9b437a268c8e11444a5656d71037ced7f743a01c2b64e8f94c26a7463",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/cat-hidden/regions/portrait.png",
+      "sha256": "43d105d4ed0781ccebf0188df33a516d2d506308cce0fa3994e8bfc790de862d",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/cat-hidden/regions/landscape.png",
+      "sha256": "64ca16d92027b59e8a114911cb02d4e1d23e642c9c2ed633021b9b4c8100e6c1",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/cat-hidden/regions/cat-contact.png",
+      "sha256": "9ca1cb0d9fc8489275998aaaa3e701d21518fabf67814c8255f5015e78d1bb0d",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/cat-isolated/context.png",
+      "sha256": "3b8d6cea293a053605e578fbd569b400bee5b2b60a8a5415afde05a2a5aa2f76",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/cat-isolated/regions/portrait.png",
+      "sha256": "73e3ee733aec6600efd949ca7c5969e2277700834efd8a2277facfe6af044388",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/cat-isolated/regions/landscape.png",
+      "sha256": "b00e22e19d1e4d0cce796f80c25041fbedd22a7b95067bdc0e3a62ac4c2416d5",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/cat-isolated/regions/cat-contact.png",
+      "sha256": "38b671722d6589ee2efbd2975e4a214b4f912b591feebde01fa7869951298537",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/cottage-hidden/context.png",
+      "sha256": "610196d02af41bd693159db2e5b36d4e164bd91e4de4132e88b3e7f9c0a9b336",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/cottage-hidden/regions/portrait.png",
+      "sha256": "0667f1bfb38a61201ed84a43bc2184286cc68b1d48a39f7e562c611df4beb95c",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/cottage-hidden/regions/landscape.png",
+      "sha256": "a95614a7e6a7e06066729dfe8e0bf1dbceff0f41edba61cdfdafb91c473365f6",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/cottage-hidden/regions/cat-contact.png",
+      "sha256": "ea40f36935e89c7134b4557605a0f8ca28f886bf476e8179d670fec9d2730e50",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/cottage-isolated/context.png",
+      "sha256": "97524a0bae1570ea00285fd72f51c9ca3901ed56108580cdda6f57a7d9af5d29",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/cottage-isolated/regions/portrait.png",
+      "sha256": "76b599fc374dbda7c3a6ca5af3e828a8a06da0fecc035118a42af1d4f4a81238",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/cottage-isolated/regions/landscape.png",
+      "sha256": "02b7e3e1c0a9f9aa92b4c6316f9790bd315eaad0c1641696845e5d97377bfb49",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/cottage-isolated/regions/cat-contact.png",
+      "sha256": "3b7eac5b69dba7f6904556b055bbba09a4b5132628ecd065d3ffe2d9971c33cf",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/chair-hidden/context.png",
+      "sha256": "24bd71ba56e6276b721db0664251a567d18297817cbe3f36cb7d872fe578d46f",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/chair-hidden/regions/portrait.png",
+      "sha256": "82f8d10266f774ef6ff4d5286ee9b2709a3012d03aa79d1695d9ff949de720f2",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/chair-hidden/regions/landscape.png",
+      "sha256": "63fbdcb055dda7cc4c2daa340e3e0b093ec88de0a110dc42d6d30e5aba3a459a",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/chair-hidden/regions/cat-contact.png",
+      "sha256": "4f05a3bc93f2342833d34aebec3917244869c9ec9549e1fe7063e48132a75605",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/chair-isolated/context.png",
+      "sha256": "e21a28abf857a22dd62bcee243785ffd456d5dfffb290d47e728f1e9c3e1a8eb",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/chair-isolated/regions/portrait.png",
+      "sha256": "188a53c6eb268a3f3251e73cedeb0ae30c2d1e15419ef47830b39c9f233c832e",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/chair-isolated/regions/landscape.png",
+      "sha256": "1c051bd2e9ed2f4aa2f338c8987cdbd82e8f1611388dd437a740aa64cf669ba0",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/chair-isolated/regions/cat-contact.png",
+      "sha256": "9ca6f5fe8e969f235fdfcae0c095e544e3ad4081dcaa65b6598f4682854568cb",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/pumpkins-hidden/context.png",
+      "sha256": "9e4b092c24f755395fd322d83b17f6d5c2080662099aa04a7347e3c49582d726",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/pumpkins-hidden/regions/portrait.png",
+      "sha256": "4a7960bdc80cf57dbfbf156b15a2103b081f5327f6cab7835c5e85525b34ac1d",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/pumpkins-hidden/regions/landscape.png",
+      "sha256": "71c1fccba64fb82fc4aac4b9a85262c374000d3d631565f18aa2aaea34be781c",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/pumpkins-hidden/regions/cat-contact.png",
+      "sha256": "4f05a3bc93f2342833d34aebec3917244869c9ec9549e1fe7063e48132a75605",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/pumpkins-isolated/context.png",
+      "sha256": "56e8b88a11addd9b9770dbd55842d7c47e98f8761ae258a1f655f7621f0882bd",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/pumpkins-isolated/regions/portrait.png",
+      "sha256": "b79e4d3dc4bfe8c4cbd079dba564e8eed3ef46143d0d2113899061387c80a2fe",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/pumpkins-isolated/regions/landscape.png",
+      "sha256": "3bd78948b2b688fffc6194318e9925d0d150e899a7e124b09dfbd24dd81b66a1",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/pumpkins-isolated/regions/cat-contact.png",
+      "sha256": "9ca6f5fe8e969f235fdfcae0c095e544e3ad4081dcaa65b6598f4682854568cb",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/lanterns-hidden/context.png",
+      "sha256": "6e9d523c51d79de58bd3cdfa69c0e1f320812c77981cb34f6f595a91fd26458b",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/lanterns-hidden/regions/portrait.png",
+      "sha256": "82e0448e4d3da689467ddb6de36ddf00551560a56e7d1e7cf17ed1ad2b488967",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/lanterns-hidden/regions/landscape.png",
+      "sha256": "e3ef3262f95f1943f7157c267d720c74b301a6d977734c8b58475328798f586d",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/lanterns-hidden/regions/cat-contact.png",
+      "sha256": "4f05a3bc93f2342833d34aebec3917244869c9ec9549e1fe7063e48132a75605",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/lanterns-isolated/context.png",
+      "sha256": "06481b37d6c262157c252e521e87011594046b5516cadd0cfc776b18220de3d8",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/lanterns-isolated/regions/portrait.png",
+      "sha256": "25787981f3a8b26c2fa97b03bd8e9e74fe067390f79475340aa0ba24852db2f0",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/lanterns-isolated/regions/landscape.png",
+      "sha256": "ccb185fecf55642587f7e4cf4f220f1e9612d25e53a5b58ca4659e277ab62e0c",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/lanterns-isolated/regions/cat-contact.png",
+      "sha256": "9ca6f5fe8e969f235fdfcae0c095e544e3ad4081dcaa65b6598f4682854568cb",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/planters-hidden/context.png",
+      "sha256": "3a64b4ada6173ab304f4ff1037f9e5214b9cf52fed6219e1486f2d036913a567",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/planters-hidden/regions/portrait.png",
+      "sha256": "5a9196f008b4047f18afab2b6366d06de8599f06cc9f9ae6551e498b10b0e82d",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/planters-hidden/regions/landscape.png",
+      "sha256": "8deda5cc8a3c1aafe8f55575e5d75c24d0bd6af04a6b748d3dfbc50919e1cb7e",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/planters-hidden/regions/cat-contact.png",
+      "sha256": "a8c9b97bdde1487e47c18f72193133c237e9a33fca445458a16903312cbcf10d",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/planters-isolated/context.png",
+      "sha256": "68f9f138035604c873537bba64eb9ccaa040275352bd762abcc13421d3cb5aba",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/planters-isolated/regions/portrait.png",
+      "sha256": "a61daff9875f5d0f01b56307713934f05976aec031fe87bbecba8aa18a2d8d30",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/planters-isolated/regions/landscape.png",
+      "sha256": "5f9e8a4f30c46c5e0f3d278098cffb0edf16513898fb7f474640476fd332d931",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/planters-isolated/regions/cat-contact.png",
+      "sha256": "bd912ba55133d8b2566630923b151a952dffd74e9439cea28495ba7a20d205c4",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/wreath-hidden/context.png",
+      "sha256": "b1f02b4f5c4dfe3ac1c23014b9c47a5a2d66aa00957252aa23e825d4f9b2ef39",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/wreath-hidden/regions/portrait.png",
+      "sha256": "492eb31ff1c4db8a9340f8bdf9e8c45321207227eeb57222e81b4ffea4dad7f3",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/wreath-hidden/regions/landscape.png",
+      "sha256": "a10865844883b3e9ecab8dfb33060d3125981d90e778f877887d55fc5890ac41",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/wreath-hidden/regions/cat-contact.png",
+      "sha256": "4f05a3bc93f2342833d34aebec3917244869c9ec9549e1fe7063e48132a75605",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/wreath-isolated/context.png",
+      "sha256": "848be75720c199275e9cce858dd8d8ca1b008383e3689f968389b7a3dec8efdd",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/wreath-isolated/regions/portrait.png",
+      "sha256": "0dabb3f68edb2bd504731a3164d8466154d97071b26f528b3f3cb3da3744de8d",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/wreath-isolated/regions/landscape.png",
+      "sha256": "3f21f0200134444aa9677aead6d898a918f19ba34c17a53453fd9e36f39134e8",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/wreath-isolated/regions/cat-contact.png",
+      "sha256": "9ca6f5fe8e969f235fdfcae0c095e544e3ad4081dcaa65b6598f4682854568cb",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/tree-hidden/context.png",
+      "sha256": "4bfb159d41f485d7a6d6a70b2a1b66ce307af68468c62be7ae7a1498f36808d1",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/tree-hidden/regions/portrait.png",
+      "sha256": "50b175e99689e98421731d5757cdb8bfb8358700ab809a5909c6624eaeb69ad2",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/tree-hidden/regions/landscape.png",
+      "sha256": "08f0f8df669f6d3b9b4361c4f39423cf1d04155b5692260d5247f36a702d1848",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/tree-hidden/regions/cat-contact.png",
+      "sha256": "4f05a3bc93f2342833d34aebec3917244869c9ec9549e1fe7063e48132a75605",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/tree-isolated/context.png",
+      "sha256": "4a84a2ac72901693e1cf1fc07a11d57d4e44b5d8f5b74f68dda408e47db7ea61",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/tree-isolated/regions/portrait.png",
+      "sha256": "96667b9209f2c46487d8456b4d6b0a5036c27237e3ade340859b3bcc179feac8",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/tree-isolated/regions/landscape.png",
+      "sha256": "71ac986ef0d08cbb5c1b6cc93a4dfd64c0c5f7d9c053f3a20fc40a88cdb168c2",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/tree-isolated/regions/cat-contact.png",
+      "sha256": "9ca6f5fe8e969f235fdfcae0c095e544e3ad4081dcaa65b6598f4682854568cb",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/fences-hidden/context.png",
+      "sha256": "eaa5b538dc8614e5a49999905b248fa6bc2691c01085731cf0f03aea2088a209",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/fences-hidden/regions/portrait.png",
+      "sha256": "885c9961d05e4ddbf1076a9e4ba6d3f77b67699b27dc08d5dbff588a3af65a74",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/fences-hidden/regions/landscape.png",
+      "sha256": "c0708791fcf340c01021695b12bceae78f00392c80af2e162eb18ff3712e11ef",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/fences-hidden/regions/cat-contact.png",
+      "sha256": "4f05a3bc93f2342833d34aebec3917244869c9ec9549e1fe7063e48132a75605",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/fences-isolated/context.png",
+      "sha256": "bc0ec62dcdc8b00666b6c194d30d4bfe03dcbef809678b2122ef75c8884e28a7",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/fences-isolated/regions/portrait.png",
+      "sha256": "3d1559ae18b50b2ffa28fbd16b67e0e5ebdbb6b84973dcc0522e1a302ad22267",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/fences-isolated/regions/landscape.png",
+      "sha256": "fce520e4cc0b7258e1ef7c29a33861ce0c9a82214c4343ac164cec524adc7c63",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/fences-isolated/regions/cat-contact.png",
+      "sha256": "9ca6f5fe8e969f235fdfcae0c095e544e3ad4081dcaa65b6598f4682854568cb",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "comparisons/cat-reveal/context.png",
+      "sha256": "a859e1ab6fd3c39f2f1196245af55efcbb568e49c24d8176df89acaf8831682b",
+      "width": 1920,
+      "height": 720
+    },
+    {
+      "file": "comparisons/cat-reveal/regions/portrait.png",
+      "sha256": "78a646a823f37a345a78cc6bce36c4ef618492ed9b65dcad50c4cc0b426731c8",
+      "width": 810,
+      "height": 720
+    },
+    {
+      "file": "comparisons/cat-reveal/regions/landscape.png",
+      "sha256": "c3bc5dd4874e32f61714a515c43e0807c0c1e518bd83c3924054d614ea5b42e9",
+      "width": 1920,
+      "height": 540
+    },
+    {
+      "file": "comparisons/cat-reveal/regions/cat-contact.png",
+      "sha256": "a71f5bbf4d3f8655ef291f2e44050cffb5141742e5c4652f0314a5e231988375",
+      "width": 192,
+      "height": 130
+    },
+    {
+      "file": "comparisons/cat-reveal/difference.png",
+      "sha256": "4d25d48496b84a15b112d51935e726774ad45960ed3a9828385fa937a42d6e0f",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "comparisons/cat-extreme/context.png",
+      "sha256": "c846bc1087858a2980ee78fdf85a490dfaa728dcbebe518d4f141f16fb9c8df1",
+      "width": 1920,
+      "height": 720
+    },
+    {
+      "file": "comparisons/cat-extreme/regions/portrait.png",
+      "sha256": "22cc59fe79bc61d42e6c51a4b8750b300af1067cbf7dece3a7f528c39720cbbb",
+      "width": 810,
+      "height": 720
+    },
+    {
+      "file": "comparisons/cat-extreme/regions/landscape.png",
+      "sha256": "caac026c3b1b88e7d0298030a0ca0acd4b6991913dfd5e207753fc0ddb2194ff",
+      "width": 1920,
+      "height": 540
+    },
+    {
+      "file": "comparisons/cat-extreme/regions/cat-contact.png",
+      "sha256": "e474a1845bfdbb5acafd9e565f0de055d60f0abe0f1ed4a9777bf218485c8021",
+      "width": 192,
+      "height": 130
+    },
+    {
+      "file": "comparisons/cat-extreme/difference.png",
+      "sha256": "62d0f2495c56b854a43a11fbd82122c18840e583cc378cadf78350e3a6b8241b",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "comparisons/house-backing/context.png",
+      "sha256": "bdbc28c2ae0c7fa80cf5b88c5ee6c2841a095b407c673fae7a33a4485411a4a3",
+      "width": 1920,
+      "height": 720
+    },
+    {
+      "file": "comparisons/house-backing/regions/portrait.png",
+      "sha256": "549eb4ba3a9d31873873b37baf493275bb3e27732ae25a646a8c1ccdcbe9bf99",
+      "width": 810,
+      "height": 720
+    },
+    {
+      "file": "comparisons/house-backing/regions/landscape.png",
+      "sha256": "a39379a11632ed9cb3701e906a812e1dde312ad142856373815552151e6b05e8",
+      "width": 1920,
+      "height": 540
+    },
+    {
+      "file": "comparisons/house-backing/regions/cat-contact.png",
+      "sha256": "dbe7395918077c13f800fc98673fe2d5c2411afa045d6588c8394516a4331ff6",
+      "width": 192,
+      "height": 130
+    },
+    {
+      "file": "comparisons/house-backing/difference.png",
+      "sha256": "a83f0fef5066c0965eca407418b595474db1590e101157e46ddb4cdb6873169a",
+      "width": 960,
+      "height": 720
+    }
+  ],
+  "selected_samples": 21,
+  "full_loop_review_performed": false,
+  "output": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v3/index.html",
+  "output_sha256": "434d536506968dd8844bf6f7f92cef091ddf857af6fc8ce855ce7750d42e21aa",
+  "scene_loop_frames": 480,
+  "saved_sample_frames": 21,
+  "saved_playback_frames_per_variant": 0,
+  "saved_playback_frames_total": 0,
+  "rig_recipe": {
+    "resolved_path": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/plans/whole-object-proof-v3.json",
+    "path_base": "absolute",
+    "sha256": "fa4b9cef7b2fb1e782088429bba0febd032b092b03e2e2fa7acd20935683230b"
+  },
+  "inventory": {
+    "resolved_path": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/plans/asset-inventory.json",
+    "path_base": "project",
+    "bytes": 12364,
+    "sha256": "f2f1e2570b6fda4c1bc0694c2bba0f8c939590d2b8087a67faeb9021c93fa948"
+  },
+  "part_ids": [
+    "cat",
+    "cottage",
+    "chair",
+    "pumpkins",
+    "lanterns",
+    "planters",
+    "wreath",
+    "tree",
+    "fences"
+  ],
+  "check_scope": "Selected variant poses, optional targeted playback, plus endpoint measurement; no full-loop visual inspection",
+  "elapsed_seconds": 20.847,
+  "peak_rss_bytes": 447152128,
+  "resolved_path": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v3/index.html",
+  "path_base": "absolute",
+  "revision": null,
+  "report": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v3/render-report.json"
+}

@@ -1,0 +1,5679 @@
+{
+  "ok": true,
+  "mode": "rig-proof",
+  "scene": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/scene/scene.json",
+  "scene_sha256": "8eb218df757cafc43525a6d8e474b695c99b155dac3669f368f36c9a8b6018f7",
+  "catalog": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/assets/catalog.json",
+  "catalog_sha256": "691f7603661465ea337f6f7f692c5957e6a901b814810c4f46ead3a2e5bff8b7",
+  "engine_version": "0.7.0",
+  "engine_sha256": "8e00118001ba38a3f3e2ffe38d84037b29beb7e3e2f3e80d09ed21b661af29ab",
+  "source_canvas": {
+    "width": 1448,
+    "height": 1086,
+    "fps": 30,
+    "loop_seconds": 16,
+    "background": "#1a1733"
+  },
+  "render_canvas": {
+    "width": 960,
+    "height": 720,
+    "fps": 30,
+    "loop_seconds": 16,
+    "background": "#1a1733"
+  },
+  "internal_canvas": {
+    "width": 960,
+    "height": 720,
+    "fps": 30,
+    "loop_seconds": 16,
+    "background": "#1a1733"
+  },
+  "supersample": 1,
+  "downsample": null,
+  "bindings_engine_sha256": "b891db88f3f65d1457c251456b63465f70b8f583c21235b1de8a7aa1fd1c3cb7",
+  "finishing_engine_sha256": "06491f5e8565e5e716e75dfcb527fb47b3c93a88070566ef1969504ffe96160c",
+  "views_module_sha256": "3033fd28094b3a0d92415e7fd545708988b500694b03d5c6a19f9488591a60d8",
+  "start_seconds": null,
+  "frames": null,
+  "seconds": null,
+  "source_assets": [
+    {
+      "id": "sky",
+      "file": "assets/production/sky/atlas.png",
+      "sha256": "114345337f57f16af45f1d901b034bfb50ca646817340c260cdc319c0c86ddff"
+    },
+    {
+      "id": "valley",
+      "file": "assets/production/valley/atlas.png",
+      "sha256": "6850a4995d752f81feb8c288bc1b193d463e0d69ebda514d562970a169ea0d23"
+    },
+    {
+      "id": "path",
+      "file": "assets/production/path/atlas.png",
+      "sha256": "22ea613a4e8ba8291473da83816cda0296309d98119c13a052f5e48996abd3ef"
+    },
+    {
+      "id": "tree",
+      "file": "assets/production/tree/atlas.png",
+      "sha256": "c5fd723ba7b3af6feb9aa66ab40b82fc4c3bc255f89e0ed27f29c93a6131788a"
+    },
+    {
+      "id": "fence-left",
+      "file": "assets/production/fence-left/atlas.png",
+      "sha256": "46fa1db0bf393b7560769912d302e8debb6562c4db13b64a70487559ffaab910"
+    },
+    {
+      "id": "fence-right",
+      "file": "assets/production/fence-right/atlas.png",
+      "sha256": "cc41c1662a5c5ab43c2311a6e394598cefd18a5ccaf5ea9e738d0126ffe568a8"
+    },
+    {
+      "id": "chair",
+      "file": "assets/production/chair/atlas.png",
+      "sha256": "fd95c482edf344cb925e1ee69cc8e166b23d3e5ade50b9be42b87945ceb69836"
+    },
+    {
+      "id": "wreath",
+      "file": "assets/production/wreath/atlas.png",
+      "sha256": "f017b4fd0313c3d3d0048571dc01f6b1a8c5a38c246770ec56765d905dabd001"
+    },
+    {
+      "id": "planter-left",
+      "file": "assets/production/planter-left/atlas.png",
+      "sha256": "ab2322baca4bef70bc7aa1df848b6baa90b04eab671f88bb205eef9e19dde2b0"
+    },
+    {
+      "id": "planter-right",
+      "file": "assets/production/planter-right/atlas.png",
+      "sha256": "8b80c4b2dd0d733dab57d42193be91308e2fd36ce939a2594ea4f97bc1e2f0e3"
+    },
+    {
+      "id": "hanging-basket",
+      "file": "assets/production/hanging-basket/atlas.png",
+      "sha256": "d0fe2f2b81b608520b331fc9cb8cf68e476fb2a4dad0e873d07fe19eb177d1fa"
+    },
+    {
+      "id": "pumpkin-shelf",
+      "file": "assets/production/pumpkin-shelf/atlas.png",
+      "sha256": "451c8b2cc2a1ca1d486b7873ac7a32cf0face1c1994292176204c4801f1415f0"
+    },
+    {
+      "id": "cat-cels",
+      "file": "assets/production/cat-cels/atlas.png",
+      "sha256": "ea415de36012eff131de88cf3c72fbe55d20f3937a8153924b3b7c8e040e26af"
+    },
+    {
+      "id": "cottage-v2",
+      "file": "assets/production/cottage-v2/atlas.png",
+      "sha256": "0b1f973322674ca59a9129d33176bb936b9a65dd5c039a16f479ae9af61022d2"
+    },
+    {
+      "id": "leaf-native-alpha",
+      "file": "assets/production/leaf-native-alpha/atlas.png",
+      "sha256": "98950e7b3ab279e5b486801a0959e7b58d3b6059beaec606b99dd854546c8476"
+    },
+    {
+      "id": "flame-native-alpha",
+      "file": "assets/production/flame-native-alpha/atlas.png",
+      "sha256": "340e7a56ada7617cd13dcc290c434b20d272cc4ce46dc0b822ab8692becbb287"
+    },
+    {
+      "id": "pumpkin-near-dim",
+      "file": "assets/production/pumpkin-near-dim/atlas.png",
+      "sha256": "629e3595cee9fc06d875b37293d9ccfaf9e62e7780b4849166cf9292bbd813d8"
+    },
+    {
+      "id": "pumpkin-left-dim",
+      "file": "assets/production/pumpkin-left-dim/atlas.png",
+      "sha256": "ded49253262ed0074f4346246871a9e714d92b65b49906bf52942f20c27e9714"
+    },
+    {
+      "id": "pumpkin-right-dim",
+      "file": "assets/production/pumpkin-right-dim/atlas.png",
+      "sha256": "7678c1894b3e4cea43fa6ea5235fd36a27a4ea1a902d6664a0047b2a582f528a"
+    },
+    {
+      "id": "pumpkin-step-dim",
+      "file": "assets/production/pumpkin-step-dim/atlas.png",
+      "sha256": "b817e3dbd6cdd6d850e507d50e9b2eea89148010e62a86eb88a0a28829bb97de"
+    },
+    {
+      "id": "lantern-left-dim",
+      "file": "assets/production/lantern-left-dim/atlas.png",
+      "sha256": "d2bbf5eac1bf7c4d2df8bb14d63358093a6c11b0319ff14c62e4e7117e90d2a6"
+    },
+    {
+      "id": "lantern-step-dim",
+      "file": "assets/production/lantern-step-dim/atlas.png",
+      "sha256": "f6038c28ebadf83400e173e22e7c73a123a111cd09ad16305eb5db874f191f40"
+    },
+    {
+      "id": "lantern-step-low-dim",
+      "file": "assets/production/lantern-step-low-dim/atlas.png",
+      "sha256": "ab5efd48d1cae8b0caa59b844eedfe8c6c9e882b98792eb52fe6d06854cd256b"
+    },
+    {
+      "id": "lantern-post-dim",
+      "file": "assets/production/lantern-post-dim/atlas.png",
+      "sha256": "284bdc582a6bbbcbf176aedea0bbf2251010c71521925c33e1fda2bb23a49a8c"
+    },
+    {
+      "id": "sconce-0-trim",
+      "file": "assets/production/sconce-0-trim/atlas.png",
+      "sha256": "bf63cb3d02e3b7ed57db0565fefcc75720c109bfb6fa101e183ed1234e23abb5"
+    },
+    {
+      "id": "sconce-1-trim",
+      "file": "assets/production/sconce-1-trim/atlas.png",
+      "sha256": "5fec428daa659cdab63ac6fb0bafa3ff52ce995258da809bc5fa500fa49b8229"
+    },
+    {
+      "id": "sconce-2-trim",
+      "file": "assets/production/sconce-2-trim/atlas.png",
+      "sha256": "4dcf8323a09221e63bcb6ee709666ac01e4d73ed461593f50410d6afba6b036d"
+    },
+    {
+      "id": "lantern-right-low-trim",
+      "file": "assets/production/lantern-right-low-trim/atlas.png",
+      "sha256": "1dd62d1d93284c54d68ae71b6ed25fb4d979e02ef67be71303d86c0e6f760b8e"
+    },
+    {
+      "id": "pumpkin-near-emission-phases",
+      "file": "assets/production/pumpkin-near-emission-phases/atlas.png",
+      "sha256": "e5e6e938bed8b33d4f31983989c1c03177f214bb9e54fa4cb56a57f3c0b77e84"
+    },
+    {
+      "id": "pumpkin-left-emission-phases",
+      "file": "assets/production/pumpkin-left-emission-phases/atlas.png",
+      "sha256": "0a3f2961eb0a2936b67f348e021574e349983580925580561c7aa7a47aca637b"
+    },
+    {
+      "id": "pumpkin-right-emission-phases",
+      "file": "assets/production/pumpkin-right-emission-phases/atlas.png",
+      "sha256": "1a770f51cbca1198ee630421784eb6d70acae303e8225e453d88870772cd4844"
+    },
+    {
+      "id": "pumpkin-step-emission-phases",
+      "file": "assets/production/pumpkin-step-emission-phases/atlas.png",
+      "sha256": "dc2b56c4c029daa4d0e938c54c8057548255722b28aab9090d6dcee8b93674c9"
+    },
+    {
+      "id": "pumpkin-near-stones-path-paint",
+      "file": "assets/production/pumpkin-near-stones-path-paint/atlas.png",
+      "sha256": "cca8eaee4160ad5016570f8a1fe12a5db4cad6772d308529bde643f6890f6052"
+    },
+    {
+      "id": "pumpkin-left-stones-path-paint",
+      "file": "assets/production/pumpkin-left-stones-path-paint/atlas.png",
+      "sha256": "9d3c9d7886a09336917213a2ad400317117d2f7cdd8b5bf695f9f7bf5d3b8c6a"
+    },
+    {
+      "id": "pumpkin-right-stones-path-paint",
+      "file": "assets/production/pumpkin-right-stones-path-paint/atlas.png",
+      "sha256": "dda464e219319204843a9a8ad64ac452dcee47d8fd9b8bfa6bb53139314d6112"
+    },
+    {
+      "id": "pumpkin-step-stones-path-paint",
+      "file": "assets/production/pumpkin-step-stones-path-paint/atlas.png",
+      "sha256": "5de14b7391d76ccdd0fd7c98ee916a6044555f93ce4bd47d110a19e20e0397ac"
+    },
+    {
+      "id": "pumpkin-step-stones-cottage-paint",
+      "file": "assets/production/pumpkin-step-stones-cottage-paint/atlas.png",
+      "sha256": "3fe70c9629b163193165bc28312b4e057562d6fc811a4eb3a72aa1567e197bd5"
+    },
+    {
+      "id": "lantern-left-receiver-path-paint",
+      "file": "assets/production/lantern-left-receiver-path-paint/atlas.png",
+      "sha256": "e0976f6b7d66396b890a12cf72bfbb3ef29a8928ed124c5aeed7da55653d9c0e"
+    },
+    {
+      "id": "lantern-step-receiver-path-paint",
+      "file": "assets/production/lantern-step-receiver-path-paint/atlas.png",
+      "sha256": "dd53e66ba7ad5483bb92a5fe5e309ff8ddf00ba39565b4f9f2f1ac4993aad2ec"
+    },
+    {
+      "id": "lantern-step-receiver-cottage-paint",
+      "file": "assets/production/lantern-step-receiver-cottage-paint/atlas.png",
+      "sha256": "15e0083750d25377c562a2f5382c7bc7212ce49493c4fdfa390a1f77b98dc735"
+    },
+    {
+      "id": "lantern-step-low-receiver-path-paint",
+      "file": "assets/production/lantern-step-low-receiver-path-paint/atlas.png",
+      "sha256": "5cbea77868d3067070f1246db35d6489be79cd19f2cb807db40cba473787f3b8"
+    },
+    {
+      "id": "lantern-step-low-receiver-cottage-paint",
+      "file": "assets/production/lantern-step-low-receiver-cottage-paint/atlas.png",
+      "sha256": "35450867ec3c4017a1105ff9a21111f3264df52e2912b4a5e38f4ae767f38da1"
+    },
+    {
+      "id": "lantern-right-low-receiver-path-paint",
+      "file": "assets/production/lantern-right-low-receiver-path-paint/atlas.png",
+      "sha256": "a49a9fc2a30de047ddab5d32734aeced826afa707212041d45864cc07e5160c3"
+    },
+    {
+      "id": "lantern-post-receiver-path-paint",
+      "file": "assets/production/lantern-post-receiver-path-paint/atlas.png",
+      "sha256": "bb5cf716f08caf529ad6c5471a5d0b5bf2d186a6fe55d829820fe5896d4e70b7"
+    },
+    {
+      "id": "lantern-post-receiver-fence-right-paint",
+      "file": "assets/production/lantern-post-receiver-fence-right-paint/atlas.png",
+      "sha256": "12e1da3fda71e90772fc17141a2fe029eb38d68429a23cb9fb7539f60090d4fb"
+    },
+    {
+      "id": "sconce-0-receiver-cottage-paint",
+      "file": "assets/production/sconce-0-receiver-cottage-paint/atlas.png",
+      "sha256": "94640691e94536cb3eb622c934b010e2b606f511931a9194ca94e952103bdedd"
+    },
+    {
+      "id": "sconce-1-receiver-cottage-paint",
+      "file": "assets/production/sconce-1-receiver-cottage-paint/atlas.png",
+      "sha256": "9cfc3f0d1174f6a3c65734ab657c39e146ef8d8881291102a4043e10e46ac79d"
+    },
+    {
+      "id": "sconce-2-receiver-cottage-paint",
+      "file": "assets/production/sconce-2-receiver-cottage-paint/atlas.png",
+      "sha256": "9073e3a412889b8abf11b3b552a9fbe228b8ed590f7a96012327b9ef5dde617b"
+    }
+  ],
+  "canvas_module": "/Users/lb/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/@napi-rs/canvas/index.js",
+  "canvas_version": "0.1.100",
+  "node_version": "v24.9.0",
+  "platform": "darwin",
+  "renderer_sha256": "9dffd43e8333315e0617c2d6294b4b8c8639ccf2376e1f61ca2473dceada166e",
+  "rig_proof_renderer_sha256": "8799d29c7466c6bccd222ff4b0f4fed2f05bd01c1b04051a260e045743e360c9",
+  "rgba_endpoint_exact": true,
+  "endpoint_difference": {
+    "rgb_mean_absolute_difference": 0,
+    "rgb_max_difference": 0
+  },
+  "last_to_first": {
+    "rgb_mean_absolute_difference": 0.12208863811728395,
+    "rgb_max_difference": 223
+  },
+  "visual_review_performed": false,
+  "samples": [
+    {
+      "id": "production-only",
+      "label": "Production layers only; no seed or whole-scene fallback exists",
+      "time_seconds": 0,
+      "overrides": {},
+      "hidden_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/production-only/context.png",
+        "sha256": "5e360fe1d4f6a642428cc6378f078ca37acc225ee487309cba3d7d3e9fb7647d",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/production-only/regions/portrait.png",
+          "sha256": "27aa9c500e71b95381386ea0d50db37ef82b74084afc3aee496ad8cebb91f73f",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/production-only/regions/landscape.png",
+          "sha256": "ae1ddc9898b45082ec61fff8ad23326be81de732c4f5bb8fca4ad955a021664c",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/production-only/regions/cat-contact.png",
+          "sha256": "6b8397a19b5e1ee77a03ad8c73ae5921ab82597669ac932ff4601413be1edbf1",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "cat-look",
+      "label": "cat-look",
+      "time_seconds": 3.6,
+      "overrides": {},
+      "hidden_layers": [
+        "leaf-0",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12"
+      ],
+      "explicitly_hidden_layers": [],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/cat-look/context.png",
+        "sha256": "fa48348761b198a87238ff968ac111b421c25bd26cbdc64c9fb2972cdcae594f",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/cat-look/regions/portrait.png",
+          "sha256": "1463e3446544a5f6ceaff61c3779e6c2fed13f8b3382472b9a86a7f6c66e48e5",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/cat-look/regions/landscape.png",
+          "sha256": "bd9047cb157e8dcb61ca0ef4613b86a6d2bc8e387316e42918949055fc1bc7d0",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/cat-look/regions/cat-contact.png",
+          "sha256": "238c5a24ecfc05b0768b041ab76d836671a023c2a7faabe24330b9ccdaa4e2c1",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "cat-blink",
+      "label": "cat-blink",
+      "time_seconds": 9.1,
+      "overrides": {},
+      "hidden_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/cat-blink/context.png",
+        "sha256": "eb4d2444fd5d29a449b870e8e23ebe9aeaf5a831dc05904b08ff91bce86afa70",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/cat-blink/regions/portrait.png",
+          "sha256": "319df95f1eace95ae642b5cea4e91c86a60cb2ce411f4e0677cd7481eb676db5",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/cat-blink/regions/landscape.png",
+          "sha256": "7ac1bb547e72f466399e765eed749406a5eeda67a1d237cb614fa6c7d7cf793b",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/cat-blink/regions/cat-contact.png",
+          "sha256": "07b3baca4ebeaa81c99696169e90efe6095385c47ceaf65e3bb90fcc6ee2e020",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "cat-hidden",
+      "label": "cat-hidden",
+      "time_seconds": 0,
+      "overrides": {
+        "cat": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "cat",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "cat"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/cat-hidden/context.png",
+        "sha256": "f06c2aa306a750166c491dc109ede869e3f7ac2dfcb60bf707a80320502f76c7",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/cat-hidden/regions/portrait.png",
+          "sha256": "2347104ca53f19978151007fb97dc1f86995c13367b3d98023b12b6d9a3eb5c3",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/cat-hidden/regions/landscape.png",
+          "sha256": "5b6552df29aded8232d8b81d803caa03eb3f6e1ed2d6fa425fe719e0905612f0",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/cat-hidden/regions/cat-contact.png",
+          "sha256": "8195159e8fdb337326a5e7898715ff7f5c3383a3bcb60aa5d4c4ee13eb268271",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "cat-isolated",
+      "label": "cat-isolated",
+      "time_seconds": 0,
+      "overrides": {
+        "sky": {
+          "visible": false
+        },
+        "cloud-veil": {
+          "visible": false
+        },
+        "valley": {
+          "visible": false
+        },
+        "path": {
+          "visible": false
+        },
+        "cottage": {
+          "visible": false
+        },
+        "tree": {
+          "visible": false
+        },
+        "fence-left": {
+          "visible": false
+        },
+        "fence-right": {
+          "visible": false
+        },
+        "pumpkin-near": {
+          "visible": false
+        },
+        "pumpkin-left": {
+          "visible": false
+        },
+        "pumpkin-right": {
+          "visible": false
+        },
+        "pumpkin-step": {
+          "visible": false
+        },
+        "chair": {
+          "visible": false
+        },
+        "wreath": {
+          "visible": false
+        },
+        "planter-left": {
+          "visible": false
+        },
+        "planter-right": {
+          "visible": false
+        },
+        "hanging-basket": {
+          "visible": false
+        },
+        "pumpkin-shelf": {
+          "visible": false
+        },
+        "lantern-left": {
+          "visible": false
+        },
+        "lantern-step": {
+          "visible": false
+        },
+        "lantern-step-low": {
+          "visible": false
+        },
+        "lantern-right-low": {
+          "visible": false
+        },
+        "lantern-post": {
+          "visible": false
+        },
+        "sconce-0": {
+          "visible": false
+        },
+        "sconce-1": {
+          "visible": false
+        },
+        "sconce-2": {
+          "visible": false
+        },
+        "pumpkin-near-emission": {
+          "visible": false
+        },
+        "pumpkin-left-emission": {
+          "visible": false
+        },
+        "pumpkin-right-emission": {
+          "visible": false
+        },
+        "pumpkin-step-emission": {
+          "visible": false
+        },
+        "lantern-left-flame": {
+          "visible": false
+        },
+        "lantern-step-flame": {
+          "visible": false
+        },
+        "lantern-step-low-flame": {
+          "visible": false
+        },
+        "lantern-right-low-flame": {
+          "visible": false
+        },
+        "lantern-post-flame": {
+          "visible": false
+        },
+        "sconce-0-flame": {
+          "visible": false
+        },
+        "sconce-1-flame": {
+          "visible": false
+        },
+        "sconce-2-flame": {
+          "visible": false
+        },
+        "leaf-0": {
+          "visible": false
+        },
+        "leaf-1": {
+          "visible": false
+        },
+        "leaf-2": {
+          "visible": false
+        },
+        "leaf-3": {
+          "visible": false
+        },
+        "leaf-4": {
+          "visible": false
+        },
+        "leaf-5": {
+          "visible": false
+        },
+        "leaf-6": {
+          "visible": false
+        },
+        "leaf-7": {
+          "visible": false
+        },
+        "leaf-8": {
+          "visible": false
+        },
+        "leaf-9": {
+          "visible": false
+        },
+        "leaf-10": {
+          "visible": false
+        },
+        "leaf-11": {
+          "visible": false
+        },
+        "leaf-12": {
+          "visible": false
+        },
+        "leaf-13": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "pumpkin-near-stones-path-paint",
+        "pumpkin-left-stones-path-paint",
+        "pumpkin-right-stones-path-paint",
+        "pumpkin-step-stones-path-paint",
+        "lantern-left-receiver-path-paint",
+        "lantern-step-receiver-path-paint",
+        "lantern-step-low-receiver-path-paint",
+        "lantern-right-low-receiver-path-paint",
+        "lantern-post-receiver-path-paint",
+        "cottage",
+        "pumpkin-step-stones-cottage-paint",
+        "lantern-step-receiver-cottage-paint",
+        "lantern-step-low-receiver-cottage-paint",
+        "sconce-0-receiver-cottage-paint",
+        "sconce-1-receiver-cottage-paint",
+        "sconce-2-receiver-cottage-paint",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "lantern-post-receiver-fence-right-paint",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "pumpkin-near-stones-path-paint",
+        "pumpkin-left-stones-path-paint",
+        "pumpkin-right-stones-path-paint",
+        "pumpkin-step-stones-path-paint",
+        "lantern-left-receiver-path-paint",
+        "lantern-step-receiver-path-paint",
+        "lantern-step-low-receiver-path-paint",
+        "lantern-right-low-receiver-path-paint",
+        "lantern-post-receiver-path-paint",
+        "pumpkin-step-stones-cottage-paint",
+        "lantern-step-receiver-cottage-paint",
+        "lantern-step-low-receiver-cottage-paint",
+        "sconce-0-receiver-cottage-paint",
+        "sconce-1-receiver-cottage-paint",
+        "sconce-2-receiver-cottage-paint",
+        "lantern-post-receiver-fence-right-paint",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "hidden_descendants": [
+        {
+          "layer": "pumpkin-near-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-left-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-right-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-step-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-left-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-step-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-step-low-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-right-low-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-post-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-step-stones-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-step-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-step-low-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-0-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-1-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-2-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-post-receiver-fence-right-paint",
+          "hidden_by": "fence-right"
+        }
+      ],
+      "context": {
+        "file": "samples/cat-isolated/context.png",
+        "sha256": "9b0651688ac5d4082247290b39c2ee98f99ef1ab235830d6c88eca6e0d0961c6",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/cat-isolated/regions/portrait.png",
+          "sha256": "c7dff5946695eb5adb08fda691ba8c67b04df1bb483b572bf5e10c8c53e3fdcc",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/cat-isolated/regions/landscape.png",
+          "sha256": "0c19f98f665eaf36dfc36d70dcd9a6adc7ca4a6d6662421147f3e8eed9d053d7",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/cat-isolated/regions/cat-contact.png",
+          "sha256": "f801eaa3da566fb7721174c546b78aa74c56e5f4f7ef9728eb3919f60356b6e9",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "cottage-hidden",
+      "label": "cottage-hidden",
+      "time_seconds": 0,
+      "overrides": {
+        "cottage": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "cottage",
+        "pumpkin-step-stones-cottage-paint",
+        "lantern-step-receiver-cottage-paint",
+        "lantern-step-low-receiver-cottage-paint",
+        "sconce-0-receiver-cottage-paint",
+        "sconce-1-receiver-cottage-paint",
+        "sconce-2-receiver-cottage-paint",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "cottage"
+      ],
+      "hidden_descendants": [
+        {
+          "layer": "pumpkin-step-stones-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-step-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-step-low-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-0-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-1-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-2-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        }
+      ],
+      "context": {
+        "file": "samples/cottage-hidden/context.png",
+        "sha256": "d8087eabae0e691b282a8193631017915903466d80c28f2dd02878694a4cc65c",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/cottage-hidden/regions/portrait.png",
+          "sha256": "9c1dc79133dd553917792dfab7d5dc7da933a640fa5c998aa0ff868c8e2f8d52",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/cottage-hidden/regions/landscape.png",
+          "sha256": "fdaab595b985d9e2015d1da687853934e4b3b865ef926124636d6809429b3026",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/cottage-hidden/regions/cat-contact.png",
+          "sha256": "d3206126461eead3d6d3f6f290265c70d5708ab1932fabf3c105f841aed19a8e",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "cottage-isolated",
+      "label": "cottage-isolated",
+      "time_seconds": 0,
+      "overrides": {
+        "sky": {
+          "visible": false
+        },
+        "cloud-veil": {
+          "visible": false
+        },
+        "valley": {
+          "visible": false
+        },
+        "path": {
+          "visible": false
+        },
+        "tree": {
+          "visible": false
+        },
+        "fence-left": {
+          "visible": false
+        },
+        "fence-right": {
+          "visible": false
+        },
+        "pumpkin-near": {
+          "visible": false
+        },
+        "pumpkin-left": {
+          "visible": false
+        },
+        "pumpkin-right": {
+          "visible": false
+        },
+        "pumpkin-step": {
+          "visible": false
+        },
+        "chair": {
+          "visible": false
+        },
+        "wreath": {
+          "visible": false
+        },
+        "planter-left": {
+          "visible": false
+        },
+        "planter-right": {
+          "visible": false
+        },
+        "hanging-basket": {
+          "visible": false
+        },
+        "pumpkin-shelf": {
+          "visible": false
+        },
+        "lantern-left": {
+          "visible": false
+        },
+        "lantern-step": {
+          "visible": false
+        },
+        "lantern-step-low": {
+          "visible": false
+        },
+        "lantern-right-low": {
+          "visible": false
+        },
+        "lantern-post": {
+          "visible": false
+        },
+        "sconce-0": {
+          "visible": false
+        },
+        "sconce-1": {
+          "visible": false
+        },
+        "sconce-2": {
+          "visible": false
+        },
+        "cat": {
+          "visible": false
+        },
+        "pumpkin-near-emission": {
+          "visible": false
+        },
+        "pumpkin-left-emission": {
+          "visible": false
+        },
+        "pumpkin-right-emission": {
+          "visible": false
+        },
+        "pumpkin-step-emission": {
+          "visible": false
+        },
+        "lantern-left-flame": {
+          "visible": false
+        },
+        "lantern-step-flame": {
+          "visible": false
+        },
+        "lantern-step-low-flame": {
+          "visible": false
+        },
+        "lantern-right-low-flame": {
+          "visible": false
+        },
+        "lantern-post-flame": {
+          "visible": false
+        },
+        "sconce-0-flame": {
+          "visible": false
+        },
+        "sconce-1-flame": {
+          "visible": false
+        },
+        "sconce-2-flame": {
+          "visible": false
+        },
+        "leaf-0": {
+          "visible": false
+        },
+        "leaf-1": {
+          "visible": false
+        },
+        "leaf-2": {
+          "visible": false
+        },
+        "leaf-3": {
+          "visible": false
+        },
+        "leaf-4": {
+          "visible": false
+        },
+        "leaf-5": {
+          "visible": false
+        },
+        "leaf-6": {
+          "visible": false
+        },
+        "leaf-7": {
+          "visible": false
+        },
+        "leaf-8": {
+          "visible": false
+        },
+        "leaf-9": {
+          "visible": false
+        },
+        "leaf-10": {
+          "visible": false
+        },
+        "leaf-11": {
+          "visible": false
+        },
+        "leaf-12": {
+          "visible": false
+        },
+        "leaf-13": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "pumpkin-near-stones-path-paint",
+        "pumpkin-left-stones-path-paint",
+        "pumpkin-right-stones-path-paint",
+        "pumpkin-step-stones-path-paint",
+        "lantern-left-receiver-path-paint",
+        "lantern-step-receiver-path-paint",
+        "lantern-step-low-receiver-path-paint",
+        "lantern-right-low-receiver-path-paint",
+        "lantern-post-receiver-path-paint",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "lantern-post-receiver-fence-right-paint",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "pumpkin-near-stones-path-paint",
+        "pumpkin-left-stones-path-paint",
+        "pumpkin-right-stones-path-paint",
+        "pumpkin-step-stones-path-paint",
+        "lantern-left-receiver-path-paint",
+        "lantern-step-receiver-path-paint",
+        "lantern-step-low-receiver-path-paint",
+        "lantern-right-low-receiver-path-paint",
+        "lantern-post-receiver-path-paint",
+        "pumpkin-step-stones-cottage-paint",
+        "lantern-step-receiver-cottage-paint",
+        "lantern-step-low-receiver-cottage-paint",
+        "sconce-0-receiver-cottage-paint",
+        "sconce-1-receiver-cottage-paint",
+        "sconce-2-receiver-cottage-paint",
+        "lantern-post-receiver-fence-right-paint",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "hidden_descendants": [
+        {
+          "layer": "pumpkin-near-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-left-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-right-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-step-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-left-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-step-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-step-low-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-right-low-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-post-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-post-receiver-fence-right-paint",
+          "hidden_by": "fence-right"
+        }
+      ],
+      "context": {
+        "file": "samples/cottage-isolated/context.png",
+        "sha256": "4351201a550340b70e903e24f5ba2e5d3b2d95e31678c46871749624cd05ca1a",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/cottage-isolated/regions/portrait.png",
+          "sha256": "c1fbc848ce4a1f35ffed7bbe64fdbd04e81b8f79d87a8550544637ead724f2ad",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/cottage-isolated/regions/landscape.png",
+          "sha256": "75ab0b8db1d1e7dd4265fd46f481357e4cf63a49ee522398baaa2a8eb598c817",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/cottage-isolated/regions/cat-contact.png",
+          "sha256": "a652bc6ed1d0e11a71687377cd7e9930840af51ed4825b46886f31bf53d937a7",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "chair-hidden",
+      "label": "chair-hidden",
+      "time_seconds": 0,
+      "overrides": {
+        "chair": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "chair",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "chair"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/chair-hidden/context.png",
+        "sha256": "a6a85138cc7157583493ddf88866730f8030cc596d483bf9af44bab89157342c",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/chair-hidden/regions/portrait.png",
+          "sha256": "540bbdb85e054e0fd3e402209eb90c418a422454983959d02c52c89404f60f78",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/chair-hidden/regions/landscape.png",
+          "sha256": "44464664db46b4999f81c79d4341f90242379558744013dcbf44e4be120843f6",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/chair-hidden/regions/cat-contact.png",
+          "sha256": "6b8397a19b5e1ee77a03ad8c73ae5921ab82597669ac932ff4601413be1edbf1",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "chair-isolated",
+      "label": "chair-isolated",
+      "time_seconds": 0,
+      "overrides": {
+        "sky": {
+          "visible": false
+        },
+        "cloud-veil": {
+          "visible": false
+        },
+        "valley": {
+          "visible": false
+        },
+        "path": {
+          "visible": false
+        },
+        "cottage": {
+          "visible": false
+        },
+        "tree": {
+          "visible": false
+        },
+        "fence-left": {
+          "visible": false
+        },
+        "fence-right": {
+          "visible": false
+        },
+        "pumpkin-near": {
+          "visible": false
+        },
+        "pumpkin-left": {
+          "visible": false
+        },
+        "pumpkin-right": {
+          "visible": false
+        },
+        "pumpkin-step": {
+          "visible": false
+        },
+        "wreath": {
+          "visible": false
+        },
+        "planter-left": {
+          "visible": false
+        },
+        "planter-right": {
+          "visible": false
+        },
+        "hanging-basket": {
+          "visible": false
+        },
+        "pumpkin-shelf": {
+          "visible": false
+        },
+        "lantern-left": {
+          "visible": false
+        },
+        "lantern-step": {
+          "visible": false
+        },
+        "lantern-step-low": {
+          "visible": false
+        },
+        "lantern-right-low": {
+          "visible": false
+        },
+        "lantern-post": {
+          "visible": false
+        },
+        "sconce-0": {
+          "visible": false
+        },
+        "sconce-1": {
+          "visible": false
+        },
+        "sconce-2": {
+          "visible": false
+        },
+        "cat": {
+          "visible": false
+        },
+        "pumpkin-near-emission": {
+          "visible": false
+        },
+        "pumpkin-left-emission": {
+          "visible": false
+        },
+        "pumpkin-right-emission": {
+          "visible": false
+        },
+        "pumpkin-step-emission": {
+          "visible": false
+        },
+        "lantern-left-flame": {
+          "visible": false
+        },
+        "lantern-step-flame": {
+          "visible": false
+        },
+        "lantern-step-low-flame": {
+          "visible": false
+        },
+        "lantern-right-low-flame": {
+          "visible": false
+        },
+        "lantern-post-flame": {
+          "visible": false
+        },
+        "sconce-0-flame": {
+          "visible": false
+        },
+        "sconce-1-flame": {
+          "visible": false
+        },
+        "sconce-2-flame": {
+          "visible": false
+        },
+        "leaf-0": {
+          "visible": false
+        },
+        "leaf-1": {
+          "visible": false
+        },
+        "leaf-2": {
+          "visible": false
+        },
+        "leaf-3": {
+          "visible": false
+        },
+        "leaf-4": {
+          "visible": false
+        },
+        "leaf-5": {
+          "visible": false
+        },
+        "leaf-6": {
+          "visible": false
+        },
+        "leaf-7": {
+          "visible": false
+        },
+        "leaf-8": {
+          "visible": false
+        },
+        "leaf-9": {
+          "visible": false
+        },
+        "leaf-10": {
+          "visible": false
+        },
+        "leaf-11": {
+          "visible": false
+        },
+        "leaf-12": {
+          "visible": false
+        },
+        "leaf-13": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "pumpkin-near-stones-path-paint",
+        "pumpkin-left-stones-path-paint",
+        "pumpkin-right-stones-path-paint",
+        "pumpkin-step-stones-path-paint",
+        "lantern-left-receiver-path-paint",
+        "lantern-step-receiver-path-paint",
+        "lantern-step-low-receiver-path-paint",
+        "lantern-right-low-receiver-path-paint",
+        "lantern-post-receiver-path-paint",
+        "cottage",
+        "pumpkin-step-stones-cottage-paint",
+        "lantern-step-receiver-cottage-paint",
+        "lantern-step-low-receiver-cottage-paint",
+        "sconce-0-receiver-cottage-paint",
+        "sconce-1-receiver-cottage-paint",
+        "sconce-2-receiver-cottage-paint",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "lantern-post-receiver-fence-right-paint",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "pumpkin-near-stones-path-paint",
+        "pumpkin-left-stones-path-paint",
+        "pumpkin-right-stones-path-paint",
+        "pumpkin-step-stones-path-paint",
+        "lantern-left-receiver-path-paint",
+        "lantern-step-receiver-path-paint",
+        "lantern-step-low-receiver-path-paint",
+        "lantern-right-low-receiver-path-paint",
+        "lantern-post-receiver-path-paint",
+        "pumpkin-step-stones-cottage-paint",
+        "lantern-step-receiver-cottage-paint",
+        "lantern-step-low-receiver-cottage-paint",
+        "sconce-0-receiver-cottage-paint",
+        "sconce-1-receiver-cottage-paint",
+        "sconce-2-receiver-cottage-paint",
+        "lantern-post-receiver-fence-right-paint",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "hidden_descendants": [
+        {
+          "layer": "pumpkin-near-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-left-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-right-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-step-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-left-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-step-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-step-low-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-right-low-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-post-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-step-stones-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-step-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-step-low-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-0-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-1-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-2-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-post-receiver-fence-right-paint",
+          "hidden_by": "fence-right"
+        }
+      ],
+      "context": {
+        "file": "samples/chair-isolated/context.png",
+        "sha256": "e4d3db64085e8e9c15dede7d74bb804d5f4a93a1a225c7ccc381372035b68867",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/chair-isolated/regions/portrait.png",
+          "sha256": "6ef3e1ec63f1ef6f7da227dd9cbfc08b2945acb7726073f448f20bbb9444f441",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/chair-isolated/regions/landscape.png",
+          "sha256": "898e8ed473c2199bb7ab773f78498ea0923dfe45ff064af4c9c46e79d27f708f",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/chair-isolated/regions/cat-contact.png",
+          "sha256": "48d947cad97e77aadf56df7cedb0686e63cabf64aff4d01c38dd68cb0177d17f",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "pumpkins-hidden",
+      "label": "pumpkins-hidden",
+      "time_seconds": 0,
+      "overrides": {
+        "pumpkin-near": {
+          "visible": false
+        },
+        "pumpkin-left": {
+          "visible": false
+        },
+        "pumpkin-right": {
+          "visible": false
+        },
+        "pumpkin-step": {
+          "visible": false
+        },
+        "pumpkin-near-emission": {
+          "visible": false
+        },
+        "pumpkin-left-emission": {
+          "visible": false
+        },
+        "pumpkin-right-emission": {
+          "visible": false
+        },
+        "pumpkin-step-emission": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "pumpkin-near-stones-path-paint",
+        "pumpkin-left-stones-path-paint",
+        "pumpkin-right-stones-path-paint",
+        "pumpkin-step-stones-path-paint",
+        "pumpkin-step-stones-cottage-paint",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/pumpkins-hidden/context.png",
+        "sha256": "d2f3a979481863ae4cdc643bd2bfb104d990da7bd5aa07897a9478d5072ede29",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/pumpkins-hidden/regions/portrait.png",
+          "sha256": "7f6431c9febf07eb7168df10d728607f9d87792814d2b57b682d17a04e31beea",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/pumpkins-hidden/regions/landscape.png",
+          "sha256": "1b1ce1bd2f2b8827eeaf5000ccd6be936e8efadd89c91c6c749f3256684555e6",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/pumpkins-hidden/regions/cat-contact.png",
+          "sha256": "6b8397a19b5e1ee77a03ad8c73ae5921ab82597669ac932ff4601413be1edbf1",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "pumpkins-isolated",
+      "label": "pumpkins-isolated",
+      "time_seconds": 0,
+      "overrides": {
+        "sky": {
+          "visible": false
+        },
+        "cloud-veil": {
+          "visible": false
+        },
+        "valley": {
+          "visible": false
+        },
+        "path": {
+          "visible": false
+        },
+        "cottage": {
+          "visible": false
+        },
+        "tree": {
+          "visible": false
+        },
+        "fence-left": {
+          "visible": false
+        },
+        "fence-right": {
+          "visible": false
+        },
+        "chair": {
+          "visible": false
+        },
+        "wreath": {
+          "visible": false
+        },
+        "planter-left": {
+          "visible": false
+        },
+        "planter-right": {
+          "visible": false
+        },
+        "hanging-basket": {
+          "visible": false
+        },
+        "pumpkin-shelf": {
+          "visible": false
+        },
+        "lantern-left": {
+          "visible": false
+        },
+        "lantern-step": {
+          "visible": false
+        },
+        "lantern-step-low": {
+          "visible": false
+        },
+        "lantern-right-low": {
+          "visible": false
+        },
+        "lantern-post": {
+          "visible": false
+        },
+        "sconce-0": {
+          "visible": false
+        },
+        "sconce-1": {
+          "visible": false
+        },
+        "sconce-2": {
+          "visible": false
+        },
+        "cat": {
+          "visible": false
+        },
+        "lantern-left-flame": {
+          "visible": false
+        },
+        "lantern-step-flame": {
+          "visible": false
+        },
+        "lantern-step-low-flame": {
+          "visible": false
+        },
+        "lantern-right-low-flame": {
+          "visible": false
+        },
+        "lantern-post-flame": {
+          "visible": false
+        },
+        "sconce-0-flame": {
+          "visible": false
+        },
+        "sconce-1-flame": {
+          "visible": false
+        },
+        "sconce-2-flame": {
+          "visible": false
+        },
+        "leaf-0": {
+          "visible": false
+        },
+        "leaf-1": {
+          "visible": false
+        },
+        "leaf-2": {
+          "visible": false
+        },
+        "leaf-3": {
+          "visible": false
+        },
+        "leaf-4": {
+          "visible": false
+        },
+        "leaf-5": {
+          "visible": false
+        },
+        "leaf-6": {
+          "visible": false
+        },
+        "leaf-7": {
+          "visible": false
+        },
+        "leaf-8": {
+          "visible": false
+        },
+        "leaf-9": {
+          "visible": false
+        },
+        "leaf-10": {
+          "visible": false
+        },
+        "leaf-11": {
+          "visible": false
+        },
+        "leaf-12": {
+          "visible": false
+        },
+        "leaf-13": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "pumpkin-near-stones-path-paint",
+        "pumpkin-left-stones-path-paint",
+        "pumpkin-right-stones-path-paint",
+        "pumpkin-step-stones-path-paint",
+        "lantern-left-receiver-path-paint",
+        "lantern-step-receiver-path-paint",
+        "lantern-step-low-receiver-path-paint",
+        "lantern-right-low-receiver-path-paint",
+        "lantern-post-receiver-path-paint",
+        "cottage",
+        "pumpkin-step-stones-cottage-paint",
+        "lantern-step-receiver-cottage-paint",
+        "lantern-step-low-receiver-cottage-paint",
+        "sconce-0-receiver-cottage-paint",
+        "sconce-1-receiver-cottage-paint",
+        "sconce-2-receiver-cottage-paint",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "lantern-post-receiver-fence-right-paint",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "lantern-left-receiver-path-paint",
+        "lantern-step-receiver-path-paint",
+        "lantern-step-low-receiver-path-paint",
+        "lantern-right-low-receiver-path-paint",
+        "lantern-post-receiver-path-paint",
+        "lantern-step-receiver-cottage-paint",
+        "lantern-step-low-receiver-cottage-paint",
+        "sconce-0-receiver-cottage-paint",
+        "sconce-1-receiver-cottage-paint",
+        "sconce-2-receiver-cottage-paint",
+        "lantern-post-receiver-fence-right-paint",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "hidden_descendants": [
+        {
+          "layer": "pumpkin-near-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-left-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-right-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-step-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-left-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-step-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-step-low-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-right-low-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-post-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-step-stones-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-step-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-step-low-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-0-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-1-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-2-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-post-receiver-fence-right-paint",
+          "hidden_by": "fence-right"
+        }
+      ],
+      "context": {
+        "file": "samples/pumpkins-isolated/context.png",
+        "sha256": "a9e7a95b1e76732a9cf5c658e4cfded0666daa47887e86fb07a9378bc9e8710a",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/pumpkins-isolated/regions/portrait.png",
+          "sha256": "8d08e125aac9b4b313d2a93fc54bded6f976f13ddf3a3893ba4ec6cbacbfacd1",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/pumpkins-isolated/regions/landscape.png",
+          "sha256": "c08a40398b8bbdfc817d72c72580763717a81ec9c94765ce354ea52207f54ea4",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/pumpkins-isolated/regions/cat-contact.png",
+          "sha256": "48d947cad97e77aadf56df7cedb0686e63cabf64aff4d01c38dd68cb0177d17f",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "lanterns-hidden",
+      "label": "lanterns-hidden",
+      "time_seconds": 0,
+      "overrides": {
+        "lantern-left": {
+          "visible": false
+        },
+        "lantern-step": {
+          "visible": false
+        },
+        "lantern-step-low": {
+          "visible": false
+        },
+        "lantern-right-low": {
+          "visible": false
+        },
+        "lantern-post": {
+          "visible": false
+        },
+        "sconce-0": {
+          "visible": false
+        },
+        "sconce-1": {
+          "visible": false
+        },
+        "sconce-2": {
+          "visible": false
+        },
+        "lantern-left-flame": {
+          "visible": false
+        },
+        "lantern-step-flame": {
+          "visible": false
+        },
+        "lantern-step-low-flame": {
+          "visible": false
+        },
+        "lantern-right-low-flame": {
+          "visible": false
+        },
+        "lantern-post-flame": {
+          "visible": false
+        },
+        "sconce-0-flame": {
+          "visible": false
+        },
+        "sconce-1-flame": {
+          "visible": false
+        },
+        "sconce-2-flame": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "lantern-left-receiver-path-paint",
+        "lantern-step-receiver-path-paint",
+        "lantern-step-low-receiver-path-paint",
+        "lantern-right-low-receiver-path-paint",
+        "lantern-post-receiver-path-paint",
+        "lantern-step-receiver-cottage-paint",
+        "lantern-step-low-receiver-cottage-paint",
+        "sconce-0-receiver-cottage-paint",
+        "sconce-1-receiver-cottage-paint",
+        "sconce-2-receiver-cottage-paint",
+        "lantern-post-receiver-fence-right-paint",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/lanterns-hidden/context.png",
+        "sha256": "19ffcf3276bccb9d1889ea31d34e4c60b9f303aaa847f359c611ae906aa9247b",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/lanterns-hidden/regions/portrait.png",
+          "sha256": "7e4bcd38a692b9aae617d716d612a8bb01cf339ae2c8754ea67fec89f544fa28",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/lanterns-hidden/regions/landscape.png",
+          "sha256": "28ce23876f908acc16df54f64441ea634fde6f7748c82a30644b2cb962debb70",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/lanterns-hidden/regions/cat-contact.png",
+          "sha256": "6b8397a19b5e1ee77a03ad8c73ae5921ab82597669ac932ff4601413be1edbf1",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "lanterns-isolated",
+      "label": "lanterns-isolated",
+      "time_seconds": 0,
+      "overrides": {
+        "sky": {
+          "visible": false
+        },
+        "cloud-veil": {
+          "visible": false
+        },
+        "valley": {
+          "visible": false
+        },
+        "path": {
+          "visible": false
+        },
+        "cottage": {
+          "visible": false
+        },
+        "tree": {
+          "visible": false
+        },
+        "fence-left": {
+          "visible": false
+        },
+        "fence-right": {
+          "visible": false
+        },
+        "pumpkin-near": {
+          "visible": false
+        },
+        "pumpkin-left": {
+          "visible": false
+        },
+        "pumpkin-right": {
+          "visible": false
+        },
+        "pumpkin-step": {
+          "visible": false
+        },
+        "chair": {
+          "visible": false
+        },
+        "wreath": {
+          "visible": false
+        },
+        "planter-left": {
+          "visible": false
+        },
+        "planter-right": {
+          "visible": false
+        },
+        "hanging-basket": {
+          "visible": false
+        },
+        "pumpkin-shelf": {
+          "visible": false
+        },
+        "cat": {
+          "visible": false
+        },
+        "pumpkin-near-emission": {
+          "visible": false
+        },
+        "pumpkin-left-emission": {
+          "visible": false
+        },
+        "pumpkin-right-emission": {
+          "visible": false
+        },
+        "pumpkin-step-emission": {
+          "visible": false
+        },
+        "leaf-0": {
+          "visible": false
+        },
+        "leaf-1": {
+          "visible": false
+        },
+        "leaf-2": {
+          "visible": false
+        },
+        "leaf-3": {
+          "visible": false
+        },
+        "leaf-4": {
+          "visible": false
+        },
+        "leaf-5": {
+          "visible": false
+        },
+        "leaf-6": {
+          "visible": false
+        },
+        "leaf-7": {
+          "visible": false
+        },
+        "leaf-8": {
+          "visible": false
+        },
+        "leaf-9": {
+          "visible": false
+        },
+        "leaf-10": {
+          "visible": false
+        },
+        "leaf-11": {
+          "visible": false
+        },
+        "leaf-12": {
+          "visible": false
+        },
+        "leaf-13": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "pumpkin-near-stones-path-paint",
+        "pumpkin-left-stones-path-paint",
+        "pumpkin-right-stones-path-paint",
+        "pumpkin-step-stones-path-paint",
+        "lantern-left-receiver-path-paint",
+        "lantern-step-receiver-path-paint",
+        "lantern-step-low-receiver-path-paint",
+        "lantern-right-low-receiver-path-paint",
+        "lantern-post-receiver-path-paint",
+        "cottage",
+        "pumpkin-step-stones-cottage-paint",
+        "lantern-step-receiver-cottage-paint",
+        "lantern-step-low-receiver-cottage-paint",
+        "sconce-0-receiver-cottage-paint",
+        "sconce-1-receiver-cottage-paint",
+        "sconce-2-receiver-cottage-paint",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "lantern-post-receiver-fence-right-paint",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "pumpkin-near-stones-path-paint",
+        "pumpkin-left-stones-path-paint",
+        "pumpkin-right-stones-path-paint",
+        "pumpkin-step-stones-path-paint",
+        "pumpkin-step-stones-cottage-paint",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "hidden_descendants": [
+        {
+          "layer": "pumpkin-near-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-left-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-right-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-step-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-left-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-step-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-step-low-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-right-low-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-post-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-step-stones-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-step-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-step-low-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-0-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-1-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-2-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-post-receiver-fence-right-paint",
+          "hidden_by": "fence-right"
+        }
+      ],
+      "context": {
+        "file": "samples/lanterns-isolated/context.png",
+        "sha256": "6e0d7362cbf60a3720c4437c9e71e1e61e7b93a0df17474ddca75ed2e9c04d6d",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/lanterns-isolated/regions/portrait.png",
+          "sha256": "ce0cf197a50d0975a477deb53d382f5acf7e4c62d0bdef61186c68abce85dd52",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/lanterns-isolated/regions/landscape.png",
+          "sha256": "0ec2f1fd3a1bf7918d6139929eff9795881583a6b3ea4bf16aa2418b15c2a592",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/lanterns-isolated/regions/cat-contact.png",
+          "sha256": "48d947cad97e77aadf56df7cedb0686e63cabf64aff4d01c38dd68cb0177d17f",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "planters-hidden",
+      "label": "planters-hidden",
+      "time_seconds": 0,
+      "overrides": {
+        "planter-left": {
+          "visible": false
+        },
+        "planter-right": {
+          "visible": false
+        },
+        "hanging-basket": {
+          "visible": false
+        },
+        "pumpkin-shelf": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/planters-hidden/context.png",
+        "sha256": "d2ca5dd9e33c1a40fae435594ed6ccdd47796f2814103ec0e856f5a1be56758d",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/planters-hidden/regions/portrait.png",
+          "sha256": "ef9b639865b03c5b21fb5d21ec6459e2ebd92e1ebe6e9841c221a7f861ee4f6c",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/planters-hidden/regions/landscape.png",
+          "sha256": "79a82d296815646b433fcdb872648a9c420d9e452f76529924fd890bf8a93791",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/planters-hidden/regions/cat-contact.png",
+          "sha256": "be500086cf05c32874061fbcc77c8bcdf7043cc9af33647b44901634bd6ae705",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "planters-isolated",
+      "label": "planters-isolated",
+      "time_seconds": 0,
+      "overrides": {
+        "sky": {
+          "visible": false
+        },
+        "cloud-veil": {
+          "visible": false
+        },
+        "valley": {
+          "visible": false
+        },
+        "path": {
+          "visible": false
+        },
+        "cottage": {
+          "visible": false
+        },
+        "tree": {
+          "visible": false
+        },
+        "fence-left": {
+          "visible": false
+        },
+        "fence-right": {
+          "visible": false
+        },
+        "pumpkin-near": {
+          "visible": false
+        },
+        "pumpkin-left": {
+          "visible": false
+        },
+        "pumpkin-right": {
+          "visible": false
+        },
+        "pumpkin-step": {
+          "visible": false
+        },
+        "chair": {
+          "visible": false
+        },
+        "wreath": {
+          "visible": false
+        },
+        "lantern-left": {
+          "visible": false
+        },
+        "lantern-step": {
+          "visible": false
+        },
+        "lantern-step-low": {
+          "visible": false
+        },
+        "lantern-right-low": {
+          "visible": false
+        },
+        "lantern-post": {
+          "visible": false
+        },
+        "sconce-0": {
+          "visible": false
+        },
+        "sconce-1": {
+          "visible": false
+        },
+        "sconce-2": {
+          "visible": false
+        },
+        "cat": {
+          "visible": false
+        },
+        "pumpkin-near-emission": {
+          "visible": false
+        },
+        "pumpkin-left-emission": {
+          "visible": false
+        },
+        "pumpkin-right-emission": {
+          "visible": false
+        },
+        "pumpkin-step-emission": {
+          "visible": false
+        },
+        "lantern-left-flame": {
+          "visible": false
+        },
+        "lantern-step-flame": {
+          "visible": false
+        },
+        "lantern-step-low-flame": {
+          "visible": false
+        },
+        "lantern-right-low-flame": {
+          "visible": false
+        },
+        "lantern-post-flame": {
+          "visible": false
+        },
+        "sconce-0-flame": {
+          "visible": false
+        },
+        "sconce-1-flame": {
+          "visible": false
+        },
+        "sconce-2-flame": {
+          "visible": false
+        },
+        "leaf-0": {
+          "visible": false
+        },
+        "leaf-1": {
+          "visible": false
+        },
+        "leaf-2": {
+          "visible": false
+        },
+        "leaf-3": {
+          "visible": false
+        },
+        "leaf-4": {
+          "visible": false
+        },
+        "leaf-5": {
+          "visible": false
+        },
+        "leaf-6": {
+          "visible": false
+        },
+        "leaf-7": {
+          "visible": false
+        },
+        "leaf-8": {
+          "visible": false
+        },
+        "leaf-9": {
+          "visible": false
+        },
+        "leaf-10": {
+          "visible": false
+        },
+        "leaf-11": {
+          "visible": false
+        },
+        "leaf-12": {
+          "visible": false
+        },
+        "leaf-13": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "pumpkin-near-stones-path-paint",
+        "pumpkin-left-stones-path-paint",
+        "pumpkin-right-stones-path-paint",
+        "pumpkin-step-stones-path-paint",
+        "lantern-left-receiver-path-paint",
+        "lantern-step-receiver-path-paint",
+        "lantern-step-low-receiver-path-paint",
+        "lantern-right-low-receiver-path-paint",
+        "lantern-post-receiver-path-paint",
+        "cottage",
+        "pumpkin-step-stones-cottage-paint",
+        "lantern-step-receiver-cottage-paint",
+        "lantern-step-low-receiver-cottage-paint",
+        "sconce-0-receiver-cottage-paint",
+        "sconce-1-receiver-cottage-paint",
+        "sconce-2-receiver-cottage-paint",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "lantern-post-receiver-fence-right-paint",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "pumpkin-near-stones-path-paint",
+        "pumpkin-left-stones-path-paint",
+        "pumpkin-right-stones-path-paint",
+        "pumpkin-step-stones-path-paint",
+        "lantern-left-receiver-path-paint",
+        "lantern-step-receiver-path-paint",
+        "lantern-step-low-receiver-path-paint",
+        "lantern-right-low-receiver-path-paint",
+        "lantern-post-receiver-path-paint",
+        "pumpkin-step-stones-cottage-paint",
+        "lantern-step-receiver-cottage-paint",
+        "lantern-step-low-receiver-cottage-paint",
+        "sconce-0-receiver-cottage-paint",
+        "sconce-1-receiver-cottage-paint",
+        "sconce-2-receiver-cottage-paint",
+        "lantern-post-receiver-fence-right-paint",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "hidden_descendants": [
+        {
+          "layer": "pumpkin-near-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-left-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-right-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-step-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-left-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-step-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-step-low-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-right-low-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-post-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-step-stones-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-step-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-step-low-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-0-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-1-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-2-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-post-receiver-fence-right-paint",
+          "hidden_by": "fence-right"
+        }
+      ],
+      "context": {
+        "file": "samples/planters-isolated/context.png",
+        "sha256": "edc0836262d5d3451efb8968e0da93ca24b1c70a7c702449697737ecab410a4d",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/planters-isolated/regions/portrait.png",
+          "sha256": "07b5a3f1c1813c21a56583f8610cbed0c1ea9a70c242cee137cff54c7cf4fef1",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/planters-isolated/regions/landscape.png",
+          "sha256": "88ecc790b55732f9e65d56152d7b3f76a42b0bd5d414d2acea9320c9ea087a59",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/planters-isolated/regions/cat-contact.png",
+          "sha256": "2fe47dfe586ba78cc5c04c322c9815d8cf1f2465bf74944af916fa6afdab579a",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "wreath-hidden",
+      "label": "wreath-hidden",
+      "time_seconds": 0,
+      "overrides": {
+        "wreath": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "wreath",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "wreath"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/wreath-hidden/context.png",
+        "sha256": "86abe59e50bfd118ea7056d36070603f8c8a36de90283be5472294e2c9c3a59f",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/wreath-hidden/regions/portrait.png",
+          "sha256": "f1a1cdcb94b4d50e98f7bb1e92579e7228226ed3d3187694ba24d8935269d1c3",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/wreath-hidden/regions/landscape.png",
+          "sha256": "30bba330a695b6dac5ae9f7d8c3fdf055c996dcccad5424e6e314dbcbb6f733d",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/wreath-hidden/regions/cat-contact.png",
+          "sha256": "6b8397a19b5e1ee77a03ad8c73ae5921ab82597669ac932ff4601413be1edbf1",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "wreath-isolated",
+      "label": "wreath-isolated",
+      "time_seconds": 0,
+      "overrides": {
+        "sky": {
+          "visible": false
+        },
+        "cloud-veil": {
+          "visible": false
+        },
+        "valley": {
+          "visible": false
+        },
+        "path": {
+          "visible": false
+        },
+        "cottage": {
+          "visible": false
+        },
+        "tree": {
+          "visible": false
+        },
+        "fence-left": {
+          "visible": false
+        },
+        "fence-right": {
+          "visible": false
+        },
+        "pumpkin-near": {
+          "visible": false
+        },
+        "pumpkin-left": {
+          "visible": false
+        },
+        "pumpkin-right": {
+          "visible": false
+        },
+        "pumpkin-step": {
+          "visible": false
+        },
+        "chair": {
+          "visible": false
+        },
+        "planter-left": {
+          "visible": false
+        },
+        "planter-right": {
+          "visible": false
+        },
+        "hanging-basket": {
+          "visible": false
+        },
+        "pumpkin-shelf": {
+          "visible": false
+        },
+        "lantern-left": {
+          "visible": false
+        },
+        "lantern-step": {
+          "visible": false
+        },
+        "lantern-step-low": {
+          "visible": false
+        },
+        "lantern-right-low": {
+          "visible": false
+        },
+        "lantern-post": {
+          "visible": false
+        },
+        "sconce-0": {
+          "visible": false
+        },
+        "sconce-1": {
+          "visible": false
+        },
+        "sconce-2": {
+          "visible": false
+        },
+        "cat": {
+          "visible": false
+        },
+        "pumpkin-near-emission": {
+          "visible": false
+        },
+        "pumpkin-left-emission": {
+          "visible": false
+        },
+        "pumpkin-right-emission": {
+          "visible": false
+        },
+        "pumpkin-step-emission": {
+          "visible": false
+        },
+        "lantern-left-flame": {
+          "visible": false
+        },
+        "lantern-step-flame": {
+          "visible": false
+        },
+        "lantern-step-low-flame": {
+          "visible": false
+        },
+        "lantern-right-low-flame": {
+          "visible": false
+        },
+        "lantern-post-flame": {
+          "visible": false
+        },
+        "sconce-0-flame": {
+          "visible": false
+        },
+        "sconce-1-flame": {
+          "visible": false
+        },
+        "sconce-2-flame": {
+          "visible": false
+        },
+        "leaf-0": {
+          "visible": false
+        },
+        "leaf-1": {
+          "visible": false
+        },
+        "leaf-2": {
+          "visible": false
+        },
+        "leaf-3": {
+          "visible": false
+        },
+        "leaf-4": {
+          "visible": false
+        },
+        "leaf-5": {
+          "visible": false
+        },
+        "leaf-6": {
+          "visible": false
+        },
+        "leaf-7": {
+          "visible": false
+        },
+        "leaf-8": {
+          "visible": false
+        },
+        "leaf-9": {
+          "visible": false
+        },
+        "leaf-10": {
+          "visible": false
+        },
+        "leaf-11": {
+          "visible": false
+        },
+        "leaf-12": {
+          "visible": false
+        },
+        "leaf-13": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "pumpkin-near-stones-path-paint",
+        "pumpkin-left-stones-path-paint",
+        "pumpkin-right-stones-path-paint",
+        "pumpkin-step-stones-path-paint",
+        "lantern-left-receiver-path-paint",
+        "lantern-step-receiver-path-paint",
+        "lantern-step-low-receiver-path-paint",
+        "lantern-right-low-receiver-path-paint",
+        "lantern-post-receiver-path-paint",
+        "cottage",
+        "pumpkin-step-stones-cottage-paint",
+        "lantern-step-receiver-cottage-paint",
+        "lantern-step-low-receiver-cottage-paint",
+        "sconce-0-receiver-cottage-paint",
+        "sconce-1-receiver-cottage-paint",
+        "sconce-2-receiver-cottage-paint",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "lantern-post-receiver-fence-right-paint",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "pumpkin-near-stones-path-paint",
+        "pumpkin-left-stones-path-paint",
+        "pumpkin-right-stones-path-paint",
+        "pumpkin-step-stones-path-paint",
+        "lantern-left-receiver-path-paint",
+        "lantern-step-receiver-path-paint",
+        "lantern-step-low-receiver-path-paint",
+        "lantern-right-low-receiver-path-paint",
+        "lantern-post-receiver-path-paint",
+        "pumpkin-step-stones-cottage-paint",
+        "lantern-step-receiver-cottage-paint",
+        "lantern-step-low-receiver-cottage-paint",
+        "sconce-0-receiver-cottage-paint",
+        "sconce-1-receiver-cottage-paint",
+        "sconce-2-receiver-cottage-paint",
+        "lantern-post-receiver-fence-right-paint",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "hidden_descendants": [
+        {
+          "layer": "pumpkin-near-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-left-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-right-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-step-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-left-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-step-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-step-low-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-right-low-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-post-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-step-stones-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-step-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-step-low-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-0-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-1-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-2-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-post-receiver-fence-right-paint",
+          "hidden_by": "fence-right"
+        }
+      ],
+      "context": {
+        "file": "samples/wreath-isolated/context.png",
+        "sha256": "b72456b6a9c3f4afaecb91706fe120f13b2d1786ee062853cdf794e29fbd786e",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/wreath-isolated/regions/portrait.png",
+          "sha256": "cf336a530a8cd9caec450b16bd98bd89b0dceb3e27fa3b41258fd92b98e0bf06",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/wreath-isolated/regions/landscape.png",
+          "sha256": "14cbcc12172872a82833c4b56c19691b89a9e59fb3dca79a6ff241569a7400c6",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/wreath-isolated/regions/cat-contact.png",
+          "sha256": "48d947cad97e77aadf56df7cedb0686e63cabf64aff4d01c38dd68cb0177d17f",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "tree-hidden",
+      "label": "tree-hidden",
+      "time_seconds": 0,
+      "overrides": {
+        "tree": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "tree",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "tree"
+      ],
+      "hidden_descendants": [],
+      "context": {
+        "file": "samples/tree-hidden/context.png",
+        "sha256": "079fb1b1fe25f8c474e95ca56432eb4e61f9cbadb45cc1ed2d5fb385bc142216",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/tree-hidden/regions/portrait.png",
+          "sha256": "8b37668885a7465cf4b1fff00e264dcb3963904d674883e012f73ea7dc50245f",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/tree-hidden/regions/landscape.png",
+          "sha256": "8d36e17838389d2e768034bfdb887fff1cbcc4923b297ed82026772ae6f7f0b6",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/tree-hidden/regions/cat-contact.png",
+          "sha256": "6b8397a19b5e1ee77a03ad8c73ae5921ab82597669ac932ff4601413be1edbf1",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "tree-isolated",
+      "label": "tree-isolated",
+      "time_seconds": 0,
+      "overrides": {
+        "sky": {
+          "visible": false
+        },
+        "cloud-veil": {
+          "visible": false
+        },
+        "valley": {
+          "visible": false
+        },
+        "path": {
+          "visible": false
+        },
+        "cottage": {
+          "visible": false
+        },
+        "fence-left": {
+          "visible": false
+        },
+        "fence-right": {
+          "visible": false
+        },
+        "pumpkin-near": {
+          "visible": false
+        },
+        "pumpkin-left": {
+          "visible": false
+        },
+        "pumpkin-right": {
+          "visible": false
+        },
+        "pumpkin-step": {
+          "visible": false
+        },
+        "chair": {
+          "visible": false
+        },
+        "wreath": {
+          "visible": false
+        },
+        "planter-left": {
+          "visible": false
+        },
+        "planter-right": {
+          "visible": false
+        },
+        "hanging-basket": {
+          "visible": false
+        },
+        "pumpkin-shelf": {
+          "visible": false
+        },
+        "lantern-left": {
+          "visible": false
+        },
+        "lantern-step": {
+          "visible": false
+        },
+        "lantern-step-low": {
+          "visible": false
+        },
+        "lantern-right-low": {
+          "visible": false
+        },
+        "lantern-post": {
+          "visible": false
+        },
+        "sconce-0": {
+          "visible": false
+        },
+        "sconce-1": {
+          "visible": false
+        },
+        "sconce-2": {
+          "visible": false
+        },
+        "cat": {
+          "visible": false
+        },
+        "pumpkin-near-emission": {
+          "visible": false
+        },
+        "pumpkin-left-emission": {
+          "visible": false
+        },
+        "pumpkin-right-emission": {
+          "visible": false
+        },
+        "pumpkin-step-emission": {
+          "visible": false
+        },
+        "lantern-left-flame": {
+          "visible": false
+        },
+        "lantern-step-flame": {
+          "visible": false
+        },
+        "lantern-step-low-flame": {
+          "visible": false
+        },
+        "lantern-right-low-flame": {
+          "visible": false
+        },
+        "lantern-post-flame": {
+          "visible": false
+        },
+        "sconce-0-flame": {
+          "visible": false
+        },
+        "sconce-1-flame": {
+          "visible": false
+        },
+        "sconce-2-flame": {
+          "visible": false
+        },
+        "leaf-0": {
+          "visible": false
+        },
+        "leaf-1": {
+          "visible": false
+        },
+        "leaf-2": {
+          "visible": false
+        },
+        "leaf-3": {
+          "visible": false
+        },
+        "leaf-4": {
+          "visible": false
+        },
+        "leaf-5": {
+          "visible": false
+        },
+        "leaf-6": {
+          "visible": false
+        },
+        "leaf-7": {
+          "visible": false
+        },
+        "leaf-8": {
+          "visible": false
+        },
+        "leaf-9": {
+          "visible": false
+        },
+        "leaf-10": {
+          "visible": false
+        },
+        "leaf-11": {
+          "visible": false
+        },
+        "leaf-12": {
+          "visible": false
+        },
+        "leaf-13": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "pumpkin-near-stones-path-paint",
+        "pumpkin-left-stones-path-paint",
+        "pumpkin-right-stones-path-paint",
+        "pumpkin-step-stones-path-paint",
+        "lantern-left-receiver-path-paint",
+        "lantern-step-receiver-path-paint",
+        "lantern-step-low-receiver-path-paint",
+        "lantern-right-low-receiver-path-paint",
+        "lantern-post-receiver-path-paint",
+        "cottage",
+        "pumpkin-step-stones-cottage-paint",
+        "lantern-step-receiver-cottage-paint",
+        "lantern-step-low-receiver-cottage-paint",
+        "sconce-0-receiver-cottage-paint",
+        "sconce-1-receiver-cottage-paint",
+        "sconce-2-receiver-cottage-paint",
+        "fence-left",
+        "fence-right",
+        "lantern-post-receiver-fence-right-paint",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "pumpkin-near-stones-path-paint",
+        "pumpkin-left-stones-path-paint",
+        "pumpkin-right-stones-path-paint",
+        "pumpkin-step-stones-path-paint",
+        "lantern-left-receiver-path-paint",
+        "lantern-step-receiver-path-paint",
+        "lantern-step-low-receiver-path-paint",
+        "lantern-right-low-receiver-path-paint",
+        "lantern-post-receiver-path-paint",
+        "pumpkin-step-stones-cottage-paint",
+        "lantern-step-receiver-cottage-paint",
+        "lantern-step-low-receiver-cottage-paint",
+        "sconce-0-receiver-cottage-paint",
+        "sconce-1-receiver-cottage-paint",
+        "sconce-2-receiver-cottage-paint",
+        "lantern-post-receiver-fence-right-paint",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "fence-left",
+        "fence-right",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "hidden_descendants": [
+        {
+          "layer": "pumpkin-near-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-left-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-right-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-step-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-left-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-step-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-step-low-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-right-low-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-post-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-step-stones-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-step-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-step-low-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-0-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-1-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-2-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-post-receiver-fence-right-paint",
+          "hidden_by": "fence-right"
+        }
+      ],
+      "context": {
+        "file": "samples/tree-isolated/context.png",
+        "sha256": "cbe7e77764d7a83037ce40e79fb84b022ffd5e3c6da55250caf6cf859a8846de",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/tree-isolated/regions/portrait.png",
+          "sha256": "c9afa27b63f1fb332bb23555be45b936cac05c13ac0f78dec8a9d4df2db5b0f5",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/tree-isolated/regions/landscape.png",
+          "sha256": "bd0d5e5ee5893c192b68c9af845e24f7d4f5f43b7f4f048e5be542a49c9685a4",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/tree-isolated/regions/cat-contact.png",
+          "sha256": "48d947cad97e77aadf56df7cedb0686e63cabf64aff4d01c38dd68cb0177d17f",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "fences-hidden",
+      "label": "fences-hidden",
+      "time_seconds": 0,
+      "overrides": {
+        "fence-left": {
+          "visible": false
+        },
+        "fence-right": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "fence-left",
+        "fence-right",
+        "lantern-post-receiver-fence-right-paint",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "fence-left",
+        "fence-right"
+      ],
+      "hidden_descendants": [
+        {
+          "layer": "lantern-post-receiver-fence-right-paint",
+          "hidden_by": "fence-right"
+        }
+      ],
+      "context": {
+        "file": "samples/fences-hidden/context.png",
+        "sha256": "28b0662a74e0504ac51196de6acb31f469661dc407710cf06209afa06145aff1",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/fences-hidden/regions/portrait.png",
+          "sha256": "27aa9c500e71b95381386ea0d50db37ef82b74084afc3aee496ad8cebb91f73f",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/fences-hidden/regions/landscape.png",
+          "sha256": "953847995aaf6cadba91e9dab65d1aeea0b57c60416f8fd05704eb88c65b7471",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/fences-hidden/regions/cat-contact.png",
+          "sha256": "6b8397a19b5e1ee77a03ad8c73ae5921ab82597669ac932ff4601413be1edbf1",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    },
+    {
+      "id": "fences-isolated",
+      "label": "fences-isolated",
+      "time_seconds": 0,
+      "overrides": {
+        "sky": {
+          "visible": false
+        },
+        "cloud-veil": {
+          "visible": false
+        },
+        "valley": {
+          "visible": false
+        },
+        "path": {
+          "visible": false
+        },
+        "cottage": {
+          "visible": false
+        },
+        "tree": {
+          "visible": false
+        },
+        "pumpkin-near": {
+          "visible": false
+        },
+        "pumpkin-left": {
+          "visible": false
+        },
+        "pumpkin-right": {
+          "visible": false
+        },
+        "pumpkin-step": {
+          "visible": false
+        },
+        "chair": {
+          "visible": false
+        },
+        "wreath": {
+          "visible": false
+        },
+        "planter-left": {
+          "visible": false
+        },
+        "planter-right": {
+          "visible": false
+        },
+        "hanging-basket": {
+          "visible": false
+        },
+        "pumpkin-shelf": {
+          "visible": false
+        },
+        "lantern-left": {
+          "visible": false
+        },
+        "lantern-step": {
+          "visible": false
+        },
+        "lantern-step-low": {
+          "visible": false
+        },
+        "lantern-right-low": {
+          "visible": false
+        },
+        "lantern-post": {
+          "visible": false
+        },
+        "sconce-0": {
+          "visible": false
+        },
+        "sconce-1": {
+          "visible": false
+        },
+        "sconce-2": {
+          "visible": false
+        },
+        "cat": {
+          "visible": false
+        },
+        "pumpkin-near-emission": {
+          "visible": false
+        },
+        "pumpkin-left-emission": {
+          "visible": false
+        },
+        "pumpkin-right-emission": {
+          "visible": false
+        },
+        "pumpkin-step-emission": {
+          "visible": false
+        },
+        "lantern-left-flame": {
+          "visible": false
+        },
+        "lantern-step-flame": {
+          "visible": false
+        },
+        "lantern-step-low-flame": {
+          "visible": false
+        },
+        "lantern-right-low-flame": {
+          "visible": false
+        },
+        "lantern-post-flame": {
+          "visible": false
+        },
+        "sconce-0-flame": {
+          "visible": false
+        },
+        "sconce-1-flame": {
+          "visible": false
+        },
+        "sconce-2-flame": {
+          "visible": false
+        },
+        "leaf-0": {
+          "visible": false
+        },
+        "leaf-1": {
+          "visible": false
+        },
+        "leaf-2": {
+          "visible": false
+        },
+        "leaf-3": {
+          "visible": false
+        },
+        "leaf-4": {
+          "visible": false
+        },
+        "leaf-5": {
+          "visible": false
+        },
+        "leaf-6": {
+          "visible": false
+        },
+        "leaf-7": {
+          "visible": false
+        },
+        "leaf-8": {
+          "visible": false
+        },
+        "leaf-9": {
+          "visible": false
+        },
+        "leaf-10": {
+          "visible": false
+        },
+        "leaf-11": {
+          "visible": false
+        },
+        "leaf-12": {
+          "visible": false
+        },
+        "leaf-13": {
+          "visible": false
+        }
+      },
+      "hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "pumpkin-near-stones-path-paint",
+        "pumpkin-left-stones-path-paint",
+        "pumpkin-right-stones-path-paint",
+        "pumpkin-step-stones-path-paint",
+        "lantern-left-receiver-path-paint",
+        "lantern-step-receiver-path-paint",
+        "lantern-step-low-receiver-path-paint",
+        "lantern-right-low-receiver-path-paint",
+        "lantern-post-receiver-path-paint",
+        "cottage",
+        "pumpkin-step-stones-cottage-paint",
+        "lantern-step-receiver-cottage-paint",
+        "lantern-step-low-receiver-cottage-paint",
+        "sconce-0-receiver-cottage-paint",
+        "sconce-1-receiver-cottage-paint",
+        "sconce-2-receiver-cottage-paint",
+        "tree",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "zero_opacity_layers": [
+        "pumpkin-near-stones-path-paint",
+        "pumpkin-left-stones-path-paint",
+        "pumpkin-right-stones-path-paint",
+        "pumpkin-step-stones-path-paint",
+        "lantern-left-receiver-path-paint",
+        "lantern-step-receiver-path-paint",
+        "lantern-step-low-receiver-path-paint",
+        "lantern-right-low-receiver-path-paint",
+        "lantern-post-receiver-path-paint",
+        "pumpkin-step-stones-cottage-paint",
+        "lantern-step-receiver-cottage-paint",
+        "lantern-step-low-receiver-cottage-paint",
+        "sconce-0-receiver-cottage-paint",
+        "sconce-1-receiver-cottage-paint",
+        "sconce-2-receiver-cottage-paint",
+        "lantern-post-receiver-fence-right-paint",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "explicitly_hidden_layers": [
+        "sky",
+        "cloud-veil",
+        "valley",
+        "path",
+        "cottage",
+        "tree",
+        "pumpkin-near",
+        "pumpkin-left",
+        "pumpkin-right",
+        "pumpkin-step",
+        "chair",
+        "wreath",
+        "planter-left",
+        "planter-right",
+        "hanging-basket",
+        "pumpkin-shelf",
+        "lantern-left",
+        "lantern-step",
+        "lantern-step-low",
+        "lantern-right-low",
+        "lantern-post",
+        "sconce-0",
+        "sconce-1",
+        "sconce-2",
+        "cat",
+        "pumpkin-near-emission",
+        "pumpkin-left-emission",
+        "pumpkin-right-emission",
+        "pumpkin-step-emission",
+        "lantern-left-flame",
+        "lantern-step-flame",
+        "lantern-step-low-flame",
+        "lantern-right-low-flame",
+        "lantern-post-flame",
+        "sconce-0-flame",
+        "sconce-1-flame",
+        "sconce-2-flame",
+        "leaf-0",
+        "leaf-1",
+        "leaf-2",
+        "leaf-3",
+        "leaf-4",
+        "leaf-5",
+        "leaf-6",
+        "leaf-7",
+        "leaf-8",
+        "leaf-9",
+        "leaf-10",
+        "leaf-11",
+        "leaf-12",
+        "leaf-13"
+      ],
+      "hidden_descendants": [
+        {
+          "layer": "pumpkin-near-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-left-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-right-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-step-stones-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-left-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-step-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-step-low-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-right-low-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "lantern-post-receiver-path-paint",
+          "hidden_by": "path"
+        },
+        {
+          "layer": "pumpkin-step-stones-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-step-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "lantern-step-low-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-0-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-1-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        },
+        {
+          "layer": "sconce-2-receiver-cottage-paint",
+          "hidden_by": "cottage"
+        }
+      ],
+      "context": {
+        "file": "samples/fences-isolated/context.png",
+        "sha256": "112c7416dd3c6ae58d1a65cbb0709da77719ecbd5b55875857ed367093fb6940",
+        "width": 960,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "samples/fences-isolated/regions/portrait.png",
+          "sha256": "6ddf18c7e230b902f69d2531184e63220603a0220586496820dede189208f190",
+          "width": 405,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "samples/fences-isolated/regions/landscape.png",
+          "sha256": "554e185faddf2f4f0683750693d2a6a8e64380c16b2d1d045cd7bbe63d6177a0",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "samples/fences-isolated/regions/cat-contact.png",
+          "sha256": "48d947cad97e77aadf56df7cedb0686e63cabf64aff4d01c38dd68cb0177d17f",
+          "width": 96,
+          "height": 130
+        }
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "cat-reveal",
+      "left": "production-only",
+      "right": "cat-hidden",
+      "difference": true,
+      "context": {
+        "file": "comparisons/cat-reveal/context.png",
+        "sha256": "fd17a1d89e5296c2354b1314cdf2958cf8d28adc0269af6efb33c98896038f6d",
+        "width": 1920,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "comparisons/cat-reveal/regions/portrait.png",
+          "sha256": "7162aaa5819b8a2304a39f5e3ba15dd2757c5f503a4f166a2724ba2f993c3915",
+          "width": 810,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "comparisons/cat-reveal/regions/landscape.png",
+          "sha256": "feb5754d93c252187fbcea59d95bdce78e90f32917bed7c9bb42000a0ca1adee",
+          "width": 1920,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "comparisons/cat-reveal/regions/cat-contact.png",
+          "sha256": "f00db7e80603d1962a001d1920fc66076df3f1d607f2587f8901b871d635e439",
+          "width": 192,
+          "height": 130
+        }
+      ],
+      "difference_image": {
+        "file": "comparisons/cat-reveal/difference.png",
+        "sha256": "7710f45b56d3dc563e0975abe04647b791d1d6faaeaf8f7d939567aae06069ec",
+        "width": 960,
+        "height": 720
+      },
+      "difference_metrics": {
+        "rgb_mean_absolute_difference": 0.2501036844135803,
+        "rgb_max_difference": 254,
+        "changed_pixels": 2027,
+        "display_gain": 4
+      }
+    },
+    {
+      "id": "cat-extreme",
+      "left": "production-only",
+      "right": "cat-look",
+      "difference": true,
+      "context": {
+        "file": "comparisons/cat-extreme/context.png",
+        "sha256": "a2416013c6ab51693d03d76a1e8249ad3eac087340d2ad39f23868763c9957e2",
+        "width": 1920,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "comparisons/cat-extreme/regions/portrait.png",
+          "sha256": "b6b98e95bf3dbd3ffed0293e31581c73332cdaca557250f8f5464b95825d60a6",
+          "width": 810,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "comparisons/cat-extreme/regions/landscape.png",
+          "sha256": "3b781cf8de161848cdf88fa1a37d94e1aec4d7feb072cb77038a8de88fd4d7fc",
+          "width": 1920,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "comparisons/cat-extreme/regions/cat-contact.png",
+          "sha256": "bae114c186d7c9d82117b33dc1926415e2df51fd8744d6303a4ca1e01c244bb9",
+          "width": 192,
+          "height": 130
+        }
+      ],
+      "difference_image": {
+        "file": "comparisons/cat-extreme/difference.png",
+        "sha256": "b4971a5b22124bc704c4b218fbdd3c6e7d6795a8ce23984bab31562ca3624934",
+        "width": 960,
+        "height": 720
+      },
+      "difference_metrics": {
+        "rgb_mean_absolute_difference": 0.3718494405864198,
+        "rgb_max_difference": 252,
+        "changed_pixels": 59410,
+        "display_gain": 4
+      }
+    },
+    {
+      "id": "house-backing",
+      "left": "production-only",
+      "right": "cottage-hidden",
+      "difference": true,
+      "context": {
+        "file": "comparisons/house-backing/context.png",
+        "sha256": "59338c69ea60ae7ec596627b494518d20c60cd0eac77f4e8fab3aab85dfdb4aa",
+        "width": 1920,
+        "height": 720
+      },
+      "details": [
+        {
+          "region": "portrait",
+          "file": "comparisons/house-backing/regions/portrait.png",
+          "sha256": "0c71f4c147f1dafc71102cb7715a18ebba7f2efe86956ccfe6c73d61c523c0fe",
+          "width": 810,
+          "height": 720
+        },
+        {
+          "region": "landscape",
+          "file": "comparisons/house-backing/regions/landscape.png",
+          "sha256": "dc9978235a4920eb4715ddc9e553d598664ec0365b5c9abe1490d4c600502a69",
+          "width": 1920,
+          "height": 540
+        },
+        {
+          "region": "cat-contact",
+          "file": "comparisons/house-backing/regions/cat-contact.png",
+          "sha256": "781e0de9d33d1627a4f545edbaa9916cb02fc70cefa9b8c4a70e796ea3e80aa4",
+          "width": 192,
+          "height": 130
+        }
+      ],
+      "difference_image": {
+        "file": "comparisons/house-backing/difference.png",
+        "sha256": "80d417fb548f5901ca640461af9aee3956c25d9199b47aa17510d90b446bb259",
+        "width": 960,
+        "height": 720
+      },
+      "difference_metrics": {
+        "rgb_mean_absolute_difference": 16.578352141203705,
+        "rgb_max_difference": 248,
+        "changed_pixels": 251755,
+        "display_gain": 4
+      }
+    }
+  ],
+  "playback": null,
+  "outputs": [
+    {
+      "file": "samples/production-only/context.png",
+      "sha256": "5e360fe1d4f6a642428cc6378f078ca37acc225ee487309cba3d7d3e9fb7647d",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/production-only/regions/portrait.png",
+      "sha256": "27aa9c500e71b95381386ea0d50db37ef82b74084afc3aee496ad8cebb91f73f",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/production-only/regions/landscape.png",
+      "sha256": "ae1ddc9898b45082ec61fff8ad23326be81de732c4f5bb8fca4ad955a021664c",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/production-only/regions/cat-contact.png",
+      "sha256": "6b8397a19b5e1ee77a03ad8c73ae5921ab82597669ac932ff4601413be1edbf1",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/cat-look/context.png",
+      "sha256": "fa48348761b198a87238ff968ac111b421c25bd26cbdc64c9fb2972cdcae594f",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/cat-look/regions/portrait.png",
+      "sha256": "1463e3446544a5f6ceaff61c3779e6c2fed13f8b3382472b9a86a7f6c66e48e5",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/cat-look/regions/landscape.png",
+      "sha256": "bd9047cb157e8dcb61ca0ef4613b86a6d2bc8e387316e42918949055fc1bc7d0",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/cat-look/regions/cat-contact.png",
+      "sha256": "238c5a24ecfc05b0768b041ab76d836671a023c2a7faabe24330b9ccdaa4e2c1",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/cat-blink/context.png",
+      "sha256": "eb4d2444fd5d29a449b870e8e23ebe9aeaf5a831dc05904b08ff91bce86afa70",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/cat-blink/regions/portrait.png",
+      "sha256": "319df95f1eace95ae642b5cea4e91c86a60cb2ce411f4e0677cd7481eb676db5",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/cat-blink/regions/landscape.png",
+      "sha256": "7ac1bb547e72f466399e765eed749406a5eeda67a1d237cb614fa6c7d7cf793b",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/cat-blink/regions/cat-contact.png",
+      "sha256": "07b3baca4ebeaa81c99696169e90efe6095385c47ceaf65e3bb90fcc6ee2e020",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/cat-hidden/context.png",
+      "sha256": "f06c2aa306a750166c491dc109ede869e3f7ac2dfcb60bf707a80320502f76c7",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/cat-hidden/regions/portrait.png",
+      "sha256": "2347104ca53f19978151007fb97dc1f86995c13367b3d98023b12b6d9a3eb5c3",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/cat-hidden/regions/landscape.png",
+      "sha256": "5b6552df29aded8232d8b81d803caa03eb3f6e1ed2d6fa425fe719e0905612f0",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/cat-hidden/regions/cat-contact.png",
+      "sha256": "8195159e8fdb337326a5e7898715ff7f5c3383a3bcb60aa5d4c4ee13eb268271",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/cat-isolated/context.png",
+      "sha256": "9b0651688ac5d4082247290b39c2ee98f99ef1ab235830d6c88eca6e0d0961c6",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/cat-isolated/regions/portrait.png",
+      "sha256": "c7dff5946695eb5adb08fda691ba8c67b04df1bb483b572bf5e10c8c53e3fdcc",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/cat-isolated/regions/landscape.png",
+      "sha256": "0c19f98f665eaf36dfc36d70dcd9a6adc7ca4a6d6662421147f3e8eed9d053d7",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/cat-isolated/regions/cat-contact.png",
+      "sha256": "f801eaa3da566fb7721174c546b78aa74c56e5f4f7ef9728eb3919f60356b6e9",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/cottage-hidden/context.png",
+      "sha256": "d8087eabae0e691b282a8193631017915903466d80c28f2dd02878694a4cc65c",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/cottage-hidden/regions/portrait.png",
+      "sha256": "9c1dc79133dd553917792dfab7d5dc7da933a640fa5c998aa0ff868c8e2f8d52",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/cottage-hidden/regions/landscape.png",
+      "sha256": "fdaab595b985d9e2015d1da687853934e4b3b865ef926124636d6809429b3026",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/cottage-hidden/regions/cat-contact.png",
+      "sha256": "d3206126461eead3d6d3f6f290265c70d5708ab1932fabf3c105f841aed19a8e",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/cottage-isolated/context.png",
+      "sha256": "4351201a550340b70e903e24f5ba2e5d3b2d95e31678c46871749624cd05ca1a",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/cottage-isolated/regions/portrait.png",
+      "sha256": "c1fbc848ce4a1f35ffed7bbe64fdbd04e81b8f79d87a8550544637ead724f2ad",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/cottage-isolated/regions/landscape.png",
+      "sha256": "75ab0b8db1d1e7dd4265fd46f481357e4cf63a49ee522398baaa2a8eb598c817",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/cottage-isolated/regions/cat-contact.png",
+      "sha256": "a652bc6ed1d0e11a71687377cd7e9930840af51ed4825b46886f31bf53d937a7",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/chair-hidden/context.png",
+      "sha256": "a6a85138cc7157583493ddf88866730f8030cc596d483bf9af44bab89157342c",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/chair-hidden/regions/portrait.png",
+      "sha256": "540bbdb85e054e0fd3e402209eb90c418a422454983959d02c52c89404f60f78",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/chair-hidden/regions/landscape.png",
+      "sha256": "44464664db46b4999f81c79d4341f90242379558744013dcbf44e4be120843f6",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/chair-hidden/regions/cat-contact.png",
+      "sha256": "6b8397a19b5e1ee77a03ad8c73ae5921ab82597669ac932ff4601413be1edbf1",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/chair-isolated/context.png",
+      "sha256": "e4d3db64085e8e9c15dede7d74bb804d5f4a93a1a225c7ccc381372035b68867",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/chair-isolated/regions/portrait.png",
+      "sha256": "6ef3e1ec63f1ef6f7da227dd9cbfc08b2945acb7726073f448f20bbb9444f441",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/chair-isolated/regions/landscape.png",
+      "sha256": "898e8ed473c2199bb7ab773f78498ea0923dfe45ff064af4c9c46e79d27f708f",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/chair-isolated/regions/cat-contact.png",
+      "sha256": "48d947cad97e77aadf56df7cedb0686e63cabf64aff4d01c38dd68cb0177d17f",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/pumpkins-hidden/context.png",
+      "sha256": "d2f3a979481863ae4cdc643bd2bfb104d990da7bd5aa07897a9478d5072ede29",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/pumpkins-hidden/regions/portrait.png",
+      "sha256": "7f6431c9febf07eb7168df10d728607f9d87792814d2b57b682d17a04e31beea",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/pumpkins-hidden/regions/landscape.png",
+      "sha256": "1b1ce1bd2f2b8827eeaf5000ccd6be936e8efadd89c91c6c749f3256684555e6",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/pumpkins-hidden/regions/cat-contact.png",
+      "sha256": "6b8397a19b5e1ee77a03ad8c73ae5921ab82597669ac932ff4601413be1edbf1",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/pumpkins-isolated/context.png",
+      "sha256": "a9e7a95b1e76732a9cf5c658e4cfded0666daa47887e86fb07a9378bc9e8710a",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/pumpkins-isolated/regions/portrait.png",
+      "sha256": "8d08e125aac9b4b313d2a93fc54bded6f976f13ddf3a3893ba4ec6cbacbfacd1",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/pumpkins-isolated/regions/landscape.png",
+      "sha256": "c08a40398b8bbdfc817d72c72580763717a81ec9c94765ce354ea52207f54ea4",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/pumpkins-isolated/regions/cat-contact.png",
+      "sha256": "48d947cad97e77aadf56df7cedb0686e63cabf64aff4d01c38dd68cb0177d17f",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/lanterns-hidden/context.png",
+      "sha256": "19ffcf3276bccb9d1889ea31d34e4c60b9f303aaa847f359c611ae906aa9247b",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/lanterns-hidden/regions/portrait.png",
+      "sha256": "7e4bcd38a692b9aae617d716d612a8bb01cf339ae2c8754ea67fec89f544fa28",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/lanterns-hidden/regions/landscape.png",
+      "sha256": "28ce23876f908acc16df54f64441ea634fde6f7748c82a30644b2cb962debb70",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/lanterns-hidden/regions/cat-contact.png",
+      "sha256": "6b8397a19b5e1ee77a03ad8c73ae5921ab82597669ac932ff4601413be1edbf1",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/lanterns-isolated/context.png",
+      "sha256": "6e0d7362cbf60a3720c4437c9e71e1e61e7b93a0df17474ddca75ed2e9c04d6d",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/lanterns-isolated/regions/portrait.png",
+      "sha256": "ce0cf197a50d0975a477deb53d382f5acf7e4c62d0bdef61186c68abce85dd52",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/lanterns-isolated/regions/landscape.png",
+      "sha256": "0ec2f1fd3a1bf7918d6139929eff9795881583a6b3ea4bf16aa2418b15c2a592",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/lanterns-isolated/regions/cat-contact.png",
+      "sha256": "48d947cad97e77aadf56df7cedb0686e63cabf64aff4d01c38dd68cb0177d17f",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/planters-hidden/context.png",
+      "sha256": "d2ca5dd9e33c1a40fae435594ed6ccdd47796f2814103ec0e856f5a1be56758d",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/planters-hidden/regions/portrait.png",
+      "sha256": "ef9b639865b03c5b21fb5d21ec6459e2ebd92e1ebe6e9841c221a7f861ee4f6c",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/planters-hidden/regions/landscape.png",
+      "sha256": "79a82d296815646b433fcdb872648a9c420d9e452f76529924fd890bf8a93791",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/planters-hidden/regions/cat-contact.png",
+      "sha256": "be500086cf05c32874061fbcc77c8bcdf7043cc9af33647b44901634bd6ae705",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/planters-isolated/context.png",
+      "sha256": "edc0836262d5d3451efb8968e0da93ca24b1c70a7c702449697737ecab410a4d",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/planters-isolated/regions/portrait.png",
+      "sha256": "07b5a3f1c1813c21a56583f8610cbed0c1ea9a70c242cee137cff54c7cf4fef1",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/planters-isolated/regions/landscape.png",
+      "sha256": "88ecc790b55732f9e65d56152d7b3f76a42b0bd5d414d2acea9320c9ea087a59",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/planters-isolated/regions/cat-contact.png",
+      "sha256": "2fe47dfe586ba78cc5c04c322c9815d8cf1f2465bf74944af916fa6afdab579a",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/wreath-hidden/context.png",
+      "sha256": "86abe59e50bfd118ea7056d36070603f8c8a36de90283be5472294e2c9c3a59f",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/wreath-hidden/regions/portrait.png",
+      "sha256": "f1a1cdcb94b4d50e98f7bb1e92579e7228226ed3d3187694ba24d8935269d1c3",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/wreath-hidden/regions/landscape.png",
+      "sha256": "30bba330a695b6dac5ae9f7d8c3fdf055c996dcccad5424e6e314dbcbb6f733d",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/wreath-hidden/regions/cat-contact.png",
+      "sha256": "6b8397a19b5e1ee77a03ad8c73ae5921ab82597669ac932ff4601413be1edbf1",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/wreath-isolated/context.png",
+      "sha256": "b72456b6a9c3f4afaecb91706fe120f13b2d1786ee062853cdf794e29fbd786e",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/wreath-isolated/regions/portrait.png",
+      "sha256": "cf336a530a8cd9caec450b16bd98bd89b0dceb3e27fa3b41258fd92b98e0bf06",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/wreath-isolated/regions/landscape.png",
+      "sha256": "14cbcc12172872a82833c4b56c19691b89a9e59fb3dca79a6ff241569a7400c6",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/wreath-isolated/regions/cat-contact.png",
+      "sha256": "48d947cad97e77aadf56df7cedb0686e63cabf64aff4d01c38dd68cb0177d17f",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/tree-hidden/context.png",
+      "sha256": "079fb1b1fe25f8c474e95ca56432eb4e61f9cbadb45cc1ed2d5fb385bc142216",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/tree-hidden/regions/portrait.png",
+      "sha256": "8b37668885a7465cf4b1fff00e264dcb3963904d674883e012f73ea7dc50245f",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/tree-hidden/regions/landscape.png",
+      "sha256": "8d36e17838389d2e768034bfdb887fff1cbcc4923b297ed82026772ae6f7f0b6",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/tree-hidden/regions/cat-contact.png",
+      "sha256": "6b8397a19b5e1ee77a03ad8c73ae5921ab82597669ac932ff4601413be1edbf1",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/tree-isolated/context.png",
+      "sha256": "cbe7e77764d7a83037ce40e79fb84b022ffd5e3c6da55250caf6cf859a8846de",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/tree-isolated/regions/portrait.png",
+      "sha256": "c9afa27b63f1fb332bb23555be45b936cac05c13ac0f78dec8a9d4df2db5b0f5",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/tree-isolated/regions/landscape.png",
+      "sha256": "bd0d5e5ee5893c192b68c9af845e24f7d4f5f43b7f4f048e5be542a49c9685a4",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/tree-isolated/regions/cat-contact.png",
+      "sha256": "48d947cad97e77aadf56df7cedb0686e63cabf64aff4d01c38dd68cb0177d17f",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/fences-hidden/context.png",
+      "sha256": "28b0662a74e0504ac51196de6acb31f469661dc407710cf06209afa06145aff1",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/fences-hidden/regions/portrait.png",
+      "sha256": "27aa9c500e71b95381386ea0d50db37ef82b74084afc3aee496ad8cebb91f73f",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/fences-hidden/regions/landscape.png",
+      "sha256": "953847995aaf6cadba91e9dab65d1aeea0b57c60416f8fd05704eb88c65b7471",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/fences-hidden/regions/cat-contact.png",
+      "sha256": "6b8397a19b5e1ee77a03ad8c73ae5921ab82597669ac932ff4601413be1edbf1",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "samples/fences-isolated/context.png",
+      "sha256": "112c7416dd3c6ae58d1a65cbb0709da77719ecbd5b55875857ed367093fb6940",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "samples/fences-isolated/regions/portrait.png",
+      "sha256": "6ddf18c7e230b902f69d2531184e63220603a0220586496820dede189208f190",
+      "width": 405,
+      "height": 720
+    },
+    {
+      "file": "samples/fences-isolated/regions/landscape.png",
+      "sha256": "554e185faddf2f4f0683750693d2a6a8e64380c16b2d1d045cd7bbe63d6177a0",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "file": "samples/fences-isolated/regions/cat-contact.png",
+      "sha256": "48d947cad97e77aadf56df7cedb0686e63cabf64aff4d01c38dd68cb0177d17f",
+      "width": 96,
+      "height": 130
+    },
+    {
+      "file": "comparisons/cat-reveal/context.png",
+      "sha256": "fd17a1d89e5296c2354b1314cdf2958cf8d28adc0269af6efb33c98896038f6d",
+      "width": 1920,
+      "height": 720
+    },
+    {
+      "file": "comparisons/cat-reveal/regions/portrait.png",
+      "sha256": "7162aaa5819b8a2304a39f5e3ba15dd2757c5f503a4f166a2724ba2f993c3915",
+      "width": 810,
+      "height": 720
+    },
+    {
+      "file": "comparisons/cat-reveal/regions/landscape.png",
+      "sha256": "feb5754d93c252187fbcea59d95bdce78e90f32917bed7c9bb42000a0ca1adee",
+      "width": 1920,
+      "height": 540
+    },
+    {
+      "file": "comparisons/cat-reveal/regions/cat-contact.png",
+      "sha256": "f00db7e80603d1962a001d1920fc66076df3f1d607f2587f8901b871d635e439",
+      "width": 192,
+      "height": 130
+    },
+    {
+      "file": "comparisons/cat-reveal/difference.png",
+      "sha256": "7710f45b56d3dc563e0975abe04647b791d1d6faaeaf8f7d939567aae06069ec",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "comparisons/cat-extreme/context.png",
+      "sha256": "a2416013c6ab51693d03d76a1e8249ad3eac087340d2ad39f23868763c9957e2",
+      "width": 1920,
+      "height": 720
+    },
+    {
+      "file": "comparisons/cat-extreme/regions/portrait.png",
+      "sha256": "b6b98e95bf3dbd3ffed0293e31581c73332cdaca557250f8f5464b95825d60a6",
+      "width": 810,
+      "height": 720
+    },
+    {
+      "file": "comparisons/cat-extreme/regions/landscape.png",
+      "sha256": "3b781cf8de161848cdf88fa1a37d94e1aec4d7feb072cb77038a8de88fd4d7fc",
+      "width": 1920,
+      "height": 540
+    },
+    {
+      "file": "comparisons/cat-extreme/regions/cat-contact.png",
+      "sha256": "bae114c186d7c9d82117b33dc1926415e2df51fd8744d6303a4ca1e01c244bb9",
+      "width": 192,
+      "height": 130
+    },
+    {
+      "file": "comparisons/cat-extreme/difference.png",
+      "sha256": "b4971a5b22124bc704c4b218fbdd3c6e7d6795a8ce23984bab31562ca3624934",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "comparisons/house-backing/context.png",
+      "sha256": "59338c69ea60ae7ec596627b494518d20c60cd0eac77f4e8fab3aab85dfdb4aa",
+      "width": 1920,
+      "height": 720
+    },
+    {
+      "file": "comparisons/house-backing/regions/portrait.png",
+      "sha256": "0c71f4c147f1dafc71102cb7715a18ebba7f2efe86956ccfe6c73d61c523c0fe",
+      "width": 810,
+      "height": 720
+    },
+    {
+      "file": "comparisons/house-backing/regions/landscape.png",
+      "sha256": "dc9978235a4920eb4715ddc9e553d598664ec0365b5c9abe1490d4c600502a69",
+      "width": 1920,
+      "height": 540
+    },
+    {
+      "file": "comparisons/house-backing/regions/cat-contact.png",
+      "sha256": "781e0de9d33d1627a4f545edbaa9916cb02fc70cefa9b8c4a70e796ea3e80aa4",
+      "width": 192,
+      "height": 130
+    },
+    {
+      "file": "comparisons/house-backing/difference.png",
+      "sha256": "80d417fb548f5901ca640461af9aee3956c25d9199b47aa17510d90b446bb259",
+      "width": 960,
+      "height": 720
+    }
+  ],
+  "selected_samples": 21,
+  "full_loop_review_performed": false,
+  "output": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v4/index.html",
+  "output_sha256": "89efd88b92da435f060ead30ee5c4e743bf6232996b0e0e0b54abeb5895372ec",
+  "scene_loop_frames": 480,
+  "saved_sample_frames": 21,
+  "saved_playback_frames_per_variant": 0,
+  "saved_playback_frames_total": 0,
+  "rig_recipe": {
+    "resolved_path": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/plans/whole-object-proof-v3.json",
+    "path_base": "absolute",
+    "sha256": "fa4b9cef7b2fb1e782088429bba0febd032b092b03e2e2fa7acd20935683230b"
+  },
+  "inventory": {
+    "resolved_path": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/plans/asset-inventory.json",
+    "path_base": "project",
+    "bytes": 12364,
+    "sha256": "f2f1e2570b6fda4c1bc0694c2bba0f8c939590d2b8087a67faeb9021c93fa948"
+  },
+  "part_ids": [
+    "cat",
+    "cottage",
+    "chair",
+    "pumpkins",
+    "lanterns",
+    "planters",
+    "wreath",
+    "tree",
+    "fences"
+  ],
+  "check_scope": "Selected variant poses, optional targeted playback, plus endpoint measurement; no full-loop visual inspection",
+  "elapsed_seconds": 5.952,
+  "peak_rss_bytes": 323076096,
+  "resolved_path": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v4/index.html",
+  "path_base": "absolute",
+  "revision": null,
+  "report": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/render/whole-object-v4/render-report.json"
+}

@@ -1,0 +1,41 @@
+{
+  "scope": "In-memory transform diagnostic of copied v4 proof snapshot; no production scene saved",
+  "scene_sha256": "8eb218df757cafc43525a6d8e474b695c99b155dac3669f368f36c9a8b6018f7",
+  "catalog_sha256": "691f7603661465ea337f6f7f692c5957e6a901b814810c4f46ead3a2e5bff8b7",
+  "engine_sha256": "8e00118001ba38a3f3e2ffe38d84037b29beb7e3e2f3e80d09ed21b661af29ab",
+  "at_seconds": 0,
+  "edit": {
+    "layer": "lantern-step-low",
+    "x_delta_scene_px": 80
+  },
+  "result": [
+    {
+      "id": "lantern-step-low",
+      "origin_delta_px": [
+        79.99999999999989,
+        0
+      ]
+    },
+    {
+      "id": "lantern-step-low-flame",
+      "origin_delta_px": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "planter-left",
+      "origin_delta_px": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "lantern-step-low-receiver-path-paint",
+      "origin_delta_px": [
+        0,
+        0
+      ]
+    }
+  ]
+}
