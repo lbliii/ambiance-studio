@@ -20,14 +20,16 @@ def add_parsers(sub):
     q = group.add_parser('present'); q.add_argument('id'); q.add_argument('--by', required=True)
     q.add_argument('--note', default=''); q.add_argument('--channel', choices=['review', 'release'], default='review'); q.add_argument('--expect-selection')
     group = sub.add_parser('iteration', help='Produce and present a recorded local iteration').add_subparsers(dest='action', required=True)
+    q = group.add_parser('init'); q.add_argument('file', type=Path); q.add_argument('--out', type=Path, required=True)
+    q = group.add_parser('resolve'); q.add_argument('file', type=Path)
     q = group.add_parser('run'); q.add_argument('file', type=Path); q.add_argument('--by', required=True)
     q = group.add_parser('preflight'); q.add_argument('file', type=Path); q.add_argument('--stage', choices=['layout', 'assets', 'animation', 'export']); q.add_argument('--out', type=Path)
-    group.add_parser('list')
+    q = group.add_parser('list'); q.add_argument('--details', action='store_true'); q.add_argument('--limit', type=int, default=20); q.add_argument('--offset', type=int, default=0)
     q = group.add_parser('inspect'); q.add_argument('id')
-    group = sub.add_parser('feedback', help='Keep observations tied to exact movie versions').add_subparsers(dest='action', required=True)
-    q = group.add_parser('add'); q.add_argument('delivery'); q.add_argument('--role', choices=list(deliveries.ROLES), required=True)
-    q.add_argument('--view'); q.add_argument('--time', type=float, required=True); q.add_argument('--note', required=True); q.add_argument('--by', required=True)
-    q = group.add_parser('list'); q.add_argument('delivery')
+    q = group.add_parser('cancel'); q.add_argument('id'); q.add_argument('--expect-run', required=True)
+    q = group.add_parser('reconcile'); q.add_argument('id')
+    from . import feedback
+    feedback.add_parsers(sub.add_parser('feedback', help='Version-bound reports and dispositions').add_subparsers(dest='action', required=True))
 
 
 def run_file(project, id):
@@ -63,7 +65,8 @@ def link_delivery(data, alias, base_url):
     return data
 
 
-def overview(project, alias, base_url, fingerprints=None, readiness_options=None):
+def overview(project, alias, base_url, fingerprints=None, readiness_options=None, details=False):
+    fingerprints = fingerprints or deliveries.Fingerprints()
     selected = deliveries.latest(project, fingerprints=fingerprints)
     history = deliveries.listing(project, fingerprints)
     selected['delivery'] = link_delivery(selected.get('delivery'),alias,base_url)
@@ -100,6 +103,7 @@ def overview(project, alias, base_url, fingerprints=None, readiness_options=None
     except (OSError, ValueError, KeyError, TypeError) as error:
         errors.append('Review status unavailable: '+str(error))
     from . import planning
+    inventory = {}
     try:
         inventory = planning.inspect(project)
         ready = [{'id': item['id'], 'action': item['next_action']} for item in planning.ready_work(inventory)['ready']]
@@ -111,15 +115,21 @@ def overview(project, alias, base_url, fingerprints=None, readiness_options=None
         framing = views.project_summary(project)
     except (OSError, ValueError, KeyError, TypeError, CommandError) as error:
         framing = {'ok': False, 'errors': [str(error)]}
-    return {'ok': True, 'project': alias, 'current_url': f'{base_url}/projects/{alias}',
+    run_rows = runs(project)
+    result = {'ok': True, 'project': alias, 'current_url': f'{base_url}/projects/{alias}',
             'current': selected, 'release': deliveries.latest(project, 'release', fingerprints),
             'history': history, 'working': working, 'open_checks': checks, 'ready_work': ready,
-            'inventory_errors': inventory_errors, 'errors': errors, 'runs': runs(project)[:10],
+            'inventory_errors': inventory_errors, 'errors': errors, 'runs': run_rows, 'runs_total': len(run_rows),
+            'active_unmapped_asset_ids': inventory.get('active_unmapped_asset_ids', []),
+            'retained_unmapped_asset_ids': inventory.get('retained_unmapped_asset_ids', []),
             'entry_checks':entry_checks,
             'release_ready': bool(entry_checks) and all(item['release_ready'] for item in entry_checks.values()) and
                              (not current_data.get('production_scope', {}).get('enforced') or current_data['production_scope']['ready']) if current_data else gates['release_ready'] if gates else False,
             'check_subject': gates['subject'] if gates else None, 'framing': framing,
             'production_readiness': production_readiness(project, **(readiness_options or {}))}
+    if details: return result
+    from .production_queries import summarize
+    return summarize(project, result)
 
 
 def production_readiness(project, **kwargs):
@@ -240,15 +250,18 @@ def view_job_plan(project, recipe, directory, state):
 
 
 
-def iteration(project, recipe, actor):
+def iteration(project, recipe, actor, *, present=True):
     from .cli import parser, run
     from .project import project_lock
+    from . import run_control
+    import uuid
     validate_recipe(recipe)
     if not isinstance(actor,str) or not actor.strip():raise ValueError('Identify who runs this iteration with --by')
     id = recipe['id']; path = run_file(project, id); directory = path.parent
     with project_lock(project):
         if path.exists():
             state = studio.read(path)
+            if state.get('present', True) != present: raise ValueError('Run presentation mode changed; use a new iteration ID')
             if state['recipe'] != recipe:
                 raise ValueError('Run recipe changed; choose a new iteration ID')
             if state['state'] == 'complete':
@@ -260,20 +273,34 @@ def iteration(project, recipe, actor):
                 readiness = production_readiness(project, stage='export', revision=recipe['revision'])
                 return {'ok': recipe.get('scope') != 'final' or readiness['ready'], 'run': state, 'reused': True, 'production_readiness': readiness}
             if (directory/'active.lock').exists():
-                try:os.kill(state['pid'],0)
-                except ProcessLookupError:(directory/'active.lock').unlink()
-                except (PermissionError,KeyError):raise ValueError('Run lock owner cannot be verified; inspect its recorded process')
-                else:raise ValueError('Run is active; only one coordinator may write its state')
+                if run_control.live_children(project, state): raise ValueError('Owned children remain; cancel/reconcile this run before resume')
+                if run_control.owner_state(state) != 'absent':
+                    raise ValueError('Run owner is present or unverified; inspect before resuming')
+                lock = directory/'active.lock'
+                if lock.read_text().strip() and studio.read(lock).get('run_uuid') != state.get('run_uuid'):
+                    raise ValueError('Run lock identity differs')
+                lock.unlink()
+
         else:
             directory.mkdir(parents=True, exist_ok=False)
             state = {'id': id, 'recipe': recipe, 'started_utc': deliveries.now(),
                      'expected_selection': deliveries.selection_token(project), 'steps': {}, 'attempts': {}}
         fd = os.open(directory/'active.lock', os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
         os.close(fd)
-        state.update(state='running', pid=os.getpid(), updated_utc=deliveries.now(), error=None)
+        state.update(state='running', present=present, run_uuid=uuid.uuid4().hex, owner=run_control.identity(os.getpid()), pid=os.getpid(), updated_utc=deliveries.now(), error=None)
+        studio.write(directory/'active.lock', {'run_uuid': state['run_uuid'], 'owner': state['owner']})
         studio.write(path, state)
+    tracker = run_control.Tracker(project, state)
+    try: tracker.__enter__()
+    except BaseException as error:
+        state.update(state='failed', error=str(error)); studio.write(path, state)
+        lock = directory/'active.lock'
+        if lock.exists() and studio.read(lock).get('run_uuid') == state['run_uuid']: lock.unlink()
+        raise
     start = time.monotonic()
     def save(stage):
+        tracker.update({'phase': stage})
+        if stage not in ['interrupted', 'failed', 'complete']: tracker.check_cancel()
         state.update(stage=stage, updated_utc=deliveries.now(), elapsed_seconds=time.monotonic()-start)
         studio.write(path, state)
     def step(name, arguments):
@@ -303,7 +330,8 @@ def iteration(project, recipe, actor):
             for item in receipt['dependencies']:
                 if not deliveries.intact(project, item)['ok']:
                     raise ValueError('Recorded edition changed while the run was interrupted')
-            state['steps'][name] = {'result': result, 'outputs': outputs}; save(name)
+            from .production_queries import saved_step_result
+            state['steps'][name] = {'result': saved_step_result(result), 'outputs': outputs}; save(name)
             return result
         attempt = state['attempts'].get(name, 0)+1
         state['attempts'][name] = attempt
@@ -318,7 +346,8 @@ def iteration(project, recipe, actor):
         if result.get('edition'):
             files.append(result['edition']['receipt'])
         outputs = [deliveries.reference(project, revisions.relative(project, file)) for file in files]
-        state['steps'][name] = {'result': result, 'outputs': outputs, 'elapsed_seconds':time.monotonic()-step_started}; save(name)
+        from .production_queries import saved_step_result
+        state['steps'][name] = {'result': saved_step_result(result), 'outputs': outputs, 'elapsed_seconds':time.monotonic()-step_started}; save(name)
         return result
     try:
         if recipe.get('capture_selection'):
@@ -396,7 +425,7 @@ def iteration(project, recipe, actor):
             deliveries.register(project, declaration)
         state['production_readiness'] = record_iteration_scope(project, recipe, declaration)
         save('present')
-        selected = deliveries.present(project, id, actor, recipe.get('notes', ''), expected=state['expected_selection'])
+        selected = deliveries.present(project, id, actor, recipe.get('notes', ''), expected=state['expected_selection']) if present else {'selection': None}
         state.update(state='complete', selection=selected['selection'], finished_utc=deliveries.now())
         save('complete')
         complete = recipe.get('scope') != 'final' or state['production_readiness']['ready']
@@ -407,7 +436,9 @@ def iteration(project, recipe, actor):
         save(state['state'])
         raise
     finally:
-        (directory/'active.lock').unlink(missing_ok=True)
+        tracker.__exit__(None, None, None)
+        lock = directory/'active.lock'
+        if lock.exists() and studio.read(lock).get('run_uuid') == state['run_uuid']: lock.unlink()
 
 
 def run_command(args, project):
@@ -422,15 +453,32 @@ def run_command(args, project):
             return handoff(project, args.id, args.out)
         return deliveries.present(project, args.id, args.by, args.note, args.channel, args.expect_selection)
     if args.command == 'iteration':
+        if args.action == 'resolve':
+            from .recipe_config import read, resolve
+            return resolve(project, read(args.file))
+        if args.action in ['cancel', 'reconcile']:
+            from . import run_control
+            return run_control.cancel(project, args.id, args.expect_run) if args.action == 'cancel' else run_control.reconcile(project, args.id)
+        if args.action == 'init':
+            from .iteration_recipes import initialize
+            from .recipe_config import read
+            return initialize(project, read(args.file), args.out)
         if args.action == 'preflight': return iteration_preflight(project, studio.read(args.file), args.stage)
         if args.action == 'run':
             return iteration(project, studio.read(args.file), args.by)
         if args.action == 'inspect':
-            return {'ok': True, 'run': studio.read(run_file(project, args.id))}
-        return {'ok': True, 'runs': runs(project)}
-    if args.action == 'add':
-        return deliveries.feedback(project, args.delivery, args.role, args.time, args.note, args.by, args.view)
-    return {'ok': True, 'feedback': deliveries.feedback_list(project, args.delivery)}
+            from .run_control import effective
+            row = studio.read(run_file(project, args.id))
+            return {'ok': True, 'run': row, **effective(row, project)}
+        from .production_queries import run_summary
+        if not 1 <= args.limit <= 1000 or args.offset < 0: raise ValueError('Run list needs limit 1–1000 and a nonnegative offset')
+        rows = runs(project); selected = rows[args.offset:args.offset+args.limit]
+        return {'ok': True, 'runs': selected if args.details else [run_summary(row, project) for row in selected],
+                'total': len(rows), 'omitted': max(0, len(rows)-args.offset-args.limit),
+                'next_offset': args.offset+args.limit if args.offset+args.limit < len(rows) else None,
+                'details': 'iteration inspect ID or iteration list --details'}
+    from . import feedback
+    return feedback.run(args, project)
 
 
 def handoff(project, id, out, alias=None, base_url='http://127.0.0.1:8783'):

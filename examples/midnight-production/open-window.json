@@ -1,0 +1,111 @@
+{
+  "format": "ambiance-production-plan",
+  "schema_version": 1,
+  "story": {
+    "premise": "An explicitly open casement admits a light intermittent draft into the reading room.",
+    "direction": "A small lower hem lifts near the visible opening, then settles for long intervals. Keep upper attachments fixed and cloth secondary to the fire."
+  },
+  "sources": [],
+  "elements": [
+    {
+      "id": "curtain",
+      "kind": "prop",
+      "depth_band": "midground",
+      "motion_role": "ambient",
+      "cadence": "occasional",
+      "readability_target": 1,
+      "origin": "proposed",
+      "purpose": "The visible open casement and shared direction of outdoor wind establish the cause. More movement still needs a composition judgment.",
+      "source_ids": [],
+      "action_ids": [
+        "cloth-presence"
+      ],
+      "realization": {
+        "method": "cutout",
+        "inventory_parts": [
+          {
+            "item_id": "cloth",
+            "part_id": "cutout"
+          }
+        ],
+        "layer_ids": [
+          "curtain"
+        ]
+      },
+      "required_art": [
+        {
+          "id": "cloth-cutout",
+          "role": "cutout",
+          "purpose": "Preserve the painted curtain and its fixed support.",
+          "inventory_part": {
+            "item_id": "cloth",
+            "part_id": "cutout"
+          }
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "cloth-presence",
+      "element_id": "curtain",
+      "description": "A small lower hem lifts near the visible opening, then settles for long intervals. Keep upper attachments fixed and cloth secondary to the fire.",
+      "method": "Explicit held or source-registered painted cel choices",
+      "layer_ids": [
+        "curtain"
+      ],
+      "targets": [
+        {
+          "view_id": "portrait",
+          "readability_target": 1
+        },
+        {
+          "view_id": "landscape",
+          "readability_target": 1
+        }
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "view_id": "portrait",
+      "roles": [
+        "silent"
+      ]
+    },
+    {
+      "view_id": "landscape",
+      "roles": [
+        "silent"
+      ]
+    }
+  ],
+  "relations": [],
+  "expectations": [
+    {
+      "id": "cloth-emphasis",
+      "rationale": "The visible open casement and shared direction of outdoor wind establish the cause. More movement still needs a composition judgment.",
+      "direction": "A small lower hem lifts near the visible opening, then settles for long intervals. Keep upper attachments fixed and cloth secondary to the fire.",
+      "stage": "animation",
+      "view_ids": [
+        "portrait",
+        "landscape"
+      ],
+      "element_ids": [
+        "curtain"
+      ],
+      "action_ids": [
+        "cloth-presence"
+      ],
+      "relation_ids": [],
+      "requirement": {
+        "type": "observed",
+        "check": "composition"
+      }
+    }
+  ],
+  "change": {
+    "reason": "Authored open-window direction example; required visual cues are part of the brief, not observed evidence.",
+    "supersedes_sha256": null
+  }
+}

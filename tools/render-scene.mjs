@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Rasterize through the exact engine used by the browser. Python owns CLI options.
 import fs from 'node:fs/promises';
+import {writeSync} from 'node:fs';
 import {resizeSceneCanvas,planViews,canonicalView} from '../editor/views.mjs';
 import {createStageRenderer} from '../editor/stage-raster.mjs';
 import {viewsProofPage} from './views-proof.mjs';
@@ -20,6 +21,15 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const require=createRequire(import.meta.url);
 const sha=data=>createHash('sha256').update(data).digest('hex');
 
+const children=new Set();let lastProgress=0;
+function progress(event,force=false){
+  const fd=Number(process.env.AMBIANCE_PROGRESS_FD);if(!process.env.AMBIANCE_PROGRESS_FD||!Number.isInteger(fd))return;
+  if(!force&&Date.now()-lastProgress<500)return;lastProgress=Date.now();
+  try{writeSync(fd,JSON.stringify(event)+'\n');}catch{}
+}
+function own(child){children.add(child);child.once('close',()=>children.delete(child));return child;}
+for(const sig of ['SIGTERM','SIGINT'])process.on(sig,()=>{for(const child of children)if(child.exitCode===null)child.kill('SIGTERM');process.exitCode=130;setTimeout(()=>process.exit(130),100).unref();});
+
 function canvasRuntime(){
   const override=process.env.AMBIANCE_CANVAS_MODULE;
   const candidates=override?[override]:['@napi-rs/canvas',path.join(os.homedir(),'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/@napi-rs/canvas')];
@@ -33,7 +43,8 @@ function finite(value,name){if(!Number.isFinite(value))throw Error(`${name} must
 function difference(a,b){let sum=0,max=0;for(let i=0;i<a.length;i++)if(i%4!==3){const d=Math.abs(a[i]-b[i]);sum+=d;max=Math.max(max,d);}return {rgb_mean_absolute_difference:sum/(a.length/4*3),rgb_max_difference:max};}
 function gcd(a,b){return b?gcd(b,a%b):a;}
 async function native(binary,args){
-  const child=spawn(binary,args.map(String),{stdio:['ignore','pipe','pipe']});let stdout='',stderr='';child.stdout.on('data',b=>stdout+=b);child.stderr.on('data',b=>stderr+=b);
+  progress({phase:'native-'+args[0],completed_frames:null,expected_frames:null},true);
+  const child=own(spawn(binary,args.map(String),{stdio:['ignore','pipe','pipe']}));let stdout='',stderr='';child.stdout.on('data',b=>stdout+=b);child.stderr.on('data',b=>stderr+=b);
   const code=await new Promise((resolve,reject)=>{child.on('error',reject);child.on('close',resolve);});
   let result;try{result=JSON.parse(stdout);}catch{throw Error(`Native media command failed (${code}): ${stderr||stdout}`);}
   if(code!==0)throw Error(`Native media command failed (${code}): ${stderr}`);return result;
@@ -47,6 +58,7 @@ function htmlProof(files,fps,width,height,disabled,labels=null){
 <script>const config=${payload};const panes=document.querySelector('#panes'),status=document.querySelector('#status'),seek=document.querySelector('#seek'),play=document.querySelector('#play');let playing=true,current=0,base=0,last=performance.now();const views=config.files.map((list,i)=>{const f=document.createElement('figure'),label=document.createElement('figcaption'),c=document.createElement('canvas');c.width=config.width;c.height=config.height;label.textContent=config.labels?.[i]??(i?'Disabled: '+config.disabled.join(', '):'Current scene');f.append(label,c);panes.append(f);return {ctx:c.getContext('2d'),images:list.map(src=>{const image=new Image();image.src=src;return image;})};});seek.max=config.files[0].length-1;function draw(n){for(const v of views)v.ctx.drawImage(v.images[n],0,0);seek.value=n;status.textContent=(n/config.fps).toFixed(2)+' s · frame '+n;}Promise.all(views.flatMap(v=>v.images.map(i=>i.decode()))).then(()=>{play.disabled=false;last=performance.now();draw(0);function tick(now){if(playing){base+=Math.max(0,now-last)/1000*Number(document.querySelector('#speed').value);current=Math.floor(base*config.fps)%config.files[0].length;draw(current);}last=now;requestAnimationFrame(tick);}requestAnimationFrame(tick);}).catch(e=>{status.textContent='Could not load proof frames: '+e.message;});play.onclick=()=>{playing=!playing;play.textContent=playing?'Pause':'Play';};seek.oninput=()=>{playing=false;play.textContent='Play';current=Number(seek.value);base=current/config.fps;draw(current);};</script></html>`;
 }
 async function main(){
+  const initializationStarted=performance.now();
   const runtime=canvasRuntime();
   if(process.argv.includes('--probe'))return {ok:true,module:runtime.module,version:runtime.version,node:process.version};
   let input='';for await(const chunk of process.stdin)input+=chunk;const request=JSON.parse(input);
@@ -74,7 +86,7 @@ async function main(){
   const compiled=compileScene(scene,catalog),fps=scene.canvas.fps,loopFrames=fps*scene.canvas.loop_seconds;
   if(!scene.layers.length)throw Error('Cannot render an empty scene');
   const start=finite(request.start??0,'start');if(start<0)throw Error('start must be nonnegative');
-  const mode=request.mode;if(!['frame','proof','rig-proof','look-proof','video','views-proof'].includes(mode))throw Error('Unknown render mode');
+  const mode=request.mode;if(!['frame','proof','rig-proof','look-proof','video','views-proof','benchmark'].includes(mode))throw Error('Unknown render mode');
   if(mode==='views-proof'&&!viewPlan)throw Error('Paired proof requires explicit views');
   if(viewPlan&&['rig-proof','look-proof'].includes(mode))throw Error('Named views cannot be combined with rig/look matrices');
   if(viewPlan&&mode!=='views-proof'&&viewPlan.views.length!==1)throw Error('Select one view for a single-output render');
@@ -150,6 +162,16 @@ async function main(){
     report.rig_recipe={resolved_path:request.rig_recipe_path,path_base:'absolute',sha256:request.rig_recipe_sha256};
     report.inventory=request.inventory_identity??null;report.part_ids=request.rig_recipe.part_ids??[];
     report.full_loop_review_performed=false;report.check_scope='Selected variant poses, optional targeted playback, plus endpoint measurement; no full-loop visual inspection';
+  }else if(mode==='benchmark'){
+    const times=request.sample_times;if(!Array.isArray(times)||times.length<3||times.length>20||times.some(t=>!Number.isFinite(t)||t<0||t>=scene.canvas.loop_seconds))throw Error('Invalid benchmark sample times');
+    report.benchmark={initialization_seconds:(performance.now()-initializationStarted)/1000,samples:[]};
+    for(const [index,time] of times.entries()){
+      const before=performance.now();render(time);const elapsed=(performance.now()-before)/1000;
+      const name=`sample-${String(index).padStart(2,'0')}.png`;await fs.writeFile(path.join(out,name),canvas.toBuffer('image/png'));
+      report.benchmark.samples.push({time,render_seconds:elapsed,file:name});
+      progress({phase:'benchmark',completed_frames:index+1,expected_frames:times.length},true);
+    }
+    report.output=path.join(out,'sample-00.png');report.output_sha256=sha(await fs.readFile(report.output));
   }else if(mode==='frame'){
     render(start);const bytes=canvas.toBuffer('image/png');await fs.writeFile(path.join(out,'frame.png'),bytes);report.output=path.join(out,'frame.png');report.output_sha256=sha(bytes);
   }else if(mode==='views-proof'){
@@ -181,11 +203,13 @@ async function main(){
     const bitrate=request.bitrate??Math.max(300000,Math.round(12000000*width*height/(1080*1920)));
     if(!Number.isInteger(bitrate)||bitrate<1000)throw Error('bitrate must be a positive integer >= 1000');
     const intermediate=path.join(out,'preroll-and-picture.mp4'),video=path.join(out,'picture.mp4');
-    const child=spawn(nativePath,['encode',intermediate,width,height,fps,encodedFrames,bitrate,'rgba',gcd(loopFrames,fps*2)].map(String),{stdio:['pipe','pipe','pipe']});
+    const child=own(spawn(nativePath,['encode',intermediate,width,height,fps,encodedFrames,bitrate,'rgba',gcd(loopFrames,fps*2)].map(String),{stdio:['pipe','pipe','pipe']}));
+    progress({phase:'render-encode',completed_frames:0,expected_frames:encodedFrames,preroll_frames:prerollFrames,encoded_frames:0},true);
     let stdout='',stderr='',stdinError;child.stdout.on('data',b=>stdout+=b);child.stderr.on('data',b=>stderr+=b);child.stdin.on('error',e=>stdinError=e);
     const done=new Promise((resolve,reject)=>{child.on('error',reject);child.on('close',code=>code===0?resolve():reject(Error(`Native encoder failed (${code}): ${stderr}`)));});done.catch(()=>{});
     try{for(let frame=0;frame<encodedFrames;frame++){
       render(start+(frame-prerollFrames)/fps);
+      progress({phase:'render-encode',completed_frames:frame+1,expected_frames:encodedFrames,preroll_frames:prerollFrames,encoded_frames:Math.max(0,frame+1-prerollFrames)},frame+1===encodedFrames);
       if(stdinError)throw stdinError;
       if(!child.stdin.write(canvas.data()))await Promise.race([once(child.stdin,'drain'),done.then(()=>{throw Error('Encoder exited before consuming all frames');})]);
     }

@@ -64,3 +64,5 @@ Reuse the identical command and add `--resume`. A completed receipt is verified 
 ## Sound cues
 
 See [audio sessions](AUDIO-SESSION.md). `audio cue-bind` preserves the original session and writes a derivative containing exact picture-action/cue anchors. `audio cue-check` identifies changed, deleted, retimed or repeated picture actions, changed loop lengths, retimed clips and changed selected PCM/source identities. A full-loop activity receipt at every production frame is required. View changes alone preserve shared cue identity when action state and clock remain identical. Retiming and listening stay explicit.
+
+[Cel comparison recipe version 2](MIDNIGHT-OPERATIONS.md) adds explicit held poses and compatible registered cel alternatives at unchanged geometry. Per-cel companions and crop changes require coordinated preparation.

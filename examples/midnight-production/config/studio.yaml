@@ -1,0 +1,15 @@
+format: ambiance-iteration-layer
+schema_version: 1
+values:
+  render:
+    long_edge: 128
+recipe:
+  format: ambiance-iteration-request
+  schema_version: 1
+  id: {$value: take}
+  revision: {$value: take}
+  scope: proof
+  long_edge: {$value: render.long_edge}
+  views: [portrait, landscape]
+  default: {view: portrait, role: silent}
+  editions: [{role: silent}]

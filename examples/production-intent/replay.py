@@ -54,7 +54,7 @@ def replay(destination, native=False):
             'views':['portrait','landscape'],'editions':[{'role':'silent'}],'default':{'view':'portrait','role':'silent'}}
     write(project/'plans/iteration.json',recipe)
     before=run('plan','coverage',expected=1)
-    overview=run('project','overview')['production_readiness']
+    overview=run('project','overview','--details')['production_readiness']
     preflight=run('iteration','preflight',project/'plans/iteration.json',expected=1)['readiness']
     ids=lambda r:[row['id'] for row in r['blocked']]
     if not ids(before)==ids(overview)==ids(preflight):raise AssertionError('Readiness consumers disagree')
@@ -65,7 +65,7 @@ def replay(destination, native=False):
     for view in ['portrait','landscape']:
         evidence.append(run('plan','evidence','pixels','--view',view,'--revision','v1','--receipt','render/paired/render-report.json'))
     after=run('plan','coverage','--revision','v1')
-    overview=run('project','overview','--revision','v1')['production_readiness']
+    overview=run('project','overview','--details','--revision','v1')['production_readiness']
     preflight=run('iteration','preflight',project/'plans/iteration.json')['readiness']
     if not after['ready'] or not ids(after)==ids(overview)==ids(preflight):raise AssertionError('Captured readiness consumers disagree')
     export=run('plan','coverage','--stage','export','--revision','v1',expected=1)

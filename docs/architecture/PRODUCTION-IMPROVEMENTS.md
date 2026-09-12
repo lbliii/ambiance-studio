@@ -4,6 +4,8 @@ Consolidated September 11, 2026 from the A Quieter Tomorrow reviews. This is an 
 
 For the subsequently shipped interfaces and executable validation path, use the [integration handoff](PRODUCTION-INTEGRATION-HANDOFF.md) and [capability index](../CAPABILITIES.json). The starting-point table below preserves historical evidence; it is not the current capability inventory.
 
+The [Midnight Reading Room implementation design](MIDNIGHT-PRODUCTION-DESIGN.md) adds motivated-motion comparisons, ordinary feedback, compact next-work reporting, authoring operations, review packets, and measured run control. Its MRR tasks extend the same YAML backlog without resetting the completed foundation or unperformed pilot criteria.
+
 ## Outcome and failure to correct
 
 Given a seed, an agent should survey the whole scene, identify story opportunities, plan portrait and landscape compositions, prepare independent art and hidden surfaces, assemble readable motion and connected light, inspect the actual result, then produce exact, reviewable movies. Good source fidelity and technical correctness must coexist with noticeable, well-paced animation.

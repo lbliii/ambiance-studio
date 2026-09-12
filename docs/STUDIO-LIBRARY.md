@@ -95,3 +95,5 @@ The stable entry ID is `VIEW.ROLE`, for example `portrait.score`. Exact watch li
 ./ambiance --project film feedback add take-2 --view landscape --role score --time 6.2 \
   --by "Viewer name" --note "The left edge needs more room."
 ```
+
+Early paired packets, untimed feedback, bounded summaries, layered recipe initialization and reversible cleanup are documented in [production operations](MIDNIGHT-OPERATIONS.md). Packet creation preserves the selected review.

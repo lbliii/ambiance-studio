@@ -1,0 +1,7 @@
+format: ambiance-iteration-layer
+schema_version: 1
+values:
+  render:
+    long_edge: 320
+recipe:
+  notes: Shared project framing and draft size; artistic observations remain open.

@@ -73,7 +73,7 @@ class ViewDeliveryTests(unittest.TestCase):
 
     def test_overview_and_handoff_keep_each_view_review_separate(self):
         deliveries.register(self.p,self.declaration());deliveries.present(self.p,'pair','Fixture')
-        result=production.overview(self.p,'film','http://127.0.0.1:8783')
+        result=production.overview(self.p,'film','http://127.0.0.1:8783',details=True)
         self.assertEqual(set(result['entry_checks']),{'portrait.score','landscape.score'})
         self.assertFalse(result['release_ready'])
         latest=cli.run(cli.parser().parse_args(['--registry',str(self.http.registry),'--project','film','project','latest']))
@@ -125,7 +125,7 @@ class ViewDeliveryTests(unittest.TestCase):
         before=state['steps']['portrait.picture.silent']['outputs']
         # A dead coordinator lock is recoverable; a live coordinator is not displaced.
         (path.parent/'active.lock').touch();state['pid']=os.getpid();studio.write(path,state)
-        with self.assertRaisesRegex(ValueError,'Run is active'):production.iteration(self.p,recipe,'Fixture')
+        with self.assertRaisesRegex(ValueError,'Run owner is present or unverified'):production.iteration(self.p,recipe,'Fixture')
         with patch.object(production.os,'kill',side_effect=ProcessLookupError), patch.object(cli,'run',wraps=original) as resumed:
             result=production.iteration(self.p,recipe,'Fixture')
         self.assertTrue(result['ok']);self.assertEqual(resumed.call_count,2)

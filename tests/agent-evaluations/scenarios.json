@@ -1,15 +1,155 @@
 {
   "format": "ambiance-agent-scenarios",
   "schema_version": 1,
-  "replay": {"entry_point": "examples/workflow-replay/run.py", "kind": "artifact-only-public-cli-replay"},
+  "replay": {
+    "entry_point": "examples/workflow-replay/run.py",
+    "kind": "artifact-only-public-cli-replay"
+  },
   "scenarios": [
-    {"id": "TRIAL-TRAM-SCOPE", "state": "not-run", "brief": "A quiet tram scene with early readable passenger action, passing environment and both compositions.", "seed": "An authorized unfamiliar tram-shaped seed supplied at trial time; no private film is a CI input.", "expected": ["canonical semantic plan", "independent action and hidden backing", "paired normal-speed picture proofs", "explicit incomplete scope and recovery records"], "observer": null, "observations": []},
-    {"id": "TRIAL-NEARLY-STILL", "state": "not-run", "brief": "An explicitly nearly-still, single-format non-Halloween scene; preserve that direction.", "seed": "An authorized unfamiliar non-Halloween seed supplied at trial time.", "expected": ["single requested output overrides defaults", "deliberate stillness recorded", "no invented extra motion requirement", "exact normal-speed observations"], "observer": null, "observations": []},
-    {"id": "TRIAL-PAINTED-LIGHT", "state": "not-run", "brief": "A moving or dimming painted source controls a registered receiver response in both requested views.", "seed": "An authorized source/receiver seed supplied at trial time.", "expected": ["independent source, driver and receiver relations", "low/high/off and loop-join proofs", "no orphan response when source hides", "source-backed artistic integration observations"], "observer": null, "observations": []}
+    {
+      "id": "TRIAL-TRAM-SCOPE",
+      "state": "not-run",
+      "brief": "A quiet tram scene with early readable passenger action, passing environment and both compositions.",
+      "seed": "An authorized unfamiliar tram-shaped seed supplied at trial time; no private film is a CI input.",
+      "expected": [
+        "canonical semantic plan",
+        "independent action and hidden backing",
+        "paired normal-speed picture proofs",
+        "explicit incomplete scope and recovery records"
+      ],
+      "observer": null,
+      "observations": []
+    },
+    {
+      "id": "TRIAL-NEARLY-STILL",
+      "state": "not-run",
+      "brief": "An explicitly nearly-still, single-format non-Halloween scene; preserve that direction.",
+      "seed": "An authorized unfamiliar non-Halloween seed supplied at trial time.",
+      "expected": [
+        "single requested output overrides defaults",
+        "deliberate stillness recorded",
+        "no invented extra motion requirement",
+        "exact normal-speed observations"
+      ],
+      "observer": null,
+      "observations": []
+    },
+    {
+      "id": "TRIAL-PAINTED-LIGHT",
+      "state": "not-run",
+      "brief": "A moving or dimming painted source controls a registered receiver response in both requested views.",
+      "seed": "An authorized source/receiver seed supplied at trial time.",
+      "expected": [
+        "independent source, driver and receiver relations",
+        "low/high/off and loop-join proofs",
+        "no orphan response when source hides",
+        "source-backed artistic integration observations"
+      ],
+      "observer": null,
+      "observations": []
+    },
+    {
+      "id": "MRR-SHELTERED",
+      "state": "not-run",
+      "brief": "Supplied sheltered reading room with reported excessive curtain movement.",
+      "seed": "Supplied local art and explicit scenario direction. See the contextual implementation pilot separately.",
+      "expected": [
+        "compare current/held/restrained cels",
+        "keep justified fire/steam/outdoor motion",
+        "no invented wind or curse"
+      ],
+      "observer": null,
+      "observations": []
+    },
+    {
+      "id": "MRR-OPEN-WINDOW",
+      "state": "not-run",
+      "brief": "Supplied authored open-casement premise with visible airflow cues.",
+      "seed": "Supplied local art and explicit scenario direction. See the contextual implementation pilot separately.",
+      "expected": [
+        "recognize established physical cause",
+        "keep cloth subordinate and attachments fixed",
+        "review strength/frequency independently"
+      ],
+      "observer": null,
+      "observations": []
+    },
+    {
+      "id": "MRR-HAUNTING",
+      "state": "not-run",
+      "brief": "Supplied story already establishes an uncanny cue and coordinated cloth action.",
+      "seed": "Supplied local art and explicit scenario direction. See the contextual implementation pilot separately.",
+      "expected": [
+        "advance the established premise",
+        "do not infer haunting from a defect",
+        "quiet rest between events"
+      ],
+      "observer": null,
+      "observations": []
+    },
+    {
+      "id": "MRR-UNTIMED",
+      "state": "not-run",
+      "brief": "A report identifies the delivery but no movie orientation or timestamp.",
+      "seed": "Supplied local art and explicit scenario direction. See the contextual implementation pilot separately.",
+      "expected": [
+        "retain original uncertainty",
+        "add delivery-scoped feedback",
+        "exact resolution and reopening evidence"
+      ],
+      "observer": null,
+      "observations": []
+    },
+    {
+      "id": "MRR-INTERRUPTED",
+      "state": "not-run",
+      "brief": "Interrupt a paired run while render/verify/compose is active.",
+      "seed": "Supplied local art and explicit scenario direction. See the contextual implementation pilot separately.",
+      "expected": [
+        "verify owned process before signaling",
+        "retain completed step identities",
+        "resume without changing selected review"
+      ],
+      "observer": null,
+      "observations": []
+    }
   ],
-  "authority": {"network": false, "paid_generation": false, "publish": false, "account_changes": false, "private_assets": false},
-  "resource_bounds": {"trial_launch": "Explicit, one-shot authorization and selected seed required", "draft_long_edge": 320, "draft_seconds": 2, "generation_requests": 0},
-  "rubric": ["scope coverage", "per-view composition", "observed primary/supporting motion", "source/receiver coherence", "interventions and recovery effort"],
-  "record_required": ["exact CLI/tool and model versions", "seed and artifact hashes", "permissions", "all interventions", "actual normal-speed observations", "unknowns and failures"],
-  "limits": ["No autonomous agent trial has been performed by declaring these scenarios.", "State, raster and native evidence are not artistic observations.", "No aggregate aesthetic score or minimum layer quota."]
+  "authority": {
+    "network": false,
+    "paid_generation": false,
+    "publish": false,
+    "account_changes": false,
+    "private_assets": false
+  },
+  "resource_bounds": {
+    "trial_launch": "Explicit, one-shot authorization and selected seed required",
+    "draft_long_edge": 320,
+    "draft_seconds": 2,
+    "generation_requests": 0
+  },
+  "rubric": [
+    "scope coverage",
+    "per-view composition",
+    "observed primary/supporting motion",
+    "source/receiver coherence",
+    "interventions and recovery effort"
+  ],
+  "record_required": [
+    "exact CLI/tool and model versions",
+    "seed and artifact hashes",
+    "permissions",
+    "all interventions",
+    "actual normal-speed observations",
+    "unknowns and failures"
+  ],
+  "limits": [
+    "No autonomous agent trial has been performed by declaring these scenarios.",
+    "State, raster and native evidence are not artistic observations.",
+    "No aggregate aesthetic score or minimum layer quota."
+  ],
+  "implementation_evidence": {
+    "reference": "docs/architecture/MIDNIGHT-IMPLEMENTATION-HANDOFF.md",
+    "kind": "context-aware-implementation-pilot-and-synthetic-replays",
+    "meaning": "These checks do not change the unperformed unfamiliar-input agent trial states above."
+  }
 }

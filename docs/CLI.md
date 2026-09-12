@@ -2,6 +2,8 @@
 
 The supported entry point is `./ambiance` in the repository, or its absolute path from another directory. `python3 -m ambiance_studio` also works from the repository. There is no wheel or global shell installation in this version.
 
+The [feedback and production operations](MIDNIGHT-OPERATIONS.md) document current overview summaries, untimed feedback, clock/fulfillment authoring, review packets, run control, cel trimming, layered iteration configuration and reversible cleanup. The [public CLI replay](../examples/midnight-production/README.md) exercises the supported path. `project overview --details` retains the former expanded response; default overview is now schema 2. `iteration list` is paginated with an explicit `--details` option.
+
 ## Project selection and output
 
 The [studio library](STUDIO-LIBRARY.md) provides shared discovery, exact/current movie links, recorded iteration runs and feedback. Start with `./ambiance studio open`. Registered IDs work with `--project ID` across worktrees; use `studio register PATH` for other project locations. Global `--registry FILE` or `AMBIANCE_REGISTRY` selects an isolated registry.

@@ -112,7 +112,7 @@ class CoverageTests(unittest.TestCase):
     def test_cli_overview_and_iteration_use_identical_blocked_ids_drafts_renderable(self):
         recipe = self.recipe(); file = self.p/'recipe.json'; studio.write(file, recipe)
         direct = self.run_cli('plan', 'coverage')
-        overview = production.overview(self.p, 'fixture', 'http://localhost')['production_readiness']
+        overview = production.overview(self.p, 'fixture', 'http://localhost', details=True)['production_readiness']
         preflight = self.run_cli('iteration', 'preflight', file)
         ids = lambda r: [x['id'] for x in r['blocked']]
         self.assertEqual(ids(direct), ids(overview)); self.assertEqual(ids(direct), ids(preflight['readiness']))

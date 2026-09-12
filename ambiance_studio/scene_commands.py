@@ -9,6 +9,8 @@ from .scene_transactions import scene_transaction
 
 
 def scene_batch(args, transaction):
+    if args.action == 'clock':
+        return {'version': 1, 'operations': [{'op': 'clock', 'values': {'loop_seconds': args.loop_seconds}}]}
     if args.action == 'reparent':
         return {'version': 1, 'operations': [{'op': 'reparent', 'layer': args.layer,
                 'to': args.to, 'socket': args.socket, 'preserve': 'world_at_time', 'at_seconds': args.at}]}
@@ -65,6 +67,19 @@ def run_scene(args, project):
         return {'snapshots': [{'sha256': path.stem, 'path': str(path)}
                 for path in sorted((project/'.ambiance/scene-history').glob('*.json'))]}
     with scene_transaction(project, getattr(args, 'expect_sha256', None)) as transaction:
+        if action == 'clock':
+            before = scene_runtime.scene_bridge('timing', transaction.scene, transaction.catalog, {})
+            batch = scene_batch(args, transaction)
+            report = scene_runtime.scene_bridge('apply', transaction.scene, transaction.catalog, {'batch': batch, 'report': True})
+            after = scene_runtime.scene_bridge('timing', report['scene'], transaction.catalog, {})
+            impact = {'before': before, 'after': after, 'audio': [], 'meaning': 'Existing audio and captured evidence are not retimed.'}
+            from .audio import wav_info
+            for path in sorted((project/'audio').glob('**/*.wav')):
+                try:
+                    info = wav_info(path)
+                    impact['audio'].append({'path': str(path), 'duration_seconds': info['seconds'], 'picture_loop_seconds': args.loop_seconds, 'needs_cue_review': True})
+                except (OSError, ValueError) as error: impact['audio'].append({'path': str(path), 'error': str(error)})
+            return transaction.finish(report['scene'], 'clock', dry_run=args.dry_run, details={'timing_impact': impact})
         if action in ['apply', 'track', 'place', 'reparent']:
             return apply_batch(transaction, scene_batch(args, transaction), action,
                                dry_run=args.dry_run, diagnostics=True)

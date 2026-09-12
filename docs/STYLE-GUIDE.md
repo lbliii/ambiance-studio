@@ -6,6 +6,8 @@ A place that feels inhabited, inviting, and a little mysterious. The viewer shou
 
 These are the defaults learned from The Last Lantern. The user's reference and explicit direction take precedence. A snowy café should not inherit Halloween pumpkins merely because the first library contains them.
 
+Place vegetation where it has a plausible source and growing conditions. Do not add ivy as generic cozy or spooky decoration across indoor shelves, furniture, or active fireplaces. Indoor plants need a believable container and location; invasive growth needs a setting that supports it. The Midnight Reading Room seed review identified arbitrary indoor ivy as a distraction from an otherwise cared-for room.
+
 For seed-driven productions, use [seed-to-stage production](SEED-TO-STAGE.md) to turn the reference into a staged film in the requested formats. Judge the whole scene and its story opportunities before narrowing the first asset batch. Preserve design identity and atmosphere while adapting layout and preparing missing paint.
 
 ## Shape, color, and depth
@@ -29,6 +31,10 @@ Every separation has a cost: it may need a matte, clean backing, shadow, attachm
 Maintain a style reference for each pack: palette, edge treatment, light direction, perspective, texture scale, and output scale. Reject an otherwise attractive asset when those relationships make it look pasted in.
 
 ## Motion language
+
+Movement needs a reason to exist: a believable cause in the scene or an intentional contribution to its theme. Choose the cause and purpose before the amount of movement. Its strength, direction and cadence should fit that choice. Stillness can express shelter, weight and calm; preserve it where it supports the scene.
+
+The Midnight Reading Room curtain feedback exposed excessive movement without an established draft or supernatural cause. An open or broken window could motivate wind-driven cloth; an established haunting could motivate uncanny movement. Those choices change the story and should be deliberate. A spooky palette alone does not establish magic. In a sheltered room, keep the curtains still or let any slight movement follow a credible source of air.
 
 Use the [motion direction scale](MOTION-DIRECTION.md) to state size, readability and cadence separately. The tram review demonstrated that clean, stable sprites can still make an under-animated film. Start with environmental movement that reads in the full composition at normal viewing size, then add selected character gestures. “Quiet” alone is not a direction to make every action tiny or rare.
 
@@ -54,6 +60,7 @@ No single numerical loudness target defines this style. Preserve comfortable low
 - Does foreground, middle distance, and background read before playback?
 - Can I notice the selected story actions at normal speed in each requested composition, without a pointer or crop? Do long unintended still intervals remain?
 - Does the movement deepen the feeling of place?
+- What causes each movement or what thematic purpose does it serve, and does its strength fit the scene?
 - Do outlines, lighting, texture, and perspective agree across assets?
 - Can I notice a loop restart, drifting attachment, or repeated sound too easily?
 - Would I willingly watch and listen for another three repetitions?

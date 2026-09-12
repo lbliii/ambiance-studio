@@ -2,6 +2,12 @@
 
 This is an authored direction and review vocabulary, not an implemented automatic classifier or new scene schema. It responds to the user's review of **A Quieter Tomorrow / first-film-v2**: clean, stable animation was too small and infrequent to notice in the whole composition.
 
+## Cause and purpose
+
+Choose movement that follows the scene's physical logic or advances an intentional theme. Establish that reason before assigning readability and cadence targets. Judge the strength against the implied force, material, attachment and emotional role. Stillness is a valid choice for an object that has no reason to move.
+
+The user's reported feedback on **Midnight Reading Room / painted-review** was that the curtains moved too much. A visibly open or broken window could support a draft; an established magic, curse or haunting could support unexplained motion. These are possible story directions, not additions authorized by the feedback. Readable motion still needs motivation, and reducing an unsupported action does not require making the whole scene quieter.
+
 ## Readability levels
 
 Judge the active action at normal speed, in the full composition, at the intended display size. Keep the target level separate from an observed result; an unchecked target is not a pass.
@@ -18,6 +24,7 @@ These are perceptual judgments, not universal pixel thresholds. Small movement o
 
 ## Record independent dimensions
 
+- **Cause and purpose:** the physical cause or intended thematic contribution, the cues that establish it, and why the chosen strength fits. Keep proposed causes separate from what the scene actually depicts.
 - **Role and method:** environment, character gesture, accent, or fixed reference; translation, rotation, changing cels, light, or parallax. A role does not imply an intensity.
 - **Size:** displacement relative to the object and to the frame, silhouette change, and rotation where relevant. Report intended display-pixel travel when measured. Use actual painted bounds, not an atlas's transparent padding. Describe both travel and speed; slow movement can cover a large distance.
 - **Readability:** target level, observed level, viewing size/speed, and the actual observation. Use `unreviewed` until viewed. Whole-frame difference statistics cannot assign the observed level by themselves.
@@ -29,7 +36,7 @@ Example direction: “Clouds: environment; broad slow travel; readable level 2; 
 
 ## Agent workflow
 
-1. Assign motion targets before asset boundaries. Separate any surfaces needed for different depth, speed, deformation, or overlap. A foreground cutout over one static background is not an implemented depth stack.
+1. Establish each action's cause or thematic purpose, then assign motion targets before asset boundaries. Separate any surfaces needed for different depth, speed, deformation, or overlap. A foreground cutout over one static background is not an implemented depth stack.
 2. Establish a readable full-scene motion draft before final art polish and full-resolution encoding. Compare quieter, target, and stronger versions at the same intended size and speed. Label variants by what actually changed; changing amplitude, speed and frequency are different experiments.
 3. Use the existing `scene timing` and `render proof` tools for actual timing and playback. Record size measurements and observations alongside the project plan. Do not add unsupported classification fields to executable scene data.
 4. Inspect the scene without pointing at the animated object. If the viewer must search for the primary or supporting action, record that miss and revise amplitude, silhouette, staging, contrast, cadence, or layer separation at the responsible source.

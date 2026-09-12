@@ -22,6 +22,7 @@ NATIVE_SOURCE = ROOT / 'native/media/media.m'
 
 def add_parsers(sub):
     group = sub.add_parser('render', help='Render saved scene frames, motion proofs, or video').add_subparsers(dest='action', required=True)
+    q = group.add_parser('benchmark'); q.add_argument('file', type=Path); q.add_argument('--out', type=Path, required=True)
     for action in ['frame', 'proof', 'rig-proof', 'look-proof', 'video', 'views-proof']:
         q = group.add_parser(action)
         q.add_argument('--revision', help='Verified captured revision ID; never falls back to working scene')
@@ -107,8 +108,11 @@ def _error(message, code='invalid_input', exit_code=2):
 
 
 def _json_command(command, request=None, allow_check_failure=False):
-    result = subprocess.run(list(map(str, command)), input=json.dumps(request, allow_nan=False) if request is not None else None,
-                            capture_output=True, text=True)
+    from .run_control import execute, ACTIVE
+    tracker = ACTIVE.get()
+    if tracker and len(command) > 1 and str(command[1]) in ['compose', 'verify', 'probe']:
+        tracker.update({'phase': 'media-'+str(command[1])})
+    result = execute(list(map(str, command)), json.dumps(request, allow_nan=False) if request is not None else None)
     try:
         data = json.loads(result.stdout)
     except ValueError:
@@ -306,6 +310,7 @@ def run(args, project):
         request.update(views=view_requests, view_options=view_options,
                        expected_scene_sha256=hashlib.sha256(scene_bytes).hexdigest(),
                        expected_catalog_sha256=hashlib.sha256(catalog_bytes).hexdigest())
+    if args.action == 'benchmark': request['sample_times'] = args.sample_times
     if args.action == 'rig-proof':
         recipe_path = args.recipe.resolve()
         recipe_bytes = recipe_path.read_bytes()

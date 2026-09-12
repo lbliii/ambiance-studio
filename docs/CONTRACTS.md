@@ -67,3 +67,6 @@ Movie discovery, delivery sets, current selections, local iteration recipes and 
 Code, schemas/contracts, scenes, and recipes receive ordinary version control. Accepted media receives immutable IDs and content hashes. A derived change creates a new asset version and updates explicit references. Do not silently replace a shared smoke atlas in all existing films.
 
 Changes to a production contract need a migration note and a fixture test. Keep the old record available so past projects remain understandable. Use one renderer implementation for preview and export wherever possible; parity still needs testing after backend/version changes.
+## Production-operation extensions
+
+See [current operation contracts](MIDNIGHT-OPERATIONS.md) for feedback schema 3, bounded overview schema 2, cel comparison recipe 2, packet/recipe initialization, run ownership/progress, trim provenance, layered iteration configuration and cleanup plans/receipts. Scene, inventory, canonical plan, capture, edition and delivery schemas retain their existing ownership. Legacy feedback is read through adapters; sealed records are not rewritten. Resolution and cleanup never certify artistic readiness.

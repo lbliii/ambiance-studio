@@ -113,3 +113,5 @@ Every newly compiled asset now includes `registration_mapping` version 1 in both
 `raw_cel_to_cell` maps coordinates inside an extracted grid cell or frame image into its padded output cell. `source_to_cell` maps the **whole original input image** into that cell, accounting for a grid cell's origin. `reference_to_cell = source_to_cell × inverse(image_to_reference)`. Placement can therefore compose real crop scale, registration, sequence scale and padding rather than reconstructing them from alpha bounds. The compiler's raw preparation remains the authority; these matrices do not move scene objects by themselves.
 
 Existing accepted packs are unchanged. A new compiler version changes the build key; use a new output directory for rebuilding old inputs. Named landmark registration and explicit pivots remain supported. See the [rig workbench](RIG-WORKBENCH.md) and [runnable independent example](../examples/asset-preparation/README.md).
+
+[Union-cel trimming](MIDNIGHT-OPERATIONS.md) creates a source-pinned compiler recipe and remapped placement, without changing the current scene/catalog. Inspect the measured area ratio before adoption.

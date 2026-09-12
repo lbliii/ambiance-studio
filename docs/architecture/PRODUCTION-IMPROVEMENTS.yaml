@@ -1,7 +1,7 @@
 format: ambiance-improvement-roadmap
 schema_version: 1
 updated: '2026-09-11'
-status: engineering_integrated_observed_pilots_remaining
+status: foundation_integrated_followups_and_observed_pilots_remaining
 design: docs/architecture/PRODUCTION-IMPROVEMENTS.md
 meaning: Human/agent implementation backlog; not an executable production recipe, scheduler, approval or runtime
   schema.
@@ -29,6 +29,8 @@ phases:
   name: Skills integration and observed production pilots
 - id: 5
   name: Evidence-triggered follow-up tools
+- id: 6
+  name: Midnight feedback, creative comparisons and production operation
 pilot_expectations:
   project: a-quieter-tomorrow
   status: targets_unreviewed_for_new_revision
@@ -658,6 +660,342 @@ tasks:
   source_specs:
   - docs/architecture/CEL-MOTION-WORKBENCH.md
   - docs/architecture/CEL-MOTION-HANDOFF.md
+- id: MRR-01
+  title: Carry cause, theme and appropriate emphasis through action direction
+  phase: 6
+  priority: P0
+  status: implemented
+  relative_size: S
+  depends_on: [DATA-01]
+  affected_paths:
+  - docs/MOTION-DIRECTION.md
+  - docs/workflows/01-reference-and-layers.md
+  - templates/production-plan.json
+  - examples
+  deliverables:
+  - Concise action examples using existing purpose, description, direction and rationale fields.
+  - Explicit distinction between movement readability and appropriate upper emphasis.
+  - A derivative curtain direction study preserving justified motion elsewhere.
+  acceptance:
+  - Sheltered, open-window and established-haunting cases have different authored causes and suitable alternatives.
+  - Neither invented story premises nor a universal stillness or minimum-motion rule repairs the curtain case.
+  - Revised requirements get a reason and new captured identity; previous movies and observations retain theirs.
+  validation:
+  - Validate the plan examples through the public plan CLI.
+  - MRR-07 owns the subsequent actual contextual observations; these direction examples do not pass aesthetic review.
+  source_specs:
+  - docs/architecture/MIDNIGHT-PRODUCTION-DESIGN.md
+  - reports/MIDNIGHT-WORKFLOW-AUDIT-2026-09-11.md
+  implementation_handoff: docs/architecture/MIDNIGHT-IMPLEMENTATION-HANDOFF.md
+- id: MRR-02
+  title: Capture untimed feedback and trace its resolution to exact evidence
+  phase: 6
+  priority: P0
+  status: implemented
+  relative_size: M
+  depends_on: [DELIVERY-01, DATA-01]
+  affected_paths:
+  - ambiance_studio/feedback.py (new)
+  - ambiance_studio/deliveries.py
+  - ambiance_studio/production.py
+  - ambiance_studio/studio_server.py
+  - studio/studio.mjs
+  - docs/CONTRACTS.md
+  - tests
+  deliverables:
+  - Feedback schema 3 with delivery or entry subjects, optional point/range and separate reporter/observer.
+  - Legacy read adapters, idempotent add and sealed append-only resolution/reopen events.
+  - CLI and Studio list/inspect/add/resolution paths with exact evidence navigation.
+  acceptance:
+  - The curtain note is discoverable without a fabricated time, orientation, viewer or multiple auditions.
+  - A changed current review does not retarget an old comment; resolving work does not pass a quality gate.
+  - Stale event heads, conflicting retries and corrupt chains produce actionable errors without rewriting observations.
+  validation:
+  - Legacy version 1/2, subject ambiguity, finite time/range boundaries, hashes and concurrency fixtures.
+  - CLI import/resolve/reopen replay and actual Studio inspection of timed and untimed feedback.
+  source_specs:
+  - docs/architecture/MIDNIGHT-PRODUCTION-DESIGN.md
+  - reports/MIDNIGHT-WORKFLOW-AUDIT-2026-09-11.md
+  implementation_handoff: docs/architecture/MIDNIGHT-IMPLEMENTATION-HANDOFF.md
+- id: MRR-03
+  title: Return bounded project state and actionable work across production and review
+  phase: 6
+  priority: P0
+  status: implemented
+  relative_size: M
+  depends_on: [MRR-02, PERF-01]
+  affected_paths:
+  - ambiance_studio/production_queries.py (new)
+  - ambiance_studio/production.py
+  - ambiance_studio/planning.py
+  - ambiance_studio/cli.py
+  - ambiance_studio/studio_server.py
+  - studio/studio.mjs
+  - tests
+  deliverables:
+  - Versioned compact overview with bounded collections, omitted counts and a legacy details option.
+  - Project next-work aggregation over existing readiness, inventory, feedback and run-state results.
+  - Conservative effective-state projection and active-versus-retained unmapped asset reporting.
+  acceptance:
+  - Representative emitted overview is at most 16 KiB and excludes nested frame/sample reports.
+  - Complete inventory plus open curtain feedback still produces useful next work and direct evidence paths.
+  - CLI and Studio show absent owners as interrupted and unverifiable legacy owners as unknown.
+  - Detail retrieval stays complete; informational retained assets remain available and integrity-checked.
+  validation:
+  - Growing-history/large-report projection fixtures with byte bounds and stable pagination/detail references.
+  - Dead/unknown-owner, deduplication, all-assets-complete and partial-readiness fixtures.
+  - CLI and Studio contract compatibility checks; descriptive latency measurements only.
+  source_specs:
+  - docs/architecture/MIDNIGHT-PRODUCTION-DESIGN.md
+  - reports/MIDNIGHT-WORKFLOW-AUDIT-2026-09-11.md
+  implementation_handoff: docs/architecture/MIDNIGHT-IMPLEMENTATION-HANDOFF.md
+- id: MRR-04
+  title: Produce an early paired motion-and-sound review packet through the CLI
+  phase: 6
+  priority: P1
+  status: implemented_device_audition_and_local_file_check_remaining
+  relative_size: L
+  depends_on: [MRR-02, MRR-06, DELIVERY-01, AUDIO-01]
+  affected_paths:
+  - ambiance_studio/review_packets.py (new)
+  - ambiance_studio/production.py
+  - ambiance_studio/studio_server.py
+  - studio/studio.mjs
+  - docs/STUDIO-LIBRARY.md
+  - tests
+  deliverables:
+  - Packet init/run over the shared recipe builder and existing capture/render/audio/media services.
+  - Identity-bound packet manifest, exact feedback subjects and explicit source-audition links.
+  - Paired Studio playback with a single audible source and a portable local artifact fallback.
+  acceptance:
+  - The chosen interval supports the actual cadence or soundtrack question and declares excerpt limitations.
+  - Packet creation preserves current review selection; explicit presentation remains available.
+  - Playback distinguishes approximate movie sync from exact frame proof and never implies an audition occurred.
+  validation:
+  - CLI packet creation/resume and dependency-tamper/missing-PCM fixtures.
+  - Actual browser play, pause, seek, loop, paired-view and single-audio checks.
+  - Local-file fallback and direct artifact inspection without weakening HTTP origin protections.
+  source_specs:
+  - docs/architecture/MIDNIGHT-PRODUCTION-DESIGN.md
+  - reports/MIDNIGHT-WORKFLOW-AUDIT-2026-09-11.md
+  implementation_handoff: docs/architecture/MIDNIGHT-IMPLEMENTATION-HANDOFF.md
+- id: MRR-05
+  title: Benchmark, observe, cancel and resume owned render work
+  phase: 6
+  priority: P1
+  status: implemented
+  relative_size: L
+  depends_on: [MRR-03, DELIVERY-01]
+  affected_paths:
+  - ambiance_studio/run_control.py (new)
+  - ambiance_studio/production.py
+  - ambiance_studio/rendering.py
+  - tools/render-scene.mjs
+  - studio/studio.mjs
+  - tests
+  deliverables:
+  - Real-recipe bounded benchmark with resolution/backend identity and explicit estimate assumptions.
+  - Throttled atomic progress records, owned process identities and consistent effective run state.
+  - Cooperative cancellation, verified fallback signaling and safe interrupted-run reconciliation.
+  acceptance:
+  - Estimates include declared preroll, view jobs, encoding and verification with unknown components identified.
+  - Final stdout remains one result; progress cannot falsely certify a completed edition.
+  - Absent, reused or unverifiable PID records never lead to signaling an unrelated process.
+  - Cancellation and resume preserve completed work and the selected review, including selection races.
+  validation:
+  - Harmless owned-subprocess fixtures covering phase transitions, identity mismatch and stale activity.
+  - Existing native lane exercises cancellation during render/encode/verification and validated step reuse.
+  - Retain measured benchmark reports at the planned internal stage resolution.
+  source_specs:
+  - docs/architecture/MIDNIGHT-PRODUCTION-DESIGN.md
+  - reports/MIDNIGHT-WORKFLOW-AUDIT-2026-09-11.md
+  implementation_handoff: docs/architecture/MIDNIGHT-IMPLEMENTATION-HANDOFF.md
+- id: MRR-06
+  title: Replace repeated clock, fulfillment and recipe file surgery with narrow operations
+  phase: 6
+  priority: P1
+  status: implemented
+  relative_size: L
+  depends_on: [DATA-01, DELIVERY-01]
+  affected_paths:
+  - tools/scene-command.mjs
+  - ambiance_studio/scene_authoring.py
+  - ambiance_studio/inventory_authoring.py (new)
+  - ambiance_studio/planning.py
+  - ambiance_studio/iteration_recipes.py (new)
+  - ambiance_studio/production.py
+  - tests
+  deliverables:
+  - Separate clock-operation, fulfillment-patch and iteration-initializer implementation slices.
+  - Shared validation, expected identities, restorable authoring history and no-write dry runs.
+  - Pure recipe construction shared with MRR-04 and derived factual project summaries.
+  acceptance:
+  - Clock changes expose actual cel-track precedence and audio impact without silently retiming content.
+  - Fulfillment changes cannot alter scope or artistic verdicts and require hashed stage evidence.
+  - Initializer uses explicit audio/view/default choices, validates before writing and does not capture/render/present.
+  - A small setup fixture needs no direct canonical JSON overwrite or import-side-effect script.
+  validation:
+  - Public CLI positive/negative replay for each operation, including invalid refs and stale expected hashes.
+  - Real timing/loop closure, audio mismatch, interrupted write and snapshot restoration fixtures.
+  - Existing scene, rig and plan suites for the touched shared services.
+  source_specs:
+  - docs/architecture/MIDNIGHT-PRODUCTION-DESIGN.md
+  - docs/architecture/SCENE-TRANSACTIONS.md
+  - reports/MIDNIGHT-WORKFLOW-AUDIT-2026-09-11.md
+  implementation_handoff: docs/architecture/MIDNIGHT-IMPLEMENTATION-HANDOFF.md
+- id: MRR-07
+  title: Compare held and restrained painted cels while preserving object geometry
+  phase: 6
+  priority: P1
+  status: implemented_contextual_drafts_user_selection_remaining
+  relative_size: M
+  depends_on: [MRR-01, MOTION-02, ASSET-01]
+  affected_paths:
+  - ambiance_studio/activity.py
+  - ambiance_studio/asset_motion.py
+  - ambiance_studio/preparation.py
+  - editor
+  - tests
+  deliverables:
+  - Comparison recipe version 2 with explicit held-pose and registered cel-alternative variants.
+  - Temporary derivative contexts, declared cell/companion maps and invariant geometry/timing reports.
+  - Current, restrained and still curtain proofs in both views with exact source identities.
+  acceptance:
+  - Reduced deformation cannot be represented as scaling or hiding the whole curtain.
+  - Atlas alternatives preserve source placement, attachments, framing and applicable cadence.
+  - Incompatible companions or cell maps fail before rendering; no implicit asset generation occurs.
+  - Actual normal-speed observations assess the alternatives against the established cause/theme.
+  validation:
+  - Version-1 comparison compatibility and crop/source/anchor/socket/cel-map negative fixtures.
+  - Contextual raster and normal-speed encoded comparisons in both intended views.
+  source_specs:
+  - docs/architecture/MIDNIGHT-PRODUCTION-DESIGN.md
+  - reports/MIDNIGHT-WORKFLOW-AUDIT-2026-09-11.md
+  implementation_handoff: docs/architecture/MIDNIGHT-IMPLEMENTATION-HANDOFF.md
+- id: MRR-08
+  title: Promote measured preparation and renderer improvements with fidelity evidence
+  phase: 6
+  priority: P2
+  status: trim_and_measurements_implemented_renderer_baseline_retained
+  relative_size: L
+  depends_on: [MRR-05, ASSET-01, BIND-01]
+  affected_paths:
+  - ambiance_studio/assets.py
+  - ambiance_studio/asset_prep.py
+  - editor/finishing.mjs
+  - tools/render-scene.mjs
+  - tests
+  deliverables:
+  - Source-mapped union-cel crop preserving geometry, anchors, sockets and companion rules.
+  - Profiled allocation/finishing candidates with baseline/candidate timing and memory reports.
+  - A measured adoption or retain-baseline disposition; no optimization is required without benefit.
+  acceptance:
+  - Every promoted transform preserves source provenance and actual registered placement.
+  - Exact, tolerance-bounded and intentionally approximate outputs are labeled distinctly.
+  - Cache dependencies and memory limits are explicit; preroll remains until encoded evidence justifies a change.
+  validation:
+  - Empty/changing-cel, crop, companion and attachment fixtures using compiler/rig suites.
+  - Source/mask/view invalidation, both-view raster, lighting-state and encoded-boundary comparisons.
+  - Actual benchmark at intended resolution; recorded reasons when a candidate is rejected.
+  source_specs:
+  - docs/architecture/MIDNIGHT-PRODUCTION-DESIGN.md
+  - reports/MIDNIGHT-WORKFLOW-AUDIT-2026-09-11.md
+  implementation_handoff: docs/architecture/MIDNIGHT-IMPLEMENTATION-HANDOFF.md
+- id: MRR-09
+  title: Consolidate the supported path through the six production skills
+  phase: 6
+  priority: P1
+  status: implemented_behavior_trials_remaining
+  relative_size: S
+  depends_on: [MRR-01, MRR-02, MRR-03, MRR-04, MRR-05, MRR-06, MRR-07]
+  affected_paths:
+  - .agents/skills
+  - docs/workflows
+  - docs/CLI.md
+  - docs/CAPABILITIES.json
+  - examples
+  deliverables:
+  - Short stage openings with current inputs, supported commands, presentation artifact and creative judgment.
+  - Shared cause/theme/emphasis guidance and an early picture-and-sound review path.
+  - Executable examples for newly shipped routes and linked uncommon recovery cases.
+  acceptance:
+  - Scope, original protection, real backing, exact versions and honest observations survive simplification.
+  - Proposed commands are not advertised as callable until implemented and tested.
+  - The old under-animated tram and overactive curtain lessons coexist without universal motion quotas.
+  validation:
+  - Replay shipped examples through the CLI and run the package/capability audit.
+  - Actual operator behavior is assessed in MRR-10, separately from link/frontmatter checks.
+  source_specs:
+  - docs/architecture/MIDNIGHT-PRODUCTION-DESIGN.md
+  - reports/MIDNIGHT-WORKFLOW-AUDIT-2026-09-11.md
+  implementation_handoff: docs/architecture/MIDNIGHT-IMPLEMENTATION-HANDOFF.md
+- id: MRR-10
+  title: Observe contrasting creative choices and production effort using existing art
+  phase: 6
+  priority: P1
+  status: contextual_and_synthetic_evidence_recorded_unfamiliar_trials_remaining
+  relative_size: M
+  depends_on: [MRR-09, MRR-08, CI-01]
+  affected_paths:
+  - tests/agent-evaluations
+  - tests/skill-scenarios.md
+  - examples
+  - reports
+  deliverables:
+  - Sheltered/open-window/haunted cases plus untimed-feedback and interrupted-paired-run scenarios.
+  - Retained CLI, raster, movie, listening and intervention evidence with exact subject identities.
+  - Effort measurements and remaining capability gaps without an aggregate aesthetic score.
+  acceptance:
+  - Supplied art/local resources suffice for the initial trial without new paid generation.
+  - Trials distinguish appropriate stillness, physically motivated movement and established uncanny action.
+  - Reports disclose actual interventions, script volume, bytes, first useful review time and unresolved observations.
+  - Synthetic replay and old unperformed CI-02/PILOT-01 criteria are not relabeled as observed passes.
+  validation:
+  - Existing evaluation harness with actual recorded operator runs and exact review artifacts.
+  - Applicable shared-code/native/browser checks and normal-speed paired viewing/listening.
+  - MRR-08 measured disposition may retain the baseline; optimization adoption is not a trial prerequisite.
+  source_specs:
+  - docs/architecture/MIDNIGHT-PRODUCTION-DESIGN.md
+  - tests/skill-scenarios.md
+  - reports/MIDNIGHT-WORKFLOW-AUDIT-2026-09-11.md
+  implementation_handoff: docs/architecture/MIDNIGHT-IMPLEMENTATION-HANDOFF.md
+- id: MRR-11
+  title: Add a storage inventory and reversible cleanup cycle
+  phase: 6
+  priority: P1
+  status: implemented_reversible_retirement_no_permanent_purge
+  relative_size: M
+  depends_on: [MRR-03, MRR-05]
+  affected_paths: [ambiance_studio/project_storage.py, ambiance_studio/production_queries.py, tests/test_config_storage.py]
+  deliverables:
+  - Bounded storage/duplicate diagnostics and age/reference-based cleanup plans.
+  - Rechecked quarantine and hash-verified restore with one receipt per batch.
+  - New run records reference detailed media reports instead of embedding duplicate sample arrays.
+  acceptance:
+  - Original art, captures, plans, selected media and referenced evidence stay protected.
+  - Changed candidates/references fail; cleanup and restoration are recoverable.
+  - Retention defaults to 30 days and no automatic permanent deletion is scheduled.
+  validation: [tests/test_config_storage.py, tests/test_midnight_authoring.py, examples/midnight-production/README.md]
+  source_specs: [docs/MIDNIGHT-OPERATIONS.md]
+  implementation_handoff: docs/architecture/MIDNIGHT-IMPLEMENTATION-HANDOFF.md
+- id: MRR-12
+  title: Resolve layered iteration configuration and reusable typed values
+  phase: 6
+  priority: P1
+  status: implemented
+  relative_size: M
+  depends_on: [MRR-06]
+  affected_paths: [ambiance_studio/recipe_config.py, ambiance_studio/iteration_recipes.py, examples/midnight-production/config]
+  deliverables:
+  - Ordered JSON/YAML layers, project/request values and explicit final overrides.
+  - Preview of resolved recipe, winning origins and input hashes.
+  - Ordinary validated immutable recipe bundles with saved configuration resolution.
+  acceptance:
+  - Typed substitutions fail on unknown values; arrays replace explicitly and local paths cannot escape the project.
+  - Rendering consumes the compiled recipe; later template edits do not rewrite existing captures or media.
+  validation: [tests/test_config_storage.py, examples/midnight-production/README.md]
+  source_specs: [docs/MIDNIGHT-OPERATIONS.md]
+  implementation_handoff: docs/architecture/MIDNIGHT-IMPLEMENTATION-HANDOFF.md
 completion:
   core_tasks:
   - KIT-01
@@ -679,6 +1017,18 @@ completion:
   follow_up_tasks:
   - FOLLOW-01
   - FOLLOW-02
+  - MRR-01
+  - MRR-02
+  - MRR-03
+  - MRR-04
+  - MRR-05
+  - MRR-06
+  - MRR-07
+  - MRR-08
+  - MRR-09
+  - MRR-10
+  - MRR-11
+  - MRR-12
   requires:
   - Working public CLI path, strict contracts and compatible captured evidence.
   - Feature-owned positive/negative tests and actual raster/native/browser checks.

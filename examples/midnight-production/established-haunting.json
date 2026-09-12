@@ -1,0 +1,111 @@
+{
+  "format": "ambiance-production-plan",
+  "schema_version": 1,
+  "story": {
+    "premise": "The authored story establishes a curse through a repeated sigil pulse and a candle that burns blue at the same moment.",
+    "direction": "A single restrained inward curtain gesture accompanies the established sigil pulse. Hold between events; preserve the cozy refuge."
+  },
+  "sources": [],
+  "elements": [
+    {
+      "id": "curtain",
+      "kind": "prop",
+      "depth_band": "midground",
+      "motion_role": "supporting",
+      "cadence": "occasional",
+      "readability_target": 1,
+      "origin": "proposed",
+      "purpose": "The uncanny event develops the stated curse. The independent cue must be staged; it is not inferred from unexplained curtain motion.",
+      "source_ids": [],
+      "action_ids": [
+        "cloth-presence"
+      ],
+      "realization": {
+        "method": "cutout",
+        "inventory_parts": [
+          {
+            "item_id": "cloth",
+            "part_id": "cutout"
+          }
+        ],
+        "layer_ids": [
+          "curtain"
+        ]
+      },
+      "required_art": [
+        {
+          "id": "cloth-cutout",
+          "role": "cutout",
+          "purpose": "Preserve the painted curtain and its fixed support.",
+          "inventory_part": {
+            "item_id": "cloth",
+            "part_id": "cutout"
+          }
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "cloth-presence",
+      "element_id": "curtain",
+      "description": "A single restrained inward curtain gesture accompanies the established sigil pulse. Hold between events; preserve the cozy refuge.",
+      "method": "Explicit held or source-registered painted cel choices",
+      "layer_ids": [
+        "curtain"
+      ],
+      "targets": [
+        {
+          "view_id": "portrait",
+          "readability_target": 1
+        },
+        {
+          "view_id": "landscape",
+          "readability_target": 1
+        }
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "view_id": "portrait",
+      "roles": [
+        "silent"
+      ]
+    },
+    {
+      "view_id": "landscape",
+      "roles": [
+        "silent"
+      ]
+    }
+  ],
+  "relations": [],
+  "expectations": [
+    {
+      "id": "cloth-emphasis",
+      "rationale": "The uncanny event develops the stated curse. The independent cue must be staged; it is not inferred from unexplained curtain motion.",
+      "direction": "A single restrained inward curtain gesture accompanies the established sigil pulse. Hold between events; preserve the cozy refuge.",
+      "stage": "animation",
+      "view_ids": [
+        "portrait",
+        "landscape"
+      ],
+      "element_ids": [
+        "curtain"
+      ],
+      "action_ids": [
+        "cloth-presence"
+      ],
+      "relation_ids": [],
+      "requirement": {
+        "type": "observed",
+        "check": "composition"
+      }
+    }
+  ],
+  "change": {
+    "reason": "Authored established-haunting direction example; required visual cues are part of the brief, not observed evidence.",
+    "supersedes_sha256": null
+  }
+}

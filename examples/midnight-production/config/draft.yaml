@@ -1,0 +1,11 @@
+format: ambiance-iteration-config
+schema_version: 1
+layers:
+  - config/studio.yaml
+  - config/project.yaml
+values:
+  take: layered-draft
+  render:
+    long_edge: 160
+overrides:
+  title: Layered configuration draft

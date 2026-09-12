@@ -22,6 +22,8 @@ List every area movement may expose. A clean sky behind clouds, landscape behind
 
 ## Choose the motion method
 
+Name each action's cause or thematic contribution, the cues that establish it, and its appropriate emphasis before choosing a method. Use the existing plan's purpose, description, direction and rationale fields. The [contrasting curtain examples](../../examples/midnight-production/README.md) distinguish sheltered stillness, visible airflow and an authored haunting. Readability establishes whether motion can be noticed; it does not establish that stronger motion fits the scene. Review upper emphasis as well as missing life.
+
 | Feature | Useful starting method | Stable relationship |
 | --- | --- | --- |
 | Moon, hill, building structure | Painted plate and subtle camera transform | Perspective and silhouette |
