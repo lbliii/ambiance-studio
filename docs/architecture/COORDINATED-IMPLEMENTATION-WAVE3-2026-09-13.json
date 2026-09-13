@@ -63,12 +63,13 @@
       },
       "candidate_commit": "0ccabe4198d91a3b56afbcd2bbad004b10847d44",
       "full_validation": {
-        "state": "queued",
+        "state": "slot_granted",
         "candidate_commit": "0ccabe4198d91a3b56afbcd2bbad004b10847d44",
         "source_frozen": true,
         "clean_verified_by_coordinator": true,
         "required_native": true,
-        "artifacts": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-native-final"
+        "artifacts": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-native-final",
+        "grant_reverified_clean_head": true
       },
       "public_replay": {
         "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/run.json",
@@ -219,21 +220,32 @@
       },
       "candidate_commit": "06a50236b09fffa4e5ece61037ecbc340672b2cb",
       "full_validation": {
-        "state": "running_with_observed_failures",
-        "candidate_commit": "06a50236b09fffa4e5ece61037ecbc340672b2cb",
-        "source_frozen": true,
-        "clean_verified_by_coordinator": true,
-        "required_native": true,
-        "artifacts": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/required-native-1",
-        "observed_failures": [
-          "Prepared snapshot imports clock.mjs but fixed module bundle omitted it.",
-          "Intentional scene clock/sample route signatures require fixture updates."
-        ]
+        "state": "repairing_before_new_candidate",
+        "required_native": true
       },
       "legacy_parity_reported": {
         "complete_state_samples": 485,
         "description": "480 bundled frames plus five negative/end/out-of-order samples match baseline after preserving original numeric seconds; coordinator verification pending."
-      }
+      },
+      "failed_native_runs": [
+        {
+          "state": "failed_completed",
+          "candidate_commit": "06a50236b09fffa4e5ece61037ecbc340672b2cb",
+          "source_frozen": true,
+          "clean_verified_by_coordinator": true,
+          "required_native": true,
+          "artifacts": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/required-native-1",
+          "observed_failures": [
+            "Prepared snapshot imports clock.mjs but fixed module bundle omitted it.",
+            "Intentional scene clock/sample route signatures require fixture updates."
+          ],
+          "report_sha256": "a70ac99c98fda0e9bbe0103c2c22da46c68c940cd806992e3cff4eb95336370c",
+          "reported_python_tests": 506,
+          "reported_skips": 0,
+          "coordinator_verified": "Report hash and completed failed state; CI-PYTHON failed, all17 other check entries passed.",
+          "slot_released": true
+        }
+      ]
     },
     {
       "stream": "A3",
@@ -307,11 +319,10 @@
   "shared_owner": "Coordinator reconciles central CLI/output/evidence/backlog/capabilities. W3 owns optional global outcome guidance; M3 model transport and typed model evidence; T3 picture clocks/evaluation; A3 audio measurements/encoding. New shared semantics require a concrete interface and narrow lease, not user permission.",
   "bounded_prerequisite": "Integrated mc/1 and C1/C2 plus corrected renderer permit I1/I2 and independent P03 technical fixtures. Full model Phase 1/P00 seed/story/census/art requirements remain open.",
   "native_test_queue": [
-    "W3",
     "M3",
     "A3"
   ],
-  "active_native_test_owner": "T3",
+  "active_native_test_owner": "W3",
   "native_test_policy": "One committed frozen-source full native suite at a time across these tasks. Focused independent checks continue. Coordinator runs final combined required-native suite; reuse validated 516-case baseline.",
   "cross_stream_dependencies": [
     {
@@ -401,5 +412,5 @@
     "report": "/private/tmp/ambiance-wave3-dispatch-package.json"
   },
   "list_threads_limitation": "New tasks may be omitted by list_threads. Preserve setup IDs and resolve actual IDs from worker messages/confirmed task state; never create duplicate replacements.",
-  "native_slot_state": "reserved_for_frozen_candidate"
+  "native_slot_state": "granted"
 }
