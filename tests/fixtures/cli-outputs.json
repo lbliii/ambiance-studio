@@ -59,16 +59,13 @@
   {"argv": ["delivery", "handoff", "input", "--out", "output"], "output": "artifact-directory", "command": "delivery handoff"},
   {"argv": ["iteration", "init", "input", "--out", "output"], "output": "artifact-directory", "command": "iteration init"},
   {"argv": ["iteration", "preflight", "input", "--out", "output"], "output": "result-envelope", "command": "iteration preflight"},
-<<<<<<< HEAD
   {"argv": ["audio", "library", "search", "--config", "input", "--out", "output"], "output": "result-envelope", "command": "audio library"},
   {"argv": ["audio", "library", "inspect", "input", "--version", "input", "--config", "input", "--out", "output"], "output": "result-envelope", "command": "audio library"},
-  {"argv": ["audio", "library", "check", "input", "--out", "output"], "output": "result-envelope", "command": "audio library"}
-=======
+  {"argv": ["audio", "library", "check", "input", "--out", "output"], "output": "result-envelope", "command": "audio library"},
   {"argv": ["model", "build", "input", "--source-root", "input", "--out", "output"], "output": "artifact-directory", "command": "model build"},
   {"argv": ["model", "inspect", "input", "--out", "output"], "output": "result-envelope", "command": "model inspect"},
   {"argv": ["model", "lower", "input", "--state", "input", "--out", "output"], "output": "artifact-directory", "command": "model lower"},
   {"argv": ["model", "proof", "input", "--recipe", "input", "--out", "output"], "output": "artifact-directory", "command": "model proof"},
   {"argv": ["model", "check", "input", "--package", "input", "--recipe", "input", "--out", "output"], "output": "result-envelope", "command": "model check"},
   {"argv": ["model", "admit", "input", "--proof", "input", "--recipe", "input", "--out", "output"], "output": "artifact-directory", "command": "model admit"}
->>>>>>> 93ffc66 (Implement immutable local model construction and static proof adapters)
 ]
