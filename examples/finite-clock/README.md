@@ -18,6 +18,7 @@ python3 examples/finite-clock/create_fixture.py /tmp/finite-clock-demo
 ./ambiance --project /tmp/finite-clock-demo scene check
 ./ambiance --project /tmp/finite-clock-demo render frame --time 2.5 --out /tmp/finite-clock-demo/endpoint
 ./ambiance --project /tmp/finite-clock-demo render video --out /tmp/finite-clock-demo/movie
+./ambiance --project /tmp/finite-clock-demo render video --start-frame 1 --out /tmp/finite-clock-demo/range-movie
 ./ambiance --project /tmp/finite-clock-demo media verify /tmp/finite-clock-demo/movie/picture.mp4 --frames 60 --fps 24 --contact-frame 59 --out /tmp/finite-clock-demo/decode
 ./ambiance --project /tmp/finite-clock-demo preview --port 8793
 ```
@@ -28,6 +29,8 @@ is blue and shifts the marker to the third socket. Requests beyond the endpoint
 hold the blue pose. The small independent local-cycle card ends partway through
 its third cycle. Inspect actual pixels and normal-speed playback separately from
 state assertions. Preview Play holds frame 59; manual seek can inspect frame 60.
+The `range-movie` selects source `[1,60)` and decodes 59 frames; its final local
+frame 58 is still yellow. Its receipt retains source frame 1 directly.
 
 Meaningful failures to try in fresh output directories: `render video --repeats 2`,
 `render proof --start 2 --seconds 1`, a missing `local_cycle`, a finite clock whose

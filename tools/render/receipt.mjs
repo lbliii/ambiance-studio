@@ -52,6 +52,8 @@ export async function renderReceipt(job, raster) {
     finishing_engine_sha256 : sha(await fs.readFile(path.join(root, 'editor/finishing.mjs'))),
     views_module_sha256 : sha(await fs.readFile(path.join(root, 'editor/views.mjs'))),
     start_seconds : start,
+    source_start_frame : job.startFrame,
+    source_end_frame_exclusive : job.startFrame===null?null:job.startFrame+frames,
     frames,
     seconds : frames / fps,
     source_assets : assetHashes,

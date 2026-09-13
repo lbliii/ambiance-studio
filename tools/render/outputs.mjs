@@ -1,7 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-import {secondsToFrames} from '../../editor/clock.mjs';
 import {auditViewPixels, auditViews} from '../../editor/audit.mjs';
 import {renderLookProof} from '../look-proof.mjs';
 import {renderRigProof} from '../rig-proof.mjs';
@@ -40,8 +39,7 @@ export async function renderOutputs(job, raster, report, initializationStarted) 
     runtime
   } = job;
   const {stageRenderer, canvas, render} = raster;
-  const finiteShot=job.compiled.clock.mode==='finite';
-  const renderOffset=(frame,off=false)=>finiteShot?raster.renderFrame(secondsToFrames(start,fps).value+frame,off):render(start+frame/fps,off);
+  const renderOffset=(frame,off=false)=>job.startFrame!==null?raster.renderFrame(job.startFrame+frame,off):render(start+frame/fps,off);
   if (mode === 'look-proof') {
     Object.assign(report, await renderLookProof(lookPlan, {
                     out,

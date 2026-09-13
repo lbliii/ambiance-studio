@@ -75,30 +75,52 @@ def plan_render(args, project):
     if supersample not in [1, 2, 4] or isinstance(supersample, bool) or width*supersample > 4096 or height*supersample > 4096:
         raise CommandError('Supersample must be 1, 2, or 4, with internal dimensions no larger than 4096 pixels per side.')
     start = getattr(args, 'time', getattr(args, 'start', 0))
-    seconds = getattr(args, 'seconds', None)
-    if seconds is None:
-        seconds = min(3, canvas['loop_seconds']) if args.action in ['proof', 'views-proof'] else canvas['loop_seconds']
-    if not math.isfinite(start) or start < 0 or not math.isfinite(seconds) or seconds <= 0:
-        raise CommandError('Render time/duration must be finite and nonnegative, with positive duration.')
-    frames = seconds * canvas['fps']
-    if frames != int(frames) or frames > loop_frames:
-        raise CommandError('Duration must contain an integer frame count within one authored loop.')
-    if scene.get('clock', {}).get('mode') == 'finite' and args.action in ['video', 'proof', 'views-proof']:
-        from .timebase import seconds_to_frames
+    source_start_frame = getattr(args, 'start_frame', None)
+    finite_shot = scene.get('clock', {}).get('mode') == 'finite'
+    if source_start_frame is not None:
+        from .timebase import integer
         try:
-            start_frame = seconds_to_frames(start, canvas['fps'])['value']
+            integer(source_start_frame)
         except ValueError as error:
             raise CommandError(str(error)) from error
-        if start_frame + frames > loop_frames:
+        if source_start_frame < 0:
+            raise CommandError('Source start frame must be nonnegative.')
+        start = source_start_frame / canvas['fps']
+    elif finite_shot and args.action in ['video', 'proof', 'views-proof']:
+        from .timebase import seconds_to_frames
+        try:
+            source_start_frame = seconds_to_frames(start, canvas['fps'])['value']
+        except ValueError as error:
+            raise CommandError(str(error) + '; use --start-frame for an exact frame selection.') from error
+    seconds = getattr(args, 'seconds', None)
+    if seconds is None and finite_shot and source_start_frame is not None:
+        frames = loop_frames - source_start_frame
+        if args.action in ['proof', 'views-proof']:
+            frames = min(frames, 3 * canvas['fps'])
+        seconds = frames / canvas['fps']
+    else:
+        if seconds is None:
+            seconds = min(3, canvas['loop_seconds']) if args.action in ['proof', 'views-proof'] else canvas['loop_seconds']
+        frames = seconds * canvas['fps']
+    if not math.isfinite(start) or start < 0 or not math.isfinite(seconds) or seconds <= 0:
+        raise CommandError('Render time/duration must be finite and nonnegative, with positive duration.')
+    if frames != int(frames) or frames > loop_frames:
+        raise CommandError('Duration must contain an integer frame count within one authored loop.')
+    if finite_shot and args.action in ['video', 'proof', 'views-proof']:
+        if source_start_frame + frames > loop_frames:
             raise CommandError('Finite render range must stay within [0,N); endpoint inspection is frame-only.')
         if getattr(args, 'repeats', 1) != 1:
             raise CommandError('Finite video cannot repeat the shot.')
+        if source_start_frame and getattr(args, 'audio', None):
+            raise CommandError('Audio conformance for a nonzero finite source range is not supported; render the picture range separately.')
     disable = getattr(args, 'disable', [])
     if any(layer not in {row['id'] for row in scene['layers']} for layer in disable):
         raise CommandError('Every --disable layer must exist in the selected scene.')
     request = {'project': str(project), 'out': str(out), 'mode': args.action, 'width': width, 'height': height,
                'start': start, 'seconds': seconds, 'disable': disable, 'supersample': supersample,
                'scene_path':str(context['scene']), 'catalog_path':str(context['catalog'])}
+    if source_start_frame is not None:
+        request.update(start_frame=source_start_frame, frame_count=int(frames))
     if selected:
         request.update(views=view_requests, view_options=view_options,
                        expected_scene_sha256=hashlib.sha256(scene_bytes).hexdigest(),

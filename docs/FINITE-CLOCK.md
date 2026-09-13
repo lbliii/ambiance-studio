@@ -41,6 +41,16 @@ trimmed away; it does not append endpoint N. The browser Play control holds N−
 and restarts from zero on the next play. Its timeline also permits inspection of N.
 Saved raster proof segments still repeat, explicitly for inspection.
 
+`render proof`, `render video` and `render views-proof` accept `--start-frame N`,
+mutually exclusive with `--start SECONDS`. The integer start and count survive
+planning, raster sampling and receipt serialization. Display seconds never get
+converted back into frame identity. With no duration, finite video selects all
+remaining frames; proofs select up to three seconds of remaining frames. Thus a
+60-frame shot started at frame 1 produces 59 samples, source `[1,60)`. Decimal
+`--start` still requires exact frame alignment for finite output: use
+`--start-frame 1` to express 1/24 second exactly. Nonzero finite source ranges with
+audio are rejected before rendering; audio conformance is outside this package.
+
 An optional `local_cycle` on a layer, camera or keyed finishing signal selects a
 named cycle. Missing, empty and unknown references fail validation. Progress is
 `(clamped_host_seconds / period_seconds + phase_turns) mod 1`. A layer's tracks
@@ -113,6 +123,8 @@ future consumers; no cue or sequence runtime is introduced here.
 
 Render reports add `picture_clock`, `clock_engine_sha256`, `endpoint_policy`,
 `last_exported_to_endpoint`, and the clock module in `renderer_sources`.
+`source_start_frame` and `source_end_frame_exclusive` bind exact frame selections;
+they are null when a legacy/subframe request has no integer source selection.
 `rgba_endpoint_exact` reports measured endpoint-to-zero equality; false is valid
 for finite output. It remains required for loops. These are single-scene picture
 receipts, not P06 aggregate film evidence or artistic approval.

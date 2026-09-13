@@ -66,7 +66,12 @@ export async function prepareJob(request, runtime) {
         loopFrames = fps * scene.canvas.loop_seconds;
   if (!scene.layers.length)
     throw Error('Cannot render an empty scene');
-  const start = finite(request.start ?? 0, 'start');
+  let start = finite(request.start ?? 0, 'start'), startFrame = request.start_frame ?? null;
+  if(startFrame!==null){
+    if(!Number.isSafeInteger(startFrame)||startFrame<0)throw Error('Source start frame must be a safe nonnegative integer');
+    if(request.start!==undefined&&request.start!==startFrame/fps)throw Error('Source start frame and seconds mirror disagree');
+    start=startFrame/fps;
+  }
   if (start < 0)
     throw Error('start must be nonnegative');
   const mode = request.mode;
@@ -82,15 +87,18 @@ export async function prepareJob(request, runtime) {
   if (mode === 'rig-proof' && supersample !== 1)
     throw Error(
         'Rig-proof matrix uses fixed resolution; supersampling is supported for frame, proof, look-proof and video');
-  const seconds = finite(request.seconds ?? ([ 'proof', 'views-proof' ].includes(mode)
-                                                 ? Math.min(3, scene.canvas.loop_seconds)
-                                                 : scene.canvas.loop_seconds),
-                         'seconds');
-  const frames = mode === 'frame' ? 1 : seconds * fps;
+  const finiteRange=compiled.clock.mode==='finite'&&['video','proof','views-proof'].includes(mode);
+  if(finiteRange&&startFrame===null)startFrame=secondsToFrames(start,compiled.clock.fps).value;
+  const remaining=finiteRange?loopFrames-startFrame:loopFrames;
+  const defaultFrames=['proof','views-proof'].includes(mode)?Math.min(3*fps,remaining):remaining;
+  const defaultSeconds=finiteRange?defaultFrames/fps:
+      ['proof','views-proof'].includes(mode)?Math.min(3,scene.canvas.loop_seconds):scene.canvas.loop_seconds;
+  const seconds=finite(request.seconds??(request.frame_count===undefined?defaultSeconds:request.frame_count/fps),'seconds');
+  const frames = mode === 'frame' ? 1 : request.frame_count ?? (request.seconds===undefined&&finiteRange?defaultFrames:seconds*fps);
+  if(request.frame_count!==undefined&&seconds!==frames/fps)throw Error('Source frame count and seconds mirror disagree');
   if (!Number.isInteger(frames) || frames < 1 || frames > loopFrames)
     throw Error('Duration must contain an integer frame count within one scene loop');
-  if(compiled.clock.mode==='finite'&&['video','proof','views-proof'].includes(mode)){
-    const startFrame=secondsToFrames(start,compiled.clock.fps).value;
+  if(finiteRange){
     if(startFrame+frames>loopFrames)throw Error('Finite render range must stay within [0,N); endpoint inspection is frame-only');
     if(mode==='video'&&(request.repeats??1)!==1)throw Error('Finite video cannot repeat the shot');
   }
@@ -160,6 +168,7 @@ export async function prepareJob(request, runtime) {
     fps,
     loopFrames,
     start,
+    startFrame,
     mode,
     frames,
     disable,

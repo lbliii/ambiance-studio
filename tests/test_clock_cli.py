@@ -62,9 +62,20 @@ class ClockCLI(unittest.TestCase):
         fixture.write(self.root/'bad.json', {'version': 1, 'operations': [{'op': 'set', 'layer': 'root', 'values': {'local_cycle': 'missing'}}]})
         self.cli('scene', 'apply', self.root/'bad.json', ok=False)
         self.assertEqual(before, (self.project/'scene.json').read_bytes())
-        for args in [('proof', '--start', '2', '--seconds', '1'), ('video', '--repeats', '2'), ('proof', '--start', '.001')]:
+        for args in [('proof', '--start', '2', '--seconds', '1'), ('video', '--repeats', '2'), ('proof', '--start', '.001'),
+                     ('proof', '--start-frame', '60'), ('proof', '--start-frame', '-1'),
+                     ('video', '--start-frame', '1', '--audio', self.root/'unconformed.wav')]:
             self.cli('render', *args, '--out', self.root/'bad-render', ok=False)
             self.assertFalse((self.root/'bad-render').exists())
+
+    def test_exact_source_start_and_remaining_count_survive_raster_transport(self):
+        self.author()
+        report = self.cli('render', 'proof', '--start-frame', '1', '--width', '320', '--out', self.root/'range')
+        self.assertEqual(report['source_start_frame'], 1)
+        self.assertEqual(report['source_end_frame_exclusive'], 60)
+        self.assertEqual(report['frames'], 59)
+        self.assertEqual(report['seconds'], 59/24)
+        self.assertEqual(len(list((self.root/'range/current').glob('*.png'))), 59)
 
     def test_exact_audio_alignment_and_rounding_specimens(self):
         packet = json.loads((ROOT/'tests/fixtures/model-contract/clock-cues.json').read_text())
@@ -94,6 +105,15 @@ class ClockCLI(unittest.TestCase):
         with Image.open(contact) as image:
             r, g, b = image.convert('RGB').getpixel((240, 80))
         self.assertGreater(r, b + 80); self.assertGreater(g, b + 80)  # final cel is yellow, endpoint is blue
+        selected = self.cli('render', 'video', '--start-frame', '1', '--out', self.root/'selected')
+        self.assertEqual(selected['source_start_frame'], 1)
+        self.assertEqual(selected['source_end_frame_exclusive'], 60)
+        self.assertEqual(selected['verification']['decoded_frames'], 59)
+        self.assertEqual(selected['final_frames'], 59)
+        self.assertAlmostEqual(selected['verification']['duration_seconds'], 59/24)
+        with Image.open(self.root/'selected/verification/contacts/decoded-0058.png') as image:
+            r, g, b = image.convert('RGB').getpixel((240, 80))
+        self.assertGreater(r, b + 80); self.assertGreater(g, b + 80)
 
 
 if __name__ == '__main__':

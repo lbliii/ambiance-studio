@@ -45,7 +45,9 @@ def add_parsers(sub):
         if action == 'frame':
             q.add_argument('--time', type=float, default=0)
         elif action not in ['rig-proof', 'look-proof']:
-            q.add_argument('--start', type=float, default=0)
+            start = q.add_mutually_exclusive_group()
+            start.add_argument('--start', type=float, default=0)
+            start.add_argument('--start-frame', type=int, help='Exact integer source frame; exclusive with --start')
             q.add_argument('--seconds', type=float, help='Integer frame duration within one loop; proof default 3 seconds')
         if action == 'proof':
             q.add_argument('--disable', action='append', default=[], metavar='LAYER', help='Add a synchronized comparison with this layer hidden; repeatable')
