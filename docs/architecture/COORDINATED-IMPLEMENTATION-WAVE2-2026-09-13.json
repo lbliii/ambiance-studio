@@ -63,10 +63,10 @@
         "envelopes": "Blank about 10 KiB; populated one subject about 11 KiB.",
         "coverage": "All nine gates, hidden preparation verbs through stage details, pure WF01 assessment, revision-only and exact subject tests.",
         "latest": "Focused pure/stale/custom pipeline/dependency/wrong-view checks pass; native preparation replay uncovered empty initializer foreground part, correction through existing prepare edit retained in replay.",
-        "reported_passes": 20,
+        "reported_passes": 22,
         "cli_contract_passes": 8,
         "public_cli_calls": 39,
-        "next": "Final project-bound action identity and pagination context corrections, replacement committed freeze, then reserved full-native after M2 release."
+        "next": "Frozen full-native run active, then handoff-only records and coordinator combined suite."
       },
       "coordinator_findings": [
         {
@@ -100,6 +100,30 @@
         "source_frozen": true,
         "artifacts": "/tmp/wf2-native-cf94887",
         "environment": "Explicit escalation for local loopback/Core Audio/AVFoundation services"
+      },
+      "public_replay": {
+        "path": "/private/tmp/wf2-replay-cf94887/replay.json",
+        "sha256": "b34c3170a8490ae8e8e741c19329265e7038398ddfd82e56c8730c3668d86256",
+        "source_commit": "cf9488703b491924c9fc622ba1320e6faddc3f28",
+        "coordinator_verified": {
+          "source_files": 97,
+          "command_outputs": 39,
+          "project_files": 123,
+          "mismatches": 0,
+          "pure_unchanged_reads": 22
+        },
+        "combined_source_smoke": {
+          "commands": [
+            "workflow inspect --subject review",
+            "project next --guided --subject review"
+          ],
+          "subject_count": 2,
+          "output_bytes": [
+            15744,
+            15597
+          ],
+          "all_project_file_bytes_unchanged": true
+        }
       }
     },
     {
@@ -432,5 +456,11 @@
     "package_errors": 0,
     "roadmap_tests": 2,
     "remaining": "Final worker workflow validation and metadata; coordinator combined required-native suite."
+  },
+  "combined_validation": {
+    "state": "queued",
+    "after": "W2 explicit full-native slot release",
+    "scope": "All four locally integrated source candidates plus reconciled CLI contracts/capability/backlog documentation; freeze before required-native suite.",
+    "prechecks": "Eight combined CLI contract cases, roadmap checks, package audit and all three feature-family public read smoke checks passed."
   }
 }
