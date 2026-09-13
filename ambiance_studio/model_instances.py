@@ -47,6 +47,10 @@ def records(scene):
         raise ValueError('Unsupported scene model instance contract')
     ids = [identifier(r['instance_id']) for r in container['instances']]
     if len(set(ids)) != len(ids): raise ValueError('Duplicate scene instance IDs')
+    for record in container['instances']:
+        fields(record, ['instance_id', 'pin', 'state', 'placement', 'mount', 'receivers', 'interface', 'mapping',
+                        'sockets', 'root_layer', 'relationships', 'effective_controls', 'selected_variants', 'clock',
+                        'managed_sha256'], 'model instance record')
     return container['instances']
 
 
@@ -113,7 +117,7 @@ def adoption_preview(old, new_interface, operation):
     for key in sorted(set(old['interface']) | set(new_interface)):
         if old['interface'].get(key) != new_interface.get(key):
             conflicts.append({'field': key, 'reason': 'Changed model interface; explicit remapping is outside this adoption subset'})
-    state = copy.deepcopy(old['state']); reset = []; retained = []
+    state = {'controls': [], 'variants': [], **copy.deepcopy(old['state'])}; reset = []; retained = []
     for group, identity_keys in [('controls', ['model_path', 'control_id']), ('variants', ['model_path', 'variant_set_id'])]:
         requested = operation.get('reset_'+group, [])
         if not isinstance(requested, list): raise ValueError('Reset selections must be arrays')
@@ -222,6 +226,7 @@ def apply(project, recipe_file, *, dry_run=False):
                     raise ValueError('Adoption interface conflicts: '+', '.join(r['field'] for r in preview['conflicts']))
             else: state = copy.deepcopy(operation.get('state', old['state'] if old else REST))
             resolved = model_package.bridge(closure, root, state=state)
+            state = {'controls': [], 'variants': [], **state}
             if preview is not None:
                 preview['effective_controls'] = {'before': old['effective_controls'], 'after': resolved['effective_controls']}
                 preview['selected_variants'] = {'before': old['selected_variants'], 'after': resolved['selected_variants']}

@@ -200,6 +200,17 @@ class InstanceTests(unittest.TestCase):
         self.assertEqual(self.scene(), before)
         self.command('model', 'instance', 'inspect')
 
+    def test_minimal_static_state_adopts_defaults_and_unknown_record_fields_reject(self):
+        op = self.place(); op['state'] = {'schema_version': 1, 'pose_id': 'minimal'}
+        self.save([op])
+        adoption = self.update(); adoption.update(op='adopt', package=str(self.package2), package_sha256=digest(self.package2/'model-package.json'))
+        self.save([adoption]); self.command('model', 'instance', 'inspect')
+        scene = self.scene(); record = scene['model_instances']['instances'][0]
+        record['arbitrary_patch'] = {'visible': False}
+        record['managed_sha256'] = model_instances.fingerprint(scene, studio.read(locations(self.project)[1]), record)
+        studio.write(locations(self.project)[0], scene)
+        self.command('model', 'instance', 'inspect', code=2)
+
     def test_drift_stale_pin_and_outside_receiver_envelope_reject(self):
         self.save([self.place(receivers=True)])
         self.command('model', 'instance', 'apply', self.recipe([self.update(placement={'position': [120, 100], 'scale': 1, 'rotation': 0, 'depth': 0})]), code=2)
