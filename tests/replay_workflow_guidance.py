@@ -20,6 +20,8 @@ def snapshot(project):
 def replay(out):
     out=Path(out).resolve();out.mkdir(parents=True,exist_ok=False)
     records=[]
+    source_paths=[*sorted((ROOT/'ambiance_studio').glob('*.py')),ROOT/'studio.py',ROOT/'templates/workflows/painted-film.v1.json',Path(__file__),ROOT/'tests/test_production_coverage.py',ROOT/'tools/asset_tool.py',ROOT/'editor/engine.mjs']
+    source_before={str(p.relative_to(ROOT)):studio.digest(p) for p in source_paths}
     def run(name,project,*args,code=0,pure=False,argv=None,bounded=False):
         argv=argv or [str(ROOT/'ambiance'),'--project',str(project),*map(str,args)]
         before=snapshot(project) if pure else None;started=time.monotonic()
@@ -121,9 +123,10 @@ def replay(out):
     assert partial['stages'][0]['subjects'][0]['criteria']==working_pipeline['gates'][0]['criteria']
     captured=run('36-captured-after-working-damage',project,'workflow','stage','intent','--revision','v1',pure=True)
     assert len(captured['stages'][0]['subjects'][0]['criteria'])==3
-    paths=[*sorted((ROOT/'ambiance_studio').glob('*.py')),ROOT/'studio.py',ROOT/'templates/workflows/painted-film.v1.json',Path(__file__)]
+    source_after={str(p.relative_to(ROOT)):studio.digest(p) for p in source_paths}
+    if source_before!=source_after:raise AssertionError('Implementation source changed during replay; no mixed-source success is published')
     manifest={'format':'ambiance-wf0203-replay','schema_version':1,'ok':True,'commands':records,'project':str(project),
-              'source_files':{str(p.relative_to(ROOT)):studio.digest(p) for p in paths},'project_files':snapshot(project),
+              'source_files':source_before,'project_files':snapshot(project),
               'limits':['Actual native raster, preparation, compiler and encode/decode operations; synthetic painted geometry only.',
                         'No listening, artistic acceptance, human observation, publication or WF-04–07 adoption trial is claimed.']}
     target=out/'replay.json';studio.write(target,manifest)

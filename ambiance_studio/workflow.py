@@ -66,7 +66,7 @@ class Assessment:
 
     def add(self, bundle, issue, op, reason, stage, kind='production', bindings=None, dependencies=(), state=None, **extra):
         subject=bundle['subject']; logical=logical_subject(subject)
-        id='wf1.'+studio.encoded_hash({'subject':logical,'issue':issue,'operation':op})
+        id='wf1.'+studio.encoded_hash({'project':str(self.query.project),'subject':logical,'issue':issue,'operation':op})
         if id in self.actions:
             old=self.actions[id];old['dependencies']=sorted(set(old['dependencies'])|set(dependencies));return id
         source_identity=studio.encoded_hash({str(p):r['sha256'] for ctx in self.query.inputs.values() for p,r in ctx.files.items()})
@@ -88,7 +88,7 @@ class Assessment:
 
     def _inspect(self):
         for subject,ctx,ed in self.subjects:
-            id='subject.'+studio.encoded_hash(logical_subject(subject))
+            id='subject.'+studio.encoded_hash({'project':str(self.query.project),'subject':logical_subject(subject)})
             gates=ctx.get('pipeline') if ctx else None
             gates=gates or []
             if self.stage and self.stage not in {g['id'] for g in gates}:
@@ -296,7 +296,7 @@ class Assessment:
                     # a default delivery entry is never substituted for it.
                     action['subject']={'mode':matches[0]['subject']['mode'],'feedback':row['id'],**row['subject']}
                     action['applies_to_subject_ids']=[b['id'] for b in matches]
-                    action['id']='wf1.'+studio.encoded_hash({'feedback_subject':row['subject'],'feedback':row['id'],'operation':'feedback.inspect'})
+                    action['id']='wf1.'+studio.encoded_hash({'project':str(self.query.project),'feedback_subject':row['subject'],'feedback':row['id'],'operation':'feedback.inspect'})
                     action['argv']=[str(ROOT/'ambiance'),'--project',str(self.query.project),'feedback','inspect',row['id']]
                     action['cwd']=str(ROOT);self.actions[action['id']]=action
             except ERRORS as error:self.diagnostics.append({'component':'feedback','path':str(path),'message':str(error)})
@@ -399,7 +399,8 @@ class Assessment:
             for subject in subjects:
                 controls=subject.pop('controls',{})
                 subject['control_hashes']={k:v['sha256'] for k,v in controls.items()}
-        retrieval=[*base,'inspect',*selection,'--details']+(['--stage',self.stage] if self.stage else [])
+        page_context=['--limit',str(limit),'--subject-offset',str(subject_offset),'--subject-limit',str(subject_limit),*(['--stage',self.stage] if self.stage else []),*(['--kind',kind] if kind else [])]
+        retrieval=[*base,'inspect',*selection,*page_context,'--offset',str(offset),'--details']
         result={'ok':True,'format':FORMAT,'schema_version':VERSION,'project':str(self.query.project),
                 'catalog':{k:self.catalog[k] for k in ['id','schema_version','sha256','path']},
                 'assessment':{'sha256':self.assessment_hash,'complete':self.snapshot['complete'] and not self.diagnostics,
@@ -414,9 +415,9 @@ class Assessment:
                 'limits':['Advisory operations only. Actual pipeline and native coverage retain their separate verdicts.',
                           'No generation, publication, selection change, observation or project mutation was performed.']}
         if result['next_offset'] is not None:
-            result['next_argv']=[*base,'inspect',*selection,'--offset',str(result['next_offset']),'--limit',str(limit),*(['--stage',self.stage] if self.stage else []),*(['--kind',kind] if kind else [])]
+            result['next_argv']=[*base,'inspect',*selection,*page_context,'--offset',str(result['next_offset']),*(['--details'] if details else [])]
         if result['next_subject_offset'] is not None:
-            result['next_subjects_argv']=[*base,'inspect',*selection,'--subject-offset',str(result['next_subject_offset']),'--subject-limit',str(subject_limit),*(['--stage',self.stage] if self.stage else [])]
+            result['next_subjects_argv']=[*base,'inspect',*selection,'--subject-offset',str(result['next_subject_offset']),'--subject-limit',str(subject_limit),'--offset','0','--limit',str(limit),*(['--stage',self.stage] if self.stage else []),*(['--kind',kind] if kind else []),*(['--details'] if details else [])]
         if details:result['inputs']=self.snapshot
         return result
 
@@ -432,6 +433,6 @@ def explain(project, id, expected=None, **selectors):
         raise CommandError('Assessment inputs or selected subject changed; reinspect explicitly. Current assessment: '+assessment.assessment_hash,'stale_assessment',2)
     row=assessment.actions.get(id)
     if row is None:raise CommandError('Action is no longer applicable to this exact subject; reinspect. No substitute action was selected.','stale_action',2)
-    return {'ok':True,'format':'ambiance-workflow-action','schema_version':VERSION,'assessment_sha256':assessment.assessment_hash,
+    return {'ok':True,'format':'ambiance-workflow-action','schema_version':VERSION,'project':str(assessment.query.project),'assessment_sha256':assessment.assessment_hash,
             'catalog_sha256':assessment.catalog['sha256'],'action':row,'subject':row.get('feedback_subject') or next(b['subject'] for b in assessment.bundles if b['id']==row['subject']['subject_id']),
             'operation':operation_details(assessment.catalog['operations'][row['operation']]),'diagnostics':assessment.diagnostics}

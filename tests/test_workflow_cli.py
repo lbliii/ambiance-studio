@@ -125,5 +125,20 @@ class WorkflowCLITests(unittest.TestCase):
         self.assertFalse(any(r['subject'].get('view')=='landscape' for r in reports))
         self.assertTrue(all(r['subject'].get('revision') in [None,'v1'] for r in reports))
 
+    def test_action_pagination_preserves_subject_page_and_subject_paging_resets_action_offset(self):
+        self.capture('v1');self.capture('v2')
+        first=synthetic_delivery(self.p,'portrait','v1','portrait','portrait-v1')
+        second=synthetic_delivery(self.p,'landscape','v2','landscape','landscape-v2');self.select('pair',[first,second])
+        code,output,_=self.invoke('workflow','inspect','--subject','review','--subject-offset','1','--subject-limit','1','--limit','1','--kind','production','--details')
+        self.assertEqual(code,0,output);current=output['data']
+        args=cli.parser().parse_args(current['next_argv'][1:]);self.assertEqual(args.subject_offset,1);self.assertEqual(args.subject_limit,1)
+        self.assertTrue(args.details);self.assertEqual(args.kind,'production')
+        following=cli.run(args);self.assertEqual(current['subjects'],following['subjects'])
+        self.assertNotEqual(current['items'][0]['id'],following['items'][0]['id'])
+        code,output,_=self.invoke('workflow','inspect','--subject','review','--subject-limit','1','--offset','1','--limit','2','--kind','production','--details')
+        args=cli.parser().parse_args(output['data']['next_subjects_argv'][1:])
+        self.assertEqual(args.subject_offset,1);self.assertEqual(args.offset,0);self.assertEqual(args.limit,2)
+        self.assertEqual(args.kind,'production');self.assertTrue(args.details)
+
 
 if __name__=='__main__':unittest.main()

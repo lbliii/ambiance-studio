@@ -199,5 +199,11 @@ class WorkflowTests(unittest.TestCase):
         parsed=cli.parser().parse_args(row['argv'][1:]);self.assertEqual(parsed.revision,'v1')
         result=cli.run(parsed);self.assertEqual(result['revision'],'v1');self.assertEqual(set(result['views']),{'portrait'})
 
+    def test_action_from_another_project_is_not_substituted_without_token(self):
+        other_root=self.root/'another';other_root.mkdir();other=fixture(other_root)
+        action=next(r for r in workflow.Assessment(self.p).ordered if r['operation']=='asset.proof')
+        with self.assertRaises(CommandError) as error:workflow.explain(other,action['id'])
+        self.assertEqual(error.exception.code,'stale_action')
+
 
 if __name__=='__main__':unittest.main()
