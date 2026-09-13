@@ -138,7 +138,25 @@
         "required_native": true,
         "artifacts": null
       },
-      "finite_integration": "Coordinator-only final combined probe on reviewed T3+M3 commits; do not adopt known-failing intermediate clock stack. Static candidate full-native validation proceeds independently."
+      "finite_integration": "Coordinator-only final combined probe on reviewed T3+M3 commits; do not adopt known-failing intermediate clock stack. Static candidate full-native validation proceeds independently.",
+      "public_replay": {
+        "path": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/public-70e0937/evidence.json",
+        "sha256": "e17a73f424b701565aa397d2ead4efd5368dff0776df059a0ece6a159cae8ca3",
+        "coordinator_verified": "Report hash and clean source commit; detailed artifact/source review pending.",
+        "reported_pixels_changed": {
+          "moved": 4527,
+          "variant": 4536,
+          "hidden": 3700
+        },
+        "reported_second_instance_crop": "byte exact",
+        "reported_mount_corner_error_pixels": 2.0097183471152322e-14,
+        "reported_receiver_opacity": {
+          "hidden_source": 0,
+          "unrelated": 0.8
+        },
+        "reported_portability": "Origin/package/source project unavailable; portable inspect/check and captured old revision render passed.",
+        "browser_observation": "Worker inspected13-layer scene with moved/arched lantern; exposed canvas remains deliberate engineering fixture limitation."
+      }
     },
     {
       "stream": "T3",
@@ -247,14 +265,31 @@
           "sha256": "eb36e47f9bba744d7cc6ed45904faa4d3059c962c924c7c380474631d77ddf5c"
         }
       },
-      "candidate_commit_reported": "2e7aefb"
+      "candidate_commit_reported": "2e7aefb",
+      "candidate_commit": "2e7aefb87b3e4911bf19d6117b6cd8e2d9b72cde",
+      "full_validation": {
+        "state": "queued_after_M3",
+        "candidate_commit": "2e7aefb87b3e4911bf19d6117b6cd8e2d9b72cde",
+        "source_frozen": true,
+        "clean_verified_by_coordinator": true,
+        "required_native": true,
+        "artifacts": "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/native-final"
+      },
+      "public_replay": {
+        "path": "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/replay-final/replay.json",
+        "sha256": "13060f7932bc9a3f2656e444d713735b3b6abd51b0dfa76991ce43ff74dbe6d5",
+        "coordinator_verified": "Report hash and clean source commit; detailed artifact/source review pending.",
+        "reported_checks": 18,
+        "reported_limits": "384k rejected before raster; 256/320k requests encode exact96000 presentation samples, estimated simple-tone bitrates differ; explicit unaccepted library use, no promotion/audition."
+      }
     }
   ],
   "shared_owner": "Coordinator reconciles central CLI/output/evidence/backlog/capabilities. W3 owns optional global outcome guidance; M3 model transport and typed model evidence; T3 picture clocks/evaluation; A3 audio measurements/encoding. New shared semantics require a concrete interface and narrow lease, not user permission.",
   "bounded_prerequisite": "Integrated mc/1 and C1/C2 plus corrected renderer permit I1/I2 and independent P03 technical fixtures. Full model Phase 1/P00 seed/story/census/art requirements remain open.",
   "native_test_queue": [
     "W3",
-    "M3"
+    "M3",
+    "A3"
   ],
   "active_native_test_owner": "T3",
   "native_test_policy": "One committed frozen-source full native suite at a time across these tasks. Focused independent checks continue. Coordinator runs final combined required-native suite; reuse validated 516-case baseline.",
