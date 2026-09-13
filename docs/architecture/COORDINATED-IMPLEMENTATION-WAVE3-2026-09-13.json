@@ -131,7 +131,7 @@
       },
       "candidate_commit": "92e64484fb9358827ff1a71879753525ab85aa56",
       "full_validation": {
-        "state": "queued_pending_successor_replay",
+        "state": "queued_after_W3",
         "candidate_commit": "92e64484fb9358827ff1a71879753525ab85aa56",
         "source_frozen": true,
         "clean_verified_by_coordinator": true,
@@ -140,6 +140,17 @@
       },
       "finite_integration": "Coordinator-only final combined probe on reviewed T3+M3 commits; do not adopt known-failing intermediate clock stack. Static candidate full-native validation proceeds independently.",
       "public_replay": {
+        "path": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/public-92e6448/evidence.json",
+        "sha256": "758c2aeb7323cd0d98a6f0df87e55326fd6005b9affa3f1c1da7b2516ac71714",
+        "source_commit": "92e64484fb9358827ff1a71879753525ab85aa56",
+        "coordinator_verified": "Report hash; detailed artifact review pending.",
+        "observations": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/observations-92e6448.json",
+        "observations_sha256": "3bd49be059653f56b54732dabf59bddf9248d0c3d6c0ee49d93170d0d997fdce",
+        "package_audit": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/package-audit-92e6448.json"
+      },
+      "successor_fix": "Committed92e6448 normalizes missing controls/variants and rejects unknown record fields; coordinator reviewed the17-line source/test addition and verified clean tree. Fresh public replay on successor is running.",
+      "queue_policy": "Keep place if clean successor/replay ready at slot opening; otherwise let ready A3 proceed. No full native has run for M3.",
+      "historical_public_replay": {
         "path": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/public-70e0937/evidence.json",
         "sha256": "e17a73f424b701565aa397d2ead4efd5368dff0776df059a0ece6a159cae8ca3",
         "coordinator_verified": "Report hash and prior committed HEAD verified. Current working tree has a subsequent bounded fix in progress; this replay remains tied only to70e0937.",
@@ -156,9 +167,7 @@
         },
         "reported_portability": "Origin/package/source project unavailable; portable inspect/check and captured old revision render passed.",
         "browser_observation": "Worker inspected13-layer scene with moved/arched lantern; exposed canvas remains deliberate engineering fixture limitation."
-      },
-      "successor_fix": "Committed92e6448 normalizes missing controls/variants and rejects unknown record fields; coordinator reviewed the17-line source/test addition and verified clean tree. Fresh public replay on successor is running.",
-      "queue_policy": "Keep place if clean successor/replay ready at slot opening; otherwise let ready A3 proceed. No full native has run for M3."
+      }
     },
     {
       "stream": "T3",
@@ -283,6 +292,15 @@
         "coordinator_verified": "Report hash and clean source commit; detailed artifact/source review pending.",
         "reported_checks": 18,
         "reported_limits": "384k rejected before raster; 256/320k requests encode exact96000 presentation samples, estimated simple-tone bitrates differ; explicit unaccepted library use, no promotion/audition."
+      },
+      "supplemental_peak_proof": {
+        "path": "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/high-native/high-peak-observation.json",
+        "sha256": "563c56b7ff04a4ab5272ddf92962e28989776479947135f472951cd746061cf7",
+        "render_report_sha256": "cbb4a4e94ef641d6548412dfd8b00c1dfc5d39f7ac35169ffc6fb4d5a91b7e79",
+        "reported_samples": 9600,
+        "reported_decoded_float_max": 1.009989619255066,
+        "reported_float_true_peak_dbtp": 3.1122539839,
+        "meaning": "Worker reports float overshoots retained while legacy PCM16 clamps; source unchanged, no audition. Coordinator verified observation record hash only."
       }
     }
   ],
