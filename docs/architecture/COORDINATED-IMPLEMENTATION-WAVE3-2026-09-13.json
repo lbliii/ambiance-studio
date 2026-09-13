@@ -88,7 +88,22 @@
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
       "open_design_review": "Scene/catalog pointer commit may fit, but existing finish() mutates active scene path: separate immutable packages/staging from mutable active scene, preserve/rebase catalog-relative paths, prove ordinary edit/restore/view/render/revision after pointer switch and failed-write recovery.",
       "transaction_refinement": "Active generation contains mutable working scene; captured previous config/scene and contained model packages remain immutable. Existing edit/restore/view/render/revision compatibility is still required.",
-      "bounded_lowering_gap": "C1 static constant-cell keys at 0/1 seconds fail a host with a 2-second duration; this is an endpoint duration mismatch, not fps arithmetic. Granted constant-cell endpoints mapped to validated host interval, rejecting animated inputs beyond subset; actual finite-host compatibility remains required."
+      "bounded_lowering_gap": "C1 static constant-cell keys at 0/1 seconds fail a host with a 2-second duration; this is an endpoint duration mismatch, not fps arithmetic. Granted constant-cell endpoints mapped to validated host interval, rejecting animated inputs beyond subset; actual finite-host compatibility remains required.",
+      "focused_progress": {
+        "state": "focused_instance_checks_passed_typed_revision_mapping_fix_in_progress",
+        "source": "worker-reported tests; current source reviewed for alias issue, not a frozen handoff",
+        "reported_checks": [
+          "dry/save/retry",
+          "independent move/variant/hide with receiver off",
+          "keep-world mount",
+          "stale/late/interrupt rejection",
+          "interface conflicts",
+          "ordinary scene edit/restore",
+          "generation asset-root validation",
+          "actual raster provider wrapper"
+        ],
+        "next": "Tie namespaced runtime asset identity to exact compiler pack from model closure/state before revision alias acceptance; complete public revision/reuse replay and freeze."
+      }
     },
     {
       "stream": "T3",
@@ -201,6 +216,13 @@
       "state": "narrow_fix_leased",
       "observed_failure": "Actual saved generation catalog fails kit.validate and tools/check-scene.mjs because catalog.parent.parent is assumed asset root. Coordinator inspected both and nested attachment audit.",
       "action": "Pass explicit selected project root through project check and nested validators, preserving legacy inferred fallback and containment/hash diagnostics. Keep separate from T3 finite-cycle guards; validate new generation, legacy layout and invalid source cases."
+    },
+    {
+      "id": "model-runtime-compiler-alias",
+      "owner": "M3",
+      "state": "coordinator_finding_fix_requested",
+      "finding": "Current set-based Collector id skip is populated from record mapping after fingerprint and independent package checks; no semantic relation to expected compiler identity is established.",
+      "required_fix": "Derive explicit runtime-to-compiler identity and pinned pack/recipe mapping from exact closure/state using shared lowering. Preserve other checks; reject swapped mapping/different valid pack even after managed fingerprint recomputation and reject ordinary non-model alias."
     }
   ],
   "blocking_decisions": [],
