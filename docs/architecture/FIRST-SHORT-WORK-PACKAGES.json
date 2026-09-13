@@ -1,12 +1,12 @@
 {
   "format": "first-short-work-packages",
   "schema_version": 1,
-  "updated": "2026-09-12",
+  "updated": "2026-09-13",
   "meaning": "Planning backlog only. Not a runtime schema, scheduler, task launch, production approval or provider-spending authorization.",
   "milestone_roadmap": "docs/architecture/FIRST-SHORT-ROADMAP.md",
   "rationale": "docs/architecture/FIRST-SHORT-PARALLEL-WORK.md",
   "status_owner": "Coordinator updates package status here; milestone status stays in FIRST-SHORT-ROADMAP.md.",
-  "readiness": "start_after permits bounded implementation. accept_after must be integrated and exercised before acceptance. Empty thread_id and baseline_commit mean undispatched. P11 represents all later disjoint shot instances.",
+  "readiness": "start_after permits bounded implementation. accept_after must be integrated and exercised before acceptance. Empty thread_id and baseline_commit mean undispatched. P11 represents all later disjoint shot instances. P15/P16 are appended identities for work that joins P10, not post-film packages.",
   "dispatch_context_required": [
     "Exact integrated starting commit containing planning/contracts",
     "Actual saved-project ID/host and chosen isolated worktree",
@@ -16,7 +16,7 @@
     "Recorded scope, selected story/art/audio decisions and generation authority",
     "Public CLI validation and exact-artifact acceptance expectations"
   ],
-  "common_prompt": "Read the applicable AGENTS.md, stage skill, milestone roadmap and this package's versioned contracts. Work only within the assigned files and candidate media paths. Consume shared evaluator/library APIs. Do not redefine another package's schema or edit canonical project state unless you are its named owner. Coordinate shared CLI/bridge hooks with the integrator. Keep code, integrated capability and observed artistic acceptance distinct. Preserve source-quality media and existing reviewed versions. Use recorded generation authority. Return exact changes/commits, interface version, CLI replay, required validation results/skips, artifact paths/hashes, remaining issues and downstream impact. Do not update roadmap/package statuses or present the canonical final review unless assigned that ownership.",
+  "common_prompt": "Read the applicable AGENTS.md, stage skill, milestone roadmap and this package's versioned contracts. Work only within the assigned files and candidate media paths. Consume shared evaluator/library APIs. Do not redefine another package's schema or edit canonical project state unless you are its named owner. Coordinate shared CLI/bridge hooks with the integrator. Keep code, integrated capability and observed artistic acceptance distinct. Preserve source-quality media and existing reviewed versions. Use recorded generation authority. Return exact changes/commits, interface version, CLI replay, required validation results/skips, artifact paths/hashes, remaining issues and downstream impact. Do not update roadmap/package statuses or present the canonical final review unless assigned that ownership. Follow AGENT-ANIMATION-VISION.md: agents author editable traditional animation through familiar conventions, inspect actual picture/sound and perform scoped revisions. Generated video is optional scoped source/reference. Use exact observations and retain perception limitations.",
   "tasks": [
     {
       "id": "P00",
@@ -32,7 +32,7 @@
         4,
         7
       ],
-      "prompt": "Establish a shared, versioned interface packet for the first-short work packages. Resolve source/character coordinates, immutable character and drawing IDs, finite-shot and legacy-loop timing, source/shot/edit offsets, frame/sample rounding, mouth-cue and take records, sequence selection, and film-level receipt identity. Use current library/evaluator contracts; document actual required extensions and tiny positive/negative fixtures. Capture one baseline that includes the roadmap, research, work packages and contracts. Resolve the actual production-project location and private-media access before dispatch. Own common CLI/bridge/schema registration and integration. Do not implement every feature or begin paid production as part of this package. At restart, use STUDIO-PLAN-ALIGNMENT.md to reconcile reusable-model/instance and character/part IDs, local/source coordinates, nested dependencies, allowed overrides and typed proof identity with the model owner. Register native workflow hooks through the settled command/output adapters; do not introduce a competing assembly graph or make the full model-library rollout a prerequisite for independent story/timing work.",
+      "prompt": "Establish a shared, versioned interface packet for the first-short work packages. Resolve source/character coordinates, immutable character and drawing IDs, finite-shot and legacy-loop timing, source/shot/edit offsets, frame/sample rounding, mouth-cue and take records, sequence selection, and film-level receipt identity. Use current library/evaluator contracts; document actual required extensions and tiny positive/negative fixtures. Capture one baseline that includes the roadmap, research, work packages and contracts. Resolve the actual production-project location and private-media access before dispatch. Own common CLI/bridge/schema registration and integration. Do not implement every feature or begin paid production as part of this package. At restart, use STUDIO-PLAN-ALIGNMENT.md to reconcile reusable-model/instance and character/part IDs, local/source coordinates, nested dependencies, allowed overrides and typed proof identity with the model owner. Register native workflow hooks through the settled command/output adapters; do not introduce a competing assembly graph or make the full model-library rollout a prerequisite for independent story/timing work. Adopt AGENT-ANIMATION-VISION.md: settle a small animator vocabulary and worked shot for model sheets, layouts, key poses/breakdowns, exposure sheets, pencil tests and retakes. Map those concepts to existing canonical owners without adding a second timeline or model graph. Coordinate P15 authoring and P16 dailies with native clock/cue/render and feedback/review owners; preserve observation identity and explicit sampling/coverage.",
       "result": "Versioned interface packet, shared fixture identities, integration baseline and dispatch context.",
       "status": "planned",
       "thread_id": null,
@@ -50,7 +50,7 @@
       "milestones": [
         1
       ],
-      "prompt": "Develop a complete approximately 60-second vintage-inspired mystery-comedy using the first-short roadmap as the working brief. Produce the script, timed shot list, rough full-minute animatic, requirements-to-shot map, continuity notes and required character views/poses/props/set angles. Treat The Ghost Light premise and cast as working proposals. Use temporary or available sources within recorded authority. Coordinate one canonical project initialization/address with the coordinator; keep candidate story material in your own work package until adopted. Do not author new runtime schemas or change required scope to accommodate missing tools.",
+      "prompt": "Develop a complete approximately 60-second vintage-inspired mystery-comedy using the first-short roadmap as the working brief. Produce the script, timed shot list, rough full-minute animatic, requirements-to-shot map, continuity notes and required character views/poses/props/set angles. Treat The Ghost Light premise and cast as working proposals. Use temporary or available sources within recorded authority. Coordinate one canonical project initialization/address with the coordinator; keep candidate story material in your own work package until adopted. Do not author new runtime schemas or change required scope to accommodate missing tools. Plan the requested TikTok pilot in primary 9:16 at 1080 by 1920, with final format/fps recorded in the adopted brief; a landscape companion is an explicit additional staging decision. Supply model/pose demands, layout, key/breakdown intent, exposure intent and continuity using P00 terminology. Shot lengths follow the story, not provider clip limits.",
       "result": "Full-minute story/animatic and shot demand list; no missing required action.",
       "status": "planned",
       "thread_id": null,
@@ -72,7 +72,7 @@
       "milestones": [
         2
       ],
-      "prompt": "Build the smallest CLI character-package and reconstruction-proof workflow needed for the first short. Preserve complete source-character proportions through crop/compiler mappings, padding, pivots, placement and attachments. Prefer existing compound preparation, source placement and rig proofs. Use independent fixtures to expose wrong scale, offset, hidden duplicates, and inconsistent pose registration. Return source/assembly overlays, silhouettes, joint crops and exact proof paths with explicit limits. Coordinate shared CLI hooks with the coordinator. This package establishes technical support; the human and dog art packages separately establish actual character quality. Consume the P00-aligned model/registration foundation and extend it with character-specific drawings and controls. Use source preparation when the art needs shared reference/backing separation; already-isolated art may go directly through registered compiler/scene operations. Exercise the shared move/hide and contamination cases without claiming proposed model commands are already callable.",
+      "prompt": "Build the smallest CLI character-package and reconstruction-proof workflow needed for the first short. Preserve complete source-character proportions through crop/compiler mappings, padding, pivots, placement and attachments. Prefer existing compound preparation, source placement and rig proofs. Use independent fixtures to expose wrong scale, offset, hidden duplicates, and inconsistent pose registration. Return source/assembly overlays, silhouettes, joint crops and exact proof paths with explicit limits. Coordinate shared CLI hooks with the coordinator. This package establishes technical support; the human and dog art packages separately establish actual character quality. Consume the P00-aligned model/registration foundation and extend it with character-specific drawings and controls. Use source preparation when the art needs shared reference/backing separation; already-isolated art may go directly through registered compiler/scene operations. Exercise the shared move/hide and contamination cases without claiming proposed model commands are already callable. Expose supported character views, named drawing substitutions, poses and controls for P15. Model/pose-sheet inspection must identify the exact drawings used by the scene. Preserve whole-pose replacements and selective articulation without assuming a universal puppet or automatic in-between generation.",
       "result": "CLI fixture replay, validated registration/package contract and reconstruction/pose evidence; no claim of accepted character art.",
       "status": "planned",
       "thread_id": null,
@@ -94,7 +94,7 @@
       "milestones": [
         3
       ],
-      "prompt": "Extend the shared scene evaluator with the agreed finite-shot clock and explicit local cycles while preserving existing loop scenes. Own common time conversion, held final poses, source/shot/edit frame boundaries, output sampling, and timing diagnostics. Use unequal durations, out-of-order seeks, discrete cel holds, attachments and local loops as fixtures. Supply the public CLI path through coordinator-owned registration. Coordinate with sequence rendering on the evaluator API; do not implement a second renderer or take ownership of movie assembly/delivery. Validate a proposed 24 fps profile where relevant and record what still requires native output validation.",
+      "prompt": "Extend the shared scene evaluator with the agreed finite-shot clock and explicit local cycles while preserving existing loop scenes. Own common time conversion, held final poses, source/shot/edit frame boundaries, output sampling, and timing diagnostics. Use unequal durations, out-of-order seeks, discrete cel holds, attachments and local loops as fixtures. Supply the public CLI path through coordinator-owned registration. Coordinate with sequence rendering on the evaluator API; do not implement a second renderer or take ownership of movie assembly/delivery. Validate a proposed 24 fps profile where relevant and record what still requires native output validation. Supply P15 with canonical frame-addressed exposure and scoped timing semantics, including mixed ones/twos/long holds independent of output fps. P15 must consume this conversion/evaluation contract instead of inventing its own clock.",
       "result": "Integrated evaluator/timing API, CLI sampling proof and legacy-loop regressions.",
       "status": "planned",
       "thread_id": null,
@@ -117,7 +117,7 @@
       "milestones": [
         4
       ],
-      "prompt": "Implement a provider-neutral saved-audio take record, timed mouth-cue import, character drawing-map validation, manual cue overrides and stale-take diagnostics. Use fixtures and available audio; do not spend credits or assume the connector returns undocumented alignment. Accept a Rhubarb-style cue artifact without requiring a provider. Treat character/word timestamps as optional evidence rather than phonemes. Consume the shared clock conversion and character drawing map; retain actual sample/frame offsets and report cues lost to quantization. Model laughter as authored events, not fabricated words. Prove missing drawings, mismatched audio, timing offsets and a line replacement. Final acceptance requires real integrated P02/P03 APIs and a public CLI replay.",
+      "prompt": "Implement a provider-neutral saved-audio take record, timed mouth-cue import, character drawing-map validation, manual cue overrides and stale-take diagnostics. Use fixtures and available audio; do not spend credits or assume the connector returns undocumented alignment. Accept a Rhubarb-style cue artifact without requiring a provider. Treat character/word timestamps as optional evidence rather than phonemes. Consume the shared clock conversion and character drawing map; retain actual sample/frame offsets and report cues lost to quantization. Model laughter as authored events, not fabricated words. Prove missing drawings, mismatched audio, timing offsets and a line replacement. Final acceptance requires real integrated P02/P03 APIs and a public CLI replay. Expose selected-take and cue corrections to P15 exposure inspection and P16 listening/visual packets. A timing edit must disclose affected cues and selected audio; no silent take replacement or duplicate editable cue state.",
       "result": "Editable cue-to-cel path bound to selected audio and character identity, with targeted failure checks.",
       "status": "planned",
       "thread_id": null,
@@ -139,7 +139,7 @@
       "milestones": [
         3
       ],
-      "prompt": "Implement finite-shot sequence selection, preview and native movie assembly over the integrated clock. Own the sequence renderer and audio composition boundaries. Reuse the shared evaluator/drawing code and native media backend. Prove two unequal shots, exact cuts, source in/out frames, edit offsets, final-frame behavior and synchronized audio, including a duration edit. Produce the agreed immutable receipt for the film-evidence adapter. Keep the CLI usable without browser editing and inspect actual preview/encoded results. Preserve existing rendering behavior; do not claim loop-era single-scene receipts certify a multi-shot film.",
+      "prompt": "Implement finite-shot sequence selection, preview and native movie assembly over the integrated clock. Own the sequence renderer and audio composition boundaries. Reuse the shared evaluator/drawing code and native media backend. Prove two unequal shots, exact cuts, source in/out frames, edit offsets, final-frame behavior and synchronized audio, including a duration edit. Produce the agreed immutable receipt for the film-evidence adapter. Keep the CLI usable without browser editing and inspect actual preview/encoded results. Preserve existing rendering behavior; do not claim loop-era single-scene receipts certify a multi-shot film. Supply P15 pencil-test frame/neighbor inspection and P16 exact sequence/view/audio selection through the same evaluator and receipts. Expose actual inspected frame/sample mappings; do not infer playback or listening from artifact creation.",
       "result": "Public CLI two-shot replay, synchronized preview/video and sequence receipt.",
       "status": "planned",
       "thread_id": null,
@@ -162,7 +162,7 @@
         3,
         7
       ],
-      "prompt": "Add the agreed versioned film-level input identity, revision/receipt validation, aggregate required-action coverage and delivery presentation adapters. Start with fixed contract specimens, but complete only against a real P05 output. Reuse existing revision, coverage and studio-library owners rather than duplicating their rules. Prove detection of a changed shot, swapped audio, missing required action, stale edit and wrong receipt. Preserve existing editions and loop-film workflows. Supply an exact watch-link path for a valid multi-shot review and honest outstanding observations; a schema fixture is not a finished integration. Align future model/instance version and override references with the shared proof/dependency owner; workflow guidance consumes these results and does not recreate coverage or assembly state. Use the extracted revision, edition, coverage and iteration services rather than extending obsolete monolithic ownership.",
+      "prompt": "Add the agreed versioned film-level input identity, revision/receipt validation, aggregate required-action coverage and delivery presentation adapters. Start with fixed contract specimens, but complete only against a real P05 output. Reuse existing revision, coverage and studio-library owners rather than duplicating their rules. Prove detection of a changed shot, swapped audio, missing required action, stale edit and wrong receipt. Preserve existing editions and loop-film workflows. Supply an exact watch-link path for a valid multi-shot review and honest outstanding observations; a schema fixture is not a finished integration. Align future model/instance version and override references with the shared proof/dependency owner; workflow guidance consumes these results and does not recreate coverage or assembly state. Use the extracted revision, edition, coverage and iteration services rather than extending obsolete monolithic ownership. Integrate P16 observation references through existing typed feedback/review services. Keep measured checks, agent/model observations and required human verdicts distinct; no automatic gate passage or second dailies verdict store.",
       "result": "Validated sequence-to-review/delivery path and aggregate readiness against real media.",
       "status": "planned",
       "thread_id": null,
@@ -267,7 +267,7 @@
     },
     {
       "id": "P10",
-      "title": "Integrate and direct the acting comparison",
+      "title": "Integrate acting, dailies and directing revisions",
       "start_after": [
         "P03",
         "P04",
@@ -275,7 +275,9 @@
         "P07H",
         "P07D",
         "P08",
-        "P09"
+        "P09",
+        "P15",
+        "P16"
       ],
       "accept_after": [
         "P03",
@@ -284,15 +286,17 @@
         "P07H",
         "P07D",
         "P08",
-        "P09"
+        "P09",
+        "P15",
+        "P16"
       ],
       "lane": "integration",
       "owner": "performance director",
       "milestones": [
         4
       ],
-      "prompt": "Assemble an 8\u201312-second passage from the adopted full-minute story using the integrated character, timing, cue and sequence tools plus selected artwork/audio. Compare whole-pose/facial substitutions with selective articulation while holding audio, framing and intended action constant. Include speaking/listening, the laugh and a prop gesture. Inspect proportions, closures, pauses, joints and contacts at normal speed. Demonstrate a reaction delay and a line replacement. Publish the chosen performance method, exact proof and defects. Keep the entire minute's required scope open and return fixes to the relevant package owner.",
-      "result": "Observed acting comparison, selected technique and reusable shot/performance handoff.",
+      "prompt": "Assemble an 8\u201312-second passage from the adopted full-minute story using the integrated character, timing, cue and sequence tools plus selected artwork/audio. Compare whole-pose/facial substitutions with selective articulation while holding audio, framing and intended action constant. Include speaking/listening, the laugh and a prop gesture. Inspect proportions, closures, pauses, joints and contacts at normal speed. Demonstrate a reaction delay and a line replacement. Publish the chosen performance method, exact proof and defects. Keep the entire minute's required scope open and return fixes to the relevant package owner. Integrate P15/P16: author and revise the performance through animation conventions; inspect actual playback, consecutive-frame detail and selected audio; record one actionable finding and carry it through a bounded correction and re-review. Preserve exact before/after media and state diffs for that correction, the reaction delay and line replacement. Record manual coordinate/cue work, model/tool usage and human interventions. An uninspected interval or unavailable listening/motion capability remains an explicit gap.",
+      "result": "Observed acting comparison plus animation-authoring and dailies correction loop, selected technique, exact revision proofs and measured effort.",
       "status": "planned",
       "thread_id": null,
       "baseline_commit": null,
@@ -314,7 +318,7 @@
         5
       ],
       "instance_policy": "Instantiate after the shot list is adopted. Allocate exclusive shot IDs, usually 2\u20133 shots per task, grouping shared acting/continuity. P11 completes only when every instance is accepted.",
-      "prompt": "Animate only the exact shot IDs supplied at dispatch using the captured character/set/audio versions and performance conventions. Deliver saved scenes/tracks, preview movies, explicit first/last character and prop states, and unresolved issues. Preserve all actions assigned to these shots. Do not change another shot, shared asset versions, master edit, canonical catalog or final review selection. Propose timing/continuity changes to the director. Inspect actual motion at intended scale; technical checks do not replace observation.",
+      "prompt": "Animate only the exact shot IDs supplied at dispatch using the captured character/set/audio versions and performance conventions. Deliver saved scenes/tracks, preview movies, explicit first/last character and prop states, and unresolved issues. Preserve all actions assigned to these shots. Do not change another shot, shared asset versions, master edit, canonical catalog or final review selection. Propose timing/continuity changes to the director. Inspect actual motion at intended scale; technical checks do not replace observation. Use the proven exposure/pose authoring and dailies loop. Retain actionable frame-referenced corrections and inspected coverage for each shot, with human interventions and any demonstrated custom-mechanics gaps. Full-minute acceptance requires editable authored animation; unrelated generated replacement clips do not fulfill missing required actions.",
       "result": "All assigned shots animated with compatible boundary states; all batch instances accounted for.",
       "status": "planned",
       "thread_id": null,
@@ -365,7 +369,7 @@
       "milestones": [
         5
       ],
-      "prompt": "Assemble every accepted shot batch and the draft soundtrack into one complete approximately 60-second review movie. Own the master edit and canonical project review records for this phase. Check all required actions, continuity, character scale, screen direction, eyelines and prop state. Present the exact movie, identify required corrections by shot/asset/audio source, and capture the chosen edit for finishing. Do not call isolated or placeholder shots a complete rough film. Package review observations without inventing human feedback.",
+      "prompt": "Assemble every accepted shot batch and the draft soundtrack into one complete approximately 60-second review movie. Own the master edit and canonical project review records for this phase. Check all required actions, continuity, character scale, screen direction, eyelines and prop state. Present the exact movie, identify required corrections by shot/asset/audio source, and capture the chosen edit for finishing. Do not call isolated or placeholder shots a complete rough film. Package review observations without inventing human feedback. Report the complete minute as an agent-animation trial: supported operations, editable source state, observed continuity, unresolved dailies findings and manual interventions. Preserve required scope while exposing artistic and perception limits.",
       "result": "Complete rough movie, current review selection and bounded finishing notes.",
       "status": "planned",
       "thread_id": null,
@@ -388,26 +392,80 @@
         6,
         7
       ],
-      "prompt": "Complete the recorded picture corrections through the owning shot/asset packages, conform final dialogue/music/effects to the captured edit, and verify the intended 60-second 1080p delivery. Acquire explicit ownership of final sound/session and review records before mutation. Run affected technical/coverage checks, fully decode the movie, inspect actual picture and sound, and preserve sources/stems/cues/revisions. Present exact/current studio watch links and outstanding human checks honestly. Demonstrate a second-shot character reuse or retained reuse evidence. This task is complete only when the full film and reproducible source package meet the roadmap, not when the encoder succeeds.",
-      "result": "Finished verified one-minute example, reproducible source package, exact watch links and truthful review status.",
+      "prompt": "Complete the recorded picture corrections through the owning shot/asset packages, conform final dialogue/music/effects to the captured edit, and verify the intended 60-second 1080p delivery. Acquire explicit ownership of final sound/session and review records before mutation. Run affected technical/coverage checks, fully decode the movie, inspect actual picture and sound, and preserve sources/stems/cues/revisions. Present exact/current studio watch links and outstanding human checks honestly. Demonstrate a second-shot character reuse or retained reuse evidence. This task is complete only when the full film and reproducible source package meet the roadmap, not when the encoder succeeds. Extend the directing/reuse check with a fresh note that changes the performance while preserving explicitly retained dialogue, contact or staging. Show the actual before/after result and scoped state changes; preserve the earlier accepted version. Give an agent a second-shot task using only the saved character/production handoff, with a different line or action, without reconstructing unchanged character parts. A fresh operator context does not require a new task. Record first/second-shot setup, revision effort, human interventions and model/tool usage; do not infer a speedup from reuse alone.",
+      "result": "Finished verified one-minute example, reproducible sources, exact watch links, fresh directing/second-shot reuse evidence and truthful review status.",
       "status": "planned",
       "thread_id": null,
       "baseline_commit": null,
       "evidence": [],
       "work_kind": "film_production"
+    },
+    {
+      "id": "P15",
+      "title": "Build animation-convention authoring and pencil-test inspection",
+      "start_after": [
+        "P00"
+      ],
+      "accept_after": [
+        "P02",
+        "P03",
+        "P04",
+        "P05"
+      ],
+      "lane": "engineering",
+      "owner": "animation authoring",
+      "milestones": [
+        2,
+        3,
+        4
+      ],
+      "prompt": "Implement the bounded animation-authoring slice in AGENT-ANIMATION-VISION.md. Begin by exercising current scene track/apply/timing, character and render contracts on a worked shot and record any concrete unsupported behavior. Expose batchable key-pose/breakdown selection, drawing exposures with mixed ones/twos/long holds, scoped timing edits and human-readable exposure inspection. Consume P02 drawing/control IDs, P03 finite clocks and P04 cue ownership. Use P05/shared renderer for pencil-test playback, exact-frame flipping and neighboring-drawing/onion-skin comparisons. Canonical scenes/tracks/cues remain authoritative; no second editable X-sheet, evaluator or assembly graph. Prove author/inspect/save/reload/revise/render round-trip, stale-input rejection, missing-drawing errors, cue impacts and unchanged unrelated tracks. Early fixtures can precede consumer implementations; final acceptance needs integrated P02-P05 public CLI replays and actual raster/preview inspection. Publish a small agent animation method/example covering anticipation, spacing, holds and readable reactions through demonstrated operations. General deformation, automatic in-between drawing and new providers are outside this slice; artwork gaps return to asset preparation. P10 owns integrated artistic acceptance.",
+      "result": "Native authoring/inspection replay with an editable exposure/pose example, pencil-test comparisons, scoped revision proof and an agent method grounded in actual operations.",
+      "status": "planned",
+      "thread_id": null,
+      "baseline_commit": null,
+      "evidence": [],
+      "work_kind": "tool_development"
+    },
+    {
+      "id": "P16",
+      "title": "Build visual and listening dailies with observed correction trials",
+      "start_after": [
+        "P00"
+      ],
+      "accept_after": [
+        "P05"
+      ],
+      "lane": "engineering",
+      "owner": "dailies and perception",
+      "milestones": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "prompt": "Implement the bounded dailies slice in AGENT-ANIMATION-VISION.md over existing rig/activity/frame proofs, early review packets, exact media and feedback/review services. Exercise the nearest current operations before adding missing adapters. Select exact shot/revision/view/audio inputs with model/reference sheets, intended action, normal-speed playback, targeted consecutive frames/neighbor overlays/contact crops and audio intervals. Record actual frame/sample coverage and observer/model/tool identity; reuse available multimodal capabilities without requiring separate providers or agents. Return localized expected-versus-observed findings, uncertainty/uninspected material and a proposed owner through existing feedback/review contracts or a narrowly coordinated typed extension. Do not introduce a second verdict store, infer human observation or automatically pass gates. Validate with clean and deliberately defective controls plus a held-out shot/angle: include a brief between-samples defect, apparent contact, registration drift and cue offset; hide defect labels from the observer and report misses/false alarms and actual coverage. Perform one real find/fix/review cycle using existing native correction operations; P10 later integrates P15 authoring. Final acceptance requires actual P05 input/receipt integration, public CLI replay, observed motion/listening appropriate to each claim and retained before/after artifacts. If a required perception capability is unavailable, keep the affected acceptance open and continue packet/independent work. No paid generation, generic vision platform, automatic segmentation or universal quality judge is implied.",
+      "result": "Exact dailies packet/observation integration, clean/defective and held-out perception results, a real correction/re-review example, and explicit inspection limitations.",
+      "status": "planned",
+      "thread_id": null,
+      "baseline_commit": null,
+      "evidence": [],
+      "work_kind": "tool_development"
     }
   ],
   "work_model": {
     "deliverables": [
-      "Reusable narrative-animation tool capabilities",
-      "Complete one-minute short produced and revised through those capabilities"
+      "Reusable tools and agent methods for traditional animation authoring, visual/listening review and scoped revisions",
+      "Complete editable one-minute short produced, observed, directed and reused through those capabilities"
     ],
     "engineering_packages": [
       "P02",
       "P03",
       "P04",
       "P05",
-      "P06"
+      "P06",
+      "P15",
+      "P16"
     ],
     "new_capabilities": [
       "P03",
@@ -416,9 +474,11 @@
     ],
     "extensions_to_existing_foundations": [
       "P02",
-      "P06"
+      "P06",
+      "P15",
+      "P16"
     ],
-    "approach": "Build known missing capabilities using fixtures; run early real-art/audio trials during preparation; return observed weaknesses to their owners; use P10 as combined acceptance before parallel shot production."
+    "approach": "Build the known character/clock/cue/sequence gaps with fixtures; add P15 animation-convention authoring and P16 exact visual/listening dailies over native owners. Run early real-art/audio and observation trials, return defects to their owners, integrate acting/correction in P10, then complete the minute and a measured directing/second-shot reuse check. Preserve all required actions and statuses; this plan launches no work."
   },
   "feedback_loop": {
     "starts": "During character reconstruction and voice/gesture trials, before P10 and before full-film production",
@@ -429,7 +489,10 @@
       "Manual correction effort",
       "Classification: artwork, authoring, renderer/timing, or observation gap",
       "Responsible package",
-      "Bounded proposed fix and expected downstream impact"
+      "Bounded proposed fix and expected downstream impact",
+      "Observer/model/tool identity and actual inspected frame/audio coverage",
+      "Perception uncertainty, false alarms/misses when known, and human intervention",
+      "Exact before/after media and scoped state changes for a performed correction"
     ],
     "recheck": [
       "Repeat the original case",
@@ -440,5 +503,6 @@
     "scheduling": "Follow up with the owning package; do not introduce circular start_after/accept_after dependencies or retain stale acceptance evidence.",
     "scope": "Extra deformation, pose inference or contact solvers require a demonstrated need and explicit impact assessment; repair source drawings when the defect is in the art."
   },
-  "alignment": "docs/architecture/STUDIO-PLAN-ALIGNMENT.md"
+  "alignment": "docs/architecture/STUDIO-PLAN-ALIGNMENT.md",
+  "vision": "docs/architecture/AGENT-ANIMATION-VISION.md"
 }

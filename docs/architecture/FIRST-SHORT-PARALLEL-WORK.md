@@ -1,21 +1,22 @@
 # Parallel work plan for the first short
 
-September 12, 2026. This plan decomposes the [first-short roadmap](FIRST-SHORT-ROADMAP.md) into bounded future tasks. No tasks have been launched. The [work-package backlog](FIRST-SHORT-WORK-PACKAGES.json) holds package IDs, status, dependencies, acceptance results and task-specific prompts. The roadmap continues to own film milestone status; the research owns the supporting rationale.
+Updated September 13, 2026 for [agent-operated traditional animation](AGENT-ANIMATION-VISION.md). This plan decomposes the [first-short roadmap](FIRST-SHORT-ROADMAP.md) into bounded future tasks. No first-short packages have been launched. The [work-package backlog](FIRST-SHORT-WORK-PACKAGES.json) holds package IDs, status, dependencies, acceptance results and task-specific prompts. The roadmap continues to own film milestone status; the research owns the supporting rationale.
 
 **Recommended launch pattern:** a short shared-contract setup, then four concurrent tracks: story/animatic, character tools, finite-shot timing and audio/mouth tooling. The story track can start while the common technical packet is being prepared. Engineering can use independent fixtures before the film's drawings exist. Final production art and performance choices follow the adopted storyboard.
 
-The five software-development packages are P02–P06. They build reusable tools; production packages exercise them with real art and sound. Known missing capabilities are implemented upfront, while early reconstruction, voice and gesture trials reveal additional work. The [roadmap's tool-development explanation](FIRST-SHORT-ROADMAP.md) distinguishes this from film-production milestones. P10 is the combined acting acceptance test, not the first opportunity to learn from actual artwork.
+The seven software-development packages are P02–P06 plus P15 animation-convention authoring and P16 visual/listening dailies. They build reusable tools; production packages exercise them with real art and sound. P15/P16 are appended IDs for work that joins P10, not packages after final delivery. Known missing capabilities are implemented upfront, while early reconstruction, voice, gesture and observation trials reveal additional work. The [roadmap's tool-development explanation](FIRST-SHORT-ROADMAP.md) distinguishes this from film-production milestones. P10 is the combined acting/authoring/dailies acceptance test, not the first opportunity to learn from actual artwork.
 
 An observed failure returns to its responsible package with exact source/proof identities, a proposed classification, measured editing effort and the affected requirement. The owner fixes the art, implementation or observation tools, then repeats the failed case and a separate reuse case. Consumers refresh their captured dependency versions and affected checks before resuming dependent work. These follow-ups are a deliberate feedback loop outside the acyclic start/accept dependency graph. A technically accepted package can need further work when real production exposes a new limitation.
 
-Do not start sixteen tasks at once. The backlog contains sixteen packages across the whole film. Several are later continuations, and the shot package is a template for a small number of disjoint batches. Begin with four worker tasks and one coordination role; the coordinating role can remain in the parent task. Four is a workflow recommendation, not a measured host capacity or Codex task limit.
+The backlog now contains eighteen packages across the whole film; the two additions do not justify increasing concurrency. Several packages are later continuations, and the shot package is a template for a small number of disjoint batches. Use only authorized available worker capacity, including the coordinator in any host/task limit. The coordinating role can remain in the parent task. The lanes below express independent work, not a required number of simultaneously running agents.
 
 | Wave | Packages that can run alongside each other | What unlocks the next work |
 | --- | --- | --- |
 | Setup | P00 shared contracts/integration baseline; P01 story can begin | Common interfaces and source locations are captured |
 | Foundation | P01 story, P02 character tools, P03 finite clock, P04 mouth-cue tooling | Integrated fixture paths and a shot demand list |
+| Authoring and observation trials | P15 exposure/pose authoring and P16 dailies after P00, as capacity frees; existing operations/specimens support early trials | Concrete native-operation gaps, animator vocabulary and real artifact observations |
 | Assets and assembly | P07H human, P07D dog, P08 sets/props, P09 voices; P05 sequence rendering after P03; P06 film evidence as capacity frees | Selected art/audio plus working sequence/cue paths |
-| Acting convergence | P10 one integrated acting comparison; P06 can finish if still open; P12 sound can prepare | Chosen performance method and reproducible revisions |
+| Acting convergence | P15/P16 integrated acceptance, then P10 acting/authoring/dailies comparison; P06 can finish if still open; P12 sound can prepare | Chosen performance method, observed correction loop and reproducible directing revisions |
 | Full film | P11 disjoint shot batches alongside P12 score/effects | Every required shot/action and draft soundtrack exist |
 | Edit and finish | P13 one master rough edit, then P14 finishing and final delivery | Complete verified minute and reusable sources |
 
@@ -34,6 +35,8 @@ Use the [studio alignment](STUDIO-PLAN-ALIGNMENT.md) during setup. Align P00/P02
 | Shot/edit selection | Exact shot revision, source in/out frames, edit position, view and soundtrack references |
 | Evidence | Receipt identity, dependency hashes, per-shot coverage and aggregate film coverage; which observations remain unperformed |
 | Production state | One canonical film address; immutable inputs and exclusive candidate output locations for each worker |
+| Animator vocabulary | Model/pose sheets, layouts, key poses/breakdowns, exposure sheets and pencil tests map to native owners; no duplicate editable timeline |
+| Dailies | Exact shot/view/audio selection, inspected frame/sample coverage, observer identity, uncertainty and localized findings through existing feedback/review records |
 
 The packet should include tiny test specimens: a registered character with known offsets, two unequal shots, and a selected audio/cue sample with a known edit offset. Specimens expose incompatible assumptions before final art. They do not establish artistic quality.
 
@@ -50,6 +53,8 @@ Changes to a shared interface need an explicit version/diff and a named integrat
 
 P04 may implement against a fixed contract specimen while P02/P03 are active. It is accepted only after a real integrated CLI replay consumes their implemented interfaces. P06 has the same relationship to P05's movie receipts. This distinction is recorded as start_after versus accept_after in the backlog.
 
+P15 and P16 may start after P00 with existing operations and independent specimens. P15 acceptance requires integrated P02/P03/P04/P05 authoring/rendering; P16 acceptance requires actual P05 inputs plus performed perception and correction trials. P16 uses existing native correction operations for its own trial, so it does not acquire a circular dependency on P15/P10. P10 combines both packages with real character art and audio. Missing perception capability leaves only its affected observations/acceptance open; unrelated work can continue.
+
 P01's first timed storyboard can use a provisional local slideshow/edit. It must not wait for the new sequence renderer, and must not claim that provisional assembly implements P05. Private source art and voice access are resolved before requesting any dependent generation. Scope and spending authority remain those already recorded for the film.
 
 **Ownership follows actual shared code.** Separate worktrees isolate file edits, but do not prevent two implementations from disagreeing about semantics. The following is an initial ownership map; inspect the actual checkout before dispatch and explicitly lease additional files when needed.
@@ -62,6 +67,8 @@ P01's first timed storyboard can use a provisional local slideshow/edit. It must
 | P04 speech cues | New take/cue/import/correction modules and their tests | Reuse audio.py/audio_cues.py through existing APIs; request any necessary shared edits explicitly |
 | P05 sequence renderer | New sequence modules; render_plan.py/render_execution.py, tools/render modules, native media owners and relevant preview/player integration | Consume P03; preserve compatibility wrappers and shared media operations; emit agreed P06 receipts |
 | P06 film evidence | Revision capture/dependency/review and edition owners, coverage context/evidence/records, iteration/delivery owners, required production-plan adapters and evidence tests | Consume the P05 output contract and shared model identities; preserve existing single-scene editions and avoid a second evaluator |
+| P15 animation authoring | New authoring/inspection adapters, worked exposure/pose examples and bounded animation methods; proof/preview additions only through explicit leases | P02 owns drawings/controls, P03 time, P04 cues and P05 render/preview; P15 consumes them without independently editable copies |
+| P16 dailies | New packet/observation adapters and perception trial inputs/results; narrowly leased proof, packet and feedback hooks | P05 supplies exact media; P06/existing review owners retain evidence/verdict authority; coordinate shared neighboring-frame views with P15 |
 | Production workers | Their own immutable candidate asset/audio packages or assigned shot projects | Submit manifests; canonical admission/edit/review belongs to the named integrator |
 
 A listed filename is an ownership boundary, not a requirement to edit that file. Prefer smaller modules and existing library functions. No worker should broadly refactor shared files just to make its package easier.
@@ -80,6 +87,8 @@ P07H and P07D can be separate art tasks once the common style, character scale a
 
 **Converge before multiplying animation tasks.** P10 is deliberately one integrated performance owner. It tests the real art, real selected audio, cue tool, clock and renderer together. Its output fixes the production method and identifies defects by responsible owner.
 
+P10 additionally tests familiar exposure/pose authoring and a performed visual/listening correction cycle. It retains before/after media for a dailies correction, delayed reaction and replaced line, plus actual state changes and manual effort. The trial evaluates agent animation under direction; generated-shot comparison is optional and cannot replace this acceptance.
+
 After P10, instantiate P11 as disjoint shot groups, normally two or three shots each. Group related acting/continuity to reduce duplicated setup. Actual shot IDs and batch boundaries come from the adopted P01 shot list; no guessed ranges are dispatched now. Each batch receives:
 
 - Exact character, set, prop and voice-take versions.
@@ -94,7 +103,7 @@ P12 can prepare score/effects and a provisional mix against the selected animati
 
 **Critical convergence points.** Without duration measurements this is a dependency analysis, not a promised schedule.
 
-The first acting proof waits for the slower of character/art preparation, clock/sequence implementation and voice/cue preparation. These can advance concurrently. P10 → all P11 shot batches → P13 full rough → P14 finish/delivery is the main production chain. P06 evidence and P12 sound should run before their downstream joins rather than becoming surprises at delivery.
+The integrated acting proof waits for character/art preparation, clock/sequence implementation, voice/cue preparation and P15/P16 authoring/observation acceptance. These can advance concurrently within available capacity; early bounded art/performance checks need not wait for P10. P10 → all P11 shot batches → P13 full rough → P14 finish/delivery is the main production chain. P06 evidence and P12 sound should run before their downstream joins rather than becoming surprises at delivery. P14's fresh directing and second-shot reuse tasks measure effort while preserving the previous accepted film.
 
 A complete-looking engine fixture cannot advance the art milestone. Conversely, useful character/story work need not wait for every evidence adapter. Keep partial progress labeled: planned → active → implementation ready → integrated → accepted. Engineering acceptance means public CLI plus required evidence; artistic acceptance also needs observation of the actual output. Film milestone completion still requires every contributing package and the full stated scope.
 
