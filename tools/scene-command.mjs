@@ -9,6 +9,7 @@ import {placeFromSource,reparentAtTime} from '../editor/source-placement.mjs';
 import {regionDemand} from '../editor/region-sizing.mjs';
 import {resolveView,viewIds,viewProjection,canonicalView,dualFraming,planViews} from '../editor/views.mjs';
 import {auditViews} from '../editor/audit.mjs';
+import {placeInstance} from './model/instance.mjs';
 
 const layerFields=['name','asset','x','y','width','height','anchor','scale','rotation','opacity','visible','blend','depth','group','attach','sockets','cycle_seconds','phase_frames','motion','tracks','track_loop'];
 const optionalFields=['depth','group','attach','sockets','cycle_seconds','phase_frames','motion','tracks','track_loop'];
@@ -99,6 +100,7 @@ try{
   validateScene(scene,catalog);
   let result;
   if(action==='sample')result=compileScene(scene,catalog).sample(args.time);
+  else if(action==='model-instance')result=placeInstance(scene,structuredClone(catalog),args);
   else if(action==='region-demand')result=regionDemand(scene,catalog,args);
   else if(action==='binding-check')result=compileScene(scene,catalog).inspectBindings(args.time??0);
   else if(action==='view-defaults')result=dualFraming();
