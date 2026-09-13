@@ -70,6 +70,9 @@ def replay(out):
     cli('revision', 'capture', 'before', '--selection', selection)
     unchanged_b = copy.deepcopy(scene()['model_instances']['instances'][1])
     mount = apply('move-mount', [update(placement={'position': [85, 100], 'scale': 1.3, 'rotation': .12, 'depth': 0}, mount={'layer': 'ground', 'socket': 'light', 'at_seconds': .375})])
+    comparison = cli('revision', 'compare', 'before', '--working')
+    assert comparison['working_diverged'] and any(row['path'] == 'ambiance-project.json' for row in comparison['working_changes'])
+    assert cli('revision', 'check', 'before')['ok']
     facts['mount_corner_error_pixels'] = mount['previews'][0]['mount']['max_world_corner_error_pixels']
     raster('moved-mounted')
     arched = studio.read(source/'rest.json'); arched['variants'][0]['variant_id'] = 'arched'
@@ -96,6 +99,11 @@ def replay(out):
     # Existing ordinary edit and exact restore still operate on the selected generation.
     current_sha = digest(locations(project)[0]); cli('scene', 'set', 'unrelated-light', '--x', .3)
     cli('scene', 'restore', current_sha); assert digest(locations(project)[0]) == current_sha
+    # Reusing retained catalog art after restore must not duplicate its package.
+    cli('scene', 'restore', dry['previous_sha256'])
+    replacement = copy.deepcopy(operations[0]); replacement['instance_id'] = 'restored-instance'
+    apply('place-after-restore', [replacement]); cli('model', 'instance', 'inspect')
+    cli('scene', 'restore', current_sha); cli('model', 'instance', 'inspect')
     (out/'unavailable').mkdir()
     for path in [source, source2, package, package2]: shutil.move(path, out/'unavailable'/path.name)
     cli('model', 'instance', 'inspect'); cli('scene', 'check')

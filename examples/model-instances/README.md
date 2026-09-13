@@ -96,7 +96,11 @@ Static cel holds span the host duration in seconds; construction-proof fps and
 duration are not imported. Runtime tuple identities remain stable across variants
 and compatible adoption. Catalog art IDs include the package pin and reuse exact
 immutable bytes across instances. The catalog retains previous-version assets so
-ordinary scene history restore can reopen the old scene.
+ordinary scene history restore can reopen the old scene. Restoring a scene with
+no instances also permits placing the same exact package again: retained art
+identifies its already-contained package, which is verified before reuse. A
+changed retained manifest or conflicting catalog mapping fails without replacing
+the accepted package.
 
 The transaction publishes an active generation beneath
 `.ambiance/model-generations/<recipe-byte-hash>/`, then atomically replaces the
@@ -114,6 +118,11 @@ and exact recipe/pack/image pins. A recomputed fingerprint cannot authorize a
 swapped valid pack or changed managed writer. All original asset comparisons
 remain active for unrelated catalog entries. New scene-context evidence is
 required after state/adoption changes; old captured revisions keep their pins.
+Configured captures retain the selected project configuration as an animation
+origin and captured control. Working comparison also checks selected scene/catalog
+paths for historical captures without that origin. Switching active generations
+therefore reports working divergence while the old revision remains intact and
+renderable. Legacy literal-path gate watches remain a separate integration owner.
 
 The broader model Phase 4–7 acceptance, character views, nonpaint roots, clipping,
 animation controls, automatic light transport and whole-scene artistic trials

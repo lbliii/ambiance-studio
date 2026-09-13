@@ -178,6 +178,10 @@ class InstanceTests(unittest.TestCase):
         self.command('revision', 'capture', 'before', '--selection', selection_path)
         op = self.update(state={'schema_version': 1, 'pose_id': 'hidden', 'controls': [{'model_path': [], 'control_id': 'visible', 'value': False}], 'variants': []})
         self.save([op]); after = self.project/'render/hidden'
+        comparison = self.command('revision', 'compare', 'before', '--working')
+        self.assertTrue(comparison['working_diverged'])
+        self.assertTrue(any(row['path'] == 'ambiance-project.json' for row in comparison['working_changes']))
+        self.assertTrue(self.command('revision', 'check', 'before')['ok'])
         self.command('render', 'frame', '--view', 'authored', '--out', after)
         new_report = studio.read(after/'render-report.json')
         with self.assertRaisesRegex(ValueError, 'different scene'):
@@ -210,6 +214,44 @@ class InstanceTests(unittest.TestCase):
         record['managed_sha256'] = model_instances.fingerprint(scene, studio.read(locations(self.project)[1]), record)
         studio.write(locations(self.project)[0], scene)
         self.command('model', 'instance', 'inspect', code=2)
+
+    def test_restore_pre_instance_scene_reuses_retained_exact_package(self):
+        original = digest(locations(self.project)[0])
+        self.save([self.place()]); pin = self.scene()['model_instances']['instances'][0]['pin']
+        self.command('scene', 'restore', original)
+        self.save([self.place('new-instance')])
+        self.assertEqual(self.scene()['model_instances']['instances'][0]['pin'], pin)
+        self.assertEqual(len(list((self.project/'.ambiance/model-generations').glob('*/packages/*/model-package.json'))), 1)
+        self.command('model', 'instance', 'inspect'); self.command('scene', 'check')
+        self.command('scene', 'restore', original)
+        manifest = self.project/pin['package']; before = manifest.read_bytes()
+        manifest.write_bytes(before+b' ')
+        config_hash = digest(self.project/'ambiance-project.json')
+        self.command('model', 'instance', 'apply', self.recipe([self.place('c')]), code=2)
+        self.assertEqual(digest(self.project/'ambiance-project.json'), config_hash)
+        self.assertEqual(manifest.read_bytes(), before+b' ')
+
+    def test_historical_revision_detects_selection_switch_without_config_origin(self):
+        from ambiance_studio.record_contracts import seal
+        config = studio.read(self.project/'ambiance-project.json')
+        selection = self.project/'selection.json'
+        studio.write(selection, {'format': 'ambiance-revision-selection', 'schema_version': 1, 'scene': config['scene'], 'catalog': config['catalog']})
+        self.command('revision', 'capture', 'historical', '--selection', selection)
+        manifest_path = self.project/'revisions/historical/manifest.json'
+        manifest = studio.read(manifest_path); manifest.pop('payload_sha256')
+        manifest['origins'] = [r for r in manifest['origins'] if r['role'] != 'active_project']
+        manifest['dependencies'] = [r for r in manifest['dependencies'] if r['role'] != 'active_project']
+        manifest['controls'].pop('active_project'); studio.write(manifest_path, seal(manifest))
+        self.assertFalse(self.command('revision', 'compare', 'historical', '--working')['working_diverged'])
+        self.save([self.place()])
+        self.assertTrue(self.command('revision', 'compare', 'historical', '--working')['working_diverged'])
+        self.assertTrue(self.command('revision', 'check', 'historical')['ok'])
+        # Invalid active configuration is reported truthfully, while captured
+        # immutable inputs stay valid and independently renderable.
+        current = studio.read(self.project/'ambiance-project.json'); current['scene'] = 'missing.json'
+        studio.write(self.project/'ambiance-project.json', current)
+        self.command('revision', 'compare', 'historical', '--working', code=2)
+        self.assertTrue(self.command('revision', 'check', 'historical')['ok'])
 
     def test_drift_stale_pin_and_outside_receiver_envelope_reject(self):
         self.save([self.place(receivers=True)])
