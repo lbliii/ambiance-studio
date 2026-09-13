@@ -222,7 +222,7 @@
       "id": "transparent-model-repeat-render",
       "reported_by": "M2",
       "owner": "D2",
-      "state": "awaiting_reproduction_after_frozen_suite",
+      "state": "reproduced_fix_boundary_confirmed_awaiting_frozen_suite_completion",
       "observed_failure": "prepareRaster raises Raster endpoint differs from frame zero on static transparent model scene; partial-alpha accumulation suspected.",
       "inputs": {
         "scene": "/tmp/m2-model-lowered/scene/scene.json",
@@ -243,7 +243,9 @@
         "project": "/Users/lb/.codex/worktrees/e892/ambiance-studio/work/m2/transparent-regression/lowered",
         "recipe": "/Users/lb/.codex/worktrees/e892/ambiance-studio/work/m2/transparent-regression/recipe.json",
         "forwarded_to_renderer_owner": true
-      }
+      },
+      "renderer_owner_result": "Direct static drawScene times 0,1,0,.5 accumulate alpha: 288 alpha pixels / 860 RGBA bytes differ on the second draw, sample alpha 26 to 49 to 70 to 89. Clearing target before drawing preserves the exact fresh PNG at each sample. Public render-frame reproduces exit 3.",
+      "agreed_correction": "One clearRect after transform/alpha/composite reset, before background fill, in drawScene; separate commit after current frozen run."
     }
   ]
 }
