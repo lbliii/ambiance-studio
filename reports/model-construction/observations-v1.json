@@ -1,0 +1,125 @@
+{
+  "format": "model-construction-observation",
+  "schema_version": 1,
+  "scope": "Agent visual inspection of exact static engineering artifacts; not artistic or human approval.",
+  "proof": {
+    "path": "/Users/lb/.codex/worktrees/e892/ambiance-studio/work/m2/replay-v2/entry/proof/model-proof.json",
+    "sha256": "1e6ce097aae3f6b4bc9fe31c13172cb020ca8dc4f90943919aadc39282e715a5"
+  },
+  "package": {
+    "path": "/Users/lb/.codex/worktrees/e892/ambiance-studio/work/m2/replay-v2/entry/package/model-package.json",
+    "sha256": "4bde936936c2fff7aa92e914b42277dff78ad199749b0bd8eb1ea7b4146dd036"
+  },
+  "entry_sha256": "d8d267bd0b17bfdc76f64f3efc80222fae7deafad7e7a837108e813a1ec688fc",
+  "replay": {
+    "path": "/Users/lb/.codex/worktrees/e892/ambiance-studio/work/m2/replay-v2/evidence.json",
+    "sha256": "ef3462fb47e78696f56792856deb7548aa3bab8c149a05126ab8dfaa05dd0db1"
+  },
+  "implementation": {
+    "ambiance_studio/assets.py": "ba7c46fe85e07ed400b6e58cd2b84f31805fe0cccf43ea7d4e6d5d6e3f58d689",
+    "ambiance_studio/edge_quality.py": "6f46572f569e79fd62cbd40184bede21b8a8acf700b4d41eedd3dbbfb104bbf0",
+    "ambiance_studio/file_identity.py": "016aca279f7a356b5ee14835cbd81cab76e119783f84d1dddf1ac43047911975",
+    "ambiance_studio/model_definition.py": "33c12212bdfe99d47b4eb3540c32c4104456f18e2169a6d882a72f7f9fead5f1",
+    "ambiance_studio/model_package.py": "5e4929be34d71eea3dbec7f7e04a86c845f9496145741b0b5df6d3dfc46b9c4a",
+    "ambiance_studio/record_contracts.py": "98ae4a7c7b082f04b32409f72585d975b51c8419adbb65ca7998c58567c2955d",
+    "editor/activity.mjs": "1719fd9019fc00e5fe8551a1261fba3280c63a2f2894035d0f8ca244fdf0cc46",
+    "editor/audit.mjs": "33fc366286fcad955028f2a585055e38ebcfaccbc25e9205851701a70deaeca5",
+    "editor/bindings.mjs": "b891db88f3f65d1457c251456b63465f70b8f583c21235b1de8a7aa1fd1c3cb7",
+    "editor/editor.mjs": "cf73279d8655075c05e3ce20ad46fb72eaa9396b836cc690ebb97d52376e6aff",
+    "editor/engine.mjs": "84881ab6f3a2eb71e2bd026a55478d60e589c316bcbaf183e6690fde7c7ac4e7",
+    "editor/finishing.mjs": "06491f5e8565e5e716e75dfcb527fb47b3c93a88070566ef1969504ffe96160c",
+    "editor/look-workbench.mjs": "c4f401b391348c05d91d09e16fbd803c547ed8c61cddee1dc43f897c5b9a914c",
+    "editor/motion-workbench.mjs": "eff22f2dd590713412453e3eb510e51f74df06952b9d3defa3cec6d40f2c1641",
+    "editor/preparation-workbench.mjs": "095901dee53c79e54cb24e68b3d46c22a3e6278f5e9bc33cd010c6e8ea16fc89",
+    "editor/region-sizing.mjs": "e1dbbc5eca3c724084cefb09bddd7e689540430dea5339ae7cdba8d0c962795f",
+    "editor/region-workbench.mjs": "ede45786dfdbc717b41f0d62ca98b324af346e46b38fe12069de40a3ca75dfa6",
+    "editor/source-placement.mjs": "17f512baf8010ccc6d66d5fef682fa570a673885f3432350c9f88bb5718a0e3c",
+    "editor/stage-raster.mjs": "5f59d3457594c7ecf6bb91bb85f32c44cdad997d86e87c34ee0e6a298c015ba1",
+    "editor/timing.mjs": "98a21220b43036f4d2298549070e9ffabe5a5124a957c39c5d72b994c2459c79",
+    "editor/verify-engine.mjs": "b20e02e7f26f1f1dceb4e01dc31f5708a41319c3e28f91e265459e1cc747ff54",
+    "editor/views.mjs": "3033fd28094b3a0d92415e7fd545708988b500694b03d5c6a19f9488591a60d8",
+    "tools/asset_tool.py": "8549a3b6b203df48afbc4010646c5f1d639211785e2f80f0dabe704c08951278",
+    "tools/model/bridge.mjs": "22acb3f1ae4feff05de0e0cd6b078bfb23c55412c8c95c13e8121c5a56b63b1b",
+    "tools/model/lower.mjs": "f397e5abdd7fe18977a9fc223a1952ed741b147be289fad2bc9d15714754da09",
+    "tools/render/canvas-runtime.mjs": "9e7d4b249b511b788f3ca1ffb779c00d5c62663619e44a1a49037c2bc292800c",
+    "tools/render/job-input.mjs": "f900ff7004d9b62ff5f005deec64b73172e6f296ac36bdfe30b9b4d750881064",
+    "tools/render/job.mjs": "ed41f24245845ecb73184da86032f63f31a1a31e5b93141760702044358e4dd5",
+    "tools/render/native-process.mjs": "9c66460c7d6bf6295c3ac62b351ebf9ebd2ad58f2940ee98388b5d0f240c7d7d",
+    "tools/render/outputs.mjs": "f1091243ca1ef21b29ce16ffb6afe1df2f32916b25adf22a0d36521b53036b66",
+    "tools/render/progress.mjs": "357d7ce1196e7272df0f93de70f1f40911d6eca8795d45fefe57bbdd9705e3f9",
+    "tools/render/proof-page.mjs": "4c7bfa7f42a2824b75f1cf54a5833f376ed86a059bed270d3179ebf93629842e",
+    "tools/render/raster.mjs": "d1ca249901474d7478d8459a650edf184b20e13790c5348b47b95a9a976ad156",
+    "tools/render/receipt.mjs": "1c10b2dd7aab776dbdb2acc1bc9c5026bc26b4ab5ce0e97bf575a18ae955c9e2",
+    "tools/render/source-identity.mjs": "671ba45ec2bea241b256624023179b8a0010b65ac42dec55691b7b6639518255",
+    "tools/rig-proof.mjs": "8799d29c7466c6bccd222ff4b0f4fed2f05bd01c1b04051a260e045743e360c9"
+  },
+  "runtime": {
+    "node": "v24.9.0",
+    "canvas_version": "0.1.100",
+    "module_sha256": "bbdad32cab670261983ea56d4625fc7d07b1382f8bb7d6d31232bb2834861597",
+    "native_modules": [
+      {
+        "name": "skia.darwin-arm64.node",
+        "sha256": "a9c429727b4a133e34e60c5ffa7f701541ffe941afa9574abe6273a1648c342d"
+      }
+    ]
+  },
+  "observed_artifacts": [
+    {
+      "file": "square-rest/source-versus-assembly.png",
+      "sha256": "853096b10af12b8b18ee4cd57dd1dae54b4b26fb7db1715a26c29a1f26f55826"
+    },
+    {
+      "file": "square-rest/solid-mask.png",
+      "sha256": "3ac3b9a9aa943a840c8f99982c36588eb22ad0e1381dc3481b95374b1b0ed248"
+    },
+    {
+      "file": "square-rest/glass.png",
+      "sha256": "41728ce6400ec3c4cb8ca2688bd6f9f6d15516c6b72126e5a16c34301997987d"
+    },
+    {
+      "file": "square-rest/flame.png",
+      "sha256": "dcbbba0f762e835875ac3914113cbb37be9f0076be5c83e2e2363912c8d590be"
+    },
+    {
+      "file": "square-left/composite.png",
+      "sha256": "d40e789c036dc19739f513e59d666ab2fb61d478e032ef84e99b368179a6c8bb"
+    },
+    {
+      "file": "square-right/composite.png",
+      "sha256": "ad8139f14849712e173c25fbebf831ad2c08d00b9b1c23aebeab237a17deb719"
+    },
+    {
+      "file": "arched-rest/composite.png",
+      "sha256": "385a79bf2ec1676b849b089ffe391201c0ab79bf891d53665436149e7646b6e5"
+    },
+    {
+      "file": "arched-left/composite.png",
+      "sha256": "7855919c955bfbf760410d202369f7239ddc5c800a84aabe18460d57cf538584"
+    },
+    {
+      "file": "arched-right/composite.png",
+      "sha256": "70a34095420b117e7411d339db0bbb6fe3345f21d56c283c9cd49ab5c8b75d63"
+    },
+    {
+      "file": "square-unlit/composite.png",
+      "sha256": "89cde91eca9c64db4041f208ea39e0af70884363ce91141e7c39d10bcb4c7530"
+    },
+    {
+      "file": "square-hidden/composite.png",
+      "sha256": "1fc205091562c2dfba240e7ddd010069342ff482ee6c36936c723b1d011afc8e"
+    }
+  ],
+  "observations": [
+    "Original-source and compiled rest images show the same upright frame, candle, flame and pane; no visible registration shift at this small native size. Numeric resampling differences remain recorded in the proof.",
+    "Solid mask preserves the two pane openings around the central frame/candle. Glass is a separate translucent cyan rectangle; the flame pass contains only the small yellow/orange flame.",
+    "Square and arched top-frame drawings differ at the upper corners. In both left/right extremes the candle and flame stay with the tilted housing, front paint remains above them, and the full object stays inside the viewport margin.",
+    "Unlit removes the yellow flame while retaining housing, candle and glass. Hidden is empty. These are local model results; no receiving surface is in this specimen."
+  ],
+  "remaining_gaps": [
+    "The supplied/derived art is geometric; clean production painting, artistic suitability and broader model families are unestablished.",
+    "No animation or normal-speed observation; states are static and P03 cycles/finite timing remain outside C1/C2.",
+    "No scene receiver-light/removal/occluder proof, two independent scene instances/adoption, full reconstruction, portrait/landscape film or full Phase 1/P00 acceptance."
+  ],
+  "native_suite": "pending serialized slot"
+}

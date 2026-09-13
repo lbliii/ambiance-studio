@@ -20,6 +20,10 @@ def create(out):
         shutil.copyfile(source/f'art/{name}.png', out/f'art/{name}.png')
     # A separate translucent pane for authored glass-role coverage, explicitly synthetic.
     from PIL import Image
+    # Preserve repository originals. This test derivative gives the rear frame
+    # an actual opening so excluding glass/flame cannot silently fill it.
+    housing = Image.open(out/'art/housing.png').convert('RGBA')
+    housing.paste((0,0,0,0),(6,7,26,41)); housing.save(out/'art/housing.png')
     pane = Image.new('RGBA', (32,48)); pane.paste((127,179,193,65),(7,16,25,39)); pane.save(out/'art/glass.png')
     defs = {name: studio.read(source/f'models/{name}-v1.json') for name in ['lantern', 'candle']}
     specs = {'housing': ([32,48],[16,46]), 'frame-square': ([32,48],[16,46]), 'frame-arched': ([32,48],[16,46]), 'glass': ([32,48],[16,46]), 'wax': ([12,20],[6,18]), 'flame': ([8,12],[4,12])}
@@ -59,6 +63,15 @@ def create(out):
             part=next(p for p in definition['parts'] if p['part_id']==socket['part_path'][0]); d=next(d for d in definition['drawings'] if d['drawing_id']==part['drawing_id']); art='flame' if d['drawing_id'].startswith('flame-') else d['drawing_id']; size,pivot=specs[art]; asset=packs[art]; cel=asset['registration_mapping']['cels'][d['cel_index']]; m=cel['source_to_cell']; x,y=socket['cell_uv'][0]*size[0],socket['cell_uv'][1]*size[1]; socket['cell_uv']=[(m[0]*x+m[4])/asset['atlas']['cell_width'],(m[3]*y+m[5])/asset['atlas']['cell_height']]
         if name=='lantern':
             ref=next(p['definition'] for p in definition['parts'] if 'definition' in p);ref['sha256']='pending'
+        if name=='lantern':
+            # Output viewport includes the complete extreme poses. Geometry is
+            # still local and unclipped; no film composition is inherited.
+            definition['local_frame']={'size':[64,80],'pivot':[32,62],'clip':'none'}
+            for drawing in definition['drawings']:
+                drawing['source_to_local'][4]+=16;drawing['source_to_local'][5]+=16
+            for part in definition['parts']:
+                matrix=part['local_to_parent'] if 'definition' in part else part['cell_to_local']
+                matrix[4]+=16;matrix[5]+=16
         studio.write(out/f'models/{name}.json',definition)
     candle=out/'models/candle.json'; lantern=defs['lantern']; ref=next(p['definition'] for p in lantern['parts'] if 'definition' in p);ref.update(file='candle.json',sha256=digest(candle));studio.write(out/'models/lantern.json',lantern)
     states=[]

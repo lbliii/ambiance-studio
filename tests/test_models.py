@@ -185,6 +185,12 @@ class ModelTests(unittest.TestCase):
         by_id={s['pose_id']:s for s in report['samples']}
         rest=by_id['square-rest'];hidden=by_id['square-hidden'];unlit=by_id['square-unlit']
         self.assertGreater(rest['roles']['glass']['partial_alpha_pixels'],0)
+        from PIL import Image
+        with Image.open(out/'square-rest/solid-mask.png') as solid:
+            self.assertEqual(solid.getpixel((26,40))[3],0, 'Glass opening is absent from solid mask')
+        for sample in report['samples']:
+            bounds=sample['roles']['composite']['bounds']
+            if bounds:self.assertTrue(0<bounds[0]<bounds[2]<64 and 0<bounds[1]<bounds[3]<80, 'Extreme pose needs framing margin')
         self.assertEqual(len(rest['roles']['solid']['included_leaves']),3)
         self.assertEqual(hidden['roles']['composite']['covered_pixels'],0)
         self.assertEqual(unlit['roles']['flame']['covered_pixels'],0)
