@@ -99,6 +99,13 @@ def summarize(project, data):
         return [dict(gate=row['gate'], state=row['state'], reasons=[excerpt(r) for r in row.get('reasons', [])[:2]],
                      criteria=[{k: excerpt(c[k]) for k in ['id', 'result', 'note'] if k in c} for c in row.get('criteria', [])[:2]]) for row in rows[:8]]
     result = {k: data[k] for k in ['ok', 'project', 'current_url', 'working', 'release_ready']}
+    if 'subjects' in data:
+        result['subjects'] = dict(data['subjects'])
+        selected = data['subjects'].get('selected_movie')
+        if selected:
+            entries = selected['entries']
+            result['subjects']['selected_movie'] = {**selected, 'entries': dict(list(entries.items())[:6]),
+                                                     'entry_count': len(entries), 'entries_omitted': max(0, len(entries)-6)}
     result.update(format='ambiance-project-overview', schema_version=2, current=selection_summary(data['current']), release=selection_summary(data['release']),
                   history=[delivery_summary(d, 0) for d in data['history'][:5]], history_total=len(data['history']),
                   history_omitted=max(0, len(data['history'])-5), runs=[run_summary(r, project) for r in data['runs'][:5]],
@@ -110,6 +117,9 @@ def summarize(project, data):
     readiness = data.get('production_readiness', {})
     result['production_readiness'] = {k: readiness[k] for k in ['ready', 'stage', 'enforced', 'phase'] if k in readiness}
     result['production_readiness']['blocked_count'] = len(readiness.get('blocked', []))
+    assessment = readiness.get('assessment', {})
+    result['production_readiness']['assessment'] = {k: assessment[k] for k in
+        ['assessment_sha256', 'subject', 'complete', 'components', 'changed_inputs', 'unknown_expectations'] if k in assessment}
     result['framing'] = {k: data.get('framing', {}).get(k) for k in ['ok', 'intended_views']}
     result['asset_accounting'] = {'active_unmapped_count': len(data.get('active_unmapped_asset_ids', [])),
                                  'retained_unused_count': len(data.get('retained_unmapped_asset_ids', [])),

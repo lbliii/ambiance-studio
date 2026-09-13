@@ -10,7 +10,7 @@ import math
 
 import studio
 from . import production_plan as spec, editions, project_references, record_contracts, revision_reviews
-from .coverage_context import pinned, relative_file
+from .coverage_context import AssessmentUnavailable, pinned, relative_file
 
 
 class FileReference(TypedDict):
@@ -138,7 +138,14 @@ def movie_receipt(project, path, ctx, view, role=None) -> ProviderEvidence:
     key = studio.encoded_hash({'movie': receipt['output'], 'facts': facts, 'loop_frames': verification['loop_frames']})
     cache = Path(project)/'.ambiance/evidence-decode'/key
     report_path = cache/'media-report.json'
+    assessment = ctx.get('_assessment')
+    if assessment:
+        for ref in receipt['dependencies']:
+            assessment.track(studio.inside(project, ref['path']), 'evidence_index')
+        if ctx.get('_read_only') or report_path.exists(): assessment.track(report_path, 'evidence_index')
     if not report_path.exists():
+        if ctx.get('_read_only'):
+            raise AssessmentUnavailable('Exact movie decode evidence is unavailable; run explicit plan evidence or plan coverage to acquire it: '+str(report_path))
         media_verification.verify_media(native_media.native_binary(project), movie, cache,
                           int(facts['width']), int(facts['height']), int(facts['fps']), int(facts['frames']),
                           facts['audio_tracks'], int(verification['loop_frames']))

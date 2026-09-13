@@ -7,9 +7,9 @@ from . import deliveries, editions, project_references, record_contracts, revisi
 from .errors import CommandError
 
 
-def production_readiness(project, **kwargs):
-    from .production_coverage import evaluate
-    return evaluate(project, **kwargs)
+def production_readiness(project, *, persist=True, **kwargs):
+    from .production_coverage import assess, evaluate
+    return (evaluate if persist else assess)(project, **kwargs)
 
 def iteration_preflight(project, recipe, stage=None):
     validate_recipe(recipe)

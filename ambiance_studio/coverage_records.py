@@ -94,9 +94,15 @@ def register_evidence(project, id, view, receipt, revision=None, role=None, *, v
 
 
 def evidence_for(project, ctx, exp, view, refs, role=None, *, verifier: EvidenceVerifier | None = None):
-    reasons = []
+    from .coverage_context import AssessmentUnavailable
+    reasons = []; unavailable = False
+    assessment = ctx.get('_assessment')
+    def track(ref):
+        path = studio.inside(project, ref['path'])
+        if assessment and (ctx.get('_read_only') or path.exists()): assessment.track(path, 'evidence_index')
     for ref in refs:
         try:
+            track(ref)
             path = spec.file_ref(project, ref)
             record = record_contracts.read_sealed(path, EVIDENCE)
             spec.obj(record, ['format', 'schema_version', 'payload_sha256', 'subject', 'receipt', 'provider'], label='plan evidence')
@@ -105,13 +111,18 @@ def evidence_for(project, ctx, exp, view, refs, role=None, *, verifier: Evidence
             if selected.get('expectation_id') != exp['id'] or selected.get('view_id') != view: continue
             if role and record['provider'].get('role') != role: continue
             if selected != subject(ctx, exp, view): raise ValueError('Stale plan/expectation/scene/catalog/view/revision identity')
+            track(record['receipt'])
+            for reference in record['provider'].get('references', []): track(reference)
             receipt = spec.file_ref(project, record['receipt'])
             provider = (ProviderVerifier() if verifier is None else verifier).verify(EvidenceRequest(project, receipt, ctx, exp, view, role))
             if provider != record['provider']: raise ValueError('Evidence artifact identity changed')
             return True, str(path)
-        except (OSError, ValueError, KeyError, TypeError, CommandError) as error: reasons.append(str(error))
+        except (OSError, ValueError, KeyError, TypeError, ImportError, CommandError) as error:
+            if ctx.get('_read_only') and (isinstance(error, (AssessmentUnavailable, ImportError)) or getattr(error, 'code', None) in ['missing_dependency', 'runtime_error']):
+                unavailable = True
+            reasons.append(str(error))
     unique = list(dict.fromkeys(reasons))
-    return False, ('; '.join(unique[:3]) + (f'; {len(unique)-3} further invalid records' if len(unique)>3 else '')) or 'No matching typed evidence is recorded'
+    return (None if unavailable else False), ('; '.join(unique[:3]) + (f'; {len(unique)-3} further invalid records' if len(unique)>3 else '')) or 'No matching typed evidence is recorded'
 
 
 def acquire_evidence(project, ctx, needs, refs, *, verifier: EvidenceVerifier | None = None):
@@ -127,12 +138,18 @@ def acquire_evidence(project, ctx, needs, refs, *, verifier: EvidenceVerifier | 
 
 def save_report(project, result, rows, *, details):
     """Persist an immutable report with the existing bytes/hash/compact contract."""
-    issues = result['blocked']; fulfilled = result['fulfilled']
     report = project/'.ambiance/coverage'/f'{studio.encoded_hash(result)}.json'
     full = {**result, 'expectations': rows, 'report': str(report)}
     if not report.exists(): studio.write(report, full)
     elif studio.read(report) != full: raise ValueError('Saved coverage report changed')
-    if details: return full
+    return format_report(result, rows, details=details, report=str(report))
+
+
+def format_report(result, rows, *, details, report=None):
+    """Pure projection; a report path is included only by explicit persistence."""
+    location = {'report': report} if report is not None else {}
+    if details: return {**result, 'expectations': rows, **location}
+    issues = result['blocked']; fulfilled = result['fulfilled']
     compact = [{**r, **({'reasons': r['reasons'][:3]} if 'reasons' in r else {})} for r in issues[:8]]
-    return {**result, 'blocked': compact, 'fulfilled': len(fulfilled), 'report': str(report),
+    return {**result, 'blocked': compact, 'fulfilled': len(fulfilled), **location,
             'details_truncated': len(issues)>8 or any(len(r.get('reasons', []))>3 for r in issues)}

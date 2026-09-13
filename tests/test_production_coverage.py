@@ -57,6 +57,271 @@ class CoverageTests(unittest.TestCase):
     def register(self, report, view='portrait', revision=None, id='pixels'):
         return coverage.register_evidence(self.p, id, view, str(Path(report).relative_to(self.p)), revision)
 
+    def snapshot(self):
+        return {str(p.relative_to(self.p)): (studio.digest(p) if p.is_file() else 'directory')
+                for p in self.p.rglob('*')}
+
+    def test_pure_cli_reads_on_nonwritable_project_do_not_acquire_writer_lock(self):
+        from ambiance_studio import project as project_module
+        # A live writer lock must not stop an independent read.
+        lock = self.p/'.ambiance/write.lock'; lock.write_text('fixture writer')
+        paths = [self.p, *self.p.rglob('*')]
+        modes = {p: p.stat().st_mode & 0o777 for p in paths}
+        before = self.snapshot()
+        for path in paths: path.chmod(0o555 if path.is_dir() else 0o444)
+        try:
+            with patch.object(studio, 'write', side_effect=AssertionError('query wrote a report')), \
+                 patch.object(project_module, 'project_lock', side_effect=AssertionError('query took writer lock')):
+                result = coverage.assess(self.p, details=True)
+                overview = self.run_cli('project', 'overview', '--details')
+                next_work = self.run_cli('project', 'next')
+            self.assertFalse(result['ready'])
+            self.assertNotIn('report', result)
+            self.assertTrue(overview['ok']); self.assertTrue(next_work['ok'])
+            self.assertEqual(result['assessment']['subject']['mode'], 'working')
+            self.assertIsNone(overview['subjects']['selected_movie'])
+            self.assertEqual(before, self.snapshot())
+        finally:
+            for path, mode in modes.items(): path.chmod(mode)
+
+    def test_scoped_inputs_preserve_intent_inventory_and_pipeline_without_runtime(self):
+        from ambiance_studio.coverage_context import AssessmentInputs
+        from ambiance_studio.errors import CommandError
+        inputs = AssessmentInputs(self.p)
+        before = self.snapshot()
+        with patch.object(coverage.scene_runtime, 'scene_bridge', side_effect=CommandError('Node unavailable', 'missing_dependency', 3)) as runtime:
+            self.assertEqual(inputs.get('plan')['story'], plan.load(self.p)['story'])
+            self.assertEqual(len(inputs.get('inventory')['items']), 1)
+            self.assertEqual(len(inputs.get('pipeline')), 9)
+            runtime.assert_not_called()
+            self.assertNotIn('catalog', inputs.components)
+            assessment = coverage.assess(self.p, 'layout', assessment=inputs, details=True)
+        self.assertFalse(assessment['ready'])
+        self.assertFalse(assessment['assessment']['complete'])
+        self.assertEqual(assessment['assessment']['components']['plan']['state'], 'available')
+        self.assertEqual(assessment['assessment']['components']['views']['state'], 'unknown')
+        self.assertTrue(all(row['ready'] is None for row in assessment['expectations']))
+        self.assertNotIn('pipeline', assessment['assessment']['components'])  # independent preloaded material is outside coverage
+        self.assertEqual(inputs.finish(['pipeline'])['components']['pipeline']['state'], 'available')
+        self.assertEqual(before, self.snapshot())
+
+    def test_invalid_components_and_legacy_plan_absence_remain_scoped(self):
+        from ambiance_studio.coverage_context import AssessmentInputs
+        for name, path in [('scene', self.p/'scene/scene.json'), ('catalog', self.p/'assets/catalog.json'),
+                           ('inventory', self.p/'plans/asset-inventory.json')]:
+            original = path.read_bytes()
+            try:
+                path.write_text('{broken')
+                inputs = AssessmentInputs(self.p)
+                self.assertIsNone(inputs.get(name))
+                self.assertEqual(inputs.components[name]['state'], 'unknown')
+                self.assertIsNotNone(inputs.get('plan')); self.assertIsNotNone(inputs.get('pipeline'))
+                result = coverage.assess(self.p, details=True)
+                self.assertFalse(result['ready']); self.assertFalse(result['assessment']['complete'])
+                self.assertTrue(result['assessment']['diagnostics'])
+                if name == 'inventory':
+                    self.assertIn('plan.expectation.framing.portrait', result['fulfilled'])
+            finally:
+                path.write_bytes(original)
+        (self.p/plan.PATH).unlink()
+        inputs = AssessmentInputs(self.p)
+        self.assertIsNone(inputs.get('plan')); self.assertIsNotNone(inputs.get('inventory'))
+        self.assertEqual(coverage.assess(self.p)['blocked'][0]['id'], 'plan.unavailable')
+        self.assertEqual(coverage.evaluate(self.p)['blocked'][0]['id'], 'plan.unavailable')
+
+    def test_missing_wrong_view_stale_evidence_and_changed_sources_are_not_success(self):
+        absent = coverage.assess(self.p, view='portrait', details=True)
+        self.assertFalse(absent['ready'])
+        report = self.proof(views=('portrait',))['report']; self.register(report)
+        portrait = coverage.assess(self.p, view='portrait', details=True)
+        self.assertTrue(portrait['ready'])
+        self.assertFalse(coverage.assess(self.p, view='landscape')['ready'])
+        scene_path = self.p/'scene/scene.json'; scene = studio.read(scene_path)
+        scene['title'] = 'Changed input'; studio.write(scene_path, scene)
+        stale = coverage.assess(self.p, view='portrait', details=True)
+        self.assertFalse(stale['ready']); self.assertIn('Stale plan/expectation', str(stale['blocked']))
+        source = self.p/'assets/source.png'; source.write_bytes(source.read_bytes()+b'changed')
+        changed = coverage.assess(self.p, details=True)
+        self.assertEqual(changed['assessment']['components']['plan']['state'], 'available')
+        self.assertEqual(changed['assessment']['components']['plan_dependencies']['state'], 'unknown')
+        self.assertTrue(any(row['ready'] is None for row in changed['expectations']))
+
+    def test_changed_during_assessment_invalidates_results_and_reused_inputs(self):
+        from ambiance_studio.coverage_context import AssessmentInputs
+        inputs = AssessmentInputs(self.p)
+        inputs.get('plan'); inputs.get('pipeline')
+        original = studio.read(self.p/plan.PATH)
+        changed = copy.deepcopy(original); changed['story']['premise'] = 'Concurrent intent'
+        studio.write(self.p/plan.PATH, changed)
+        result = coverage.assess(self.p, 'layout', assessment=inputs, details=True)
+        self.assertFalse(result['ready']); self.assertFalse(result['assessment']['complete'])
+        self.assertEqual(result['fulfilled'], [])
+        self.assertTrue(all(row['ready'] is None for row in result['expectations']))
+        self.assertTrue(result['assessment']['changed_inputs'])
+        self.assertEqual(inputs.finish(['pipeline'])['components']['pipeline']['state'], 'available')
+        with self.assertRaisesRegex(ValueError, 'different project/revision'):
+            coverage.assess(self.p, revision='missing', assessment=inputs)
+        # A previously absent file appearing is a change, too.
+        path = self.p/'plans/asset-inventory.json'; raw = path.read_bytes(); path.unlink()
+        inputs = AssessmentInputs(self.p); self.assertIsNone(inputs.get('inventory'))
+        path.write_bytes(raw)
+        self.assertTrue(inputs.finish()['changed_inputs'])
+
+    def synthetic_movie_cache(self):
+        """Typed local cache fixture tests routing/identity, never codec quality."""
+        from ambiance_studio import deliveries
+        self.capture()
+        movie = self.p/'synthetic.mp4'; movie.write_bytes(b'\x00\x00\x00\x18ftypisom' + b'synthetic record fixture' * 20)
+        verification = self.p/'synthetic-verification.json'
+        report = {'ok': True, 'fully_decoded': True, 'input_unchanged': True,
+                  'input_sha256': studio.digest(movie), 'input_sha256_after': studio.digest(movie),
+                  'width': 90, 'height': 160, 'fps': 6, 'decoded_frames': 6, 'loop_frames': 6,
+                  'duration_seconds': 1, 'audio': {'tracks': 0}, 'synthetic_test_fixture': True}
+        studio.write(verification, report)
+        path = revisions.edition_path(self.p, 'v1', 'synthetic')
+        receipt = revisions.seal({'format': revisions.EDITION, 'schema_version': 2, 'id': 'synthetic', 'revision': 'v1',
+            'revision_sha256': studio.digest(revisions.manifest_path(self.p, 'v1')),
+            'view': revisions.captured_view(self.p, 'v1', 'portrait'),
+            'output_expectations': {'width': 90, 'height': 160, 'fps': 6, 'frames': 6, 'loop_frames': 6, 'audio_tracks': 0},
+            'output': {'path': movie.name, 'sha256': studio.digest(movie), 'bytes': movie.stat().st_size},
+            'verification': {'path': verification.name, 'sha256': studio.digest(verification)},
+            'dependencies': [{'path': p.name, 'sha256': studio.digest(p), 'bytes': p.stat().st_size} for p in [movie, verification]]})
+        studio.write(path, receipt)
+        key = studio.encoded_hash({'movie': receipt['output'], 'facts': deliveries.metadata(report), 'loop_frames': 6})
+        cache = self.p/'.ambiance/evidence-decode'/key/'media-report.json'; studio.write(cache, report)
+        coverage.register_evidence(self.p, 'movie', 'portrait', str(path.relative_to(self.p)), 'v1', 'silent')
+        return cache, path
+
+    def test_pure_cold_and_warm_movie_cache_never_builds_native_runtime(self):
+        from ambiance_studio import native_media, media_verification
+        cache, receipt = self.synthetic_movie_cache(); cache_bytes = cache.read_bytes()
+        with patch.object(native_media, 'native_binary', side_effect=AssertionError('native build on pure read')), \
+             patch.object(media_verification, 'verify_media', side_effect=AssertionError('decode on pure read')):
+            before = self.snapshot()
+            warm = coverage.assess(self.p, 'export', view='portrait', revision='v1', details=True)
+            self.assertIn('plan.expectation.movie.portrait', warm['fulfilled'])
+            self.assertEqual(before, self.snapshot())
+            cache.unlink(); before = self.snapshot()
+            cold = coverage.assess(self.p, 'export', view='portrait', revision='v1', details=True)
+            row = next(row for row in cold['expectations'] if row['id'] == 'movie')
+            self.assertIsNone(row['ready']); self.assertFalse(cold['assessment']['complete'])
+            self.assertIn('Exact movie decode evidence is unavailable', str(cold['blocked']))
+            self.assertEqual(before, self.snapshot())
+            cache.write_bytes(cache_bytes + b' ')
+            corrupt = coverage.assess(self.p, 'export', view='portrait', revision='v1', details=True)
+            self.assertNotIn('plan.expectation.movie.portrait', corrupt['fulfilled'])
+        # Explicit coverage still acquires a missing cache through the native owner.
+        cache.unlink()
+        def decode(*args, **kwargs):
+            cache.parent.mkdir(parents=True, exist_ok=True); cache.write_bytes(cache_bytes)
+        with patch.object(native_media, 'native_binary', return_value=Path('/synthetic-decoder')), \
+             patch.object(media_verification, 'verify_media', side_effect=decode) as called:
+            explicit = coverage.evaluate(self.p, 'export', view='portrait', revision='v1', details=True)
+        called.assert_called_once()
+        self.assertIn('plan.expectation.movie.portrait', explicit['fulfilled'])
+        self.assertTrue(Path(explicit['report']).is_file())
+
+    def test_selected_movie_identity_survives_broken_working_scene_without_writes(self):
+        from ambiance_studio import deliveries, native_media
+        cache, receipt = self.synthetic_movie_cache()
+        poster = self.p/'poster.png'; Image.new('RGB', (90, 160), '#887744').save(poster)
+        declarations = {'format': deliveries.SELECTION, 'schema_version': 2, 'id': 'selected',
+                        'default': {'view': 'portrait', 'role': 'silent'},
+                        'entries': [{'view': 'portrait', 'role': 'silent', 'revision': 'v1',
+                                     'edition': 'synthetic', 'poster': poster.name}]}
+        deliveries.register(self.p, declarations); deliveries.present(self.p, 'selected', 'Synthetic test')
+        path = self.p/'scene/scene.json'; path.write_text('{broken working scene')
+        before = self.snapshot()
+        with patch.object(studio, 'write', side_effect=AssertionError('query write')), \
+             patch.object(native_media, 'native_binary', side_effect=AssertionError('native build')):
+            result = self.run_cli('project', 'overview', '--details')
+        self.assertEqual(before, self.snapshot())
+        self.assertFalse(result['production_readiness']['ready']); self.assertFalse(result['release_ready'])
+        subjects = result['subjects']
+        self.assertEqual(subjects['working']['scene_sha256'], studio.digest(path))
+        self.assertEqual(subjects['selected_movie']['delivery'], 'selected')
+        entry = next(iter(subjects['selected_movie']['entries'].values()))
+        self.assertEqual(entry['revision'], 'v1'); self.assertEqual(entry['edition'], 'synthetic')
+        self.assertNotEqual(result['production_readiness']['assessment']['subject']['scene_sha256'],
+                            studio.digest(revisions.render_context(self.p, 'v1')['scene']))
+
+    def test_persisted_report_identity_projection_and_exit_compatibility(self):
+        import contextlib
+        import io
+        pure = coverage.assess(self.p, 'layout', details=True)
+        self.assertFalse((self.p/'.ambiance/coverage').exists())
+        persisted = coverage.evaluate(self.p, 'layout', details=True)
+        payload = {k: value for k, value in pure.items() if k != 'assessment'}
+        self.assertEqual(payload, {k: value for k, value in persisted.items() if k != 'report'})
+        identity = studio.encoded_hash({k: v for k, v in persisted.items() if k not in ['report', 'expectations']})
+        self.assertEqual(Path(persisted['report']).name, identity+'.json')
+        before = Path(persisted['report']).read_bytes()
+        compact = coverage.evaluate(self.p, 'layout')
+        self.assertEqual(compact['report'], persisted['report'])
+        self.assertEqual(Path(compact['report']).read_bytes(), before)
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(cli.main(['--project', str(self.p), 'plan', 'coverage', '--stage', 'layout']), 0)
+            self.assertEqual(cli.main(['--project', str(self.p), 'plan', 'coverage']), 1)
+            self.assertEqual(cli.main(['--project', str(self.p), 'project', 'overview']), 0)
+        Path(persisted['report']).write_bytes(before+b'changed')
+        with self.assertRaises((ValueError, json.JSONDecodeError)):
+            coverage.evaluate(self.p, 'layout')
+
+    def test_captured_inputs_isolate_stale_controls_without_working_fallback(self):
+        from ambiance_studio.coverage_context import AssessmentInputs
+        self.capture()
+        manifest = revisions.load(self.p, 'v1')
+        scene = studio.inside(self.p, manifest['controls']['scene']); scene.write_text('{changed captured scene')
+        inputs = AssessmentInputs(self.p, 'v1')
+        self.assertIsNotNone(inputs.get('plan')); self.assertIsNotNone(inputs.get('pipeline'))
+        self.assertIsNotNone(inputs.get('inventory')); self.assertIsNone(inputs.get('scene'))
+        report = coverage.assess(self.p, 'layout', revision='v1', assessment=inputs, details=True)
+        self.assertFalse(report['ready']); self.assertEqual(report['revision'], 'v1')
+        self.assertTrue(all(row['ready'] is None for row in report['expectations']))
+        self.assertEqual(inputs.components['plan']['state'], 'available')
+        self.assertTrue(coverage.assess(self.p, 'layout')['ready'])  # working is independent
+        missing = coverage.assess(self.p, revision='never-captured')
+        self.assertFalse(missing['ready']); self.assertEqual(missing['revision'], 'never-captured')
+        self.assertIsNone(missing['plan_sha256'])
+
+    def test_captured_dependency_integrity_remains_required_but_material_stays_readable(self):
+        from ambiance_studio.coverage_context import AssessmentInputs
+        selection_path = self.p/'plans/selection.json'
+        selection = studio.read(selection_path)
+        sound = self.p/'sound/selected-note.txt'; sound.parent.mkdir(exist_ok=True); sound.write_text('Selected sound intent')
+        selection['documents'] = {'sound_plan': str(sound.relative_to(self.p))}; studio.write(selection_path, selection)
+        self.capture()
+        manifest = revisions.load(self.p, 'v1')
+        studio.inside(self.p, manifest['controls']['sound_plan']).write_text('Changed captured sound intent')
+        inputs = AssessmentInputs(self.p, 'v1')
+        self.assertIsNotNone(inputs.get('plan')); self.assertIsNotNone(inputs.get('pipeline'))
+        assessed = coverage.assess(self.p, 'layout', revision='v1', assessment=inputs, details=True)
+        self.assertFalse(assessed['ready'])
+        self.assertEqual(assessed['assessment']['components']['revision_dependencies']['state'], 'unknown')
+        self.assertEqual(assessed['assessment']['components']['plan']['state'], 'available')
+        self.assertFalse(coverage.evaluate(self.p, 'layout', revision='v1')['ready'])
+
+    def test_removed_view_and_evidence_race_are_explicitly_diagnosed(self):
+        report = self.proof()['report']; self.register(report)
+        scene_path = self.p/'scene/scene.json'; scene = studio.read(scene_path)
+        del scene['framing']['views']['landscape']; studio.write(scene_path, scene)
+        missing = coverage.assess(self.p, 'layout', details=True)
+        self.assertIn('plan.view-missing.landscape', [row['id'] for row in missing['blocked']])
+        self.assertIsNone(next(row for row in missing['expectations'] if row['view_id'] == 'landscape')['ready'])
+        # Restore exact proof inputs, then edit verified pixels before assessment finishes.
+        scene = studio.read(Path(report).parent/'scene.snapshot.json'); studio.write(scene_path, scene)
+        from ambiance_studio.coverage_evidence import ProviderVerifier
+        frame = Path(report).parent/'portrait/00000.png'
+        class EditingVerifier:
+            def verify(self, request):
+                result = ProviderVerifier().verify(request)
+                frame.write_bytes(frame.read_bytes()+b'concurrent change')
+                return result
+        raced = coverage.assess(self.p, view='portrait', details=True, verifier=EditingVerifier())
+        self.assertFalse(raced['ready']); self.assertEqual(raced['fulfilled'], [])
+        self.assertIn('plan.inputs-changed', [row['id'] for row in raced['blocked']])
+        self.assertTrue(any(row['path'] == str(frame) for row in raced['assessment']['changed_inputs']))
+
     def test_empty_missing_and_omitted_expectations_never_vacuously_pass(self):
         data = plan.load(self.p); data['elements'] = []; data['expectations'] = []; data['outputs'] = []
         studio.write(self.p/plan.PATH, data)
@@ -137,7 +402,9 @@ class CoverageTests(unittest.TestCase):
                     direct = self.run_cli('plan', 'coverage', '--stage', stage, '--details')
                     overview = production.overview(self.p, 'fixture', 'http://localhost',
                         readiness_options={'stage': stage, 'details': True}, details=True)['production_readiness']
-                    self.assertEqual(direct, overview)
+                    self.assertEqual({k: v for k, v in direct.items() if k != 'report'},
+                                     {k: v for k, v in overview.items() if k != 'assessment'})
+                    self.assertNotIn('report', overview)
                     pending = self.run_cli('plan', 'coverage', '--stage', stage, '--phase', 'preflight')
                     preflight = self.run_cli('iteration', 'preflight', file, '--stage', stage)['readiness']
                     self.assertEqual(pending, preflight)
