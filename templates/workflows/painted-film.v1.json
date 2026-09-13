@@ -1,0 +1,955 @@
+{
+  "format": "ambiance-workflow-catalog",
+  "schema_version": 1,
+  "id": "painted-film.v1",
+  "stages": [
+    {
+      "id": "intent",
+      "purpose": "Inspect the reference and author explicit creative direction.",
+      "inputs": [
+        "Preserved reference and its identity",
+        "Brief, known direction and unresolved creative choices"
+      ],
+      "outputs": [
+        "Authored production plan with chosen story, actions, outputs and expectations"
+      ],
+      "references": [
+        "docs/BRIEF-TEMPLATE.md",
+        "docs/PRODUCTION-PLAN.md"
+      ],
+      "operations": [
+        "reference.inspect",
+        "intent.author"
+      ],
+      "criterion_bindings": {
+        "reference-read": "62070862ea6cdb79c9a3982e86c2c50b4fe999cac66c8fa40be6c6a6368694f8",
+        "creative-direction": "f6ece5b5ef2aa09e17a95d4e7aa214e49aaca1006357428644ddc37e0ad50fb9",
+        "production-scope": "c90c3a1fd29b981578e2da2c9d4eab99366708166e6bd3d8d0af3186812bf803"
+      },
+      "coverage_stage": null
+    },
+    {
+      "id": "layout",
+      "purpose": "Account for the whole scene and stage the requested compositions.",
+      "inputs": [
+        "Canonical plan and inventory",
+        "Complete object/backing needs, depth, contacts and saved views"
+      ],
+      "outputs": [
+        "Authored inventory and layout",
+        "Composition proofs for each requested view"
+      ],
+      "references": [
+        "docs/SEED-TO-STAGE.md",
+        "docs/LAYER-AND-LIGHT-PLANNING.md"
+      ],
+      "operations": [
+        "inventory.inspect",
+        "view.inspect",
+        "picture.proof",
+        "inventory.fulfill",
+        "view.apply"
+      ],
+      "criterion_bindings": {
+        "depth-and-order": "6ef6e68187719ba082cdf206ecee8ae8bc3945989855e4ad0aced83e5de5fd3e",
+        "occlusion-coverage": "c0eca8665469c97352ffe9a5080e0fa6a432178bc8f73f3bc940343e0f0f1681",
+        "attachments": "0dccb542c35372bbe22852df086d19dcb3eccd904cd82869196cd8f739231dd8",
+        "scene-census": "2409701fdefb4a0e512f5c66fe3e12e22a22630049b6565398a5bbd3b4f97d47",
+        "output-compositions": "6f600924e50200d81c25f1dd29bfe1ebd4f4eef7d125ec1e84256160e2fb6137"
+      },
+      "coverage_stage": "layout"
+    },
+    {
+      "id": "assets",
+      "purpose": "Prepare source-preserving art and inspect registration and isolation.",
+      "inputs": [
+        "Hashed source art or already-isolated cutouts",
+        "Explicit preparation/compiler recipes, pivots and masks"
+      ],
+      "outputs": [
+        "Fresh prepared packs and receipts",
+        "Cel playback, edge and move/hide proof artifacts"
+      ],
+      "references": [
+        "docs/PREPARATION-WORKBENCH.md",
+        "docs/RIG-WORKBENCH.md",
+        "docs/CLI.md"
+      ],
+      "operations": [
+        "art.preflight",
+        "prepare.init",
+        "prepare.inspect",
+        "prepare.check",
+        "prepare.edit",
+        "prepare.build",
+        "prepare.proof",
+        "prepare.place",
+        "asset.build",
+        "asset.proof"
+      ],
+      "criterion_bindings": {
+        "integrity": "6ca145344fb573e835ab6e01a55a340f92d8349cb6c6785b754cbc2696689a23",
+        "registration": "67c0d5ffc55abae62a36289cf5f82db79ab82a9e29dd74d9a0f92e2835f4255e",
+        "style-and-edges": "d8599faee8a8ffe757f9e4845893da0c2724faf5c3a514f32e57ee16859d6b39",
+        "provenance": "eb936ec9a552de0a62bb5e05316f4381eb582d7834430102d62746369d7e8527"
+      },
+      "coverage_stage": "assets"
+    },
+    {
+      "id": "animation",
+      "purpose": "Assemble and inspect visible actions in the actual scene clock.",
+      "inputs": [
+        "Prepared art, scene rigs/tracks and intended views",
+        "Canonical action and evidence requirements"
+      ],
+      "outputs": [
+        "Exact per-view picture/activity evidence",
+        "Actual observations of full-cycle motion"
+      ],
+      "references": [
+        "docs/SCENE-CONTRACT.md",
+        "docs/RENDERING.md"
+      ],
+      "operations": [
+        "scene.timing",
+        "scene.activity",
+        "picture.proof",
+        "scene.apply",
+        "evidence.register"
+      ],
+      "criterion_bindings": {
+        "absolute-time": "18e21a3b0226a9d9e8d4b2de19a347acdffa84cb4749d7d0bd7ca60c6fffee0f",
+        "loop-and-coverage": "46dbcac1278bf0d24af6f9abee3a5e8bc08dfb40c1a35cc10a225ce0fa467e13",
+        "picture-review": "ec3cdc28ab777d3c89218ca0b9ad236cfc42821020ffc699e8cadaff2ec85848",
+        "scope-coverage": "170fda5e60f4e4275b72f6b0b50ea76eba8617910099f7d2954e3e76380748a6"
+      },
+      "coverage_stage": "animation"
+    },
+    {
+      "id": "sound-design",
+      "purpose": "Choose source sounds that support the emotional story.",
+      "inputs": [
+        "Sound brief and exact source files",
+        "Source requests, selected takes and provenance"
+      ],
+      "outputs": [
+        "Source facts and retained preparation",
+        "Real audition observations with exact file identity"
+      ],
+      "references": [
+        "docs/AUDIO-SOURCES.md",
+        "docs/AUDIO-SESSION.md"
+      ],
+      "operations": [
+        "audio.source-inspect"
+      ],
+      "criterion_bindings": {
+        "sound-story": "6c428f97ad549dff67002c6037a5d390a887010fa74158c7b813f305b98edbd0",
+        "source-audition": "85517060df85c8b2748801fe17379c4b9f685c21115afe2f128338ffd7bb9d4e",
+        "source-records": "47bd8b6a722a2d8a79f272e83a8c9ace73123fed79273c0bc6f4373bcf8644e1"
+      },
+      "coverage_stage": null
+    },
+    {
+      "id": "mix",
+      "purpose": "Arrange a circular soundtrack and inspect its real output.",
+      "inputs": [
+        "Validated audio session and pinned PCM sources",
+        "Picture clock and intended soundtrack roles"
+      ],
+      "outputs": [
+        "Masters/stems and numerical reports",
+        "Actual repeat-listening observations"
+      ],
+      "references": [
+        "docs/AUDIO-SESSION.md"
+      ],
+      "operations": [
+        "audio.inspect",
+        "audio.mix",
+        "audio.check"
+      ],
+      "criterion_bindings": {
+        "circular-edit": "838c1d750c46d55b21e249f91dcf5c775340d9b5df12d1735574cc8c923cfc74",
+        "signal-checks": "e1783977df07a74c57b35a8abd6f2d342fe3ad3cd7505aa05b774068c0d7ac3b",
+        "repeat-listen": "d34f06f409236203ee2ee182c81e3e16c928d6ca5bb2323455df2e288da3babb"
+      },
+      "coverage_stage": null
+    },
+    {
+      "id": "export",
+      "purpose": "Capture and verify the requested view and soundtrack editions.",
+      "inputs": [
+        "Exact revision and validated iteration recipe",
+        "Per-view dimensions, duration, selected masters and provenance"
+      ],
+      "outputs": [
+        "Captured editions and full decode evidence",
+        "Exact view/role movies and covers"
+      ],
+      "references": [
+        "docs/REVISIONS.md",
+        "docs/MIDNIGHT-OPERATIONS.md"
+      ],
+      "operations": [
+        "iteration.inspect",
+        "iteration.init",
+        "media.verify"
+      ],
+      "criterion_bindings": {
+        "decoded-file": "847006923689d49df2b9605fe6fbccf96247661cd9ac43cfd52a5502934f1c28",
+        "encoded-seam": "5ee7851a0c684bb6fc73556f64886fb5ef11b1eb305fd77aa4bdfd541d183dfb",
+        "editions": "301c3494c0da49be9e6c71463e476f6d81fa8b72b34beae70d93c7f473a1b8ba"
+      },
+      "coverage_stage": "export"
+    },
+    {
+      "id": "release",
+      "purpose": "Present exact movies and retain unperformed human checks.",
+      "inputs": [
+        "Exact delivery entries and their current evidence",
+        "Actual human look/listen and phone observations"
+      ],
+      "outputs": [
+        "Explicit review presentation",
+        "Current subject-bound review receipts or open criteria"
+      ],
+      "references": [
+        "docs/QUALITY-GATES.md",
+        "docs/STUDIO-LIBRARY.md"
+      ],
+      "operations": [
+        "delivery.inspect",
+        "delivery.present",
+        "review.draft",
+        "feedback.inspect"
+      ],
+      "criterion_bindings": {
+        "human-look-listen": "fca4d7ee8971376b6a0279b3f980740a00d7d730c8114945face80621349dd0f",
+        "phone-check": "6696e66def83d67e49f05256b4857a1d0082cba87b02012d9495c82ad436198c",
+        "delivery-scope": "0dbbcbb1da3018495bba8c19014dbc4ce3a56411e09846f5867225d24b010c6d"
+      },
+      "coverage_stage": null
+    },
+    {
+      "id": "library",
+      "purpose": "Package a discoverable handoff and preserve reusable records.",
+      "inputs": [
+        "Exact delivery or captured revision",
+        "Source/recipe/version records and known limits"
+      ],
+      "outputs": [
+        "Handoff bundle with exact movies, rebuild inputs and open checks"
+      ],
+      "references": [
+        "docs/STUDIO-LIBRARY.md",
+        "docs/REVISIONS.md"
+      ],
+      "operations": [
+        "delivery.handoff",
+        "revision.handoff",
+        "library.find"
+      ],
+      "criterion_bindings": {
+        "rebuild-record": "b7e627ad47c8ee2e0df071e8f117447143e59921753d847d39d6d4ab3644f589",
+        "reusable-modules": "d2a95ea94d19a5d95081cbb872cd577318173031adf9c1f54960ddf7d4a78dd7",
+        "handoff": "10e8b2d4ac588ac07a8b07840cfb0bcda8549a988a630e04d9f18ae0ece781f6"
+      },
+      "coverage_stage": null
+    }
+  ],
+  "operations": [
+    {
+      "id": "reference.inspect",
+      "resolver": "reference.inspect",
+      "route": [
+        "project",
+        "status"
+      ],
+      "inputs": [
+        "project.reference path/hash; actual visual inspection"
+      ],
+      "outputs": [
+        "Observed reference features; additions explicitly distinguished"
+      ],
+      "effects": [
+        "read"
+      ],
+      "runtime": null,
+      "contract": "docs/CLI.md"
+    },
+    {
+      "id": "intent.author",
+      "resolver": "intent.author",
+      "route": [
+        "plan",
+        "spec",
+        "apply"
+      ],
+      "inputs": [
+        "authored_plan: native production plan JSON; story.premise, story.direction, sources, elements, actions, outputs, relations, expectations, change"
+      ],
+      "outputs": [
+        "Validated canonical creative scope; original plan retained"
+      ],
+      "effects": [
+        "project-write"
+      ],
+      "runtime": null,
+      "contract": "examples/production-plan.json"
+    },
+    {
+      "id": "inventory.inspect",
+      "resolver": "inventory.inspect",
+      "route": [
+        "plan",
+        "inspect"
+      ],
+      "inputs": [
+        "inventory, scene and catalog"
+      ],
+      "outputs": [
+        "Native fulfillment and dependency diagnostics"
+      ],
+      "effects": [
+        "read"
+      ],
+      "runtime": null,
+      "contract": "docs/CLI.md"
+    },
+    {
+      "id": "view.inspect",
+      "resolver": "view.inspect",
+      "route": [
+        "view",
+        "inspect"
+      ],
+      "inputs": [
+        "scene, catalog, optional view"
+      ],
+      "outputs": [
+        "Saved framing and output geometry"
+      ],
+      "effects": [
+        "read"
+      ],
+      "runtime": "node",
+      "contract": "docs/CLI.md"
+    },
+    {
+      "id": "picture.proof",
+      "resolver": "picture.proof",
+      "route": [
+        "render",
+        "views-proof"
+      ],
+      "inputs": [
+        "scene, catalog, explicit view, fresh output directory"
+      ],
+      "outputs": [
+        "View-bound raster/loop proof receipt; no observation"
+      ],
+      "effects": [
+        "artifact-write"
+      ],
+      "runtime": "renderer",
+      "contract": "docs/RENDERING.md"
+    },
+    {
+      "id": "scene.timing",
+      "resolver": "scene.timing",
+      "route": [
+        "scene",
+        "timing"
+      ],
+      "inputs": [
+        "scene and catalog"
+      ],
+      "outputs": [
+        "Actual evaluated picture clock"
+      ],
+      "effects": [
+        "read"
+      ],
+      "runtime": "node",
+      "contract": "docs/SCENE-CONTRACT.md"
+    },
+    {
+      "id": "scene.activity",
+      "resolver": "scene.activity",
+      "route": [
+        "scene",
+        "activity"
+      ],
+      "inputs": [
+        "scene, catalog, view and fresh output directory"
+      ],
+      "outputs": [
+        "Measured action activity evidence"
+      ],
+      "effects": [
+        "artifact-write"
+      ],
+      "runtime": "node",
+      "contract": "docs/SCENE-ACTIVITY.md"
+    },
+    {
+      "id": "art.preflight",
+      "resolver": "art.preflight",
+      "route": [
+        "asset",
+        "preflight"
+      ],
+      "inputs": [
+        "exact source image; fresh output directory"
+      ],
+      "outputs": [
+        "Decoded alpha facts and light/dark previews"
+      ],
+      "effects": [
+        "artifact-write"
+      ],
+      "runtime": "pillow",
+      "contract": "docs/PREPARATION-WORKBENCH.md"
+    },
+    {
+      "id": "prepare.init",
+      "resolver": "prepare.init",
+      "route": [
+        "asset",
+        "prepare"
+      ],
+      "inputs": [
+        "existing single/compound native preparation recipe or artifact",
+        "optional context JSON",
+        "fresh output directory"
+      ],
+      "outputs": [
+        "Native compound preparation recipe checkpoint"
+      ],
+      "effects": [
+        "artifact-write"
+      ],
+      "runtime": "pillow",
+      "contract": "docs/PREPARATION-WORKBENCH.md",
+      "syntax": "asset prepare init TARGET --out FRESH_DIRECTORY"
+    },
+    {
+      "id": "prepare.inspect",
+      "resolver": "prepare.inspect",
+      "route": [
+        "asset",
+        "prepare"
+      ],
+      "inputs": [
+        "recipe or prepared artifact path"
+      ],
+      "outputs": [
+        "Source/part/receipt inspection"
+      ],
+      "effects": [
+        "read"
+      ],
+      "runtime": "pillow",
+      "contract": "docs/PREPARATION-WORKBENCH.md",
+      "syntax": "asset prepare inspect TARGET"
+    },
+    {
+      "id": "prepare.check",
+      "resolver": "prepare.check",
+      "route": [
+        "asset",
+        "prepare"
+      ],
+      "inputs": [
+        "recipe or prepared artifact path"
+      ],
+      "outputs": [
+        "Native source/recipe integrity findings"
+      ],
+      "effects": [
+        "read"
+      ],
+      "runtime": "pillow",
+      "contract": "docs/PREPARATION-WORKBENCH.md",
+      "syntax": "asset prepare check TARGET"
+    },
+    {
+      "id": "prepare.edit",
+      "resolver": "prepare.edit",
+      "route": [
+        "asset",
+        "prepare"
+      ],
+      "inputs": [
+        "recipe path",
+        "native batch JSON",
+        "expected recipe hash",
+        "fresh output directory"
+      ],
+      "outputs": [
+        "New recipe version; original preserved"
+      ],
+      "effects": [
+        "artifact-write"
+      ],
+      "runtime": "pillow",
+      "contract": "docs/PREPARATION-WORKBENCH.md",
+      "syntax": "asset prepare edit TARGET --out FRESH_DIRECTORY"
+    },
+    {
+      "id": "prepare.build",
+      "resolver": "prepare.build",
+      "route": [
+        "asset",
+        "prepare"
+      ],
+      "inputs": [
+        "complete native recipe with source, backing, masks, parts and registration",
+        "fresh output directory"
+      ],
+      "outputs": [
+        "Prepared parts and source-bound receipts"
+      ],
+      "effects": [
+        "artifact-write"
+      ],
+      "runtime": "pillow",
+      "contract": "docs/PREPARATION-WORKBENCH.md",
+      "syntax": "asset prepare build TARGET --out FRESH_DIRECTORY"
+    },
+    {
+      "id": "prepare.proof",
+      "resolver": "prepare.proof",
+      "route": [
+        "asset",
+        "prepare"
+      ],
+      "inputs": [
+        "prepared artifact path",
+        "fresh output directory"
+      ],
+      "outputs": [
+        "Move/hide raster proof; optional resume"
+      ],
+      "effects": [
+        "artifact-write"
+      ],
+      "runtime": "renderer",
+      "contract": "docs/PREPARATION-WORKBENCH.md",
+      "syntax": "asset prepare proof TARGET --out FRESH_DIRECTORY"
+    },
+    {
+      "id": "prepare.place",
+      "resolver": "prepare.place",
+      "route": [
+        "asset",
+        "prepare"
+      ],
+      "inputs": [
+        "prepared artifact path",
+        "existing source-plane base layer",
+        "prefix",
+        "expected scene hash"
+      ],
+      "outputs": [
+        "Source-mapped scene adoption with restoration history"
+      ],
+      "effects": [
+        "project-write"
+      ],
+      "runtime": "node",
+      "contract": "docs/PREPARATION-WORKBENCH.md",
+      "syntax": "asset prepare place TARGET"
+    },
+    {
+      "id": "asset.build",
+      "resolver": "asset.build",
+      "route": [
+        "asset",
+        "build"
+      ],
+      "inputs": [
+        "compiler recipe for already-isolated art, explicit pivot/registration and fresh output directory"
+      ],
+      "outputs": [
+        "Compiled raster pack; not an editable model"
+      ],
+      "effects": [
+        "artifact-write"
+      ],
+      "runtime": "pillow",
+      "contract": "docs/CLI.md"
+    },
+    {
+      "id": "asset.proof",
+      "resolver": "asset.proof",
+      "route": [
+        "asset",
+        "proof"
+      ],
+      "inputs": [
+        "catalog asset ID and fresh output directory"
+      ],
+      "outputs": [
+        "Cel playback, contact sheet and registration evidence"
+      ],
+      "effects": [
+        "artifact-write"
+      ],
+      "runtime": "pillow",
+      "contract": "docs/RIG-WORKBENCH.md"
+    },
+    {
+      "id": "audio.source-inspect",
+      "resolver": "audio.source-inspect",
+      "route": [
+        "audio",
+        "source-inspect"
+      ],
+      "inputs": [
+        "exact local source path",
+        "explicit backend pcm or macos-afconvert"
+      ],
+      "outputs": [
+        "Decoded source facts; no audition"
+      ],
+      "effects": [
+        "read"
+      ],
+      "runtime": "audio-source",
+      "contract": "docs/AUDIO-SOURCES.md"
+    },
+    {
+      "id": "audio.inspect",
+      "resolver": "audio.inspect",
+      "route": [
+        "audio",
+        "inspect"
+      ],
+      "inputs": [
+        "native audio session JSON and pinned PCM source files"
+      ],
+      "outputs": [
+        "Session/cue validation and exact source facts"
+      ],
+      "effects": [
+        "read"
+      ],
+      "runtime": null,
+      "contract": "docs/AUDIO-SESSION.md"
+    },
+    {
+      "id": "audio.mix",
+      "resolver": "audio.mix",
+      "route": [
+        "audio",
+        "mix"
+      ],
+      "inputs": [
+        "validated native session JSON"
+      ],
+      "outputs": [
+        "Fresh audio run, master/stems and measurement report"
+      ],
+      "effects": [
+        "project-write"
+      ],
+      "runtime": null,
+      "contract": "docs/AUDIO-SESSION.md"
+    },
+    {
+      "id": "audio.check",
+      "resolver": "audio.check",
+      "route": [
+        "audio",
+        "check"
+      ],
+      "inputs": [
+        "exact master WAV or audio run directory"
+      ],
+      "outputs": [
+        "Sample count, clipping and loop measurements; no listening"
+      ],
+      "effects": [
+        "read"
+      ],
+      "runtime": null,
+      "contract": "docs/AUDIO-SESSION.md"
+    },
+    {
+      "id": "iteration.inspect",
+      "resolver": "iteration.inspect",
+      "route": [
+        "iteration",
+        "inspect"
+      ],
+      "inputs": [
+        "exact run ID"
+      ],
+      "outputs": [
+        "Effective run state and resumable verified work"
+      ],
+      "effects": [
+        "read"
+      ],
+      "runtime": null,
+      "contract": "docs/CLI.md"
+    },
+    {
+      "id": "iteration.init",
+      "resolver": "iteration.init",
+      "route": [
+        "iteration",
+        "init"
+      ],
+      "inputs": [
+        "authored native iteration input and fresh directory"
+      ],
+      "outputs": [
+        "Native iteration recipe; no render or capture"
+      ],
+      "effects": [
+        "artifact-write"
+      ],
+      "runtime": null,
+      "contract": "docs/MIDNIGHT-OPERATIONS.md"
+    },
+    {
+      "id": "media.verify",
+      "resolver": "media.verify",
+      "route": [
+        "media",
+        "verify"
+      ],
+      "inputs": [
+        "exact movie path and declared output expectations"
+      ],
+      "outputs": [
+        "Complete native decode verification"
+      ],
+      "effects": [
+        "read"
+      ],
+      "runtime": "native",
+      "contract": "docs/RENDERING.md"
+    },
+    {
+      "id": "delivery.inspect",
+      "resolver": "delivery.inspect",
+      "route": [
+        "delivery",
+        "inspect"
+      ],
+      "inputs": [
+        "exact delivery ID"
+      ],
+      "outputs": [
+        "Each entry identity and evidence state"
+      ],
+      "effects": [
+        "read"
+      ],
+      "runtime": null,
+      "contract": "docs/CLI.md"
+    },
+    {
+      "id": "delivery.present",
+      "resolver": "delivery.present",
+      "route": [
+        "delivery",
+        "present"
+      ],
+      "inputs": [
+        "exact delivery ID",
+        "recorder identity",
+        "channel and selection expectation"
+      ],
+      "outputs": [
+        "Explicit current review/release selection"
+      ],
+      "effects": [
+        "project-write"
+      ],
+      "runtime": null,
+      "contract": "docs/CLI.md"
+    },
+    {
+      "id": "review.draft",
+      "resolver": "review.draft",
+      "route": [
+        "review",
+        "draft"
+      ],
+      "inputs": [
+        "actual gate ID",
+        "exact revision/edition/view when captured",
+        "fresh draft path"
+      ],
+      "outputs": [
+        "Unperformed review draft; never gate approval"
+      ],
+      "effects": [
+        "artifact-write"
+      ],
+      "runtime": null,
+      "contract": "docs/QUALITY-GATES.md"
+    },
+    {
+      "id": "delivery.handoff",
+      "resolver": "delivery.handoff",
+      "route": [
+        "delivery",
+        "handoff"
+      ],
+      "inputs": [
+        "exact delivery ID and fresh output directory"
+      ],
+      "outputs": [
+        "Handoff of exact entries and open reviews"
+      ],
+      "effects": [
+        "artifact-write"
+      ],
+      "runtime": null,
+      "contract": "docs/CLI.md"
+    },
+    {
+      "id": "revision.handoff",
+      "resolver": "revision.handoff",
+      "route": [
+        "revision",
+        "handoff"
+      ],
+      "inputs": [
+        "exact revision/edition and fresh output directory"
+      ],
+      "outputs": [
+        "Captured rebuild/review handoff"
+      ],
+      "effects": [
+        "artifact-write"
+      ],
+      "runtime": null,
+      "contract": "docs/CLI.md"
+    },
+    {
+      "id": "library.find",
+      "resolver": "library.find",
+      "route": [
+        "library",
+        "find"
+      ],
+      "inputs": [
+        "optional search text"
+      ],
+      "outputs": [
+        "Existing reusable raster records; no model construction"
+      ],
+      "effects": [
+        "read"
+      ],
+      "runtime": null,
+      "contract": "docs/CLI.md"
+    },
+    {
+      "id": "inventory.fulfill",
+      "resolver": "inventory.fulfill",
+      "route": [
+        "plan",
+        "fulfill"
+      ],
+      "inputs": [
+        "native fulfillment JSON describing produced part evidence",
+        "expected inventory SHA-256"
+      ],
+      "outputs": [
+        "Versioned inventory fulfillment; scope unchanged"
+      ],
+      "effects": [
+        "project-write"
+      ],
+      "runtime": null,
+      "contract": "docs/CLI.md"
+    },
+    {
+      "id": "evidence.register",
+      "resolver": "evidence.register",
+      "route": [
+        "plan",
+        "evidence"
+      ],
+      "inputs": [
+        "expectation ID",
+        "view ID",
+        "typed exact provider receipt",
+        "soundtrack role for movie evidence"
+      ],
+      "outputs": [
+        "Source-bound expectation evidence registration"
+      ],
+      "effects": [
+        "project-write"
+      ],
+      "runtime": null,
+      "contract": "docs/PRODUCTION-PLAN.md"
+    },
+    {
+      "id": "scene.apply",
+      "resolver": "scene.apply",
+      "route": [
+        "scene",
+        "apply"
+      ],
+      "inputs": [
+        "native scene batch JSON; authored realization/relationship changes"
+      ],
+      "outputs": [
+        "Validated scene transaction and restoration snapshot"
+      ],
+      "effects": [
+        "project-write"
+      ],
+      "runtime": null,
+      "contract": "docs/SCENE-CONTRACT.md"
+    },
+    {
+      "id": "view.apply",
+      "resolver": "view.apply",
+      "route": [
+        "view",
+        "apply"
+      ],
+      "inputs": [
+        "native saved-view definition JSON"
+      ],
+      "outputs": [
+        "Validated saved composition"
+      ],
+      "effects": [
+        "project-write"
+      ],
+      "runtime": null,
+      "contract": "docs/VIEWS.md"
+    },
+    {
+      "id": "feedback.inspect",
+      "resolver": "feedback.inspect",
+      "route": [
+        "feedback",
+        "inspect"
+      ],
+      "inputs": [
+        "exact immutable feedback ID"
+      ],
+      "outputs": [
+        "Exact entry/delivery scope and current disposition"
+      ],
+      "effects": [
+        "read"
+      ],
+      "runtime": null,
+      "contract": "docs/MIDNIGHT-OPERATIONS.md"
+    }
+  ]
+}

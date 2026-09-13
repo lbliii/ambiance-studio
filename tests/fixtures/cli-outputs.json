@@ -67,5 +67,8 @@
   {"argv": ["model", "lower", "input", "--state", "input", "--out", "output"], "output": "artifact-directory", "command": "model lower"},
   {"argv": ["model", "proof", "input", "--recipe", "input", "--out", "output"], "output": "artifact-directory", "command": "model proof"},
   {"argv": ["model", "check", "input", "--package", "input", "--recipe", "input", "--out", "output"], "output": "result-envelope", "command": "model check"},
-  {"argv": ["model", "admit", "input", "--proof", "input", "--recipe", "input", "--out", "output"], "output": "artifact-directory", "command": "model admit"}
+  {"argv": ["model", "admit", "input", "--proof", "input", "--recipe", "input", "--out", "output"], "output": "artifact-directory", "command": "model admit"},
+  {"argv": ["workflow", "inspect", "--out", "output"], "output": "result-envelope", "command": "workflow inspect"},
+  {"argv": ["workflow", "stage", "intent", "--out", "output"], "output": "result-envelope", "command": "workflow stage"},
+  {"argv": ["workflow", "explain", "wf1.action", "--out", "output"], "output": "result-envelope", "command": "workflow explain"}
 ]

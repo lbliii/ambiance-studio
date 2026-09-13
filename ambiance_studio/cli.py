@@ -7,7 +7,7 @@ import sys
 
 from . import __version__
 from . import planning, assets, revisions, views, model_commands
-from . import asset_commands, diagnostic_commands, preview_commands
+from . import asset_commands, diagnostic_commands, preview_commands, workflow_commands
 from . import production_commands, project_commands, review_commands, scene_commands, studio_commands
 from .command_output import Output, selected_output
 from .errors import CommandError
@@ -53,7 +53,7 @@ def parser():
     sub = p.add_subparsers(dest='command', required=True)
     sub.add_parser('doctor', help='Inspect runtimes and implemented capabilities')
     for module in [project_commands, studio_commands, asset_commands, scene_commands,
-                   review_commands, preview_commands, diagnostic_commands, planning, model_commands]:
+                   review_commands, preview_commands, diagnostic_commands, planning, model_commands, workflow_commands]:
         module.add_parsers(sub)
     assets.add_library_parsers(sub)
     revisions.add_parsers(sub)
@@ -116,6 +116,7 @@ def run(args):
         'plan': planning.run, 'render': run_render, 'media': execute_media,
         'audio': audio.run, 'scene': scene_commands.run, 'look': scene_commands.run_look,
         'preview': partial(preview_commands.run, root=ROOT), 'review': review_commands.run,
+        'workflow': workflow_commands.run,
     }
     handler = handlers.get(args.command)
     if handler is None:

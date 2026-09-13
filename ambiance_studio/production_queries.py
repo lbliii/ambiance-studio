@@ -125,3 +125,14 @@ def summarize(project, data):
                                  'retained_unused_count': len(data.get('retained_unmapped_asset_ids', [])),
                                  'details_argv': ['./ambiance', '--project', str(project), 'plan', 'inspect']}
     return result
+
+
+def guided_next(project, args):
+    """Opt-in projection shared with workflow inspect; legacy next_work is unchanged."""
+    from .workflow import inspect
+    from .workflow_commands import selectors
+    result = inspect(project, **selectors(args), **{key: getattr(args, key) for key in
+        ['details', 'limit', 'offset', 'kind', 'subject_limit', 'subject_offset']})
+    result['format'] = 'ambiance-guided-next'
+    result['stage_count'] = len(result.pop('stages'))
+    return result

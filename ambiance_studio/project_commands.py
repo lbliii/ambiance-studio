@@ -82,6 +82,10 @@ def add_parsers(sub):
     q=group.add_parser('overview');add_output(q, Output.REPORT, type=Path);q.add_argument('--details',action='store_true')
     q.add_argument('--stage',choices=['layout','assets','animation','export'],default='animation');q.add_argument('--view');q.add_argument('--revision')
     q=group.add_parser('next');q.add_argument('--limit',type=int,default=8);q.add_argument('--offset',type=int,default=0);q.add_argument('--kind')
+    q.add_argument('--guided',action='store_true',help='Opt into exact-subject workflow action guidance')
+    from .workflow_commands import add_selectors
+    add_selectors(q);q.add_argument('--stage');q.add_argument('--details',action='store_true')
+    q.add_argument('--subject-limit',type=int,default=6);q.add_argument('--subject-offset',type=int,default=0)
     from . import project_storage
     project_storage.add_parsers(group)
 
@@ -95,6 +99,12 @@ def run(args, project, root, registry_file):
     if args.action in ['storage', 'cleanup']:
         from . import project_storage
         return project_storage.run(args, project)
+    if args.action == 'next':
+        if args.guided:
+            from .production_queries import guided_next
+            return guided_next(project, args)
+        if any(getattr(args,key,None) is not None for key in ['subject','revision','edition','view','stage']) or args.details or args.subject_limit!=6 or args.subject_offset!=0:
+            raise CommandError('Workflow selectors require project next --guided')
     if args.action in ['latest', 'overview', 'next']:
         from . import production_commands
         return production_commands.run(args, project, root, registry_file)
