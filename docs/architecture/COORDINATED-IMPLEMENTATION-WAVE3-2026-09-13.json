@@ -279,7 +279,8 @@
       "owner": "T3",
       "state": "coordinator_reproduced_fix_after_frozen_run",
       "finding": "secondsToFrames((1/24),24) and frames2/29 fail exact conversion because numeric CLI seconds are decimal rationals; render_plan/job-input/outputs use this exact conversion, so no current selector expresses many finite starting frames.",
-      "required_fix": "Provide an explicit integer-frame input path to finite render selection and carry that identity through job/output/receipt, preserving subframe rejection and legacy seconds behavior. Prove frame1 at24fps and nonzero boundary render without implicit rounding."
+      "required_fix": "Provide an explicit integer-frame input path to finite render selection and carry that identity through job/output/receipt, preserving subframe rejection and legacy seconds behavior. Prove frame1 at24fps and nonzero boundary render without implicit rounding.",
+      "approved_interface": "proof/views-proof mutually exclusive --start or --start-frame; video --start-frame. Preserve integer start/count through request/outputs, source_start_frame receipt, finite omitted duration N-start. Check audio range semantics or reject unsupported pairing; no silent offset/rounding."
     },
     {
       "id": "prepared-clock-module-closure",
