@@ -101,7 +101,7 @@ def context_render(context,candidate,stage,seconds):
     from .native_media import json_command
     scene=proposal['scene'];fps=scene['canvas']['fps'];duration=scene['canvas']['loop_seconds']
     from .timebase import scene_frame_count
-    count=scene_frame_count(scene);finite=scene.get('clock',{}).get('mode')=='finite'
+    count=int(scene_frame_count(scene));finite=scene.get('clock',{}).get('mode')=='finite'
     frames=max(1,min(round(seconds*fps),count));seconds=frames/fps
     width,height=scene['canvas']['width'],scene['canvas']['height']
     # Scene proof is at authored pixel dimensions. Bound volume rather than silently reduce scale.

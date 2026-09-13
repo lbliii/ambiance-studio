@@ -736,7 +736,11 @@
     "state": "implementation_focused_checks_passed_public_replay_ready",
     "scope": "Shared authored frame counts in activity, region demand, movie evidence, motion-context proofs and model receiver envelopes; finite diagnostics use linear predecessors and no loop joins. Clock dependency identities added to affected report owners. Finite activity requirement evidence remains unavailable pending P06.",
     "focused": "16 instance tests,14 activity tests with one native-only skip in focused run,8 CLI contract tests,18 motion tests (restricted localhost failure followed by successful native-access rerun), JS activity/region/clock passed. Full required-native run will require zero skips.",
-    "public_replay": "examples/model-instances/replay.py --finite exercises W3 auto guidance, M3 lifecycle, T3 exact29@25 with local camera cycle and A3 measurement/320k finite tone encode."
+    "public_replay": "examples/model-instances/replay.py --finite exercises W3 auto guidance, M3 lifecycle, T3 exact29@25 with local camera cycle and A3 measurement/320k finite tone encode.",
+    "retained_failures": [
+      "Public replay1 reached successful views-proof, then harness read a compact-output field that belongs in the detailed receipt. Harness corrected; replay2 passed.",
+      "Precombined package audit rejected T3 handoff links to its original worktree. Converted to explicit retained evidence paths; no evidence files or hashes changed."
+    ]
   },
   "documentation_followup": {
     "owner": "W3 existing task",
@@ -751,5 +755,23 @@
       "docs/architecture/TV-QUALITY-AND-SOUND-LIBRARY.yaml"
     ],
     "combined_acceptance": "pending"
+  },
+  "combined_public_replay": {
+    "state": "passed",
+    "source_commit": "c27b22bd2ec70408b10fd45f0b4bb3365541a423",
+    "path": ".ambiance/coordination/2026-09-13/wave3-finite-replay-2/evidence.json",
+    "sha256": "714af3517fbe7f5e08872090324163d8030e27e1b244d07459843ce9df6e28af",
+    "public_calls": 54,
+    "source_files_verified": 614,
+    "artifact_files_verified": 817,
+    "fully_decoded_frames": 29,
+    "fps": 25,
+    "presented_audio_samples": 55680,
+    "audio_sample_rate": 48000,
+    "requested_audio_bitrate": 320000,
+    "movie_sha256": "d3655ee6a92230b7c886a642d5240526aeedaf71dbcbe91237fd31dd41e178b0",
+    "observation": ".ambiance/coordination/2026-09-13/wave3-finite-replay-2/coordinator-observation.json",
+    "observation_sha256": "97c9841dc028ee5fa5bde7328a236abedd8bb60c095a1b769c55794c80f48389",
+    "limits": "Static engineering models with a local camera cycle and synthetic tone; no film or listening acceptance. Later motion-proof count normalization is separately focused-tested and awaits final suite."
   }
 }

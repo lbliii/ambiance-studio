@@ -12,30 +12,32 @@ See the [schema/API and public command guide](../../docs/FINITE-CLOCK.md) and [r
 
 ## Validation and retained movies
 
-`./ambiance test --require-native --artifacts .ambiance/p03-clock/required-native-2` passed **525/525 recorded cases, 509 Python tests, zero skips and 18 check groups**. All 581 recorded input files were rehashed afterward with zero mismatches, and the source tree was clean. The native slot was explicitly released to the coordinator. [Run report](/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/required-native-2/run.json), SHA-256 `f3770f39dc3be5f9cd3a97f8a59e925a9c75a418556f3b9e677051d1f75f0599`. [Input manifest](/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/required-native-2/inputs.json), SHA-256 `12cfa5910961c65735c894151bef5f516e434a8fa3eb50727783a2dc89667a5f`.
+Artifact paths below are relative to the originating worktree `/Users/lb/.codex/worktrees/fc6f/ambiance-studio`. They are retained evidence locations, not bundled checkout files. The adjacent verification index binds their original paths and hashes.
+
+`./ambiance test --require-native --artifacts .ambiance/p03-clock/required-native-2` passed **525/525 recorded cases, 509 Python tests, zero skips and 18 check groups**. All 581 recorded input files were rehashed afterward with zero mismatches, and the source tree was clean. The native slot was explicitly released to the coordinator. Run report (`.ambiance/p03-clock/required-native-2/run.json`), SHA-256 `f3770f39dc3be5f9cd3a97f8a59e925a9c75a418556f3b9e677051d1f75f0599`. Input manifest (`.ambiance/p03-clock/required-native-2/inputs.json`), SHA-256 `12cfa5910961c65735c894151bef5f516e434a8fa3eb50727783a2dc89667a5f`.
 
 All six movies below were freshly encoded and decoded on the tested source. Counts and durations passed, with zero maximum frame-PTS error. Ranges are half-open source-frame selections. The package audit also passed after adding the handoff documents.
 
 | fps | Source range | Decoded frames | Exact retained movie |
 | --- | --- | --- | --- |
-| 24 | 0–60 | 60 | [Watch](/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/24-60-from-0/picture.mp4) |
-| 24 | 1–60 | 59 | [Watch](/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/24-60-from-1/picture.mp4) |
-| 30 | 0–31 | 31 | [Watch](/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/30-31-from-0/picture.mp4) |
-| 30 | 1–31 | 30 | [Watch](/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/30-31-from-1/picture.mp4) |
-| 25 | 0–7 | 7 | [Watch](/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/25-7-from-0/picture.mp4) |
-| 25 | 1–7 | 6 | [Watch](/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/25-7-from-1/picture.mp4) |
+| 24 | 0–60 | 60 | Watch (`.ambiance/p03-clock/native-369546b/24-60-from-0/picture.mp4`) |
+| 24 | 1–60 | 59 | Watch (`.ambiance/p03-clock/native-369546b/24-60-from-1/picture.mp4`) |
+| 30 | 0–31 | 31 | Watch (`.ambiance/p03-clock/native-369546b/30-31-from-0/picture.mp4`) |
+| 30 | 1–31 | 30 | Watch (`.ambiance/p03-clock/native-369546b/30-31-from-1/picture.mp4`) |
+| 25 | 0–7 | 7 | Watch (`.ambiance/p03-clock/native-369546b/25-7-from-0/picture.mp4`) |
+| 25 | 1–7 | 6 | Watch (`.ambiance/p03-clock/native-369546b/25-7-from-1/picture.mp4`) |
 
-[Proof manifest](/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/proof-manifest.json), SHA-256 `53d5efd87ba4718e44d8829d1494897281d468bb88716e94cd7ec9b54b077a6e`, binds all six outputs and their receipts. These are technical review movies; they are not selected production editions.
+Proof manifest (`.ambiance/p03-clock/native-369546b/proof-manifest.json`), SHA-256 `53d5efd87ba4718e44d8829d1494897281d468bb88716e94cd7ec9b54b077a6e`, binds all six outputs and their receipts. These are technical review movies; they are not selected production editions.
 
-Actual decoded contacts were inspected: [full movie frame 59](/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/24-60-from-0/verification/contacts/decoded-0059.png) and [range movie frame 58](/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/24-60-from-1/verification/contacts/decoded-0058.png) show the yellow source-59 cel with its middle-socket marker. The separate [endpoint N](/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/endpoint-24/frame.png) is blue with its final socket. It was not appended to either movie. [Observation record](/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/observation.json), SHA-256 `e4bd03cd7a4d2280fbbaa270b7c5a3c78f752349750f21d304589f552690515a`, records these observations and browser provenance.
+Actual decoded contacts were inspected: full movie frame 59 (`.ambiance/p03-clock/native-369546b/24-60-from-0/verification/contacts/decoded-0059.png`) and range movie frame 58 (`.ambiance/p03-clock/native-369546b/24-60-from-1/verification/contacts/decoded-0058.png`) show the yellow source-59 cel with its middle-socket marker. The separate endpoint N (`.ambiance/p03-clock/native-369546b/endpoint-24/frame.png`) is blue with its final socket. It was not appended to either movie. Observation record (`.ambiance/p03-clock/native-369546b/observation.json`), SHA-256 `e4bd03cd7a4d2280fbbaa270b7c5a3c78f752349750f21d304589f552690515a`, records these observations and browser provenance.
 
 The browser was checked on runtime-identical `2847b83`: a 31-frame/30-fps scene loaded, seek 31 showed the authored endpoint, and Play restarted before stopping at frame 30. Earlier actual browser checks of the 60-frame moving fixture observed its endpoint/cel/socket changes. These were technical snapshots and playback progression, not human artistic acceptance or a continuous visual-quality review.
 
-Legacy compatibility was additionally checked against base `75d24b8` at 485 sample times, with byte-identical state arrays. [Parity record](/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/duration-repair/legacy-parity.json). JS tests cover unequal 60/96-frame shots, 7@25, 31@30 and 31@60, out-of-order and subframe sampling, endpoint visibility/cels/sockets, finishing pixels, reparenting, local-cycle closure and rational cue interval/rounding specimens. Public tests cover atomic authoring, stale guards/history, exact ranges, invalid requests without writes and native count/default-verification boundaries.
+Legacy compatibility was additionally checked against base `75d24b8` at 485 sample times, with byte-identical state arrays. Parity record (`.ambiance/p03-clock/duration-repair/legacy-parity.json`). JS tests cover unequal 60/96-frame shots, 7@25, 31@30 and 31@60, out-of-order and subframe sampling, endpoint visibility/cels/sockets, finishing pixels, reparenting, local-cycle closure and rational cue interval/rounding specimens. Public tests cover atomic authoring, stale guards/history, exact ranges, invalid requests without writes and native count/default-verification boundaries.
 
 ## Repairs preserved in the evidence
 
-The first full run on `06a5023` failed: 520 of 523 recorded cases passed, with 506 Python tests and zero skips. It exposed prepared-editor module closure and two expected CLI-signature changes. Those were repaired before the successful full rerun. [Original failed run](/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/required-native-1/run.json), SHA-256 `a70ac99c98fda0e9bbe0103c2c22da46c68c940cd806992e3cff4eb95336370c`.
+The first full run on `06a5023` failed: 520 of 523 recorded cases passed, with 506 Python tests and zero skips. It exposed prepared-editor module closure and two expected CLI-signature changes. Those were repaired before the successful full rerun. Original failed run (`.ambiance/p03-clock/required-native-1/run.json`), SHA-256 `a70ac99c98fda0e9bbe0103c2c22da46c68c940cd806992e3cff4eb95336370c`.
 
 Further review caught floating reconstruction of authored N for 7@25 and 31@30; `1567a39` fixed the clock and narrow consumers. Actual browser inspection then caught initialization order, repaired in `2847b83`. `369546b` only corrected a new test's positional media-verification argument. Earlier media/observations retain their original identities; the six current movies above bind the successful source.
 
