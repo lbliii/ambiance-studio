@@ -1,0 +1,175 @@
+{
+  "format": "studio-workstream-coordination",
+  "schema_version": 1,
+  "wave": 2,
+  "updated_utc": "2026-09-13",
+  "coordinator_thread_id": "01a0983d-40cf-71a3-bd9c-cb8308ad6efa",
+  "coordinator_worktree": "/Users/lb/.codex/worktrees/cfeb/ambiance-studio",
+  "coordinator_branch": "codex/coordinated-studio-wave2",
+  "saved_project_id": "f5120268-3ebf-40fb-8c45-d50ab7c7bcff",
+  "baseline_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
+  "status": "active",
+  "authorization": "User explicitly requested creating and merging the first-wave PR, then spawning the next wave of tasks. PR #32 merged. Four fresh second-wave tasks are authorized; ongoing coordination includes unblocking, review, local integration and combined validation.",
+  "first_wave": {
+    "ledger": "docs/architecture/COORDINATED-IMPLEMENTATION-2026-09-13.json",
+    "pr": "https://github.com/lbliii/ambiance-studio/pull/32",
+    "state": "MERGED",
+    "merged_at": "2026-09-13T02:40:28Z",
+    "merge_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
+    "head_commit": "7ce91bb34ff1b8886f78e11ab344609e39d271d1",
+    "tree_equals_reviewed_head": true,
+    "validation": {
+      "required_native": true,
+      "cases": 447,
+      "python_tests": 433,
+      "skips": 0,
+      "tested_commit": "5fc33d41c06604175610937a4b876c7692772178",
+      "later_changes": "Completion ledger and companion Markdown only; final package audit 600 links.",
+      "github_ci": "No job started: billing/account spending-limit annotation. Normal merge succeeded without changing account settings or branch protections.",
+      "github_run": "https://github.com/lbliii/ambiance-studio/actions/runs/34733575220"
+    }
+  },
+  "plan": "docs/architecture/COORDINATED-IMPLEMENTATION-WAVE2-2026-09-13.md",
+  "workers": [
+    {
+      "stream": "W2",
+      "title": "Build guided workflow inspection",
+      "assignment": "WF-02 then WF-03 only",
+      "leases": [
+        "new workflow modules and templates/workflows/painted-film.v1.json",
+        "production_queries.py guided projection only",
+        "project_commands.py project next --guided and guidance options only",
+        "cli.py workflow parser/dispatch registration only",
+        "new-route CLI option/output fixture entries and affected parent signatures only"
+      ],
+      "excludes": [
+        "WF-04 through WF-07",
+        "coverage policy/persistence changes",
+        "central output envelope changes"
+      ],
+      "thread_id": "01a098a5-2b68-71c1-9441-31360878c398",
+      "client_thread_id": "client-new-thread:439a3f38-aa4a-41c3-8d48-94afea11ebb5",
+      "host_id": "local",
+      "worktree": "/Users/lb/.codex/worktrees/1fb5/ambiance-studio",
+      "branch": "codex/workflow-guidance-wave2",
+      "baseline_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
+      "dispatch_state": "active",
+      "cursor": "3eb0771e-775e-4022-af41-0e043619dc93:1",
+      "baseline_verified": true,
+      "interface": "Advisory catalog plus exact selected-pipeline gates; explicit working/review/release/revision/edition/view subjects, stable logical action IDs and separate freshness; workflow inspect/stage/explain and project next --guided. Revision-only inspection remains supported.",
+      "progress_verified": "wait_threads confirmed active/in-progress at the recorded cursor."
+    },
+    {
+      "stream": "M2",
+      "title": "Build immutable model construction",
+      "assignment": "mc/1 C1 then C2 only",
+      "leases": [
+        "new model definition/package/lowering/proof modules",
+        "new model fixtures and examples",
+        "cli.py model parser/dispatch registration only",
+        "new-route CLI option/output fixture entries and affected parent signatures only",
+        "cli.py command_project project-free explicit model routes",
+        "static named-state proof adapter over existing renderer; no shared rendering edits"
+      ],
+      "excludes": [
+        "editor evaluator or renderer-state changes",
+        "I1/I2 scene instances/adoption",
+        "full model Phase 1/P00 or artistic acceptance"
+      ],
+      "thread_id": "01a098a5-b2d3-7663-9b48-819ee499d1e6",
+      "client_thread_id": "client-new-thread:0a2191b1-adb1-47b5-82b3-febdf8077ed7",
+      "host_id": "local",
+      "worktree": "/Users/lb/.codex/worktrees/e892/ambiance-studio",
+      "branch": "codex/model-construction-c1-c2",
+      "baseline_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
+      "dispatch_state": "active",
+      "cursor": "968ca122-3068-4f0f-bb39-8fc91ed41861:2",
+      "baseline_verified": true,
+      "early_interface": "Immutable package closure and sealed manifest; ordinary scene/catalog lowering with tuple mapping. Proposed model build/inspect/lower/proof/check/admit; no renderer edits.",
+      "interface": "Project-free model build/inspect/lower/proof/check/admit; immutable exact closure, ordinary-engine lowering and static named-state proof. Unsupported animated/cycle controls must fail explicitly. Technical library admission only.",
+      "progress_verified": "wait_threads confirmed active/in-progress at the recorded cursor."
+    },
+    {
+      "stream": "S2",
+      "title": "Build portable audio library",
+      "assignment": "Quality backlog LIB-01 only",
+      "leases": [
+        "new typed audio library/materialization modules, contract, fixtures and examples",
+        "audio.py new library parser/service hooks only",
+        "cli.py command_project for chosen audio library read/import routes (granted)",
+        "revision_dependencies.py new typed library-materialization adapter (granted)",
+        "new-route CLI option/output fixture entries and affected parent signatures only"
+      ],
+      "excludes": [
+        "visual raster/model schemas",
+        "AUDIO-02 loudness/encoder work",
+        "paid generation or inferred audition/acceptance"
+      ],
+      "thread_id": "01a098a5-ea03-7443-8924-0e07a9ffe7b6",
+      "client_thread_id": "client-new-thread:25c21304-e0d7-4c78-95a5-d69a248ea343",
+      "host_id": "local",
+      "worktree": "/Users/lb/.codex/worktrees/94fa/ambiance-studio",
+      "branch": "codex/portable-audio-library",
+      "baseline_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
+      "dispatch_state": "active",
+      "cursor": "155b3f3e-fad2-439a-a286-f947d290aa33:1",
+      "interface": "Explicit absolute --config/library root; audio library configure/search/inspect/import/audition/observe/promote/materialize/check. Typed ambiance-audio-materialization v1; archival origin references are not active dependencies.",
+      "baseline_verified": true,
+      "progress_verified": "wait_threads confirmed active/in-progress at the recorded cursor."
+    },
+    {
+      "stream": "D2",
+      "title": "Fix Canvas render sequence dependence",
+      "assignment": "Bounded fresh versus interleaved render-state discrepancy",
+      "leases": [
+        "editor/engine.mjs narrowly scoped Canvas state setup/restoration",
+        "tools/render/raster.mjs and tools/render/canvas-runtime.mjs narrowly scoped Canvas state",
+        "focused sequence regression fixture/tests",
+        "docs/RENDERING.md exact corrected behavior and residual limits",
+        "editor/stage-raster.mjs drawCoverage Canvas smoothing/state only (granted)"
+      ],
+      "excludes": [
+        "finite timing P03",
+        "alpha thresholds/default audit policy",
+        "visual restyling or broad renderer rewrite"
+      ],
+      "thread_id": "01a098a6-24c9-7fa3-8781-f453585cc6e5",
+      "client_thread_id": "client-new-thread:04a22c49-b15c-457b-96dc-dc1110559926",
+      "host_id": "local",
+      "worktree": "/Users/lb/.codex/worktrees/dbe1/ambiance-studio",
+      "branch": "codex/canvas-render-sequence",
+      "baseline_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
+      "dispatch_state": "active",
+      "cursor": "d1e00d1b-810d-42df-bace-389fde3d14e1:1",
+      "interface": "Exact baseline reproduced in 24 runs: imageSmoothingQuality high alone reproduces alternating pixels; restoring low restores fresh pixels, finishing on/off. Granted explicit enabled/high initialization in drawCoverage to match drawScene/extractView. Fresh coverage intentionally changes; finished bytes must remain unchanged.",
+      "baseline_verified": true,
+      "first_native_slot": "Reserved; may start after focused matrix passes and candidate commit is frozen. Notify start/finish and release.",
+      "progress_verified": "wait_threads confirmed active/in-progress at the recorded cursor."
+    }
+  ],
+  "status_owner_note": "Dispatch/integration record only; owning workflow YAML, model plan and quality YAML retain implementation/acceptance status.",
+  "shared_owner": "Coordinator owns broad cli/output/runtime/evidence/backlog/capability registration; listed route-only leases enable independent public CLI work and are reconciled on integration. New shared semantics require an early concrete contract, not a user approval gate.",
+  "native_test_queue": [],
+  "active_native_test_owner": "D2",
+  "native_test_policy": "One full native suite at a time on a frozen candidate. Workers request a slot before full suites; focused checks and small necessary proofs may run independently. Reuse the verified baseline.",
+  "automation": {
+    "id": "coordinate-studio-implementation",
+    "kind": "heartbeat",
+    "status": "ACTIVE",
+    "interval_minutes": 15,
+    "target_thread_id": "01a0983d-40cf-71a3-bd9c-cb8308ad6efa"
+  },
+  "scope_limits": [
+    "No automatic paid generation, account/billing changes, canonical film edits or artistic approval",
+    "First-wave PR #32 is merged; second-wave completion is reviewed local integration and combined validation, then handoff",
+    "P03 finite timing follows D2 and needs a separate continuation; no fifth task yet"
+  ],
+  "blocking_decisions": [],
+  "list_threads_limitation": "New tasks are omitted by list_threads; actual IDs are confirmed by worker messages and wait_threads. Do not create replacements.",
+  "native_slot_state": "reserved_for_frozen_candidate",
+  "dispatch_validation": {
+    "ok": true,
+    "local_links_checked": 605,
+    "errors": []
+  }
+}

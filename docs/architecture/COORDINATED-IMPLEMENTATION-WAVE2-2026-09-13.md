@@ -1,0 +1,30 @@
+# Coordinated implementation — second wave
+
+The user requested a PR/merge of the first wave and fresh next-wave tasks. [PR #32](https://github.com/lbliii/ambiance-studio/pull/32) is merged into main at `71aa947a8bfc2b71dd21ea4966caf0136e9bb15b`; its tree equals the reviewed head. The clean saved-project main checkout was fast-forwarded to this commit. Local required-native validation passed 447 recorded cases / 433 Python tests with zero skips. GitHub jobs did not start because account billing/spending limits blocked runners; that limitation is recorded on the PR. No account settings or protections were changed.
+
+This document and the [ledger](COORDINATED-IMPLEMENTATION-WAVE2-2026-09-13.json) supersede the first-wave plan's suggestion to reuse old tasks: the latest user request explicitly asks for new tasks. Existing first-wave tasks remain complete. All four new tasks start from merged main and use isolated worktrees. The coordinator works on `codex/coordinated-studio-wave2`.
+
+| Stream | Assignment | Ownership and stop point |
+| --- | --- | --- |
+| W2 — Build guided workflow inspection | WF-02 validated stage catalog/subject inspection, then WF-03 prerequisite-aware actions | Own new workflow modules and narrow guided-query hooks. Preserve actual pipeline criteria, selected entry identities and legacy unflagged output. Stop before packets, command-outcome guidance or adoption. |
+| M2 — Build immutable model construction | C1 immutable local definitions, then C2 lowering/proof/local entry | Consume mc/1; lower through existing engine/renderer. Build/reopen a complete painted-root lantern with nested candle/flame and variants. Stop before independent scene instances/adoption and whole-scene acceptance. |
+| S2 — Build portable audio library | LIB-01 typed local versions, lookup/import/audition/promotion/materialization | Preserve original/preparation identities, explicit observations and project containment. Demonstrate second-project playback/use after library and original project are unavailable. Stop before loudness/encoder work, curation or new mixes. |
+| D2 — Fix Canvas render sequence dependence | Diagnose and correct the retained fresh versus interleaved render discrepancy | Narrow Canvas state ownership in existing engine/raster path. Preserve thresholds and intended finished rendering. Compare fresh/out-of-order/interleaved views and inspect actual pixels. Stop before finite timing or broad renderer changes. |
+
+The owning plans remain [WF-02/03](WORKFLOW-CLI.yaml), [mc/1 construction slices](model-contract/implementation-v1.md) and [LIB-01](TV-QUALITY-AND-SOUND-LIBRARY.yaml). Read [studio alignment](STUDIO-PLAN-ALIGNMENT.md), AGENTS.md and relevant native contracts before implementation. Initial model/P00 technical decisions do not complete a production seed/census or full-film/artistic gates.
+
+## Interfaces and unblocking
+
+The ledger gives explicit narrow leases. W2 may register workflow routes and `project next --guided`; M2 may register its model routes; S2 may extend audio routes. They may update only new-route CLI signatures and affected parent signatures, preserving existing leaves and explicit output ownership. The coordinator reconciles these small shared hook patches; avoid broad central-file refactors. S2 agrees the library root/route and typed materialization receipt with the coordinator early before its optional project-selection/revision hooks. M2 requests any renderer/evidence adapter after showing the specific required operation; D2 owns renderer state while this diagnosis is active.
+
+All tasks send their real task ID, worktree, branch, exact base and first interface decision early. Continue independent reversible work while a lease/contract question is pending. Keep evidence and source identity exact; use current validators and actual CLI replays. A working primitive or geometric fixture does not imply clean paint, accepted audio or whole-film readiness.
+
+One full native suite runs at a time on a frozen worker candidate. Request the slot through the coordinator; do focused checks and necessary small proofs independently. Return commits, changed paths, argv, exact report/artifact hashes, real observations, errors/skips and residual acceptance gaps. The coordinator reviews each handoff, integrates in dependency order, resolves conflicts and runs the combined required-native suite on the stable combined tree. Reuse the verified baseline instead of repeating it in every worktree.
+
+P03 finite timing is queued behind D2 to avoid concurrent evaluator edits. TV-01 and AUDIO-02 likewise require their own scoped continuation and split shared leases. No fifth task or entire-roadmap rollout is dispatched here. Original seed/project selection, required census, actual art/takes, auditions and artistic reviews remain explicit production work.
+
+## Follow-up
+
+The existing 15-minute coordinator heartbeat is resumed for these four assignments. It reads this ledger, uses compact task snapshots, supplies concrete interfaces/leases, resumes blocked owners for specific fixes, and remains quiet when state is unchanged. It manages review/local integration and combined validation, then pauses with a handoff. The current user authorization merged PR #32; any later main merge must be separately grounded in the user's direction. Task IDs/cursors and test-slot ownership are durable in the ledger.
+
+All four actual task IDs and merged-base check-ins are confirmed in the ledger; compact task snapshots show active implementation. The first full-native slot is reserved for D2 after its focused matrix passes and its candidate is frozen. S2's typed materialization/project-selection hooks and M2's explicit project-free model routes have their narrow leases granted. D2's additional lease is limited to `editor/stage-raster.mjs::drawCoverage` smoothing initialization; it reproduced the 114/120 defect difference and must preserve finished-render bytes while documenting the intentional fresh-coverage change.
