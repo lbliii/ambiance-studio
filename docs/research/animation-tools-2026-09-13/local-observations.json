@@ -1,0 +1,301 @@
+{
+  "schema_version": 1,
+  "researched_at": "2026-09-13T14:42:09.255Z",
+  "repository_commit": "08bb56fa191a1c1112e01ca4d964e1f7dd2838b3",
+  "node": "v24.9.0",
+  "probe_sha256": "82a7a257659e6f2682fbe53058342d607b35a1105f3a6784341dc6b296530b12",
+  "source_hashes": {
+    "editor/engine.mjs": "84881ab6f3a2eb71e2bd026a55478d60e589c316bcbaf183e6690fde7c7ac4e7",
+    "editor/timing.mjs": "98a21220b43036f4d2298549070e9ffabe5a5124a957c39c5d72b994c2459c79",
+    "tools/scene-command.mjs": "88791ec078053bb5368389f109c590ce928cf308727638b5b1b5c995a5b8b05a",
+    "ambiance_studio/scene_transactions.py": "a56913ba6443d286760f5b1ae5bbbe3dba0a5ec8a97f52b432da9f0e7a8df696",
+    "ambiance_studio/scene_commands.py": "5b6f8e19c9533df01ecc3146556e44da30fe7b0d5cf48af0a5d3a7f46439347a",
+    "docs/CAPABILITIES.json": "bf900fbaf9af25bd533b74b2f8a607145687b3da03f903c8be4252f397a99a0d",
+    "docs/architecture/FIRST-SHORT-WORK-PACKAGES.json": "ecb2377f5f496a0c84997309a53e89e278530b2e5183c2da458ee109834f371b"
+  },
+  "observations": {
+    "separate_equal_cell_keys": {
+      "saved_keys": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1.5,
+          2
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "timing_report_holds": [
+        {
+          "start_seconds": 0,
+          "end_seconds": 1,
+          "cell": 0,
+          "duration_seconds": 1
+        },
+        {
+          "start_seconds": 1,
+          "end_seconds": 1.5,
+          "cell": 1,
+          "duration_seconds": 0.5
+        },
+        {
+          "start_seconds": 1.5,
+          "end_seconds": 2,
+          "cell": 2,
+          "duration_seconds": 0.5
+        }
+      ],
+      "saved_boundary_at_half_second": true,
+      "report_merges_boundary": true
+    },
+    "bounded_substitution": {
+      "saved_keys": [
+        [
+          0,
+          0
+        ],
+        [
+          0.25,
+          3
+        ],
+        [
+          0.5,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1.5,
+          2
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "changed_output_frames": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "output_fps": 24,
+      "dry_run_preserves_scene": true,
+      "previous_scene_snapshot_preserved": true
+    },
+    "finite_clock": {
+      "sample_at_duration_equals_start": true,
+      "nonclosing_track_error": {
+        "code": "invalid_input",
+        "message": "Track endpoints must close, or declare a hidden reset: subject.cell"
+      },
+      "clock_only_change_error": {
+        "code": "invalid_input",
+        "message": "Track must include zero and loop endpoint: subject.cell"
+      },
+      "rejected_clock_preserves_scene": true
+    },
+    "arbitrary_seek": {
+      "repeat_sample_equal": true
+    },
+    "mixed_exposures": {
+      "authored_frame_keys": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          48,
+          0
+        ]
+      ],
+      "fps": 24,
+      "output_frames": 48,
+      "all_requested_frame_selections_match": false,
+      "exact_frame_mismatches": [
+        {
+          "frame": 1,
+          "expected": 1,
+          "observed": 0,
+          "input_seconds": 0.041666666666666664,
+          "wrapped_seconds": 0.04166666666666652
+        }
+      ]
+    }
+  },
+  "commands": [
+    {
+      "argv": [
+        "project",
+        "init",
+        "$WORK/fixture",
+        "--template",
+        "blank"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "error": null
+    },
+    {
+      "argv": [
+        "--project",
+        "$WORK/fixture",
+        "scene",
+        "apply",
+        "$WORK/fixture/probe-batch.json",
+        "--dry-run"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "error": null
+    },
+    {
+      "argv": [
+        "--project",
+        "$WORK/fixture",
+        "scene",
+        "apply",
+        "$WORK/fixture/probe-batch.json",
+        "--expect-sha256",
+        "d2bb5e3538b6190a9672e5bf6ba0225dd10f4c7197be8c5ee649786d3ed5de72"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "error": null
+    },
+    {
+      "argv": [
+        "--project",
+        "$WORK/fixture",
+        "scene",
+        "timing",
+        "--layer",
+        "subject"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "error": null
+    },
+    {
+      "argv": [
+        "--project",
+        "$WORK/fixture",
+        "scene",
+        "apply",
+        "$WORK/fixture/probe-batch.json",
+        "--dry-run"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "error": null
+    },
+    {
+      "argv": [
+        "--project",
+        "$WORK/fixture",
+        "scene",
+        "apply",
+        "$WORK/fixture/probe-batch.json",
+        "--expect-sha256",
+        "cb3395c8e23ac5a21c9896cf271895e44ab60bdce3dccdd5d85aa0808c10911b"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "error": null
+    },
+    {
+      "argv": [
+        "--project",
+        "$WORK/fixture",
+        "scene",
+        "apply",
+        "$WORK/fixture/probe-batch.json",
+        "--dry-run"
+      ],
+      "exit_code": 2,
+      "ok": false,
+      "error": {
+        "code": "invalid_input",
+        "message": "Track endpoints must close, or declare a hidden reset: subject.cell"
+      }
+    },
+    {
+      "argv": [
+        "--project",
+        "$WORK/fixture",
+        "scene",
+        "clock",
+        "--loop-seconds",
+        "4",
+        "--dry-run"
+      ],
+      "exit_code": 2,
+      "ok": false,
+      "error": {
+        "code": "invalid_input",
+        "message": "Track must include zero and loop endpoint: subject.cell"
+      }
+    },
+    {
+      "argv": [
+        "--project",
+        "$WORK/fixture",
+        "scene",
+        "apply",
+        "$WORK/fixture/probe-batch.json",
+        "--dry-run"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "error": null
+    },
+    {
+      "argv": [
+        "--project",
+        "$WORK/fixture",
+        "scene",
+        "apply",
+        "$WORK/fixture/probe-batch.json",
+        "--expect-sha256",
+        "0472d75cb9bbeba4f8a15072d1128749dc05fc474d2ee30ef5c5f7d9ca5baa3b"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "error": null
+    }
+  ],
+  "limits": [
+    "Metadata-only synthetic specimen; no raster, audio, or artistic observation.",
+    "External applications and interchange libraries were not executed.",
+    "Public CLI mutations and timing plus the shared evaluator were exercised; no new runtime capability.",
+    "Exit zero means observation completed; inspect mixed_exposures for observed mismatches."
+  ]
+}

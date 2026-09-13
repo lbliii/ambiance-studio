@@ -8,6 +8,8 @@ Build a studio where agents carry out traditional animation production under hum
 
 Animation conventions supply a language shared by agents and human animators: model sheets, storyboards, layouts, key poses, breakdowns, exposure sheets, drawing substitutions, pencil tests, dailies and retakes. The CLI should make meaningful production changes available in batches. Browser inspection and optional editing use the same saved work.
 
+The [preliminary traditional-tools research](../research/animation-tools-2026-09-13/report.md) compares Harmony, OpenToonz, TVPaint, Krita, Moho, Storyboard Pro, Open RV, Blender/Grease Pencil and OpenTimelineIO with our native owners. It includes executed CLI exposure/clock observations, an exact-frame defect for P03/P15, and bounded follow-up studies. External application capabilities are documentation findings, not tested integrations or completed packages.
+
 Text/reasoning, image generation, visual understanding, and audio generation/understanding have complementary roles. The shared engine executes authored drawings, timing, transforms and compositing. Shot lengths follow the story. A reusable character and its performances should make later scenes easier to produce and revise.
 
 Generated video is an optional, explicitly scoped source or reference. The primary development path is agents authoring animation with text, image, audio and vision capabilities. A comparison against generated shots is not a prerequisite or the success criterion for this roadmap. Existing ambiance films and local cycles remain first-class uses of the shared foundations.
