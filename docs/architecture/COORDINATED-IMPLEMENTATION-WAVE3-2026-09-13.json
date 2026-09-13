@@ -44,12 +44,12 @@
       "branch": "codex/wave3-workflow-packets-outcomes",
       "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
       "dispatch_state": "active",
-      "cursor": "94fa07e9-c120-463c-8e93-bef403873fbf:2",
+      "cursor": "94fa07e9-c120-463c-8e93-bef403873fbf:3",
       "interface": "Global --guidance off|auto|full default off with separate ambiance-operation-guidance v1; fresh workflow prepare packets use native validation; global metadata removed before native Namespace forwarding.",
       "baseline_verified": true,
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
       "focused_progress": {
-        "state": "frozen_candidate_queued_for_native",
+        "state": "frozen_candidate_native_running",
         "source": "worker update; candidate not frozen or coordinator-reviewed",
         "native_slot_requested": false,
         "reported_behavior": [
@@ -58,12 +58,12 @@
           "Review drafts remain not-run; no inferred recorder. Complete iteration packets expose preflight, execution still needs explicit by.",
           "Auto guidance reads native outcome fields; full guidance uses fresh exact-subject assessment or explicit unavailable diagnostic."
         ],
-        "next": "Repeat retained CLI replay on exact committed source while queued; full suite when T3 releases slot.",
+        "next": "Complete reserved frozen native run; retain exact report and release slot.",
         "reported_checks": "Worker reports 56 existing/new focused tests plus final legacy review/watched-parent/delivery-wide cases passed; 24-call native CLI replay passed, earlier restricted failure retained."
       },
       "candidate_commit": "0ccabe4198d91a3b56afbcd2bbad004b10847d44",
       "full_validation": {
-        "state": "slot_granted",
+        "state": "running",
         "candidate_commit": "0ccabe4198d91a3b56afbcd2bbad004b10847d44",
         "source_frozen": true,
         "clean_verified_by_coordinator": true,
@@ -108,7 +108,7 @@
       "branch": "codex/model-instances-wave3",
       "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
       "dispatch_state": "active",
-      "cursor": "ffefdcba-0a41-43f5-ba3d-53cf50e2b5a4:1",
+      "cursor": "ffefdcba-0a41-43f5-ba3d-53cf50e2b5a4:2",
       "interface": "Project-scoped model instance apply recipe, exact contained package pins and deterministic tuple IDs; managed-layer fingerprints and adoption conflict preview. Actual C1/C2 lantern lowering probe passes.",
       "baseline_verified": true,
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
@@ -194,14 +194,14 @@
       "branch": "codex/wave3-p03-clock",
       "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
       "dispatch_state": "active",
-      "cursor": "4dbdebd1-a93d-43a6-a836-cf97b90e0435:2",
+      "cursor": "4dbdebd1-a93d-43a6-a836-cf97b90e0435:3",
       "interface": "Opt-in scene.clock version/mode/id/revision/duration_frames/local_cycles; canvas.loop_seconds remains duration mirror. Shared editor/clock.mjs context; existing sample(seconds) array stays; scene clock/sample frame/context routes proposed. Revision-pin and closure details need final contract.",
       "baseline_verified": true,
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
       "validation_note": "JS test-clock auto-discovered; Python clock tests should exercise actual CLI, not duplicate JS wrapper. Coordinator reconciles renderer source-list verifiers.",
       "clock_context_proposal": "compiled.clock.seconds(seconds)/frame(integer) returns frozen context; compiled.sample(context) validates equivalent definition and does not rewrap; sample(seconds) retains array and sampleFrame preserves requested frame. consumerTime selects local-cycle values. Authored clock revision label is distinct from external scene/revision hashes.",
       "focused_progress": {
-        "state": "finite_native_and_browser_proof_reported_preparing_freeze",
+        "state": "repaired_frozen_candidate_queued",
         "source": "worker-reported; frozen replay and coordinator verification pending",
         "implementation": "Shared finite/loop engine, JS/Python exact conversions, CLI clock/sample, local-cycle camera/layer/signal and finite reparent/raster consumers.",
         "reported_checks": "Legacy track/rig/binding/finishing checks and four CLI cases passed.",
@@ -216,12 +216,16 @@
         },
         "browser_observation": "Worker inspected both sample/endpoint poses and observed Play stop at frame59. Coordinator has not repeated this observation.",
         "native_slot_requested": false,
-        "next": "Focused commits/freeze, fresh frozen-source replay and full native slot request."
+        "next": "Second full native run after existing M3/A3 reservations; no tracked edits."
       },
-      "candidate_commit": "06a50236b09fffa4e5ece61037ecbc340672b2cb",
+      "candidate_commit": "8a24cff847751c0f0163c8b9779024815fd6908b",
       "full_validation": {
-        "state": "repairing_before_new_candidate",
-        "required_native": true
+        "state": "queued_after_A3",
+        "candidate_commit": "8a24cff847751c0f0163c8b9779024815fd6908b",
+        "source_frozen": true,
+        "clean_verified_by_coordinator": true,
+        "required_native": true,
+        "artifacts": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/required-native-2"
       },
       "legacy_parity_reported": {
         "complete_state_samples": 485,
@@ -243,9 +247,48 @@
           "reported_python_tests": 506,
           "reported_skips": 0,
           "coordinator_verified": "Report hash and completed failed state; CI-PYTHON failed, all17 other check entries passed.",
-          "slot_released": true
+          "slot_released": true,
+          "reported_recorded_cases": {
+            "total": 523,
+            "passed": 520,
+            "failed": 3
+          }
         }
-      ]
+      ],
+      "repair_commits": [
+        "ff917d2c31428a0ebd723f5273fd5ac7dbe4c8a8",
+        "8a24cff847751c0f0163c8b9779024815fd6908b"
+      ],
+      "coordinator_review": {
+        "state": "repair_source_review_no_blocking_finding",
+        "scope": "Reviewed copy/serve/runtime identity closure and exact integer start/count transport, finite range/audio rejection and five route signatures. Verified clean HEAD, source manifest and native movie hashes; full required-native run pending."
+      },
+      "public_replay": {
+        "source_commit": "8a24cff847751c0f0163c8b9779024815fd6908b",
+        "source_manifest": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/source-manifest-reviewed.json",
+        "source_manifest_sha256": "d08e0708f41d4962f701026b223d555d051eb54cce43c9199af25dd06ad63e95",
+        "movies": [
+          {
+            "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-reviewed/picture.mp4",
+            "sha256": "c441ef1697616a88218e8df8219f7bb2414e2383abe5528ebf2f337a653195c7",
+            "reported_source_range": [
+              0,
+              60
+            ],
+            "reported_decoded_frames": 60
+          },
+          {
+            "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/range-reviewed/picture.mp4",
+            "sha256": "097b9440b6c6f39971ea93e343bfb0cffa5fab543aaaada49d0e8c43429e287e",
+            "reported_source_range": [
+              1,
+              60
+            ],
+            "reported_decoded_frames": 59
+          }
+        ],
+        "coordinator_verified": "Manifest, source-file and movie hashes; reported render ranges/verification metadata inspected. Worker inspected actual final yellow cel; no coordinator raster observation yet."
+      }
     },
     {
       "stream": "A3",
@@ -269,7 +312,7 @@
       "branch": "codex/wave3-audio02",
       "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
       "dispatch_state": "active",
-      "cursor": "a089d4e4-c7e5-4434-bffe-2e70338c74c0:1",
+      "cursor": "a089d4e4-c7e5-4434-bffe-2e70338c74c0:2",
       "interface": "audio measure PATH [--source-sha256 HASH --out FILE] uses REPORT envelope. Optional audio_bitrate allows explicit 256/320/384k with actual format-specific capability rejection, no substitution. Audio encoding and separate source/decoded measurement evidence retain actual presentation interval.",
       "baseline_verified": true,
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
@@ -320,7 +363,8 @@
   "bounded_prerequisite": "Integrated mc/1 and C1/C2 plus corrected renderer permit I1/I2 and independent P03 technical fixtures. Full model Phase 1/P00 seed/story/census/art requirements remain open.",
   "native_test_queue": [
     "M3",
-    "A3"
+    "A3",
+    "T3"
   ],
   "active_native_test_owner": "W3",
   "native_test_policy": "One committed frozen-source full native suite at a time across these tasks. Focused independent checks continue. Coordinator runs final combined required-native suite; reuse validated 516-case baseline.",
@@ -375,17 +419,19 @@
     {
       "id": "finite-render-integer-start",
       "owner": "T3",
-      "state": "coordinator_reproduced_fix_after_frozen_run",
+      "state": "repair_source_reviewed_full_native_pending",
       "finding": "secondsToFrames((1/24),24) and frames2/29 fail exact conversion because numeric CLI seconds are decimal rationals; render_plan/job-input/outputs use this exact conversion, so no current selector expresses many finite starting frames.",
       "required_fix": "Provide an explicit integer-frame input path to finite render selection and carry that identity through job/output/receipt, preserving subframe rejection and legacy seconds behavior. Prove frame1 at24fps and nonzero boundary render without implicit rounding.",
-      "approved_interface": "proof/views-proof mutually exclusive --start or --start-frame; video --start-frame. Preserve integer start/count through request/outputs, source_start_frame receipt, finite omitted duration N-start. Check audio range semantics or reject unsupported pairing; no silent offset/rounding."
+      "approved_interface": "proof/video/views-proof mutually exclusive --start or --start-frame; integer start/count transported through raster and source range receipt; finite omitted duration is remaining range (proof retains 3-second cap); nonzero finite video plus audio rejects before output creation.",
+      "repair_candidate": "8a24cff847751c0f0163c8b9779024815fd6908b"
     },
     {
       "id": "prepared-clock-module-closure",
       "owner": "T3",
-      "state": "failed_native_run_repair_after_completion",
+      "state": "repair_source_reviewed_full_native_pending",
       "finding": "Prepared engine imports missing prepared/clock.mjs; fixed snapshot module list omits new transitive dependency.",
-      "required_fix": "Narrow actual snapshot closure updates and scene clock/sample CLI fixture updates after frozen run; preserve failed bundle, then commit and requeue behind W3."
+      "required_fix": "Narrow actual snapshot closure updates and scene clock/sample CLI fixture updates after frozen run; preserve failed bundle, then commit and requeue behind W3.",
+      "repair_candidate": "8a24cff847751c0f0163c8b9779024815fd6908b"
     }
   ],
   "blocking_decisions": [],
@@ -412,5 +458,5 @@
     "report": "/private/tmp/ambiance-wave3-dispatch-package.json"
   },
   "list_threads_limitation": "New tasks may be omitted by list_threads. Preserve setup IDs and resolve actual IDs from worker messages/confirmed task state; never create duplicate replacements.",
-  "native_slot_state": "granted"
+  "native_slot_state": "running"
 }
