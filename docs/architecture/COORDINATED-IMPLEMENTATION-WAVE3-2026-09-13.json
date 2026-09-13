@@ -144,7 +144,7 @@
       "transaction_refinement": "Active generation contains mutable working scene; captured previous config/scene and contained model packages remain immutable. Existing edit/restore/view/render/revision compatibility is still required.",
       "bounded_lowering_gap": "C1 static constant-cell keys at 0/1 seconds fail a host with a 2-second duration; this is an endpoint duration mismatch, not fps arithmetic. Granted constant-cell endpoints mapped to validated host interval, rejecting animated inputs beyond subset; actual finite-host compatibility remains required.",
       "focused_progress": {
-        "state": "frozen_candidate_native_running",
+        "state": "full_native_passed_handoff_pending",
         "source": "worker-reported tests; current source reviewed for alias issue, not a frozen handoff",
         "reported_checks": [
           "dry/save/retry",
@@ -156,17 +156,26 @@
           "generation asset-root validation",
           "actual raster provider wrapper"
         ],
-        "next": "Run required-native suite on frozenfe2ab3e, retain exact evidence, explicitly release slot."
+        "next": "Documentation-only handoff, coordinator local integration and shared fixes."
       },
       "candidate_commit": "fe2ab3eeffd587cb41df1dbd7bba9922adb65306",
       "full_validation": {
-        "state": "running",
+        "state": "passed",
         "candidate_commit": "fe2ab3eeffd587cb41df1dbd7bba9922adb65306",
         "source_frozen": true,
         "clean_verified_by_coordinator": true,
         "required_native": true,
         "artifacts": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/native-final",
-        "grant_reverified_clean_head": true
+        "grant_reverified_clean_head": true,
+        "report_sha256": "a93b719108ff28640db53968828e73ae28f046f05fe62821c996fff367ad8c1e",
+        "recorded_cases": 531,
+        "passed_cases": 531,
+        "python_tests": 516,
+        "skips": 0,
+        "tracked_source_sha256": "9d60ee5138a1d621a7cf0b7ca118855dcd0fdfb4f11edb957230ecec1c1cfe46",
+        "source_manifest_sha256": "22bde2f2b23c6123a9fd06cce0a00a00a540d18190b59ed65a50166786c694a6",
+        "slot_released": true,
+        "coordinator_verified": "Report hash, exact commit, native_required true,531 passed recorded cases/516 Python/zero skips, all17 checks passed;582 source-file hashes reverified."
       },
       "finite_integration": "Coordinator-only final combined probe on reviewed T3+M3 commits; do not adopt known-failing intermediate clock stack. Static candidate full-native validation proceeds independently.",
       "public_replay": {
@@ -280,16 +289,17 @@
         },
         "browser_observation": "Worker inspected both sample/endpoint poses and observed Play stop at frame59. Coordinator has not repeated this observation.",
         "native_slot_requested": false,
-        "next": "When M3 releases, run retained native full/range proofs then required-native-2 on frozen369546b; runtime is byte-identical to2847b83."
+        "next": "Run retained native full/range proofs and required-native-2 against exact369546b, then explicitly release."
       },
       "candidate_commit": "369546b1533c9b65d3a94ebe9148037b0f492e91",
       "full_validation": {
-        "state": "queued_after_M3",
+        "state": "slot_granted",
         "candidate_commit": "369546b1533c9b65d3a94ebe9148037b0f492e91",
         "source_frozen": true,
         "clean_verified_by_coordinator": true,
         "required_native": true,
-        "artifacts": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/required-native-2"
+        "artifacts": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/required-native-2",
+        "grant_reverified_clean_head": true
       },
       "legacy_parity_reported": {
         "complete_state_samples": 485,
@@ -483,10 +493,8 @@
   ],
   "shared_owner": "Coordinator reconciles central CLI/output/evidence/backlog/capabilities. W3 owns optional global outcome guidance; M3 model transport and typed model evidence; T3 picture clocks/evaluation; A3 audio measurements/encoding. New shared semantics require a concrete interface and narrow lease, not user permission.",
   "bounded_prerequisite": "Integrated mc/1 and C1/C2 plus corrected renderer permit I1/I2 and independent P03 technical fixtures. Full model Phase 1/P00 seed/story/census/art requirements remain open.",
-  "native_test_queue": [
-    "T3"
-  ],
-  "active_native_test_owner": "M3",
+  "native_test_queue": [],
+  "active_native_test_owner": "T3",
   "native_test_policy": "One committed frozen-source full native suite at a time across these tasks. Focused independent checks continue. Coordinator runs final combined required-native suite; reuse validated 516-case baseline.",
   "cross_stream_dependencies": [
     {
@@ -630,7 +638,7 @@
     "report": "/private/tmp/ambiance-wave3-dispatch-package.json"
   },
   "list_threads_limitation": "New tasks may be omitted by list_threads. Preserve setup IDs and resolve actual IDs from worker messages/confirmed task state; never create duplicate replacements.",
-  "native_slot_state": "running",
+  "native_slot_state": "granted",
   "integration_package_audit": {
     "ok": true,
     "local_links_checked": 661,
