@@ -147,7 +147,8 @@ def overview(project, alias, base_url, fingerprints=None, readiness_options=None
                              (not current_data.get('production_scope', {}).get('enforced') or current_data['production_scope']['ready']) if current_data else gates['release_ready'] if gates else False,
             'check_subject': gates['subject'] if gates else None, 'framing': framing,
             'production_readiness': production_readiness(project, persist=False, **(readiness_options or {}))}
-    if not current_data and not result['production_readiness']['assessment']['complete']:
+    from .production_plan import PATH as plan_path
+    if not current_data and (project/plan_path).exists() and not result['production_readiness']['assessment']['complete']:
         result['release_ready'] = False
     if details: return result
     from .production_queries import summarize

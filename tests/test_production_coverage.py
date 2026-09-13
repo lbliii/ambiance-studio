@@ -301,6 +301,15 @@ class CoverageTests(unittest.TestCase):
         self.assertEqual(assessed['assessment']['components']['plan']['state'], 'available')
         self.assertFalse(coverage.evaluate(self.p, 'layout', revision='v1')['ready'])
 
+    def test_legacy_gate_verdict_does_not_require_canonical_plan_adoption(self):
+        (self.p/plan.PATH).unlink()
+        legacy_gate_state = {'gates': {}, 'subject': {'mode': 'legacy-fixture'}, 'release_ready': True}
+        with patch.object(studio, 'gate_status', return_value=legacy_gate_state):
+            overview = production.overview(self.p, 'fixture', 'http://localhost', details=True)
+        self.assertTrue(overview['release_ready'])  # forwards the existing gate owner, not coverage acceptance
+        self.assertFalse(overview['production_readiness']['ready'])
+        self.assertIsNone(overview['production_readiness']['plan_sha256'])
+
     def test_removed_view_and_evidence_race_are_explicitly_diagnosed(self):
         report = self.proof()['report']; self.register(report)
         scene_path = self.p/'scene/scene.json'; scene = studio.read(scene_path)
