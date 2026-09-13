@@ -73,7 +73,8 @@
       "baseline_verified": true,
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
       "open_design_review": "Scene/catalog pointer commit may fit, but existing finish() mutates active scene path: separate immutable packages/staging from mutable active scene, preserve/rebase catalog-relative paths, prove ordinary edit/restore/view/render/revision after pointer switch and failed-write recovery.",
-      "transaction_refinement": "Active generation contains mutable working scene; captured previous config/scene and contained model packages remain immutable. Existing edit/restore/view/render/revision compatibility is still required."
+      "transaction_refinement": "Active generation contains mutable working scene; captured previous config/scene and contained model packages remain immutable. Existing edit/restore/view/render/revision compatibility is still required.",
+      "bounded_lowering_gap": "C1 static constant-cell keys at 0/1 seconds fail host 24fps endpoint validation. Granted static constant-cell endpoint mapping to validated host interval; reject animated inputs beyond subset and later prove actual finite-host compatibility."
     },
     {
       "stream": "T3",
@@ -101,7 +102,8 @@
       "interface": "Opt-in scene.clock version/mode/id/revision/duration_frames/local_cycles; canvas.loop_seconds remains duration mirror. Shared editor/clock.mjs context; existing sample(seconds) array stays; scene clock/sample frame/context routes proposed. Revision-pin and closure details need final contract.",
       "baseline_verified": true,
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
-      "validation_note": "JS test-clock auto-discovered; Python clock tests should exercise actual CLI, not duplicate JS wrapper. Coordinator reconciles renderer source-list verifiers."
+      "validation_note": "JS test-clock auto-discovered; Python clock tests should exercise actual CLI, not duplicate JS wrapper. Coordinator reconciles renderer source-list verifiers.",
+      "clock_context_proposal": "compiled.clock.seconds(seconds)/frame(integer) returns frozen context; compiled.sample(context) validates equivalent definition and does not rewrap; sample(seconds) retains array and sampleFrame preserves requested frame. consumerTime selects local-cycle values. Authored clock revision label is distinct from external scene/revision hashes."
     },
     {
       "stream": "A3",
@@ -114,7 +116,8 @@
         "audio recipe/output fixtures and new audio evidence",
         "native/media/compose.m media_commands.h verify_audio.m audio-only implementation",
         "media_operations.py media_verification.py editions.py audio-only request/evidence adapters",
-        "actual iteration recipe/step/plan/pass-through owners audio_bitrate only; no iteration_contract.py exists"
+        "actual iteration recipe/step/plan/pass-through owners audio_bitrate only; no iteration_contract.py exists",
+        "native/media/encode.m encodeAudio audio bitrate signature/settings/result only, preserving standalone default"
       ],
       "thread_id": "01a09b0c-90a8-7613-8e74-3804bbbcafea",
       "client_thread_id": "client-new-thread:e959c4d5-f200-429b-9778-2a9cd8b4d92e",
@@ -126,7 +129,8 @@
       "cursor": "a089d4e4-c7e5-4434-bffe-2e70338c74c0:1",
       "interface": "audio measure SOURCE source-bound method/backend/version results; audio_bitrate default 256000 with 384000 trial; separate audio_encoding and source/decoded measurements. Extracted native compose/verify_audio owns AAC and unchanged presentation interval.",
       "baseline_verified": true,
-      "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot."
+      "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
+      "measurement_scope": "Initial streaming double-precision Node DSP backend at explicit 48kHz; ITU Annex1/2 coefficients. EBU fixture download HTTP403 retained; deterministic published-definition signal/tolerance validation and any independent conformance gaps must be stated."
     }
   ],
   "shared_owner": "Coordinator reconciles central CLI/output/evidence/backlog/capabilities. W3 owns optional global outcome guidance; M3 model transport and typed model evidence; T3 picture clocks/evaluation; A3 audio measurements/encoding. New shared semantics require a concrete interface and narrow lease, not user permission.",
@@ -161,8 +165,11 @@
       "id": "shared-affine-exports",
       "owner": "T3",
       "consumer": "M3",
-      "state": "requested",
-      "action": "Export existing engine scaling/rotation without math changes as an independent commit; M3 continues transaction work then adopts shared exports."
+      "state": "integrated_and_relayed",
+      "action": "Export existing engine scaling/rotation without math changes as an independent commit; M3 continues transaction work then adopts shared exports.",
+      "source_commit": "c6cfbb2bb6a256a399124dda01ac86b044f968c9",
+      "integration_commit": "f874719",
+      "coordinator_review": "Only exports existing declarations; no arithmetic change. Source-placement 8 checks and rig 7 checks passed. Exact commit sent to M3 for adoption."
     }
   ],
   "blocking_decisions": [],
