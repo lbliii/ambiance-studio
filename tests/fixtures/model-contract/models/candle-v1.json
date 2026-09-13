@@ -1,0 +1,202 @@
+{
+  "packet_version": "mc/1",
+  "model_id": "candle",
+  "version": "1",
+  "kind": "prop",
+  "path_base": "document",
+  "local_frame": {
+    "size": [
+      20,
+      32
+    ],
+    "pivot": [
+      10,
+      30
+    ],
+    "clip": "none"
+  },
+  "root_part_id": "wax",
+  "drawings": [
+    {
+      "drawing_id": "wax",
+      "asset": {
+        "asset_id": "wax-v1",
+        "file": "../art/wax.png",
+        "sha256": "0c445be76b3f24c403e63759e0f5c77565245b25e533e19c36bc6a73faad03ea",
+        "width": 12,
+        "height": 20,
+        "cell_size": [
+          12,
+          20
+        ],
+        "pivot": [
+          0.5,
+          0.9
+        ]
+      },
+      "cel_index": 0,
+      "material_role": "solid"
+    },
+    {
+      "drawing_id": "flame-0",
+      "asset": {
+        "asset_id": "flame-v1",
+        "file": "../art/flame.png",
+        "sha256": "87b92478ac9aaf9ca148dc09968aad114d671edc8580712d2f1fce30e3836eb2",
+        "width": 32,
+        "height": 12,
+        "cell_size": [
+          8,
+          12
+        ],
+        "pivot": [
+          0.5,
+          1
+        ]
+      },
+      "cel_index": 0,
+      "material_role": "flame"
+    },
+    {
+      "drawing_id": "flame-1",
+      "asset": {
+        "asset_id": "flame-v1",
+        "file": "../art/flame.png",
+        "sha256": "87b92478ac9aaf9ca148dc09968aad114d671edc8580712d2f1fce30e3836eb2",
+        "width": 32,
+        "height": 12,
+        "cell_size": [
+          8,
+          12
+        ],
+        "pivot": [
+          0.5,
+          1
+        ]
+      },
+      "cel_index": 1,
+      "material_role": "flame"
+    },
+    {
+      "drawing_id": "flame-2",
+      "asset": {
+        "asset_id": "flame-v1",
+        "file": "../art/flame.png",
+        "sha256": "87b92478ac9aaf9ca148dc09968aad114d671edc8580712d2f1fce30e3836eb2",
+        "width": 32,
+        "height": 12,
+        "cell_size": [
+          8,
+          12
+        ],
+        "pivot": [
+          0.5,
+          1
+        ]
+      },
+      "cel_index": 2,
+      "material_role": "flame"
+    },
+    {
+      "drawing_id": "flame-3",
+      "asset": {
+        "asset_id": "flame-v1",
+        "file": "../art/flame.png",
+        "sha256": "87b92478ac9aaf9ca148dc09968aad114d671edc8580712d2f1fce30e3836eb2",
+        "width": 32,
+        "height": 12,
+        "cell_size": [
+          8,
+          12
+        ],
+        "pivot": [
+          0.5,
+          1
+        ]
+      },
+      "cel_index": 3,
+      "material_role": "flame"
+    }
+  ],
+  "parts": [
+    {
+      "part_id": "wax",
+      "drawing_id": "wax",
+      "cell_to_local": [
+        1,
+        0,
+        0,
+        1,
+        4,
+        12
+      ]
+    },
+    {
+      "part_id": "flame",
+      "drawing_id": "flame-0",
+      "mount": {
+        "part_path": [
+          "wax"
+        ],
+        "socket_id": "wick"
+      },
+      "cell_to_local": [
+        1,
+        0,
+        0,
+        1,
+        6,
+        2
+      ]
+    }
+  ],
+  "sockets": [
+    {
+      "socket_id": "wick",
+      "part_path": [
+        "wax"
+      ],
+      "cell_uv": [
+        0.5,
+        0
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "control_id": "flame-on",
+      "type": "boolean",
+      "default": true,
+      "target": {
+        "part_path": [
+          "flame"
+        ],
+        "channel": "visible"
+      }
+    }
+  ],
+  "local_cycles": [
+    {
+      "cycle_id": "flame",
+      "period_seconds": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "phase_turns": 0,
+      "drawings": [
+        "flame-0",
+        "flame-1",
+        "flame-2",
+        "flame-3"
+      ]
+    }
+  ],
+  "paint_order": [
+    [
+      "wax"
+    ],
+    [
+      "flame"
+    ]
+  ]
+}

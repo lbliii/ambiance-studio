@@ -2,6 +2,8 @@ import {compileScene,point,inverseVector,ENGINE_VERSION} from './engine.mjs';
 import {resolveView,viewIds,planViews,fitView} from './views.mjs';
 import {createStageRenderer} from './stage-raster.mjs';
 
+export const ALPHA_THRESHOLD=254;
+
 const distance=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);
 export function auditScene(scene,catalog,{coverageRect=null}={}){
   const rig=compileScene(scene,catalog),{width:W,height:H,fps,loop_seconds:T}=scene.canvas;
@@ -88,8 +90,38 @@ export async function auditPixels(scene,catalog,images,onProgress=()=>{}){
       'Seam difference is an attention cue, not a perceptual pass/fail decision.']};
 }
 
+// Coordinates are zero-based audit-raster pixels. Bounds include all defects;
+// samples are bounded separately for each class so a large perimeter cannot hide
+// interior samples. Boundary filtering is descriptive, never a coverage waiver.
+export function inspectAlpha(data,width,height,{threshold=ALPHA_THRESHOLD,boundaryPixels=1,sampleLimit=64}={}){
+  if(!Number.isInteger(width)||width<1||!Number.isInteger(height)||height<1||data.length!==width*height*4)
+    throw Error('Alpha diagnostic requires exact RGBA raster dimensions');
+  if(!Number.isInteger(threshold)||threshold<1||threshold>255||!Number.isInteger(boundaryPixels)||boundaryPixels<0||
+     !Number.isInteger(sampleLimit)||sampleLimit<0||sampleLimit>256)throw Error('Invalid alpha diagnostic limits');
+  const make=()=>({count:0,min_alpha:null,bounds:null,samples:[]});
+  const all=make(),boundary=make(),interior=make();
+  function add(row,x,y,alpha){
+    row.count++;row.min_alpha=row.min_alpha===null?alpha:Math.min(row.min_alpha,alpha);
+    if(!row.bounds)row.bounds=[x,y,x+1,y+1];
+    else{row.bounds[0]=Math.min(row.bounds[0],x);row.bounds[1]=Math.min(row.bounds[1],y);row.bounds[2]=Math.max(row.bounds[2],x+1);row.bounds[3]=Math.max(row.bounds[3],y+1);}
+    if(row.samples.length<sampleLimit)row.samples.push({x,y,alpha});
+  }
+  for(let y=0;y<height;y++)for(let x=0;x<width;x++){
+    const alpha=data[(y*width+x)*4+3];if(alpha>=threshold)continue;
+    add(all,x,y,alpha);
+    add(x<boundaryPixels||y<boundaryPixels||x>=width-boundaryPixels||y>=height-boundaryPixels?boundary:interior,x,y,alpha);
+  }
+  for(const row of [all,boundary,interior]){
+    if(row.bounds){const [x,y,right,bottom]=row.bounds;row.bounds=[x,y,right-x,bottom-y];}
+    row.samples_truncated=row.count>row.samples.length;
+  }
+  return {threshold,comparison:'alpha < threshold',boundary_pixels:boundaryPixels,sample_limit_per_class:sampleLimit,
+    coordinates:'Zero-based audit-raster pixels; bounds are [x,y,width,height]; samples in row-major order',all,boundary,interior};
+}
+
 // The same low-resolution per-view audit runs in Node proofs and the browser.
-export async function auditViewPixels(scene,catalog,images,ids,createCanvas,onProgress=()=>{},outputPlan=null){
+export async function auditViewPixels(scene,catalog,images,ids,createCanvas,onProgress=()=>{},outputPlan=null,{onAlphaDiagnostic=null}={}){
+  if(onAlphaDiagnostic!==null&&typeof onAlphaDiagnostic!=='function')throw Error('Alpha diagnostic callback must be a function');
   const requests=ids.map(id=>{
     const output=outputPlan?.views.find(v=>v.view.id===id)?.output;
     const ceiling=output?Math.min(240,Math.max(output.width,output.height)):240;
@@ -106,15 +138,25 @@ export async function auditViewPixels(scene,catalog,images,ids,createCanvas,onPr
     renderer.render(frame/scene.canvas.fps,{coverage:true});
     for(const [id,canvas] of renderer.outputs){
       const row=rows.get(id),data=pixels(canvas);let holes=0;
-      for(let i=3;i<data.length;i+=4)if(data[i]<254)holes++;
-      if(holes){row.uncovered_frames++;if(holes>row.max_uncovered_pixels){row.max_uncovered_pixels=holes;row.worst_frame=frame;}}
+      for(let i=3;i<data.length;i+=4)if(data[i]<ALPHA_THRESHOLD)holes++;
+      if(holes){row.uncovered_frames++;if(holes>row.max_uncovered_pixels){row.max_uncovered_pixels=holes;row.worst_frame=frame;if(onAlphaDiagnostic)row.worstPixels=new Uint8ClampedArray(data);}}
     }
     renderer.render(frame/scene.canvas.fps);
     for(const [id,canvas] of renderer.outputs){const row=rows.get(id),data=pixels(canvas);if(row.previous)row.deltas.push(delta(data,row.previous));else row.first=data;row.previous=data;}
     if(frame%12===0){onProgress(frame,frames);await new Promise(resolve=>setTimeout(resolve,0));}
   }
+  // Retain the actual measured pixels, rather than re-rendering the selected time
+  // at the proof resolution or trying to recover alpha from a finished frame.
+  if(onAlphaDiagnostic)for(const resolved of plan.views){
+    const row=rows.get(resolved.view.id);if(!row.worstPixels)continue;
+    const [width,height]=row.resolution,canvas=createCanvas(width,height),ctx=canvas.getContext('2d');
+    const image=ctx.createImageData(width,height);image.data.set(row.worstPixels);ctx.putImageData(image,0,0);
+    await onAlphaDiagnostic({view_id:resolved.view.id,frame:row.worst_frame,time_seconds:row.worst_frame/scene.canvas.fps,
+      fps:scene.canvas.fps,audit_frames:frames,resolution:row.resolution,view:resolved.view,raster_view:resolved,internal_canvas:plan.internal_canvas,
+      alpha:inspectAlpha(row.worstPixels,width,height)},canvas);
+  }
   const views=Object.fromEntries([...rows].map(([id,row])=>{
-    const {first,previous,deltas,...report}=row,sorted=deltas.sort((a,b)=>a-b),p95=sorted[Math.floor((sorted.length-1)*.95)]||0,seam=delta(first,previous);
+    const {first,previous,deltas,worstPixels,...report}=row,sorted=deltas.sort((a,b)=>a-b),p95=sorted[Math.floor((sorted.length-1)*.95)]||0,seam=delta(first,previous);
     return [id,{...report,ok:!row.uncovered_frames,last_to_first_rgb_difference:seam,adjacent_difference_p95:p95,seam_review_suggested:seam>Math.max(.01,p95*2)}];
   }));
   onProgress(frames,frames);

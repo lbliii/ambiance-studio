@@ -74,6 +74,15 @@ class Collector:
                 self.pin(audio.inside(folder, stem['path']), 'mix', 'stem', stem['sha256'])
 
     def preparation(self, path, index):
+        declaration = audio.read_json(path)
+        if isinstance(declaration, dict) and declaration.get('format') == 'ambiance-audio-preparation':
+            from .audio_sources import validate_preparation
+            prepared = validate_preparation(self.project, path)
+            self.document(f'preparation-{index}.json', path, 'sound-design', 'audio_preparation')
+            for item in prepared['dependencies']:
+                self.pin(studio.inside(self.project, item['path']), item['section'], item['role'], item['sha256'])
+            self.notes.append('Prepared audio source dependencies are pinned; preparation is not a complete master or an audition.')
+            return
         doc = self.document(f'preparation-{index}.json', path, 'mix', 'external_preparation')
         data = json.loads(doc['bytes'])
         fields(data, ['format', 'schema_version', 'sources', 'recipes', 'outputs', 'notes'], 'external preparation')

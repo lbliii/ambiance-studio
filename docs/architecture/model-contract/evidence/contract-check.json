@@ -1,0 +1,20 @@
+{
+  "ok": true,
+  "packet_version": "mc/1",
+  "checks": [
+    "Exact fixture bytes, explicit nested pins, stable IDs and registered drawings",
+    "Stale bytes/version, missing dependency, unsafe path and duplicate IDs reject",
+    "Independent instance tuple identities and compatible label changes retain overrides",
+    "Padded character cells map through current source/engine affines without alpha fitting",
+    "Current evaluator keeps mounted parts together, independent instances and front-frame order",
+    "Existing graph rejects child depth, absent socket, mounting cycle and conflicting writers",
+    "Legacy clock remains deterministic for random/negative seeks and actual timing cadence",
+    "Derived subject is explicitly bound to pose, variants, overrides, nested pins and mask policy",
+    "Selected silent take bytes/PCM and character drawing map are pinned independently",
+    "Unequal edit and cue offsets preserve exact samples and end-exclusive presentation"
+  ],
+  "limits": [
+    "Specimen invariants and current evaluator state only; no model runtime, finite evaluator, raster or artistic acceptance.",
+    "Fixed dependency pins and expected time tables are not a production graph resolver or time conversion implementation."
+  ]
+}

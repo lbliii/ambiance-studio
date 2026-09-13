@@ -67,12 +67,17 @@ def link_delivery(data, alias, base_url):
 
 def overview(project, alias, base_url, fingerprints=None, readiness_options=None, details=False):
     fingerprints = fingerprints or deliveries.Fingerprints()
-    selected = deliveries.latest(project, fingerprints=fingerprints)
+    errors = []
+    try:
+        selected = deliveries.latest(project, fingerprints=fingerprints)
+    except (OSError, ValueError, KeyError, TypeError, CommandError) as error:
+        selected = {'ok': False, 'selection': None, 'delivery': None, 'error': str(error)}
+        errors.append('Selected movie unavailable: '+str(error))
     history = deliveries.listing(project, fingerprints)
     selected['delivery'] = link_delivery(selected.get('delivery'),alias,base_url)
     for entry in history:
         link_delivery(entry,alias,base_url)
-    errors = []; checks = []; gates = None; working = {}; entry_checks = {}
+    checks = []; gates = None; working = {}; entry_checks = {}
     current_data = selected.get('delivery')
     try:
         conf = studio.read(project/'ambiance-project.json')
@@ -81,7 +86,7 @@ def overview(project, alias, base_url, fingerprints=None, readiness_options=None
             digest = fingerprints.digest(path) if fingerprints else studio.digest(path)
             captured = (current_data or {}).get('working_inputs', {}).get(kind)
             working[kind] = {'sha256': digest, 'matches_selected': digest == captured['sha256'] if captured else None}
-    except (OSError, ValueError, KeyError, TypeError) as error:
+    except (OSError, ValueError, KeyError, TypeError, CommandError) as error:
         errors.append('Working scene unavailable: '+str(error))
     try:
         context = None
@@ -100,7 +105,7 @@ def overview(project, alias, base_url, fingerprints=None, readiness_options=None
             unfinished = [{'id': check['id'], 'result': check['result'], 'note': check.get('note', '')}
                           for check in receipt.get('checks', []) if check.get('result') != 'pass']
             checks.append({'gate': gate, 'state': state['state'], 'reasons': state['reasons'], 'criteria': unfinished})
-    except (OSError, ValueError, KeyError, TypeError) as error:
+    except (OSError, ValueError, KeyError, TypeError, CommandError) as error:
         errors.append('Review status unavailable: '+str(error))
     from . import planning
     inventory = {}
@@ -116,8 +121,23 @@ def overview(project, alias, base_url, fingerprints=None, readiness_options=None
     except (OSError, ValueError, KeyError, TypeError, CommandError) as error:
         framing = {'ok': False, 'errors': [str(error)]}
     run_rows = runs(project)
+    try:
+        release = deliveries.latest(project, 'release', fingerprints)
+    except (OSError, ValueError, KeyError, TypeError, CommandError) as error:
+        release = {'ok': False, 'selection': None, 'delivery': None, 'error': str(error)}
+        errors.append('Selected release unavailable: '+str(error))
+    subjects = {'working': {'mode': 'working', **{key+'_sha256': row['sha256'] for key, row in working.items()}},
+                'selected_movie': None}
+    if current_data:
+        subjects['selected_movie'] = {
+            'mode': 'delivery', 'delivery': current_data['id'],
+            'selection_sha256': selected['selection']['payload_sha256'],
+            'delivery_sha256': current_data['record_sha256'],
+            'entries': {key: {field: entry.get(field) for field in ['revision', 'edition', 'view', 'role', 'movie']}
+                        for key, entry in current_data['entries'].items()},
+        }
     result = {'ok': True, 'project': alias, 'current_url': f'{base_url}/projects/{alias}',
-            'current': selected, 'release': deliveries.latest(project, 'release', fingerprints),
+            'current': selected, 'release': release, 'subjects': subjects,
             'history': history, 'working': working, 'open_checks': checks, 'ready_work': ready,
             'inventory_errors': inventory_errors, 'errors': errors, 'runs': run_rows, 'runs_total': len(run_rows),
             'active_unmapped_asset_ids': inventory.get('active_unmapped_asset_ids', []),
@@ -126,7 +146,10 @@ def overview(project, alias, base_url, fingerprints=None, readiness_options=None
             'release_ready': bool(entry_checks) and all(item['release_ready'] for item in entry_checks.values()) and
                              (not current_data.get('production_scope', {}).get('enforced') or current_data['production_scope']['ready']) if current_data else gates['release_ready'] if gates else False,
             'check_subject': gates['subject'] if gates else None, 'framing': framing,
-            'production_readiness': production_readiness(project, **(readiness_options or {}))}
+            'production_readiness': production_readiness(project, persist=False, **(readiness_options or {}))}
+    from .production_plan import PATH as plan_path
+    if not current_data and (project/plan_path).exists() and not result['production_readiness']['assessment']['complete']:
+        result['release_ready'] = False
     if details: return result
     from .production_queries import summarize
     return summarize(project, result)

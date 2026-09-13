@@ -94,6 +94,29 @@ def views_proof_routes(directory):
     for output in report['outputs']:
         if len(output['files'])!=report['frames'] or len(output['hashes'])!=report['frames']:raise ValueError('View proof frame list is incomplete')
         for name,digest in zip(output['files'],output['hashes']):add(name,digest)
+    for item in report.get('alpha_diagnostics', []):
+        for key in ['metadata', 'frame_image', 'heatmap']:
+            artifact = item[key]
+            if artifact.get('path_base') != 'artifact-relative':raise ValueError('Alpha diagnostic path must be artifact-relative')
+            add(artifact['file'], artifact['sha256'])
+        metadata = json.loads(routes['/'+item['metadata']['file']])
+        if metadata.get('format') != 'ambiance-alpha-diagnostic' or metadata.get('schema_version') != 1:
+            raise ValueError('Unsupported alpha diagnostic metadata')
+        if any(metadata.get(key) != item[key] for key in ['view_id', 'frame', 'time_seconds', 'resolution', 'alpha', 'frame_image', 'heatmap']):
+            raise ValueError('Alpha diagnostic differs from receipt')
+        view = report['views'].get(item['view_id'])
+        audit = report['pixels']['views'].get(item['view_id'])
+        if not view or not audit or metadata['view'] != view['view'] or metadata['view_sha256'] != view['view_sha256']:
+            raise ValueError('Alpha diagnostic has wrong view identity')
+        if item['frame'] != audit['worst_frame'] or item['resolution'] != audit['resolution'] or item['alpha']['all']['count'] != audit['max_uncovered_pixels'] or item['time_seconds'] != item['frame']/report['source_canvas']['fps']:
+            raise ValueError('Alpha diagnostic has wrong measured frame')
+        source = metadata.get('source')
+        required_source = ['scene_sha256','catalog_sha256','engine_sha256','audit_module_sha256',
+                           'stage_adapter_sha256','renderer_sources','canvas_module','node_version']
+        if not isinstance(source, dict) or any(key not in source for key in required_source):
+            raise ValueError('Alpha diagnostic source identity is incomplete')
+        if any(value != report.get(key) for key, value in source.items()):
+            raise ValueError('Alpha diagnostic source differs from receipt')
     routes['/']=routes['/index.html']
     return routes
 

@@ -92,3 +92,24 @@ export async function renderReceipt(job, raster) {
   report.renderer_sources = await rendererSources();
   return report;
 }
+
+// Supplemental proof files share the receipt's immutable, artifact-relative
+// identity contract. Callers provide bytes from the measured raster itself.
+export async function saveProofArtifact(out, file, bytes) {
+  const target = path.resolve(out, file);
+  if (path.isAbsolute(file) || path.relative(out, target).startsWith('..') ||
+      target === path.resolve(out) || file.split('/').includes('..'))
+    throw Error('Proof artifact path escapes its directory');
+  await fs.mkdir(path.dirname(target), {recursive : true});
+  await fs.writeFile(target, bytes, {flag : 'wx'});
+  return {file, sha256 : sha(bytes), path_base : 'artifact-relative'};
+}
+
+export function alphaDiagnosticIdentity(report) {
+  return Object.fromEntries([
+    'scene_sha256', 'catalog_sha256', 'source_assets', 'engine_version', 'engine_sha256',
+    'bindings_engine_sha256', 'finishing_engine_sha256', 'views_module_sha256',
+    'stage_adapter_sha256', 'audit_module_sha256', 'renderer_sha256', 'renderer_sources',
+    'canvas_module', 'canvas_version', 'node_version', 'platform'
+  ].map(key => [key, report[key]]));
+}

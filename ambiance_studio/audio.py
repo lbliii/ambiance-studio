@@ -26,15 +26,19 @@ LIMITS = ['Measurements are not listening, phone-speaker review, or artistic app
 
 
 def capabilities():
+    from .audio_source_backend import capabilities as source_capabilities
     return {'audio_arrangement': True, 'audio_pcm_wav': True,
             'audio_source_hashes': True, 'audio_comparisons': True,
-            'audio_normalization': False, 'audio_true_peak': False}
+            'audio_normalization': False, 'audio_true_peak': False,
+            'source_preparation': source_capabilities()}
 
 
 def add_parsers(sub):
     group = sub.add_parser('audio', help='Inspect, arrange and compare explicit PCM audio sessions').add_subparsers(dest='action', required=True)
     from . import audio_cues
     audio_cues.add_parsers(group)
+    from . import audio_sources
+    audio_sources.add_parsers(group)
     p = group.add_parser('inspect'); p.add_argument('session', type=Path)
     p = group.add_parser('import-stems', help='Create a new unity-gain session from an existing session stem list')
     p.add_argument('legacy_session', type=Path); p.add_argument('--session-id', required=True)
@@ -449,6 +453,9 @@ def check_audio(path):
 
 def run(args, project):
     project = Path(project).resolve(); action = args.action
+    if action in ['source-inspect', 'source-prepare', 'source-check']:
+        from . import audio_sources
+        return audio_sources.run(args, project)
     if action in ['cue-bind', 'cue-check']:
         from . import audio_cues
         return audio_cues.bind(args, project) if action == 'cue-bind' else audio_cues.check(args, project)

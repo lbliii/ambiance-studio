@@ -1,5 +1,6 @@
 """Public named-view rendering and immutable paired-proof artifacts."""
 import json
+import hashlib
 import os
 from pathlib import Path
 import sys
@@ -45,10 +46,83 @@ class ViewRenderTests(unittest.TestCase):
         self.assertEqual(report['sample_times'],[.5+n/6 for n in range(6)])
         self.assertIsNone(report['render_canvas'])
         self.assertEqual([v['output'] for v in report['outputs']],[{'width':90,'height':160},{'width':160,'height':90}])
-        routes=preview.views_proof_routes(self.root/'pair');self.assertEqual(len(routes),14)
+        routes=preview.views_proof_routes(self.root/'pair');self.assertEqual(len(routes),14+3*len(report['alpha_diagnostics']))
         self.assertNotIn('outputs',result)  # Per-frame evidence stays in the report.
         frame=self.root/'pair/portrait/00000.png';frame.write_bytes(frame.read_bytes()+b'tampered')
         with self.assertRaisesRegex(ValueError,'changed'):preview.views_proof_routes(self.root/'pair')
+
+    def alpha_proof(self):
+        scene=json.loads(self.source);scene['layers']=scene['layers'][:1]
+        scene['layers'][0].update(x=.5,y=.5,width=1,height=1)
+        scene['layers'][0].pop('motion',None)
+        self.scene_path.write_text(json.dumps(scene))
+        source=self.project/'art/pattern.png'
+        image=Image.new('RGBA',(160,160),(25,70,110,255))
+        image.paste((0,0,0,0),(72,16,80,24));image.paste((0,0,0,0),(88,0,96,1));image.save(source)
+        catalog_path=self.project/'art/library.json';catalog=json.loads(catalog_path.read_text())
+        catalog['assets'][0].update(width=160,height=160,sha256=hashlib.sha256(source.read_bytes()).hexdigest())
+        catalog_path.write_text(json.dumps(catalog))
+        result=self.render('views-proof','--view','portrait','--view','landscape','--start','.5','--seconds','.5','--long-edge','160','--out',self.root/'alpha')
+        return result,json.loads(Path(result['report']).read_text())
+
+    def test_alpha_proof_preserves_holes_and_lists_exact_source_frame_artifacts(self):
+        result,report=self.alpha_proof();out=Path(result['output']).parent
+        self.assertTrue(report['review_needed']);self.assertFalse(report['pixels']['ok'])
+        self.assertEqual(len(report['alpha_diagnostics']),1)
+        item=report['alpha_diagnostics'][0];self.assertEqual(item['view_id'],'portrait')
+        self.assertLess(item['time_seconds'],report['start_seconds'])
+        metadata=json.loads((out/item['metadata']['file']).read_text())
+        self.assertEqual(metadata['source']['scene_sha256'],hashlib.sha256(self.scene_path.read_bytes()).hexdigest())
+        self.assertEqual(metadata['view']['rect_scene_px'],[35,0,90,160]);self.assertEqual(metadata['resolution'],[90,160])
+        for name in ['scene','catalog']:
+            self.assertEqual(metadata['source'][name+'_sha256'],hashlib.sha256((out/(name+'.snapshot.json')).read_bytes()).hexdigest())
+        for name,digest in metadata['source']['renderer_sources'].items():
+            self.assertEqual(digest,hashlib.sha256((Path(__file__).resolve().parents[1]/name).read_bytes()).hexdigest())
+        with Image.open(out/item['frame_image']['file']) as image,Image.open(out/item['heatmap']['file']) as heat:
+            raw=list(zip(*[iter(image.convert('RGBA').tobytes())]*4));marked=list(zip(*[iter(heat.convert('RGBA').tobytes())]*4))
+            holes=[(i%90,i//90,rgba[3]) for i,rgba in enumerate(raw) if rgba[3]<254]
+            self.assertEqual(len(holes),item['alpha']['all']['count'])
+            # Independent source-to-crop landmarks: the known 8x8 hole is at
+            # scene (72,16), hence view (37,16). Allow the stated raster fringe.
+            self.assertEqual(raw[20*90+41][3],0)
+            self.assertTrue(all((35<=x<47 and 14<=y<26) or (51<=x<63 and 0<=y<3) for x,y,a in holes))
+            for i,(rgba,color) in enumerate(zip(raw,marked)):
+                if rgba[3]>=254:self.assertEqual(color[3],0)
+                else:self.assertEqual(color,(255,170,0,255) if i%90 in [0,89] or i//90 in [0,159] else (255,0,170,255))
+        with Image.open(out/'portrait/00000.png') as image:self.assertEqual(image.getextrema()[3],(255,255))
+        routes=preview.views_proof_routes(out)
+        for key in ['metadata','frame_image','heatmap']:
+            artifact=item[key];self.assertEqual(artifact['path_base'],'artifact-relative')
+            self.assertEqual(hashlib.sha256(routes['/'+artifact['file']]).hexdigest(),artifact['sha256'])
+        self.assertNotIn('alpha_diagnostics',result)  # Ordinary CLI envelope remains compact.
+        self.assertIn('Painted alpha diagnostics',Path(result['output']).read_text())
+
+    def test_alpha_preview_rejects_changed_missing_escaping_or_misattributed_files(self):
+        result,report=self.alpha_proof();out=Path(result['output']).parent;receipt=Path(result['report']);original=receipt.read_bytes()
+        item=report['alpha_diagnostics'][0]
+        for key in ['metadata','frame_image','heatmap']:
+            file=out/item[key]['file'];data=file.read_bytes();file.write_bytes(data+b'changed')
+            with self.assertRaisesRegex(ValueError,'changed'):preview.views_proof_routes(out)
+            file.unlink()
+            with self.assertRaises(FileNotFoundError):preview.views_proof_routes(out)
+            file.write_bytes(data)
+        item['heatmap']['file']='../escape.png';receipt.write_text(json.dumps(report))
+        with self.assertRaisesRegex(ValueError,'escapes'):preview.views_proof_routes(out)
+        receipt.write_bytes(original);report=json.loads(original);item=report['alpha_diagnostics'][0]
+        item['frame']+=1;receipt.write_text(json.dumps(report))
+        with self.assertRaisesRegex(ValueError,'differs'):preview.views_proof_routes(out)
+        receipt.write_bytes(original);report=json.loads(original);item=report['alpha_diagnostics'][0]
+        file=out/item['metadata']['file'];metadata=json.loads(file.read_text());metadata['source']['scene_sha256']='0'*64
+        file.write_text(json.dumps(metadata));item['metadata']['sha256']=hashlib.sha256(file.read_bytes()).hexdigest();receipt.write_text(json.dumps(report))
+        with self.assertRaisesRegex(ValueError,'source differs'):preview.views_proof_routes(out)
+
+    def test_diagnostic_directory_does_not_collide_with_a_view_named_alpha(self):
+        scene=json.loads(self.source);scene['framing']['views']={'alpha':scene['framing']['views']['portrait']}
+        self.scene_path.write_text(json.dumps(scene))
+        result=self.render('views-proof','--view','alpha','--seconds','.5','--long-edge','160','--out',self.root/'alpha-view')
+        report=json.loads(Path(result['report']).read_text())
+        self.assertEqual(report['alpha_diagnostics'][0]['view_id'],'alpha')
+        preview.views_proof_routes(Path(result['output']).parent)
 
     def test_invalid_views_dimensions_and_internal_stage_fail_before_output(self):
         for args in [

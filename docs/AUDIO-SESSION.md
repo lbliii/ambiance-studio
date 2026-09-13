@@ -1,5 +1,6 @@
 # Explicit audio sessions
 
+Prepare incompatible or compressed originals through the explicit [audio source preparation](AUDIO-SOURCES.md) path before using their project-contained 48 kHz PCM working files in a session. Preparation preserves provenance and does not mark a mix or audition complete.
 The `audio` commands arrange existing PCM WAV files without provider calls, synthesized substitutes or automatic loudness normalization. They use Python's standard library. Import or decode compressed sources deliberately before arranging them: the executable backend accepts integer PCM WAV, mono or stereo, 8/16/24/32-bit, at the session's exact sample rate. Output is stereo PCM24.
 
 ```sh

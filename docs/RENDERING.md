@@ -41,13 +41,19 @@ The proof plays at the scene's actual frame rate by default. It includes pause, 
 
 Proof durations must contain an integer number of frames and fit within one visual loop; the default is three seconds or the scene's shorter loop duration. The selected segment repeats for inspection. If it covers only part of the authored loop, its restart is an arbitrary cut, not evidence of the full film's seam. A phone-sized desktop view is not a performed physical-phone check.
 
-The report measures exact RGBA equality at the mathematical loop endpoints and the adjacent last-to-first RGB difference. These are technical measurements, not judgments about natural motion, registration or the encoded seam. PNG pixels are deterministic with the same inputs and raster runtime; byte identity across different Canvas versions is not promised.
+The report measures exact RGBA equality at the mathematical loop endpoints and the adjacent last-to-first RGB difference. These are technical measurements, not judgments about natural motion, registration or the encoded seam. Reproduction needs the same inputs, raster runtime and render sequence; byte identity across different Canvas versions is not promised. A known Canvas smoothing-state difference can affect coverage pixels when coverage and finished rendering alternate, as described below.
 
 ## Saved portrait and landscape views
 
 `render frame/proof/video --view ID` extracts one saved view after rendering the complete finished stage. `render views-proof --view portrait --view landscape --long-edge 640 --seconds 3 --out NEW_DIR` saves synchronized PNG sequences and a shared-clock player. Both use the same stage adapter as the editor. The output dimensions, source rectangle, view hash, internal raster and stage-adapter hash are recorded. Omitting `--view` preserves the full-stage sizing described above.
 
 Use `preview --views-proof DIR` to serve the verified paired artifact. These proofs include per-view geometry and reduced-resolution alpha checks; each output also has its own endpoint/seam measurements. Video still encodes one selected view per command, with normal native verification. Named-view edition registration records the crop and actual decoded output. A version-2 iteration produces and presents the requested view/soundtrack set. See [saved views](VIEWS.md) for sizing, limits and runnable examples.
+
+For each view with failing painted alpha, the paired proof now saves the actual worst-frame raster, a heatmap and JSON metadata under `_alpha-diagnostics/`. The full receipt lists their artifact-relative paths and hashes, and the existing proof page displays them. The metadata identifies source frame/time, view, source/runtime hashes, resolution, threshold, defect bounds and bounded coordinate samples. The all-frame audit can select a source frame outside the saved playback segment. Its raster precedes background fill and finishing, so the original transparency remains visible.
+
+The current threshold remains alpha below 254, at an audit long edge of at most 240 pixels. The heatmap marks interior failures in magenta and the one-pixel perimeter in amber; classification does not change the failing result. Fine holes can disappear during reduction, and alpha cannot detect opaque unrelated paint or establish artistic quality. `preview --views-proof` verifies the diagnostic files and their metadata against the saved receipt before serving them; earlier proofs without diagnostics remain readable.
+
+The audit retains its measured pixels directly. An existing Node Canvas 0.1.100 fixture produced 114 uncovered pixels in a fresh coverage render and 120 after alternating coverage/finished passes at the same source time; observed smoothing quality differed. The diagnostic metadata records the alternating sequence. This localization change preserves that behavior and its separate reproduction; it does not establish sequence-independent coverage rendering.
 
 ## Native video export
 

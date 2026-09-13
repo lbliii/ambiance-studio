@@ -8,6 +8,7 @@ import {viewsProofPage} from '../views-proof.mjs';
 
 import {encodeFrames, native} from './native-process.mjs';
 import {progress} from './progress.mjs';
+import {saveProofArtifact, alphaDiagnosticIdentity} from './receipt.mjs';
 import {htmlProof} from './proof-page.mjs';
 import {root, sha} from './source-identity.mjs';
 
@@ -117,9 +118,45 @@ export async function renderOutputs(job, raster, report, initializationStarted) 
   } else if (mode === 'views-proof') {
     const ids = viewPlan.views.map(v => v.view.id);
     report.geometry = auditViews(scene, catalog, ids);
-    report.pixels = await auditViewPixels(scene, catalog, images, ids, runtime.createCanvas,
-                                          () => {}, viewPlan);
     report.audit_module_sha256 = sha(await fs.readFile(path.join(root, 'editor/audit.mjs')));
+    report.alpha_diagnostics = [];
+    report.pixels = await auditViewPixels(scene, catalog, images, ids, runtime.createCanvas,
+                                          () => {}, viewPlan, {onAlphaDiagnostic: async (measured, canvas) => {
+      const prefix = `_alpha-diagnostics/${measured.view_id}-frame-${String(measured.frame).padStart(5, '0')}`;
+      const frame_image = await saveProofArtifact(out, prefix + '.png', canvas.toBuffer('image/png'));
+      const heatmapCanvas = runtime.createCanvas(canvas.width, canvas.height);
+      const ctx = heatmapCanvas.getContext('2d'), heat = ctx.createImageData(canvas.width, canvas.height);
+      const raw = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
+      const {threshold, boundary_pixels: edge} = measured.alpha;
+      for (let y = 0; y < canvas.height; y++) for (let x = 0; x < canvas.width; x++) {
+        const i = (y * canvas.width + x) * 4, alpha = raw[i + 3];
+        if (alpha >= threshold) continue;
+        const boundary = x < edge || y < edge || x >= canvas.width - edge || y >= canvas.height - edge;
+        heat.data.set(boundary ? [255, 170, 0, 255] : [255, 0, 170, 255], i);
+      }
+      ctx.putImageData(heat, 0, 0);
+      const heatmap = await saveProofArtifact(out, prefix + '-heatmap.png', heatmapCanvas.toBuffer('image/png'));
+      const details = {
+        format: 'ambiance-alpha-diagnostic', schema_version: 1, ...measured,
+        view_sha256: report.views[measured.view_id].view_sha256,
+        source: alphaDiagnosticIdentity(report),
+        proof_output: report.views[measured.view_id].output, proof_supersample: supersample,
+        audit_supersample: 1,
+        raster_sequence: 'Coverage then finished rendering at each source frame, starting at frame zero; pixels retained during coverage',
+        scope: 'Exact worst-frame painted-alpha raster retained during the all-frame reduced-resolution audit; before background fill and finishing',
+        heatmap_legend: {interior: '#ff00aa', boundary: '#ffaa00', covered: 'transparent',
+          meaning: 'Binary alpha-threshold failures; colors classify the perimeter, not severity'},
+        limits: ['Audit long edge is at most 240 pixels and may be smaller than the proof output; small holes can disappear during rasterization.',
+          'Boundary classification never changes uncovered counts, the threshold or the audit result.',
+          'Node and browser backends or resolutions may produce different alpha values.',
+          'Alpha cannot diagnose opaque unrelated paint, semantic ownership or artistic quality.'],
+        frame_image, heatmap
+      };
+      const metadata = await saveProofArtifact(out, prefix + '.json', JSON.stringify(details, null, 2) + '\n');
+      report.alpha_diagnostics.push({view_id: measured.view_id, frame: measured.frame,
+        time_seconds: measured.time_seconds, resolution: measured.resolution, alpha: measured.alpha,
+        metadata, frame_image, heatmap});
+    }});
     report.review_needed = !report.geometry.ok || !report.pixels.ok;
     const outputs =
         viewPlan.views.map(v => ({id : v.view.id, output : v.output, files : [], hashes : []}));
@@ -136,7 +173,8 @@ export async function renderOutputs(job, raster, report, initializationStarted) 
       }
     }
     await fs.writeFile(path.join(out, 'index.html'),
-                       viewsProofPage(outputs, fps, start, frames, scene.canvas.loop_seconds));
+                       viewsProofPage(outputs, fps, start, frames, scene.canvas.loop_seconds,
+                                      {alphaDiagnostics: report.alpha_diagnostics}));
     report.output_sha256 = sha(await fs.readFile(path.join(out, 'index.html')));
     report.output = path.join(out, 'index.html');
     report.outputs = outputs;

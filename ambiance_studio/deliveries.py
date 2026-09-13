@@ -317,7 +317,7 @@ def production_scope(project, data):
     from . import production_plan, production_coverage
     selected = list(entries(data).values()); revisions_used = sorted({e['revision'] for e in selected if e.get('revision')})
     enforced = (project/production_plan.PATH).exists()
-    reports = []; blocked = []
+    reports = []; blocked = []; assessments = []
     for revision in revisions_used:
         manifest = revision_capture.load(project, revision)
         if 'production_plan' not in manifest['controls'] and not enforced: continue
@@ -325,12 +325,15 @@ def production_scope(project, data):
         outputs = {}
         for entry in selected:
             if entry['revision'] == revision: outputs.setdefault(entry['view'], []).append(entry['role'])
-        report = production_coverage.evaluate(project, 'export', revision=revision,
+        report = production_coverage.assess(project, 'export', revision=revision,
             outputs=[{'view_id': v, 'roles': roles} for v, roles in outputs.items()], details=True)
-        reports.append(report['report']); blocked.extend(report['blocked'])
+        assessments.append({'revision': revision, 'assessment_sha256': report['assessment']['assessment_sha256'],
+                            'complete': report['assessment']['complete']})
+        blocked.extend(report['blocked'])
     if enforced and (not revisions_used or any(not e.get('revision') for e in selected)):
         blocked.append({'id': 'plan.delivery-legacy-subject', 'action': 'Capture the intended plan and produce view-bound editions before claiming full scope.'})
     return {'enforced': enforced, 'ready': enforced and not blocked, 'blocked': blocked[:8], 'reports': reports,
+            'assessments': assessments,
             'meaning': 'Captured production scope; earlier sealed records retain their original meaning.'}
 
 

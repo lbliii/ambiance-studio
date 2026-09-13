@@ -1,0 +1,447 @@
+{
+  "packet_version": "mc/1",
+  "meaning": "Hand-authored current-engine state fixture; not model lowering, raster evidence, or a production film.",
+  "catalog": {
+    "version": 1,
+    "assets": [
+      {
+        "width": 32,
+        "height": 48,
+        "sha256": "39ae79183ef8f11cf809f04d2edbbb2a68dfb7cb6ccbee3118c8bdb307aadf3f",
+        "id": "housing-v1",
+        "file": "art/housing.png"
+      },
+      {
+        "width": 12,
+        "height": 20,
+        "sha256": "0c445be76b3f24c403e63759e0f5c77565245b25e533e19c36bc6a73faad03ea",
+        "id": "wax-v1",
+        "file": "art/wax.png"
+      },
+      {
+        "width": 32,
+        "height": 12,
+        "sha256": "87b92478ac9aaf9ca148dc09968aad114d671edc8580712d2f1fce30e3836eb2",
+        "id": "flame-v1",
+        "file": "art/flame.png",
+        "atlas": {
+          "columns": 4,
+          "rows": 1,
+          "cell_width": 8,
+          "cell_height": 12,
+          "frame_count": 4
+        }
+      },
+      {
+        "width": 32,
+        "height": 48,
+        "sha256": "dae25947b7a3e5c16c6391fd1d83b5ef2c6e97f508653861cc137367ac3ac07d",
+        "id": "frame-square-v1",
+        "file": "art/frame-square.png"
+      },
+      {
+        "width": 32,
+        "height": 48,
+        "sha256": "74c18fe057623f0273c0bcbdaa313e15eb8fe75e5621f08f20a22013e957e7d7",
+        "id": "frame-arched-v1",
+        "file": "art/frame-arched.png"
+      },
+      {
+        "width": 80,
+        "height": 20,
+        "sha256": "ed2ca7d108ede192de6dd665f98a66f7cc070b410f76d03a7a3d6d7df66055d1",
+        "id": "ground-v1",
+        "file": "art/ground.png"
+      },
+      {
+        "width": 40,
+        "height": 12,
+        "sha256": "ab2584505c271ba9c1f5a05136d6992ffa205f5ef96d7e9e6d28a60b5615b259",
+        "id": "light-v1",
+        "file": "art/light.png"
+      }
+    ]
+  },
+  "scene": {
+    "version": 1,
+    "id": "mc1-current-runtime",
+    "canvas": {
+      "width": 240,
+      "height": 160,
+      "fps": 24,
+      "loop_seconds": 2,
+      "background": "#142636"
+    },
+    "camera": {
+      "overscan": 1,
+      "x_amplitude": 0,
+      "y_amplitude": 0,
+      "zoom_amplitude": 0
+    },
+    "groups": [],
+    "layers": [
+      {
+        "id": "ground",
+        "name": "ground",
+        "asset": "ground-v1",
+        "x": 0.5,
+        "y": 0.8,
+        "width": 1,
+        "height": 0.2,
+        "anchor": [
+          0.5,
+          0.5
+        ],
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1,
+        "visible": true,
+        "blend": "source-over",
+        "depth": 0,
+        "sockets": {
+          "light": [
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "id": "lamp-a",
+        "name": "lamp-a",
+        "asset": "housing-v1",
+        "x": 0.25,
+        "y": 0.5,
+        "width": 0.13333333333333333,
+        "height": 0.3,
+        "anchor": [
+          0.5,
+          0.5
+        ],
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1,
+        "visible": true,
+        "blend": "source-over",
+        "depth": 0,
+        "sockets": {
+          "seat": [
+            0.5,
+            0.75
+          ],
+          "front": [
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "id": "a-wax",
+        "name": "a-wax",
+        "asset": "wax-v1",
+        "x": 0,
+        "y": 0,
+        "width": 0.05,
+        "height": 0.125,
+        "anchor": [
+          0.5,
+          0.5
+        ],
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1,
+        "visible": true,
+        "blend": "source-over",
+        "attach": {
+          "layer": "lamp-a",
+          "socket": "seat"
+        },
+        "sockets": {
+          "wick": [
+            0.5,
+            0
+          ]
+        }
+      },
+      {
+        "id": "a-flame",
+        "name": "a-flame",
+        "asset": "flame-v1",
+        "x": 0,
+        "y": 0,
+        "width": 0.03333333333333333,
+        "height": 0.075,
+        "anchor": [
+          0.5,
+          0.5
+        ],
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1,
+        "visible": true,
+        "blend": "source-over",
+        "attach": {
+          "layer": "a-wax",
+          "socket": "wick"
+        },
+        "cycle_seconds": 1,
+        "phase_frames": 0
+      },
+      {
+        "id": "a-front",
+        "name": "a-front",
+        "asset": "frame-square-v1",
+        "x": 0,
+        "y": 0,
+        "width": 0.13333333333333333,
+        "height": 0.3,
+        "anchor": [
+          0.5,
+          0.5
+        ],
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1,
+        "visible": true,
+        "blend": "source-over",
+        "attach": {
+          "layer": "lamp-a",
+          "socket": "front"
+        }
+      },
+      {
+        "id": "lamp-b",
+        "name": "lamp-b",
+        "asset": "housing-v1",
+        "x": 0.75,
+        "y": 0.5,
+        "width": 0.13333333333333333,
+        "height": 0.3,
+        "anchor": [
+          0.5,
+          0.5
+        ],
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1,
+        "visible": true,
+        "blend": "source-over",
+        "depth": 0,
+        "sockets": {
+          "seat": [
+            0.5,
+            0.75
+          ],
+          "front": [
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "id": "b-wax",
+        "name": "b-wax",
+        "asset": "wax-v1",
+        "x": 0,
+        "y": 0,
+        "width": 0.05,
+        "height": 0.125,
+        "anchor": [
+          0.5,
+          0.5
+        ],
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1,
+        "visible": true,
+        "blend": "source-over",
+        "attach": {
+          "layer": "lamp-b",
+          "socket": "seat"
+        },
+        "sockets": {
+          "wick": [
+            0.5,
+            0
+          ]
+        }
+      },
+      {
+        "id": "b-flame",
+        "name": "b-flame",
+        "asset": "flame-v1",
+        "x": 0,
+        "y": 0,
+        "width": 0.03333333333333333,
+        "height": 0.075,
+        "anchor": [
+          0.5,
+          0.5
+        ],
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1,
+        "visible": true,
+        "blend": "source-over",
+        "attach": {
+          "layer": "b-wax",
+          "socket": "wick"
+        },
+        "cycle_seconds": 1,
+        "phase_frames": 2
+      },
+      {
+        "id": "b-front",
+        "name": "b-front",
+        "asset": "frame-arched-v1",
+        "x": 0,
+        "y": 0,
+        "width": 0.13333333333333333,
+        "height": 0.3,
+        "anchor": [
+          0.5,
+          0.5
+        ],
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1,
+        "visible": true,
+        "blend": "source-over",
+        "attach": {
+          "layer": "lamp-b",
+          "socket": "front"
+        }
+      },
+      {
+        "id": "ground-a-light",
+        "name": "ground-a-light",
+        "asset": "light-v1",
+        "x": -0.25,
+        "y": 0,
+        "width": 0.2,
+        "height": 0.1,
+        "anchor": [
+          0.5,
+          0.5
+        ],
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1,
+        "visible": true,
+        "blend": "source-over",
+        "attach": {
+          "layer": "ground",
+          "socket": "light"
+        }
+      },
+      {
+        "id": "unrelated-light",
+        "name": "unrelated-light",
+        "asset": "light-v1",
+        "x": 0.25,
+        "y": 0,
+        "width": 0.2,
+        "height": 0.1,
+        "anchor": [
+          0.5,
+          0.5
+        ],
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1,
+        "visible": true,
+        "blend": "source-over",
+        "attach": {
+          "layer": "ground",
+          "socket": "light"
+        }
+      }
+    ],
+    "finishing": {
+      "version": 1,
+      "working_space": "linear-srgb",
+      "output_space": "srgb",
+      "signals": [
+        {
+          "id": "a-power",
+          "layer": "a-flame",
+          "values": [
+            0.4,
+            0.7,
+            1,
+            0.6
+          ]
+        }
+      ],
+      "illuminations": [
+        {
+          "id": "a-floor",
+          "layer": "ground-a-light",
+          "receiver": "ground",
+          "mode": "add"
+        },
+        {
+          "id": "other-floor",
+          "layer": "unrelated-light",
+          "receiver": "ground",
+          "mode": "add"
+        }
+      ]
+    },
+    "bindings": {
+      "version": 1,
+      "links": [
+        {
+          "id": "a-floor-power",
+          "source": {
+            "signal": "a-power",
+            "range": [
+              0,
+              1
+            ]
+          },
+          "target": {
+            "layer": "ground-a-light",
+            "channel": "opacity",
+            "range": [
+              0,
+              1
+            ]
+          },
+          "map": {
+            "interpolation": "linear",
+            "keys": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ]
+            ]
+          },
+          "off": 0
+        }
+      ]
+    }
+  },
+  "owned_sets": {
+    "lamp-a": [
+      "lamp-a",
+      "a-wax",
+      "a-flame",
+      "a-front"
+    ],
+    "lamp-b": [
+      "lamp-b",
+      "b-wax",
+      "b-flame",
+      "b-front"
+    ],
+    "ground": [
+      "ground",
+      "ground-a-light",
+      "unrelated-light"
+    ]
+  }
+}

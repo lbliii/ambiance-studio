@@ -1,7 +1,7 @@
 format: ambiance-quality-roadmap
 schema_version: 1
-updated: '2026-09-12'
-status: planned
+updated: '2026-09-13'
+status: in_progress
 baseline_commit: '31390fb'
 design: docs/architecture/TV-QUALITY-AND-SOUND-LIBRARY.md
 alignment: docs/architecture/STUDIO-PLAN-ALIGNMENT.md
@@ -50,7 +50,10 @@ tasks:
     title: Inventory existing sources, current editions, and provider routes
     phase: 0
     priority: P0
-    status: planned
+    status: implemented
+    implementation_evidence: docs/research/audio-sources-2026-09-13/README.md
+    implementation_note: >-
+      Bounded read-only survey of three available projects; unavailable locations, missing bell source, current API entitlement and unperformed auditions remain explicit. No pilot selected.
     relative_size: S
     depends_on: []
     affected_paths:
@@ -159,7 +162,10 @@ tasks:
     title: Add source format inspection and explicit local audio preparation
     phase: 1
     priority: P0
-    status: planned
+    status: implemented
+    implementation_evidence: docs/AUDIO-SOURCES.md
+    implementation_note: >-
+      Local source inspection/preparation and typed revision adapter implemented. Four actual compressed originals replayed; corrected source passed native/revision/CLI focused checks. Combined validation belongs to the coordinator ledger. No paid comparison, new source quality claim or audition.
     relative_size: M
     depends_on: [BASE-01]
     affected_paths:
