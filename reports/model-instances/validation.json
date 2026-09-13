@@ -1,0 +1,81 @@
+{
+  "format": "ambiance-model-instance-validation-index",
+  "schema_version": 1,
+  "tested_implementation_commit": "fe2ab3eeffd587cb41df1dbd7bba9922adb65306",
+  "tracked_tree_sha256": "9d60ee5138a1d621a7cf0b7ca118855dcd0fdfb4f11edb957230ecec1c1cfe46",
+  "base_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
+  "branch": "codex/model-instances-wave3",
+  "task_id": "01a09b0c-4fcf-7542-b921-c1b7aa265a7b",
+  "worktree": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio",
+  "native": {
+    "command": "./ambiance test --require-native --artifacts .ambiance/model-instances/native-final",
+    "artifacts": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/native-final",
+    "exit_code": 0,
+    "recorded_cases": 531,
+    "python_tests": 516,
+    "skips": 0,
+    "verified_source_files": 582,
+    "source_mismatches": [],
+    "reports_sha256": {
+      "run.json": "a93b719108ff28640db53968828e73ae28f046f05fe62821c996fff367ad8c1e",
+      "python.json": "1c42d86062bf9d1f3233d2044f68999aba5c10b0b6dd05135540217e400f212f",
+      "inputs.json": "22bde2f2b23c6123a9fd06cce0a00a00a540d18190b59ed65a50166786c694a6",
+      "junit.xml": "6edf30ab4b1012f04c5bc82e32593177164e0f674899242f3931778e1b6a9e6b"
+    }
+  },
+  "public_replay": {
+    "command": "python3 examples/model-instances/replay.py --out .ambiance/model-instances/public-final",
+    "evidence": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/public-final/evidence.json",
+    "sha256": "14ddc9a1875292fa451c627c972de22220ac6499be32e8b18f5beafe6c81b883",
+    "cli_exits": 43,
+    "hashed_artifacts": 611,
+    "listed_source_files": 4,
+    "facts": {
+      "mount_corner_error_pixels": 2.0097183471152322e-14,
+      "hidden_source_receiver_opacity": 0,
+      "unrelated_receiver_opacity": 0.8,
+      "moved-mounted": {
+        "different_pixels": 4527,
+        "second_instance_crop_unchanged": true
+      },
+      "a-arched": {
+        "different_pixels": 4536,
+        "second_instance_crop_unchanged": true
+      },
+      "a-hidden": {
+        "different_pixels": 3700,
+        "second_instance_crop_unchanged": true
+      }
+    },
+    "previously_inspected_frames_exact": {
+      "two-square": true,
+      "moved-mounted": true,
+      "a-arched": true,
+      "a-hidden": true,
+      "a-revealed": true,
+      "adopted-v2": true,
+      "captured-old": true,
+      "portable-reopened": true
+    }
+  },
+  "package_audit": {
+    "path": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/package-audit-final.json",
+    "sha256": "9007e260be960d32822799e6e9e4fd9647bc8cbcc88e6246e4c5be37df1720e1",
+    "ok": true
+  },
+  "remaining_coordinator_work": [
+    "Legacy literal-path gate watch integration",
+    "Final T3/M3 finite-clock compatibility including authoritative duration_frames in receiver probe"
+  ],
+  "limits": [
+    "Documentation-only handoff follows the tested implementation commit.",
+    "Static engineering raster and browser observations do not establish motion or artistic acceptance.",
+    "No hosted CI run or broader model Phase 4-7 acceptance is claimed."
+  ],
+  "handoff_package_audit": {
+    "path": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/package-audit-handoff.json",
+    "ok": true,
+    "local_links_checked": 647,
+    "sha256": "80233468fdea4bf90195b62d233b5964d643c2fd94ec92ca66f00446cb7d436e"
+  }
+}
