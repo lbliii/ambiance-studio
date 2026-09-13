@@ -19,7 +19,7 @@
       "client_thread_id": "client-new-thread:1b7904db-2504-4bc8-a812-9c86fc6d195c",
       "worktree": "/Users/lb/.codex/worktrees/4fda/ambiance-studio",
       "first_assignment": "WORKFLOW-CLI.yaml WF-01",
-      "cursor": "b6119829-6e1b-4a78-846a-b6c52ee1cb7e:3",
+      "cursor": "b6119829-6e1b-4a78-846a-b6c52ee1cb7e:8",
       "leases": [
         "production_coverage.py",
         "coverage_context.py",
@@ -35,7 +35,7 @@
       "dispatch_state": "integrated",
       "handoff": "/Users/lb/.codex/worktrees/4fda/ambiance-studio/.ambiance/wf01/handoff.json",
       "integration_commit": "31084b6",
-      "worker_reported_progress": "30 coverage tests (3 native deferred), 11 delivery and 6 query/authoring pass. Public 11-command replay plus 24 canonical and 8 legacy payload/identity comparisons reported; handoff verification pending.",
+      "worker_reported_progress": "First assignment complete and locally integrated; no continuation dispatched.",
       "candidate_commit": "6e3e1e7182dfcf5042bfc95441e12c7fe9c523be",
       "full_validation": {
         "ok": true,
@@ -62,7 +62,8 @@
       "integration_commits": [
         "5380d8d",
         "31084b6"
-      ]
+      ],
+      "task_status": "completed_idle"
     },
     {
       "stream": "M",
@@ -71,7 +72,7 @@
       "client_thread_id": "client-new-thread:a11e6000-b4f7-40d3-865c-a7caa47187cb",
       "worktree": "/Users/lb/.codex/worktrees/174e/ambiance-studio",
       "first_assignment": "Model Phase 1 / P00 shared technical contract subset",
-      "cursor": "03ed7568-3785-41e3-b59c-3157c3431a41:3",
+      "cursor": "03ed7568-3785-41e3-b59c-3157c3431a41:4",
       "leases": [
         "docs/architecture/model-contract/",
         "tests/fixtures/model-contract/",
@@ -93,7 +94,9 @@
         "roadmap_tests": 2,
         "package_links_checked": 578,
         "state": "Passed source/contract review and integrated focused validation."
-      }
+      },
+      "task_status": "completed_idle",
+      "worker_reported_progress": "First assignment complete and locally integrated; no continuation dispatched."
     },
     {
       "stream": "S",
@@ -102,7 +105,7 @@
       "client_thread_id": "client-new-thread:d6b601f2-1dd4-457d-8f03-3945a5560578",
       "worktree": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio",
       "first_assignment": "TV-QUALITY-AND-SOUND-LIBRARY.yaml BASE-01 then AUDIO-01",
-      "cursor": "970fa786-eed5-4501-aba7-6641d6e18a62:7",
+      "cursor": "970fa786-eed5-4501-aba7-6641d6e18a62:8",
       "leases": [
         "new audio source/preparation modules",
         "audio.py parser/service hooks",
@@ -124,15 +127,17 @@
         }
       ],
       "focused_validation": {
-        "state": "worker_reported_pass",
-        "new_audio_sources_tests": 15,
+        "state": "verified_pass",
+        "new_audio_sources_tests": 16,
         "native_required": true,
         "skips": 0,
-        "existing_audio_tests": 12,
-        "artifact_verification": "Pending exact handoff logs and committed source identity."
+        "revision_tests": 14,
+        "revision_contract_tests": 9,
+        "cli_contract_tests": 8,
+        "final_source_in_combined_suite": true
       },
       "candidate_commit": "ea07370d45e7f7d8a6905223b68594fdb74d36db",
-      "worker_reported_progress": "Required-native suite is running on frozen f6678c6. Worker found a non-object legacy preparation error regression; retain S native slot for a narrow guard correction and final-source rerun.",
+      "worker_reported_progress": "First assignment complete and locally integrated; no continuation dispatched.",
       "integration_commits": [
         "984734e",
         "e495047"
@@ -150,7 +155,8 @@
         "corrected_focused_skips": 0
       },
       "retained_evidence": "/Users/lb/.codex/worktrees/cfeb/ambiance-studio/.ambiance/coordination/2026-09-13/audio-source-preparation",
-      "retention_note": "Exact evidence copy; source paths and captured receipts retain their original project identities."
+      "retention_note": "Exact evidence copy; source paths and captured receipts retain their original project identities.",
+      "task_status": "completed_idle"
     },
     {
       "stream": "D",
@@ -159,7 +165,7 @@
       "client_thread_id": "client-new-thread:cbdd3fbe-a08c-4a3e-8b91-9593b3f63a65",
       "worktree": "/Users/lb/.codex/worktrees/b8ee/ambiance-studio",
       "first_assignment": "Amberwatch glue audit alpha localization follow-up",
-      "cursor": "a2bd9ec7-64f5-41a6-8506-becb502d90fc:4",
+      "cursor": "a2bd9ec7-64f5-41a6-8506-becb502d90fc:8",
       "leases": [
         "editor/audit.mjs",
         "focused alpha helper",
@@ -194,7 +200,9 @@
         "report_sha256": "9c69216c525778c87e92aa35b01e12f665c6171a765c7490fccd9234a5ab1c44"
       },
       "retained_evidence": "/Users/lb/.codex/worktrees/cfeb/ambiance-studio/.ambiance/coordination/2026-09-13/alpha-localization",
-      "retention_note": "Exact evidence copy; original reproduction script retains its original path assumptions, so adapt its explicit module inputs before replaying from a different directory."
+      "retention_note": "Exact evidence copy; original reproduction script retains its original path assumptions, so adapt its explicit module inputs before replaying from a different directory.",
+      "task_status": "completed_idle",
+      "worker_reported_progress": "First assignment complete and locally integrated; no continuation dispatched."
     }
   ],
   "baseline_validation": {
@@ -217,32 +225,61 @@
   "automation": {
     "id": "coordinate-studio-implementation",
     "kind": "heartbeat",
-    "status": "ACTIVE",
+    "status": "PAUSED",
     "interval_minutes": 15,
-    "scope": "Four first assignments through local integration, validation and next-wave readiness"
+    "scope": "Four first assignments through local integration, validation and next-wave readiness",
+    "completion_reason": "Four first assignments integrated, combined validation passed, next-wave handoff prepared."
   },
   "next_wave_candidates": [
-    "WF-02/03 after integrated WF-01",
-    "Model construction after integrated shared contract",
-    "P02/P03 and fixed-contract P04 after P00 technical contracts, with full P00/film prerequisites explicit",
-    "TV-01 after BASE-01; TV-02 after TV-01",
-    "LIB-01 and quality AUDIO-02 after quality AUDIO-01"
+    "W: WF-02 then WF-03",
+    "M: C1 then C2 model construction",
+    "S: typed portable audio LIB-01",
+    "D: bounded Canvas sequence discrepancy",
+    "Next free evaluator slot: P03 finite timing after D; TV-01/AUDIO-02 require explicit shared leases"
   ],
   "blocking_decisions": [],
   "coordinator_branch": "codex/coordinated-studio-restart",
   "coordination_validation": {
     "package_audit": "passed",
-    "local_links_checked": 560,
+    "local_links_checked": 600,
     "git_diff_check": "passed"
   },
   "native_test_queue": [],
-  "native_test_queue_note": "S finishes frozen original full suite, then its narrow legacy guard correction and focused native/legacy checks. The final corrected source is covered by the coordinator combined required-native run; no redundant second worker full suite.",
-  "active_native_test_owner": "coordinator",
+  "native_test_queue_note": "All first-wave assignments integrated; combined required-native suite passed on the frozen source. No active native test owner.",
+  "active_native_test_owner": null,
   "combined_validation": {
-    "state": "ready_to_run",
-    "scope": "All four integrated first assignments, public contracts, capability/backlog status and next-wave briefs",
+    "state": "passed",
+    "scope": "All four integrated first assignments and public contracts/status docs at the tested commit",
     "native_required": true,
-    "artifacts": "/Users/lb/.codex/worktrees/cfeb/ambiance-studio/.ambiance/coordination/2026-09-13/combined-suite",
-    "source_policy": "Commit and freeze the combined tree before starting. Final report is source-bound; completion ledger updates follow the run."
-  }
+    "cases": 447,
+    "python_tests": 433,
+    "skips": 0,
+    "all_checks_passed": 16,
+    "source": {
+      "commit": "5fc33d41c06604175610937a4b876c7692772178",
+      "tracked_tree_sha256": "aae3c4d641e1b409d1a4927d8d09ab7fa3642f62e2ee9945db0ff114bf38fe09",
+      "manifest": "inputs.json"
+    },
+    "input_file_hashes_verified_after_run": 537,
+    "artifacts": {
+      "run.json": {
+        "path": "/Users/lb/.codex/worktrees/cfeb/ambiance-studio/.ambiance/coordination/2026-09-13/combined-suite/run.json",
+        "sha256": "b19631b705be3329fda57d339b45e2289f48ac926db1ad9311df85692de9b0eb"
+      },
+      "inputs.json": {
+        "path": "/Users/lb/.codex/worktrees/cfeb/ambiance-studio/.ambiance/coordination/2026-09-13/combined-suite/inputs.json",
+        "sha256": "d1cf10d7d48c5e3c017432c0c1b57b51f536800b1643d50029f9a053671c2308"
+      },
+      "python.json": {
+        "path": "/Users/lb/.codex/worktrees/cfeb/ambiance-studio/.ambiance/coordination/2026-09-13/combined-suite/python.json",
+        "sha256": "27c794924f0cac4a256a342244913c185cd90d08442d3281158af272247c467a"
+      },
+      "junit.xml": {
+        "path": "/Users/lb/.codex/worktrees/cfeb/ambiance-studio/.ambiance/coordination/2026-09-13/combined-suite/junit.xml",
+        "sha256": "486311caab0a7d2db62176c2e7b3acb1f33e44e3e8a87379e3fb8cc9a800f987"
+      }
+    },
+    "completion_note": "Only this completion ledger and its companion Markdown handoff change after the tested source commit; no implementation, fixture or command contract changed."
+  },
+  "status": "first_wave_complete"
 }

@@ -2,6 +2,19 @@
 
 September 13, 2026 UTC / September 12 EDT. Coordinator: Codex task `01a0983d-40cf-71a3-bd9c-cb8308ad6efa`, branch `codex/coordinated-studio-restart`. Inspected implementation baseline: `00c64436543d0252fc0850f3ef58e686badda1b6` (`origin/main`). The user authorized starting ready workstreams and coordinating them. This is a dispatch and integration record; the existing owning backlogs retain capability and acceptance status.
 
+## First-wave result
+
+All four initial assignments are reviewed and integrated locally on `codex/coordinated-studio-restart`. The combined source at `5fc33d41c06604175610937a4b876c7692772178` passed `./ambiance test --require-native`: **447 recorded cases, 433 Python tests, zero skips**, all 16 check entries passing. The tracked input hashes were verified again after the run. Exact commits, report/input hashes, retained worker evidence and task cursors are in the [ledger](COORDINATED-IMPLEMENTATION-2026-09-13.json). Only completion bookkeeping follows the tested source commit.
+
+| Task | Integrated result | Acceptance boundary |
+| --- | --- | --- |
+| Make workflow assessment read-only | WF-01 pure scoped assessment, compatible explicit coverage persistence, separate selected/working identities | WF-02–07 and operator adoption remain open. |
+| Define shared model and character contracts | mc/1 technical identities, registration/clock/evidence specimens and construction slices | Full model Phase 1/P00 and actual model/instance/finite runtime remain open. |
+| Prepare reusable audio sources | BASE-01 bounded inventory, quality AUDIO-01 immutable local source inspection/preparation and typed revision edges | Library portability, loudness/true peak, entitlements and auditions remain separate. |
+| Localize alpha defects in scene proofs | Exact measured alpha frame, heatmap, bounded coordinates and verified preview artifacts | Reduced-resolution raster diagnostic only; semantic ownership and art approval remain separate. |
+
+The pre-existing Canvas sequence discrepancy is retained for the bounded D follow-up below (114 fresh-render versus 120 interleaved-audit defects on the recorded fixture). It is not fixed or hidden by this integration. The four tasks are complete and idle; the first-wave heartbeat is paused. Next-wave briefs below are ready and have not been dispatched. No push or main merge was performed.
+
 ## Assessment
 
 The [alignment plan](STUDIO-PLAN-ALIGNMENT.md) is cohesive: canonical scope and evidence, editable models, agent guidance, narrative timing and audio reuse have distinct owners and share explicit interfaces. Its principal delivery risk is allowing the planned systems to independently redefine identity, coordinates, time or evidence. The right first wave combines one short shared-contract task with independent implementation, then starts consumers from the integrated contract.
