@@ -44,7 +44,11 @@ def plan_render(args, project):
     scene_bytes = Path(context['scene']).read_bytes()
     scene = load_scene_json(scene_bytes)
     canvas = scene['canvas']
-    loop_frames = canvas['fps'] * canvas['loop_seconds']
+    from .timebase import scene_frame_count
+    try:
+        loop_frames = scene_frame_count(scene)
+    except ValueError as error:
+        raise CommandError(str(error)) from error
     out = fresh_output(args.out)
     supersample = getattr(args, 'supersample', 1)
     selected = getattr(args, 'views', None) or ([args.view] if getattr(args, 'view', None) else None)
@@ -99,9 +103,13 @@ def plan_render(args, project):
             frames = min(frames, 3 * canvas['fps'])
         seconds = frames / canvas['fps']
     else:
-        if seconds is None:
-            seconds = min(3, canvas['loop_seconds']) if args.action in ['proof', 'views-proof'] else canvas['loop_seconds']
-        frames = seconds * canvas['fps']
+        if seconds is None and 'clock' in scene:
+            frames = min(3 * canvas['fps'], loop_frames) if args.action in ['proof', 'views-proof'] else loop_frames
+            seconds = frames / canvas['fps']
+        else:
+            if seconds is None:
+                seconds = min(3, canvas['loop_seconds']) if args.action in ['proof', 'views-proof'] else canvas['loop_seconds']
+            frames = seconds * canvas['fps']
     if not math.isfinite(start) or start < 0 or not math.isfinite(seconds) or seconds <= 0:
         raise CommandError('Render time/duration must be finite and nonnegative, with positive duration.')
     if frames != int(frames) or frames > loop_frames:
@@ -120,7 +128,9 @@ def plan_render(args, project):
                'start': start, 'seconds': seconds, 'disable': disable, 'supersample': supersample,
                'scene_path':str(context['scene']), 'catalog_path':str(context['catalog'])}
     if source_start_frame is not None:
-        request.update(start_frame=source_start_frame, frame_count=int(frames))
+        request['start_frame'] = source_start_frame
+    if args.action != 'frame' and (source_start_frame is not None or 'clock' in scene):
+        request['frame_count'] = int(frames)
     if selected:
         request.update(views=view_requests, view_options=view_options,
                        expected_scene_sha256=hashlib.sha256(scene_bytes).hexdigest(),

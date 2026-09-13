@@ -33,10 +33,11 @@ function applyOperations(scene,catalog,operations,report=false){
     if(['finishing','framing','bindings'].includes(op.op)){if(op.value===null)delete scene[op.op];else scene[op.op]=structuredClone(op.value);}
     else if(op.op==='clock'){fields(op.values,['loop_seconds','fps','clock'],'clock');
       if(op.values.fps!==undefined)scene.canvas.fps=op.values.fps;
-      if(op.values.clock!==undefined){scene.clock=structuredClone(op.values.clock);scene.canvas.loop_seconds=scene.clock.duration_frames/scene.canvas.fps;}
+      if(op.values.clock!==undefined)scene.clock=structuredClone(op.values.clock);
+      if(scene.clock&&(op.values.clock!==undefined||op.values.fps!==undefined))scene.canvas.loop_seconds=scene.clock.duration_frames/scene.canvas.fps;
       if(op.values.loop_seconds!==undefined){
         if(op.values.clock!==undefined&&op.values.loop_seconds!==scene.canvas.loop_seconds)throw Error('Clock duration_frames and loop_seconds disagree');
-        scene.canvas.loop_seconds=op.values.loop_seconds;if(scene.clock)scene.clock.duration_frames=scene.canvas.fps*scene.canvas.loop_seconds;
+        scene.canvas.loop_seconds=op.values.loop_seconds;if(scene.clock&&op.values.clock===undefined&&op.values.loop_seconds!==scene.clock.duration_frames/scene.canvas.fps)scene.clock.duration_frames=scene.canvas.fps*scene.canvas.loop_seconds;
       }
       if(!Object.keys(op.values).length)throw Error('Clock needs authored values');}
     else if(op.op==='place_from_source')diagnostics.push(placeFromSource(scene,catalog,op));

@@ -63,7 +63,7 @@ export async function prepareJob(request, runtime) {
   if (!viewPlan)
     resizeSceneCanvas(scene, internalWidth, internalHeight);
   const compiled = compileScene(scene, catalog), fps = scene.canvas.fps,
-        loopFrames = fps * scene.canvas.loop_seconds;
+        loopFrames = compiled.clock.duration_frames;
   if (!scene.layers.length)
     throw Error('Cannot render an empty scene');
   let start = finite(request.start ?? 0, 'start'), startFrame = request.start_frame ?? null;
@@ -94,7 +94,7 @@ export async function prepareJob(request, runtime) {
   const defaultSeconds=finiteRange?defaultFrames/fps:
       ['proof','views-proof'].includes(mode)?Math.min(3,scene.canvas.loop_seconds):scene.canvas.loop_seconds;
   const seconds=finite(request.seconds??(request.frame_count===undefined?defaultSeconds:request.frame_count/fps),'seconds');
-  const frames = mode === 'frame' ? 1 : request.frame_count ?? (request.seconds===undefined&&finiteRange?defaultFrames:seconds*fps);
+  const frames = mode === 'frame' ? 1 : request.frame_count ?? (request.seconds===undefined&&(finiteRange||scene.clock)?defaultFrames:seconds*fps);
   if(request.frame_count!==undefined&&seconds!==frames/fps)throw Error('Source frame count and seconds mirror disagree');
   if (!Number.isInteger(frames) || frames < 1 || frames > loopFrames)
     throw Error('Duration must contain an integer frame count within one scene loop');

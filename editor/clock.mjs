@@ -41,12 +41,12 @@ const object=v=>v&&typeof v==='object'&&!Array.isArray(v);
 function fields(v,allowed,label){if(!object(v)||Object.keys(v).some(k=>!allowed.includes(k)))throw Error(`Invalid ${label} fields`);}
 export function compileClock(scene){
   const canvas=scene.canvas,c=scene.clock,mode=c?.mode??'loop',fps=positive(canvas.fps);
-  const N=canvas.fps*canvas.loop_seconds;
-  const duration=c?div([integer(N),1n],fps):positive(canvas.loop_seconds);
+  const N=c===undefined?canvas.fps*canvas.loop_seconds:c?.duration_frames;
   if(!Number.isSafeInteger(N)||N<1)throw Error('Clock needs a safe positive frame count');
+  const duration=c===undefined?positive(canvas.loop_seconds):div([integer(N),1n],fps);
   if(c!==undefined){
     fields(c,['version','mode','id','revision','duration_frames','local_cycles'],'clock');
-    if(c.version!==1||!['loop','finite'].includes(mode)||typeof c.id!=='string'||!c.id||typeof c.revision!=='string'||!c.revision||c.duration_frames!==N)throw Error('Clock requires version, mode, id, revision and duration_frames matching canvas');
+    if(c.version!==1||!['loop','finite'].includes(mode)||typeof c.id!=='string'||!c.id||typeof c.revision!=='string'||!c.revision||canvas.loop_seconds!==N/canvas.fps)throw Error('Clock requires version, mode, id, revision and duration_frames matching canvas');
   }
   if(c?.local_cycles!==undefined)fields(c.local_cycles,Object.keys(c.local_cycles),'local cycles');
   const cycles=Object.entries(c?.local_cycles??{}).sort(([a],[b])=>a.localeCompare(b)).map(([id,cycle])=>{

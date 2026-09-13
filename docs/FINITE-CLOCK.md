@@ -23,8 +23,9 @@ acceptance, cues, sequence assembly and film evidence remain open.
 ```
 
 `canvas.fps` retains its existing positive integer schema. `canvas.loop_seconds`
-remains the duration mirror, including on finite scenes; its frame count must
-equal `duration_frames`. Arbitrary rational output fps is not enabled. `id` and
+remains the duration mirror, including on finite scenes. Authored integer
+`duration_frames` is authoritative; the mirror must equal `duration_frames / fps`.
+No count is reconstructed by multiplying that floating-point mirror. Arbitrary rational output fps is not enabled. `id` and
 `revision` are required authored identifiers, not self-referential scene hashes.
 Assign a stable timing revision label, change it when adopting another timing
 definition, and capture the scene using the existing revision/receipt machinery.

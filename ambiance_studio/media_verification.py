@@ -82,7 +82,11 @@ def verify_command(args, project):
     context = render_plan.render_context(project, getattr(args, 'revision', None))
     scene = load_scene_json(Path(context['scene']).read_bytes())
     canvas = scene['canvas']
-    loop_frames = canvas['fps'] * canvas['loop_seconds']
+    from .timebase import scene_frame_count
+    try:
+        loop_frames = scene_frame_count(scene)
+    except ValueError as error:
+        raise CommandError(str(error)) from error
     out = fresh_output(args.out)
     source = args.file.resolve()
     if not source.is_file():

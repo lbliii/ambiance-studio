@@ -34,6 +34,22 @@ check('mc/1 finite specimen holds authored endpoint N independently from final e
     assert.throws(()=>rig.sampleFrame(.5));assert.throws(()=>rig.sample(Infinity));
   }
 });
+check('authored integer duration survives nonintegral floating products',()=>{
+  for(const [N,fps] of [[31,30],[7,25],[31,60]]){
+    const scene=fixture(N),T=N/fps;
+    scene.canvas.fps=fps;scene.canvas.loop_seconds=T;
+    scene.layers[0].tracks={x:track([[0,0],[T,N/320]],'linear'),cell:track([[0,0],[(N-1)/fps,1],[T,2]])};
+    const rig=compileScene(scene,catalog);
+    assert.equal(rig.clock.duration_frames,N);assert.equal(rig.clock.frame(N).effective_frame,N);
+    assert.equal(rig.sampleFrame(N-1)[0].cell,1);assert.equal(rig.sampleFrame(N)[0].cell,2);
+    assert.deepEqual(rig.sample(T),rig.sampleFrame(N));
+    assert.equal(sceneTiming(scene,catalog).output_frames,N);assert.equal(auditScene(scene,catalog).frame_count,N);
+    const bad=structuredClone(scene);bad.canvas.loop_seconds+=1e-8;
+    assert.throws(()=>compileScene(bad,catalog),/matching canvas/);
+    const loop=structuredClone(scene);loop.clock.mode='loop';loop.clock.local_cycles={};loop.layers=[];
+    assert.equal(compileScene(loop,catalog).clock.duration_frames,N);
+  }
+});
 check('Local cycles evaluate from clamped time once for motion, camera, cels, sockets and held tracks',()=>{
   const scene=fixture();scene.camera={...scene.camera,local_cycle:'flame',x_amplitude:.1};
   scene.layers[0]={...card('root',{asset:'cels',depth:1}),cycle_seconds:7,phase_frames:0,local_cycle:'flame',sockets:{tip:{frames:[[0,0],[.5,0],[1,0]]}},motion:{x_amplitude:.1,y_amplitude:0,cycles:1,phase:0},tracks:{cell:track([[0,0],[.5,1],[.8,2],[1,0]])}};

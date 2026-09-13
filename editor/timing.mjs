@@ -13,7 +13,7 @@ function windows(values,fps,predicate){
   return runs(values,v=>({selected:predicate(v)})).filter(r=>r.selected).map(({start_frame,end_frame_exclusive})=>({start_frame,end_frame_exclusive,start_seconds:start_frame/fps,end_seconds:end_frame_exclusive/fps}));
 }
 export function sceneTiming(scene,catalog,{layer:filter}={}){
-  const rig=compileScene(scene,catalog),{fps,loop_seconds:T}=scene.canvas,N=Math.round(fps*T);
+  const rig=compileScene(scene,catalog),{fps,loop_seconds:T}=scene.canvas,N=rig.clock.duration_frames;
   const selected=filter?scene.layers.filter(l=>l.id===filter):scene.layers;
   if(filter&&!selected.length)throw Error(`Unknown layer: ${filter}`);
   if(N*Math.max(1,scene.layers.length)>2_000_000)throw Error('Timing report exceeds two million layer samples; reduce the diagnostic scene or output clock');

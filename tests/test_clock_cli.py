@@ -32,6 +32,32 @@ class ClockCLI(unittest.TestCase):
         self.cli('scene', 'clock', '--file', self.project/'clock.json')
         self.cli('scene', 'apply', self.project/'acting.json')
 
+    def author_short(self, frames, fps):
+        packet = json.loads((self.project/'clock.json').read_text())
+        packet.update(fps=fps, loop_seconds=frames/fps)
+        packet['clock']['duration_frames'] = frames
+        fixture.write(self.project/'short-clock.json', packet)
+        return self.cli('scene', 'clock', '--file', self.project/'short-clock.json')
+
+    def test_authored_duration_is_integer_authority_for_public_samples_and_ranges(self):
+        for frames, fps in [(31, 30), (7, 25)]:
+            with self.subTest(frames=frames, fps=fps):
+                authored = self.author_short(frames, fps)
+                self.assertEqual(authored['timing_impact']['after']['output_frames'], frames)
+                self.cli('scene', 'clock', '--loop-seconds', frames/fps)
+                self.assertEqual(self.cli('scene', 'sample', '--frame', frames, '--context')['clock']['effective_frame'], frames)
+                self.assertEqual(self.cli('scene', 'sample', '--frame', frames-1, '--context')['clock']['region'], 'inside')
+                self.assertEqual(self.cli('scene', 'check')['integrity']['export_frame_count'], frames)
+                for start in [0, 1]:
+                    out = self.root/f'proof-{fps}-{start}'
+                    report = self.cli('render', 'proof', '--start-frame', start, '--width', 320, '--out', out)
+                    self.assertEqual(report['frames'], frames-start)
+                    self.assertEqual(report['picture_clock']['duration_frames'], frames)
+                    self.assertEqual(report['source_end_frame_exclusive'], frames)
+                    self.assertEqual(len(list((out/'current').glob('*.png'))), frames-start)
+                endpoint = self.cli('render', 'frame', '--time', frames/fps, '--out', self.root/f'endpoint-{fps}')
+                self.assertEqual(endpoint['picture_clock']['effective_frame'], frames)
+
     def test_transaction_dry_run_stale_guard_and_history(self):
         path = self.project/'scene.json'; before = path.read_bytes()
         self.cli('scene', 'clock', '--file', self.project/'clock.json', '--dry-run')
@@ -90,6 +116,24 @@ class ClockCLI(unittest.TestCase):
         self.assertTrue(alignment(session, {'clock': {'fps': 24}}, links)[0]['aligned'])
         with self.assertRaisesRegex(ValueError, 'between PCM samples'):
             alignment(session, {'clock': {'fps': 29}}, links)
+
+    @unittest.skipUnless(os.environ.get('AMBIANCE_TEST_NATIVE') == '1' and sys.platform == 'darwin', 'Set AMBIANCE_TEST_NATIVE=1 with macOS media-service access')
+    def test_native_authored_duration_and_range_preserve_exact_counts(self):
+        for frames, fps in [(31, 30), (7, 25)]:
+            with self.subTest(frames=frames, fps=fps):
+                self.author_short(frames, fps)
+                for start in [0, 1]:
+                    out = self.root/f'movie-{fps}-{start}'
+                    report = self.cli('render', 'video', '--start-frame', start, '--out', out)
+                    self.assertTrue(report['verification']['ok'])
+                    self.assertEqual(report['verification']['decoded_frames'], frames-start)
+                    self.assertEqual(report['final_frames'], frames-start)
+                    self.assertEqual(report['source_end_frame_exclusive'], frames)
+                    self.assertEqual(report['picture_clock']['duration_frames'], frames)
+                    self.assertAlmostEqual(report['verification']['duration_seconds'], (frames-start)/fps)
+                    if start == 0:
+                        verified = self.cli('media', 'verify', '--file', out/'picture.mp4', '--out', self.root/f'verify-{fps}')
+                        self.assertEqual(verified['decoded_frames'], frames)
 
     @unittest.skipUnless(os.environ.get('AMBIANCE_TEST_NATIVE') == '1' and sys.platform == 'darwin', 'Set AMBIANCE_TEST_NATIVE=1 with macOS media-service access')
     def test_native_24fps_exports_only_0_through_59(self):

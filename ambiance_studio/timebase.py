@@ -16,6 +16,20 @@ def integer(value):
     return value
 
 
+def scene_frame_count(scene):
+    """Read authored N; seconds are its mirror, never its integer authority."""
+    canvas = scene['canvas']
+    if 'clock' not in scene:
+        return canvas['fps'] * canvas['loop_seconds']
+    clock = scene['clock']
+    if not isinstance(clock, dict):
+        raise ValueError('Expected a clock object')
+    count = integer(clock.get('duration_frames'))
+    if count < 1 or canvas['loop_seconds'] != count / canvas['fps']:
+        raise ValueError('Clock duration_frames and canvas seconds mirror disagree')
+    return count
+
+
 def fraction(value):
     if isinstance(value, dict):
         if set(value) != {'numerator', 'denominator'}:

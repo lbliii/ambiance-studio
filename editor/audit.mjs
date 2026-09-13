@@ -7,7 +7,7 @@ export const ALPHA_THRESHOLD=254;
 const distance=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);
 export function auditScene(scene,catalog,{coverageRect=null}={}){
   const rig=compileScene(scene,catalog),{width:W,height:H,fps,loop_seconds:T}=scene.canvas;
-  const N=Math.round(fps*T),failures=[],warnings=[],coverage=scene.coverage_layers||[];
+  const N=rig.clock.duration_frames,failures=[],warnings=[],coverage=scene.coverage_layers||[];
   const [vx,vy,vw,vh]=coverageRect??[0,0,W,H];
   let maxAttachmentError=0,minCoverageMargin=Infinity;
   const closure=JSON.stringify(rig.sample(0))===JSON.stringify(rig.sample(T));
@@ -59,7 +59,7 @@ export async function auditPixels(scene,catalog,images,onProgress=()=>{}){
   const rig=compileScene(scene,catalog),W=135,H=Math.round(W*scene.canvas.height/scene.canvas.width);
   const canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;
   const ctx=canvas.getContext('2d',{willReadFrequently:true}),ratio=W/scene.canvas.width;
-  const N=Math.round(scene.canvas.fps*scene.canvas.loop_seconds);
+  const N=rig.clock.duration_frames;
   const background=document.createElement('canvas');background.width=W;background.height=H;
   const bc=background.getContext('2d',{willReadFrequently:true});
   let first,prev,uncoveredFrames=0,maxUncovered=0,worstFrame=0;
@@ -129,7 +129,7 @@ export async function auditViewPixels(scene,catalog,images,ids,createCanvas,onPr
   });
   const plan=planViews(scene,requests);
   const renderer=createStageRenderer(scene,catalog,images,plan,createCanvas);
-  const frames=scene.canvas.fps*scene.canvas.loop_seconds;
+  const frames=compileScene(scene,catalog).clock.duration_frames;
   const rows=new Map(plan.views.map(v=>[v.view.id,{resolution:[v.output.width,v.output.height],frames,
     uncovered_frames:0,max_uncovered_pixels:0,worst_frame:null,deltas:[],first:null,previous:null}]));
   const delta=(a,b)=>{let sum=0;for(let i=0;i<a.length;i+=4)sum+=Math.abs(a[i]-b[i])+Math.abs(a[i+1]-b[i+1])+Math.abs(a[i+2]-b[i+2]);return sum/(a.length/4*3*255);};

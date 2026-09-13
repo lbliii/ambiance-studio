@@ -152,7 +152,7 @@ export function validateScene(scene,catalog) {
   const vector = v=>Array.isArray(v)&&v.length===2&&v.every(finite);
   if(!scene||scene.version!==1||!Array.isArray(scene.layers)||!Array.isArray(scene.groups)) throw Error('Expected a version 1 scene with layers and groups.');
   const c=scene.canvas;
-  if(!c||!['width','height','fps','loop_seconds'].every(k=>finite(c[k])&&c[k]>0)||c.width>4096||c.height>4096||!Number.isInteger(c.width)||!Number.isInteger(c.height)||!Number.isInteger(c.fps)||!Number.isInteger(c.fps*c.loop_seconds)) throw Error('Invalid canvas or frame count (preview maximum 4096 pixels per side).');
+  if(!c||!['width','height','fps','loop_seconds'].every(k=>finite(c[k])&&c[k]>0)||c.width>4096||c.height>4096||!Number.isInteger(c.width)||!Number.isInteger(c.height)||!Number.isInteger(c.fps)||(scene.clock===undefined&&!Number.isInteger(c.fps*c.loop_seconds))) throw Error('Invalid canvas or frame count (preview maximum 4096 pixels per side).');
   const clock=compileClock(scene);
   validateCycleReference(scene,scene.camera??{});
   validateFraming(scene);

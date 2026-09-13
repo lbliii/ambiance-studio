@@ -89,7 +89,7 @@ function install(next){
   if(!scene.layers.length)throw Error('The editor requires at least one layer.');
   selected=scene.layers.some(l=>l.id==='cottage')?'cottage':scene.layers[0].id;
   time=0;stop();$('edit-group').checked=false;
-  $('timeline').max=Math.round(scene.canvas.loop_seconds*scene.canvas.fps)-(scene.clock?.mode==='finite'?0:1);
+  $('timeline').max=compiled.clock.duration_frames-(scene.clock?.mode==='finite'?0:1);
   $('view-timeline').max=$('timeline').max;
   $('timeline').labels[0].textContent=scene.clock?.mode==='finite'?'Frame position · endpoint available for inspection':'Loop position';
   $('view-timeline').labels[0].textContent=scene.clock?.mode==='finite'?'Output frame position':'Output loop position';

@@ -58,7 +58,12 @@ def validate(scene_path, catalog_path=None, project_root=None):
         require(positive(c[key]), f'Canvas {key} must be positive')
     if not all(positive(c[k]) for k in ['width','height','fps','loop_seconds']):
         return dict(ok=False, errors=errors)
-    require(float(duration*c['fps']).is_integer(), 'Loop must contain a whole number of output frames')
+    from ambiance_studio.timebase import scene_frame_count
+    try:
+        frame_count = scene_frame_count(scene)
+    except ValueError as error:
+        return dict(ok=False, errors=[*errors, str(error)])
+    require(float(frame_count).is_integer(), 'Loop must contain a whole number of output frames')
     for key in ['width','height','fps']:
         require(float(c[key]).is_integer(), f'Canvas {key} must be an integer')
     camera = scene['camera']
@@ -142,7 +147,7 @@ def validate(scene_path, catalog_path=None, project_root=None):
             result = subprocess.run([node, str(ROOT/'tools/check-scene.mjs'), str(scene_path.resolve()), '--catalog', str(catalog_path.resolve()), '--project-root', str(asset_root)], capture_output=True, text=True)
             require(result.returncode == 0, 'Attachment/scene audit failed: '+result.stdout if result.returncode else '')
     return dict(ok=not errors, scene=scene['id'], asset_count=len(assets), layer_count=len(ids),
-                export_frame_count=round(duration*c['fps']), cycles=cycles, timing=timing, errors=errors,
+                export_frame_count=round(frame_count), cycles=cycles, timing=timing, errors=errors,
                 limits=['PNG headers and hashes checked; no pixel alpha/edge analysis.',
                         'No rendered video, audio, or aesthetic validation performed by this command.'])
 
