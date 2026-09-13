@@ -129,7 +129,8 @@
         "tools/scene-command.mjs clock/sample branches only; preserve M3 model transport",
         "kit.py finite/named versus legacy loop cycle precheck only",
         "audio_cues.alignment frame/sample exact conversion only; preserve rejection policy",
-        "Actual prepared-scene snapshot module lists add clock.mjs; only scene clock/sample CLI signature fixture entries after frozen run"
+        "Actual prepared-scene snapshot module lists add clock.mjs; only scene clock/sample CLI signature fixture entries after frozen run",
+        "After freeze: preparation.py copied modules, preparation_server.py served allowlist, preparation_commands.py proof runtime_files add clock.mjs together; focused existing copy/serve/identity tests"
       ],
       "thread_id": "01a09b0c-779a-75c1-9e08-5f7ace309f1a",
       "client_thread_id": "client-new-thread:e21a93f6-dd26-48c0-b681-da9df8fc2d79",
