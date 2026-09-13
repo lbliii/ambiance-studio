@@ -75,6 +75,14 @@ class Collector:
 
     def preparation(self, path, index):
         declaration = audio.read_json(path)
+        if isinstance(declaration, dict) and declaration.get('format') == 'ambiance-audio-materialization':
+            from .audio_materialization import validate_materialization
+            materialized = validate_materialization(self.project, path)
+            self.document(f'preparation-{index}.json', path, 'sound-design', 'audio_materialization')
+            for item in materialized['dependencies']:
+                self.pin(studio.inside(self.project, item['path']), item['section'], item['role'], item['sha256'])
+            self.notes.append('Contained library audio and exact review history are pinned; source use is not a complete master or film approval.')
+            return
         if isinstance(declaration, dict) and declaration.get('format') == 'ambiance-audio-preparation':
             from .audio_sources import validate_preparation
             prepared = validate_preparation(self.project, path)

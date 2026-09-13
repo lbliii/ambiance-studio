@@ -37,11 +37,13 @@ the extracted Python implementation files.
 
 `render frame` writes `frame.png` at the authored dimensions by default. `render proof` writes a self-contained local `index.html` plus PNG sequences, using width 360 by default and preserving the exact authored aspect ratio. Provide `--width` and optionally `--height`; both dimensions must be integers with exactly the authored ratio. No cropping or aspect-ratio conversion is implied. A width that cannot preserve that ratio is rejected.
 
+`drawScene` clears its target before applying the scene background. A transparent or translucent background fill alone does not erase retained pixels. Previously, repeated sampling of a static transparent model accumulated partial-alpha glass and failed the renderer's endpoint check; clearing preserves the original fresh render while making subsequent samples independent. `tests/test-render-state.mjs` exercises transparent/translucent/opaque backgrounds, moving paint, repeated and out-of-order samples, coverage/finished views, and raster endpoint/disabled comparisons at supersampling 1/2/4. This target reset does not change the finishing pipeline's existing output-alpha behavior.
+
 The proof plays at the scene's actual frame rate by default. It includes pause, frame seeking and an optional half-speed view. Repeat `--disable LAYER` to add a synchronized comparison with the specified layers hidden. Their attached descendants inherit that visibility through the shared engine. This reveals the existing backing; it does not generate a clean plate or remove imagery baked into another layer. The project scene is unchanged.
 
 Proof durations must contain an integer number of frames and fit within one visual loop; the default is three seconds or the scene's shorter loop duration. The selected segment repeats for inspection. If it covers only part of the authored loop, its restart is an arbitrary cut, not evidence of the full film's seam. A phone-sized desktop view is not a performed physical-phone check.
 
-The report measures exact RGBA equality at the mathematical loop endpoints and the adjacent last-to-first RGB difference. These are technical measurements, not judgments about natural motion, registration or the encoded seam. Reproduction needs the same inputs, raster runtime and render sequence; byte identity across different Canvas versions is not promised. A known Canvas smoothing-state difference can affect coverage pixels when coverage and finished rendering alternate, as described below.
+The report measures exact RGBA equality at the mathematical loop endpoints and the adjacent last-to-first RGB difference. These are technical measurements, not judgments about natural motion, registration or the encoded seam. Reproduction needs the same inputs and raster runtime; byte identity across different Canvas versions is not promised. Coverage explicitly initializes its layer smoothing, as does finished rendering, so the tested fresh and interleaved sequences use the same sampling policy.
 
 ## Saved portrait and landscape views
 
@@ -53,7 +55,18 @@ For each view with failing painted alpha, the paired proof now saves the actual 
 
 The current threshold remains alpha below 254, at an audit long edge of at most 240 pixels. The heatmap marks interior failures in magenta and the one-pixel perimeter in amber; classification does not change the failing result. Fine holes can disappear during reduction, and alpha cannot detect opaque unrelated paint or establish artistic quality. `preview --views-proof` verifies the diagnostic files and their metadata against the saved receipt before serving them; earlier proofs without diagnostics remain readable.
 
-The audit retains its measured pixels directly. An existing Node Canvas 0.1.100 fixture produced 114 uncovered pixels in a fresh coverage render and 120 after alternating coverage/finished passes at the same source time; observed smoothing quality differed. The diagnostic metadata records the alternating sequence. This localization change preserves that behavior and its separate reproduction; it does not establish sequence-independent coverage rendering.
+The audit retains its measured pixels directly, and diagnostic metadata records the actual alternating sequence. Coverage initializes `imageSmoothingEnabled=true` and `imageSmoothingQuality='high'` before drawing layers, matching the existing finished-layer and view-extraction policy. Previously, coverage inherited low quality from a fresh Canvas context or high quality from a preceding finished call. The Node Canvas 0.1.100 fixture at 0.125 seconds / 90×160 produced 114 versus 120 uncovered pixels, with 146 alpha pixels differing. Setting only smoothing quality reproduced either result, including with finishing disabled. The corrected fresh and alternating coverage both produce the former high-quality result (120); fresh/coverage-only rasters intentionally change. Alpha thresholds, audit resolution, view sizing, and finishing remain unchanged.
+
+The bounded [render-sequence replay](../examples/views/reproduce_canvas_sequence.mjs) saves source/runtime/input identities, PNG and RGBA hashes, and comparisons for stage, portrait and landscape pixels. It tests fresh, repeated, out-of-order and interleaved coverage/finished calls with finishing on/off and supersampling 1/2/4. On the recorded fixture/runtime, the correction removed all 54 history-dependent comparisons and preserved all 216 finished captures byte for byte against the baseline. This is fixture evidence, not a claim about every Canvas implementation or artistic quality. The regression also compares each retained alpha diagnostic with a fresh seek. Run the replay with a fresh output directory:
+
+```sh
+node examples/views/reproduce_canvas_sequence.mjs --out work/canvas-sequence-replay
+node tests/test-view-raster.mjs
+```
+
+Named-view render receipts and alpha diagnostic metadata already include `stage_adapter_sha256`, so the corrected sampling implementation has a distinct evidence identity. Old saved proofs remain verifiable historical artifacts with their original source hash; opening them does not rerender or certify them against current code.
+
+In the retained alpha proof, the maximum remains 120 defects (110 interior, 10 boundary), but its earliest worst frame moves from 1 to 0: the initial coverage frame now also uses high smoothing. The existing earliest-worst tie rule is unchanged. The saved finished playback frames remain identical; the diagnostic image changes to the newly selected source frame.
 
 ## Native video export
 

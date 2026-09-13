@@ -1,0 +1,322 @@
+{
+  "format": "ambiance-workflow-handoff",
+  "schema_version": 1,
+  "scope": [
+    "WF-02",
+    "WF-03"
+  ],
+  "baseline": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
+  "implementation_commits": [
+    "570d33260ca1b49b0320aacdbcde0f3b060af613",
+    "cf9488703b491924c9fc622ba1320e6faddc3f28"
+  ],
+  "worktree": "/Users/lb/.codex/worktrees/1fb5/ambiance-studio",
+  "branch": "codex/workflow-guidance-wave2",
+  "changed_paths": [
+    "ambiance_studio/cli.py",
+    "ambiance_studio/production_queries.py",
+    "ambiance_studio/project_commands.py",
+    "ambiance_studio/workflow.py",
+    "ambiance_studio/workflow_catalog.py",
+    "ambiance_studio/workflow_commands.py",
+    "ambiance_studio/workflow_operations.py",
+    "ambiance_studio/workflow_subjects.py",
+    "examples/workflow-guidance/README.md",
+    "reports/workflow-cli/WF-02-03-GUIDANCE.md",
+    "reports/workflow-cli/WF-02-03-HANDOFF.json",
+    "templates/workflows/painted-film.v1.json",
+    "tests/fixtures/cli-options.json",
+    "tests/fixtures/cli-outputs.json",
+    "tests/replay_workflow_guidance.py",
+    "tests/test_workflow.py",
+    "tests/test_workflow_cli.py"
+  ],
+  "replay": {
+    "argv": [
+      "python3",
+      "/Users/lb/.codex/worktrees/1fb5/ambiance-studio/tests/replay_workflow_guidance.py",
+      "--out",
+      "/tmp/wf2-replay-cf94887"
+    ],
+    "manifest": "/tmp/wf2-replay-cf94887/replay.json",
+    "sha256": "b34c3170a8490ae8e8e741c19329265e7038398ddfd82e56c8730c3668d86256",
+    "commands": 39,
+    "pure_commands": 22,
+    "expected_failures": [
+      {
+        "name": "09-prepare-check-unresolved",
+        "exit_code": 1
+      },
+      {
+        "name": "30-invalid-view",
+        "exit_code": 2
+      },
+      {
+        "name": "31-stale-action-token",
+        "exit_code": 2
+      }
+    ],
+    "default_envelope_bytes": {
+      "02-blank-intent": 10044,
+      "03-inspect": 10746,
+      "04-guided-next": 10573,
+      "26-selected-pair": 15744,
+      "27-selected-guided": 15597,
+      "29-selected-edition": 11373
+    },
+    "source_current": true
+  },
+  "focused": {
+    "workflow_cases": 22,
+    "workflow_skips": 0,
+    "workflow_log": {
+      "path": "/tmp/wf2-focused-sealed.log",
+      "sha256": "d4467066bdeb6dc04e93d9a2ae7e494217f8a2afadf67d6e055ae9c1adf90c1e"
+    },
+    "cli_contract_cases": 8,
+    "cli_contract_skips": 0,
+    "cli_contract_log": {
+      "path": "/tmp/wf2-contract-final.log",
+      "sha256": "8488617643f9f83b6beab6517e0989034cab179825d4feebebae62256371997b"
+    }
+  },
+  "native": {
+    "state": "passed",
+    "argv": [
+      "./ambiance",
+      "test",
+      "--require-native",
+      "--artifacts",
+      "/tmp/wf2-native-cf94887"
+    ],
+    "candidate": "cf9488703b491924c9fc622ba1320e6faddc3f28",
+    "source_tree_sha256": "7dd0dac169e7e6da942da3cd1a0c687385121df96ea0a53828a88f09e652a975",
+    "cases": 469,
+    "python_tests": 455,
+    "skips": 0,
+    "run_report": {
+      "path": "/tmp/wf2-native-cf94887/run.json",
+      "sha256": "6a68f683f44d46a736d66c0d7c64c76d5a5dc1c53b31279963f6f51f100645d6"
+    },
+    "source_manifest": {
+      "path": "/tmp/wf2-native-cf94887/inputs.json",
+      "sha256": "082a40e6bad524f6ca371fd2ce4be7c2ab06491e288fd6e91a6d74e0a227320e"
+    },
+    "python_report": {
+      "path": "/tmp/wf2-native-cf94887/python.json",
+      "sha256": "035ac3032fd0bc529d56242569c38ad3982d644cfc0e72590b32903ecf687c61"
+    },
+    "runtime": {
+      "python": "3.14.0",
+      "node": "v24.9.0",
+      "platform": "Darwin"
+    },
+    "environment": "Explicit local loopback/Core Audio/AVFoundation access via approved escalation. No skipped native checks substituted."
+  },
+  "artifacts": [
+    {
+      "operation": "06-suggested-asset-proof",
+      "path": "/private/tmp/wf2-replay-cf94887/film/reports/workflow/24e86123408490a5-5a47a6f414cc2d85/report.json",
+      "sha256": "17dcaf45177ec8beb407745631b5dd354b2b4caf590fb3a6e3e61feb4332e397",
+      "bytes": 1256
+    },
+    {
+      "operation": "06-suggested-asset-proof",
+      "path": "/private/tmp/wf2-replay-cf94887/film/reports/workflow/24e86123408490a5-5a47a6f414cc2d85/contact-sheet.png",
+      "sha256": "65b6caae21c153712d419fdcf7c329d67814287c896cf437637d663a06b7ccb0",
+      "bytes": 1375
+    },
+    {
+      "operation": "11-suggested-prepare-build",
+      "path": "/private/tmp/wf2-replay-cf94887/film/reports/workflow/4017313c738b1205-d37a53b38f3189f9/preparation-receipt.json",
+      "sha256": "7949dbea23bfa169c758450317e119767d804675750089fc4e5940e0972fe20f",
+      "bytes": 2677
+    },
+    {
+      "operation": "11-suggested-prepare-build",
+      "path": "/private/tmp/wf2-replay-cf94887/film/reports/workflow/4017313c738b1205-d37a53b38f3189f9/images/rest.png",
+      "sha256": "16af9bb3133144854808e8969f71fd2d78a721870e097aa8e07eca20b842449a",
+      "bytes": 213
+    },
+    {
+      "operation": "11-suggested-prepare-build",
+      "path": "/private/tmp/wf2-replay-cf94887/film/reports/workflow/4017313c738b1205-d37a53b38f3189f9/images/backing.png",
+      "sha256": "9ddab786aeb0518f431a65bf02214324ede006f7919019d1caef57b947096383",
+      "bytes": 186
+    },
+    {
+      "operation": "11-suggested-prepare-build",
+      "path": "/private/tmp/wf2-replay-cf94887/film/reports/workflow/4017313c738b1205-d37a53b38f3189f9/images/subject.png",
+      "sha256": "75586b1d62ad511e7f6b3d9b61b0cc1c6ad688a1d3c9e9160c9637927b10cff0",
+      "bytes": 213
+    },
+    {
+      "operation": "15-suggested-isolated-build",
+      "path": "/private/tmp/wf2-replay-cf94887/film/reports/workflow/1ac7d3b9ce87f7cc-42067fc9daffb052/asset.json",
+      "sha256": "26589ff54a1b950a4612caccdf075aa649044db97ae67a861fce26421f014a49",
+      "bytes": 1590
+    },
+    {
+      "operation": "15-suggested-isolated-build",
+      "path": "/private/tmp/wf2-replay-cf94887/film/reports/workflow/1ac7d3b9ce87f7cc-42067fc9daffb052/report.json",
+      "sha256": "b4cdf5546371467f5f53d9cb8e13409f9de1ff5d508b7972896c6f32349440eb",
+      "bytes": 2279
+    },
+    {
+      "operation": "15-suggested-isolated-build",
+      "path": "/private/tmp/wf2-replay-cf94887/film/reports/workflow/1ac7d3b9ce87f7cc-42067fc9daffb052/contact-sheet.png",
+      "sha256": "81a8e4fb046a323143f0eb3b03fd5d9a8373efaa5f712ac9efba7a5ed9427c86",
+      "bytes": 1058
+    },
+    {
+      "operation": "230-native-portrait",
+      "path": "/private/tmp/wf2-replay-cf94887/film/render/movie-portrait/render-report.json",
+      "sha256": "f63cafdc324a192fe9066e9cabc9976d299eca838b350d0be15b64f963cb6aaf",
+      "bytes": 10297
+    },
+    {
+      "operation": "230-native-portrait",
+      "path": "/private/tmp/wf2-replay-cf94887/film/render/movie-portrait/picture.mp4",
+      "sha256": "91f61f7e86393c6a8f76c8444cafd89d468b15f6a5f852a704aaa6f2d3c92d2b",
+      "bytes": 1059
+    },
+    {
+      "operation": "230-native-portrait",
+      "path": "/private/tmp/wf2-replay-cf94887/film/render/movie-portrait/verification/media-report.json",
+      "sha256": "afb3db55622a44735e5ea59ef2db5f2b64723b43e4353f1994500584da1ca505",
+      "bytes": 2638
+    },
+    {
+      "operation": "231-native-landscape",
+      "path": "/private/tmp/wf2-replay-cf94887/film/render/movie-landscape/render-report.json",
+      "sha256": "8a04bfc5581471be4120e918975b562bc103515d63bbd70f29921b180130ba73",
+      "bytes": 10329
+    },
+    {
+      "operation": "231-native-landscape",
+      "path": "/private/tmp/wf2-replay-cf94887/film/render/movie-landscape/picture.mp4",
+      "sha256": "013fd33147c2ed4dda72957abc771d30a496ce1066878c08c428930aa211d51a",
+      "bytes": 1018
+    },
+    {
+      "operation": "231-native-landscape",
+      "path": "/private/tmp/wf2-replay-cf94887/film/render/movie-landscape/verification/media-report.json",
+      "sha256": "587ef83dc7ead6a67fde034b69797d86dcf979c9f9ac3ed270f21f1d96e17021",
+      "bytes": 2659
+    }
+  ],
+  "limits": [
+    "Advisory inspection/actions only; WF-04\u201307 remain unimplemented by this assignment.",
+    "No publishing, paid generation, canonical-film change, artistic approval or human/listening observation.",
+    "Actual pipeline and pure native coverage remain separate authorities.",
+    "Historical scene timing lacks --revision; captured view inspect uses its real native route.",
+    "CI runners were unavailable due to account billing/spending limits; no settings were changed."
+  ],
+  "interfaces": {
+    "catalog": {
+      "id": "painted-film.v1",
+      "sha256": "0457501ca86c3906e3ca19261924a28f74307dd7697291a4d6aedab555804ff2",
+      "path": "/Users/lb/.codex/worktrees/1fb5/ambiance-studio/templates/workflows/painted-film.v1.json",
+      "stages": 9,
+      "operations": 35
+    },
+    "public_routes": [
+      [
+        "workflow",
+        "inspect"
+      ],
+      [
+        "workflow",
+        "stage"
+      ],
+      [
+        "workflow",
+        "explain"
+      ],
+      [
+        "project",
+        "next",
+        "--guided"
+      ]
+    ],
+    "selectors": [
+      "--subject working|review|release (mutually exclusive with --revision)",
+      "--revision ID [--edition ID]",
+      "--view ID"
+    ],
+    "output_formats": [
+      "ambiance-workflow/1",
+      "ambiance-guided-next/1",
+      "ambiance-workflow-action/1"
+    ],
+    "out_ownership": "Result-envelope on the three new workflow leaves only",
+    "registration_hooks": [
+      "cli.py workflow parser/dispatch",
+      "project_commands.py guided next flags/run hook",
+      "production_queries.py guided projection",
+      "new CLI fixture leaves and affected root/project-next signatures"
+    ],
+    "compatibility": "Existing unflagged project next schema and old native leaves/output owners are unchanged."
+  },
+  "actual_observations": {
+    "method": "Assistant inspected the exact local PNGs with view_image after the final source-stable replay.",
+    "files": [
+      {
+        "operation": "11-suggested-prepare-build",
+        "path": "/private/tmp/wf2-replay-cf94887/film/reports/workflow/4017313c738b1205-d37a53b38f3189f9/images/rest.png",
+        "sha256": "16af9bb3133144854808e8969f71fd2d78a721870e097aa8e07eca20b842449a",
+        "bytes": 213
+      },
+      {
+        "operation": "11-suggested-prepare-build",
+        "path": "/private/tmp/wf2-replay-cf94887/film/reports/workflow/4017313c738b1205-d37a53b38f3189f9/images/backing.png",
+        "sha256": "9ddab786aeb0518f431a65bf02214324ede006f7919019d1caef57b947096383",
+        "bytes": 186
+      },
+      {
+        "operation": "15-suggested-isolated-build",
+        "path": "/private/tmp/wf2-replay-cf94887/film/reports/workflow/1ac7d3b9ce87f7cc-42067fc9daffb052/contact-sheet.png",
+        "sha256": "81a8e4fb046a323143f0eb3b03fd5d9a8373efaa5f712ac9efba7a5ed9427c86",
+        "bytes": 1058
+      }
+    ],
+    "notes": [
+      "Reconstructed rest shows a small yellow rectangle on a dark blue field.",
+      "Backing is a continuous dark blue field with the rectangle removed.",
+      "The compiler contact sheet shows one small green/gold oval with a centered registration cross."
+    ],
+    "not_performed": [
+      "Listening",
+      "Human phone/release review",
+      "Full-film normal-speed artistic review",
+      "Operator adoption trial"
+    ]
+  },
+  "retained_failed_attempts": [
+    {
+      "path": "/tmp/wf2-replay-02.log",
+      "sha256": "e4abb3bdefff71d5304a18d6b13ebf582b7e40fcca61b0faea37c6b3b0a06479",
+      "reason": "Sandbox-only AVFoundation encoding failed; later same bounded native operation succeeded with authorized native-service access. Not counted as passing evidence."
+    }
+  ],
+  "remaining_acceptance_gaps": [
+    "No known WF-02/03 software acceptance gap after final native/CLI/source review.",
+    "WF-04 packets, WF-05 outcome guidance, WF-06 trials and WF-07 adoption are explicitly outside this assignment.",
+    "Film artistry, listening and human release observations remain production work; no acceptance is inferred from this engineering fixture.",
+    "Coordinator owns central capability/backlog registration, integration and combined validation."
+  ],
+  "handoff_only_change": "This report and companion Markdown are added after native validation; implementation bytes at the tested commit are unchanged.",
+  "final_package_audit": {
+    "path": "/tmp/wf2-final-package.json",
+    "sha256": "7caff2f8b2b45f6d23e5828ab174ccfde5d7a32173fb7dbb9505b947b4996e8e",
+    "result": {
+      "ok": true,
+      "local_links_checked": 602,
+      "errors": []
+    }
+  },
+  "handoff_only_paths": [
+    "reports/workflow-cli/WF-02-03-GUIDANCE.md",
+    "reports/workflow-cli/WF-02-03-HANDOFF.json"
+  ]
+}

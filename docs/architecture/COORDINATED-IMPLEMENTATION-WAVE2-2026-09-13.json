@@ -1,0 +1,497 @@
+{
+  "format": "studio-workstream-coordination",
+  "schema_version": 1,
+  "wave": 2,
+  "updated_utc": "2026-09-13",
+  "coordinator_thread_id": "01a0983d-40cf-71a3-bd9c-cb8308ad6efa",
+  "coordinator_worktree": "/Users/lb/.codex/worktrees/cfeb/ambiance-studio",
+  "coordinator_branch": "codex/coordinated-studio-wave2",
+  "saved_project_id": "f5120268-3ebf-40fb-8c45-d50ab7c7bcff",
+  "baseline_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
+  "status": "complete_local",
+  "authorization": "User explicitly requested creating and merging the first-wave PR, then spawning the next wave of tasks. PR #32 merged. Four fresh second-wave tasks are authorized; ongoing coordination includes unblocking, review, local integration and combined validation.",
+  "first_wave": {
+    "ledger": "docs/architecture/COORDINATED-IMPLEMENTATION-2026-09-13.json",
+    "pr": "https://github.com/lbliii/ambiance-studio/pull/32",
+    "state": "MERGED",
+    "merged_at": "2026-09-13T02:40:28Z",
+    "merge_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
+    "head_commit": "7ce91bb34ff1b8886f78e11ab344609e39d271d1",
+    "tree_equals_reviewed_head": true,
+    "validation": {
+      "required_native": true,
+      "cases": 447,
+      "python_tests": 433,
+      "skips": 0,
+      "tested_commit": "5fc33d41c06604175610937a4b876c7692772178",
+      "later_changes": "Completion ledger and companion Markdown only; final package audit 600 links.",
+      "github_ci": "No job started: billing/account spending-limit annotation. Normal merge succeeded without changing account settings or branch protections.",
+      "github_run": "https://github.com/lbliii/ambiance-studio/actions/runs/34733575220"
+    }
+  },
+  "plan": "docs/architecture/COORDINATED-IMPLEMENTATION-WAVE2-2026-09-13.md",
+  "workers": [
+    {
+      "stream": "W2",
+      "title": "Build guided workflow inspection",
+      "assignment": "WF-02 then WF-03 only",
+      "leases": [
+        "new workflow modules and templates/workflows/painted-film.v1.json",
+        "production_queries.py guided projection only",
+        "project_commands.py project next --guided and guidance options only",
+        "cli.py workflow parser/dispatch registration only",
+        "new-route CLI option/output fixture entries and affected parent signatures only"
+      ],
+      "excludes": [
+        "WF-04 through WF-07",
+        "coverage policy/persistence changes",
+        "central output envelope changes"
+      ],
+      "thread_id": "01a098a5-2b68-71c1-9441-31360878c398",
+      "client_thread_id": "client-new-thread:439a3f38-aa4a-41c3-8d48-94afea11ebb5",
+      "host_id": "local",
+      "worktree": "/Users/lb/.codex/worktrees/1fb5/ambiance-studio",
+      "branch": "codex/workflow-guidance-wave2",
+      "baseline_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
+      "dispatch_state": "complete_local",
+      "cursor": "3eb0771e-775e-4022-af41-0e043619dc93:2",
+      "baseline_verified": true,
+      "interface": "Advisory catalog plus exact selected-pipeline gates; explicit working/review/release/revision/edition/view subjects, stable logical action IDs and separate freshness; workflow inspect/stage/explain and project next --guided. Revision-only inspection remains supported.",
+      "progress_verified": "wait_threads confirmed active/in-progress at the recorded cursor.",
+      "focused_progress": {
+        "state": "Local routes implemented; focused tests and real CLI replay in progress, candidate not frozen.",
+        "envelopes": "Blank about 10 KiB; populated one subject about 11 KiB.",
+        "coverage": "All nine gates, hidden preparation verbs through stage details, pure WF01 assessment, revision-only and exact subject tests.",
+        "latest": "Focused pure/stale/custom pipeline/dependency/wrong-view checks pass; native preparation replay uncovered empty initializer foreground part, correction through existing prepare edit retained in replay.",
+        "reported_passes": 22,
+        "cli_contract_passes": 8,
+        "public_cli_calls": 39,
+        "next": "None; assigned work complete and combined native validation passed."
+      },
+      "coordinator_findings": [
+        {
+          "issue": "Feedback collapsed multi-entry delivery to last subject, including wrong-view feedback",
+          "state": "corrected in 570d332; coordinator verified source and actual default/details CLI over multi-entry feedback fixture"
+        },
+        {
+          "issue": "view.inspect incorrectly claimed no captured revision support",
+          "state": "corrected in 570d332; coordinator reviewed native revision route and regression"
+        },
+        {
+          "issue": "Returned next action-page argv drops subject pagination and can switch to first selected movie entry",
+          "state": "corrected in cf94887; coordinator reviewed returned-argv regression and exact source patch"
+        }
+      ],
+      "candidate_commit": "cf9488703b491924c9fc622ba1320e6faddc3f28",
+      "worker_identity_followup": "Implemented in cf94887 with cross-project stale-action rejection regression.",
+      "integration": {
+        "state": "complete_local",
+        "commits": [
+          "a4c59d7",
+          "7315c41"
+        ],
+        "coordinator_review": "Reviewed all workflow modules, native operation adapters and final feedback/view/pagination corrections. Preserved model/audio hooks while merging workflow routes; 8 combined CLI contract tests pass.",
+        "remaining": "None within assigned implementation scope; limits retained in owning contract."
+      },
+      "full_validation": {
+        "state": "passed",
+        "candidate_commit": "cf9488703b491924c9fc622ba1320e6faddc3f28",
+        "native_required": true,
+        "source_frozen": true,
+        "artifacts": "/tmp/wf2-native-cf94887",
+        "environment": "Explicit escalation for local loopback/Core Audio/AVFoundation services",
+        "cases": 469,
+        "python_tests": 455,
+        "skips": 0,
+        "report_sha256": "6a68f683f44d46a736d66c0d7c64c76d5a5dc1c53b31279963f6f51f100645d6",
+        "tracked_tree_sha256": "7dd0dac169e7e6da942da3cd1a0c687385121df96ea0a53828a88f09e652a975",
+        "inputs_sha256": "082a40e6bad524f6ca371fd2ce4be7c2ab06491e288fd6e91a6d74e0a227320e"
+      },
+      "public_replay": {
+        "path": "/private/tmp/wf2-replay-cf94887/replay.json",
+        "sha256": "b34c3170a8490ae8e8e741c19329265e7038398ddfd82e56c8730c3668d86256",
+        "source_commit": "cf9488703b491924c9fc622ba1320e6faddc3f28",
+        "coordinator_verified": {
+          "source_files": 97,
+          "command_outputs": 39,
+          "project_files": 123,
+          "mismatches": 0,
+          "pure_unchanged_reads": 22
+        },
+        "combined_source_smoke": {
+          "commands": [
+            "workflow inspect --subject review",
+            "project next --guided --subject review"
+          ],
+          "subject_count": 2,
+          "output_bytes": [
+            15744,
+            15597
+          ],
+          "all_project_file_bytes_unchanged": true
+        }
+      },
+      "handoff": {
+        "upstream_commit": "0e8f6eca38460985a4afdc815e35b02fe63402f2",
+        "path": "reports/workflow-cli/WF-02-03-HANDOFF.json",
+        "sha256": "2fc3dddbabc8fb227085211c0f3d5edade362dca42f3613988f7462e2aea0113",
+        "scope": "Handoff-only; implemented files match tested cf94887."
+      }
+    },
+    {
+      "stream": "M2",
+      "title": "Build immutable model construction",
+      "assignment": "mc/1 C1 then C2 only",
+      "leases": [
+        "new model definition/package/lowering/proof modules",
+        "new model fixtures and examples",
+        "cli.py model parser/dispatch registration only",
+        "new-route CLI option/output fixture entries and affected parent signatures only",
+        "cli.py command_project project-free explicit model routes",
+        "static named-state proof adapter over existing renderer; no shared rendering edits"
+      ],
+      "excludes": [
+        "editor evaluator or renderer-state changes",
+        "I1/I2 scene instances/adoption",
+        "full model Phase 1/P00 or artistic acceptance"
+      ],
+      "thread_id": "01a098a5-b2d3-7663-9b48-819ee499d1e6",
+      "client_thread_id": "client-new-thread:0a2191b1-adb1-47b5-82b3-febdf8077ed7",
+      "host_id": "local",
+      "worktree": "/Users/lb/.codex/worktrees/e892/ambiance-studio",
+      "branch": "codex/model-construction-c1-c2",
+      "baseline_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
+      "dispatch_state": "complete_local",
+      "cursor": "968ca122-3068-4f0f-bb39-8fc91ed41861:4",
+      "baseline_verified": true,
+      "early_interface": "Immutable package closure and sealed manifest; ordinary scene/catalog lowering with tuple mapping. Proposed model build/inspect/lower/proof/check/admit; no renderer edits.",
+      "interface": "Project-free model build/inspect/lower/proof/check/admit; immutable exact closure, ordinary-engine lowering and static named-state proof. Unsupported animated/cycle controls must fail explicitly. Technical library admission only.",
+      "progress_verified": "wait_threads confirmed active/in-progress at the recorded cursor.",
+      "partial_dependency": "Resolved by D2 final renderer fixes; all model and combined native checks pass.",
+      "focused_progress": {
+        "reported_passes": 27,
+        "skips": 0,
+        "remaining_failure": null,
+        "independent_work": "Completed revised geometric fixture, current role/source proof, public entry reopen and full native validation.",
+        "next": "None; assigned work complete and combined native validation passed."
+      },
+      "renderer_adoption": {
+        "upstream_commits": [
+          "e74b72cd318bb9a734a5f5cbd338f07da3545940",
+          "06a3b53699b7041e0463cf4cc6a490df4c64b3ce"
+        ],
+        "local_commits": [
+          "695c477",
+          "107388b37533563c5369ad51918bf1f5c8084ce3"
+        ],
+        "implementation_commit": "93ffc66",
+        "state": "Adopted; all 27 focused model tests and public proof/reopen pass. Fixture revision in progress before freeze."
+      },
+      "candidate_commit": "260fe7c5a35a6ad4cdc6dd29e456d607189e7dd1",
+      "full_validation": {
+        "state": "passed",
+        "source_frozen": true,
+        "native_required": true,
+        "candidate_commit": "260fe7c5a35a6ad4cdc6dd29e456d607189e7dd1",
+        "includes_D2_final_source": true,
+        "artifacts": "/Users/lb/.codex/worktrees/e892/ambiance-studio/work/m2/native-suite-unsandboxed",
+        "failed_sandbox_report": "/Users/lb/.codex/worktrees/e892/ambiance-studio/work/m2/native-suite/run.json",
+        "failed_sandbox_sha256": "d3fa1dd458bf523022548db17adfdd3448dcd7e6cdcbdf6ad9abf2ffd9455601",
+        "cases": 475,
+        "python_tests": 460,
+        "skips": 0,
+        "report_sha256": "8d7383b42fb70a3aee4a11d1ba5eb6b10e6548c4f1780844438f069ec148c6cd",
+        "tracked_tree_sha256": "edf8afe41163db50b4552320aac6e3d3048c985ff11b2c0d18e1b4a13e595048"
+      },
+      "current_replay": {
+        "report": "/Users/lb/.codex/worktrees/e892/ambiance-studio/work/m2/replay-v2/evidence.json",
+        "sha256": "ef3462fb47e78696f56792856deb7548aa3bab8c149a05126ab8dfaa05dd0db1",
+        "observations": "reports/model-construction/observations-v1.json",
+        "worker_claim": "Genuine pane openings and all extremes unclipped in revised geometric derivative; actual inspected samples. Earlier v1 replay is superseded diagnostic."
+      },
+      "coordinator_review": {
+        "source": "Read C1/C2 definition/package/lowering/proof modules and contract; no blocking finding.",
+        "replay_files_verified": 534,
+        "mismatches": [],
+        "public_cli": "model inspect work/m2/replay-v2/entry exited 0; current technical proof, acceptance not established.",
+        "visual": "Inspected exact source-versus-assembly, solid-mask, square-left and arched-right PNGs; registration matches, pane openings visible, tilted objects inside viewport. Geometric fixture only."
+      },
+      "integration": {
+        "state": "complete_local",
+        "commits": [
+          "ec62bc2",
+          "b9de406",
+          "c1919cf"
+        ],
+        "coordinator_resolution": "Preserved audio project exemptions plus model project-free routes. United both route fixtures; all old signature values preserved and 8 CLI contract checks pass.",
+        "validation_failure": "First native suite failed from sandbox loopback/Core Audio/AVFoundation restrictions. Preserved original report; approved escalated rerun on unchanged candidate is active.",
+        "remaining": "None within assigned implementation scope; limits retained in owning contract."
+      },
+      "handoff": {
+        "commit": "6357ac89b47e60276ff3cb380b1276b6e61817a1",
+        "path": "/Users/lb/.codex/worktrees/e892/ambiance-studio/reports/model-construction/C1-C2-HANDOFF.md",
+        "scope": "Handoff/native metadata only; implementation remains tested 260fe7c bytes."
+      }
+    },
+    {
+      "stream": "S2",
+      "title": "Build portable audio library",
+      "assignment": "Quality backlog LIB-01 only",
+      "leases": [
+        "new typed audio library/materialization modules, contract, fixtures and examples",
+        "audio.py new library parser/service hooks only",
+        "cli.py command_project for chosen audio library read/import routes (granted)",
+        "revision_dependencies.py new typed library-materialization adapter (granted)",
+        "new-route CLI option/output fixture entries and affected parent signatures only"
+      ],
+      "excludes": [
+        "visual raster/model schemas",
+        "AUDIO-02 loudness/encoder work",
+        "paid generation or inferred audition/acceptance"
+      ],
+      "thread_id": "01a098a5-ea03-7443-8924-0e07a9ffe7b6",
+      "client_thread_id": "client-new-thread:25c21304-e0d7-4c78-95a5-d69a248ea343",
+      "host_id": "local",
+      "worktree": "/Users/lb/.codex/worktrees/94fa/ambiance-studio",
+      "branch": "codex/portable-audio-library",
+      "baseline_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
+      "dispatch_state": "complete_local",
+      "cursor": "155b3f3e-fad2-439a-a286-f947d290aa33:2",
+      "interface": "Explicit absolute --config/library root; audio library configure/search/inspect/import/audition/observe/promote/materialize/check. Typed ambiance-audio-materialization v1; archival origin references are not active dependencies.",
+      "baseline_verified": true,
+      "progress_verified": "wait_threads confirmed active/in-progress at the recorded cursor.",
+      "focused_progress": {
+        "reported_passes": 19,
+        "claim_scope": "Candidate/prepared pins, duplicates, simulated identity-bound review states, stale/failed writes, portability after origin/library removal, revision capture/check and recopied handoff. No real audition.",
+        "implementation_note": "Typed materialization reuses AUDIO-01 validation through a disposable projection with hardlinks/copy fallback; prior receipt bytes remain archival, active output dependencies stay local.",
+        "coordinator_review_followup": "Verify path containment and alias collisions before projection creation, no writes to linked source bytes, no reactivation of archived paths or assertion of historical origin availability. Working implementation not yet source-reviewed.",
+        "next": "None; assigned work complete and combined native validation passed.",
+        "cli_contract_passes": 8,
+        "studio_passes": 14,
+        "package_links": 604,
+        "skips": 0
+      },
+      "candidate_commit": "a1131a493420ea321e9869fece4b904603aaf29c",
+      "public_replay": {
+        "report": "/private/tmp/ambiance-lib01-replay-02/replay.json",
+        "sha256": "ed9a2fe12a94106f75c0eaec0472fd9e52691b4713cf4f079c953bacdbc3262c",
+        "worker_claim": "Public replay and portable handoff after library/origin removal pass; coordinator review pending."
+      },
+      "full_validation": {
+        "state": "passed",
+        "candidate_commit": "a1131a493420ea321e9869fece4b904603aaf29c",
+        "native_required": true,
+        "source_frozen": true,
+        "artifacts": "/Users/lb/.codex/worktrees/94fa/ambiance-studio/.ambiance/coordination/lib01/native-a1131a4",
+        "cases": 466,
+        "python_tests": 452,
+        "skips": 0,
+        "tracked_tree_sha256": "d453399eb7370fdbeb4598dd7aa02ef17cbae934caae83b2a34b01bd985f54b8",
+        "report_sha256": "25ded8a2dfc7d278c027c4fdf063ff3bef3eaf3397998c2fe021039ded4ce7ad"
+      },
+      "handoff": {
+        "path": "/Users/lb/.codex/worktrees/94fa/ambiance-studio/.ambiance/coordination/lib01/handoff.json",
+        "sha256": "2266f6c272ac9ea576a2e9c907fca2cb8e0c0ad72fcafbba8ae113fcaa79a582"
+      },
+      "integration": {
+        "state": "complete_local",
+        "commit": "2deeb820f3892968b42d71ffa6ef30738eb80c6b",
+        "coordinator_review": "Read all three implementation modules, typed revision/project-selection hooks, contract and focused tests. Independently verified all 84 public replay artifacts and ran audio library check plus revision check in copied portable handoff with origin/library addresses absent. Both pass; no listening or acceptance claimed.",
+        "remaining": "None within assigned implementation scope; limits retained in owning contract."
+      }
+    },
+    {
+      "stream": "D2",
+      "title": "Fix Canvas render sequence dependence",
+      "assignment": "Bounded fresh versus interleaved render-state discrepancy",
+      "leases": [
+        "editor/engine.mjs narrowly scoped Canvas state setup/restoration",
+        "tools/render/raster.mjs and tools/render/canvas-runtime.mjs narrowly scoped Canvas state",
+        "focused sequence regression fixture/tests",
+        "docs/RENDERING.md exact corrected behavior and residual limits",
+        "editor/stage-raster.mjs drawCoverage Canvas smoothing/state only (granted)",
+        "editor/engine.mjs drawScene target reset for demonstrated transparent repeat-render failure, after active frozen suite completes"
+      ],
+      "excludes": [
+        "finite timing P03",
+        "alpha thresholds/default audit policy",
+        "visual restyling or broad renderer rewrite"
+      ],
+      "thread_id": "01a098a6-24c9-7fa3-8781-f453585cc6e5",
+      "client_thread_id": "client-new-thread:04a22c49-b15c-457b-96dc-dc1110559926",
+      "host_id": "local",
+      "worktree": "/Users/lb/.codex/worktrees/dbe1/ambiance-studio",
+      "branch": "codex/canvas-render-sequence",
+      "baseline_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
+      "dispatch_state": "complete_local",
+      "cursor": "d1e00d1b-810d-42df-bace-389fde3d14e1:2",
+      "interface": "Exact baseline reproduced in 24 runs: imageSmoothingQuality high alone reproduces alternating pixels; restoring low restores fresh pixels, finishing on/off. Granted explicit enabled/high initialization in drawCoverage to match drawScene/extractView. Fresh coverage intentionally changes; finished bytes must remain unchanged.",
+      "baseline_verified": true,
+      "first_native_slot": "Used and released; final correction also covered by M2 and coordinator full native suites.",
+      "progress_verified": "wait_threads confirmed active/in-progress at the recorded cursor.",
+      "early_patch_review": {
+        "state": "reviewed_working_candidate_not_yet_integrated",
+        "production_change": "drawCoverage explicitly enables image smoothing and sets high quality in editor/stage-raster.mjs",
+        "stage_adapter_sha256": "5f59d3457594c7ecf6bb91bb85f32c44cdad997d86e87c34ee0e6a298c015ba1",
+        "matrix_comparison": "/Users/lb/.codex/worktrees/dbe1/ambiance-studio/work/canvas-sequence/matrix-comparison.json",
+        "matrix_comparison_sha256": "1d441e822c6a921ce256f6687820228cb3e2f335caff9efadd0036a570c9f848",
+        "baseline_history_dependent": 54,
+        "corrected_history_dependent": 0,
+        "finished_png_pairs_independently_verified": 216,
+        "existing_identity_binding": "stage_adapter_sha256 and alphaDiagnosticIdentity verified; old immutable proofs retain historical identity",
+        "remaining": "None within assigned scope."
+      },
+      "public_proof_review": {
+        "report": "/Users/lb/.codex/worktrees/dbe1/ambiance-studio/work/canvas-sequence/corrected-proof/render-report.json",
+        "report_sha256": "5282142ad74f9d2a2e2b9c9aafd9184e416392916372ca2f3640db8e63f32565",
+        "finished_png_pairs_independently_verified": 8,
+        "diagnostic_delta": "Earliest worst frame 1 to 0 because coverage uses high smoothing from the first frame; total remains 120 (110 interior, 10 boundary), landscape zero.",
+        "corrected_module_identity_verified": true,
+        "worker_browser_observation": "Both shared-clock views inspected; paused frame 2 at .750s, diagnostic source frame 0 at 0s and interior/top-boundary heatmap.",
+        "coordinator_browser_observation": "Not repeated; coordinator independently compared all eight saved finished PNGs and inspected exact report/module identity.",
+        "remaining": "None within assigned scope."
+      },
+      "candidate_commit": "e74b72cd318bb9a734a5f5cbd338f07da3545940",
+      "full_validation": {
+        "state": "passed",
+        "native_required": true,
+        "source_frozen": true,
+        "candidate_commit": "e74b72cd318bb9a734a5f5cbd338f07da3545940",
+        "artifacts": "/Users/lb/.codex/worktrees/dbe1/ambiance-studio/work/canvas-sequence/full-suite",
+        "report": "/Users/lb/.codex/worktrees/dbe1/ambiance-studio/work/canvas-sequence/full-suite/run.json",
+        "report_sha256": "c81bb2f3353cd2050d1dc176ee0fad19e85f0a67e4e8fa50e40ff1d52ac1d4aa",
+        "tracked_tree_sha256": "90fe177ba57b7cbe65b9e1cd041249a6e965cc7b2b733edbb53c30a2fad341a3",
+        "recorded_cases": 447,
+        "python_tests": 433,
+        "skips": 0,
+        "claim_scope": "Initial smoothing correction e74b72c only. Separate transparent target-clear follow-up receives focused native checks, then full suite on M2 adopted source and final combined source."
+      },
+      "followup_candidate_commit": "06a3b53699b7041e0463cf4cc6a490df4c64b3ce",
+      "followup_review": "Coordinator inspected two-line engine target clear, dedicated raster-state regression and documentation; focused native handoff pending.",
+      "focused_followup_validation": {
+        "state": "passed",
+        "commit": "06a3b53699b7041e0463cf4cc6a490df4c64b3ce",
+        "report": "/Users/lb/.codex/worktrees/dbe1/ambiance-studio/work/canvas-sequence/final-focused-native/run.json",
+        "report_sha256": "0f9394095a40d73ab673cb7a4fb4673ab1ceba2a986dc9598fb78c20c5741207",
+        "source_unchanged": true,
+        "python_tests": 29,
+        "skips": 0,
+        "other_checks": [
+          "engine",
+          "render-state",
+          "view-raster",
+          "finishing",
+          "rig",
+          "package"
+        ],
+        "coordinator_verified": "Read exact report/hash and reviewed reset/test diff. New JS regression is discovered by full-suite glob."
+      },
+      "integration": {
+        "state": "complete_local",
+        "commits": [
+          "0575fa8",
+          "4d6e9f5beb73e1aeb040a355b063af59c305a774"
+        ],
+        "all_six_changed_files_equal_candidate": true,
+        "final_full_suite": "Passed in M2 adopted 260fe7c bundle: all final renderer/regression source bytes verified by D2; 475 cases/460 Python/0 skips.",
+        "remaining": "None within assigned implementation scope; limits retained in owning contract."
+      },
+      "handoff": {
+        "path": "/Users/lb/.codex/worktrees/dbe1/ambiance-studio/work/canvas-sequence/handoff.json",
+        "sha256": "23e2f0b2257990f442ef6536035cb1bfe9a38065342226a34ae93d3c0fe84ef5",
+        "evidence_manifest_sha256": "861de3f1d3bd14df14463e8d2f43a8c9ae23e2220b7dc7ce1012c80f64bfc72e",
+        "final_proof_report_sha256": "3ad856857ee21a6f740090c5f306c15b6c4b215bbdf4134b898352f1f617e2d0",
+        "coordinator_verified_manifest_entries": 1495,
+        "manifest_mismatches": [],
+        "native_addendum": "/Users/lb/.codex/worktrees/dbe1/ambiance-studio/work/canvas-sequence/m2-native-validation-addendum"
+      }
+    }
+  ],
+  "status_owner_note": "Dispatch/integration record only; owning workflow YAML, model plan and quality YAML retain implementation/acceptance status.",
+  "shared_owner": "Coordinator owns broad cli/output/runtime/evidence/backlog/capability registration; listed route-only leases enable independent public CLI work and are reconciled on integration. New shared semantics require an early concrete contract, not a user approval gate.",
+  "native_test_queue": [],
+  "active_native_test_owner": null,
+  "native_test_policy": "Completed wave: all frozen worker suites and the coordinator combined required-native suite passed. No native slot is active.",
+  "automation": {
+    "id": "coordinate-studio-implementation",
+    "kind": "heartbeat",
+    "status": "PAUSED",
+    "interval_minutes": 15,
+    "target_thread_id": "01a0983d-40cf-71a3-bd9c-cb8308ad6efa"
+  },
+  "scope_limits": [
+    "No automatic paid generation, account/billing changes, canonical film edits or artistic approval",
+    "First-wave PR #32 is merged; second-wave completion is reviewed local integration and combined validation, then handoff",
+    "P03 finite timing follows D2 and needs a separate continuation; no fifth task yet"
+  ],
+  "blocking_decisions": [],
+  "list_threads_limitation": "New tasks are omitted by list_threads; actual IDs are confirmed by worker messages and wait_threads. Do not create replacements.",
+  "native_slot_state": "released",
+  "dispatch_validation": {
+    "ok": true,
+    "local_links_checked": 605,
+    "errors": []
+  },
+  "cross_stream_dependencies": [
+    {
+      "id": "transparent-model-repeat-render",
+      "reported_by": "M2",
+      "owner": "D2",
+      "state": "resolved_validated",
+      "observed_failure": "prepareRaster raises Raster endpoint differs from frame zero on static transparent model scene; partial-alpha accumulation suspected.",
+      "inputs": {
+        "scene": "/tmp/m2-model-lowered/scene/scene.json",
+        "scene_sha256": "1bca046246ce0dcc1f23475d09326e8e6000f2adb2ecc055ad0e18854ec07ba1",
+        "catalog": "/tmp/m2-model-lowered/assets/catalog.json",
+        "catalog_sha256": "91ea9d0247f5ebbc9666b794507b7f0f560c9a4271fec90db8167ec6c32332b0"
+      },
+      "coordinator_observation": "Confirmed static 32x48 transparent scene, five assets/layers and drawScene background fill without clear. Root-cause reproduction still delegated to D2.",
+      "next_actions": [],
+      "acceptance": "No transparent accumulation on repeated/out-of-order samples, opaque finished behavior retained, actual model public proof passes with current source identity.",
+      "durable_reproduction": {
+        "report": "/Users/lb/.codex/worktrees/e892/ambiance-studio/work/m2/transparent-regression/failure.json",
+        "sha256": "234a47d2f10ff7ecf9b8b32045b9dec417a75739a741293dd0243fd0a30aa236",
+        "project": "/Users/lb/.codex/worktrees/e892/ambiance-studio/work/m2/transparent-regression/lowered",
+        "recipe": "/Users/lb/.codex/worktrees/e892/ambiance-studio/work/m2/transparent-regression/recipe.json",
+        "forwarded_to_renderer_owner": true
+      },
+      "renderer_owner_result": "Direct static drawScene times 0,1,0,.5 accumulate alpha: 288 alpha pixels / 860 RGBA bytes differ on the second draw, sample alpha 26 to 49 to 70 to 89. Clearing target before drawing preserves the exact fresh PNG at each sample. Public render-frame reproduces exit 3.",
+      "agreed_correction": "One clearRect after transform/alpha/composite reset, before background fill, in drawScene; separate commit after current frozen run."
+    }
+  ],
+  "central_registration": {
+    "state": "complete",
+    "package_links": 644,
+    "package_errors": 0,
+    "roadmap_tests": 2,
+    "remaining": "None within this bounded local integration; later PR/merge and further workstreams need user direction."
+  },
+  "combined_validation": {
+    "state": "passed",
+    "after": "W2 explicit full-native slot release",
+    "scope": "All four locally integrated source candidates plus reconciled CLI contracts/capability/backlog documentation; freeze before required-native suite.",
+    "prechecks": "Eight combined CLI contract cases, roadmap checks, package audit and all three feature-family public read smoke checks passed.",
+    "artifacts": "/Users/lb/.codex/worktrees/cfeb/ambiance-studio/.ambiance/coordination/2026-09-13/wave2-combined",
+    "command": "./ambiance test --require-native --artifacts .ambiance/coordination/2026-09-13/wave2-combined",
+    "source_policy": "Commit this ledger before launch; do not modify tracked source while running. Actual frozen identity is recorded by run.json.",
+    "tested_commit": "367245a08f8e76b13f011a47a2413afe0263b201",
+    "tracked_tree_sha256": "4b0c75971920775c99cccf4f68d49925c6e350d9f2ba134a8e35a1ff6a3b924d",
+    "report_sha256": "701e2c70d63642dc2f78e48d84b944bb8e8706752c7575b86a82669cd17314cc",
+    "inputs_sha256": "23b6502527d683c37d8f2c769cd5641d0a02f17659c6827e3f74ae66ebfb01c1",
+    "python_sha256": "85bb85f2ef13df85cfbb52f81ad638504c85711c333fbb35b1ba985247eecaf9",
+    "cases": 516,
+    "python_tests": 501,
+    "skips": 0,
+    "check_entries": 17,
+    "source_files_reverified": 573,
+    "source_unchanged_after_run": true,
+    "later_changes": "Completion ledger, companion plan and final handoff documentation only; final package audit passed 644 links."
+  },
+  "handoff": "reports/coordinated-wave2/HANDOFF.md",
+  "final_package_audit": {
+    "ok": true,
+    "local_links_checked": 644,
+    "errors": [],
+    "report": "/private/tmp/ambiance-wave2-final-package.json"
+  }
+}

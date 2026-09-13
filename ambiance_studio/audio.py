@@ -39,6 +39,8 @@ def add_parsers(sub):
     audio_cues.add_parsers(group)
     from . import audio_sources
     audio_sources.add_parsers(group)
+    from . import audio_library
+    audio_library.add_parsers(group)
     p = group.add_parser('inspect'); p.add_argument('session', type=Path)
     p = group.add_parser('import-stems', help='Create a new unity-gain session from an existing session stem list')
     p.add_argument('legacy_session', type=Path); p.add_argument('--session-id', required=True)
@@ -452,6 +454,9 @@ def check_audio(path):
 
 
 def run(args, project):
+    if args.action == 'library':
+        from . import audio_library
+        return audio_library.run(args, project)
     project = Path(project).resolve(); action = args.action
     if action in ['source-inspect', 'source-prepare', 'source-check']:
         from . import audio_sources

@@ -222,7 +222,14 @@ tasks:
     title: Implement a typed audio library with portable project use
     phase: 2
     priority: P0
-    status: planned
+    status: implemented
+    implementation_evidence: docs/AUDIO-LIBRARY.md
+    implementation_note: >-
+      Typed versions, explicit observations and portable materialization passed 466 required-native cases
+      with 452 Python tests and zero skips on the worker candidate. The coordinator independently
+      checked the copied project and captured revision with origin/library addresses unavailable.
+      Combined validation is recorded in docs/architecture/COORDINATED-IMPLEMENTATION-WAVE2-2026-09-13.json.
+      No real listening, accepted collection, new generation or AUDIO-02 measurement is claimed.
     relative_size: M
     depends_on: [BASE-01, AUDIO-01]
     affected_paths:
