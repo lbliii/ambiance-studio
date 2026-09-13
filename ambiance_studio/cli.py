@@ -6,7 +6,7 @@ from pathlib import Path
 import sys
 
 from . import __version__
-from . import planning, assets, revisions, views
+from . import planning, assets, revisions, views, model_commands
 from . import asset_commands, diagnostic_commands, preview_commands
 from . import production_commands, project_commands, review_commands, scene_commands, studio_commands
 from .command_output import Output, selected_output
@@ -53,7 +53,7 @@ def parser():
     sub = p.add_subparsers(dest='command', required=True)
     sub.add_parser('doctor', help='Inspect runtimes and implemented capabilities')
     for module in [project_commands, studio_commands, asset_commands, scene_commands,
-                   review_commands, preview_commands, diagnostic_commands, planning]:
+                   review_commands, preview_commands, diagnostic_commands, planning, model_commands]:
         module.add_parsers(sub)
     assets.add_library_parsers(sub)
     revisions.add_parsers(sub)
@@ -74,7 +74,7 @@ def command_project(args):
     route = (command, action)
     if route == ('audio', 'library') and args.library_action not in ['import', 'materialize', 'check']:
         return None
-    if command in ['studio', 'doctor', 'test'] or route in PROJECT_FREE:
+    if command in ['studio', 'doctor', 'test', 'model'] or route in PROJECT_FREE:
         return None
     if command == 'preview' and preview_commands.is_artifact(args):
         return None
@@ -109,6 +109,7 @@ def run(args):
     handlers = {
         'project': partial(project_commands.run, root=ROOT, registry_file=registry_file),
         'asset': asset_commands.run,
+        'model': model_commands.run,
         'library': assets.library,
         'delivery': production, 'iteration': production, 'feedback': production,
         'binding': bindings.run, 'revision': revisions.run, 'view': views.run,
