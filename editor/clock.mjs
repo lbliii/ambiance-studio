@@ -59,14 +59,14 @@ export function compileClock(scene){
   const definition=Object.freeze({version:1,mode,id:c?.id??scene.id??null,revision:c?.revision??null,fps:json(fps),duration_frames:N,duration_seconds:canvas.loop_seconds});
   const signature=JSON.stringify([definition,cycles.map(([id,p,h])=>[id,json(p),json(h)])]);
   function evaluate(request,requestedFrame=null){
-    const original=read(request),n=number(original),T=canvas.loop_seconds;
+    const original=read(request),n=typeof request==='number'?request:number(original),T=canvas.loop_seconds;
     if(!Number.isFinite(n)||Math.abs(n)>Number.MAX_SAFE_INTEGER)throw Error('Time must be finite and safe');
     const declaredEnd=typeof request==='number'&&n===T;
     const region=original[0]<0n?'before':declaredEnd||original[0]*duration[1]>=duration[0]*original[1]?'at-or-after-end':'inside';
     const effective=mode==='finite'?(region==='before'?[0n,1n]:region==='at-or-after-end'?duration:original):
       requestedFrame===null&&typeof request==='number'?read(wrapTime(n,T)):mod(original,duration);
     // Preserve legacy floating arithmetic and cel schedules for seconds callers.
-    const seconds=mode==='loop'?wrapTime(n,T):number(effective);
+    const seconds=mode==='loop'?wrapTime(n,T):region==='inside'&&typeof request==='number'?n:number(effective);
     const local=Object.fromEntries(cycles.map(([id,period,phase])=>{
       const progress=mod(add(div(effective,period),phase),[1n,1n]);
       return [id,Object.freeze({progress:number(progress),progress_exact:json(progress),seconds:number(mul(progress,period)),period_seconds:number(period)})];

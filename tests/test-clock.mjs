@@ -75,5 +75,9 @@ check('Exact rational conversions preserve signed ties, residuals, cue membershi
   assert.deepEqual(framesToSamples(1,{numerator:30000,denominator:1001},48000,'floor').residual,{numerator:-3,denominator:5});
   assert.equal(secondsToFrames({numerator:59,denominator:24},24).value,59);
   assert.throws(()=>framesToSamples(Number.MAX_SAFE_INTEGER+1,24,48000));assert.throws(()=>roundRational(1,'implicit'));
+  // Decimal-rational serialization must never round-trip back into legacy
+  // floating sampling: this particular 17-digit double exposes double rounding.
+  const legacy={id:'legacy',canvas:{fps:30,loop_seconds:16}},time=.9666666666666667;
+  assert.equal(compileClock(legacy).seconds(time).seconds,((time%16)+16)%16);
 });
 console.log(JSON.stringify({ok:true,checks},null,2));
