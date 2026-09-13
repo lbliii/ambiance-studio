@@ -115,7 +115,7 @@
       "transaction_refinement": "Active generation contains mutable working scene; captured previous config/scene and contained model packages remain immutable. Existing edit/restore/view/render/revision compatibility is still required.",
       "bounded_lowering_gap": "C1 static constant-cell keys at 0/1 seconds fail a host with a 2-second duration; this is an endpoint duration mismatch, not fps arithmetic. Granted constant-cell endpoints mapped to validated host interval, rejecting animated inputs beyond subset; actual finite-host compatibility remains required.",
       "focused_progress": {
-        "state": "focused_instance_checks_passed_typed_revision_mapping_fix_in_progress",
+        "state": "successor_fix_in_progress_before_full_native",
         "source": "worker-reported tests; current source reviewed for alias issue, not a frozen handoff",
         "reported_checks": [
           "dry/save/retry",
@@ -131,10 +131,10 @@
       },
       "candidate_commit": "70e0937b985f9bec47ea089fc9a9624fb0401c0f",
       "full_validation": {
-        "state": "queued_after_W3",
+        "state": "queued_conditional_on_frozen_successor",
         "candidate_commit": "70e0937b985f9bec47ea089fc9a9624fb0401c0f",
-        "source_frozen": true,
-        "clean_verified_by_coordinator": true,
+        "source_frozen": false,
+        "clean_verified_by_coordinator": false,
         "required_native": true,
         "artifacts": null
       },
@@ -142,7 +142,7 @@
       "public_replay": {
         "path": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/public-70e0937/evidence.json",
         "sha256": "e17a73f424b701565aa397d2ead4efd5368dff0776df059a0ece6a159cae8ca3",
-        "coordinator_verified": "Report hash and clean source commit; detailed artifact/source review pending.",
+        "coordinator_verified": "Report hash and prior committed HEAD verified. Current working tree has a subsequent bounded fix in progress; this replay remains tied only to70e0937.",
         "reported_pixels_changed": {
           "moved": 4527,
           "variant": 4536,
@@ -156,7 +156,9 @@
         },
         "reported_portability": "Origin/package/source project unavailable; portable inspect/check and captured old revision render passed.",
         "browser_observation": "Worker inspected13-layer scene with moved/arched lantern; exposed canvas remains deliberate engineering fixture limitation."
-      }
+      },
+      "successor_fix": "Normalize omitted controls/variants in C1 minimal states to avoid adoption KeyError; reject unknown saved model-record fields. Two tracked files modified after retained70e0937 replay; commit and fresh replay required before slot.",
+      "queue_policy": "Keep place if clean successor/replay ready at slot opening; otherwise let ready A3 proceed. No full native has run for M3."
     },
     {
       "stream": "T3",
