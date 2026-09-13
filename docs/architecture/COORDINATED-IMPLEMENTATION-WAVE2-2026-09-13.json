@@ -57,7 +57,12 @@
       "cursor": "3eb0771e-775e-4022-af41-0e043619dc93:1",
       "baseline_verified": true,
       "interface": "Advisory catalog plus exact selected-pipeline gates; explicit working/review/release/revision/edition/view subjects, stable logical action IDs and separate freshness; workflow inspect/stage/explain and project next --guided. Revision-only inspection remains supported.",
-      "progress_verified": "wait_threads confirmed active/in-progress at the recorded cursor."
+      "progress_verified": "wait_threads confirmed active/in-progress at the recorded cursor.",
+      "focused_progress": {
+        "state": "Local routes implemented; focused tests and real CLI replay in progress, candidate not frozen.",
+        "envelopes": "Blank about 10 KiB; populated one subject about 11 KiB.",
+        "coverage": "All nine gates, hidden preparation verbs through stage details, pure WF01 assessment, revision-only and exact subject tests."
+      }
     },
     {
       "stream": "M2",
@@ -88,12 +93,24 @@
       "early_interface": "Immutable package closure and sealed manifest; ordinary scene/catalog lowering with tuple mapping. Proposed model build/inspect/lower/proof/check/admit; no renderer edits.",
       "interface": "Project-free model build/inspect/lower/proof/check/admit; immutable exact closure, ordinary-engine lowering and static named-state proof. Unsupported animated/cycle controls must fail explicitly. Technical library admission only.",
       "progress_verified": "wait_threads confirmed active/in-progress at the recorded cursor.",
-      "partial_dependency": "C2 repeated transparent raster proof awaits D2 investigation; build/lower and independent validation remain active.",
+      "partial_dependency": "Transparent public proof passes after D2 adoption; complete current geometric fixture visual corrections before frozen full native.",
       "focused_progress": {
-        "reported_passes": 22,
+        "reported_passes": 27,
         "skips": 0,
-        "remaining_failure": "Actual public transparent model proof endpoint; assigned to D2.",
-        "independent_work": "Source/assembly proofs and closure/registration robustness continuing."
+        "remaining_failure": null,
+        "independent_work": "Actual visual inspection identified opaque pane and clipped extremes in geometric fixture; revising fixture derivative to glass opening and 64x80 viewport, originals protected."
+      },
+      "renderer_adoption": {
+        "upstream_commits": [
+          "e74b72cd318bb9a734a5f5cbd338f07da3545940",
+          "06a3b53699b7041e0463cf4cc6a490df4c64b3ce"
+        ],
+        "local_commits": [
+          "695c477",
+          "107388b37533563c5369ad51918bf1f5c8084ce3"
+        ],
+        "implementation_commit": "93ffc66",
+        "state": "Adopted; all 27 focused model tests and public proof/reopen pass. Fixture revision in progress before freeze."
       }
     },
     {
@@ -118,17 +135,34 @@
       "worktree": "/Users/lb/.codex/worktrees/94fa/ambiance-studio",
       "branch": "codex/portable-audio-library",
       "baseline_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
-      "dispatch_state": "active",
+      "dispatch_state": "validating",
       "cursor": "155b3f3e-fad2-439a-a286-f947d290aa33:1",
       "interface": "Explicit absolute --config/library root; audio library configure/search/inspect/import/audition/observe/promote/materialize/check. Typed ambiance-audio-materialization v1; archival origin references are not active dependencies.",
       "baseline_verified": true,
       "progress_verified": "wait_threads confirmed active/in-progress at the recorded cursor.",
       "focused_progress": {
-        "reported_passes": 15,
+        "reported_passes": 19,
         "claim_scope": "Candidate/prepared pins, duplicates, simulated identity-bound review states, stale/failed writes, portability after origin/library removal, revision capture/check and recopied handoff. No real audition.",
         "implementation_note": "Typed materialization reuses AUDIO-01 validation through a disposable projection with hardlinks/copy fallback; prior receipt bytes remain archival, active output dependencies stay local.",
         "coordinator_review_followup": "Verify path containment and alias collisions before projection creation, no writes to linked source bytes, no reactivation of archived paths or assertion of historical origin availability. Working implementation not yet source-reviewed.",
-        "next": "Public CLI replay, docs/package audit, frozen candidate and native-slot request."
+        "next": "Frozen candidate, awaiting D2 explicit slot release, then full native.",
+        "cli_contract_passes": 8,
+        "studio_passes": 14,
+        "package_links": 604,
+        "skips": 0
+      },
+      "candidate_commit": "a1131a493420ea321e9869fece4b904603aaf29c",
+      "public_replay": {
+        "report": "/private/tmp/ambiance-lib01-replay-02/replay.json",
+        "sha256": "ed9a2fe12a94106f75c0eaec0472fd9e52691b4713cf4f079c953bacdbc3262c",
+        "worker_claim": "Public replay and portable handoff after library/origin removal pass; coordinator review pending."
+      },
+      "full_validation": {
+        "state": "running",
+        "candidate_commit": "a1131a493420ea321e9869fece4b904603aaf29c",
+        "native_required": true,
+        "source_frozen": true,
+        "artifacts": "/Users/lb/.codex/worktrees/94fa/ambiance-studio/.ambiance/coordination/lib01/native-a1131a4"
       }
     },
     {
@@ -154,7 +188,7 @@
       "worktree": "/Users/lb/.codex/worktrees/dbe1/ambiance-studio",
       "branch": "codex/canvas-render-sequence",
       "baseline_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
-      "dispatch_state": "validating",
+      "dispatch_state": "handoff_pending",
       "cursor": "d1e00d1b-810d-42df-bace-389fde3d14e1:2",
       "interface": "Exact baseline reproduced in 24 runs: imageSmoothingQuality high alone reproduces alternating pixels; restoring low restores fresh pixels, finishing on/off. Granted explicit enabled/high initialization in drawCoverage to match drawScene/extractView. Fresh coverage intentionally changes; finished bytes must remain unchanged.",
       "baseline_verified": true,
@@ -170,7 +204,7 @@
         "corrected_history_dependent": 0,
         "finished_png_pairs_independently_verified": 216,
         "existing_identity_binding": "stage_adapter_sha256 and alphaDiagnosticIdentity verified; old immutable proofs retain historical identity",
-        "remaining": "Public CLI/browser proof, frozen candidate commit and full native suite pending."
+        "remaining": "Initial source passed required-native suite; second transparent reset candidate awaiting focused handoff."
       },
       "public_proof_review": {
         "report": "/Users/lb/.codex/worktrees/dbe1/ambiance-studio/work/canvas-sequence/corrected-proof/render-report.json",
@@ -180,23 +214,52 @@
         "corrected_module_identity_verified": true,
         "worker_browser_observation": "Both shared-clock views inspected; paused frame 2 at .750s, diagnostic source frame 0 at 0s and interior/top-boundary heatmap.",
         "coordinator_browser_observation": "Not repeated; coordinator independently compared all eight saved finished PNGs and inspected exact report/module identity.",
-        "remaining": "Committed freeze and granted full native suite pending."
+        "remaining": "Initial source passed required-native suite; second transparent reset candidate awaiting focused handoff."
       },
       "candidate_commit": "e74b72cd318bb9a734a5f5cbd338f07da3545940",
       "full_validation": {
-        "state": "running",
+        "state": "passed",
         "native_required": true,
         "source_frozen": true,
         "candidate_commit": "e74b72cd318bb9a734a5f5cbd338f07da3545940",
-        "artifacts": "/Users/lb/.codex/worktrees/dbe1/ambiance-studio/work/canvas-sequence/full-suite"
+        "artifacts": "/Users/lb/.codex/worktrees/dbe1/ambiance-studio/work/canvas-sequence/full-suite",
+        "report": "/Users/lb/.codex/worktrees/dbe1/ambiance-studio/work/canvas-sequence/full-suite/run.json",
+        "report_sha256": "c81bb2f3353cd2050d1dc176ee0fad19e85f0a67e4e8fa50e40ff1d52ac1d4aa",
+        "tracked_tree_sha256": "90fe177ba57b7cbe65b9e1cd041249a6e965cc7b2b733edbb53c30a2fad341a3",
+        "recorded_cases": 447,
+        "python_tests": 433,
+        "skips": 0,
+        "claim_scope": "Initial smoothing correction e74b72c only. Separate transparent target-clear follow-up receives focused native checks, then full suite on M2 adopted source and final combined source."
+      },
+      "followup_candidate_commit": "06a3b53699b7041e0463cf4cc6a490df4c64b3ce",
+      "followup_review": "Coordinator inspected two-line engine target clear, dedicated raster-state regression and documentation; focused native handoff pending.",
+      "focused_followup_validation": {
+        "state": "passed",
+        "commit": "06a3b53699b7041e0463cf4cc6a490df4c64b3ce",
+        "report": "/Users/lb/.codex/worktrees/dbe1/ambiance-studio/work/canvas-sequence/final-focused-native/run.json",
+        "report_sha256": "0f9394095a40d73ab673cb7a4fb4673ab1ceba2a986dc9598fb78c20c5741207",
+        "source_unchanged": true,
+        "python_tests": 29,
+        "skips": 0,
+        "other_checks": [
+          "engine",
+          "render-state",
+          "view-raster",
+          "finishing",
+          "rig",
+          "package"
+        ],
+        "coordinator_verified": "Read exact report/hash and reviewed reset/test diff. New JS regression is discovered by full-suite glob."
       }
     }
   ],
   "status_owner_note": "Dispatch/integration record only; owning workflow YAML, model plan and quality YAML retain implementation/acceptance status.",
   "shared_owner": "Coordinator owns broad cli/output/runtime/evidence/backlog/capability registration; listed route-only leases enable independent public CLI work and are reconciled on integration. New shared semantics require an early concrete contract, not a user approval gate.",
-  "native_test_queue": [],
-  "active_native_test_owner": "D2",
-  "native_test_policy": "One full native suite at a time on a frozen candidate. Workers request a slot before full suites; focused checks and small necessary proofs may run independently. Reuse the verified baseline.",
+  "native_test_queue": [
+    "M2"
+  ],
+  "active_native_test_owner": "S2",
+  "native_test_policy": "One full native suite at a time on frozen source. D2 initial e74b72c passed; D2 holds through focused 06a3b53 checks then explicitly releases S2. S2 releases to M2; M2 full suite includes both final D2 code/test commits. Coordinator combined suite covers final integrated source. Focused checks and small necessary proofs may run independently.",
   "automation": {
     "id": "coordinate-studio-implementation",
     "kind": "heartbeat",
@@ -222,7 +285,7 @@
       "id": "transparent-model-repeat-render",
       "reported_by": "M2",
       "owner": "D2",
-      "state": "reproduced_fix_boundary_confirmed_awaiting_frozen_suite_completion",
+      "state": "corrected_and_model_proof_passed_focused_renderer_handoff_pending",
       "observed_failure": "prepareRaster raises Raster endpoint differs from frame zero on static transparent model scene; partial-alpha accumulation suspected.",
       "inputs": {
         "scene": "/tmp/m2-model-lowered/scene/scene.json",
@@ -232,9 +295,9 @@
       },
       "coordinator_observation": "Confirmed static 32x48 transparent scene, five assets/layers and drawScene background fill without clear. Root-cause reproduction still delegated to D2.",
       "next_actions": [
-        "M2 retain exact public argv/stderr/media hashes in durable ignored evidence",
-        "D2 preserve active suite source, then isolate transparent repeat/reset behavior and make smallest supported separate patch",
-        "M2 continue independent construction/closure/negative checks and consume reviewed fix before final model proof"
+        "D2 complete focused native checks on 06a3b53 and release S2 slot",
+        "M2 finalize visually inspected fixture, freeze, then run required-native after S2 release",
+        "Coordinator review final source/evidence and integrate locally"
       ],
       "acceptance": "No transparent accumulation on repeated/out-of-order samples, opaque finished behavior retained, actual model public proof passes with current source identity.",
       "durable_reproduction": {
