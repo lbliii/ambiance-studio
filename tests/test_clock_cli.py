@@ -132,7 +132,7 @@ class ClockCLI(unittest.TestCase):
                     self.assertEqual(report['picture_clock']['duration_frames'], frames)
                     self.assertAlmostEqual(report['verification']['duration_seconds'], (frames-start)/fps)
                     if start == 0:
-                        verified = self.cli('media', 'verify', '--file', out/'picture.mp4', '--out', self.root/f'verify-{fps}')
+                        verified = self.cli('media', 'verify', out/'picture.mp4', '--out', self.root/f'verify-{fps}')
                         self.assertEqual(verified['decoded_frames'], frames)
 
     @unittest.skipUnless(os.environ.get('AMBIANCE_TEST_NATIVE') == '1' and sys.platform == 'darwin', 'Set AMBIANCE_TEST_NATIVE=1 with macOS media-service access')
