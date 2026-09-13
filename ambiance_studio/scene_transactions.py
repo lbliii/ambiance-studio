@@ -21,6 +21,8 @@ class SceneTransaction:
         self.project = Path(project).resolve()
         config_bytes, config_ref = scene_authoring.read_input(self.project/'ambiance-project.json', 'project configuration')
         config = json.loads(config_bytes)
+        self.config = config
+        self.config_bytes = config_bytes
         scene_path, catalog_path = locations(self.project, config)
         self.previous_bytes, scene_ref = scene_authoring.read_input(self.project/config['scene'], 'scene')
         catalog_bytes, catalog_ref = scene_authoring.read_input(self.project/config['catalog'], 'catalog')
@@ -74,6 +76,56 @@ class SceneTransaction:
                 'previous_sha256': self.previous_sha256, 'sha256': studio.digest(self.scene_path),
                 'restore_command': shlex.join(['ambiance', '--project', str(self.project),
                                               'scene', 'restore', self.previous_sha256]),
+                'dependencies': dependencies, **details}
+
+    def finish_bundle(self, candidate, catalog, generation, *, materialize, dependencies=(), dry_run=False, details=None):
+        """Commit a complete scene/catalog generation with one config replacement.
+
+        The selected scene remains ordinary mutable scene state. Packages and
+        captured previous bytes inside the generation are retained immutable
+        inputs. An interrupted publication before pointer replacement leaves an
+        unselected generation, never a partially selected scene/catalog pair.
+        """
+        from .edge_quality import fresh_output
+        from .scene_runtime import scene_bridge
+        scene_bridge('inspect', candidate, catalog, {'full': True})
+        dependencies = [*dependencies, *self.dependencies]
+        scene_authoring.verify_dependencies(self.project, dependencies)
+        self._verify_inputs()
+        details = details or {}
+        if dry_run:
+            return {'dry_run': True, 'previous_sha256': self.previous_sha256,
+                    'scene': candidate, 'catalog': catalog, 'dependencies': dependencies, **details}
+        generation = Path(generation).resolve()
+        if not generation.is_relative_to(self.project/'.ambiance/model-generations'):
+            raise ValueError('Model generation must stay inside the project')
+        with fresh_output(generation) as stage:
+            materialize(stage)
+            studio.write(stage/'scene.json', candidate)
+            studio.write(stage/'catalog.json', catalog)
+            (stage/'previous-scene.json').write_bytes(self.previous_bytes)
+            (stage/'previous-config.json').write_bytes(self.config_bytes)
+            scene_authoring.verify_dependencies(self.project, dependencies)
+            self._verify_inputs()
+        # Publication is not selection. Verify again before the sole commit.
+        scene_authoring.verify_dependencies(self.project, dependencies)
+        self._verify_inputs()
+        history = self.project/'.ambiance/scene-history'
+        history.mkdir(parents=True, exist_ok=True)
+        backup = history/f'{self.previous_sha256}.json'
+        if backup.exists():
+            if backup.read_bytes() != self.previous_bytes:
+                raise CommandError(f'Scene history snapshot has changed: {backup}')
+        else:
+            with backup.open('xb') as file: file.write(self.previous_bytes)
+        config = {**self.config, 'scene': (generation/'scene.json').relative_to(self.project).as_posix(),
+                  'catalog': (generation/'catalog.json').relative_to(self.project).as_posix()}
+        self._verify_inputs()
+        studio.write(self.project/'ambiance-project.json', config)
+        return {'scene': str(generation/'scene.json'), 'catalog': str(generation/'catalog.json'),
+                'operation': 'model-instance', 'previous_sha256': self.previous_sha256,
+                'sha256': studio.digest(generation/'scene.json'),
+                'restore_command': shlex.join(['ambiance', '--project', str(self.project), 'scene', 'restore', self.previous_sha256]),
                 'dependencies': dependencies, **details}
 
 
