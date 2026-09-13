@@ -201,6 +201,8 @@ export function drawScene(canvas,scene,catalog,images,time,{selected=null,grid=f
   if(canvas.width!==W||canvas.height!==H){canvas.width=W;canvas.height=H;}
   const ctx=canvas.getContext('2d');
   ctx.setTransform(...identity);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
+  // A transparent/translucent background fill cannot erase the previous frame.
+  ctx.clearRect(0,0,W,H);
   ctx.fillStyle=scene.canvas.background;ctx.fillRect(0,0,W,H);
   ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
   const states=sampler?sampler(time):sampleScene(scene,catalog,time);
