@@ -1,0 +1,879 @@
+{
+  "format": "ambiance-audio-source-evidence",
+  "schema_version": 1,
+  "baseline": "00c64436543d0252fc0850f3ef58e686badda1b6",
+  "inventory": {
+    "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/docs/research/audio-sources-2026-09-13/inventory.json",
+    "sha256": "e2e5f00257e23b8926bd3b82f4f2cf7659247aa47cf4d608fdb02536fd6db1ec",
+    "bytes": 1365532
+  },
+  "replays": [
+    {
+      "report": {
+        "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/last-lantern-music/replay.json",
+        "sha256": "2111c502b2792be06fc42c6377164c8a9693fa8b4838bd32ae82d51fe02810dd",
+        "bytes": 16721
+      },
+      "ok": true,
+      "origin": {
+        "path": "/Users/lb/.codex/worktrees/e31d/ambiance-studio/projects/amberwatch/audio/sources/last-lantern/elevenlabs/music-original.mp4",
+        "sha256": "0b24d8228f452c4e0adcba10d35d0c3c0e18d0e8775937de0289fdf1e4b6c34d",
+        "bytes": 981242
+      },
+      "receipt": {
+        "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/last-lantern-music/audio/preparations/working-v1/receipt.json",
+        "sha256": "64246d125bcd4deaa8b1e99bd502117a9d366931a287f421423a467ac76df974",
+        "bytes": 3823
+      },
+      "preserved_original": {
+        "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/last-lantern-music/audio/preparations/working-v1/original.source",
+        "sha256": "0b24d8228f452c4e0adcba10d35d0c3c0e18d0e8775937de0289fdf1e4b6c34d",
+        "bytes": 981242
+      },
+      "working": {
+        "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/last-lantern-music/audio/preparations/working-v1/working.wav",
+        "sha256": "095c0ea6780ad5226d3ed108c3edf54b59192ab47c0b1dc218b7c3954e1ea2d1",
+        "bytes": 17290468
+      },
+      "source_format": {
+        "container": "mp4",
+        "codec": "aac",
+        "frames": 2646976,
+        "sample_rate": 44100,
+        "channels": 2,
+        "channel_layout": "stereo",
+        "layout_basis": "channel order retained; absent map interpreted as mono/stereo",
+        "bits": null,
+        "bitrate_bps": 128200,
+        "packet_table": {
+          "total_frames": 2649088,
+          "valid_frames": 2646976,
+          "priming_frames": 2112,
+          "remainder_frames": 0
+        },
+        "duration_seconds": 60.022131519274375,
+        "decoded": {
+          "complete": true,
+          "frames": 2646976,
+          "sample_rate": 44100,
+          "channels": 2,
+          "pcm_sha256": "2607431d7d88ce007fb01fa98def7df3b5ce6846c289d8029e4abaae8f22ac5b",
+          "representation": "signed-integer-32-little-endian"
+        }
+      },
+      "working_format": {
+        "container": "wav",
+        "codec": "pcm_integer",
+        "sample_rate": 48000,
+        "channels": 2,
+        "bits": 24,
+        "bitrate_bps": 2304000,
+        "frames": 2881062,
+        "data_offset": 4096,
+        "data_bytes": 17286372
+      },
+      "backend": {
+        "id": "macos-afconvert",
+        "adapter_version": 1,
+        "os": "macOS-26.1-arm64-arm-64bit-Mach-O",
+        "macos_version": "26.1",
+        "tools": [
+          {
+            "path": "/usr/bin/afinfo",
+            "sha256": "90b7b8ee0fcca014b513042a4eb38a97032af80acd32158cccbbfc37d8b8dd66",
+            "version": "2.0"
+          },
+          {
+            "path": "/usr/bin/afconvert",
+            "sha256": "f0e034477121244a12764b2aa3e385ae636ccc98d119a4b93b8d512963eb3fd6",
+            "version": "2.0"
+          }
+        ]
+      },
+      "provenance": {
+        "origin_kind": "generated",
+        "provider": "ElevenLabs",
+        "generation": {
+          "model": "Music v1",
+          "route": "Authenticated browser UI",
+          "candidate_id": "lsiiYDx4PoRxbIKaRTBB"
+        },
+        "retrieval": {
+          "requested_format": "unknown",
+          "returned_format": "MP4 audio container"
+        },
+        "terms_reference": null,
+        "entitlement": "unknown",
+        "audition": "unknown; no fresh listening",
+        "prior_processing": "Recorded music-original.mp4 copied from Amberwatch source archive"
+      },
+      "public_commands": [
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/last-lantern-music",
+          "audio",
+          "source-inspect",
+          "source.input",
+          "--backend",
+          "macos-afconvert"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/last-lantern-music",
+          "audio",
+          "source-prepare",
+          "source.input",
+          "--backend",
+          "macos-afconvert",
+          "--source-sha256",
+          "0b24d8228f452c4e0adcba10d35d0c3c0e18d0e8775937de0289fdf1e4b6c34d",
+          "--preparation-id",
+          "working-v1",
+          "--provenance",
+          "provenance.json"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/last-lantern-music",
+          "audio",
+          "source-check",
+          "audio/preparations/working-v1/receipt.json"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/last-lantern-music",
+          "revision",
+          "capture",
+          "source-v1",
+          "--selection",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/last-lantern-music/selection.json"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/last-lantern-music",
+          "revision",
+          "check",
+          "source-v1"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/last-lantern-music",
+          "audio",
+          "source-prepare",
+          "source.input",
+          "--backend",
+          "macos-afconvert",
+          "--source-sha256",
+          "0b24d8228f452c4e0adcba10d35d0c3c0e18d0e8775937de0289fdf1e4b6c34d",
+          "--preparation-id",
+          "working-v1"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/last-lantern-music",
+          "audio",
+          "source-inspect",
+          "truncated.input",
+          "--backend",
+          "macos-afconvert"
+        ]
+      ]
+    },
+    {
+      "report": {
+        "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-cloth-bronze-v1/replay.json",
+        "sha256": "93c43af82dbb53def10509206e565ec8ede9421547976eb188c90427ad5745ba",
+        "bytes": 16924
+      },
+      "ok": true,
+      "origin": {
+        "path": "/Users/lb/Developer/ambiance-studio/projects/the-midnight-collection/audio/sources/provider-originals/cloth-bronze.audio",
+        "sha256": "e2caf2d9f04fe9b44d53820332357f611e201ded5d65e9c35ca0a494f675ebea",
+        "bytes": 146029
+      },
+      "receipt": {
+        "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-cloth-bronze-v1/audio/preparations/working-v1/receipt.json",
+        "sha256": "7f4bcc8cae37ab93c95213fc519ab2c7d68507196f3f1ea403df8f52316940ad",
+        "bytes": 4106
+      },
+      "preserved_original": {
+        "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-cloth-bronze-v1/audio/preparations/working-v1/original.source",
+        "sha256": "e2caf2d9f04fe9b44d53820332357f611e201ded5d65e9c35ca0a494f675ebea",
+        "bytes": 146029
+      },
+      "working": {
+        "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-cloth-bronze-v1/audio/preparations/working-v1/working.wav",
+        "sha256": "80c8c75321c3136cc05a1155e099b10cf950f3bf813b1e04a7e05b8a589b71f0",
+        "bytes": 2308096
+      },
+      "source_format": {
+        "container": "mp3",
+        "codec": "mp3",
+        "sample_rate": 44100,
+        "channels": 2,
+        "bits": null,
+        "bitrate_bps": 128000,
+        "mpeg_frames": 309,
+        "coded_sample_frames": 355968,
+        "frames": 352800,
+        "data_offset": 16881,
+        "channel_layout": "stereo",
+        "layout_basis": "channel order retained; absent map interpreted as mono/stereo",
+        "packet_table": {
+          "total_frames": 354816,
+          "valid_frames": 352800,
+          "priming_frames": 576,
+          "remainder_frames": 1440
+        },
+        "duration_seconds": 8.0,
+        "decoded": {
+          "complete": true,
+          "frames": 352800,
+          "sample_rate": 44100,
+          "channels": 2,
+          "pcm_sha256": "03e51e3b45c1c840248b19e80b6a7d9aa19c1567c20d8988554fd60e2e016506",
+          "representation": "signed-integer-32-little-endian"
+        }
+      },
+      "working_format": {
+        "container": "wav",
+        "codec": "pcm_integer",
+        "sample_rate": 48000,
+        "channels": 2,
+        "bits": 24,
+        "bitrate_bps": 2304000,
+        "frames": 384000,
+        "data_offset": 4096,
+        "data_bytes": 2304000
+      },
+      "backend": {
+        "id": "macos-afconvert",
+        "adapter_version": 1,
+        "os": "macOS-26.1-arm64-arm-64bit-Mach-O",
+        "macos_version": "26.1",
+        "tools": [
+          {
+            "path": "/usr/bin/afinfo",
+            "sha256": "90b7b8ee0fcca014b513042a4eb38a97032af80acd32158cccbbfc37d8b8dd66",
+            "version": "2.0"
+          },
+          {
+            "path": "/usr/bin/afconvert",
+            "sha256": "f0e034477121244a12764b2aa3e385ae636ccc98d119a4b93b8d512963eb3fd6",
+            "version": "2.0"
+          }
+        ]
+      },
+      "provenance": {
+        "origin_kind": "generated",
+        "provider": "ElevenLabs",
+        "generation": {
+          "request_id": "museum-cloth-bronze-v1",
+          "output_id": "kXL8bFr2fVPdA4W61GXn",
+          "candidate_id": "EVXKnvkcW1qUcUyE8gGp",
+          "model": "eleven_text_to_sound_v2",
+          "route": "ElevenLabs connected flow ak9K6oRLbyFEMd59bh0L"
+        },
+        "retrieval": {
+          "requested_format": "not exposed in recorded flow controls",
+          "returned_format": "MP3",
+          "retrieved_at": "2026-09-10T16:05:28.137806+00:00"
+        },
+        "terms_reference": null,
+        "entitlement": "unknown",
+        "audition": "not performed; runtime does not support audio input",
+        "prior_processing": "Recorded provider original; no earlier local processing declared"
+      },
+      "public_commands": [
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-cloth-bronze-v1",
+          "audio",
+          "source-inspect",
+          "source.input",
+          "--backend",
+          "macos-afconvert"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-cloth-bronze-v1",
+          "audio",
+          "source-prepare",
+          "source.input",
+          "--backend",
+          "macos-afconvert",
+          "--source-sha256",
+          "e2caf2d9f04fe9b44d53820332357f611e201ded5d65e9c35ca0a494f675ebea",
+          "--preparation-id",
+          "working-v1",
+          "--provenance",
+          "provenance.json"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-cloth-bronze-v1",
+          "audio",
+          "source-check",
+          "audio/preparations/working-v1/receipt.json"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-cloth-bronze-v1",
+          "revision",
+          "capture",
+          "source-v1",
+          "--selection",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-cloth-bronze-v1/selection.json"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-cloth-bronze-v1",
+          "revision",
+          "check",
+          "source-v1"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-cloth-bronze-v1",
+          "audio",
+          "source-prepare",
+          "source.input",
+          "--backend",
+          "macos-afconvert",
+          "--source-sha256",
+          "e2caf2d9f04fe9b44d53820332357f611e201ded5d65e9c35ca0a494f675ebea",
+          "--preparation-id",
+          "working-v1"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-cloth-bronze-v1",
+          "audio",
+          "source-inspect",
+          "truncated.input",
+          "--backend",
+          "macos-afconvert"
+        ]
+      ]
+    },
+    {
+      "report": {
+        "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-room-air-v1/replay.json",
+        "sha256": "465cd091590c99986b806c4909f662ee8dbb685b946254d53c459c6a6cfbe663",
+        "bytes": 16897
+      },
+      "ok": true,
+      "origin": {
+        "path": "/Users/lb/Developer/ambiance-studio/projects/the-midnight-collection/audio/sources/provider-originals/room-air.audio",
+        "sha256": "9c1d3397af4686a37a914f9e9e690ac8223fcdb513dc8d6ddcd9ddfdc8ba462d",
+        "bytes": 497951
+      },
+      "receipt": {
+        "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-room-air-v1/audio/preparations/working-v1/receipt.json",
+        "sha256": "32a16b53d3c7722817c8472c344cdb3767c49399901747d95e60fe65f5febe19",
+        "bytes": 4112
+      },
+      "preserved_original": {
+        "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-room-air-v1/audio/preparations/working-v1/original.source",
+        "sha256": "9c1d3397af4686a37a914f9e9e690ac8223fcdb513dc8d6ddcd9ddfdc8ba462d",
+        "bytes": 497951
+      },
+      "working": {
+        "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-room-air-v1/audio/preparations/working-v1/working.wav",
+        "sha256": "eb0d6c8248b0aa430cebbf36e4190ab3c6a7412a4ad7bb29f5837edcdf8a9bac",
+        "bytes": 8644096
+      },
+      "source_format": {
+        "container": "mp3",
+        "codec": "mp3",
+        "sample_rate": 44100,
+        "channels": 2,
+        "bits": null,
+        "bitrate_bps": 128000,
+        "mpeg_frames": 1151,
+        "coded_sample_frames": 1325952,
+        "frames": 1323000,
+        "data_offset": 16881,
+        "channel_layout": "stereo",
+        "layout_basis": "channel order retained; absent map interpreted as mono/stereo",
+        "packet_table": {
+          "total_frames": 1324800,
+          "valid_frames": 1323000,
+          "priming_frames": 576,
+          "remainder_frames": 1224
+        },
+        "duration_seconds": 30.0,
+        "decoded": {
+          "complete": true,
+          "frames": 1323000,
+          "sample_rate": 44100,
+          "channels": 2,
+          "pcm_sha256": "8229404725de381f4f097972eb8b0ccf040697c83edac187cfcce513f6dd4c85",
+          "representation": "signed-integer-32-little-endian"
+        }
+      },
+      "working_format": {
+        "container": "wav",
+        "codec": "pcm_integer",
+        "sample_rate": 48000,
+        "channels": 2,
+        "bits": 24,
+        "bitrate_bps": 2304000,
+        "frames": 1440000,
+        "data_offset": 4096,
+        "data_bytes": 8640000
+      },
+      "backend": {
+        "id": "macos-afconvert",
+        "adapter_version": 1,
+        "os": "macOS-26.1-arm64-arm-64bit-Mach-O",
+        "macos_version": "26.1",
+        "tools": [
+          {
+            "path": "/usr/bin/afinfo",
+            "sha256": "90b7b8ee0fcca014b513042a4eb38a97032af80acd32158cccbbfc37d8b8dd66",
+            "version": "2.0"
+          },
+          {
+            "path": "/usr/bin/afconvert",
+            "sha256": "f0e034477121244a12764b2aa3e385ae636ccc98d119a4b93b8d512963eb3fd6",
+            "version": "2.0"
+          }
+        ]
+      },
+      "provenance": {
+        "origin_kind": "generated",
+        "provider": "ElevenLabs",
+        "generation": {
+          "request_id": "museum-room-air-v1",
+          "output_id": "KUzWAv9EuFYfryj66Vi8",
+          "candidate_id": "44k6g4eUpONYeUjsyEmK",
+          "model": "eleven_text_to_sound_v2",
+          "route": "ElevenLabs connected flow ak9K6oRLbyFEMd59bh0L"
+        },
+        "retrieval": {
+          "requested_format": "not exposed in recorded flow controls",
+          "returned_format": "MP3",
+          "retrieved_at": "2026-09-10T16:05:28.129858+00:00"
+        },
+        "terms_reference": null,
+        "entitlement": "unknown",
+        "audition": "not performed; runtime does not support audio input",
+        "prior_processing": "Recorded provider original; no earlier local processing declared"
+      },
+      "public_commands": [
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-room-air-v1",
+          "audio",
+          "source-inspect",
+          "source.input",
+          "--backend",
+          "macos-afconvert"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-room-air-v1",
+          "audio",
+          "source-prepare",
+          "source.input",
+          "--backend",
+          "macos-afconvert",
+          "--source-sha256",
+          "9c1d3397af4686a37a914f9e9e690ac8223fcdb513dc8d6ddcd9ddfdc8ba462d",
+          "--preparation-id",
+          "working-v1",
+          "--provenance",
+          "provenance.json"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-room-air-v1",
+          "audio",
+          "source-check",
+          "audio/preparations/working-v1/receipt.json"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-room-air-v1",
+          "revision",
+          "capture",
+          "source-v1",
+          "--selection",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-room-air-v1/selection.json"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-room-air-v1",
+          "revision",
+          "check",
+          "source-v1"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-room-air-v1",
+          "audio",
+          "source-prepare",
+          "source.input",
+          "--backend",
+          "macos-afconvert",
+          "--source-sha256",
+          "9c1d3397af4686a37a914f9e9e690ac8223fcdb513dc8d6ddcd9ddfdc8ba462d",
+          "--preparation-id",
+          "working-v1"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-room-air-v1",
+          "audio",
+          "source-inspect",
+          "truncated.input",
+          "--backend",
+          "macos-afconvert"
+        ]
+      ]
+    },
+    {
+      "report": {
+        "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-sparse-music-v1/replay.json",
+        "sha256": "3ad9d427c031a0d725af163af51618d3bd80ee1922aa3beb2d2d1685d45c729c",
+        "bytes": 16954
+      },
+      "ok": true,
+      "origin": {
+        "path": "/Users/lb/Developer/ambiance-studio/projects/the-midnight-collection/audio/sources/provider-originals/sparse-music.audio",
+        "sha256": "b145abd99dc306b0da6584dee9998943f2de8cd2dc50aa44252012cd9badf9b7",
+        "bytes": 1746033
+      },
+      "receipt": {
+        "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-sparse-music-v1/audio/preparations/working-v1/receipt.json",
+        "sha256": "aeddc8cdd1adf270d21032d105f04c77c26585e30aeaa4a1fcd04a947916fdc3",
+        "bytes": 4113
+      },
+      "preserved_original": {
+        "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-sparse-music-v1/audio/preparations/working-v1/original.source",
+        "sha256": "b145abd99dc306b0da6584dee9998943f2de8cd2dc50aa44252012cd9badf9b7",
+        "bytes": 1746033
+      },
+      "working": {
+        "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-sparse-music-v1/audio/preparations/working-v1/working.wav",
+        "sha256": "d3b18dff7fd12583d085bd9dfc46ea843991b1579c85d4a1f8723bfa1dfd1306",
+        "bytes": 20740096
+      },
+      "source_format": {
+        "container": "mp3",
+        "codec": "mp3",
+        "sample_rate": 48000,
+        "channels": 2,
+        "bits": null,
+        "bitrate_bps": 192000,
+        "mpeg_frames": 3002,
+        "coded_sample_frames": 3458304,
+        "frames": 3456000,
+        "data_offset": 16881,
+        "channel_layout": "stereo",
+        "layout_basis": "channel order retained; absent map interpreted as mono/stereo",
+        "packet_table": {
+          "total_frames": 3457152,
+          "valid_frames": 3456000,
+          "priming_frames": 576,
+          "remainder_frames": 576
+        },
+        "duration_seconds": 72.0,
+        "decoded": {
+          "complete": true,
+          "frames": 3456000,
+          "sample_rate": 48000,
+          "channels": 2,
+          "pcm_sha256": "c767de13335175a4d026c31c78f8f2d1b6572f4b620715dbc3db5516013c9d6f",
+          "representation": "signed-integer-32-little-endian"
+        }
+      },
+      "working_format": {
+        "container": "wav",
+        "codec": "pcm_integer",
+        "sample_rate": 48000,
+        "channels": 2,
+        "bits": 24,
+        "bitrate_bps": 2304000,
+        "frames": 3456000,
+        "data_offset": 4096,
+        "data_bytes": 20736000
+      },
+      "backend": {
+        "id": "macos-afconvert",
+        "adapter_version": 1,
+        "os": "macOS-26.1-arm64-arm-64bit-Mach-O",
+        "macos_version": "26.1",
+        "tools": [
+          {
+            "path": "/usr/bin/afinfo",
+            "sha256": "90b7b8ee0fcca014b513042a4eb38a97032af80acd32158cccbbfc37d8b8dd66",
+            "version": "2.0"
+          },
+          {
+            "path": "/usr/bin/afconvert",
+            "sha256": "f0e034477121244a12764b2aa3e385ae636ccc98d119a4b93b8d512963eb3fd6",
+            "version": "2.0"
+          }
+        ]
+      },
+      "provenance": {
+        "origin_kind": "generated",
+        "provider": "ElevenLabs",
+        "generation": {
+          "request_id": "museum-sparse-music-v1",
+          "output_id": "GhMrfiQZ6vZPUJAqVlxy",
+          "candidate_id": "hjzuOWMLMqZepq0Goe4i",
+          "model": "eleven_music_v2",
+          "route": "ElevenLabs connected flow ak9K6oRLbyFEMd59bh0L"
+        },
+        "retrieval": {
+          "requested_format": "not exposed in recorded flow controls",
+          "returned_format": "MP3",
+          "retrieved_at": "2026-09-10T16:08:25.839591+00:00"
+        },
+        "terms_reference": null,
+        "entitlement": "unknown",
+        "audition": "not performed; runtime does not support audio input",
+        "prior_processing": "Recorded provider original; no earlier local processing declared"
+      },
+      "public_commands": [
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-sparse-music-v1",
+          "audio",
+          "source-inspect",
+          "source.input",
+          "--backend",
+          "macos-afconvert"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-sparse-music-v1",
+          "audio",
+          "source-prepare",
+          "source.input",
+          "--backend",
+          "macos-afconvert",
+          "--source-sha256",
+          "b145abd99dc306b0da6584dee9998943f2de8cd2dc50aa44252012cd9badf9b7",
+          "--preparation-id",
+          "working-v1",
+          "--provenance",
+          "provenance.json"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-sparse-music-v1",
+          "audio",
+          "source-check",
+          "audio/preparations/working-v1/receipt.json"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-sparse-music-v1",
+          "revision",
+          "capture",
+          "source-v1",
+          "--selection",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-sparse-music-v1/selection.json"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-sparse-music-v1",
+          "revision",
+          "check",
+          "source-v1"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-sparse-music-v1",
+          "audio",
+          "source-prepare",
+          "source.input",
+          "--backend",
+          "macos-afconvert",
+          "--source-sha256",
+          "b145abd99dc306b0da6584dee9998943f2de8cd2dc50aa44252012cd9badf9b7",
+          "--preparation-id",
+          "working-v1"
+        ],
+        [
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance",
+          "--project",
+          "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/museum-sparse-music-v1",
+          "audio",
+          "source-inspect",
+          "truncated.input",
+          "--backend",
+          "macos-afconvert"
+        ]
+      ]
+    }
+  ],
+  "focused_tests": [
+    {
+      "argv": [
+        "AMBIANCE_TEST_NATIVE=1",
+        "python3",
+        "tests/test_audio_sources.py"
+      ],
+      "log": {
+        "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/native-tests.txt",
+        "sha256": "9f9ee97042cb8fedede04f0ade60b2708f807cd9b7c4f723c14f749a5437fc70",
+        "bytes": 114
+      },
+      "tests": 15,
+      "skipped": 0,
+      "passed": true
+    },
+    {
+      "argv": [
+        "python3",
+        "tests/test_audio_sources.py"
+      ],
+      "log": {
+        "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/portable-tests.txt",
+        "sha256": "224e81ea5dd2836037e7a249123444939807a82accdf395d0d930350fb391800",
+        "bytes": 126
+      },
+      "tests": 15,
+      "skipped": 2,
+      "passed": true
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_cli_contract.py"
+      ],
+      "log": {
+        "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/cli-contract.txt",
+        "sha256": "bfded71e8471c9570a97776fc0f47719b008714d7a1b820b9845f8fdc38a5bc0",
+        "bytes": 106
+      },
+      "tests": 8,
+      "skipped": 0,
+      "passed": true
+    },
+    {
+      "argv": [
+        "python3",
+        "tests/test_audio.py"
+      ],
+      "log": {
+        "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/existing-audio.txt",
+        "sha256": "ca1e8f3ea027022b1fbf58b8b709b3b9ec4e6c61beb52bec16f61d073c67a5be",
+        "bytes": 1827
+      },
+      "tests": 12,
+      "skipped": 0,
+      "passed": true
+    }
+  ],
+  "backend_failure": {
+    "context": "initial sandbox",
+    "argv": [
+      "/usr/bin/afconvert",
+      "-f",
+      "WAVE",
+      "-d",
+      "LEI24@48000",
+      "-r",
+      "127",
+      "--src-complexity",
+      "bats",
+      "existing cloth-bronze.audio",
+      "disposable cloth.wav"
+    ],
+    "exit_code": 1,
+    "error": "ExtAudioFileSetProperty ('cfmt') failed ('fmt?')",
+    "resolution": "Same bounded source and conversion succeeded in authorized execution outside sandbox; no fallback selected"
+  },
+  "limits": [
+    "Source readiness only; no provider/account action or listening/artistic approval.",
+    "Replay media and detailed CLI envelopes are local disposable artifacts; hashes here preserve exact evidence identity."
+  ],
+  "historical_originals": [
+    {
+      "recorded_path": "source/elevenlabs/leaves-01.wav",
+      "expected_sha256": "de9adfc468d8e3dfb792e73c2e63e65b2773fc84ed5faa460130436629a5d680",
+      "original_repository_path": "/Users/lb/Developer/ambiance-studio/source/elevenlabs/leaves-01.wav",
+      "original_repository_path_available": false
+    },
+    {
+      "recorded_path": "source/elevenlabs/hearth-01.wav",
+      "expected_sha256": "dd04b8093a52f2c5e3539c24a4d387a179028c71e95db11541d877efa6067888",
+      "original_repository_path": "/Users/lb/Developer/ambiance-studio/source/elevenlabs/hearth-01.wav",
+      "original_repository_path_available": false
+    },
+    {
+      "recorded_path": "source/elevenlabs/music-original.mp4",
+      "expected_sha256": "0b24d8228f452c4e0adcba10d35d0c3c0e18d0e8775937de0289fdf1e4b6c34d",
+      "original_repository_path": "/Users/lb/Developer/ambiance-studio/source/elevenlabs/music-original.mp4",
+      "original_repository_path_available": false
+    },
+    {
+      "recorded_path": "source/elevenlabs/bell-01.wav",
+      "expected_sha256": "13c12ab0379f6b04b3a30f78c2fa112efb52131d102f396ea4afdb0210086653",
+      "original_repository_path": "/Users/lb/Developer/ambiance-studio/source/elevenlabs/bell-01.wav",
+      "original_repository_path_available": false
+    },
+    {
+      "recorded_path": "source/elevenlabs/woodland-01.wav",
+      "expected_sha256": "4ccc98902688757ffa16ab16689c6460c8f7eeb0d9a80b972571413b4a13ef08",
+      "original_repository_path": "/Users/lb/Developer/ambiance-studio/source/elevenlabs/woodland-01.wav",
+      "original_repository_path_available": false
+    }
+  ],
+  "implementation": {
+    "audio_sources.py": {
+      "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance_studio/audio_sources.py",
+      "sha256": "b2693be34220717e04ef1cd141863d17c39d8f8e9c2411d961d29676f25513ac",
+      "bytes": 18337
+    },
+    "audio_source_backend.py": {
+      "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance_studio/audio_source_backend.py",
+      "sha256": "9d396f3ba77c2c4ecd6997ff8e4d0acadbef2dba959a2edf5f650645d23bcf85",
+      "bytes": 4715
+    },
+    "audio_source_formats.py": {
+      "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/ambiance_studio/audio_source_formats.py",
+      "sha256": "1d33404d6f4a3a8520c16b26ab54cb1a613672a35665eace8e15d6d2d826f03b",
+      "bytes": 8793
+    }
+  }
+}
