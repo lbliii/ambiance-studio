@@ -59,7 +59,9 @@
         "scene_runtime.py/tools/scene-command.mjs model transport hooks and scene transaction integration",
         "revision_dependencies.py typed model edges and coverage_evidence.py typed model provider only",
         "cli.py command_project project-scoped model instance exception",
-        "provisional scene_transactions.py scene/catalog bundle transaction; finalized semantics require coordinator review"
+        "provisional scene_transactions.py scene/catalog bundle transaction; finalized semantics require coordinator review",
+        "kit.validate optional project_root and nested attachment subprocess forwarding only; legacy inferred root retained",
+        "tools/check-scene.mjs --project-root and project_commands.check_project root forwarding only"
       ],
       "thread_id": "01a09b0c-4fcf-7542-b921-c1b7aa265a7b",
       "client_thread_id": "client-new-thread:0efa40dc-4201-4e0b-a4ad-7cf69acf5601",
@@ -74,7 +76,7 @@
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
       "open_design_review": "Scene/catalog pointer commit may fit, but existing finish() mutates active scene path: separate immutable packages/staging from mutable active scene, preserve/rebase catalog-relative paths, prove ordinary edit/restore/view/render/revision after pointer switch and failed-write recovery.",
       "transaction_refinement": "Active generation contains mutable working scene; captured previous config/scene and contained model packages remain immutable. Existing edit/restore/view/render/revision compatibility is still required.",
-      "bounded_lowering_gap": "C1 static constant-cell keys at 0/1 seconds fail host 24fps endpoint validation. Granted static constant-cell endpoint mapping to validated host interval; reject animated inputs beyond subset and later prove actual finite-host compatibility."
+      "bounded_lowering_gap": "C1 static constant-cell keys at 0/1 seconds fail a host with a 2-second duration; this is an endpoint duration mismatch, not fps arithmetic. Granted constant-cell endpoints mapped to validated host interval, rejecting animated inputs beyond subset; actual finite-host compatibility remains required."
     },
     {
       "stream": "T3",
@@ -170,6 +172,13 @@
       "source_commit": "c6cfbb2bb6a256a399124dda01ac86b044f968c9",
       "integration_commit": "f874719",
       "coordinator_review": "Only exports existing declarations; no arithmetic change. Source-placement 8 checks and rig 7 checks passed. Exact commit sent to M3 for adoption."
+    },
+    {
+      "id": "selected-catalog-root-validation",
+      "owner": "M3",
+      "state": "narrow_fix_leased",
+      "observed_failure": "Actual saved generation catalog fails kit.validate and tools/check-scene.mjs because catalog.parent.parent is assumed asset root. Coordinator inspected both and nested attachment audit.",
+      "action": "Pass explicit selected project root through project check and nested validators, preserving legacy inferred fallback and containment/hash diagnostics. Keep separate from T3 finite-cycle guards; validate new generation, legacy layout and invalid source cases."
     }
   ],
   "blocking_decisions": [],
