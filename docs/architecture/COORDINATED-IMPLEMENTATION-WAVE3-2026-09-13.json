@@ -129,12 +129,12 @@
         ],
         "next": "Tie namespaced runtime asset identity to exact compiler pack from model closure/state before revision alias acceptance; complete public revision/reuse replay and freeze."
       },
-      "candidate_commit": "70e0937b985f9bec47ea089fc9a9624fb0401c0f",
+      "candidate_commit": "92e64484fb9358827ff1a71879753525ab85aa56",
       "full_validation": {
-        "state": "queued_conditional_on_frozen_successor",
-        "candidate_commit": "70e0937b985f9bec47ea089fc9a9624fb0401c0f",
-        "source_frozen": false,
-        "clean_verified_by_coordinator": false,
+        "state": "queued_pending_successor_replay",
+        "candidate_commit": "92e64484fb9358827ff1a71879753525ab85aa56",
+        "source_frozen": true,
+        "clean_verified_by_coordinator": true,
         "required_native": true,
         "artifacts": null
       },
@@ -157,7 +157,7 @@
         "reported_portability": "Origin/package/source project unavailable; portable inspect/check and captured old revision render passed.",
         "browser_observation": "Worker inspected13-layer scene with moved/arched lantern; exposed canvas remains deliberate engineering fixture limitation."
       },
-      "successor_fix": "Normalize omitted controls/variants in C1 minimal states to avoid adoption KeyError; reject unknown saved model-record fields. Two tracked files modified after retained70e0937 replay; commit and fresh replay required before slot.",
+      "successor_fix": "Committed92e6448 normalizes missing controls/variants and rejects unknown record fields; coordinator reviewed the17-line source/test addition and verified clean tree. Fresh public replay on successor is running.",
       "queue_policy": "Keep place if clean successor/replay ready at slot opening; otherwise let ready A3 proceed. No full native has run for M3."
     },
     {
