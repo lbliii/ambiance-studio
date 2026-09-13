@@ -1,0 +1,484 @@
+{
+  "format": "ambiance-lib01-implementation-evidence",
+  "schema_version": 1,
+  "baseline_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
+  "report": {
+    "path": "/private/tmp/ambiance-lib01-replay-02/replay.json",
+    "sha256": "ed9a2fe12a94106f75c0eaec0472fd9e52691b4713cf4f079c953bacdbc3262c",
+    "bytes": 69165
+  },
+  "implementation_sha256": {
+    "ambiance_studio/audio_library.py": "b353ef98ef0de487f44074e9480d0cb73a0d14a72bec67d2d060c07ba049ccdd",
+    "ambiance_studio/audio_library_records.py": "2a573b187ab1ad747d580c090dc95007622345e2275b913d4d535adac70e18dd",
+    "ambiance_studio/audio_materialization.py": "f82eea71e5db74b66ab39d2652f88f23a8c6aa8785712b77c2823b9bb64ae5ad",
+    "ambiance_studio/audio_sources.py": "b2693be34220717e04ef1cd141863d17c39d8f8e9c2411d961d29676f25513ac",
+    "ambiance_studio/audio.py": "d107c223d03045995c74be012b3bf5515b6879e0a82cf45ae521f333b991d221",
+    "ambiance_studio/revision_dependencies.py": "bd0939ddeeeee2a35c547bba968956d5cd8b8d5638323b72b11905cab4e1fad3",
+    "ambiance_studio/cli.py": "15aeaeb20d9952155eb25acfeea2b6559867463041e93612094867a581ed61a5"
+  },
+  "source": {
+    "original_sha256": "0369f19546ae25ae24fdf6df5c555e00822cd08b887db5ad06196194854fb8ce",
+    "working_sha256": "d97500c6901d0faf55bd448b7a9b5cb1cc210ebe17232e40439a67a75b0da254",
+    "prior_receipt_sha256": "504506989214454d344a839c617d8dea0511fc49affb42f8acee26d7e88a7bf5",
+    "library_version_sha256": "0a77e54ae2f97edb9ace4144312c63b3bcc49bb5b6bd95c7cc32baa60e1483e9",
+    "frames": 4800,
+    "sample_rate": 48000,
+    "channels": 2
+  },
+  "public_replay_argv": [
+    "python3",
+    "examples/audio-library-replay/replay.py",
+    "--out",
+    "/private/tmp/ambiance-lib01-replay-02"
+  ],
+  "steps": [
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/94fa/ambiance-studio/ambiance",
+        "audio",
+        "library",
+        "configure",
+        "--config",
+        "/private/tmp/ambiance-lib01-replay-02/library-config.json",
+        "--media-root",
+        "/private/tmp/ambiance-lib01-replay-02/shared-media",
+        "--library-id",
+        "lib01-replay"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/94fa/ambiance-studio/ambiance",
+        "project",
+        "init",
+        "/private/tmp/ambiance-lib01-replay-02/origin",
+        "--template",
+        "blank"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/94fa/ambiance-studio/ambiance",
+        "project",
+        "init",
+        "/private/tmp/ambiance-lib01-replay-02/destination",
+        "--template",
+        "blank"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/94fa/ambiance-studio/ambiance",
+        "--project",
+        "/private/tmp/ambiance-lib01-replay-02/origin",
+        "audio",
+        "library",
+        "import",
+        "tone",
+        "--config",
+        "/private/tmp/ambiance-lib01-replay-02/library-config.json",
+        "--version",
+        "original-v1",
+        "--kind",
+        "event",
+        "--source",
+        "tone.wav",
+        "--sha256",
+        "0369f19546ae25ae24fdf6df5c555e00822cd08b887db5ad06196194854fb8ce",
+        "--backend",
+        "pcm",
+        "--provenance",
+        "provenance.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/94fa/ambiance-studio/ambiance",
+        "audio",
+        "library",
+        "search",
+        "tone",
+        "--config",
+        "/private/tmp/ambiance-lib01-replay-02/library-config.json",
+        "--state",
+        "candidate"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/94fa/ambiance-studio/ambiance",
+        "--project",
+        "/private/tmp/ambiance-lib01-replay-02/origin",
+        "audio",
+        "source-prepare",
+        "tone.wav",
+        "--backend",
+        "pcm",
+        "--source-sha256",
+        "0369f19546ae25ae24fdf6df5c555e00822cd08b887db5ad06196194854fb8ce",
+        "--preparation-id",
+        "working-v1",
+        "--provenance",
+        "provenance.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/94fa/ambiance-studio/ambiance",
+        "--project",
+        "/private/tmp/ambiance-lib01-replay-02/origin",
+        "audio",
+        "library",
+        "import",
+        "tone",
+        "--config",
+        "/private/tmp/ambiance-lib01-replay-02/library-config.json",
+        "--version",
+        "prepared-v1",
+        "--kind",
+        "event",
+        "--preparation",
+        "audio/preparations/working-v1/receipt.json",
+        "--sha256",
+        "504506989214454d344a839c617d8dea0511fc49affb42f8acee26d7e88a7bf5",
+        "--parent-version",
+        "original-v1",
+        "--parent-sha256",
+        "fdef8848a00d4f18e855c6df9f54531fbf3d57801092f4507a84f9f3fac5679e"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/94fa/ambiance-studio/ambiance",
+        "audio",
+        "library",
+        "inspect",
+        "tone",
+        "--version",
+        "prepared-v1",
+        "--config",
+        "/private/tmp/ambiance-lib01-replay-02/library-config.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/94fa/ambiance-studio/ambiance",
+        "audio",
+        "library",
+        "audition",
+        "tone",
+        "--version",
+        "prepared-v1",
+        "--config",
+        "/private/tmp/ambiance-lib01-replay-02/library-config.json",
+        "--expect-version",
+        "0a77e54ae2f97edb9ace4144312c63b3bcc49bb5b6bd95c7cc32baa60e1483e9",
+        "--audition-id",
+        "region-v1",
+        "--start-frame",
+        "480",
+        "--frames",
+        "2400"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/94fa/ambiance-studio/ambiance",
+        "audio",
+        "library",
+        "promote",
+        "tone",
+        "--version",
+        "prepared-v1",
+        "--config",
+        "/private/tmp/ambiance-lib01-replay-02/library-config.json",
+        "--expect-state",
+        "0a77e54ae2f97edb9ace4144312c63b3bcc49bb5b6bd95c7cc32baa60e1483e9",
+        "--event-id",
+        "unperformed",
+        "--decision",
+        "accepted",
+        "--by",
+        "LIB-01 replay",
+        "--note",
+        "No listening performed"
+      ],
+      "exit_code": 2
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/94fa/ambiance-studio/ambiance",
+        "--project",
+        "/private/tmp/ambiance-lib01-replay-02/origin",
+        "audio",
+        "library",
+        "import",
+        "duplicate",
+        "--config",
+        "/private/tmp/ambiance-lib01-replay-02/library-config.json",
+        "--version",
+        "v1",
+        "--kind",
+        "event",
+        "--preparation",
+        "audio/preparations/working-v1/receipt.json",
+        "--sha256",
+        "504506989214454d344a839c617d8dea0511fc49affb42f8acee26d7e88a7bf5"
+      ],
+      "exit_code": 2
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/94fa/ambiance-studio/ambiance",
+        "--project",
+        "/private/tmp/ambiance-lib01-replay-02/destination",
+        "audio",
+        "library",
+        "materialize",
+        "tone",
+        "--version",
+        "prepared-v1",
+        "--config",
+        "/private/tmp/ambiance-lib01-replay-02/library-config.json",
+        "--expect-version",
+        "0a77e54ae2f97edb9ace4144312c63b3bcc49bb5b6bd95c7cc32baa60e1483e9",
+        "--expect-state",
+        "0a77e54ae2f97edb9ace4144312c63b3bcc49bb5b6bd95c7cc32baa60e1483e9",
+        "--materialization-id",
+        "tone-use-v1",
+        "--allow-unaccepted"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/94fa/ambiance-studio/ambiance",
+        "--project",
+        "/private/tmp/ambiance-lib01-replay-02/destination",
+        "audio",
+        "library",
+        "check",
+        "audio/library/tone-use-v1/receipt.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/94fa/ambiance-studio/ambiance",
+        "--project",
+        "/private/tmp/ambiance-lib01-replay-02/destination",
+        "audio",
+        "inspect",
+        "session.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/94fa/ambiance-studio/ambiance",
+        "--project",
+        "/private/tmp/ambiance-lib01-replay-02/destination",
+        "audio",
+        "check",
+        "audio/library/tone-use-v1/source/working.wav"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/94fa/ambiance-studio/ambiance",
+        "--project",
+        "/private/tmp/ambiance-lib01-replay-02/destination",
+        "revision",
+        "capture",
+        "portable-v1",
+        "--selection",
+        "/private/tmp/ambiance-lib01-replay-02/destination/selection.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/94fa/ambiance-studio/ambiance",
+        "--project",
+        "/private/tmp/ambiance-lib01-replay-02/destination",
+        "revision",
+        "check",
+        "portable-v1"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/94fa/ambiance-studio/ambiance",
+        "--project",
+        "/private/tmp/ambiance-lib01-replay-02/portable-handoff",
+        "audio",
+        "library",
+        "check",
+        "audio/library/tone-use-v1/receipt.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/94fa/ambiance-studio/ambiance",
+        "--project",
+        "/private/tmp/ambiance-lib01-replay-02/portable-handoff",
+        "audio",
+        "inspect",
+        "session.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/94fa/ambiance-studio/ambiance",
+        "--project",
+        "/private/tmp/ambiance-lib01-replay-02/portable-handoff",
+        "revision",
+        "check",
+        "portable-v1"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "portable_artifacts": {
+    "portable-handoff/ambiance-project.json": {
+      "sha256": "6ad397d16e122fcf3ce12e30107ba8b2cb34fcaa5e3e5f14ad26266b522f5434",
+      "bytes": 109
+    },
+    "portable-handoff/assets/catalog.json": {
+      "sha256": "a8174f5941573d1acd5d5df5dee4bca235701e21c29685694d143512d3247acf",
+      "bytes": 35
+    },
+    "portable-handoff/audio/library/tone-use-v1/receipt.json": {
+      "sha256": "efb068ad64868d4a0dd0595bd27529db982f06c4ac29608875a6ffe90769f1e4",
+      "bytes": 3164
+    },
+    "portable-handoff/audio/library/tone-use-v1/source/original.source": {
+      "sha256": "0369f19546ae25ae24fdf6df5c555e00822cd08b887db5ad06196194854fb8ce",
+      "bytes": 19244
+    },
+    "portable-handoff/audio/library/tone-use-v1/source/recipe.json": {
+      "sha256": "dc8216a6d7dd5ccfd23b3e4298b5d6460c12ea72912454b9dcc4e247b477e160",
+      "bytes": 666
+    },
+    "portable-handoff/audio/library/tone-use-v1/source/source-receipt.json": {
+      "sha256": "504506989214454d344a839c617d8dea0511fc49affb42f8acee26d7e88a7bf5",
+      "bytes": 2986
+    },
+    "portable-handoff/audio/library/tone-use-v1/source/version.json": {
+      "sha256": "0a77e54ae2f97edb9ace4144312c63b3bcc49bb5b6bd95c7cc32baa60e1483e9",
+      "bytes": 2587
+    },
+    "portable-handoff/audio/library/tone-use-v1/source/working.wav": {
+      "sha256": "d97500c6901d0faf55bd448b7a9b5cb1cc210ebe17232e40439a67a75b0da254",
+      "bytes": 28844
+    },
+    "portable-handoff/handoff.md": {
+      "sha256": "3389dddee8a4bb093a889a3473e1c16029c61f5796716cdf9deda77a5ade0000",
+      "bytes": 160
+    },
+    "portable-handoff/pipeline.json": {
+      "sha256": "f8be73d0851509d2ca994d8dc2d801bc32819df4b7f3b0afeb131d9c6aa115fa",
+      "bytes": 10113
+    },
+    "portable-handoff/plans/asset-inventory.json": {
+      "sha256": "78508008ef5c9895e6663b716f7d73903991fffa64836b78594c79aea1540cac",
+      "bytes": 138
+    },
+    "portable-handoff/plans/brief.md": {
+      "sha256": "ff87c36630008f76d908d509aaf2a4b465939f6691e559e83e295fd9b50756a9",
+      "bytes": 2150
+    },
+    "portable-handoff/plans/generation-ledger.json": {
+      "sha256": "0acc80db40f45b5e408387c3f710ffacff957b9f5e170667a07c7f29f1b6d1fc",
+      "bytes": 37
+    },
+    "portable-handoff/plans/layer-plan.json": {
+      "sha256": "eac31324c412d54ddf1116f55d6d9315e3673f039c77d3d206136cfadfe72e4f",
+      "bytes": 119
+    },
+    "portable-handoff/plans/layout-notes.md": {
+      "sha256": "e6f4b219b9eecb50128e2eedebac03d00fa9e0af1adef48267ef43949096cd27",
+      "bytes": 106
+    },
+    "portable-handoff/plans/sound-brief.md": {
+      "sha256": "2324950240cb71d4bd48fd7dcf541c6588642250801a909fb1dab7217264fcfc",
+      "bytes": 110
+    },
+    "portable-handoff/project.json": {
+      "sha256": "e0db597b87d6c69d00fd241a12663afbc71d11bcb8b2d56a745e83cde3e7ef84",
+      "bytes": 379
+    },
+    "portable-handoff/revisions/portable-v1/controls/audio-session.json": {
+      "sha256": "cce36db08f1022775134fd58617424d315458d24f8a4786482508f7e2268e64c",
+      "bytes": 612
+    },
+    "portable-handoff/revisions/portable-v1/controls/catalog.json": {
+      "sha256": "a8174f5941573d1acd5d5df5dee4bca235701e21c29685694d143512d3247acf",
+      "bytes": 35
+    },
+    "portable-handoff/revisions/portable-v1/controls/pipeline.json": {
+      "sha256": "f8be73d0851509d2ca994d8dc2d801bc32819df4b7f3b0afeb131d9c6aa115fa",
+      "bytes": 10113
+    },
+    "portable-handoff/revisions/portable-v1/controls/preparation-0.json": {
+      "sha256": "efb068ad64868d4a0dd0595bd27529db982f06c4ac29608875a6ffe90769f1e4",
+      "bytes": 3164
+    },
+    "portable-handoff/revisions/portable-v1/controls/project.json": {
+      "sha256": "e0db597b87d6c69d00fd241a12663afbc71d11bcb8b2d56a745e83cde3e7ef84",
+      "bytes": 379
+    },
+    "portable-handoff/revisions/portable-v1/controls/scene.json": {
+      "sha256": "fa7f209be4ebe35cee209d533f6f8135e6a71c5944d48bddb4fcf8195e99cd03",
+      "bytes": 334
+    },
+    "portable-handoff/revisions/portable-v1/manifest.json": {
+      "sha256": "68d1d7e117affdf14fb331430283a4d5a43097e6a359a6b50dd17c4a33570061",
+      "bytes": 6361
+    },
+    "portable-handoff/scene/scene.json": {
+      "sha256": "fa7f209be4ebe35cee209d533f6f8135e6a71c5944d48bddb4fcf8195e99cd03",
+      "bytes": 334
+    },
+    "portable-handoff/selection.json": {
+      "sha256": "d1f38845d79e3ed48a6b1ebb8cb7cb2d44696207cffbbcf3f4135e2dbc81a57b",
+      "bytes": 260
+    },
+    "portable-handoff/session.json": {
+      "sha256": "cce36db08f1022775134fd58617424d315458d24f8a4786482508f7e2268e64c",
+      "bytes": 612
+    }
+  },
+  "package_audit": {
+    "path": "/private/tmp/ambiance-lib01-package-audit-final.json",
+    "sha256": "20c2acb9a6d12d9ae3173e2ba01d0de7aab79f24b7fdb5afea5bb110f433b700",
+    "ok": true,
+    "links": 604,
+    "errors": []
+  },
+  "focused_tests": {
+    "audio_library": 19,
+    "cli_contract": 8,
+    "studio": 14,
+    "skips": 0
+  },
+  "listening": "not performed",
+  "acceptance": "No source accepted in public replay; unit review records are simulated fixtures only.",
+  "limits": [
+    "Technical generated-local tones only; no listening, curation, new mix or artistic acceptance.",
+    "Unit tests separately exercise simulated observation/promotion transitions; this replay claims no audition."
+  ]
+}

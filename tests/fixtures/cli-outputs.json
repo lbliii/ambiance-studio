@@ -58,5 +58,8 @@
   {"argv": ["binding", "check", "--out", "output"], "output": "result-envelope", "command": "binding check"},
   {"argv": ["delivery", "handoff", "input", "--out", "output"], "output": "artifact-directory", "command": "delivery handoff"},
   {"argv": ["iteration", "init", "input", "--out", "output"], "output": "artifact-directory", "command": "iteration init"},
-  {"argv": ["iteration", "preflight", "input", "--out", "output"], "output": "result-envelope", "command": "iteration preflight"}
+  {"argv": ["iteration", "preflight", "input", "--out", "output"], "output": "result-envelope", "command": "iteration preflight"},
+  {"argv": ["audio", "library", "search", "--config", "input", "--out", "output"], "output": "result-envelope", "command": "audio library"},
+  {"argv": ["audio", "library", "inspect", "input", "--version", "input", "--config", "input", "--out", "output"], "output": "result-envelope", "command": "audio library"},
+  {"argv": ["audio", "library", "check", "input", "--out", "output"], "output": "result-envelope", "command": "audio library"}
 ]

@@ -118,7 +118,7 @@
   "media": "e6174338c428349b0943f2f846b080530288eee9e343f56623ce07c3043907eb",
   "media verify": "a178d5fd534f4dc65a4ef354e08e7210311e135d88514edea4f8d5e8b36bea86",
   "media compose": "1df96f45c23a8b4ba7465b5a1d2f49f560f0e5b5b3937bebb2f15b400278c3b6",
-  "audio": "0afe6b7a1285db00d0ac4be23e6feb79fecec624cbe4e9276e1b7d16f352227f",
+  "audio": "aaf751fbc14d57a4d7cbfb5624f898d83dcfbc86b00a92b115e47c5d33e2e89b",
   "audio cue-bind": "c33bdf708ea0074e21ff44ed26c15209cdfb665e169939aebc42a28d2439705f",
   "audio cue-check": "5d1a1fa44cca17b7ee70748b9a5596d7308c98ebd9d7eaab1fcb9edfcdb55ae7",
   "audio inspect": "7dc6a0486cf607f47fd4182be135d59520ea3f556bbb0f7749818fb5c7b22b24",
@@ -159,5 +159,15 @@
   "feedback reopen": "850a8432ae83a4e971547a75a8150e22fd53176df8116d0a7c74c7b77c6e53f9",
   "audio source-prepare": "38243edcf8b7a1e4a2883103af7a6cc9a2bcb6791bf387ec74a2349f8f60fa38",
   "audio source-inspect": "61e7fd0aef41cf8413624a79d1fe0da1c389bafce06455859f82e56566668175",
-  "audio source-check": "42bcb947321ea162c3babdfe2d55f60281d6ac020af9b62d63150bacad88b220"
+  "audio source-check": "42bcb947321ea162c3babdfe2d55f60281d6ac020af9b62d63150bacad88b220",
+  "audio library": "284ecd3a48c0742062b0eaba29ed8af1be600f66435a77769c6eabfc0da7acbf",
+  "audio library configure": "7c566997581eb4f4e4a5744971cb142a2168b4c0382cb8e5fce4430edc0e5e49",
+  "audio library search": "b92d3453f753f14612453fd4f29711ee64a1f4e1b4347eb5cbddab965e28b106",
+  "audio library check": "5325c1566d530107c626c0b7457ae3f91a8efab155dffcefe82a99bb7c94fd54",
+  "audio library inspect": "ffde0eac8cf3903eaef57f059b1f1e607c23624898ce56b1bc65d781d2fd6e42",
+  "audio library import": "ca4ce39c077d85a1ae077d7b275a526af83995893632621f58d87fc416905a0a",
+  "audio library audition": "83a01c4b7b8303f51a399852051f6ae5951332d6fa88c93af0665e3747b4291e",
+  "audio library observe": "44b00376b9f5470a2ea8cc996c6de420271d2b5df19265a6c49ab913214e7235",
+  "audio library promote": "5c099ecb28ce64fde1473cc5f977bd0e453e28ff5bea68b7a2656beceed50bf6",
+  "audio library materialize": "fa3a4aa98dfe8d7e1cb750418e2b6214efee8943362bd6761f11c78fe554f844"
 }

@@ -72,6 +72,8 @@ PROJECT_OPTIONAL = {('asset', 'proof')}
 def command_project(args):
     command, action = args.command, getattr(args, 'action', None)
     route = (command, action)
+    if route == ('audio', 'library') and args.library_action not in ['import', 'materialize', 'check']:
+        return None
     if command in ['studio', 'doctor', 'test'] or route in PROJECT_FREE:
         return None
     if command == 'preview' and preview_commands.is_artifact(args):
