@@ -1,0 +1,233 @@
+{
+  "format": "p03-clock-technical-handoff",
+  "tested_commit": "369546b1533c9b65d3a94ebe9148037b0f492e91",
+  "tested_tree": "82b50853878b97e7a8158f9e8b77e94cc1f1f77a",
+  "base_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
+  "branch": "codex/wave3-p03-clock",
+  "full_native": {
+    "command": "./ambiance test --require-native --artifacts .ambiance/p03-clock/required-native-2",
+    "passed": true,
+    "recorded_cases": 525,
+    "python_tests": 509,
+    "skips": 0,
+    "check_groups": 18,
+    "verified_source_files": 581,
+    "source_mismatches": [],
+    "run": {
+      "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/required-native-2/run.json",
+      "sha256": "f3770f39dc3be5f9cd3a97f8a59e925a9c75a418556f3b9e677051d1f75f0599"
+    },
+    "inputs": {
+      "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/required-native-2/inputs.json",
+      "sha256": "12cfa5910961c65735c894151bef5f516e434a8fa3eb50727783a2dc89667a5f"
+    }
+  },
+  "initial_failed_run": {
+    "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/required-native-1/run.json",
+    "sha256": "a70ac99c98fda0e9bbe0103c2c22da46c68c940cd806992e3cff4eb95336370c"
+  },
+  "source_manifest": {
+    "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/duration-repair/source-manifest-369546b.json",
+    "sha256": "e39310f1886f0a36c4079a995b07b763804f387e02dff5236abac5b03d7a00a4"
+  },
+  "runtime_changes": {
+    "ambiance_studio/audio_cues.py": "3519d06f74234d254436b6d33f8cda53742762eb8a63aa60c54c86e1d0db011f",
+    "ambiance_studio/media_verification.py": "c5d302e20dd5bb3e13a8b896b5a799d56e79b2c4ecb8b9c494dfeecdc4ec6359",
+    "ambiance_studio/preparation.py": "aa396051af00dfc49525f1c12a8bc14270f47a71102290254d6d871349c46e1b",
+    "ambiance_studio/preparation_commands.py": "0b1894b2f50fa6065e07d549d2cde2210d98103c5b782e4e5a53cc247aed6a45",
+    "ambiance_studio/preparation_server.py": "77a0bc3da3d22e0568e50b1ffb9e905f8562150a3a43525e5010e9b472e1c7ec",
+    "ambiance_studio/render_plan.py": "d61c7e3780f808a15b5fdfc5bf2cfb3d144802392ef7ecd477e37049068f2f77",
+    "ambiance_studio/rendering.py": "360564c291517cf00368347531d622a53e145e9cfd957fe86c2127573b1da5f9",
+    "ambiance_studio/scene_commands.py": "1be0dd01d743cb6c67ed9831a486e143334c55c7fd30e58a7fb0e3086f9269d7",
+    "ambiance_studio/timebase.py": "3b73da77acb4f4fc806680b89b439af26267d6822663ee3b054003801754db73",
+    "docs/FINITE-CLOCK.md": "3c0a8ed2bf2759913f754b26888d0009b0d53f4ac0d651468910e9168fe750a7",
+    "editor/audit.mjs": "2f44db707ef84d569771ffea2327ea85e061a9aa7700520f09d067e228605d72",
+    "editor/clock.mjs": "629a6c585e08cc1d58981527e75a051577e1a6348899d7477f3253986c6ea7b6",
+    "editor/editor.mjs": "86ca5125f17eb15354e160f0fad9461e7cbc290ec4ea8ac5a0fc92e766ee7d3c",
+    "editor/engine.mjs": "811a930257e80c2a7f7aa12bea058c00ec54b94923cdaf9b33060e9393130cb6",
+    "editor/finishing.mjs": "5ef6a0829d344efb07a4b037180311b68e282eaab9f80cb2b0ca13b528c6f486",
+    "editor/source-placement.mjs": "5cf0aef693893eb4cb5c73c053bb2bf48c64e69e00f5e5c29f799ea7163bc533",
+    "editor/timing.mjs": "2688e74a72838725558e9e4f8c5fb6146f1b87705ee57c8cca3d92b0bed8b1ed",
+    "examples/finite-clock/README.md": "d31425000cae37dc1a4c5a3850acfe5760248676b00047e24e6d8ef0d3023f26",
+    "examples/finite-clock/create_fixture.py": "01d0776801b5809dedbb41bdfb12c507e1c5ecc1bccd274ae3486f4cb7c600e8",
+    "kit.py": "47e7c3e0f8c298702b6ae9273ec0d19f4b5612f5567dc2ee2f7b6cb8f4c4e690",
+    "tests/fixtures/cli-options.json": "1a816619c861e376f6b186885c37c0b83ebdd9c708a00773eb96c537c977cb3e",
+    "tests/test-clock.mjs": "1456b5ca0f520393acf48f3dc31cbbf7f06b1a105da8ed397e647eb1eb715a6c",
+    "tests/test_binding_proof.py": "608b14144ac46bb3ed6b9a4823de25a4e2ea8756e747665d6ad82b4d3fbed820",
+    "tests/test_clock_cli.py": "f99f771ac39ca8fbeb2d066868813ebf6781a39842e2b4103439fea6f8dbc59e",
+    "tests/test_compound_preparation.py": "a49501e7e9f774a5c92998ff10bfa142a4349ec480a6cdd82e662ebb2a7a54e0",
+    "tests/test_preparation.py": "ac82c4614235afe176f97d7618bd701e69883bbf22f044b8249f93c508e487b2",
+    "tools/render/job-input.mjs": "3e5f4dc905da23b681243fe42626bb1a18b51acc93f7a701de8618df2eaa55bd",
+    "tools/render/outputs.mjs": "b8aaab81df966cdc445322187aef46c0f81c527b8c5db153df40776c440b6c21",
+    "tools/render/raster.mjs": "832256720d02f70e2b8d80168a8853d6ed4f82e54024d634eee64de77d5fea3f",
+    "tools/render/receipt.mjs": "80950c4ff05ff5294ac43453a9f749d4956a3e0724944ec8ff2ea100234d79f6",
+    "tools/render/source-identity.mjs": "5392cff89789ff319f2cc300dd1d8274e986013ed2c6c79451b2d272c595a8fe",
+    "tools/scene-command.mjs": "57675c44dff488dec85a36b8fd3a67e6e1735ff49ccd0fedceb8887f987e263d"
+  },
+  "native_proof_manifest": {
+    "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/proof-manifest.json",
+    "sha256": "53d5efd87ba4718e44d8829d1494897281d468bb88716e94cd7ec9b54b077a6e"
+  },
+  "observations": {
+    "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/observation.json",
+    "sha256": "e4bd03cd7a4d2280fbbaa270b7c5a3c78f752349750f21d304589f552690515a"
+  },
+  "legacy_parity": {
+    "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/duration-repair/legacy-parity.json",
+    "sha256": "04f659044c2b742c51f2a067c0cad99624e9c4810e2369dba1fa7376316fc873"
+  },
+  "movies": [
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/ambiance",
+        "--project",
+        "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/project-v2",
+        "render",
+        "video",
+        "--start-frame",
+        "0",
+        "--out",
+        "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/24-60-from-0"
+      ],
+      "movie": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/24-60-from-0/picture.mp4",
+      "sha256": "7f871ef1efbdb8cd264e3d8592bc341d1df8eb1ed5f8c01d2acfb90bc2ab2b99",
+      "decoded_frames": 60,
+      "fps": 24,
+      "source_range": [
+        0,
+        60
+      ],
+      "report": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/24-60-from-0/render-report.json"
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/ambiance",
+        "--project",
+        "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/project-v2",
+        "render",
+        "video",
+        "--start-frame",
+        "1",
+        "--out",
+        "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/24-60-from-1"
+      ],
+      "movie": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/24-60-from-1/picture.mp4",
+      "sha256": "f6adca1db6b4646de181b31918bdf66db15b7253eae20c61a0ccb099fed2262b",
+      "decoded_frames": 59,
+      "fps": 24,
+      "source_range": [
+        1,
+        60
+      ],
+      "report": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/24-60-from-1/render-report.json"
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/ambiance",
+        "--project",
+        "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/duration-repair/project-30",
+        "render",
+        "video",
+        "--start-frame",
+        "0",
+        "--out",
+        "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/30-31-from-0"
+      ],
+      "movie": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/30-31-from-0/picture.mp4",
+      "sha256": "8e2a1f17de19e9dbeff38c353340994a065f85804c6240dee2d5653ea910a827",
+      "decoded_frames": 31,
+      "fps": 30,
+      "source_range": [
+        0,
+        31
+      ],
+      "report": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/30-31-from-0/render-report.json"
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/ambiance",
+        "--project",
+        "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/duration-repair/project-30",
+        "render",
+        "video",
+        "--start-frame",
+        "1",
+        "--out",
+        "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/30-31-from-1"
+      ],
+      "movie": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/30-31-from-1/picture.mp4",
+      "sha256": "0f644b2bad93fc2bb1b820236a4d4628f6f6d220ddac72205b5018d2136b2bef",
+      "decoded_frames": 30,
+      "fps": 30,
+      "source_range": [
+        1,
+        31
+      ],
+      "report": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/30-31-from-1/render-report.json"
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/ambiance",
+        "--project",
+        "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/duration-repair/project-25",
+        "render",
+        "video",
+        "--start-frame",
+        "0",
+        "--out",
+        "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/25-7-from-0"
+      ],
+      "movie": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/25-7-from-0/picture.mp4",
+      "sha256": "fdd8da4f333ae5c46f6e060b0edc7c6afcba98f8c9eef09ec4a12efa460d01ed",
+      "decoded_frames": 7,
+      "fps": 25,
+      "source_range": [
+        0,
+        7
+      ],
+      "report": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/25-7-from-0/render-report.json"
+    },
+    {
+      "argv": [
+        "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/ambiance",
+        "--project",
+        "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/duration-repair/project-25",
+        "render",
+        "video",
+        "--start-frame",
+        "1",
+        "--out",
+        "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/25-7-from-1"
+      ],
+      "movie": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/25-7-from-1/picture.mp4",
+      "sha256": "c6c65fb3fbda96dced1019828ff59cdb586b0fb6f3490d0bcb50edc6f232ed95",
+      "decoded_frames": 6,
+      "fps": 25,
+      "source_range": [
+        1,
+        7
+      ],
+      "report": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/25-7-from-1/render-report.json"
+    }
+  ],
+  "native_slot": "released to coordinator after passing run",
+  "scope_open": [
+    "P00 production seed/story/census/art acceptance",
+    "P04 cue authoring",
+    "P05 sequence assembly",
+    "P06 film evidence",
+    "arbitrary rational native output fps",
+    "nonzero finite audio-range conformance",
+    "4K quality work"
+  ],
+  "limits": [
+    "Local retained artifacts are supplemental evidence, not published media.",
+    "Browser and decoded-contact observations are technical; no human art/listening acceptance is claimed.",
+    "The handoff commit adds only these report documents after the exact tested commit."
+  ],
+  "handoff_package_audit": {
+    "ok": true,
+    "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/handoff-package-audit.json",
+    "sha256": "bcda334d2b4ae361276682bd18ed2ca41b9093fbf26277f2fd25a7651909725c"
+  }
+}
