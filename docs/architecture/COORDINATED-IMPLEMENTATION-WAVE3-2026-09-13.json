@@ -265,7 +265,7 @@
       "validation_note": "JS test-clock auto-discovered; Python clock tests should exercise actual CLI, not duplicate JS wrapper. Coordinator reconciles renderer source-list verifiers.",
       "clock_context_proposal": "compiled.clock.seconds(seconds)/frame(integer) returns frozen context; compiled.sample(context) validates equivalent definition and does not rewrap; sample(seconds) retains array and sampleFrame preserves requested frame. consumerTime selects local-cycle values. Authored clock revision label is distinct from external scene/revision hashes.",
       "focused_progress": {
-        "state": "correcting_test_only_media_verify_invocation",
+        "state": "test_corrected_frozen_candidate_queued",
         "source": "worker-reported; frozen replay and coordinator verification pending",
         "implementation": "Shared finite/loop engine, JS/Python exact conversions, CLI clock/sample, local-cycle camera/layer/signal and finite reparent/raster consumers.",
         "reported_checks": "Legacy track/rig/binding/finishing checks and four CLI cases passed.",
@@ -280,14 +280,14 @@
         },
         "browser_observation": "Worker inspected both sample/endpoint poses and observed Play stop at frame59. Coordinator has not repeated this observation.",
         "native_slot_requested": false,
-        "next": "Remove unsupported --file from new media verify test (positional path), commit test-only successor and refresh manifest. Runtime2847b83 unchanged; M3 still owns native slot."
+        "next": "When M3 releases, run retained native full/range proofs then required-native-2 on frozen369546b; runtime is byte-identical to2847b83."
       },
-      "candidate_commit": "2847b83c149611bf785ff5b95e32320c8083ce5c",
+      "candidate_commit": "369546b1533c9b65d3a94ebe9148037b0f492e91",
       "full_validation": {
-        "state": "test_invocation_successor_before_reserved_slot",
-        "candidate_commit": "2847b83c149611bf785ff5b95e32320c8083ce5c",
-        "source_frozen": false,
-        "clean_verified_by_coordinator": false,
+        "state": "queued_after_M3",
+        "candidate_commit": "369546b1533c9b65d3a94ebe9148037b0f492e91",
+        "source_frozen": true,
+        "clean_verified_by_coordinator": true,
         "required_native": true,
         "artifacts": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/required-native-2"
       },
@@ -324,8 +324,8 @@
         "8a24cff847751c0f0163c8b9779024815fd6908b"
       ],
       "coordinator_review": {
-        "state": "duration_and_browser_repair_source_reviewed_native_pending",
-        "scope": "Reviewed1567a39 authored duration authority throughout clock/validator/render/timing/media-default consumers. Independently replayed original public7@25 and31@30 author/sample failures: now pass with correct N\u22121/N region and frame identities. Worker actual browser inspection caught install reading compiled.clock before initialization; narrow fix underway. Native suite and broader combined evidence reconciliation pending. Reviewed one-line2847b83 initialization fix and verified all32 current source manifest entries. Worker browser observation record/manifest hashes verified; actual browser playback observation is worker-reported."
+        "state": "runtime_and_test_successor_reviewed_native_pending",
+        "scope": "Reviewed1567a39 authored duration authority throughout clock/validator/render/timing/media-default consumers. Independently replayed original public7@25 and31@30 author/sample failures: now pass with correct N\u22121/N region and frame identities. Worker actual browser inspection caught install reading compiled.clock before initialization; narrow fix underway. Native suite and broader combined evidence reconciliation pending. Reviewed one-line2847b83 initialization fix and verified all32 current source manifest entries. Worker browser observation record/manifest hashes verified; actual browser playback observation is worker-reported. Reviewed369546b: only removes unsupported --file in one new native test. Actual CLI help confirms positional file. Clean tree and all32 current manifest source hashes verified."
       },
       "public_replay": {
         "source_commit": "8a24cff847751c0f0163c8b9779024815fd6908b",
@@ -364,8 +364,8 @@
         "source_note": "32 manifest entries; later audit found editor/editor.mjs mismatch during reported browser repair. This is historical1567a39 evidence, not current clean successor validation."
       },
       "current_source_manifest": {
-        "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/duration-repair/source-manifest-2847b83.json",
-        "sha256": "a19105db7c6edb9b457eaef18a5cce47923f4ca8cd0533f3cd1c5bc2e6426720",
+        "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/duration-repair/source-manifest-369546b.json",
+        "sha256": "e39310f1886f0a36c4079a995b07b763804f387e02dff5236abac5b03d7a00a4",
         "source_files": 32,
         "mismatches": []
       },
