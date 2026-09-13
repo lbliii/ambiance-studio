@@ -1,5 +1,6 @@
 # TV quality, compact loops, and a reusable sound library
 
+Implementation update, September 13: [BASE-01 inventory and evidence](../research/audio-sources-2026-09-13/README.md) and [local AUDIO-01 source preparation](../AUDIO-SOURCES.md) are implemented within their stated bounds. The remaining profile, detail, loudness and library sections describe planned work; the [owning backlog](TV-QUALITY-AND-SOUND-LIBRARY.yaml) retains status.
 Planning date: September 11, 2026. Baseline inspected: `31390fb`.
 
 The intended product is a short, high-quality ambiance master built from reusable painted and audio sources, ready for full-screen TV playback and later repetition. Keep everyday production compact. A ten-hour movie is an optional delivery, not the working asset.

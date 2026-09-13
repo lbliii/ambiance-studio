@@ -14,7 +14,7 @@ Each finite command writes one JSON result to stdout: `ok`, `schema_version: 1`,
 
 `--out` on check/test commands writes the same result envelope to a file. CLI checks do not close quality gates; they are evidence for a separate review.
 
-`--out` on asset proofs, rendering and media verification instead names a **fresh artifact directory**. Those commands save their own reports alongside actual outputs. Audio outputs are immutable directories under the selected project's `audio/runs/`. Explicit recipe/batch/render paths are relative to the shell working directory; audio session and source paths are project-relative as described in the audio contract.
+`--out` on asset proofs, rendering and media verification instead names a **fresh artifact directory**. Those commands save their own reports alongside actual outputs. Audio mix outputs are immutable directories under the selected project's `audio/runs/`; source preparations use `audio/preparations/ID/`. Explicit recipe/batch/render paths are relative to the shell working directory; audio session and source paths are project-relative as described in the audio contract.
 
 Revision selections and asset/placement manifests use project-relative references. Their explicit command input/output filenames retain shell-relative semantics. `revision handoff --out` also creates a fresh artifact directory. Revision-aware commands identify working divergence separately from captured input integrity and review verdicts; see [revisions and editions](REVISIONS.md).
 
@@ -104,6 +104,9 @@ Revision selections and asset/placement manifests use project-relative reference
 | `render video --out DIR [--revision ID --view ID --edition ID --seconds N --repeats N --audio WAV --width N --height N --bitrate N]` | Encode H.264, optionally mux PCM, and verify output; edition binding retains exact named-view identity |
 | `media compose PICTURE --audio PCM --repeats N --out DIR [--revision ID --edition ID --view ID --picture-receipt FILE]` | Reuse compressed picture samples with selected PCM; verify the resulting edition |
 | `media verify FILE [--revision ID --edition ID --view ID] --out DIR [--frames N --loop-frames N --audio-tracks 0/1 --contact-time N --contact-frame N]` | Completely decode video/audio, check timing and save join/requested-contact evidence |
+| `audio source-inspect SOURCE --backend pcm/macos-afconvert` | Inspect actual format, decode identity and source hash; raw PCM needs explicit format/rate/channel flags |
+| `audio source-prepare SOURCE --backend BACKEND --source-sha256 HASH --preparation-id ID [--provenance FILE]` | Preserve original bytes and publish a fresh 48 kHz PCM24 preparation with exact source/tool/recipe identities |
+| `audio source-check RECEIPT` | Verify a prepared source and its dependencies without asserting a complete mix or audition |
 | `audio inspect SESSION` | Validate explicit selected PCM sources and inspect arrangement/levels |
 | `audio import-stems SESSION --session-id ID` | Preserve a legacy session and create a new executable session from its rendered stems |
 | `audio mix SESSION [--run-id ID --start N --duration N --solo STEM --mute STEM --gain STEM=DB]` | Render a versioned circular arrangement, aligned stems and numerical reports |
@@ -119,7 +122,7 @@ A blank project is the default for new artwork. It has no layers; its technical 
 
 Overview/next assessment creates no project reports, decode caches or writer locks. Missing runtime or exact cached movie decode evidence stays unknown with a diagnostic; explicit `plan evidence` or `plan coverage` acquires evidence. An explicit `--out FILE` still requests a result file. See the [assessment contract and replay](../reports/workflow-cli/WF-01-ASSESSMENT.md).
 
-Detailed contracts and examples: [inventory and asset proofs](PRODUCTION-INVENTORY.md), [crop/return preparation](ASSET-PREPARATION.md), [scene transactions](architecture/SCENE-TRANSACTIONS.md), [authored tracks](SCENE-CONTRACT.md), [rendering/media](RENDERING.md), [audio sessions](AUDIO-SESSION.md), [revisions and editions](REVISIONS.md). Edition audio may cite `--audio-run`, `--audio-provenance` or additional `--audio-session` inputs; their provenance requirements are described in the revision contract.
+Detailed contracts and examples: [inventory and asset proofs](PRODUCTION-INVENTORY.md), [crop/return preparation](ASSET-PREPARATION.md), [scene transactions](architecture/SCENE-TRANSACTIONS.md), [authored tracks](SCENE-CONTRACT.md), [rendering/media](RENDERING.md), [audio sessions](AUDIO-SESSION.md), [source preparation](AUDIO-SOURCES.md), [revisions and editions](REVISIONS.md). Edition audio may cite `--audio-run`, `--audio-provenance` or additional `--audio-session` inputs; their provenance requirements are described in the revision contract.
 
 Track files contain `version: 1`, a `tracks` object and optional `track_loop` (`closed` by default). Track values use the scene contract's units; rotation is radians. A batch can author a whole rig, including existing motions and per-cel sockets, in one file. Dry runs validate without writing history or the scene. `--expect-sha256` rejects stale edits under the project lock. Failed batches preserve the original scene.
 

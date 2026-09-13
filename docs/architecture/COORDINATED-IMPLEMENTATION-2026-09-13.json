@@ -102,7 +102,7 @@
       "client_thread_id": "client-new-thread:d6b601f2-1dd4-457d-8f03-3945a5560578",
       "worktree": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio",
       "first_assignment": "TV-QUALITY-AND-SOUND-LIBRARY.yaml BASE-01 then AUDIO-01",
-      "cursor": "970fa786-eed5-4501-aba7-6641d6e18a62:4",
+      "cursor": "970fa786-eed5-4501-aba7-6641d6e18a62:7",
       "leases": [
         "new audio source/preparation modules",
         "audio.py parser/service hooks",
@@ -112,9 +112,9 @@
       ],
       "host_id": "local",
       "baseline_commit": "00c64436543d0252fc0850f3ef58e686badda1b6",
-      "dispatch_state": "validating_with_necessary_followup",
-      "handoff": null,
-      "integration_commit": null,
+      "dispatch_state": "integrated",
+      "handoff": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/work/audio-source-evidence/handoff.json",
+      "integration_commit": "e495047",
       "early_artifacts": [
         {
           "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/docs/research/audio-sources-2026-09-13/inventory.json",
@@ -131,8 +131,26 @@
         "existing_audio_tests": 12,
         "artifact_verification": "Pending exact handoff logs and committed source identity."
       },
-      "candidate_commit": "f6678c6c31125b5f4828bbabdf16e5f634c6e8b5",
-      "worker_reported_progress": "Required-native suite is running on frozen f6678c6. Worker found a non-object legacy preparation error regression; retain S native slot for a narrow guard correction and final-source rerun."
+      "candidate_commit": "ea07370d45e7f7d8a6905223b68594fdb74d36db",
+      "worker_reported_progress": "Required-native suite is running on frozen f6678c6. Worker found a non-object legacy preparation error regression; retain S native slot for a narrow guard correction and final-source rerun.",
+      "integration_commits": [
+        "984734e",
+        "e495047"
+      ],
+      "coordinator_review": {
+        "state": "Reviewed format/backend, immutable publication, typed revision edges, CLI signatures and legacy correction. Verified 24 handoff/source/log/report identities plus 20 actual compressed-source replay/media identities.",
+        "verified_hashes": 44,
+        "full_suite_prior_commit": "f6678c6",
+        "full_suite_cases": 430,
+        "full_suite_python_tests": 417,
+        "full_suite_skips": 0,
+        "full_suite_report_sha256": "dfa192c8c435b4cb42d63d2edfb6395618af1c7fe39f19c5a58615290bb33826",
+        "corrected_commit": "ea07370",
+        "corrected_focused_tests": 47,
+        "corrected_focused_skips": 0
+      },
+      "retained_evidence": "/Users/lb/.codex/worktrees/cfeb/ambiance-studio/.ambiance/coordination/2026-09-13/audio-source-preparation",
+      "retention_note": "Exact evidence copy; source paths and captured receipts retain their original project identities."
     },
     {
       "stream": "D",
@@ -217,18 +235,14 @@
     "local_links_checked": 560,
     "git_diff_check": "passed"
   },
-  "native_test_queue": [
-    "S"
-  ],
+  "native_test_queue": [],
   "native_test_queue_note": "S finishes frozen original full suite, then its narrow legacy guard correction and focused native/legacy checks. The final corrected source is covered by the coordinator combined required-native run; no redundant second worker full suite.",
-  "active_native_test_owner": "S",
+  "active_native_test_owner": "coordinator",
   "combined_validation": {
-    "scope": "Model contract plus alpha diagnostics at 27ae5bf",
-    "model_checks": 10,
-    "raster_checks": 6,
-    "view_rendering_passed": 10,
-    "view_rendering_native_skipped": 1,
-    "package_audit": "passed",
-    "full_required_native": "Deferred until W and S integration; D exact-source native suite independently passed."
+    "state": "ready_to_run",
+    "scope": "All four integrated first assignments, public contracts, capability/backlog status and next-wave briefs",
+    "native_required": true,
+    "artifacts": "/Users/lb/.codex/worktrees/cfeb/ambiance-studio/.ambiance/coordination/2026-09-13/combined-suite",
+    "source_policy": "Commit and freeze the combined tree before starting. Final report is source-bound; completion ledger updates follow the run."
   }
 }
