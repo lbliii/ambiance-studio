@@ -53,7 +53,7 @@
       "worktree": "/Users/lb/.codex/worktrees/1fb5/ambiance-studio",
       "branch": "codex/workflow-guidance-wave2",
       "baseline_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
-      "dispatch_state": "final_review_corrections",
+      "dispatch_state": "locally_integrated_pending_validation",
       "cursor": "3eb0771e-775e-4022-af41-0e043619dc93:2",
       "baseline_verified": true,
       "interface": "Advisory catalog plus exact selected-pipeline gates; explicit working/review/release/revision/edition/view subjects, stable logical action IDs and separate freshness; workflow inspect/stage/explain and project next --guided. Revision-only inspection remains supported.",
@@ -79,11 +79,28 @@
         },
         {
           "issue": "Returned next action-page argv drops subject pagination and can switch to first selected movie entry",
-          "state": "reproduced via actual CLI with subject-offset 1/subject-limit 1; sent correction before full suite"
+          "state": "corrected in cf94887; coordinator reviewed returned-argv regression and exact source patch"
         }
       ],
-      "candidate_commit": "570d33260ca1b49b0320aacdbcde0f3b060af613",
-      "worker_identity_followup": "Project namespace added to action/subject IDs to reject unqualified stale IDs from a different project; replacement candidate pending."
+      "candidate_commit": "cf9488703b491924c9fc622ba1320e6faddc3f28",
+      "worker_identity_followup": "Implemented in cf94887 with cross-project stale-action rejection regression.",
+      "integration": {
+        "state": "local_pending_full_validation",
+        "commits": [
+          "a4c59d7",
+          "7315c41"
+        ],
+        "coordinator_review": "Reviewed all workflow modules, native operation adapters and final feedback/view/pagination corrections. Preserved model/audio hooks while merging workflow routes; 8 combined CLI contract tests pass.",
+        "remaining": "Final worker native suite, source-bound replay/handoff verification and combined native suite."
+      },
+      "full_validation": {
+        "state": "running",
+        "candidate_commit": "cf9488703b491924c9fc622ba1320e6faddc3f28",
+        "native_required": true,
+        "source_frozen": true,
+        "artifacts": "/tmp/wf2-native-cf94887",
+        "environment": "Explicit escalation for local loopback/Core Audio/AVFoundation services"
+      }
     },
     {
       "stream": "M2",
@@ -108,8 +125,8 @@
       "worktree": "/Users/lb/.codex/worktrees/e892/ambiance-studio",
       "branch": "codex/model-construction-c1-c2",
       "baseline_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
-      "dispatch_state": "validating",
-      "cursor": "968ca122-3068-4f0f-bb39-8fc91ed41861:3",
+      "dispatch_state": "locally_integrated",
+      "cursor": "968ca122-3068-4f0f-bb39-8fc91ed41861:4",
       "baseline_verified": true,
       "early_interface": "Immutable package closure and sealed manifest; ordinary scene/catalog lowering with tuple mapping. Proposed model build/inspect/lower/proof/check/admit; no renderer edits.",
       "interface": "Project-free model build/inspect/lower/proof/check/admit; immutable exact closure, ordinary-engine lowering and static named-state proof. Unsupported animated/cycle controls must fail explicitly. Technical library admission only.",
@@ -135,14 +152,19 @@
       },
       "candidate_commit": "260fe7c5a35a6ad4cdc6dd29e456d607189e7dd1",
       "full_validation": {
-        "state": "rerunning_with_native_access",
+        "state": "passed",
         "source_frozen": true,
         "native_required": true,
         "candidate_commit": "260fe7c5a35a6ad4cdc6dd29e456d607189e7dd1",
         "includes_D2_final_source": true,
         "artifacts": "/Users/lb/.codex/worktrees/e892/ambiance-studio/work/m2/native-suite-unsandboxed",
         "failed_sandbox_report": "/Users/lb/.codex/worktrees/e892/ambiance-studio/work/m2/native-suite/run.json",
-        "failed_sandbox_sha256": "d3fa1dd458bf523022548db17adfdd3448dcd7e6cdcbdf6ad9abf2ffd9455601"
+        "failed_sandbox_sha256": "d3fa1dd458bf523022548db17adfdd3448dcd7e6cdcbdf6ad9abf2ffd9455601",
+        "cases": 475,
+        "python_tests": 460,
+        "skips": 0,
+        "report_sha256": "8d7383b42fb70a3aee4a11d1ba5eb6b10e6548c4f1780844438f069ec148c6cd",
+        "tracked_tree_sha256": "edf8afe41163db50b4552320aac6e3d3048c985ff11b2c0d18e1b4a13e595048"
       },
       "current_replay": {
         "report": "/Users/lb/.codex/worktrees/e892/ambiance-studio/work/m2/replay-v2/evidence.json",
@@ -158,7 +180,7 @@
         "visual": "Inspected exact source-versus-assembly, solid-mask, square-left and arched-right PNGs; registration matches, pane openings visible, tilted objects inside viewport. Geometric fixture only."
       },
       "integration": {
-        "state": "local_pending_full_validation",
+        "state": "local_validated_candidate",
         "commits": [
           "ec62bc2",
           "b9de406",
@@ -166,6 +188,11 @@
         ],
         "coordinator_resolution": "Preserved audio project exemptions plus model project-free routes. United both route fixtures; all old signature values preserved and 8 CLI contract checks pass.",
         "validation_failure": "First native suite failed from sandbox loopback/Core Audio/AVFoundation restrictions. Preserved original report; approved escalated rerun on unchanged candidate is active."
+      },
+      "handoff": {
+        "commit": "6357ac89b47e60276ff3cb380b1276b6e61817a1",
+        "path": "/Users/lb/.codex/worktrees/e892/ambiance-studio/reports/model-construction/C1-C2-HANDOFF.md",
+        "scope": "Handoff/native metadata only; implementation remains tested 260fe7c bytes."
       }
     },
     {
@@ -328,22 +355,25 @@
           "4d6e9f5beb73e1aeb040a355b063af59c305a774"
         ],
         "all_six_changed_files_equal_candidate": true,
-        "final_full_suite": "Pending M2 adopted candidate and coordinator combined suite"
+        "final_full_suite": "Passed in M2 adopted 260fe7c bundle: all final renderer/regression source bytes verified by D2; 475 cases/460 Python/0 skips."
       },
       "handoff": {
         "path": "/Users/lb/.codex/worktrees/dbe1/ambiance-studio/work/canvas-sequence/handoff.json",
         "sha256": "23e2f0b2257990f442ef6536035cb1bfe9a38065342226a34ae93d3c0fe84ef5",
         "evidence_manifest_sha256": "861de3f1d3bd14df14463e8d2f43a8c9ae23e2220b7dc7ce1012c80f64bfc72e",
-        "final_proof_report_sha256": "3ad856857ee21a6f740090c5f306c15b6c4b215bbdf4134b898352f1f617e2d0"
+        "final_proof_report_sha256": "3ad856857ee21a6f740090c5f306c15b6c4b215bbdf4134b898352f1f617e2d0",
+        "coordinator_verified_manifest_entries": 1495,
+        "manifest_mismatches": [],
+        "native_addendum": "/Users/lb/.codex/worktrees/dbe1/ambiance-studio/work/canvas-sequence/m2-native-validation-addendum"
       }
     }
   ],
   "status_owner_note": "Dispatch/integration record only; owning workflow YAML, model plan and quality YAML retain implementation/acceptance status.",
   "shared_owner": "Coordinator owns broad cli/output/runtime/evidence/backlog/capability registration; listed route-only leases enable independent public CLI work and are reconciled on integration. New shared semantics require an early concrete contract, not a user approval gate.",
   "native_test_queue": [
-    "W2"
+    "coordinator"
   ],
-  "active_native_test_owner": "M2",
+  "active_native_test_owner": "W2",
   "native_test_policy": "One full native suite at a time on frozen source. D2 initial e74b72c passed; D2 holds through focused 06a3b53 checks then explicitly releases S2. S2 releases to M2; M2 full suite includes both final D2 code/test commits. Coordinator combined suite covers final integrated source. Focused checks and small necessary proofs may run independently.",
   "automation": {
     "id": "coordinate-studio-implementation",
@@ -397,10 +427,10 @@
     }
   ],
   "central_registration": {
-    "state": "model_audio_registered_workflow_pending",
-    "package_links": 626,
+    "state": "all_three_feature_families_registered_final_status_pending",
+    "package_links": 629,
     "package_errors": 0,
     "roadmap_tests": 2,
-    "remaining": "Register W2 after corrected handoff; run final combined native suite."
+    "remaining": "Final worker workflow validation and metadata; coordinator combined required-native suite."
   }
 }

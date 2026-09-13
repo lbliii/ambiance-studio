@@ -32,6 +32,10 @@ Revision selections and asset/placement manifests use project-relative reference
 | `studio status` / `studio stop` | Identify or stop the current registry's server |
 | `project latest [--channel review/release]` | Resolve the current selection to its exact movie and watch links |
 | `project overview [--stage STAGE --view ID --revision ID --out FILE]` | Current movies, separate selected/working identities, open criteria, available work and pure scoped readiness |
+| `workflow inspect [--subject working/review/release or --revision ID --edition ID] [--view ID]` | Read actual gates, pure coverage, exact selected entries and available work; omitted data has retrieval commands |
+| `workflow stage GATE [--details]` | Inspect the selected pipeline's criteria and native operation contracts, including preparation verbs |
+| `workflow explain ACTION_ID [--expect-assessment HASH]` | Explain a project-bound action; reject stale or substituted subjects/inputs |
+| `project next --guided [--subject working/review/release or --revision ID --edition ID]` | Opt into the shared workflow action schema; unflagged next remains compatible |
 | `delivery import FILE [--dry-run]` | Register an immutable movie set from captured editions or identity-bound legacy reports |
 | `delivery list` / `delivery inspect ID` | Inspect movie roles, identity and availability |
 | `delivery present ID --by NAME [--note TEXT --channel review/release --expect-selection HASH]` | Select a review or evidence-qualified release; preserve selection history |
@@ -127,7 +131,7 @@ A blank project is the default for new artwork. It has no layers; its technical 
 
 [Saved views](VIEWS.md) support portrait/landscape project setup, framing edits, checks, synchronized previews, paired raster proofs and single-view video export. Omitting `--view` preserves full authored-canvas rendering. Version-2 iteration recipes produce the Cartesian product of views and soundtrack editions, with resumable steps and one combined delivery.
 
-Overview/next assessment creates no project reports, decode caches or writer locks. Missing runtime or exact cached movie decode evidence stays unknown with a diagnostic; explicit `plan evidence` or `plan coverage` acquires evidence. An explicit `--out FILE` still requests a result file. See the [assessment contract and replay](../reports/workflow-cli/WF-01-ASSESSMENT.md).
+Overview/next assessment creates no project reports, decode caches or writer locks. Missing runtime or exact cached movie decode evidence stays unknown with a diagnostic; explicit `plan evidence` or `plan coverage` acquires evidence. An explicit `--out FILE` still requests a result file. See the [assessment contract and replay](../reports/workflow-cli/WF-01-ASSESSMENT.md) and [guided workflow inspection](../examples/workflow-guidance/README.md). Workflow selectors apply to inspect/stage/explain; --edition requires --revision, and --subject cannot be combined with --revision. Workflow outputs are advisory and retain native gate, coverage and observation authority.
 
 Detailed contracts and examples: [inventory and asset proofs](PRODUCTION-INVENTORY.md), [crop/return preparation](ASSET-PREPARATION.md), [scene transactions](architecture/SCENE-TRANSACTIONS.md), [authored tracks](SCENE-CONTRACT.md), [rendering/media](RENDERING.md), [audio sessions](AUDIO-SESSION.md), [source preparation](AUDIO-SOURCES.md), [portable audio library](AUDIO-LIBRARY.md), [local model construction](architecture/model-contract/construction-v1.md), [revisions and editions](REVISIONS.md). Edition audio may cite `--audio-run`, `--audio-provenance` or additional `--audio-session` inputs; their provenance requirements are described in the revision contract.
 

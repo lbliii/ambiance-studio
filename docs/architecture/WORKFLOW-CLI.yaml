@@ -51,7 +51,15 @@ tasks:
 
   - id: WF-02
     title: Add stage catalog and subject-aware inspection
-    status: proposed
+    status: in_progress
+    implementation:
+      contract: reports/workflow-cli/WF-02-03-GUIDANCE.md
+      replay: tests/replay_workflow_guidance.py
+      validation: >-
+        Implemented and locally integrated after source review, actual 39-call native CLI replay
+        and focused subject/action checks. Final worker and combined required-native suites are
+        pending in docs/architecture/COORDINATED-IMPLEMENTATION-WAVE2-2026-09-13.json.
+      limits: WF-04 through WF-07, model-operation guidance and artistic acceptance remain open.
     depends_on: [WF-01]
     size: medium
     paths:
@@ -77,7 +85,15 @@ tasks:
 
   - id: WF-03
     title: Connect expectations to concrete next actions
-    status: proposed
+    status: in_progress
+    implementation:
+      contract: reports/workflow-cli/WF-02-03-GUIDANCE.md
+      replay: tests/replay_workflow_guidance.py
+      validation: >-
+        Implemented and locally integrated after source review, actual 39-call native CLI replay
+        and focused subject/action checks. Final worker and combined required-native suites are
+        pending in docs/architecture/COORDINATED-IMPLEMENTATION-WAVE2-2026-09-13.json.
+      limits: WF-04 through WF-07, model-operation guidance and artistic acceptance remain open.
     depends_on: [WF-02]
     size: medium
     paths:
