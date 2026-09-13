@@ -87,6 +87,7 @@ function stop(){setPlaying(false);}
 function install(next){
   validateScene(next,catalog);scene=structuredClone(next);
   if(!scene.layers.length)throw Error('The editor requires at least one layer.');
+  compiled=compileScene(scene,catalog);
   selected=scene.layers.some(l=>l.id==='cottage')?'cottage':scene.layers[0].id;
   time=0;stop();$('edit-group').checked=false;
   $('timeline').max=compiled.clock.duration_frames-(scene.clock?.mode==='finite'?0:1);
