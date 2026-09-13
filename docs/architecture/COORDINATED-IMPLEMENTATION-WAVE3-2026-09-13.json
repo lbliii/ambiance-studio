@@ -136,7 +136,7 @@
       "branch": "codex/model-instances-wave3",
       "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
       "dispatch_state": "active",
-      "cursor": "ffefdcba-0a41-43f5-ba3d-53cf50e2b5a4:3",
+      "cursor": "ffefdcba-0a41-43f5-ba3d-53cf50e2b5a4:5",
       "interface": "Project-scoped model instance apply recipe, exact contained package pins and deterministic tuple IDs; managed-layer fingerprints and adoption conflict preview. Actual C1/C2 lantern lowering probe passes.",
       "baseline_verified": true,
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
@@ -144,7 +144,7 @@
       "transaction_refinement": "Active generation contains mutable working scene; captured previous config/scene and contained model packages remain immutable. Existing edit/restore/view/render/revision compatibility is still required.",
       "bounded_lowering_gap": "C1 static constant-cell keys at 0/1 seconds fail a host with a 2-second duration; this is an endpoint duration mismatch, not fps arithmetic. Granted constant-cell endpoints mapped to validated host interval, rejecting animated inputs beyond subset; actual finite-host compatibility remains required.",
       "focused_progress": {
-        "state": "repaired_frozen_candidate_replay_verified_queued",
+        "state": "frozen_candidate_native_running",
         "source": "worker-reported tests; current source reviewed for alias issue, not a frozen handoff",
         "reported_checks": [
           "dry/save/retry",
@@ -160,7 +160,7 @@
       },
       "candidate_commit": "fe2ab3eeffd587cb41df1dbd7bba9922adb65306",
       "full_validation": {
-        "state": "slot_granted",
+        "state": "running",
         "candidate_commit": "fe2ab3eeffd587cb41df1dbd7bba9922adb65306",
         "source_frozen": true,
         "clean_verified_by_coordinator": true,
@@ -629,7 +629,7 @@
     "report": "/private/tmp/ambiance-wave3-dispatch-package.json"
   },
   "list_threads_limitation": "New tasks may be omitted by list_threads. Preserve setup IDs and resolve actual IDs from worker messages/confirmed task state; never create duplicate replacements.",
-  "native_slot_state": "granted",
+  "native_slot_state": "running",
   "integration_package_audit": {
     "ok": true,
     "local_links_checked": 661,
