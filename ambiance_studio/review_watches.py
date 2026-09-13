@@ -11,7 +11,9 @@ from .errors import CommandError
 
 
 def selected_picture(project, gate):
-    watches = set(gate['watch'])
+    scopes = {'scene': 'scene', 'scene/scene.json': 'scene',
+              'assets': 'assets', 'assets/catalog.json': 'assets'}
+    watches = {scopes.get(Path(name).as_posix()) for name in gate['watch']}
     if not watches.intersection({'scene', 'assets'}):
         return {}, []
     configuration = project/'ambiance-project.json'

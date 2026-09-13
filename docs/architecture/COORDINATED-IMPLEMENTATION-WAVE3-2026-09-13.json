@@ -327,13 +327,23 @@
       },
       "candidate_commit": "369546b1533c9b65d3a94ebe9148037b0f492e91",
       "full_validation": {
-        "state": "running",
+        "state": "passed",
         "candidate_commit": "369546b1533c9b65d3a94ebe9148037b0f492e91",
         "source_frozen": true,
         "clean_verified_by_coordinator": true,
         "required_native": true,
         "artifacts": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/required-native-2",
-        "grant_reverified_clean_head": true
+        "grant_reverified_clean_head": true,
+        "slot_released": true,
+        "recorded_cases": 525,
+        "passed_cases": 525,
+        "python_tests": 509,
+        "skips": 0,
+        "report_sha256": "f3770f39dc3be5f9cd3a97f8a59e925a9c75a418556f3b9e677051d1f75f0599",
+        "source_manifest_sha256": "12cfa5910961c65735c894151bef5f516e434a8fa3eb50727783a2dc89667a5f",
+        "tracked_source_sha256": "e7f1280dca1adc45d6467029aa321e46f9e5246d0a715b0d45b62755993d85a5",
+        "coordinator_verified_source_files": 581,
+        "coordinator_verified": "Exact committed source,18 successful check entries,all581 source-file hashes and retained movie count/hash claims reverified."
       },
       "legacy_parity_reported": {
         "complete_state_samples": 485,
@@ -534,7 +544,7 @@
   "shared_owner": "Coordinator reconciles central CLI/output/evidence/backlog/capabilities. W3 owns optional global outcome guidance; M3 model transport and typed model evidence; T3 picture clocks/evaluation; A3 audio measurements/encoding. New shared semantics require a concrete interface and narrow lease, not user permission.",
   "bounded_prerequisite": "Integrated mc/1 and C1/C2 plus corrected renderer permit I1/I2 and independent P03 technical fixtures. Full model Phase 1/P00 seed/story/census/art requirements remain open.",
   "native_test_queue": [],
-  "active_native_test_owner": "T3",
+  "active_native_test_owner": null,
   "native_test_policy": "One committed frozen-source full native suite at a time across these tasks. Focused independent checks continue. Coordinator runs final combined required-native suite; reuse validated 516-case baseline.",
   "cross_stream_dependencies": [
     {
@@ -687,9 +697,9 @@
     "meaning": "After W3/A3 local integration; not final combined validation."
   },
   "shared_review_watch_repair": {
-    "state": "implemented_focused_checks_passed_peer_review_pending",
+    "state": "focused_checks_passed",
     "scope": "Legacy scene/assets folder watches additionally follow selected scene/catalog, catalog images and complete active model package closure. Gate-local malformed/missing inputs cannot pass; independent sound/intent and immutable revision scopes preserved; selection rechecked before receipt save.",
-    "regression": "17 studio tests,15 model instance tests and15 revision tests passed; includes real CLI placement, complete package closure mutation/recovery, pointer switch/restoration, independent sound/intent and concurrent selection change rejection.",
+    "regression": "18 studio,15 model instance and15 revision tests passed. Explicit canonical filename watches also covered after peer review.",
     "root_cause_proof": "/private/tmp/wave3-legacy-watch-mm37p9ad/repro.json"
   }
 }

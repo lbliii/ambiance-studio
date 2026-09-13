@@ -89,6 +89,16 @@ class StudioTests(unittest.TestCase):
         studio.write(self.project/'ambiance-project.json',{'version':999})
         self.assertEqual(self.status()['gates']['intent']['state'],'passed')
         self.assertEqual(self.status()['gates']['assets']['state'],'stale')
+    def test_explicit_selected_filename_watches_follow_generation(self):
+        self.configure_picture('first')
+        policy=studio.read(self.project/'pipeline.json')
+        for gate in policy['gates']:
+            gate['watch']=[{'scene':'scene/scene.json','assets':'assets/catalog.json'}.get(name,name) for name in gate['watch']]
+        studio.write(self.project/'pipeline.json',policy);self.all_pass()
+        self.configure_picture('second')
+        status=self.status()['gates']
+        self.assertEqual(status['animation']['state'],'stale');self.assertEqual(status['assets']['state'],'stale')
+        self.assertEqual(status['sound-design']['state'],'passed')
     def test_selection_change_during_recording_does_not_publish_receipt(self):
         self.configure_picture('first');self.record('intent');self.record('layout')
         from ambiance_studio.production_coverage import normalize_observations
