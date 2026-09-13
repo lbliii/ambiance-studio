@@ -87,7 +87,8 @@ def replay(out, *, finite=False):
             image=cli('render','frame','--view','authored','--time',frame/25,'--out',project/'renders'/('frame-'+str(frame)))
             frames['frame-'+str(frame)]={'file':image['output'],'sha256':digest(image['output']),'report':image['report']}
         proof=cli('render','views-proof','--view','portrait','--view','landscape','--start-frame',0,'--out',project/'renders/finite-views')
-        assert proof['frames']==29 and proof['source_end_frame_exclusive']==29
+        proof_receipt=studio.read(proof['report'])
+        assert proof['frames']==29 and proof_receipt['source_end_frame_exclusive']==29
         # A deterministic engineering tone exercises measured audio and an exact
         # finite encode. It is not a soundtrack or listening approval.
         import math, struct, wave
