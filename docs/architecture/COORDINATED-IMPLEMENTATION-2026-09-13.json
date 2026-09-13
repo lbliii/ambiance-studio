@@ -19,7 +19,7 @@
       "client_thread_id": "client-new-thread:1b7904db-2504-4bc8-a812-9c86fc6d195c",
       "worktree": "/Users/lb/.codex/worktrees/4fda/ambiance-studio",
       "first_assignment": "WORKFLOW-CLI.yaml WF-01",
-      "cursor": "b6119829-6e1b-4a78-846a-b6c52ee1cb7e:1",
+      "cursor": "b6119829-6e1b-4a78-846a-b6c52ee1cb7e:2",
       "leases": [
         "production_coverage.py",
         "coverage_context.py",
@@ -43,7 +43,7 @@
       "client_thread_id": "client-new-thread:a11e6000-b4f7-40d3-865c-a7caa47187cb",
       "worktree": "/Users/lb/.codex/worktrees/174e/ambiance-studio",
       "first_assignment": "Model Phase 1 / P00 shared technical contract subset",
-      "cursor": "03ed7568-3785-41e3-b59c-3157c3431a41:1",
+      "cursor": "03ed7568-3785-41e3-b59c-3157c3431a41:2",
       "leases": [
         "docs/architecture/model-contract/",
         "tests/fixtures/model-contract/",
@@ -54,7 +54,9 @@
       "baseline_commit": "00c64436543d0252fc0850f3ef58e686badda1b6",
       "dispatch_state": "active_confirmed",
       "handoff": null,
-      "integration_commit": null
+      "integration_commit": null,
+      "early_draft": "/Users/lb/.codex/worktrees/174e/ambiance-studio/docs/architecture/model-contract/README.md",
+      "draft_status": "Available; coordinator review pending, no accepted contract yet."
     },
     {
       "stream": "S",
@@ -63,7 +65,7 @@
       "client_thread_id": "client-new-thread:d6b601f2-1dd4-457d-8f03-3945a5560578",
       "worktree": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio",
       "first_assignment": "TV-QUALITY-AND-SOUND-LIBRARY.yaml BASE-01 then AUDIO-01",
-      "cursor": "970fa786-eed5-4501-aba7-6641d6e18a62:1",
+      "cursor": "970fa786-eed5-4501-aba7-6641d6e18a62:2",
       "leases": [
         "new audio source/preparation modules",
         "audio.py parser/service hooks",
@@ -91,7 +93,7 @@
       "client_thread_id": "client-new-thread:cbdd3fbe-a08c-4a3e-8b91-9593b3f63a65",
       "worktree": "/Users/lb/.codex/worktrees/b8ee/ambiance-studio",
       "first_assignment": "Amberwatch glue audit alpha localization follow-up",
-      "cursor": "a2bd9ec7-64f5-41a6-8506-becb502d90fc:1",
+      "cursor": "a2bd9ec7-64f5-41a6-8506-becb502d90fc:3",
       "leases": [
         "editor/audit.mjs",
         "focused alpha helper",
@@ -105,7 +107,8 @@
       "baseline_commit": "00c64436543d0252fc0850f3ef58e686badda1b6",
       "dispatch_state": "active_confirmed",
       "handoff": null,
-      "integration_commit": null
+      "integration_commit": null,
+      "followup_to_retain": "Preserve bounded repro of fresh-render versus alternating audit Canvas output discrepancy; may be existing renderer determinism issue. Do not infer root cause or alter engine without review."
     }
   ],
   "baseline_validation": {
@@ -115,8 +118,15 @@
     "clean_worktree": "/private/tmp/ambiance-clean-baseline-20260913",
     "clean_report": "/private/tmp/ambiance-clean-baseline-evidence-20260913/run.json",
     "clean_require_native": true,
-    "clean_state": "running",
-    "clean_exec_session": 86002
+    "clean_state": "passed",
+    "clean_exec_session": 86002,
+    "clean_exit_code": 0,
+    "clean_cases": 415,
+    "clean_python_tests": 402,
+    "clean_skips": 0,
+    "retained_report": "/Users/lb/.codex/worktrees/cfeb/ambiance-studio/.ambiance/coordination/2026-09-13/baseline/run.json",
+    "retained_report_sha256": "4b8dce23536e9e3bd29ec716d20118795809e9d48c2d1b690e4c9fab9fb8050c",
+    "retained_inputs_sha256": "3e03bac827dd87987bd0c625d6f0061d42418d3a4e81375cf2f621640eaf83bb"
   },
   "automation": {
     "id": "coordinate-studio-implementation",
@@ -138,5 +148,11 @@
     "package_audit": "passed",
     "local_links_checked": 560,
     "git_diff_check": "passed"
-  }
+  },
+  "native_test_queue": [
+    "D",
+    "W",
+    "S"
+  ],
+  "native_test_queue_note": "Coordinator clean baseline passed. D owns next full/native slot; W then S coordinate actual readiness. M design-only uses focused contract checks and package audit."
 }
