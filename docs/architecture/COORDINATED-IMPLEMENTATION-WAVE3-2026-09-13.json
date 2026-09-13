@@ -156,16 +156,17 @@
           "generation asset-root validation",
           "actual raster provider wrapper"
         ],
-        "next": "Required-native suite after A3 releases; all four lifecycle successor commits reviewed and needed."
+        "next": "Run required-native suite on frozenfe2ab3e, retain exact evidence, explicitly release slot."
       },
       "candidate_commit": "fe2ab3eeffd587cb41df1dbd7bba9922adb65306",
       "full_validation": {
-        "state": "queued_after_A3",
+        "state": "slot_granted",
         "candidate_commit": "fe2ab3eeffd587cb41df1dbd7bba9922adb65306",
         "source_frozen": true,
         "clean_verified_by_coordinator": true,
         "required_native": true,
-        "artifacts": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/native-final"
+        "artifacts": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/native-final",
+        "grant_reverified_clean_head": true
       },
       "finite_integration": "Coordinator-only final combined probe on reviewed T3+M3 commits; do not adopt known-failing intermediate clock stack. Static candidate full-native validation proceeds independently.",
       "public_replay": {
@@ -401,12 +402,12 @@
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
       "measurement_scope": "Initial streaming double-precision Node DSP backend at explicit 48kHz; ITU Annex1/2 coefficients. EBU fixture download HTTP403 retained; deterministic published-definition signal/tolerance validation and any independent conformance gaps must be stated.",
       "focused_progress": {
-        "state": "frozen_candidate_native_running",
+        "state": "full_native_passed_handoff_pending",
         "source": "worker-reported; candidate not frozen or coordinator-reviewed",
         "reported_tests_passed": 8,
         "reference_cases": "EBU-defined loudness 1-5 and dBTP 15-19 with published tolerances",
         "native_trial": "Worker reports format-specific applicableEncodeBitRates stereo48k max320000; global available list misleadingly includes384000. New preflight rejects384 before raster. Real native 256000 and explicit320000 passed mux/decode with96000 presented samples/2s, source/float32 hashes and legacy PCM16 half-LSB compatibility.",
-        "next": "Complete reserved native run and explicitly release slot.",
+        "next": "Documentation-only handoff, then coordinator local integration/combined validation.",
         "native_slot_requested": false,
         "reported_checks": "10 measurement,2 native,8 CLI,9 revision-contract,6 render-service plus iteration-step checks and package audit passed.",
         "development_replay": {
@@ -417,13 +418,21 @@
       "candidate_commit_reported": "2e7aefb",
       "candidate_commit": "2e7aefb87b3e4911bf19d6117b6cd8e2d9b72cde",
       "full_validation": {
-        "state": "running",
+        "state": "passed",
         "candidate_commit": "2e7aefb87b3e4911bf19d6117b6cd8e2d9b72cde",
         "source_frozen": true,
         "clean_verified_by_coordinator": true,
         "required_native": true,
         "artifacts": "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/native-final",
-        "grant_reverified_clean_head": true
+        "grant_reverified_clean_head": true,
+        "report_sha256": "9db12e775179702a3c54c445b61b7597c613f2aae3acfe9ab3e1cbb9519b7225",
+        "recorded_cases": 528,
+        "passed_cases": 528,
+        "python_tests": 513,
+        "skips": 0,
+        "tracked_source_sha256": "f39dab3b4f31377b53d3f357333e0e85d5140d11932a9dac6cc1fcfa2d28a38f",
+        "slot_released": true,
+        "coordinator_verified": "Report hash, exact commit, native_required true,528 passed recorded cases/513 Python/zero skips, all17 check entries passed.582 source-file hashes reverified."
       },
       "public_replay": {
         "path": "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/replay-final/replay.json",
@@ -458,10 +467,9 @@
   "shared_owner": "Coordinator reconciles central CLI/output/evidence/backlog/capabilities. W3 owns optional global outcome guidance; M3 model transport and typed model evidence; T3 picture clocks/evaluation; A3 audio measurements/encoding. New shared semantics require a concrete interface and narrow lease, not user permission.",
   "bounded_prerequisite": "Integrated mc/1 and C1/C2 plus corrected renderer permit I1/I2 and independent P03 technical fixtures. Full model Phase 1/P00 seed/story/census/art requirements remain open.",
   "native_test_queue": [
-    "M3",
     "T3"
   ],
-  "active_native_test_owner": "A3",
+  "active_native_test_owner": "M3",
   "native_test_policy": "One committed frozen-source full native suite at a time across these tasks. Focused independent checks continue. Coordinator runs final combined required-native suite; reuse validated 516-case baseline.",
   "cross_stream_dependencies": [
     {
@@ -605,7 +613,7 @@
     "report": "/private/tmp/ambiance-wave3-dispatch-package.json"
   },
   "list_threads_limitation": "New tasks may be omitted by list_threads. Preserve setup IDs and resolve actual IDs from worker messages/confirmed task state; never create duplicate replacements.",
-  "native_slot_state": "running",
+  "native_slot_state": "granted",
   "integration_package_audit": {
     "ok": true,
     "local_links_checked": 656,
