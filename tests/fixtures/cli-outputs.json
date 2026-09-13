@@ -70,5 +70,6 @@
   {"argv": ["model", "admit", "input", "--proof", "input", "--recipe", "input", "--out", "output"], "output": "artifact-directory", "command": "model admit"},
   {"argv": ["workflow", "inspect", "--out", "output"], "output": "result-envelope", "command": "workflow inspect"},
   {"argv": ["workflow", "stage", "intent", "--out", "output"], "output": "result-envelope", "command": "workflow stage"},
-  {"argv": ["workflow", "explain", "wf1.action", "--out", "output"], "output": "result-envelope", "command": "workflow explain"}
+  {"argv": ["workflow", "explain", "wf1.action", "--out", "output"], "output": "result-envelope", "command": "workflow explain"},
+  {"argv": ["workflow", "prepare", "action", "--out", "output"], "output": "artifact-directory", "command": "workflow prepare"}
 ]

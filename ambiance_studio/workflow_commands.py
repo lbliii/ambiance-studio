@@ -1,4 +1,4 @@
-"""Public read-only workflow routes with explicit report-output ownership."""
+"""Workflow inspection and native packets with explicit output ownership."""
 from pathlib import Path
 from .command_output import Output, add_output
 
@@ -26,6 +26,10 @@ def add_parsers(sub):
         if name=='explain':
             parser.add_argument('id');parser.add_argument('--expect-assessment')
         else:add_projection_options(parser)
+    parser=group.add_parser('prepare',help='Prepare fresh native inputs without executing the action')
+    parser.add_argument('id');add_selectors(parser);parser.add_argument('--stage')
+    parser.add_argument('--inputs',type=Path);parser.add_argument('--expect-assessment')
+    add_output(parser,Output.ARTIFACT,type=Path,required=True)
 
 
 def selectors(args):
@@ -34,5 +38,8 @@ def selectors(args):
 
 def run(args, project):
     from . import workflow
+    if args.action=='prepare':
+        from .workflow_packets import prepare
+        return prepare(project,args.id,args.out,inputs=args.inputs,expected=args.expect_assessment,**selectors(args))
     if args.action=='explain':return workflow.explain(project,args.id,args.expect_assessment,**selectors(args))
     return workflow.inspect(project,**selectors(args),**{key:getattr(args,key) for key in ['details','limit','offset','kind','subject_limit','subject_offset']})
