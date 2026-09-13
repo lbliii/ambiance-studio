@@ -134,6 +134,13 @@ class SourceTests(unittest.TestCase):
             with self.assertRaises(ValueError):self.prepare(provenance=provenance)
         self.assertFalse((self.project/'audio').exists())
 
+    def test_legacy_nonobject_preparation_keeps_invalid_input_error(self):
+        malformed=self.project/'legacy.json'
+        for value in [[],None,42]:
+            malformed.write_text(json.dumps(value))
+            with self.assertRaisesRegex(ValueError,'Unsupported external preparation fields'):
+                Collector(self.project).preparation(malformed,0)
+
     def test_revision_adapter_never_marks_source_as_complete_mix(self):
         r=self.prepare();collector=Collector(self.project);collector.preparation(Path(r['receipt']),0)
         self.assertEqual(collector.masters,[]);self.assertEqual(collector.sound_complete,set())

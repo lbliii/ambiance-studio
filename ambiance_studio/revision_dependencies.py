@@ -74,7 +74,8 @@ class Collector:
                 self.pin(audio.inside(folder, stem['path']), 'mix', 'stem', stem['sha256'])
 
     def preparation(self, path, index):
-        if audio.read_json(path).get('format') == 'ambiance-audio-preparation':
+        declaration = audio.read_json(path)
+        if isinstance(declaration, dict) and declaration.get('format') == 'ambiance-audio-preparation':
             from .audio_sources import validate_preparation
             prepared = validate_preparation(self.project, path)
             self.document(f'preparation-{index}.json', path, 'sound-design', 'audio_preparation')
