@@ -1,0 +1,142 @@
+{
+  "format": "studio-workstream-coordination",
+  "schema_version": 1,
+  "updated_utc": "2026-09-13",
+  "coordinator_thread_id": "01a0983d-40cf-71a3-bd9c-cb8308ad6efa",
+  "coordinator_worktree": "/Users/lb/.codex/worktrees/cfeb/ambiance-studio",
+  "baseline_commit": "00c64436543d0252fc0850f3ef58e686badda1b6",
+  "saved_project_id": "f5120268-3ebf-40fb-8c45-d50ab7c7bcff",
+  "plan": "docs/architecture/COORDINATED-IMPLEMENTATION-2026-09-13.md",
+  "status_owner_note": "Dispatch and integration only; original backlog files retain implementation and acceptance status.",
+  "authorization": "User requested analysis and parallel workstreams, then selected Start the ready workstreams and coordinate them. Initial four assignments are authorized. No paid generation, canonical film production, external publication or main merges dispatched.",
+  "list_threads_limitation": "The four create_thread calls returned client IDs. Each worker confirmed its real task ID via message and wait_threads confirmed active. list_threads omits these tasks; do not create duplicates or infer they are absent.",
+  "coordination_scope": "Manage these four initial assignments through local integration and combined validation. Reuse existing tasks for fixes. Present next-wave readiness when complete; do not automatically implement the whole film roadmap.",
+  "workers": [
+    {
+      "stream": "W",
+      "title": "Make workflow assessment read-only",
+      "thread_id": "01a09844-ad27-7d10-84a4-76e0e812981c",
+      "client_thread_id": "client-new-thread:1b7904db-2504-4bc8-a812-9c86fc6d195c",
+      "worktree": "/Users/lb/.codex/worktrees/4fda/ambiance-studio",
+      "first_assignment": "WORKFLOW-CLI.yaml WF-01",
+      "cursor": "b6119829-6e1b-4a78-846a-b6c52ee1cb7e:1",
+      "leases": [
+        "production_coverage.py",
+        "coverage_context.py",
+        "coverage_records.py",
+        "production.py assessment call sites",
+        "production_queries.py assessment call sites",
+        "iteration_plan.py assessment call sites",
+        "coverage_evidence.py read-only verifier path",
+        "deliveries.py production_scope pure assessment path"
+      ],
+      "host_id": "local",
+      "baseline_commit": "00c64436543d0252fc0850f3ef58e686badda1b6",
+      "dispatch_state": "active_confirmed",
+      "handoff": null,
+      "integration_commit": null
+    },
+    {
+      "stream": "M",
+      "title": "Define shared model and character contracts",
+      "thread_id": "01a09844-e1fb-7081-8d22-e3f4a04d21fb",
+      "client_thread_id": "client-new-thread:a11e6000-b4f7-40d3-865c-a7caa47187cb",
+      "worktree": "/Users/lb/.codex/worktrees/174e/ambiance-studio",
+      "first_assignment": "Model Phase 1 / P00 shared technical contract subset",
+      "cursor": "03ed7568-3785-41e3-b59c-3157c3431a41:1",
+      "leases": [
+        "docs/architecture/model-contract/",
+        "tests/fixtures/model-contract/",
+        "focused contract tests",
+        "model plan packet link; no phase status changes"
+      ],
+      "host_id": "local",
+      "baseline_commit": "00c64436543d0252fc0850f3ef58e686badda1b6",
+      "dispatch_state": "active_confirmed",
+      "handoff": null,
+      "integration_commit": null
+    },
+    {
+      "stream": "S",
+      "title": "Prepare reusable audio sources",
+      "thread_id": "01a09845-164c-7461-bdbf-d8eec2342b80",
+      "client_thread_id": "client-new-thread:d6b601f2-1dd4-457d-8f03-3945a5560578",
+      "worktree": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio",
+      "first_assignment": "TV-QUALITY-AND-SOUND-LIBRARY.yaml BASE-01 then AUDIO-01",
+      "cursor": "970fa786-eed5-4501-aba7-6641d6e18a62:1",
+      "leases": [
+        "new audio source/preparation modules",
+        "audio.py parser/service hooks",
+        "revision_dependencies.py Collector.preparation new typed adapter",
+        "focused audio tests"
+      ],
+      "host_id": "local",
+      "baseline_commit": "00c64436543d0252fc0850f3ef58e686badda1b6",
+      "dispatch_state": "active_confirmed",
+      "handoff": null,
+      "integration_commit": null,
+      "early_artifacts": [
+        {
+          "path": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio/docs/research/audio-sources-2026-09-13/inventory.json",
+          "sha256": "e2e5f00257e23b8926bd3b82f4f2cf7659247aa47cf4d608fdb02536fd6db1ec",
+          "coordinator_hash_verified": true,
+          "meaning": "Read-only candidate source inventory; not an audition or accepted preparation capability."
+        }
+      ]
+    },
+    {
+      "stream": "D",
+      "title": "Localize alpha defects in scene proofs",
+      "thread_id": "01a09845-421d-7de2-9227-a9ab60382edd",
+      "client_thread_id": "client-new-thread:cbdd3fbe-a08c-4a3e-8b91-9593b3f63a65",
+      "worktree": "/Users/lb/.codex/worktrees/b8ee/ambiance-studio",
+      "first_assignment": "Amberwatch glue audit alpha localization follow-up",
+      "cursor": "a2bd9ec7-64f5-41a6-8506-becb502d90fc:1",
+      "leases": [
+        "editor/audit.mjs",
+        "focused alpha helper",
+        "tools/render/outputs.mjs",
+        "tools/views-proof.mjs",
+        "tools/render/receipt.mjs diagnostic artifact helper",
+        "ambiance_studio/preview.py views_proof_routes",
+        "focused raster/proof tests"
+      ],
+      "host_id": "local",
+      "baseline_commit": "00c64436543d0252fc0850f3ef58e686badda1b6",
+      "dispatch_state": "active_confirmed",
+      "handoff": null,
+      "integration_commit": null
+    }
+  ],
+  "baseline_validation": {
+    "initial_run": "/private/tmp/ambiance-workstreams-baseline-20260913/run.json",
+    "initial_valid_baseline": false,
+    "initial_observation": "All JS checks passed. Localhost bind permission errors caused Python failures; native checks were optional/skipped. Coordinator created dispatch docs during execution, invalidating source identity and creating a transient missing-ledger package link. Not a demonstrated main-code regression.",
+    "clean_worktree": "/private/tmp/ambiance-clean-baseline-20260913",
+    "clean_report": "/private/tmp/ambiance-clean-baseline-evidence-20260913/run.json",
+    "clean_require_native": true,
+    "clean_state": "running",
+    "clean_exec_session": 86002
+  },
+  "automation": {
+    "id": "coordinate-studio-implementation",
+    "kind": "heartbeat",
+    "status": "ACTIVE",
+    "interval_minutes": 15,
+    "scope": "Four first assignments through local integration, validation and next-wave readiness"
+  },
+  "next_wave_candidates": [
+    "WF-02/03 after integrated WF-01",
+    "Model construction after integrated shared contract",
+    "P02/P03 and fixed-contract P04 after P00 technical contracts, with full P00/film prerequisites explicit",
+    "TV-01 after BASE-01; TV-02 after TV-01",
+    "LIB-01 and quality AUDIO-02 after quality AUDIO-01"
+  ],
+  "blocking_decisions": [],
+  "coordinator_branch": "codex/coordinated-studio-restart",
+  "coordination_validation": {
+    "package_audit": "passed",
+    "local_links_checked": 560,
+    "git_diff_check": "passed"
+  }
+}
