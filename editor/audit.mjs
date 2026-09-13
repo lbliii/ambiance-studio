@@ -11,7 +11,7 @@ export function auditScene(scene,catalog,{coverageRect=null}={}){
   const [vx,vy,vw,vh]=coverageRect??[0,0,W,H];
   let maxAttachmentError=0,minCoverageMargin=Infinity;
   const closure=JSON.stringify(rig.sample(0))===JSON.stringify(rig.sample(T));
-  if(!closure)failures.push({check:'state closure'});
+  if(rig.clock.mode==='loop'&&!closure)failures.push({check:'state closure'});
   if(!coverage.length)warnings.push('No coverage plate declared; geometric coverage was not checked.');
   for(let frame=0;frame<N;frame++){
     const states=rig.sample(frame/fps),byId=new Map(states.map(s=>[s.id,s]));
@@ -32,11 +32,11 @@ export function auditScene(scene,catalog,{coverageRect=null}={}){
     }
   }
   return {ok:!failures.length,engine_version:ENGINE_VERSION,scene:scene.id,frame_count:N,
-    state_closure:closure,attachment_count:scene.layers.filter(l=>l.attach).length,max_attachment_error_pixels:maxAttachmentError,
+    state_closure:closure,state_closure_required:rig.clock.mode==='loop',clock:rig.clock.frame(N),attachment_count:scene.layers.filter(l=>l.attach).length,max_attachment_error_pixels:maxAttachmentError,
     coverage_layers:coverage,min_coverage_margin_local_pixels:Number.isFinite(minCoverageMargin)?minCoverageMargin:null,
     failure_count:failures.length,failures:failures.slice(0,30),warnings,
     limits:['Geometric coverage assumes declared plates are opaque; browser pixel audit checks actual composite alpha at preview resolution.',
-      'The evaluator wraps time by design. State closure does not establish cel artwork continuity or the encoded video join.',
+      rig.clock.mode==='finite'?'Finite endpoint N is held for inspection; output contains frames [0,N). No loop closure is required.':'The evaluator wraps time by design. State closure does not establish cel artwork continuity or the encoded video join.',
       'Attachments follow authored sockets; this does not detect an incorrectly placed socket in the painting.']};
 }
 
@@ -85,7 +85,7 @@ export async function auditPixels(scene,catalog,images,onProgress=()=>{}){
   onProgress(N,N);
   return {ok:!uncoveredFrames,resolution:[W,H],frames:N,uncovered_frames:uncoveredFrames,
     worst_frame:worstFrame,max_uncovered_pixels:maxUncovered,last_to_first_rgb_difference:seam,
-    adjacent_difference_p95:p95,seam_review_suggested:seam>Math.max(.01,p95*2),
+    adjacent_difference_p95:p95,seam_review_suggested:scene.clock?.mode!=='finite'&&seam>Math.max(.01,p95*2),
     limits:['Low-resolution composite pixel check only. Small fringes, fine cel jitter, artistic continuity and encoded media need separate inspection.',
       'Seam difference is an attention cue, not a perceptual pass/fail decision.']};
 }
@@ -157,7 +157,7 @@ export async function auditViewPixels(scene,catalog,images,ids,createCanvas,onPr
   }
   const views=Object.fromEntries([...rows].map(([id,row])=>{
     const {first,previous,deltas,worstPixels,...report}=row,sorted=deltas.sort((a,b)=>a-b),p95=sorted[Math.floor((sorted.length-1)*.95)]||0,seam=delta(first,previous);
-    return [id,{...report,ok:!row.uncovered_frames,last_to_first_rgb_difference:seam,adjacent_difference_p95:p95,seam_review_suggested:seam>Math.max(.01,p95*2)}];
+    return [id,{...report,ok:!row.uncovered_frames,last_to_first_rgb_difference:seam,adjacent_difference_p95:p95,seam_review_suggested:scene.clock?.mode!=='finite'&&seam>Math.max(.01,p95*2)}];
   }));
   onProgress(frames,frames);
   return {ok:Object.values(views).every(v=>v.ok),views,raster_plan:plan,

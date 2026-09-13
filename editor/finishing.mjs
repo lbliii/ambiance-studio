@@ -1,3 +1,4 @@
+import {compileClock,consumerTime,isClockContext,validateCycleReference,wrapTime} from './clock.mjs';
 // Shared, deterministic painted-image finishing. RGB computations use linear
 // sRGB; matte samples are data. This is authored 2D compositing, not recovered 3D.
 const object=v=>v&&typeof v==='object'&&!Array.isArray(v);
@@ -43,10 +44,11 @@ export function validateFinishing(scene,catalog){
   const signals=new Set();
   for(const name of ['signals','lights','shadows','reflections','illuminations'])if(f[name]!==undefined&&!Array.isArray(f[name]))throw Error(`${name} must be an array`);
   for(const s of f.signals||[]){
-    fields(s,['id','layer','values','keys','interpolation'],'signal');
+    fields(s,['id','layer','values','keys','interpolation','local_cycle'],'signal');
+    const duration=validateCycleReference(scene,s).duration,closed=scene.clock?.mode!=='finite'||s.local_cycle!==undefined;
     if(typeof s.id!=='string'||!s.id||signals.has(s.id))throw Error('Invalid/duplicate signal');signals.add(s.id);
-    if(s.layer!==undefined){layer(s.layer);if(s.keys!==undefined||s.interpolation!==undefined||!Array.isArray(s.values)||s.values.length!==(assets.get(layers.get(s.layer).asset).atlas?.frame_count||1))throw Error('Cel signal requires one value per source cel');s.values.forEach(v=>range(v,0,8,'signal value'));}
-    else{if(s.values!==undefined||!['linear','smoothstep','hold'].includes(s.interpolation)||!Array.isArray(s.keys)||s.keys.length<2)throw Error('Signal requires cel source or closed keys');let last=-1;for(const key of s.keys){vec(key,2,'signal key',0,Math.max(T,8));if(key[0]<=last||key[0]>T||key[1]>8)throw Error('Invalid signal keys');last=key[0];}if(s.keys[0][0]!==0||last!==T||s.keys[0][1]!==s.keys.at(-1)[1])throw Error('Signal keys must close the picture loop');}
+    if(s.layer!==undefined){layer(s.layer);if(s.local_cycle!==undefined||s.keys!==undefined||s.interpolation!==undefined||!Array.isArray(s.values)||s.values.length!==(assets.get(layers.get(s.layer).asset).atlas?.frame_count||1))throw Error('Cel signal requires one value per source cel');s.values.forEach(v=>range(v,0,8,'signal value'));}
+    else{if(s.values!==undefined||!['linear','smoothstep','hold'].includes(s.interpolation)||!Array.isArray(s.keys)||s.keys.length<2)throw Error('Signal requires cel source or closed keys');let last=-1;for(const key of s.keys){vec(key,2,'signal key',0,Math.max(duration,8));if(key[0]<=last||key[0]>duration||key[1]>8)throw Error('Invalid signal keys');last=key[0];}if(s.keys[0][0]!==0||last!==duration||(closed&&s.keys[0][1]!==s.keys.at(-1)[1]))throw Error('Signal keys must close the picture loop');}
   }
   const signal=s=>{if(s!==undefined&&!signals.has(s))throw Error(`Unknown signal: ${s}`);};
   const seen=new Set();const id=e=>{if(typeof e.id!=='string'||!e.id||seen.has(e.id))throw Error('Invalid/duplicate finishing effect ID');seen.add(e.id);};
@@ -89,8 +91,8 @@ export function validateFinishing(scene,catalog){
 // Shared by bindings and finishing; readState resolves the same dependency graph.
 export function sampleSignal(s,readState,time,T){
   if(s.layer!==undefined){const l=readState(s.layer);return l.visible?s.values[l.cell]*l.opacity:0;}
-  const t=((time%T)+T)%T;let i=0;while(i<s.keys.length-2&&t>=s.keys[i+1][0])i++;
-  const [a,x]=s.keys[i],[b,y]=s.keys[i+1];let u=(t-a)/(b-a);
+  const t=isClockContext(time)?consumerTime(time,s.local_cycle).seconds:wrapTime(time,T);let i=0;while(i<s.keys.length-2&&t>=s.keys[i+1][0])i++;
+  const [a,x]=s.keys[i],[b,y]=s.keys[i+1];if(t>=b)return y;let u=(t-a)/(b-a);
   if(s.interpolation==='hold')u=0;else if(s.interpolation==='smoothstep')u=u*u*(3-2*u);
   return x+(y-x)*u;
 }
@@ -103,7 +105,7 @@ export function finishingDiagnostics(scene,catalog,time=0,states=[]){
   const warnings=[];
   for(const l of scene.layers)if(l.attach&&(f.groups?.[scene.layers.find(p=>p.id===l.attach.layer)?.group]))warnings.push({layer:l.id,code:'GROUP_GRADE_EXPLICIT',message:'Group grades apply to direct group members only; attached children need explicit instance grades.'});
   for(const e of f.shadows||[])if(!scene.layers.find(l=>l.id===e.caster)?.sockets?.ground&&!catalog.assets.find(a=>a.id===scene.layers.find(l=>l.id===e.caster)?.asset)?.sockets?.ground)warnings.push({effect:e.id,code:'GROUND_ESTIMATED',message:'No ground socket; projection uses full-cell bottom center. Author a ground socket for padded sprites.'});
-  return {ok:true,enabled:true,pipeline:'linear-srgb / premultiplied compositing / srgb output',mask_assets:finishingAssetIds(scene),grade_order:['asset','direct group','instance','lights','composite','scene grade'],signals:states.length?signalValues(f,new Map(states.map(s=>[s.id,s])),time,scene.canvas.loop_seconds):null,lights:(f.lights||[]).length,shadows:(f.shadows||[]).length,reflections:(f.reflections||[]).length,illuminations:(f.illuminations||[]).length,warnings,limits:['Authored 2D projections; no recovered geometry or physically based material lighting.','Inputs must be sRGB artwork; masks are luminance × alpha data. No automatic ICC/profile conversion.','Group grades are direct membership, independent of transform parenting.','Clipping diagnostics require raster inspection; configuration validation is not artistic approval.']};
+  return {ok:true,enabled:true,pipeline:'linear-srgb / premultiplied compositing / srgb output',mask_assets:finishingAssetIds(scene),grade_order:['asset','direct group','instance','lights','composite','scene grade'],signals:states.length?signalValues(f,new Map(states.map(s=>[s.id,s])),isClockContext(time)?time:compileClock(scene).seconds(time),scene.canvas.loop_seconds):null,lights:(f.lights||[]).length,shadows:(f.shadows||[]).length,reflections:(f.reflections||[]).length,illuminations:(f.illuminations||[]).length,warnings,limits:['Authored 2D projections; no recovered geometry or physically based material lighting.','Inputs must be sRGB artwork; masks are luminance × alpha data. No automatic ICC/profile conversion.','Group grades are direct membership, independent of transform parenting.','Clipping diagnostics require raster inspection; configuration validation is not artistic approval.']};
 }
 function curve(v,knots){if(!knots)return v;v=clamp(v);let i=0;while(i<knots.length-2&&v>knots[i+1][0])i++;const [a,x]=knots[i],[b,y]=knots[i+1];return x+(y-x)*(v-a)/(b-a);}
 export function gradeRGB(rgb,g,weight=1){
@@ -149,7 +151,7 @@ export function drawFinished(canvas,scene,catalog,images,time,states,options={})
   const ctx=canvas.getContext('2d'),scratch=make(W,H),sc=scratch.getContext('2d');
   const buffer=new Float32Array(W*H*3),baseColor=rgb(scene.canvas.background),debug=!['beauty','ungraded'].includes(pass);
   for(let i=0;i<buffer.length;i+=3){buffer[i]=debug?0:baseColor[0];buffer[i+1]=debug?0:baseColor[1];buffer[i+2]=debug?0:baseColor[2];}
-  const byId=new Map(states.map(s=>[s.id,s])),layers=new Map(scene.layers.map(l=>[l.id,l])),signals=signalValues(f,byId,time,scene.canvas.loop_seconds);
+  const byId=new Map(states.map(s=>[s.id,s])),layers=new Map(scene.layers.map(l=>[l.id,l])),signals=signalValues(f,byId,isClockContext(time)?time:compileClock(scene).seconds(time),scene.canvas.loop_seconds);
   const intensity=e=>e.signal?signals[e.signal]:1;
   const zone=(f.lights||[]).map(l=>({...l,colorRGB:rgb(l.color),inverse:l.anchor_layer?inv(byId.get(l.anchor_layer).matrix):null}));
   let clipped=0;

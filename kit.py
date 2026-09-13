@@ -106,7 +106,8 @@ def validate(scene_path, catalog_path=None, project_root=None):
             cycle = layer.get('cycle_seconds')
             require(positive(cycle), f'{id}: missing positive cel cycle')
             if positive(cycle):
-                require(abs(duration/cycle-round(duration/cycle)) < 1e-8, f'{id}: cel cycle must divide visual loop')
+                if scene.get('clock', {}).get('mode') != 'finite' and 'local_cycle' not in layer:
+                    require(abs(duration/cycle-round(duration/cycle)) < 1e-8, f'{id}: cel cycle must divide visual loop')
                 cycles.append(dict(layer=id, seconds=cycle))
             phase = layer.get('phase_frames',0)
             require(number(phase) and float(phase).is_integer() and phase >= 0, f'{id}: phase must be a non-negative integer')

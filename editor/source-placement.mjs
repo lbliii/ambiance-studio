@@ -1,5 +1,5 @@
 // Coordinate authoring over the same matrices used by preview and export.
-import {compileScene,validateScene,point,multiply,inverseMatrix,translation,wrapTime,sampleLayerMotion,sampleLayerAppearance} from './engine.mjs';
+import {compileScene,validateScene,point,multiply,inverseMatrix,translation,sampleLayerMotion,sampleLayerAppearance} from './engine.mjs';
 const finite=n=>typeof n==='number'&&Number.isFinite(n);
 const pair=v=>Array.isArray(v)&&v.length===2&&v.every(finite);
 const fields=(value,allowed,label)=>{if(!value||typeof value!=='object'||Array.isArray(value)||Object.keys(value).some(k=>!allowed.includes(k)))throw Error(`Invalid ${label} fields`);};
@@ -89,12 +89,13 @@ export function reparentAtTime(scene,catalog,op){
   if(!layer||!scene.layers.some(l=>l.id===op.to))throw Error('Unknown child or parent layer');
   if(['x','y','scale','rotation'].some(k=>layer.tracks?.[k]))throw Error('Reparent cannot rebase child transform tracks; use an explicit authored-track revision');
   if(scene.bindings?.links.some(b=>b.target.layer===layer.id&&['x','y','scale','rotation','opacity'].includes(b.target.channel)))throw Error('Reparent cannot rebase bound child channels; author an explicit binding revision');
-  const beforeLayer=structuredClone(layer),before=compileScene(scene,catalog).sample(op.at_seconds),old=before.find(s=>s.id===op.layer),parent=before.find(s=>s.id===op.to);
+  const rig=compileScene(scene,catalog),context=rig.clock.seconds(op.at_seconds);
+  const beforeLayer=structuredClone(layer),before=rig.sample(context),old=before.find(s=>s.id===op.layer),parent=before.find(s=>s.id===op.to);
   if(!parent.socketLocal[op.socket])throw Error('Missing target socket');
   const parentMatrix=multiply(parent.matrix,translation(...parent.socketLocal[op.socket]));
   const local=multiply(inverseMatrix(parentMatrix),old.matrix),geometry=orthogonalGeometry(local,layer.id);
   if(Math.abs(geometry.sx-geometry.sy)>1e-9*Math.max(geometry.sx,geometry.sy))throw Error('Reparent needs unsupported nonuniform matrix scale');
-  const t=wrapTime(op.at_seconds,scene.canvas.loop_seconds),motion=sampleLayerMotion(layer,t,scene.canvas.loop_seconds),appearance=sampleLayerAppearance(layer,t);
+  const motion=sampleLayerMotion(layer,context),appearance=sampleLayerAppearance(layer,context);
   layer.x=local[4]/scene.canvas.width-motion.x;layer.y=local[5]/scene.canvas.height-motion.y;
   layer.rotation=geometry.rotation-motion.rotation;layer.scale=geometry.sx;
   if(old.visible&&!parent.visible)throw Error(`Cannot preserve visible child under hidden parent: ${parent.id}`);

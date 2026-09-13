@@ -1,4 +1,4 @@
-import {drawScene,compileScene,point,inverseVector,validateScene} from './engine.mjs';
+import {drawScene,compileScene,sampleLayerMotion,point,inverseVector,validateScene} from './engine.mjs';
 import {auditScene,auditPixels,auditViews,auditViewPixels} from './audit.mjs';
 import {viewIds,resolveView,planViews} from './views.mjs';
 import {createStageRenderer} from './stage-raster.mjs';
@@ -75,7 +75,7 @@ function render(changed=true){
       $('view-status').textContent=`Shared time ${time.toFixed(3)} s · preview ceiling 640 px. Saved output dimensions are shown above.`;
     }catch(e){$('view-status').textContent=`Output preview unavailable: ${e.message}`;}
   }
-  $('time').value=`${time.toFixed(2)} / ${scene.canvas.loop_seconds} s`;
+  $('time').value=`${time.toFixed(2)} / ${scene.canvas.loop_seconds} s${scene.clock?.mode==='finite'&&time>=scene.canvas.loop_seconds?' · authored endpoint':''}`;
   $('view-time').value=$('time').value;
   $('timeline').value=Math.round(time*scene.canvas.fps);
   $('view-timeline').value=$('timeline').value;
@@ -89,8 +89,11 @@ function install(next){
   if(!scene.layers.length)throw Error('The editor requires at least one layer.');
   selected=scene.layers.some(l=>l.id==='cottage')?'cottage':scene.layers[0].id;
   time=0;stop();$('edit-group').checked=false;
-  $('timeline').max=Math.round(scene.canvas.loop_seconds*scene.canvas.fps)-1;
+  $('timeline').max=Math.round(scene.canvas.loop_seconds*scene.canvas.fps)-(scene.clock?.mode==='finite'?0:1);
   $('view-timeline').max=$('timeline').max;
+  $('timeline').labels[0].textContent=scene.clock?.mode==='finite'?'Frame position · endpoint available for inspection':'Loop position';
+  $('view-timeline').labels[0].textContent=scene.clock?.mode==='finite'?'Output frame position':'Output loop position';
+  $('join').textContent=scene.clock?.mode==='finite'?'Preview the ending':'Preview the join';
   $('title').textContent=scene.title;
   $('stage-size').textContent=`${scene.canvas.width} × ${scene.canvas.height}`;
   $('stage').setAttribute('aria-label','Authored painting with independently animated layers. Select a layer, then drag in the picture to move it.');
@@ -126,10 +129,10 @@ async function start(){
   requestAnimationFrame(tick);
 }
 function tick(now){
-  if(playing){time=(time+(now-last)/1000)%scene.canvas.loop_seconds;render(false);}
+  if(playing){const next=time+(now-last)/1000;if(scene.clock?.mode==='finite'){const end=(compiled.clock.duration_frames-1)/scene.canvas.fps;time=Math.min(next,end);if(next>=end)stop();}else time=next%scene.canvas.loop_seconds;render(false);}
   last=now;requestAnimationFrame(tick);
 }
-$('play').onclick=$('view-play').onclick=()=>setPlaying(!playing);
+$('play').onclick=$('view-play').onclick=()=>{if(!playing&&scene.clock?.mode==='finite'&&time>=(compiled.clock.duration_frames-1)/scene.canvas.fps)time=0;setPlaying(!playing);};
 for(const id of ['timeline','view-timeline'])$(id).oninput=()=>{stop();time=Number($(id).value)/scene.canvas.fps;render();};
 $('layer').onchange=()=>{selected=$('layer').value;$('edit-group').checked=false;refreshFields();render();};
 $('edit-group').onchange=()=>{refreshFields();render();};
@@ -203,10 +206,10 @@ $('attachment').onchange=()=>{
     delete l.attach;l.depth=old.depth;
     const next=compileScene(scene,catalog).sample(time).find(s=>s.id===l.id),parent=next.parent;
     const local=inverseVector(parent,old.matrix[4]-parent[4],old.matrix[5]-parent[5]);
-    const motion=l.motion,p=2*Math.PI*((time%scene.canvas.loop_seconds)/scene.canvas.loop_seconds),q=motion?p*motion.cycles+motion.phase:0;
-    l.x=local[0]/scene.canvas.width-(motion?.x_amplitude||0)*Math.sin(q);l.y=local[1]/scene.canvas.height-(motion?.y_amplitude||0)*Math.sin(2*q);
+    const motion=sampleLayerMotion(l,compiled.clock.seconds(time));
+    l.x=local[0]/scene.canvas.width-motion.x;l.y=local[1]/scene.canvas.height-motion.y;
     l.scale=Math.hypot(old.matrix[0],old.matrix[1])/Math.hypot(parent[0],parent[1]);
-    l.rotation=Math.atan2(old.matrix[1],old.matrix[0])-Math.atan2(parent[1],parent[0])-(motion?.rotation_amplitude||0)*Math.sin(q+.3);
+    l.rotation=Math.atan2(old.matrix[1],old.matrix[0])-Math.atan2(parent[1],parent[0])-motion.rotation;
   }
   $('edit-group').checked=false;refreshFields();render();setStatus('Attachment changed. Export the scene to keep it.');
 };
