@@ -43,13 +43,13 @@
       "worktree": "/Users/lb/.codex/worktrees/61c0/ambiance-studio",
       "branch": "codex/wave3-workflow-packets-outcomes",
       "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
-      "dispatch_state": "active",
-      "cursor": "94fa07e9-c120-463c-8e93-bef403873fbf:4",
+      "dispatch_state": "complete",
+      "cursor": "94fa07e9-c120-463c-8e93-bef403873fbf:6",
       "interface": "Global --guidance off|auto|full default off with separate ambiance-operation-guidance v1; fresh workflow prepare packets use native validation; global metadata removed before native Namespace forwarding.",
       "baseline_verified": true,
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
       "focused_progress": {
-        "state": "full_native_passed_handoff_pending",
+        "state": "reviewed_locally_integrated",
         "source": "worker update; candidate not frozen or coordinator-reviewed",
         "native_slot_requested": false,
         "reported_behavior": [
@@ -58,7 +58,7 @@
           "Review drafts remain not-run; no inferred recorder. Complete iteration packets expose preflight, execution still needs explicit by.",
           "Auto guidance reads native outcome fields; full guidance uses fresh exact-subject assessment or explicit unavailable diagnostic."
         ],
-        "next": "Final documentation handoff; no production source changes.",
+        "next": "Coordinator central registration and final combined validation.",
         "reported_checks": "Worker reports 56 existing/new focused tests plus final legacy review/watched-parent/delivery-wide cases passed; 24-call native CLI replay passed, earlier restricted failure retained."
       },
       "candidate_commit": "0ccabe4198d91a3b56afbcd2bbad004b10847d44",
@@ -77,7 +77,9 @@
         "tracked_source_sha256": "2e1cafa4ceeaede5415e6589131b4aaa273f7fd0a475d130398639844033ccff",
         "slot_released": true,
         "coordinator_verified": "Report hash, exact commit, native_required true, passed state, all17 checks and544 recorded cases passed. Final handoff pending.",
-        "python_tests": 529
+        "python_tests": 529,
+        "coordinator_verified_source_files": 580,
+        "source_manifest_sha256": "6b449b1d5d334f9e74562c02b9043badb42e246f491580e3d2e832efef5e3303"
       },
       "public_replay": {
         "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/run.json",
@@ -93,6 +95,22 @@
       "coordinator_review": {
         "state": "source_review_no_blocking_finding_initial_replay_verified",
         "scope": "Read packet/outcome modules, native draft helper, CLI namespace/output boundary, routes and contract. Rehashed104 recorded source files and48 CLI stdout/stderr records with expected exits. Full native and final artifacts still pending."
+      },
+      "handoff_commit": "d7d28e172d18fbc2f94af9b6b757ff2fcadb59b8",
+      "local_integration": {
+        "state": "integrated",
+        "commits": [
+          "6cb70e6",
+          "c4c631c",
+          "6cc99b2"
+        ],
+        "source_commits": [
+          "06c1315010f8f8653a96e1073693aeebf177f544",
+          "0ccabe4198d91a3b56afbcd2bbad004b10847d44",
+          "d7d28e172d18fbc2f94af9b6b757ff2fcadb59b8"
+        ],
+        "handoff": "reports/workflow-cli/WF-04-05-HANDOFF.md",
+        "combined_validation": "pending"
       }
     },
     {
@@ -138,7 +156,7 @@
           "generation asset-root validation",
           "actual raster provider wrapper"
         ],
-        "next": "Capture working config selection identity, prove divergence with valid immutable old revision, fresh committed replay; slot after A3."
+        "next": "Repair revision current-selection comparison and contained-package reuse after pre-instance restore, fresh frozen replay; conditional next slot after A3."
       },
       "candidate_commit": "92e64484fb9358827ff1a71879753525ab85aa56",
       "full_validation": {
@@ -164,7 +182,7 @@
         "mismatches": []
       },
       "successor_fix": "Committed92e6448 normalizes optional controls/variants and rejects unknown fields; fresh exact-commit replay verified.",
-      "queue_policy": "Keep place if clean successor/replay ready at slot opening; otherwise let ready A3 proceed. No full native has run for M3.",
+      "queue_policy": "Ready A3 took the released W3 slot while M3 repairs. Grant M3 next only after clean frozen successor and fresh replay; otherwise allow ready T3.",
       "historical_public_replay": {
         "path": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/public-70e0937/evidence.json",
         "sha256": "e17a73f424b701565aa397d2ead4efd5368dff0776df059a0ece6a159cae8ca3",
@@ -204,7 +222,8 @@
         "kit.py finite/named versus legacy loop cycle precheck only",
         "audio_cues.alignment frame/sample exact conversion only; preserve rejection policy",
         "Actual prepared-scene snapshot module lists add clock.mjs; only scene clock/sample CLI signature fixture entries after frozen run",
-        "After freeze: preparation.py copied modules, preparation_server.py served allowlist, preparation_commands.py proof runtime_files add clock.mjs together; focused existing copy/serve/identity tests"
+        "After freeze: preparation.py copied modules, preparation_server.py served allowlist, preparation_commands.py proof runtime_files add clock.mjs together; focused existing copy/serve/identity tests",
+        "Explicit authored-N repair: existing clock/canvas validators, render plan/job, timing/browser/audit frame counts and media verify defaults only; broader activity/coverage/region evidence reconciled by coordinator"
       ],
       "thread_id": "01a09b0c-779a-75c1-9e08-5f7ace309f1a",
       "client_thread_id": "client-new-thread:e21a93f6-dd26-48c0-b681-da9df8fc2d79",
@@ -331,18 +350,18 @@
       "branch": "codex/wave3-audio02",
       "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
       "dispatch_state": "active",
-      "cursor": "a089d4e4-c7e5-4434-bffe-2e70338c74c0:2",
+      "cursor": "a089d4e4-c7e5-4434-bffe-2e70338c74c0:3",
       "interface": "audio measure PATH [--source-sha256 HASH --out FILE] uses REPORT envelope. Optional audio_bitrate allows explicit 256/320/384k with actual format-specific capability rejection, no substitution. Audio encoding and separate source/decoded measurement evidence retain actual presentation interval.",
       "baseline_verified": true,
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
       "measurement_scope": "Initial streaming double-precision Node DSP backend at explicit 48kHz; ITU Annex1/2 coefficients. EBU fixture download HTTP403 retained; deterministic published-definition signal/tolerance validation and any independent conformance gaps must be stated.",
       "focused_progress": {
-        "state": "frozen_candidate_source_reviewed_queued",
+        "state": "frozen_candidate_native_running",
         "source": "worker-reported; candidate not frozen or coordinator-reviewed",
         "reported_tests_passed": 8,
         "reference_cases": "EBU-defined loudness 1-5 and dBTP 15-19 with published tolerances",
         "native_trial": "Worker reports format-specific applicableEncodeBitRates stereo48k max320000; global available list misleadingly includes384000. New preflight rejects384 before raster. Real native 256000 and explicit320000 passed mux/decode with96000 presented samples/2s, source/float32 hashes and legacy PCM16 half-LSB compatibility.",
-        "next": "Full required-native suite after M3; no source edits requested.",
+        "next": "Complete reserved native run and explicitly release slot.",
         "native_slot_requested": false,
         "reported_checks": "10 measurement,2 native,8 CLI,9 revision-contract,6 render-service plus iteration-step checks and package audit passed.",
         "development_replay": {
@@ -353,7 +372,7 @@
       "candidate_commit_reported": "2e7aefb",
       "candidate_commit": "2e7aefb87b3e4911bf19d6117b6cd8e2d9b72cde",
       "full_validation": {
-        "state": "slot_granted",
+        "state": "running",
         "candidate_commit": "2e7aefb87b3e4911bf19d6117b6cd8e2d9b72cde",
         "source_frozen": true,
         "clean_verified_by_coordinator": true,
@@ -488,9 +507,22 @@
     {
       "id": "legacy-watch-selected-generation",
       "owner": "coordinator",
-      "state": "source_gap_identified_reproduction_pending",
+      "state": "coordinator_reproduced_integration_fix_pending",
       "finding": "studio.watch_snapshot hashes literal gate watch paths. Config-selected generations can live outside scene/ and assets/ watches. No human review reproduction or acceptance is claimed.",
-      "next": "Reproduce a configured scene/catalog pointer change under affected legacy path watches, then add the narrow selected-input identity boundary with existing unconfigured and scoped-review behavior preserved. M3 comparison repair proceeds independently."
+      "next": "Coordinator fixes selected scene/catalog and relevant contained-art watch identity after M3 integration; preserve unconfigured and scoped-review behavior, test affected gate staleness. This obligation remains open.",
+      "reproduction": "/private/tmp/wave3-legacy-watch-mm37p9ad/repro.json",
+      "reproduction_sha256": "5d3cf1949ad0bebb06ec041d01a5427c9f508198fe3f1eb522bf65d26ac28ae8",
+      "result": "Actual watch_snapshot returns equal animation/assets snapshots after config selects different generation scene bytes. Pure engineering reproduction; no fabricated review."
+    },
+    {
+      "id": "restored-scene-retained-package-reuse",
+      "owner": "M3",
+      "state": "repair_leased",
+      "candidate": "92e64484fb9358827ff1a71879753525ab85aa56",
+      "finding": "After restore to pre-instance scene, catalog retains pinned art but no live instance holds its pin. Placing same package under a fresh instance ID attempts a second contained path and fails exact managed asset identity collision.",
+      "reproduction": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/restore-replace-probe-92e6448.json",
+      "reproduction_sha256": "a1f3363f5b52afc7e823150050a3e31248c02c9de40f2972897485b0d9ad901d",
+      "required_fix": "Reuse exact-hash validated contained package from retained generation data even without a live instance; never overwrite accepted packages or relax compiler/path collision checks. Add public restore/fresh-place and invalid retained-source negatives; freeze with selection-origin repair before native slot."
     }
   ],
   "blocking_decisions": [],
@@ -517,5 +549,5 @@
     "report": "/private/tmp/ambiance-wave3-dispatch-package.json"
   },
   "list_threads_limitation": "New tasks may be omitted by list_threads. Preserve setup IDs and resolve actual IDs from worker messages/confirmed task state; never create duplicate replacements.",
-  "native_slot_state": "granted"
+  "native_slot_state": "running"
 }
