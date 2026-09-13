@@ -49,7 +49,7 @@
       "baseline_verified": true,
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
       "focused_progress": {
-        "state": "frozen_candidate_native_running",
+        "state": "full_native_passed_handoff_pending",
         "source": "worker update; candidate not frozen or coordinator-reviewed",
         "native_slot_requested": false,
         "reported_behavior": [
@@ -58,18 +58,26 @@
           "Review drafts remain not-run; no inferred recorder. Complete iteration packets expose preflight, execution still needs explicit by.",
           "Auto guidance reads native outcome fields; full guidance uses fresh exact-subject assessment or explicit unavailable diagnostic."
         ],
-        "next": "Complete reserved frozen native run; retain exact report and release slot.",
+        "next": "Final documentation handoff; no production source changes.",
         "reported_checks": "Worker reports 56 existing/new focused tests plus final legacy review/watched-parent/delivery-wide cases passed; 24-call native CLI replay passed, earlier restricted failure retained."
       },
       "candidate_commit": "0ccabe4198d91a3b56afbcd2bbad004b10847d44",
       "full_validation": {
-        "state": "running",
+        "state": "passed",
         "candidate_commit": "0ccabe4198d91a3b56afbcd2bbad004b10847d44",
         "source_frozen": true,
         "clean_verified_by_coordinator": true,
         "required_native": true,
         "artifacts": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-native-final",
-        "grant_reverified_clean_head": true
+        "grant_reverified_clean_head": true,
+        "report_sha256": "a80640460ebe7cd636d571c215159fbe4d59e539166d241d4d4924e9b87e42b8",
+        "recorded_cases": 544,
+        "passed_cases": 544,
+        "skips": 0,
+        "tracked_source_sha256": "2e1cafa4ceeaede5415e6589131b4aaa273f7fd0a475d130398639844033ccff",
+        "slot_released": true,
+        "coordinator_verified": "Report hash, exact commit, native_required true, passed state, all17 checks and544 recorded cases passed. Final handoff pending.",
+        "python_tests": 529
       },
       "public_replay": {
         "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/run.json",
@@ -99,7 +107,9 @@
         "cli.py command_project project-scoped model instance exception",
         "provisional scene_transactions.py scene/catalog bundle transaction; finalized semantics require coordinator review",
         "kit.validate optional project_root and nested attachment subprocess forwarding only; legacy inferred root retained",
-        "tools/check-scene.mjs --project-root and project_commands.check_project root forwarding only"
+        "tools/check-scene.mjs --project-root and project_commands.check_project root forwarding only",
+        "revision_dependencies.py configured project selection control/origin and narrow affected revision tests/replay; preserve immutable revision integrity and unconfigured legacy selections",
+        "revision_capture.compare active configured scene/catalog selection comparison for historical manifests without config origins; immutable captured integrity/render unchanged"
       ],
       "thread_id": "01a09b0c-4fcf-7542-b921-c1b7aa265a7b",
       "client_thread_id": "client-new-thread:0efa40dc-4201-4e0b-a4ad-7cf69acf5601",
@@ -116,7 +126,7 @@
       "transaction_refinement": "Active generation contains mutable working scene; captured previous config/scene and contained model packages remain immutable. Existing edit/restore/view/render/revision compatibility is still required.",
       "bounded_lowering_gap": "C1 static constant-cell keys at 0/1 seconds fail a host with a 2-second duration; this is an endpoint duration mismatch, not fps arithmetic. Granted constant-cell endpoints mapped to validated host interval, rejecting animated inputs beyond subset; actual finite-host compatibility remains required.",
       "focused_progress": {
-        "state": "frozen_candidate_source_reviewed_queued",
+        "state": "repairing_project_selection_origin",
         "source": "worker-reported tests; current source reviewed for alias issue, not a frozen handoff",
         "reported_checks": [
           "dry/save/retry",
@@ -128,13 +138,13 @@
           "generation asset-root validation",
           "actual raster provider wrapper"
         ],
-        "next": "Full required-native suite when W3 releases; final finite integration remains coordinator-owned."
+        "next": "Capture working config selection identity, prove divergence with valid immutable old revision, fresh committed replay; slot after A3."
       },
       "candidate_commit": "92e64484fb9358827ff1a71879753525ab85aa56",
       "full_validation": {
-        "state": "queued_after_W3",
+        "state": "repairing_before_reserved_slot",
         "candidate_commit": "92e64484fb9358827ff1a71879753525ab85aa56",
-        "source_frozen": true,
+        "source_frozen": false,
         "clean_verified_by_coordinator": true,
         "required_native": true,
         "artifacts": null
@@ -174,8 +184,8 @@
         "browser_observation": "Worker inspected13-layer scene with moved/arched lantern; exposed canvas remains deliberate engineering fixture limitation."
       },
       "coordinator_review": {
-        "state": "source_review_no_blocking_finding",
-        "scope": "Reviewed package/state re-lowering, full managed-subject comparison and mapping/pack/signal/binding/ordinary-alias negatives. Reviewed transaction generation publication and atomic configuration pointer, retained catalog assets/history restore, dependency rechecks, source-root adapters and typed revision/raster adapters. Full native and combined finite probe pending.",
+        "state": "new_blocking_pointer_origin_finding",
+        "scope": "Reviewed package/state re-lowering, full managed-subject comparison and mapping/pack/signal/binding/ordinary-alias negatives. Reviewed transaction generation publication and atomic configuration pointer, retained catalog assets/history restore, dependency rechecks, source-root adapters and typed revision/raster adapters. Full native and combined finite probe pending. Later actual revision compare --working exposed missing configuration selection origin;92e6448 is not integration-ready.",
         "transaction_limit": "Interrupted publication before selection may retain an unselected generation; occupied recipe-hash generation rejects, never overwrites. This boundary is documented; direct filesystem writes bypass the CLI lock."
       }
     },
@@ -343,12 +353,13 @@
       "candidate_commit_reported": "2e7aefb",
       "candidate_commit": "2e7aefb87b3e4911bf19d6117b6cd8e2d9b72cde",
       "full_validation": {
-        "state": "queued_after_M3",
+        "state": "slot_granted",
         "candidate_commit": "2e7aefb87b3e4911bf19d6117b6cd8e2d9b72cde",
         "source_frozen": true,
         "clean_verified_by_coordinator": true,
         "required_native": true,
-        "artifacts": "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/native-final"
+        "artifacts": "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/native-final",
+        "grant_reverified_clean_head": true
       },
       "public_replay": {
         "path": "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/replay-final/replay.json",
@@ -384,10 +395,9 @@
   "bounded_prerequisite": "Integrated mc/1 and C1/C2 plus corrected renderer permit I1/I2 and independent P03 technical fixtures. Full model Phase 1/P00 seed/story/census/art requirements remain open.",
   "native_test_queue": [
     "M3",
-    "A3",
     "T3"
   ],
-  "active_native_test_owner": "W3",
+  "active_native_test_owner": "A3",
   "native_test_policy": "One committed frozen-source full native suite at a time across these tasks. Focused independent checks continue. Coordinator runs final combined required-native suite; reuse validated 516-case baseline.",
   "cross_stream_dependencies": [
     {
@@ -464,6 +474,23 @@
       "reproduction": "/private/tmp/wave3-clock-duration-ycvdp61p/repro-public.json",
       "required_fix": "Use explicit duration_frames as integer authority, check seconds mirror against N/fps, carry exact N through scene validation/render plan/job/receipts and affected consumers without weakening legacy loops. Cover25fps7 and30fps31 public author/sample/native ranges; fresh committed proof before native slot.",
       "combined_followup": "M3 tools/model/instance.mjs currently derives receiver-envelope frames from canvas product; reconcile against shared compiled clock when integrating corrected T3+M3."
+    },
+    {
+      "id": "revision-working-selection-origin",
+      "owner": "M3",
+      "state": "confirmed_repair_leased",
+      "candidate": "92e64484fb9358827ff1a71879753525ab85aa56",
+      "finding": "revision compare before --working incorrectly reports no divergence after scene/catalog generation pointer switch: old origin files remain unchanged, configured project selection is not an origin. Raster evidence and old captured revision integrity remain correct.",
+      "reproduction": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/revision-pointer-probe-working-92e6448.json",
+      "reproduction_sha256": "c0a70e8615739c4e0d67b84e4b87c00aaeda49aa9ee36206cde7fa58cd0e267f",
+      "required_fix": "Capture configured project selection as an animation control/origin (or equally explicit typed selection identity); mutable config must not stale old captured revision integrity. Preserve unconfigured selections, prove working/watch invalidation and old revision render, fresh CLI replay before reserved suite after A3. Historical captures also need compare to inspect current configured selection against recorded scene/catalog; lease granted to revision_capture.compare."
+    },
+    {
+      "id": "legacy-watch-selected-generation",
+      "owner": "coordinator",
+      "state": "source_gap_identified_reproduction_pending",
+      "finding": "studio.watch_snapshot hashes literal gate watch paths. Config-selected generations can live outside scene/ and assets/ watches. No human review reproduction or acceptance is claimed.",
+      "next": "Reproduce a configured scene/catalog pointer change under affected legacy path watches, then add the narrow selected-input identity boundary with existing unconfigured and scoped-review behavior preserved. M3 comparison repair proceeds independently."
     }
   ],
   "blocking_decisions": [],
@@ -490,5 +517,5 @@
     "report": "/private/tmp/ambiance-wave3-dispatch-package.json"
   },
   "list_threads_limitation": "New tasks may be omitted by list_threads. Preserve setup IDs and resolve actual IDs from worker messages/confirmed task state; never create duplicate replacements.",
-  "native_slot_state": "running"
+  "native_slot_state": "granted"
 }
