@@ -144,7 +144,7 @@
       "transaction_refinement": "Active generation contains mutable working scene; captured previous config/scene and contained model packages remain immutable. Existing edit/restore/view/render/revision compatibility is still required.",
       "bounded_lowering_gap": "C1 static constant-cell keys at 0/1 seconds fail a host with a 2-second duration; this is an endpoint duration mismatch, not fps arithmetic. Granted constant-cell endpoints mapped to validated host interval, rejecting animated inputs beyond subset; actual finite-host compatibility remains required.",
       "focused_progress": {
-        "state": "repairing_project_selection_origin",
+        "state": "correcting_staged_batch_dependency_recheck",
         "source": "worker-reported tests; current source reviewed for alias issue, not a frozen handoff",
         "reported_checks": [
           "dry/save/retry",
@@ -156,14 +156,14 @@
           "generation asset-root validation",
           "actual raster provider wrapper"
         ],
-        "next": "Repair revision current-selection comparison and contained-package reuse after pre-instance restore, fresh frozen replay; conditional next slot after A3."
+        "next": "Worker-reported1458e37 staged second-placement recheck bug corrected in working tree; focused tests and lifecycle replay running. Wait for clean successor before review/grant."
       },
       "candidate_commit": "92e64484fb9358827ff1a71879753525ab85aa56",
       "full_validation": {
-        "state": "repairing_before_reserved_slot",
+        "state": "successor_batch_dependency_repair_before_freeze",
         "candidate_commit": "92e64484fb9358827ff1a71879753525ab85aa56",
         "source_frozen": false,
-        "clean_verified_by_coordinator": true,
+        "clean_verified_by_coordinator": false,
         "required_native": true,
         "artifacts": null
       },
@@ -205,7 +205,13 @@
         "state": "new_blocking_pointer_origin_finding",
         "scope": "Reviewed package/state re-lowering, full managed-subject comparison and mapping/pack/signal/binding/ordinary-alias negatives. Reviewed transaction generation publication and atomic configuration pointer, retained catalog assets/history restore, dependency rechecks, source-root adapters and typed revision/raster adapters. Full native and combined finite probe pending. Later actual revision compare --working exposed missing configuration selection origin;92e6448 is not integration-ready.",
         "transaction_limit": "Interrupted publication before selection may retain an unselected generation; occupied recipe-hash generation rejects, never overwrites. This boundary is documented; direct filesystem writes bypass the CLI lock."
-      }
+      },
+      "unready_successor_commits": [
+        "a65f630",
+        "cf2c701",
+        "1458e37"
+      ],
+      "known_unready_successor": "Do not validate/integrate1458e37: second same-package placement tried reopening not-yet-published staged target. Three focused failures caught it, no partial save; small successor pending."
     },
     {
       "stream": "T3",
@@ -239,7 +245,7 @@
       "validation_note": "JS test-clock auto-discovered; Python clock tests should exercise actual CLI, not duplicate JS wrapper. Coordinator reconciles renderer source-list verifiers.",
       "clock_context_proposal": "compiled.clock.seconds(seconds)/frame(integer) returns frozen context; compiled.sample(context) validates equivalent definition and does not rewrap; sample(seconds) retains array and sampleFrame preserves requested frame. consumerTime selects local-cycle values. Authored clock revision label is distinct from external scene/revision hashes.",
       "focused_progress": {
-        "state": "authored_duration_fixed_browser_initialization_repair",
+        "state": "repaired_frozen_candidate_queued",
         "source": "worker-reported; frozen replay and coordinator verification pending",
         "implementation": "Shared finite/loop engine, JS/Python exact conversions, CLI clock/sample, local-cycle camera/layer/signal and finite reparent/raster consumers.",
         "reported_checks": "Legacy track/rig/binding/finishing checks and four CLI cases passed.",
@@ -254,14 +260,14 @@
         },
         "browser_observation": "Worker inspected both sample/endpoint poses and observed Play stop at frame59. Coordinator has not repeated this observation.",
         "native_slot_requested": false,
-        "next": "Freeze one-line browser install initialization successor; repeat actual browser endpoint/stop and refresh source manifest before queued native proof/full suite."
+        "next": "On explicit slot grant, refresh native short/range proofs and required-native-2 on exact2847b83; M3 precedes only if its repaired frozen replay is ready."
       },
-      "candidate_commit": "1567a39b10d929202f44ca44bd197a98eaaaf06a",
+      "candidate_commit": "2847b83c149611bf785ff5b95e32320c8083ce5c",
       "full_validation": {
-        "state": "browser_install_repair_before_reserved_slot",
-        "candidate_commit": "1567a39b10d929202f44ca44bd197a98eaaaf06a",
-        "source_frozen": false,
-        "clean_verified_by_coordinator": false,
+        "state": "queued_after_M3_if_ready",
+        "candidate_commit": "2847b83c149611bf785ff5b95e32320c8083ce5c",
+        "source_frozen": true,
+        "clean_verified_by_coordinator": true,
         "required_native": true,
         "artifacts": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/required-native-2"
       },
@@ -298,8 +304,8 @@
         "8a24cff847751c0f0163c8b9779024815fd6908b"
       ],
       "coordinator_review": {
-        "state": "duration_repair_reviewed_browser_successor_pending",
-        "scope": "Reviewed1567a39 authored duration authority throughout clock/validator/render/timing/media-default consumers. Independently replayed original public7@25 and31@30 author/sample failures: now pass with correct N\u22121/N region and frame identities. Worker actual browser inspection caught install reading compiled.clock before initialization; narrow fix underway. Native suite and broader combined evidence reconciliation pending."
+        "state": "duration_and_browser_repair_source_reviewed_native_pending",
+        "scope": "Reviewed1567a39 authored duration authority throughout clock/validator/render/timing/media-default consumers. Independently replayed original public7@25 and31@30 author/sample failures: now pass with correct N\u22121/N region and frame identities. Worker actual browser inspection caught install reading compiled.clock before initialization; narrow fix underway. Native suite and broader combined evidence reconciliation pending. Reviewed one-line2847b83 initialization fix and verified all32 current source manifest entries. Worker browser observation record/manifest hashes verified; actual browser playback observation is worker-reported."
       },
       "public_replay": {
         "source_commit": "8a24cff847751c0f0163c8b9779024815fd6908b",
@@ -336,6 +342,17 @@
         "public_calls": 12,
         "source_manifest_sha256": "b36579d227bd5a3607001ef0aa1eed1a647a75d07bebdcdccee4c111b2c1af17",
         "source_note": "32 manifest entries; later audit found editor/editor.mjs mismatch during reported browser repair. This is historical1567a39 evidence, not current clean successor validation."
+      },
+      "current_source_manifest": {
+        "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/duration-repair/source-manifest-2847b83.json",
+        "sha256": "a19105db7c6edb9b457eaef18a5cce47923f4ca8cd0533f3cd1c5bc2e6426720",
+        "source_files": 32,
+        "mismatches": []
+      },
+      "current_browser_observation": {
+        "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/duration-repair/observation-2847b83.json",
+        "sha256": "5b38ff535504130631f3beb3f1149fec50072249bb8098e8d3dc7a0b478e3fb4",
+        "reported_result": "31-frame30fps fixture loads Ready, seek31 exposes endpoint, Play restarts then stops at30; static floor fixture, no artistic acceptance."
       }
     },
     {
@@ -538,9 +555,10 @@
     {
       "id": "browser-installed-clock-initialization",
       "owner": "T3",
-      "state": "worker_reproduced_repair_under_existing_lease",
+      "state": "repair_source_and_manifest_reviewed_browser_observation_reported",
       "finding": "Actual browser install at1567a39 accesses compiled.clock for slider max before compiled is initialized.",
-      "required_fix": "Compile validated installed scene before reading clock, repeat actual31@30 endpoint/stop browser check, freeze one-line successor and refresh source manifest; no full suite underway."
+      "required_fix": "Compile validated installed scene before reading clock, repeat actual31@30 endpoint/stop browser check, freeze one-line successor and refresh source manifest; no full suite underway.",
+      "repair_candidate": "2847b83c149611bf785ff5b95e32320c8083ce5c"
     }
   ],
   "blocking_decisions": [],
