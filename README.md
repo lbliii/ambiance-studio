@@ -2,6 +2,8 @@
 
 A local studio for painted, layered ambiance films, designed for agent operation first. The agent pilots production through structured CLI/tools and saved project state. Localhost lets the human observe, compare and judge results, with optional visual editing for the human or agent.
 
+The broader direction is [agent-operated traditional animation](docs/architecture/AGENT-ANIMATION-VISION.md): agents use familiar drawing, posing, exposure-sheet, pencil-test and revision practices to make editable films under human direction. Text, image, audio and vision capabilities support that work. Narrative authoring and agent dailies are planned extensions; current capability remains defined by the shipped commands.
+
 For planned development, start with the [studio plan alignment](docs/architecture/STUDIO-PLAN-ALIGNMENT.md): workflow guidance, reusable models, narrative films and quality/sound-library work, with explicit owners and shared acceptance. These plans are separate from the shipped commands below.
 
 Version 0.8.0 adds a [local film library](docs/STUDIO-LIBRARY.md): projects shared across worktrees, explicit current review movies, edition history and comparison, timestamped feedback, and resumable local iteration runs. It preserves the existing rendering, sound, finishing, revision and evidence workflows.
