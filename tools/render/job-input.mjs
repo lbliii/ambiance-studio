@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 
 import {compileScene} from '../../editor/engine.mjs';
+import {secondsToFrames} from '../../editor/clock.mjs';
 import {finishingAssetIds} from '../../editor/finishing.mjs';
 import {planViews, resizeSceneCanvas} from '../../editor/views.mjs';
 import {prepareLookProof} from '../look-proof.mjs';
@@ -88,6 +89,11 @@ export async function prepareJob(request, runtime) {
   const frames = mode === 'frame' ? 1 : seconds * fps;
   if (!Number.isInteger(frames) || frames < 1 || frames > loopFrames)
     throw Error('Duration must contain an integer frame count within one scene loop');
+  if(compiled.clock.mode==='finite'&&['video','proof','views-proof'].includes(mode)){
+    const startFrame=secondsToFrames(start,compiled.clock.fps).value;
+    if(startFrame+frames>loopFrames)throw Error('Finite render range must stay within [0,N); endpoint inspection is frame-only');
+    if(mode==='video'&&(request.repeats??1)!==1)throw Error('Finite video cannot repeat the shot');
+  }
   if (mode === 'video' && (width % 2 || height % 2))
     throw Error('Native H.264 dimensions must be even');
   const disable = request.disable ?? [];
@@ -102,7 +108,7 @@ export async function prepareJob(request, runtime) {
       if (layer.tracks?.visible)
         layer.tracks.visible = {
           interpolation : 'hold',
-          keys : [ [ 0, false ], [ scene.canvas.loop_seconds, false ] ]
+          keys : [ [ 0, false ], [ layer.tracks.visible.keys.at(-1)[0], false ] ]
         };
     }
   const alternateCompiled = compileScene(alternate, catalog);

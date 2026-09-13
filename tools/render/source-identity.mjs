@@ -9,7 +9,7 @@ export const sha = data => createHash('sha256').update(data).digest('hex');
 // Every extracted owner participates in runtime evidence. Keep entry-file hashes intact.
 export async function rendererSources() {
   const names = [
-    'tools/render-scene.mjs', ...(await fs.readdir(path.join(root, 'tools/render')))
+    'editor/clock.mjs', 'tools/render-scene.mjs', ...(await fs.readdir(path.join(root, 'tools/render')))
                                   .filter(name => name.endsWith('.mjs'))
                                   .sort()
                                   .map(name => 'tools/render/' + name)

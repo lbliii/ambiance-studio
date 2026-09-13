@@ -83,6 +83,16 @@ def plan_render(args, project):
     frames = seconds * canvas['fps']
     if frames != int(frames) or frames > loop_frames:
         raise CommandError('Duration must contain an integer frame count within one authored loop.')
+    if scene.get('clock', {}).get('mode') == 'finite' and args.action in ['video', 'proof', 'views-proof']:
+        from .timebase import seconds_to_frames
+        try:
+            start_frame = seconds_to_frames(start, canvas['fps'])['value']
+        except ValueError as error:
+            raise CommandError(str(error)) from error
+        if start_frame + frames > loop_frames:
+            raise CommandError('Finite render range must stay within [0,N); endpoint inspection is frame-only.')
+        if getattr(args, 'repeats', 1) != 1:
+            raise CommandError('Finite video cannot repeat the shot.')
     disable = getattr(args, 'disable', [])
     if any(layer not in {row['id'] for row in scene['layers']} for layer in disable):
         raise CommandError('Every --disable layer must exist in the selected scene.')

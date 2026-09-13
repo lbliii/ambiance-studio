@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
+import {secondsToFrames} from '../../editor/clock.mjs';
 import {auditViewPixels, auditViews} from '../../editor/audit.mjs';
 import {renderLookProof} from '../look-proof.mjs';
 import {renderRigProof} from '../rig-proof.mjs';
@@ -39,6 +40,8 @@ export async function renderOutputs(job, raster, report, initializationStarted) 
     runtime
   } = job;
   const {stageRenderer, canvas, render} = raster;
+  const finiteShot=job.compiled.clock.mode==='finite';
+  const renderOffset=(frame,off=false)=>finiteShot?raster.renderFrame(secondsToFrames(start,fps).value+frame,off):render(start+frame/fps,off);
   if (mode === 'look-proof') {
     Object.assign(report, await renderLookProof(lookPlan, {
                     out,
@@ -163,7 +166,7 @@ export async function renderOutputs(job, raster, report, initializationStarted) 
     for (const output of outputs)
       await fs.mkdir(path.join(out, output.id));
     for (let frame = 0; frame < frames; frame++) {
-      render(start + frame / fps);
+      renderOffset(frame);
       for (const output of outputs) {
         const relative = output.id + '/' + String(frame).padStart(5, '0') + '.png',
               bytes = stageRenderer.outputs.get(output.id).toBuffer('image/png');
@@ -188,7 +191,7 @@ export async function renderOutputs(job, raster, report, initializationStarted) 
       await fs.mkdir(path.join(out, dir));
       const list = [];
       for (let frame = 0; frame < frames; frame++) {
-        render(start + frame / fps, off);
+        renderOffset(frame,off);
         const relative = `${dir}/${String(frame).padStart(5, '0')}.png`;
         await fs.writeFile(path.join(out, relative), canvas.toBuffer('image/png'));
         list.push(relative);
@@ -226,7 +229,7 @@ export async function renderOutputs(job, raster, report, initializationStarted) 
                              'rgba', gcd(loopFrames, fps * 2)
                            ],
                            encodedFrames, frame => {
-                             render(start + (frame - prerollFrames) / fps);
+                             renderOffset(frame-prerollFrames);
                              progress({
                                phase : 'render-encode',
                                completed_frames : frame + 1,
