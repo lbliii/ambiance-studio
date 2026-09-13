@@ -19,7 +19,7 @@ class FileReference(TypedDict):
 
 
 class ProviderEvidence(TypedDict):
-    kind: Literal['raster', 'movie', 'activity', 'observation']
+    kind: Literal['raster', 'model-raster', 'movie', 'activity', 'observation']
     references: list[FileReference]
     output: NotRequired[dict[str, int]]
     role: NotRequired[str]
@@ -259,7 +259,12 @@ class ProviderVerifier:
         project, path = request.project, request.receipt
         ctx, exp, view, role = request.context, request.expectation, request.view, request.role
         check = exp['requirement']['check']
-        if check == 'raster': return raster_receipt(project, path, ctx, view)
+        if check == 'raster':
+            receipt = studio.read(path)
+            if isinstance(receipt, dict) and receipt.get('format') == 'ambiance-model-scene-evidence':
+                from .model_evidence import verify
+                return verify(project, path, ctx, view)
+            return raster_receipt(project, path, ctx, view)
         if check == 'movie': return movie_receipt(project, path, ctx, view, role)
         if check == 'activity': return activity_receipt(project, path, ctx, exp, view)
         if exp['requirement']['type'] == 'observed': return observed_receipt(project, path, ctx, exp, view)

@@ -77,7 +77,7 @@ def command_project(args):
     route = (command, action)
     if route == ('audio', 'library') and args.library_action not in ['import', 'materialize', 'check']:
         return None
-    if command in ['studio', 'doctor', 'test', 'model'] or route in PROJECT_FREE:
+    if command in ['studio', 'doctor', 'test'] or command == 'model' and action != 'instance' or route in PROJECT_FREE:
         return None
     if command == 'preview' and preview_commands.is_artifact(args):
         return None
