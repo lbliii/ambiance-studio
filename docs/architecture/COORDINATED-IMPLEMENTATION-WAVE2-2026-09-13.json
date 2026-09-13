@@ -122,7 +122,14 @@
       "cursor": "155b3f3e-fad2-439a-a286-f947d290aa33:1",
       "interface": "Explicit absolute --config/library root; audio library configure/search/inspect/import/audition/observe/promote/materialize/check. Typed ambiance-audio-materialization v1; archival origin references are not active dependencies.",
       "baseline_verified": true,
-      "progress_verified": "wait_threads confirmed active/in-progress at the recorded cursor."
+      "progress_verified": "wait_threads confirmed active/in-progress at the recorded cursor.",
+      "focused_progress": {
+        "reported_passes": 15,
+        "claim_scope": "Candidate/prepared pins, duplicates, simulated identity-bound review states, stale/failed writes, portability after origin/library removal, revision capture/check and recopied handoff. No real audition.",
+        "implementation_note": "Typed materialization reuses AUDIO-01 validation through a disposable projection with hardlinks/copy fallback; prior receipt bytes remain archival, active output dependencies stay local.",
+        "coordinator_review_followup": "Verify path containment and alias collisions before projection creation, no writes to linked source bytes, no reactivation of archived paths or assertion of historical origin availability. Working implementation not yet source-reviewed.",
+        "next": "Public CLI replay, docs/package audit, frozen candidate and native-slot request."
+      }
     },
     {
       "stream": "D2",
