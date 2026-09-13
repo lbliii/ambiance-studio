@@ -144,7 +144,7 @@
       "transaction_refinement": "Active generation contains mutable working scene; captured previous config/scene and contained model packages remain immutable. Existing edit/restore/view/render/revision compatibility is still required.",
       "bounded_lowering_gap": "C1 static constant-cell keys at 0/1 seconds fail a host with a 2-second duration; this is an endpoint duration mismatch, not fps arithmetic. Granted constant-cell endpoints mapped to validated host interval, rejecting animated inputs beyond subset; actual finite-host compatibility remains required.",
       "focused_progress": {
-        "state": "correcting_staged_batch_dependency_recheck",
+        "state": "repaired_frozen_candidate_replay_verified_queued",
         "source": "worker-reported tests; current source reviewed for alias issue, not a frozen handoff",
         "reported_checks": [
           "dry/save/retry",
@@ -156,30 +156,29 @@
           "generation asset-root validation",
           "actual raster provider wrapper"
         ],
-        "next": "Worker-reported1458e37 staged second-placement recheck bug corrected in working tree; focused tests and lifecycle replay running. Wait for clean successor before review/grant."
+        "next": "Required-native suite after A3 releases; all four lifecycle successor commits reviewed and needed."
       },
-      "candidate_commit": "92e64484fb9358827ff1a71879753525ab85aa56",
+      "candidate_commit": "fe2ab3eeffd587cb41df1dbd7bba9922adb65306",
       "full_validation": {
-        "state": "successor_batch_dependency_repair_before_freeze",
-        "candidate_commit": "92e64484fb9358827ff1a71879753525ab85aa56",
-        "source_frozen": false,
-        "clean_verified_by_coordinator": false,
+        "state": "queued_after_A3",
+        "candidate_commit": "fe2ab3eeffd587cb41df1dbd7bba9922adb65306",
+        "source_frozen": true,
+        "clean_verified_by_coordinator": true,
         "required_native": true,
-        "artifacts": null
+        "artifacts": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/native-final"
       },
       "finite_integration": "Coordinator-only final combined probe on reviewed T3+M3 commits; do not adopt known-failing intermediate clock stack. Static candidate full-native validation proceeds independently.",
       "public_replay": {
-        "path": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/public-92e6448/evidence.json",
-        "sha256": "758c2aeb7323cd0d98a6f0df87e55326fd6005b9affa3f1c1da7b2516ac71714",
-        "source_commit": "92e64484fb9358827ff1a71879753525ab85aa56",
-        "coordinator_verified": "All4 recorded source-file hashes,598 replay artifact hashes and36 expected CLI exits verified. Actual two-square/moved-mounted/hidden PNGs inspected: one instance changes and disappears, second stays visible; geometric fixture is not artistic acceptance.",
-        "observations": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/observations-92e6448.json",
-        "observations_sha256": "3bd49be059653f56b54732dabf59bddf9248d0c3d6c0ee49d93170d0d997fdce",
-        "package_audit": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/package-audit-92e6448.json",
+        "path": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/public-final/evidence.json",
+        "sha256": "14ddc9a1875292fa451c627c972de22220ac6499be32e8b18f5beafe6c81b883",
+        "source_commit": "fe2ab3eeffd587cb41df1dbd7bba9922adb65306",
         "coordinator_verified_source_files": 4,
-        "coordinator_verified_artifact_files": 598,
-        "public_calls": 36,
-        "mismatches": []
+        "coordinator_verified_artifact_files": 611,
+        "public_calls": 43,
+        "mismatches": [],
+        "coordinator_probe": "/private/tmp/wave3-model-final-working-check.json",
+        "coordinator_probe_sha256": "cb3e0d136dc83c5a387203f27bebc65e39da674216c7675db9cfe970ac84000a",
+        "observed_result": "Portable compare --working returns true; captured revision check true; captured-old raster hash equals original two-square raster. No artistic acceptance."
       },
       "successor_fix": "Committed92e6448 normalizes optional controls/variants and rejects unknown fields; fresh exact-commit replay verified.",
       "queue_policy": "Ready A3 took the released W3 slot while M3 repairs. Grant M3 next only after clean frozen successor and fresh replay; otherwise allow ready T3.",
@@ -202,8 +201,8 @@
         "browser_observation": "Worker inspected13-layer scene with moved/arched lantern; exposed canvas remains deliberate engineering fixture limitation."
       },
       "coordinator_review": {
-        "state": "new_blocking_pointer_origin_finding",
-        "scope": "Reviewed package/state re-lowering, full managed-subject comparison and mapping/pack/signal/binding/ordinary-alias negatives. Reviewed transaction generation publication and atomic configuration pointer, retained catalog assets/history restore, dependency rechecks, source-root adapters and typed revision/raster adapters. Full native and combined finite probe pending. Later actual revision compare --working exposed missing configuration selection origin;92e6448 is not integration-ready.",
+        "state": "lifecycle_successor_source_reviewed_replay_verified",
+        "scope": "Reviewed retained exact package lookup/closure validation and batch staged-vs-persisted dependency distinction; new configured origins and historical active-selection comparisons; corresponding tests/public replay changes. Corrected43-call final replay and all611 artifacts/4 listed source hashes verified. Independent portable compare/check confirms working divergence true while captured integrity remains true. Legacy-watch and finite integration obligations remain coordinator-owned.",
         "transaction_limit": "Interrupted publication before selection may retain an unselected generation; occupied recipe-hash generation rejects, never overwrites. This boundary is documented; direct filesystem writes bypass the CLI lock."
       },
       "unready_successor_commits": [
@@ -211,7 +210,26 @@
         "cf2c701",
         "1458e37"
       ],
-      "known_unready_successor": "Do not validate/integrate1458e37: second same-package placement tried reopening not-yet-published staged target. Three focused failures caught it, no partial save; small successor pending."
+      "known_unready_successor": "1458e37 alone is invalid; fe2ab3e corrects staged same-package dependency recheck. Include all four lifecycle commits.",
+      "required_successor_commits": [
+        "a65f630",
+        "cf2c701",
+        "1458e37",
+        "fe2ab3e"
+      ],
+      "prior_public_replay_before_lifecycle_repairs": {
+        "path": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/public-92e6448/evidence.json",
+        "sha256": "758c2aeb7323cd0d98a6f0df87e55326fd6005b9affa3f1c1da7b2516ac71714",
+        "source_commit": "92e64484fb9358827ff1a71879753525ab85aa56",
+        "coordinator_verified": "All4 recorded source-file hashes,598 replay artifact hashes and36 expected CLI exits verified. Actual two-square/moved-mounted/hidden PNGs inspected: one instance changes and disappears, second stays visible; geometric fixture is not artistic acceptance.",
+        "observations": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/observations-92e6448.json",
+        "observations_sha256": "3bd49be059653f56b54732dabf59bddf9248d0c3d6c0ee49d93170d0d997fdce",
+        "package_audit": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/package-audit-92e6448.json",
+        "coordinator_verified_source_files": 4,
+        "coordinator_verified_artifact_files": 598,
+        "public_calls": 36,
+        "mismatches": []
+      }
     },
     {
       "stream": "T3",
@@ -377,7 +395,7 @@
       "branch": "codex/wave3-audio02",
       "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
       "dispatch_state": "active",
-      "cursor": "a089d4e4-c7e5-4434-bffe-2e70338c74c0:4",
+      "cursor": "a089d4e4-c7e5-4434-bffe-2e70338c74c0:5",
       "interface": "audio measure PATH [--source-sha256 HASH --out FILE] uses REPORT envelope. Optional audio_bitrate allows explicit 256/320/384k with actual format-specific capability rejection, no substitution. Audio encoding and separate source/decoded measurement evidence retain actual presentation interval.",
       "baseline_verified": true,
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
@@ -525,12 +543,13 @@
     {
       "id": "revision-working-selection-origin",
       "owner": "M3",
-      "state": "confirmed_repair_leased",
+      "state": "successor_source_and_public_replay_reviewed_native_pending",
       "candidate": "92e64484fb9358827ff1a71879753525ab85aa56",
       "finding": "revision compare before --working incorrectly reports no divergence after scene/catalog generation pointer switch: old origin files remain unchanged, configured project selection is not an origin. Raster evidence and old captured revision integrity remain correct.",
       "reproduction": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/revision-pointer-probe-working-92e6448.json",
       "reproduction_sha256": "c0a70e8615739c4e0d67b84e4b87c00aaeda49aa9ee36206cde7fa58cd0e267f",
-      "required_fix": "Capture configured project selection as an animation control/origin (or equally explicit typed selection identity); mutable config must not stale old captured revision integrity. Preserve unconfigured selections, prove working/watch invalidation and old revision render, fresh CLI replay before reserved suite after A3. Historical captures also need compare to inspect current configured selection against recorded scene/catalog; lease granted to revision_capture.compare."
+      "required_fix": "Capture configured project selection as an animation control/origin (or equally explicit typed selection identity); mutable config must not stale old captured revision integrity. Preserve unconfigured selections, prove working/watch invalidation and old revision render, fresh CLI replay before reserved suite after A3. Historical captures also need compare to inspect current configured selection against recorded scene/catalog; lease granted to revision_capture.compare.",
+      "repair_candidate": "fe2ab3eeffd587cb41df1dbd7bba9922adb65306"
     },
     {
       "id": "legacy-watch-selected-generation",
@@ -545,12 +564,13 @@
     {
       "id": "restored-scene-retained-package-reuse",
       "owner": "M3",
-      "state": "repair_leased",
+      "state": "successor_source_and_public_replay_reviewed_native_pending",
       "candidate": "92e64484fb9358827ff1a71879753525ab85aa56",
       "finding": "After restore to pre-instance scene, catalog retains pinned art but no live instance holds its pin. Placing same package under a fresh instance ID attempts a second contained path and fails exact managed asset identity collision.",
       "reproduction": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/restore-replace-probe-92e6448.json",
       "reproduction_sha256": "a1f3363f5b52afc7e823150050a3e31248c02c9de40f2972897485b0d9ad901d",
-      "required_fix": "Reuse exact-hash validated contained package from retained generation data even without a live instance; never overwrite accepted packages or relax compiler/path collision checks. Add public restore/fresh-place and invalid retained-source negatives; freeze with selection-origin repair before native slot."
+      "required_fix": "Reuse exact-hash validated contained package from retained generation data even without a live instance; never overwrite accepted packages or relax compiler/path collision checks. Add public restore/fresh-place and invalid retained-source negatives; freeze with selection-origin repair before native slot.",
+      "repair_candidate": "fe2ab3eeffd587cb41df1dbd7bba9922adb65306"
     },
     {
       "id": "browser-installed-clock-initialization",
