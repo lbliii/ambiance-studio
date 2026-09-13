@@ -131,7 +131,8 @@
         "native/media/compose.m media_commands.h verify_audio.m audio-only implementation",
         "media_operations.py media_verification.py editions.py audio-only request/evidence adapters",
         "actual iteration recipe/step/plan/pass-through owners audio_bitrate only; no iteration_contract.py exists",
-        "native/media/encode.m encodeAudio audio bitrate signature/settings/result only, preserving standalone default"
+        "native/media/encode.m encodeAudio audio bitrate signature/settings/result only, preserving standalone default",
+        "iterations execution-time pending-audio capability preflight before required picture work; preserve pure planning, injected executors and recovery of completed outputs"
       ],
       "thread_id": "01a09b0c-90a8-7613-8e74-3804bbbcafea",
       "client_thread_id": "client-new-thread:e959c4d5-f200-429b-9778-2a9cd8b4d92e",
@@ -141,17 +142,17 @@
       "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
       "dispatch_state": "active",
       "cursor": "a089d4e4-c7e5-4434-bffe-2e70338c74c0:1",
-      "interface": "audio measure SOURCE source-bound method/backend/version results; audio_bitrate default 256000 with 384000 trial; separate audio_encoding and source/decoded measurements. Extracted native compose/verify_audio owns AAC and unchanged presentation interval.",
+      "interface": "audio measure PATH [--source-sha256 HASH --out FILE] uses REPORT envelope. Optional audio_bitrate allows explicit 256/320/384k with actual format-specific capability rejection, no substitution. Audio encoding and separate source/decoded measurement evidence retain actual presentation interval.",
       "baseline_verified": true,
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
       "measurement_scope": "Initial streaming double-precision Node DSP backend at explicit 48kHz; ITU Annex1/2 coefficients. EBU fixture download HTTP403 retained; deterministic published-definition signal/tolerance validation and any independent conformance gaps must be stated.",
       "focused_progress": {
-        "state": "measurement_checks_passed_native_capability_fix_in_progress",
+        "state": "focused_native_supported_rates_passed_replay_in_progress",
         "source": "worker-reported; candidate not frozen or coordinator-reviewed",
         "reported_tests_passed": 8,
         "reference_cases": "EBU-defined loudness 1-5 and dBTP 15-19 with published tolerances",
-        "native_trial": "256k succeeded; 384000 AAC failed -11861/-12651 even with local media-service access, including standalone encodeAudio. Existing canApplyOutputSettings admitted unsupported rate.",
-        "next": "Actual codec capability/probe preflight before raster; retain failed 384k trial, no silent fallback. Prove available supported nondefault configuration and legacy 256k through real mux/decode, distinguishing requested versus measured bitrate.",
+        "native_trial": "Worker reports format-specific applicableEncodeBitRates stereo48k max320000; global available list misleadingly includes384000. New preflight rejects384 before raster. Real native 256000 and explicit320000 passed mux/decode with96000 presented samples/2s, source/float32 hashes and legacy PCM16 half-LSB compatibility.",
+        "next": "Execution-time pending-audio preflight before required picture jobs; unsupported rate starts zero picture jobs and verified-output resume retains behavior. Complete retained public replay/freeze before requesting native suite slot.",
         "native_slot_requested": false
       }
     }
