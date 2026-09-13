@@ -47,7 +47,19 @@
       "cursor": "94fa07e9-c120-463c-8e93-bef403873fbf:1",
       "interface": "Global --guidance off|auto|full default off with separate ambiance-operation-guidance v1; fresh workflow prepare packets use native validation; global metadata removed before native Namespace forwarding.",
       "baseline_verified": true,
-      "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot."
+      "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
+      "focused_progress": {
+        "state": "implementation_in_place_validation_in_progress",
+        "source": "worker update; candidate not frozen or coordinator-reviewed",
+        "native_slot_requested": false,
+        "reported_behavior": [
+          "Packets reuse native intent/review/iteration validators and immutable no-replace publication.",
+          "Existing output parent required; symlink/escape and occupied destinations rejected.",
+          "Review drafts remain not-run; no inferred recorder. Complete iteration packets expose preflight, execution still needs explicit by.",
+          "Auto guidance reads native outcome fields; full guidance uses fresh exact-subject assessment or explicit unavailable diagnostic."
+        ],
+        "next": "Retained public CLI replay including actual packet consumption and scene mutation followed by guidance failure, then frozen committed candidate and native slot request."
+      }
     },
     {
       "stream": "M3",
