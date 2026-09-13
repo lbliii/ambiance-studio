@@ -42,6 +42,16 @@ class RevisionTests(unittest.TestCase):
         (self.p/'plans/evidence.txt').write_text('Synthetic evidence for receipt behavior only.\n')
 
     def audio_ref(self, name): return {'path': 'audio/'+name, 'sha256': studio.digest(self.p/'audio'/name)}
+
+    def test_unconfigured_capture_preserves_explicit_legacy_selection(self):
+        (self.p/'ambiance-project.json').unlink()
+        self.capture()
+        self.assertNotIn('active_project', revisions.load(self.p, 'v1')['controls'])
+        self.assertFalse(revision_capture.compare(self.p, 'v1')['working_diverged'])
+        scene = studio.read(self.p/'scene/scene.json'); scene['title'] = 'Changed working title'
+        studio.write(self.p/'scene/scene.json', scene)
+        self.assertTrue(revision_capture.compare(self.p, 'v1')['working_diverged'])
+        self.assertTrue(revision_capture.check(self.p, 'v1')['ok'])
     def capture(self, id='v1'): return revisions.capture(self.p, id, self.selection_path)
     def record(self, gate, edition=None, verdict='pass'):
         context = revisions.review_context(self.p, 'v1', edition)

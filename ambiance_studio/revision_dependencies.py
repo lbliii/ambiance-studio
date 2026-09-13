@@ -232,6 +232,11 @@ def collect(project, selection):
     scene_path = studio.inside(project, selection['scene']); catalog_path = studio.inside(project, selection['catalog'])
     scene = json.loads(c.document('scene.json', scene_path, 'animation', 'scene')['bytes'])
     catalog = json.loads(c.document('catalog.json', catalog_path, 'assets', 'catalog')['bytes'])
+    # A pointer switch leaves old source files intact. Capture the configured
+    # selector as an origin/control, never as a mutable integrity dependency.
+    configuration = project/'ambiance-project.json'
+    if configuration.is_file():
+        c.document('active-project.json', configuration, 'animation', 'active_project')
     if scene.get('version') != 1 or catalog.get('version') != 1: raise ValueError('Unsupported scene/catalog version')
     from .scene_runtime import scene_bridge
     scene_bridge('inspect', scene, catalog, {'full': True})
