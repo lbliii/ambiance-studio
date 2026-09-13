@@ -37,5 +37,13 @@ cycle=cycleReport();assert.equal(cycle.views[0].layers[0].samples[0].sampled_sta
 cyclicLayer.tracks=undefined;
 cycle=cycleReport();assert.equal(cycle.views[0].actions[0].max_sampled_rest_seconds,6);assert.deepEqual(cycle.views[0].actions[0].state_onsets_seconds,[]);
 const a=new Uint8Array([100,100,100,255]), b=new Uint8Array([80,80,80,255]);
+const finite=structuredClone(cyclicScene);finite.canvas.fps=25;finite.canvas.loop_seconds=29/25;
+finite.clock={version:1,mode:'finite',id:'linear-shot',revision:'1',duration_frames:29};
+finite.layers[0].tracks={x:{interpolation:'linear',keys:[[0,.3],[28/25,.6],[29/25,.7]]}};
+const finiteReport=measureActivity(finite,catalog,{views:planViews(finite,[{id:'authored'}]).views,painted});
+assert.equal(finiteReport.frames,29);assert.equal(finiteReport.full_loop_sampled,false);
+const finiteRow=finiteReport.views[0].layers[0];assert.equal(finiteRow.circular,false);
+assert.equal(finiteRow.samples[0].sampled_state_changed,false);assert.equal(finiteRow.samples[0].world_anchor_travel_px,0);
+assert.equal(finiteRow.samples.at(-1).frame,28);assert.equal(finiteRow.samples.length,29);
 const same=pixelMetrics(a,b,a,b).metrics;assert.equal(same.frame_changed_pixels,1);assert.equal(same.residual_changed_pixels,0);assert.equal(same.contribution_pixels,0);
 console.log(JSON.stringify({ok:true,checks:'actual clock, duplicate paint, inherited versus local travel, offscreen, hidden, signed raster residual, interval units'}));

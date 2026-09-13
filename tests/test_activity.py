@@ -97,6 +97,24 @@ class ActivityTests(unittest.TestCase):
         first=next(r for r in partial_rows['rows'] if r['action']=='layer-actor')
         self.assertFalse(partial_rows['circular']);self.assertIsNone(first['residual_changed_pixels'])
 
+    def test_finite_raster_uses_exact_count_without_circular_predecessor(self):
+        scene_path=self.project/'scene/scene.json';scene=json.loads(scene_path.read_text())
+        scene['canvas'].update(fps=25,loop_seconds=29/25)
+        scene['clock']={'version':1,'mode':'finite','id':'activity-shot','revision':'1','duration_frames':29}
+        scene['layers'][0].pop('motion')
+        scene['layers'][0]['tracks']={'x':{'interpolation':'linear','keys':[[0,.35],[28/25,.65],[29/25,.7]]}}
+        scene_path.write_text(json.dumps(scene))
+        _,report,out=self.measure('--raster')
+        self.assertEqual(report['clock']['frames'],29);self.assertEqual(report['joins'],[])
+        self.assertIn('editor/clock.mjs',report['modules'])
+        self.assertEqual(report['performance']['raster_predecessor_samples'],0)
+        self.assertEqual(report['performance']['join_samples_per_variant'],0)
+        raster=json.loads((out/'raster.json').read_text());self.assertFalse(raster['circular'])
+        self.assertIsNone(next(r for r in raster['rows'] if r['action']=='layer-actor')['residual_changed_pixels'])
+        reference=rendering.run(args('render','frame','--view','authored','--time',28/25,'--out',self.root/'last'),self.project)
+        self.assertEqual(Path(reference['output']).read_bytes(),(out/'frames/target/authored/00028.png').read_bytes())
+        _,tail,_=self.measure('--start-frame','1');self.assertEqual(tail['clock']['frames'],28)
+
     def test_partial_raster_run_resumes_and_never_overwrites_changed_frames(self):
         _,_,out=self.measure('--raster')
         original=(out/'frames/target/authored/00000.png').read_bytes()

@@ -153,6 +153,18 @@ class InstanceTests(unittest.TestCase):
         studio.write(self.project/'.ambiance/model-generations/unselected/scene.json',{})
         self.assertEqual(studio.watch_state(self.project,gates['assets']),(snapshots['assets'],[]))
 
+    def test_finite_receiver_checks_last_authored_frame_when_seconds_product_rounds_down(self):
+        scene=self.scene();scene['canvas'].update(fps=25,loop_seconds=29/25)
+        scene['clock']={'version':1,'mode':'finite','id':'receiver-shot','revision':'1','duration_frames':29}
+        ground=next(layer for layer in scene['layers'] if layer['id']=='ground')
+        ground['tracks']={'x':{'interpolation':'hold','keys':[[0,ground['x']],[28/25,ground['x']+1],[29/25,ground['x']+1]]}}
+        studio.write(locations(self.project)[0],scene)
+        operation=self.place(receivers=True);operation['mount']={'layer':'ground','socket':'light','at_seconds':0}
+        before=(self.project/'ambiance-project.json').read_bytes()
+        result=self.command('model','instance','apply',self.recipe([operation]),code=2)
+        self.assertIn('Source outside receiver valid_bounds',str(result))
+        self.assertEqual((self.project/'ambiance-project.json').read_bytes(),before)
+
     def test_project_root_checker_legacy_generation_and_escape(self):
         from kit import validate
         self.assertTrue(validate(*locations(self.project))['ok'])

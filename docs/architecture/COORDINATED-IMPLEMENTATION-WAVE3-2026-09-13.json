@@ -300,7 +300,7 @@
       "worktree": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio",
       "branch": "codex/wave3-p03-clock",
       "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
-      "dispatch_state": "active",
+      "dispatch_state": "complete",
       "cursor": "4dbdebd1-a93d-43a6-a836-cf97b90e0435:4",
       "interface": "Opt-in scene.clock version/mode/id/revision/duration_frames/local_cycles; canvas.loop_seconds remains duration mirror. Shared editor/clock.mjs context; existing sample(seconds) array stays; scene clock/sample frame/context routes proposed. Revision-pin and closure details need final contract.",
       "baseline_verified": true,
@@ -433,6 +433,35 @@
         "sha256": "53d5efd87ba4718e44d8829d1494897281d468bb88716e94cd7ec9b54b077a6e",
         "candidate_commit": "369546b1533c9b65d3a94ebe9148037b0f492e91",
         "coordinator_verified": "Manifest hash verified; worker reports decoded 60/59@24,31/30@30,7/6@25 and retained endpoints. Detailed artifact rehash pending."
+      },
+      "handoff_commit": "e6f2e5a",
+      "local_integration": {
+        "state": "integrated",
+        "commits": [
+          "d8c7dd3",
+          "ce00f82",
+          "9d2d5c9",
+          "a945b5d",
+          "020f83b",
+          "e44c45f",
+          "e8e8967",
+          "e07f870",
+          "dcd4016"
+        ],
+        "source_commits": [
+          "5869f76",
+          "8d5a171",
+          "06a5023",
+          "ff917d2",
+          "8a24cff",
+          "1567a39",
+          "2847b83",
+          "369546b",
+          "e6f2e5a"
+        ],
+        "handoff": "reports/p03-clock/HANDOFF.md",
+        "conflict_resolution": "Preserved M3 dispatch alongside exact clock sampling. Recomputed only merged render video signature for both start-frame and audio bitrate; retained other additive routes.",
+        "focused_validation": "Integrated CLI contract8 passed; combined native pending."
       }
     },
     {
@@ -700,6 +729,27 @@
     "state": "focused_checks_passed",
     "scope": "Legacy scene/assets folder watches additionally follow selected scene/catalog, catalog images and complete active model package closure. Gate-local malformed/missing inputs cannot pass; independent sound/intent and immutable revision scopes preserved; selection rechecked before receipt save.",
     "regression": "18 studio,15 model instance and15 revision tests passed. Explicit canonical filename watches also covered after peer review.",
-    "root_cause_proof": "/private/tmp/wave3-legacy-watch-mm37p9ad/repro.json"
+    "root_cause_proof": "/private/tmp/wave3-legacy-watch-mm37p9ad/repro.json",
+    "peer_review": "M3 re-reviewed normalization and independently probed all six directory/file/trailing-separator forms: no remaining blocking findings."
+  },
+  "integration_checks": {
+    "state": "implementation_focused_checks_passed_public_replay_ready",
+    "scope": "Shared authored frame counts in activity, region demand, movie evidence, motion-context proofs and model receiver envelopes; finite diagnostics use linear predecessors and no loop joins. Clock dependency identities added to affected report owners. Finite activity requirement evidence remains unavailable pending P06.",
+    "focused": "16 instance tests,14 activity tests with one native-only skip in focused run,8 CLI contract tests,18 motion tests (restricted localhost failure followed by successful native-access rerun), JS activity/region/clock passed. Full required-native run will require zero skips.",
+    "public_replay": "examples/model-instances/replay.py --finite exercises W3 auto guidance, M3 lifecycle, T3 exact29@25 with local camera cycle and A3 measurement/320k finite tone encode."
+  },
+  "documentation_followup": {
+    "owner": "W3 existing task",
+    "state": "in_progress",
+    "scope": [
+      "docs/CLI.md",
+      "docs/CAPABILITIES.json",
+      "docs/architecture/STUDIO-PLAN-ALIGNMENT.md",
+      "docs/architecture/WORKFLOW-CLI.yaml",
+      "docs/architecture/model-contract/implementation-v1.md",
+      "docs/architecture/FIRST-SHORT-WORK-PACKAGES.json",
+      "docs/architecture/TV-QUALITY-AND-SOUND-LIBRARY.yaml"
+    ],
+    "combined_acceptance": "pending"
   }
 }

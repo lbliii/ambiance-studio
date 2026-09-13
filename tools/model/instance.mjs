@@ -80,9 +80,9 @@ export function placeInstance(scene,catalog,args) {
     if(!member||!illumination)throw Error('Receiver contact needs an owned source and existing illumination');
     const bounds=contact.valid_bounds;
     if(!Array.isArray(bounds)||bounds.length!==4||!bounds.every(finite)||bounds[0]>bounds[2]||bounds[1]>bounds[3])throw Error('Receiver needs explicit valid_bounds in host pixels');
-    const compiled=compileScene(scene,catalog),frames=scene.canvas.fps*scene.canvas.loop_seconds;
+    const compiled=compileScene(scene,catalog),frames=compiled.clock.duration_frames;
     if(frames>100000)throw Error('Receiver envelope check supports at most 100000 output frames');
-    for(const time of [mount?.at_seconds??0,...Array.from({length:frames},(_,i)=>i/scene.canvas.fps)]) {
+    for(const time of [compiled.clock.seconds(mount?.at_seconds??0),...Array.from({length:frames},(_,i)=>compiled.clock.frame(i))]) {
       const frame=compiled.sample(time).find(s=>s.id===root.id),position=point(frame.matrix,0,0);
       if(position[0]<bounds[0]||position[1]<bounds[1]||position[0]>bounds[2]||position[1]>bounds[3])throw Error('Source outside receiver valid_bounds; reauthor the contact before moving');
     }

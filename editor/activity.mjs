@@ -39,16 +39,16 @@ function geometry(state,paint,projection){
 }
 
 export function measureActivity(scene, catalog, {views, painted, actions = [], stride = 1, start_frame = 0, frames = null}) {
-  const {fps, loop_seconds} = scene.canvas, N = Math.round(fps * loop_seconds);
-  frames ??= N;
+  const {fps, loop_seconds} = scene.canvas, rig = compileScene(scene,catalog), N = rig.clock.duration_frames;
+  frames ??= N-start_frame;
   if (!Number.isInteger(stride) || stride < 1 || !Number.isInteger(start_frame) || start_frame < 0 ||
       !Number.isInteger(frames) || frames < 1 || start_frame + frames > N || frames % stride)
     throw Error('Activity requires whole output frames within one loop and a stride dividing the selected frame count');
   if (!views.length || views.length > 2 || Math.ceil(frames/stride)*scene.layers.length*views.length > 200000)
     throw Error('Activity exceeds two views or 200000 projected layer samples; reduce duration, layers or increase stride');
-  const rig = compileScene(scene,catalog), samples = [];
-  for (let f = start_frame; f < start_frame + frames; f += stride) samples.push(rig.sample(f/fps));
-  const dt = stride/fps, timing = sceneTiming(scene,catalog),fullLoop=start_frame===0&&frames===N;
+  const samples = [];
+  for (let f = start_frame; f < start_frame + frames; f += stride) samples.push(rig.sampleFrame(f));
+  const dt = stride/fps, timing = sceneTiming(scene,catalog),fullLoop=rig.clock.mode==='loop'&&start_frame===0&&frames===N;
   const report = {kind:'ambiance-state-activity',version:1,picture_seconds:loop_seconds,output_fps:fps,
     start_frame,frames,stride,sampling_hz:fps/stride,full_loop_sampled:fullLoop,
     interval_semantics:'Half-open sampled windows. Full-loop frame zero compares the last sampled frame; wrapped intervals may end beyond T on the next traversal. Partial segments are linear and have no predecessor for their first sample. No unsampled motion is inferred.',

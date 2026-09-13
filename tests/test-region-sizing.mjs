@@ -14,4 +14,9 @@ report=regionDemand(scene,catalog,options);assert.ok(Math.abs(report.max_density
 assert.equal(largestScale([0,3,-2,0,0,0]),3);
 assert.throws(()=>regionDemand(scene,catalog,{...options,views:['small','small']}),/unique/);
 assert.throws(()=>regionDemand(scene,catalog,{...options,start_frame:7,frames:2}),/within one loop/);
+scene.canvas.fps=25;scene.canvas.loop_seconds=29/25;
+scene.clock={version:1,mode:'finite',id:'region-shot',revision:'1',duration_frames:29};
+scene.layers[0].tracks={scale:{interpolation:'linear',keys:[[0,1],[28/25,2],[29/25,3]]}};
+report=regionDemand(scene,catalog,options);assert.equal(report.frames,29);assert.equal(report.cause.frame,28);
+assert.ok(Math.abs(report.max_density-8)<1e-9);
 console.log(JSON.stringify({ok:true,checks:6,scope:'Shared transforms, rotation-independent density, output demand and sampled peak'}));

@@ -14,8 +14,12 @@ from ambiance_studio.project import locations
 from ambiance_studio.model_instances import RECIPE
 
 
-def replay(out):
+def replay(out, *, finite=False):
     out = Path(out).resolve(); out.mkdir(parents=True, exist_ok=False)
+    def source_inputs():
+        names=subprocess.check_output(['git','ls-files','-z'],cwd=ROOT).decode().split('\0')
+        return {name:digest(ROOT/name) for name in names if name and (ROOT/name).is_file()}
+    frozen_inputs=source_inputs() if finite else None
     source = model_source(out/'source'); project = create(out/'scene-project')
     steps = []; facts = {}; frames = {}
     def run(argv, expected=0):
@@ -26,7 +30,7 @@ def replay(out):
         steps.append(step); studio.write(out/'replay.json', {'steps': steps})
         if result.returncode != expected: raise RuntimeError(step)
         return data.get('data', data)
-    def cli(*argv, expected=0): return run(['--project', project, *argv], expected)
+    def cli(*argv, expected=0): return run([*(['--guidance', 'auto'] if finite else []), '--project', project, *argv], expected)
     def scene(): return studio.read(locations(project)[0])
     def recipe(name, operations):
         path = out/(name+'.json')
@@ -42,6 +46,16 @@ def replay(out):
         result = cli(*argv); frames[name] = {'file': result['output'], 'sha256': digest(result['output']), 'report': result['report']}
         return result
     package = out/'package'; package2 = out/'package-v2'
+    if finite:
+        clock={'fps':25,'clock':{'version':1,'mode':'finite','id':'instance-shot','revision':'1','duration_frames':29,
+            'local_cycles':{'camera-breath':{'period_seconds':{'numerator':1,'denominator':2}}}}}
+        studio.write(out/'finite-clock.json',clock);cli('scene','clock','--file',out/'finite-clock.json')
+        studio.write(out/'finite-stage.json',{'version':1,'operations':[
+            {'op':'camera','values':{**scene()['camera'],'x_amplitude':.03,'local_cycle':'camera-breath'}},
+            {'op':'framing','value':{'version':1,'views':{
+                'portrait':{'rect_scene_px':[15,0,90,160],'output':{'width':90,'height':160}},
+                'landscape':{'rect_scene_px':[0,12.5,240,135],'output':{'width':256,'height':144}}}}}]})
+        cli('scene','apply',out/'finite-stage.json')
     run(['model', 'build', source/'models/lantern.json', '--source-root', source, '--out', package])
     run(['model', 'lower', package, '--state', source/'rest.json', '--out', out/'local-probe'])
     run(['--project', out/'local-probe', 'scene', 'check'])
@@ -53,6 +67,8 @@ def replay(out):
                    'placement': {'position': [x, 100], 'scale': 1.5, 'rotation': 0, 'depth': 0}} for id, x in [('a', 60), ('b', 180)]]
     operations[0]['receivers'] = [{'id': 'floor', 'source_part_path': ['candle', 'flame'], 'illumination': 'a-floor',
                                   'values': [.4, .7, 1, .6], 'valid_bounds': [20, 60, 110, 120]}]
+    if finite:
+        for operation in operations: operation['placement']['depth']=.2
     place_recipe = recipe('place-two', operations)
     before = digest(project/'ambiance-project.json')
     dry = cli('model', 'instance', 'apply', place_recipe, '--dry-run')
@@ -63,6 +79,26 @@ def replay(out):
     cli('model', 'instance', 'apply', place_recipe, expected=2)
     cli('model', 'instance', 'apply', recipe('duplicate', [operations[0]]), expected=2)
     baseline = raster('two-square')
+    if finite:
+        for frame in [0,28,29]:
+            sample=cli('scene','sample','--frame',frame,'--context')
+            assert sample['clock']['effective_frame']==frame
+            facts['frame-'+str(frame)]=sample['clock']
+            image=cli('render','frame','--view','authored','--time',frame/25,'--out',project/'renders'/('frame-'+str(frame)))
+            frames['frame-'+str(frame)]={'file':image['output'],'sha256':digest(image['output']),'report':image['report']}
+        proof=cli('render','views-proof','--view','portrait','--view','landscape','--start-frame',0,'--out',project/'renders/finite-views')
+        assert proof['frames']==29 and proof['source_end_frame_exclusive']==29
+        # A deterministic engineering tone exercises measured audio and an exact
+        # finite encode. It is not a soundtrack or listening approval.
+        import math, struct, wave
+        tone=project/'audio/masters/finite-tone.wav'
+        with wave.open(str(tone),'wb') as stream:
+            stream.setparams((2,2,48000,0,'NONE','not compressed'))
+            stream.writeframes(b''.join(struct.pack('<hh',*[round(1200*math.sin(2*math.pi*440*i/48000))]*2) for i in range(55680)))
+        facts['audio_measurement']=cli('audio','measure',tone)
+        movie=cli('render','video','--audio',tone,'--audio-bitrate',320000,'--out',project/'renders/finite-movie')
+        assert movie['verification']['decoded_frames']==29 and movie['verification']['ok']
+        facts['finite_movie']={'path':movie['output'],'sha256':digest(movie['output']),'frames':29,'fps':25,'report':movie['report']}
     wrapper = project/'evidence/two-models.json'
     cli('model', 'instance', 'evidence', '--receipt', baseline['report'], '--instance', 'a', '--instance', 'b', '--out', wrapper)
     config = studio.read(project/'ambiance-project.json')
@@ -116,6 +152,11 @@ def replay(out):
     for item in frames.values():
         p = Path(item['file'])
         if not p.exists(): item['file'] = str(out/'unavailable/scene-project'/p.relative_to(out/'scene-project'))
+    if finite:
+        movie=facts['finite_movie']
+        for key in ['path','report']:
+            movie[key]=str(out/'unavailable/scene-project'/Path(movie[key]).relative_to(out/'scene-project'))
+        assert digest(movie['path'])==movie['sha256']
     with Image.open(frames['two-square']['file']) as base:
         base = base.convert('RGB')
         for name in ['moved-mounted', 'a-arched', 'a-hidden']:
@@ -125,16 +166,21 @@ def replay(out):
                     'second_instance_crop_unchanged': ImageChops.difference(base.crop((130, 0, 240, 160)), other.crop((130, 0, 240, 160))).getbbox() is None}
     index = '<!doctype html><meta charset="utf-8"><title>Independent model instance replay</title><style>body{background:#202938;color:white;font:16px system-ui}figure{display:inline-block}img{width:480px;image-rendering:pixelated}</style><h1>Static instance engineering proof</h1>'
     for name, item in frames.items(): index += '<figure><figcaption>'+name+'</figcaption><img src="'+Path(item['file']).relative_to(out).as_posix()+'"></figure>'
+    if finite:
+        index+='<h2>29-frame finite camera cycle with synthetic measurement tone</h2><video controls src="'+Path(facts['finite_movie']['path']).relative_to(out).as_posix()+'"></video>'
     (out/'index.html').write_text(index)
+    if finite and frozen_inputs!=source_inputs(): raise ValueError('Implementation inputs changed during finite integration replay')
     evidence = {'format': 'model-instance-public-replay', 'schema_version': 1, 'source_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
         'source_files': {str(p.relative_to(ROOT)): digest(p) for p in [ROOT/'ambiance_studio/model_instances.py', ROOT/'ambiance_studio/model_evidence.py', ROOT/'tools/model/instance.mjs', ROOT/'ambiance_studio/scene_transactions.py']},
         'steps': steps, 'facts': facts, 'frames': frames, 'observations': [],
+        **({'all_source_inputs':frozen_inputs,'finite_integration':True} if finite else {}),
         'files': {p.relative_to(out).as_posix(): digest(p) for p in sorted(out.rglob('*')) if p.is_file()},
-        'limitations': ['Static geometric engineering art, no whole-scene or artistic acceptance.', 'Receiver contribution stays on receiver within authored bounds; no automatic light transport.']}
+        'limitations': ['Static geometric engineering art, no whole-scene or artistic acceptance.', 'Receiver contribution stays on receiver within authored bounds; no automatic light transport.',
+            'Finite mode uses a local camera cycle, independent static instances and a synthetic audio tone; no narrative film or audition acceptance.']}
     studio.write(out/'evidence.json', evidence)
     return {'evidence': str(out/'evidence.json'), 'sha256': digest(out/'evidence.json'), 'html': str(out/'index.html'), 'facts': facts}
 
 
 if __name__ == '__main__':
-    p = argparse.ArgumentParser(); p.add_argument('--out', type=Path, required=True)
-    print(json.dumps(replay(p.parse_args().out), indent=2))
+    p = argparse.ArgumentParser(); p.add_argument('--out', type=Path, required=True);p.add_argument('--finite',action='store_true')
+    args=p.parse_args();print(json.dumps(replay(args.out,finite=args.finite), indent=2))
