@@ -121,5 +121,18 @@
     "No animation or normal-speed observation; states are static and P03 cycles/finite timing remain outside C1/C2.",
     "No scene receiver-light/removal/occluder proof, two independent scene instances/adoption, full reconstruction, portrait/landscape film or full Phase 1/P00 acceptance."
   ],
-  "native_suite": "pending serialized slot"
+  "native_suite": {
+    "status": "passed",
+    "tested_commit": "260fe7c5a35a6ad4cdc6dd29e456d607189e7dd1",
+    "cases": 475,
+    "python_tests": 460,
+    "skips": 0,
+    "path": "/Users/lb/.codex/worktrees/e892/ambiance-studio/work/m2/native-suite-unsandboxed/run.json",
+    "sha256": "8d7383b42fb70a3aee4a11d1ba5eb6b10e6548c4f1780844438f069ec148c6cd",
+    "execution": "Required local loopback/Core Audio/AVFoundation access; no source or test changes after initial sandbox failure.",
+    "retained_sandbox_failure": {
+      "path": "/Users/lb/.codex/worktrees/e892/ambiance-studio/work/m2/native-suite/run.json",
+      "sha256": "d3fa1dd458bf523022548db17adfdd3448dcd7e6cdcbdf6ad9abf2ffd9455601"
+    }
+  }
 }
