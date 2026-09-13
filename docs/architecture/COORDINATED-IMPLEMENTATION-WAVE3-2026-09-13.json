@@ -144,7 +144,16 @@
       "interface": "audio measure SOURCE source-bound method/backend/version results; audio_bitrate default 256000 with 384000 trial; separate audio_encoding and source/decoded measurements. Extracted native compose/verify_audio owns AAC and unchanged presentation interval.",
       "baseline_verified": true,
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
-      "measurement_scope": "Initial streaming double-precision Node DSP backend at explicit 48kHz; ITU Annex1/2 coefficients. EBU fixture download HTTP403 retained; deterministic published-definition signal/tolerance validation and any independent conformance gaps must be stated."
+      "measurement_scope": "Initial streaming double-precision Node DSP backend at explicit 48kHz; ITU Annex1/2 coefficients. EBU fixture download HTTP403 retained; deterministic published-definition signal/tolerance validation and any independent conformance gaps must be stated.",
+      "focused_progress": {
+        "state": "measurement_checks_passed_native_capability_fix_in_progress",
+        "source": "worker-reported; candidate not frozen or coordinator-reviewed",
+        "reported_tests_passed": 8,
+        "reference_cases": "EBU-defined loudness 1-5 and dBTP 15-19 with published tolerances",
+        "native_trial": "256k succeeded; 384000 AAC failed -11861/-12651 even with local media-service access, including standalone encodeAudio. Existing canApplyOutputSettings admitted unsupported rate.",
+        "next": "Actual codec capability/probe preflight before raster; retain failed 384k trial, no silent fallback. Prove available supported nondefault configuration and legacy 256k through real mux/decode, distinguishing requested versus measured bitrate.",
+        "native_slot_requested": false
+      }
     }
   ],
   "shared_owner": "Coordinator reconciles central CLI/output/evidence/backlog/capabilities. W3 owns optional global outcome guidance; M3 model transport and typed model evidence; T3 picture clocks/evaluation; A3 audio measurements/encoding. New shared semantics require a concrete interface and narrow lease, not user permission.",
