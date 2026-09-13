@@ -49,7 +49,7 @@
       "baseline_verified": true,
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
       "focused_progress": {
-        "state": "implementation_in_place_validation_in_progress",
+        "state": "frozen_candidate_queued_for_native",
         "source": "worker update; candidate not frozen or coordinator-reviewed",
         "native_slot_requested": false,
         "reported_behavior": [
@@ -58,7 +58,17 @@
           "Review drafts remain not-run; no inferred recorder. Complete iteration packets expose preflight, execution still needs explicit by.",
           "Auto guidance reads native outcome fields; full guidance uses fresh exact-subject assessment or explicit unavailable diagnostic."
         ],
-        "next": "Retained public CLI replay including actual packet consumption and scene mutation followed by guidance failure, then frozen committed candidate and native slot request."
+        "next": "Repeat retained CLI replay on exact committed source while queued; full suite when T3 releases slot.",
+        "reported_checks": "Worker reports 56 existing/new focused tests plus final legacy review/watched-parent/delivery-wide cases passed; 24-call native CLI replay passed, earlier restricted failure retained."
+      },
+      "candidate_commit": "0ccabe4198d91a3b56afbcd2bbad004b10847d44",
+      "full_validation": {
+        "state": "queued",
+        "candidate_commit": "0ccabe4198d91a3b56afbcd2bbad004b10847d44",
+        "source_frozen": true,
+        "clean_verified_by_coordinator": true,
+        "required_native": true,
+        "artifacts": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-native-final"
       }
     },
     {
@@ -118,7 +128,8 @@
         "clock.mjs renderer source identity registration",
         "tools/scene-command.mjs clock/sample branches only; preserve M3 model transport",
         "kit.py finite/named versus legacy loop cycle precheck only",
-        "audio_cues.alignment frame/sample exact conversion only; preserve rejection policy"
+        "audio_cues.alignment frame/sample exact conversion only; preserve rejection policy",
+        "Actual prepared-scene snapshot module lists add clock.mjs; only scene clock/sample CLI signature fixture entries after frozen run"
       ],
       "thread_id": "01a09b0c-779a-75c1-9e08-5f7ace309f1a",
       "client_thread_id": "client-new-thread:e21a93f6-dd26-48c0-b681-da9df8fc2d79",
@@ -153,12 +164,16 @@
       },
       "candidate_commit": "06a50236b09fffa4e5ece61037ecbc340672b2cb",
       "full_validation": {
-        "state": "slot_granted",
+        "state": "running_with_observed_failures",
         "candidate_commit": "06a50236b09fffa4e5ece61037ecbc340672b2cb",
         "source_frozen": true,
         "clean_verified_by_coordinator": true,
         "required_native": true,
-        "artifacts": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/required-native-1"
+        "artifacts": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/required-native-1",
+        "observed_failures": [
+          "Prepared snapshot imports clock.mjs but fixed module bundle omitted it.",
+          "Intentional scene clock/sample route signatures require fixture updates."
+        ]
       },
       "legacy_parity_reported": {
         "complete_state_samples": 485,
@@ -205,7 +220,9 @@
   ],
   "shared_owner": "Coordinator reconciles central CLI/output/evidence/backlog/capabilities. W3 owns optional global outcome guidance; M3 model transport and typed model evidence; T3 picture clocks/evaluation; A3 audio measurements/encoding. New shared semantics require a concrete interface and narrow lease, not user permission.",
   "bounded_prerequisite": "Integrated mc/1 and C1/C2 plus corrected renderer permit I1/I2 and independent P03 technical fixtures. Full model Phase 1/P00 seed/story/census/art requirements remain open.",
-  "native_test_queue": [],
+  "native_test_queue": [
+    "W3"
+  ],
   "active_native_test_owner": "T3",
   "native_test_policy": "One committed frozen-source full native suite at a time across these tasks. Focused independent checks continue. Coordinator runs final combined required-native suite; reuse validated 516-case baseline.",
   "cross_stream_dependencies": [
@@ -255,6 +272,20 @@
       "finding": "Current set-based Collector id skip is populated from record mapping after fingerprint and independent package checks; no semantic relation to expected compiler identity is established.",
       "required_fix": "Derive explicit runtime-to-compiler identity and pinned pack/recipe mapping from exact closure/state using shared lowering. Preserve other checks; reject swapped mapping/different valid pack even after managed fingerprint recomputation and reject ordinary non-model alias.",
       "coordinator_followup": "Re-lowering now validates mappings/layers and compiler identity; expected catalog collision rejects changed assets. Final comparison should include all managed signals/bindings/contact state, not only layers, to detect recomputed-fingerprint receiver drift."
+    },
+    {
+      "id": "finite-render-integer-start",
+      "owner": "T3",
+      "state": "coordinator_reproduced_fix_after_frozen_run",
+      "finding": "secondsToFrames((1/24),24) and frames2/29 fail exact conversion because numeric CLI seconds are decimal rationals; render_plan/job-input/outputs use this exact conversion, so no current selector expresses many finite starting frames.",
+      "required_fix": "Provide an explicit integer-frame input path to finite render selection and carry that identity through job/output/receipt, preserving subframe rejection and legacy seconds behavior. Prove frame1 at24fps and nonzero boundary render without implicit rounding."
+    },
+    {
+      "id": "prepared-clock-module-closure",
+      "owner": "T3",
+      "state": "failed_native_run_repair_after_completion",
+      "finding": "Prepared engine imports missing prepared/clock.mjs; fixed snapshot module list omits new transitive dependency.",
+      "required_fix": "Narrow actual snapshot closure updates and scene clock/sample CLI fixture updates after frozen run; preserve failed bundle, then commit and requeue behind W3."
     }
   ],
   "blocking_decisions": [],
