@@ -23,6 +23,7 @@ class PictureRequest:
     seconds: float | None = None
     repeats: int = 1
     bitrate: int | None = None
+    audio_bitrate: int | None = None
     audio: Path | None = None
     audio_session: str | None = None
     audio_run: str | None = None
@@ -42,6 +43,7 @@ class ComposeRequest:
     audio: Path
     view: str | None = None
     repeats: int = 1
+    audio_bitrate: int | None = None
     audio_session: str | None = None
     audio_run: str | None = None
     audio_provenance: str | None = None

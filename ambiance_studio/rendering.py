@@ -52,6 +52,7 @@ def add_parsers(sub):
         if action == 'video':
             _edition_arguments(q)
             q.add_argument('--bitrate', type=int)
+            q.add_argument('--audio-bitrate', type=int, help='Stereo AAC bps: 256000 (default), 320000 or 384000; checked against backend; requires audio')
             q.add_argument('--repeats', type=int, default=1)
             q.add_argument('--audio', type=Path, help='Selected stereo 48 kHz PCM WAV matching the final duration exactly')
     group = sub.add_parser('media', help='Decode and inspect actual encoded deliverables').add_subparsers(dest='action', required=True)
@@ -68,6 +69,7 @@ def add_parsers(sub):
     q.add_argument('picture', type=Path)
     q.add_argument('--picture-receipt', help='Project-relative existing render report binding this picture to the selected revision')
     q.add_argument('--audio', type=Path, required=True)
+    q.add_argument('--audio-bitrate', type=int, help='Stereo AAC bps: 256000 (default), 320000 or 384000; checked against backend')
     q.add_argument('--repeats', type=int, default=1)
     add_output(q, Output.ARTIFACT, type=Path, required=True)
     q.add_argument('--revision')

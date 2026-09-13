@@ -99,7 +99,34 @@ void trimPicture(NSString *sourcePath, NSString *outPath, int skipFrames, int fr
         },
         nil);
 }
-void compose(NSString *videoPath, NSString *audioPath, NSString *outPath, int repeats) {
+static NSDictionary *audioCapability(int bitrate) {
+    if (bitrate != 256000 && bitrate != 320000 && bitrate != 384000)
+        fail(@"Unsupported stereo AAC bitrate; choose 256000, 320000 or 384000 bps (no fallback)");
+    AVAudioFormat *input = [[AVAudioFormat alloc] initWithCommonFormat:AVAudioPCMFormatFloat32
+        sampleRate:48000 channels:2 interleaved:YES];
+    AVAudioFormat *output = [[AVAudioFormat alloc] initWithSettings:@{AVFormatIDKey:@(kAudioFormatMPEG4AAC),
+        AVSampleRateKey:@48000, AVNumberOfChannelsKey:@2}];
+    AVAudioConverter *converter = [[AVAudioConverter alloc] initFromFormat:input toFormat:output];
+    NSArray *rates = converter.applicableEncodeBitRates;
+    if (!converter || !rates.count) fail(@"AAC format-specific bitrate capability unavailable; media-service access is required");
+    if (![rates containsObject:@(bitrate)])
+        fail([NSString stringWithFormat:@"Requested AAC bitrate %d is unsupported for stereo 48 kHz on this backend; applicable rates %@; no fallback", bitrate, rates]);
+    return @{@"ok":@YES, @"codec":@"aac", @"sample_rate":@48000, @"channels":@2,
+        @"bitrate_bps":@(bitrate), @"applicable_bitrates_bps":rates,
+        @"bitrate_strategy":converter.bitRateStrategy ?: @"backend default",
+        @"backend":@"macOS AVFoundation", @"os_version":NSProcessInfo.processInfo.operatingSystemVersionString,
+        @"method":@"AVAudioConverter applicableEncodeBitRates for actual stereo 48 kHz formats; capability check, not an encode/decode pass"};
+}
+NSDictionary *audioEncodingSettings(int bitrate) {
+    audioCapability(bitrate);
+    return @{AVFormatIDKey : @(kAudioFormatMPEG4AAC), AVSampleRateKey : @48000,
+             AVNumberOfChannelsKey : @2, AVEncoderBitRateKey : @(bitrate)};
+}
+void audioPreflight(int bitrate) {
+    json(audioCapability(bitrate), nil);
+}
+void compose(NSString *videoPath, NSString *audioPath, NSString *outPath, int repeats, int audioBitrate) {
+    NSDictionary *audioSettings = [audioPath isEqualToString:@"-"] ? nil : audioEncodingSettings(audioBitrate);
     fresh(outPath);
     if (repeats < 1)
         fail(@"Repeats must be positive");
@@ -165,8 +192,8 @@ void compose(NSString *videoPath, NSString *audioPath, NSString *outPath, int re
         [readers addObject:reader];
         NSDictionary *readSettings = isAudio ? @{
             AVFormatIDKey : @(kAudioFormatLinearPCM),
-            AVLinearPCMBitDepthKey : @16,
-            AVLinearPCMIsFloatKey : @NO,
+            AVLinearPCMBitDepthKey : @32,
+            AVLinearPCMIsFloatKey : @YES,
             AVLinearPCMIsBigEndianKey : @NO,
             AVLinearPCMIsNonInterleaved : @NO
         }
@@ -178,13 +205,7 @@ void compose(NSString *videoPath, NSString *audioPath, NSString *outPath, int re
         [reader addOutput:output];
         CMFormatDescriptionRef format =
             (__bridge CMFormatDescriptionRef)readTrack.formatDescriptions.firstObject;
-        NSDictionary *writeSettings = isAudio ? @{
-            AVFormatIDKey : @(kAudioFormatMPEG4AAC),
-            AVSampleRateKey : @48000,
-            AVNumberOfChannelsKey : @2,
-            AVEncoderBitRateKey : @256000
-        }
-                                              : nil;
+        NSDictionary *writeSettings = isAudio ? audioSettings : nil;
         AVAssetWriterInput *input =
             [AVAssetWriterInput assetWriterInputWithMediaType:track.mediaType
                                                outputSettings:writeSettings
@@ -252,7 +273,10 @@ void compose(NSString *videoPath, NSString *audioPath, NSString *outPath, int re
             @"seconds" : @(CMTimeGetSeconds(total)),
             @"video_passthrough" : @YES,
             @"audio" : audioPath,
-            @"audio_encoding" : @"PCM source encoded once to AAC stereo 48kHz 256kbps during mux"
+            @"audio_encoding" : [audioPath isEqualToString:@"-"] ? (id)[NSNull null] : @{
+                @"codec":@"aac", @"sample_rate":@48000, @"channels":@2, @"bitrate_bps":@(audioBitrate),
+                @"backend":@"macOS AVFoundation", @"os_version":NSProcessInfo.processInfo.operatingSystemVersionString,
+                @"input_decode":@"float32 PCM; encoded once during mux; no gain or normalization"}
         },
         nil);
 }

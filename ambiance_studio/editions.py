@@ -173,6 +173,24 @@ def record_edition(project, prepared, result, args):
         report_path = verification.get('report')
         if not report_path: raise ValueError('Media verification did not provide its saved report')
         refs.append(ref(project, Path(report_path), 'export', 'media_verification'))
+        # Audio-only evidence uses exact source/output identities from the existing
+        # verifier; it does not infer listening or change picture expectations.
+        measured = verification.get('audio', {}).get('level_measurement', {})
+        audio_evidence = None
+        if prepared['audio'] and result.get('audio_encoding'):
+            from .audio_encoding import encoding_settings
+            wanted = encoding_settings(getattr(args, 'audio_bitrate', None))
+            if any(result['audio_encoding'].get(k) != v for k, v in wanted.items()):
+                raise ValueError('Audio encoding differs from the requested edition settings')
+            original = result.get('audio_source_measurement', {})
+            if original.get('source', {}).get('sha256') != prepared['audio']['sha256']:
+                raise ValueError('PCM level measurements differ from the edition source')
+            if measured.get('encoded_source', {}).get('sha256') != output['sha256']:
+                raise ValueError('Decoded audio measurements differ from the edition movie')
+            decoded = measured['source']
+            refs.append(ref(project, Path(decoded['path']), 'export', 'audio_presentation_float', decoded['sha256']))
+            audio_evidence = {'encoding': result['audio_encoding'], 'source_measurement': original,
+                              'decoded_measurement': measured}
         picture = prepared['picture']
         if picture is None:
             # The render run retains its original encoded picture separately.
@@ -197,7 +215,9 @@ def record_edition(project, prepared, result, args):
             'revision_sha256': prepared['manifest_sha256'], 'created_utc': datetime.now(timezone.utc).isoformat(),
             'picture': picture, 'audio': prepared['audio'], 'output': output, 'dependencies': unique(refs),
             'sound_complete': sorted(c.sound_complete), 'recipe': {'command': args.command, 'action': args.action,
-            'repeats': getattr(args, 'repeats', 1)}, 'verification': {'path': relative(project, report_path), 'sha256': studio.digest(report_path)},
+            'repeats': getattr(args, 'repeats', 1), **({'audio_encoding':result['audio_encoding']} if audio_evidence else {})},
+            **({'audio_evidence':audio_evidence} if audio_evidence else {}),
+            'verification': {'path': relative(project, report_path), 'sha256': studio.digest(report_path)},
             'limits': ['Technical verification only. No creative verdict, listening, phone observation or publication is inferred.'],
             **({'view':view,'output_expectations':expectations} if expectations else {})})
         studio.write(path, receipt)

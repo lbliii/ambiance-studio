@@ -119,6 +119,8 @@ def plan_render(args, project):
     audio = None
     audio_bytes = None
     if args.action == 'video':
+        from .audio_encoding import encoding_settings
+        request['audio_encoding'] = encoding_settings(getattr(args, 'audio_bitrate', None), has_audio=bool(args.audio))
         if width % 2 or height % 2:
             raise CommandError('Native H.264 dimensions must be even.')
         positive_integer(args.repeats, 'repeats')

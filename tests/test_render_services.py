@@ -43,6 +43,7 @@ class RenderPlanTests(unittest.TestCase):
                 'project': str(project), 'out': str(out), 'mode': 'video', 'width': 64, 'height': 96,
                 'start': 0, 'seconds': 2, 'disable': [], 'supersample': 1,
                 'scene_path': str(scene), 'catalog_path': str(project/'catalog.json'), 'bitrate': 5000,
+                'audio_encoding': {'codec':'aac', 'sample_rate':48000, 'channels':2, 'bitrate_bps':256000},
             })
             self.assertEqual((plan.fps, plan.frames, plan.repeats), (6, 12, 2))
             audio.write_bytes(b'changed after capture')

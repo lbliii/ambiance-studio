@@ -18,6 +18,7 @@ def _composition(project, recipe, entry, picture, edition, view=None):
         revision=recipe['revision'], edition=edition, view=view,
         picture=Path(picture['output']), picture_receipt=project_references.relative(project, picture['report']),
         audio=studio.inside(project, entry['audio']), repeats=entry.get('repeats', 1),
+        audio_bitrate=entry.get('audio_bitrate'),
         audio_run=entry.get('audio_run'), audio_provenance=entry.get('audio_provenance'),
     )
 
@@ -40,6 +41,8 @@ def _produce_delivery(project, recipe, progress):
                  for e in recipe['editions'] if e['role'] != 'silent']
         plan = {'jobs': jobs, 'audio_inputs': []}
     editions = {entry['role']: entry for entry in recipe['editions']}
+    from .audio_encoding import preflight_iteration_audio
+    progress.state['audio_encoding_preflight'] = preflight_iteration_audio(project, recipe, plan['jobs'], progress)
     pictures = {}
     selected = []
     for job in plan['jobs']:

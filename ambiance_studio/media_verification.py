@@ -50,6 +50,8 @@ def verify_media(binary, source, out, width, height, fps, frames, audio_tracks, 
             continue
         data['requested_contacts'].append({**request, 'resolved_path':str(image), 'path_base':'absolute', 'sha256':digest(image)})
     data['contact_selection'] = 'CFR floor(time*fps), snapping values within 1e-7 frame of an integer boundary; valid times are [0,duration). No VFR support.'
+    from .audio_measurements import decoded_measurement
+    decoded_measurement(data, source, source_hash)
     report.write_text(json.dumps(data, indent=2, allow_nan=False)+'\n')
     return data
 
