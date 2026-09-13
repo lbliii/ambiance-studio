@@ -44,7 +44,7 @@
       "branch": "codex/wave3-workflow-packets-outcomes",
       "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
       "dispatch_state": "active",
-      "cursor": "94fa07e9-c120-463c-8e93-bef403873fbf:3",
+      "cursor": "94fa07e9-c120-463c-8e93-bef403873fbf:4",
       "interface": "Global --guidance off|auto|full default off with separate ambiance-operation-guidance v1; fresh workflow prepare packets use native validation; global metadata removed before native Namespace forwarding.",
       "baseline_verified": true,
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
@@ -112,11 +112,11 @@
       "interface": "Project-scoped model instance apply recipe, exact contained package pins and deterministic tuple IDs; managed-layer fingerprints and adoption conflict preview. Actual C1/C2 lantern lowering probe passes.",
       "baseline_verified": true,
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
-      "open_design_review": "Scene/catalog pointer commit may fit, but existing finish() mutates active scene path: separate immutable packages/staging from mutable active scene, preserve/rebase catalog-relative paths, prove ordinary edit/restore/view/render/revision after pointer switch and failed-write recovery.",
+      "open_design_review": "Source review resolved for bounded scene/catalog generation. Retained public replay verifies ordinary edit/restore, portable reopen and captured old revision raster. Full native/combined checks pending.",
       "transaction_refinement": "Active generation contains mutable working scene; captured previous config/scene and contained model packages remain immutable. Existing edit/restore/view/render/revision compatibility is still required.",
       "bounded_lowering_gap": "C1 static constant-cell keys at 0/1 seconds fail a host with a 2-second duration; this is an endpoint duration mismatch, not fps arithmetic. Granted constant-cell endpoints mapped to validated host interval, rejecting animated inputs beyond subset; actual finite-host compatibility remains required.",
       "focused_progress": {
-        "state": "successor_fix_in_progress_before_full_native",
+        "state": "frozen_candidate_source_reviewed_queued",
         "source": "worker-reported tests; current source reviewed for alias issue, not a frozen handoff",
         "reported_checks": [
           "dry/save/retry",
@@ -128,7 +128,7 @@
           "generation asset-root validation",
           "actual raster provider wrapper"
         ],
-        "next": "Tie namespaced runtime asset identity to exact compiler pack from model closure/state before revision alias acceptance; complete public revision/reuse replay and freeze."
+        "next": "Full required-native suite when W3 releases; final finite integration remains coordinator-owned."
       },
       "candidate_commit": "92e64484fb9358827ff1a71879753525ab85aa56",
       "full_validation": {
@@ -144,12 +144,16 @@
         "path": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/public-92e6448/evidence.json",
         "sha256": "758c2aeb7323cd0d98a6f0df87e55326fd6005b9affa3f1c1da7b2516ac71714",
         "source_commit": "92e64484fb9358827ff1a71879753525ab85aa56",
-        "coordinator_verified": "Report hash; detailed artifact review pending.",
+        "coordinator_verified": "All4 recorded source-file hashes,598 replay artifact hashes and36 expected CLI exits verified. Actual two-square/moved-mounted/hidden PNGs inspected: one instance changes and disappears, second stays visible; geometric fixture is not artistic acceptance.",
         "observations": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/observations-92e6448.json",
         "observations_sha256": "3bd49be059653f56b54732dabf59bddf9248d0c3d6c0ee49d93170d0d997fdce",
-        "package_audit": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/package-audit-92e6448.json"
+        "package_audit": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/package-audit-92e6448.json",
+        "coordinator_verified_source_files": 4,
+        "coordinator_verified_artifact_files": 598,
+        "public_calls": 36,
+        "mismatches": []
       },
-      "successor_fix": "Committed92e6448 normalizes missing controls/variants and rejects unknown record fields; coordinator reviewed the17-line source/test addition and verified clean tree. Fresh public replay on successor is running.",
+      "successor_fix": "Committed92e6448 normalizes optional controls/variants and rejects unknown fields; fresh exact-commit replay verified.",
       "queue_policy": "Keep place if clean successor/replay ready at slot opening; otherwise let ready A3 proceed. No full native has run for M3.",
       "historical_public_replay": {
         "path": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/public-70e0937/evidence.json",
@@ -168,6 +172,11 @@
         },
         "reported_portability": "Origin/package/source project unavailable; portable inspect/check and captured old revision render passed.",
         "browser_observation": "Worker inspected13-layer scene with moved/arched lantern; exposed canvas remains deliberate engineering fixture limitation."
+      },
+      "coordinator_review": {
+        "state": "source_review_no_blocking_finding",
+        "scope": "Reviewed package/state re-lowering, full managed-subject comparison and mapping/pack/signal/binding/ordinary-alias negatives. Reviewed transaction generation publication and atomic configuration pointer, retained catalog assets/history restore, dependency rechecks, source-root adapters and typed revision/raster adapters. Full native and combined finite probe pending.",
+        "transaction_limit": "Interrupted publication before selection may retain an unselected generation; occupied recipe-hash generation rejects, never overwrites. This boundary is documented; direct filesystem writes bypass the CLI lock."
       }
     },
     {
@@ -201,7 +210,7 @@
       "validation_note": "JS test-clock auto-discovered; Python clock tests should exercise actual CLI, not duplicate JS wrapper. Coordinator reconciles renderer source-list verifiers.",
       "clock_context_proposal": "compiled.clock.seconds(seconds)/frame(integer) returns frozen context; compiled.sample(context) validates equivalent definition and does not rewrap; sample(seconds) retains array and sampleFrame preserves requested frame. consumerTime selects local-cycle values. Authored clock revision label is distinct from external scene/revision hashes.",
       "focused_progress": {
-        "state": "repaired_frozen_candidate_queued",
+        "state": "repairing_integer_duration_authority",
         "source": "worker-reported; frozen replay and coordinator verification pending",
         "implementation": "Shared finite/loop engine, JS/Python exact conversions, CLI clock/sample, local-cycle camera/layer/signal and finite reparent/raster consumers.",
         "reported_checks": "Legacy track/rig/binding/finishing checks and four CLI cases passed.",
@@ -216,13 +225,13 @@
         },
         "browser_observation": "Worker inspected both sample/endpoint poses and observed Play stop at frame59. Coordinator has not repeated this observation.",
         "native_slot_requested": false,
-        "next": "Second full native run after existing M3/A3 reservations; no tracked edits."
+        "next": "Repair explicit duration_frames authority and refresh frozen candidate/proofs before reserved turn after A3."
       },
       "candidate_commit": "8a24cff847751c0f0163c8b9779024815fd6908b",
       "full_validation": {
-        "state": "queued_after_A3",
+        "state": "repairing_before_reserved_slot",
         "candidate_commit": "8a24cff847751c0f0163c8b9779024815fd6908b",
-        "source_frozen": true,
+        "source_frozen": false,
         "clean_verified_by_coordinator": true,
         "required_native": true,
         "artifacts": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/required-native-2"
@@ -260,8 +269,8 @@
         "8a24cff847751c0f0163c8b9779024815fd6908b"
       ],
       "coordinator_review": {
-        "state": "repair_source_review_no_blocking_finding",
-        "scope": "Reviewed copy/serve/runtime identity closure and exact integer start/count transport, finite range/audio rejection and five route signatures. Verified clean HEAD, source manifest and native movie hashes; full required-native run pending."
+        "state": "new_blocking_duration_finding",
+        "scope": "Reviewed copy/serve/runtime identity closure and exact integer start/count transport, finite range/audio rejection and five route signatures. Verified clean HEAD, source manifest and native movie hashes; full required-native run pending. Subsequent cross-fps review reproduced an additional explicit-duration failure; 8a24cff is not integration-ready."
       },
       "public_replay": {
         "source_commit": "8a24cff847751c0f0163c8b9779024815fd6908b",
@@ -318,12 +327,12 @@
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
       "measurement_scope": "Initial streaming double-precision Node DSP backend at explicit 48kHz; ITU Annex1/2 coefficients. EBU fixture download HTTP403 retained; deterministic published-definition signal/tolerance validation and any independent conformance gaps must be stated.",
       "focused_progress": {
-        "state": "frozen_candidate_final_replay_in_progress",
+        "state": "frozen_candidate_source_reviewed_queued",
         "source": "worker-reported; candidate not frozen or coordinator-reviewed",
         "reported_tests_passed": 8,
         "reference_cases": "EBU-defined loudness 1-5 and dBTP 15-19 with published tolerances",
         "native_trial": "Worker reports format-specific applicableEncodeBitRates stereo48k max320000; global available list misleadingly includes384000. New preflight rejects384 before raster. Real native 256000 and explicit320000 passed mux/decode with96000 presented samples/2s, source/float32 hashes and legacy PCM16 half-LSB compatibility.",
-        "next": "Finish exact-commit replay-final and confirm full hash before native queue placement.",
+        "next": "Full required-native suite after M3; no source edits requested.",
         "native_slot_requested": false,
         "reported_checks": "10 measurement,2 native,8 CLI,9 revision-contract,6 render-service plus iteration-step checks and package audit passed.",
         "development_replay": {
@@ -344,9 +353,13 @@
       "public_replay": {
         "path": "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/replay-final/replay.json",
         "sha256": "13060f7932bc9a3f2656e444d713735b3b6abd51b0dfa76991ce43ff74dbe6d5",
-        "coordinator_verified": "Report hash and clean source commit; detailed artifact/source review pending.",
+        "coordinator_verified": "Report/source identity verified:582 source-file hashes,118 artifact hashes/sizes and6 library artifact hashes/sizes match.18 checks report pass. Full native suite pending.",
         "reported_checks": 18,
-        "reported_limits": "384k rejected before raster; 256/320k requests encode exact96000 presentation samples, estimated simple-tone bitrates differ; explicit unaccepted library use, no promotion/audition."
+        "reported_limits": "384k rejected before raster; 256/320k requests encode exact96000 presentation samples, estimated simple-tone bitrates differ; explicit unaccepted library use, no promotion/audition.",
+        "coordinator_verified_source_files": 582,
+        "coordinator_verified_artifact_files": 118,
+        "coordinator_verified_library_files": 6,
+        "mismatches": []
       },
       "supplemental_peak_proof": {
         "path": "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/high-native/high-peak-observation.json",
@@ -356,6 +369,14 @@
         "reported_decoded_float_max": 1.009989619255066,
         "reported_float_true_peak_dbtp": 3.1122539839,
         "meaning": "Worker reports float overshoots retained while legacy PCM16 clamps; source unchanged, no audition. Coordinator verified observation record hash only."
+      },
+      "coordinator_review": {
+        "state": "source_review_no_blocking_finding",
+        "scope": "Reviewed DSP, integer/raw-float input validation, native float decode/legacy PCM16 derivative, bitrate preflight/pass-through, pending-iteration preflight and edition float dependency. Checked K-weighting coefficients, FIR phases and limited EBU signal definitions against primary publications. No full conformance or audition claim. Full native pending.",
+        "primary_sources": [
+          "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.1770-5-202311-I!!PDF-E.pdf",
+          "https://tech.ebu.ch/docs/tech/tech3341.pdf"
+        ]
       }
     }
   ],
@@ -379,8 +400,8 @@
     {
       "id": "scene-catalog-atomic-save",
       "owner": "M3",
-      "state": "design_review_pending",
-      "action": "Scene/catalog pointer commit may fit, but existing finish() mutates active scene path: separate immutable packages/staging from mutable active scene, preserve/rebase catalog-relative paths, prove ordinary edit/restore/view/render/revision after pointer switch and failed-write recovery."
+      "state": "source_and_public_replay_reviewed",
+      "action": "Source review resolved for bounded scene/catalog generation. Retained public replay verifies ordinary edit/restore, portable reopen and captured old revision raster. Full native/combined checks pending."
     },
     {
       "id": "picture-audio-render-boundary",
@@ -404,17 +425,18 @@
     {
       "id": "selected-catalog-root-validation",
       "owner": "M3",
-      "state": "narrow_fix_leased",
+      "state": "source_and_public_replay_reviewed",
       "observed_failure": "Actual saved generation catalog fails kit.validate and tools/check-scene.mjs because catalog.parent.parent is assumed asset root. Coordinator inspected both and nested attachment audit.",
       "action": "Pass explicit selected project root through project check and nested validators, preserving legacy inferred fallback and containment/hash diagnostics. Keep separate from T3 finite-cycle guards; validate new generation, legacy layout and invalid source cases."
     },
     {
       "id": "model-runtime-compiler-alias",
       "owner": "M3",
-      "state": "explicit_alias_source_reviewed_negative_tests_pending",
+      "state": "source_and_negative_tests_reviewed",
       "finding": "Current set-based Collector id skip is populated from record mapping after fingerprint and independent package checks; no semantic relation to expected compiler identity is established.",
       "required_fix": "Derive explicit runtime-to-compiler identity and pinned pack/recipe mapping from exact closure/state using shared lowering. Preserve other checks; reject swapped mapping/different valid pack even after managed fingerprint recomputation and reject ordinary non-model alias.",
-      "coordinator_followup": "Re-lowering now validates mappings/layers and compiler identity; expected catalog collision rejects changed assets. Final comparison should include all managed signals/bindings/contact state, not only layers, to detect recomputed-fingerprint receiver drift."
+      "coordinator_followup": "Re-lowering now validates mappings/layers and compiler identity; expected catalog collision rejects changed assets. Final comparison should include all managed signals/bindings/contact state, not only layers, to detect recomputed-fingerprint receiver drift.",
+      "resolution": "Exact package re-lowering and full managed-subject comparison present at92e6448; mapping/pack/signal/binding tamper with recomputed fingerprint and ordinary alias negatives inspected. Full native pending."
     },
     {
       "id": "finite-render-integer-start",
@@ -432,6 +454,16 @@
       "finding": "Prepared engine imports missing prepared/clock.mjs; fixed snapshot module list omits new transitive dependency.",
       "required_fix": "Narrow actual snapshot closure updates and scene clock/sample CLI fixture updates after frozen run; preserve failed bundle, then commit and requeue behind W3.",
       "repair_candidate": "8a24cff847751c0f0163c8b9779024815fd6908b"
+    },
+    {
+      "id": "explicit-duration-frame-authority",
+      "owner": "T3",
+      "state": "coordinator_reproduced_repair_leased",
+      "candidate": "8a24cff847751c0f0163c8b9779024815fd6908b",
+      "finding": "Clock/validator reconstruct N as fps*loop_seconds; explicit7frames25fps and31frames30/60fps round-trip to nonintegers and reject. Public scene clock --file succeeds for24fps60 control and fails for25fps7/30fps31 with invalid canvas/frame count. Direct compileClock also reproduced.",
+      "reproduction": "/private/tmp/wave3-clock-duration-ycvdp61p/repro-public.json",
+      "required_fix": "Use explicit duration_frames as integer authority, check seconds mirror against N/fps, carry exact N through scene validation/render plan/job/receipts and affected consumers without weakening legacy loops. Cover25fps7 and30fps31 public author/sample/native ranges; fresh committed proof before native slot.",
+      "combined_followup": "M3 tools/model/instance.mjs currently derives receiver-envelope frames from canvas product; reconcile against shared compiled clock when integrating corrected T3+M3."
     }
   ],
   "blocking_decisions": [],
