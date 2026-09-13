@@ -232,7 +232,7 @@ def apply(project, recipe_file, *, dry_run=False):
                 target = generation/'packages'/package_hash
                 pin = reused or {'package': (target/'model-package.json').relative_to(project).as_posix(), 'sha256': package_hash, 'definition': manifest['definition']}
                 if not reused: packages[package_hash] = (package, manifest)
-                else:
+                elif package_hash not in packages:
                     contained, retained_manifest, _, _ = open_pin(project, reused)
                     pinned.extend(dependencies(contained, retained_manifest))
             pinned.extend(dependencies(package, manifest))
