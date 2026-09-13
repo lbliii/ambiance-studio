@@ -1,6 +1,6 @@
 # mc/1 — smallest construction and consumer slices
 
-These slices map to current owners at `00c6443`; they do not change phase/package statuses. New module names below are proposals. The coordinator owns central CLI/output/bridge hooks and shared evidence/media integration. Request a narrow lease before editing those hooks.
+These slices map to current owners at `00c6443`; they do not change phase/package statuses. C1/C2 are now implemented as the [bounded static construction contract](construction-v1.md), with [public replay](../../../examples/model-construction/README.md) and exact [artifact observations](../../../reports/model-construction/observations-v1.json). I1/I2 remain planned; broad phase/package statuses do not change. The coordinator owns central CLI/output/bridge hooks and shared evidence/media integration. Request a narrow lease before editing those hooks.
 
 | Slice | New work and existing owner to reuse | Completion evidence |
 | --- | --- | --- |
@@ -40,7 +40,7 @@ python3 -m unittest discover -s tests -p test_roadmap.py -v
 python3 tools/package_audit.py
 ```
 
-There is no `ambiance model` command in this assignment. The public replay demonstrates existing registration/evaluation/transaction capability, not model construction or finite scenes. The new test is automatically discovered by the existing `tests/test-*.mjs` suite rule; no central test registration patch is needed.
+The original contract-packet assignment added no `ambiance model` command. Its replay above demonstrates existing registration/evaluation/transaction capability. The later C1/C2 implementation has the separate model build/inspect/lower/proof/check/admit replay linked above; finite scenes and instance adoption remain unimplemented. The new test is automatically discovered by the existing `tests/test-*.mjs` suite rule; no central test registration patch is needed.
 
 Discovery is verified through `diagnostic_commands.test()` → `checks.run_suite()` → the sorted `tests/test-*.mjs` glob. The coordinator explicitly refined this first assignment to focused contract/roadmap/link/package checks; it separately validates the unchanged runtime baseline. Downstream shared implementation still runs `./ambiance test` and affected native/browser checks, with actual execution/skips reported.
 

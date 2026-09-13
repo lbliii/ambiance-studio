@@ -30,6 +30,8 @@ Store an unknown value as unknown/null. Do not invent a seed, model, license con
 
 Compound preparation recipes and typed compiler receipts are documented in [agent preparation](AGENT-PREPARATION.md). They preserve separate source/backing/cutout/occluder/companion identities, canonical production bindings, saved view envelopes and immutable rebuild dependencies.
 
+The executable [local model construction contract](architecture/model-contract/construction-v1.md) adds immutable nested definitions, registered static controls/variants, exact role proofs and portable technical entries. It lowers through the existing scene evaluator; scene instances/adoption and artistic approval remain separate.
+
 ## Rig record
 
 A rig names child asset versions, local placements, pivots/sockets, masks, and parent relationships. Expose a small set of useful controls, such as window warmth, smoke rate, or branch sway. Include a preview and safe camera/scale ranges determined by review.
@@ -53,6 +55,8 @@ The executable `asset request record/reconcile/inspect` commands preserve manage
 Record master sample rate/duration, source asset IDs, source trims/offsets, track gains, pan/width, processing and its order, cue times, circular wrap/tails, crossfade choices, and output stems. Keep requested musical direction distinct from measured or heard source properties.
 
 Specify whether stems contain master gain/processing and whether unity summing reconstructs the master. The executable [audio-session contract](AUDIO-SESSION.md) supports PCM arrangement, mixing and comparisons. Preserve separate external processing recipes for operations it does not implement.
+
+The [typed audio library](AUDIO-LIBRARY.md) preserves immutable originals and preparations, separate listening/decision records, and project-contained materialization. Its typed revision adapter pins contained source files and archived provenance without retaining live dependencies on an earlier project.
 
 ## Review and release
 

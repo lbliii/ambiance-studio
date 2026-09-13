@@ -16,6 +16,8 @@ Each finite command writes one JSON result to stdout: `ok`, `schema_version: 1`,
 
 `--out` on asset proofs, rendering and media verification instead names a **fresh artifact directory**. Those commands save their own reports alongside actual outputs. Audio mix outputs are immutable directories under the selected project's `audio/runs/`; source preparations use `audio/preparations/ID/`. Explicit recipe/batch/render paths are relative to the shell working directory; audio session and source paths are project-relative as described in the audio contract.
 
+Model routes are project-free and use explicit shell-relative package/state/recipe paths. Their build/lower/proof/admit outputs are fresh artifact directories; inspect/check use optional result-envelope files. Audio library selection uses an explicit absolute config; import/materialize/check still require a selected project.
+
 Revision selections and asset/placement manifests use project-relative references. Their explicit command input/output filenames retain shell-relative semantics. `revision handoff --out` also creates a fresh artifact directory. Revision-aware commands identify working divergence separately from captured input integrity and review verdicts; see [revisions and editions](REVISIONS.md).
 
 ## Implemented commands
@@ -54,6 +56,10 @@ Revision selections and asset/placement manifests use project-relative reference
 | `asset edges PACK_OR_ID --display-width N --out DIR` | Inspect every cel at intended display size on light/dark backgrounds, with optional explicit context placement |
 | `asset edge-repair SOURCE --recipe FILE --out DIR` | Prepare an immutable, registered alpha/matte-color repair with source and recipe snapshots |
 | `asset admit PACK` | Add a compiled pack within the project to its catalog; protect existing IDs |
+| `model build DEFINITION --source-root DIR --out PACKAGE` | Validate and preserve immutable nested definitions, compiler packs and editable source closure |
+| `model inspect PACKAGE_OR_ENTRY` / `model lower PACKAGE --state FILE --out DIR` | Inspect a technical candidate or lower a static state through the existing scene evaluator |
+| `model proof PACKAGE --recipe FILE --out DIR` / `model check PROOF --package PACKAGE --recipe FILE` | Render and check exact static source/assembly and material-role evidence |
+| `model admit PACKAGE --proof PROOF --recipe FILE --out ENTRY` | Copy a verified portable technical entry; does not record artistic acceptance or create scene instances |
 | `library find [QUERY] [--directory DIR]` | Find assets and real proof paths across bundled and initialized project catalogs |
 | `library inspect ID [--catalog FILE]` | Inspect exact source metadata, integrity and decoded cel counts |
 | `plan inspect/check/next [--inventory PATH --out FILE]` | Reconcile intended parts, actual evidence, dependencies and remaining work; next returns five ready items by default (`--limit N`) |
@@ -107,6 +113,7 @@ Revision selections and asset/placement manifests use project-relative reference
 | `audio source-inspect SOURCE --backend pcm/macos-afconvert` | Inspect actual format, decode identity and source hash; raw PCM needs explicit format/rate/channel flags |
 | `audio source-prepare SOURCE --backend BACKEND --source-sha256 HASH --preparation-id ID [--provenance FILE]` | Preserve original bytes and publish a fresh 48 kHz PCM24 preparation with exact source/tool/recipe identities |
 | `audio source-check RECEIPT` | Verify a prepared source and its dependencies without asserting a complete mix or audition |
+| `audio library configure/search/inspect/import/audition/observe/promote/materialize/check` | Versioned local sources, explicit listening records and portable project copies; see [audio library](AUDIO-LIBRARY.md) for required config, hash and review inputs |
 | `audio inspect SESSION` | Validate explicit selected PCM sources and inspect arrangement/levels |
 | `audio import-stems SESSION --session-id ID` | Preserve a legacy session and create a new executable session from its rendered stems |
 | `audio mix SESSION [--run-id ID --start N --duration N --solo STEM --mute STEM --gain STEM=DB]` | Render a versioned circular arrangement, aligned stems and numerical reports |
@@ -122,7 +129,7 @@ A blank project is the default for new artwork. It has no layers; its technical 
 
 Overview/next assessment creates no project reports, decode caches or writer locks. Missing runtime or exact cached movie decode evidence stays unknown with a diagnostic; explicit `plan evidence` or `plan coverage` acquires evidence. An explicit `--out FILE` still requests a result file. See the [assessment contract and replay](../reports/workflow-cli/WF-01-ASSESSMENT.md).
 
-Detailed contracts and examples: [inventory and asset proofs](PRODUCTION-INVENTORY.md), [crop/return preparation](ASSET-PREPARATION.md), [scene transactions](architecture/SCENE-TRANSACTIONS.md), [authored tracks](SCENE-CONTRACT.md), [rendering/media](RENDERING.md), [audio sessions](AUDIO-SESSION.md), [source preparation](AUDIO-SOURCES.md), [revisions and editions](REVISIONS.md). Edition audio may cite `--audio-run`, `--audio-provenance` or additional `--audio-session` inputs; their provenance requirements are described in the revision contract.
+Detailed contracts and examples: [inventory and asset proofs](PRODUCTION-INVENTORY.md), [crop/return preparation](ASSET-PREPARATION.md), [scene transactions](architecture/SCENE-TRANSACTIONS.md), [authored tracks](SCENE-CONTRACT.md), [rendering/media](RENDERING.md), [audio sessions](AUDIO-SESSION.md), [source preparation](AUDIO-SOURCES.md), [portable audio library](AUDIO-LIBRARY.md), [local model construction](architecture/model-contract/construction-v1.md), [revisions and editions](REVISIONS.md). Edition audio may cite `--audio-run`, `--audio-provenance` or additional `--audio-session` inputs; their provenance requirements are described in the revision contract.
 
 Track files contain `version: 1`, a `tracks` object and optional `track_loop` (`closed` by default). Track values use the scene contract's units; rotation is radians. A batch can author a whole rig, including existing motions and per-cel sockets, in one file. Dry runs validate without writing history or the scene. `--expect-sha256` rejects stale edits under the project lock. Failed batches preserve the original scene.
 
