@@ -53,7 +53,7 @@
       "worktree": "/Users/lb/.codex/worktrees/1fb5/ambiance-studio",
       "branch": "codex/workflow-guidance-wave2",
       "baseline_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
-      "dispatch_state": "locally_integrated_pending_validation",
+      "dispatch_state": "locally_integrated",
       "cursor": "3eb0771e-775e-4022-af41-0e043619dc93:2",
       "baseline_verified": true,
       "interface": "Advisory catalog plus exact selected-pipeline gates; explicit working/review/release/revision/edition/view subjects, stable logical action IDs and separate freshness; workflow inspect/stage/explain and project next --guided. Revision-only inspection remains supported.",
@@ -85,21 +85,27 @@
       "candidate_commit": "cf9488703b491924c9fc622ba1320e6faddc3f28",
       "worker_identity_followup": "Implemented in cf94887 with cross-project stale-action rejection regression.",
       "integration": {
-        "state": "local_pending_full_validation",
+        "state": "local_validated_candidate",
         "commits": [
           "a4c59d7",
           "7315c41"
         ],
         "coordinator_review": "Reviewed all workflow modules, native operation adapters and final feedback/view/pagination corrections. Preserved model/audio hooks while merging workflow routes; 8 combined CLI contract tests pass.",
-        "remaining": "Final worker native suite, source-bound replay/handoff verification and combined native suite."
+        "remaining": "Handoff-only records and coordinator combined suite."
       },
       "full_validation": {
-        "state": "running",
+        "state": "passed",
         "candidate_commit": "cf9488703b491924c9fc622ba1320e6faddc3f28",
         "native_required": true,
         "source_frozen": true,
         "artifacts": "/tmp/wf2-native-cf94887",
-        "environment": "Explicit escalation for local loopback/Core Audio/AVFoundation services"
+        "environment": "Explicit escalation for local loopback/Core Audio/AVFoundation services",
+        "cases": 469,
+        "python_tests": 455,
+        "skips": 0,
+        "report_sha256": "6a68f683f44d46a736d66c0d7c64c76d5a5dc1c53b31279963f6f51f100645d6",
+        "tracked_tree_sha256": "7dd0dac169e7e6da942da3cd1a0c687385121df96ea0a53828a88f09e652a975",
+        "inputs_sha256": "082a40e6bad524f6ca371fd2ce4be7c2ab06491e288fd6e91a6d74e0a227320e"
       },
       "public_replay": {
         "path": "/private/tmp/wf2-replay-cf94887/replay.json",
@@ -394,10 +400,8 @@
   ],
   "status_owner_note": "Dispatch/integration record only; owning workflow YAML, model plan and quality YAML retain implementation/acceptance status.",
   "shared_owner": "Coordinator owns broad cli/output/runtime/evidence/backlog/capability registration; listed route-only leases enable independent public CLI work and are reconciled on integration. New shared semantics require an early concrete contract, not a user approval gate.",
-  "native_test_queue": [
-    "coordinator"
-  ],
-  "active_native_test_owner": "W2",
+  "native_test_queue": [],
+  "active_native_test_owner": "coordinator",
   "native_test_policy": "One full native suite at a time on frozen source. D2 initial e74b72c passed; D2 holds through focused 06a3b53 checks then explicitly releases S2. S2 releases to M2; M2 full suite includes both final D2 code/test commits. Coordinator combined suite covers final integrated source. Focused checks and small necessary proofs may run independently.",
   "automation": {
     "id": "coordinate-studio-implementation",
@@ -413,7 +417,7 @@
   ],
   "blocking_decisions": [],
   "list_threads_limitation": "New tasks are omitted by list_threads; actual IDs are confirmed by worker messages and wait_threads. Do not create replacements.",
-  "native_slot_state": "running",
+  "native_slot_state": "preparing_combined_freeze",
   "dispatch_validation": {
     "ok": true,
     "local_links_checked": 605,
@@ -451,14 +455,14 @@
     }
   ],
   "central_registration": {
-    "state": "all_three_feature_families_registered_final_status_pending",
+    "state": "all_implemented_scoped_statuses_reconciled",
     "package_links": 629,
     "package_errors": 0,
     "roadmap_tests": 2,
     "remaining": "Final worker workflow validation and metadata; coordinator combined required-native suite."
   },
   "combined_validation": {
-    "state": "queued",
+    "state": "preparing_frozen_source",
     "after": "W2 explicit full-native slot release",
     "scope": "All four locally integrated source candidates plus reconciled CLI contracts/capability/backlog documentation; freeze before required-native suite.",
     "prechecks": "Eight combined CLI contract cases, roadmap checks, package audit and all three feature-family public read smoke checks passed."
