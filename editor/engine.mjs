@@ -10,8 +10,8 @@ export function multiply(a,b) {
     a[0]*b[4]+a[2]*b[5]+a[4], a[1]*b[4]+a[3]*b[5]+a[5]];
 }
 export const translation = (x,y) => [1,0,0,1,x,y];
-const scaling = s => [s,0,0,s,0,0];
-const rotation = r => [Math.cos(r),Math.sin(r),-Math.sin(r),Math.cos(r),0,0];
+export const scaling = s => [s,0,0,s,0,0];
+export const rotation = r => [Math.cos(r),Math.sin(r),-Math.sin(r),Math.cos(r),0,0];
 const chain = (...matrices) => matrices.reduce(multiply,identity);
 export function point(m,x,y) { return [m[0]*x+m[2]*y+m[4],m[1]*x+m[3]*y+m[5]]; }
 export function inverseVector(m,x,y) {
