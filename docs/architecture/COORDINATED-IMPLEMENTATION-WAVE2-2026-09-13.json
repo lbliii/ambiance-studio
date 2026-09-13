@@ -62,7 +62,11 @@
         "state": "Local routes implemented; focused tests and real CLI replay in progress, candidate not frozen.",
         "envelopes": "Blank about 10 KiB; populated one subject about 11 KiB.",
         "coverage": "All nine gates, hidden preparation verbs through stage details, pure WF01 assessment, revision-only and exact subject tests.",
-        "latest": "Focused pure/stale/custom pipeline/dependency/wrong-view checks pass; native preparation replay uncovered empty initializer foreground part, correction through existing prepare edit retained in replay."
+        "latest": "Focused pure/stale/custom pipeline/dependency/wrong-view checks pass; native preparation replay uncovered empty initializer foreground part, correction through existing prepare edit retained in replay.",
+        "reported_passes": 16,
+        "cli_contract_passes": 8,
+        "public_cli_calls": 39,
+        "next": "Two final consequential tests, committed candidate freeze, then granted full-native slot after M2 release."
       }
     },
     {
@@ -126,6 +130,13 @@
         "sha256": "ef3462fb47e78696f56792856deb7548aa3bab8c149a05126ab8dfaa05dd0db1",
         "observations": "reports/model-construction/observations-v1.json",
         "worker_claim": "Genuine pane openings and all extremes unclipped in revised geometric derivative; actual inspected samples. Earlier v1 replay is superseded diagnostic."
+      },
+      "coordinator_review": {
+        "source": "Read C1/C2 definition/package/lowering/proof modules and contract; no blocking finding.",
+        "replay_files_verified": 534,
+        "mismatches": [],
+        "public_cli": "model inspect work/m2/replay-v2/entry exited 0; current technical proof, acceptance not established.",
+        "visual": "Inspected exact source-versus-assembly, solid-mask, square-left and arched-right PNGs; registration matches, pane openings visible, tilted objects inside viewport. Geometric fixture only."
       }
     },
     {
@@ -294,7 +305,9 @@
   ],
   "status_owner_note": "Dispatch/integration record only; owning workflow YAML, model plan and quality YAML retain implementation/acceptance status.",
   "shared_owner": "Coordinator owns broad cli/output/runtime/evidence/backlog/capability registration; listed route-only leases enable independent public CLI work and are reconciled on integration. New shared semantics require an early concrete contract, not a user approval gate.",
-  "native_test_queue": [],
+  "native_test_queue": [
+    "W2"
+  ],
   "active_native_test_owner": "M2",
   "native_test_policy": "One full native suite at a time on frozen source. D2 initial e74b72c passed; D2 holds through focused 06a3b53 checks then explicitly releases S2. S2 releases to M2; M2 full suite includes both final D2 code/test commits. Coordinator combined suite covers final integrated source. Focused checks and small necessary proofs may run independently.",
   "automation": {
