@@ -8,7 +8,7 @@
   "coordinator_branch": "codex/coordinated-studio-wave2",
   "saved_project_id": "f5120268-3ebf-40fb-8c45-d50ab7c7bcff",
   "baseline_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
-  "status": "active",
+  "status": "combined_validation",
   "authorization": "User explicitly requested creating and merging the first-wave PR, then spawning the next wave of tasks. PR #32 merged. Four fresh second-wave tasks are authorized; ongoing coordination includes unblocking, review, local integration and combined validation.",
   "first_wave": {
     "ledger": "docs/architecture/COORDINATED-IMPLEMENTATION-2026-09-13.json",
@@ -91,7 +91,7 @@
           "7315c41"
         ],
         "coordinator_review": "Reviewed all workflow modules, native operation adapters and final feedback/view/pagination corrections. Preserved model/audio hooks while merging workflow routes; 8 combined CLI contract tests pass.",
-        "remaining": "Handoff-only records and coordinator combined suite."
+        "remaining": "Coordinator combined suite and final handoff."
       },
       "full_validation": {
         "state": "passed",
@@ -130,6 +130,12 @@
           ],
           "all_project_file_bytes_unchanged": true
         }
+      },
+      "handoff": {
+        "upstream_commit": "0e8f6eca38460985a4afdc815e35b02fe63402f2",
+        "path": "reports/workflow-cli/WF-02-03-HANDOFF.json",
+        "sha256": "2fc3dddbabc8fb227085211c0f3d5edade362dca42f3613988f7462e2aea0113",
+        "scope": "Handoff-only; implemented files match tested cf94887."
       }
     },
     {
@@ -417,7 +423,7 @@
   ],
   "blocking_decisions": [],
   "list_threads_limitation": "New tasks are omitted by list_threads; actual IDs are confirmed by worker messages and wait_threads. Do not create replacements.",
-  "native_slot_state": "preparing_combined_freeze",
+  "native_slot_state": "running_combined",
   "dispatch_validation": {
     "ok": true,
     "local_links_checked": 605,
@@ -462,9 +468,12 @@
     "remaining": "Final worker workflow validation and metadata; coordinator combined required-native suite."
   },
   "combined_validation": {
-    "state": "preparing_frozen_source",
+    "state": "running_on_next_committed_freeze",
     "after": "W2 explicit full-native slot release",
     "scope": "All four locally integrated source candidates plus reconciled CLI contracts/capability/backlog documentation; freeze before required-native suite.",
-    "prechecks": "Eight combined CLI contract cases, roadmap checks, package audit and all three feature-family public read smoke checks passed."
+    "prechecks": "Eight combined CLI contract cases, roadmap checks, package audit and all three feature-family public read smoke checks passed.",
+    "artifacts": "/Users/lb/.codex/worktrees/cfeb/ambiance-studio/.ambiance/coordination/2026-09-13/wave2-combined",
+    "command": "./ambiance test --require-native --artifacts .ambiance/coordination/2026-09-13/wave2-combined",
+    "source_policy": "Commit this ledger before launch; do not modify tracked source while running. Actual frozen identity is recorded by run.json."
   }
 }
