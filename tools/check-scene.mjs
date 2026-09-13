@@ -13,13 +13,14 @@ let report;
 try{
   const scene=JSON.parse(fs.readFileSync(sceneFile)),catalog=JSON.parse(fs.readFileSync(catalogFile));
   report=auditScene(scene,catalog);
-  const assetRoot=path.dirname(path.dirname(catalogFile));
+  const assetRoot=fs.realpathSync(option('--project-root')||path.dirname(path.dirname(catalogFile)));
+  if(!fs.statSync(assetRoot).isDirectory())throw Error('Project asset root must be a directory');
   report.inputs={scene_sha256:hash(sceneFile),catalog_sha256:hash(catalogFile),
     engine_sha256:hash(path.join(root,'editor/engine.mjs')),audit_sha256:hash(path.join(root,'editor/audit.mjs')),
     bindings_sha256:hash(path.join(root,'editor/bindings.mjs')),finishing_sha256:hash(path.join(root,'editor/finishing.mjs')),views_sha256:hash(path.join(root,'editor/views.mjs'))};
   report.asset_hashes={};
   for(const id of new Set(scene.layers.map(l=>l.asset))){
-    const asset=catalog.assets.find(a=>a.id===id),file=path.resolve(assetRoot,asset.file);
+    const asset=catalog.assets.find(a=>a.id===id),file=fs.realpathSync(path.resolve(assetRoot,asset.file));
     if(path.relative(assetRoot,file).startsWith('..'))throw Error(`Asset outside root: ${id}`);
     const actual=hash(file);report.asset_hashes[id]=actual;
     if(actual!==asset.sha256)throw Error(`Asset hash mismatch: ${id}`);

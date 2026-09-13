@@ -18,11 +18,12 @@ ROOT = Path(__file__).resolve().parent
 def read(path):
     return json.loads(path.read_text())
 
-def validate(scene_path, catalog_path=None):
+def validate(scene_path, catalog_path=None, project_root=None):
     errors = []
     scene = read(scene_path)
     catalog_path = Path(catalog_path) if catalog_path else ROOT/'assets/catalog.json'
-    asset_root = catalog_path.resolve().parent.parent
+    asset_root = Path(project_root).resolve(strict=True) if project_root is not None else catalog_path.resolve().parent.parent
+    if not asset_root.is_dir(): raise ValueError('Project asset root must be a directory')
     catalog = read(catalog_path)
     def require(ok, message):
         if not ok: errors.append(message)
@@ -137,7 +138,7 @@ def validate(scene_path, catalog_path=None):
         node = shutil.which('node')
         require(node is not None, 'Node is required to validate attachment graphs.')
         if node:
-            result = subprocess.run([node, str(ROOT/'tools/check-scene.mjs'), str(scene_path.resolve()), '--catalog', str(catalog_path.resolve())], capture_output=True, text=True)
+            result = subprocess.run([node, str(ROOT/'tools/check-scene.mjs'), str(scene_path.resolve()), '--catalog', str(catalog_path.resolve()), '--project-root', str(asset_root)], capture_output=True, text=True)
             require(result.returncode == 0, 'Attachment/scene audit failed: '+result.stdout if result.returncode else '')
     return dict(ok=not errors, scene=scene['id'], asset_count=len(assets), layer_count=len(ids),
                 export_frame_count=round(duration*c['fps']), cycles=cycles, timing=timing, errors=errors,

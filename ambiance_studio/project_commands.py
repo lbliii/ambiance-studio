@@ -56,11 +56,11 @@ def init_project(destination,reference,title,template,output_format=None):
 def check_project(project,include_views=True):
     scene_path,catalog_path=locations(project)
     from kit import validate
-    integrity=validate(scene_path,catalog_path)
+    integrity=validate(scene_path,catalog_path,project_root=project)
     scene=studio.read(scene_path)
     if not scene['layers']:
         integrity['ok']=False;integrity['errors'].append('Scene has no layers. Import prepared assets and add a layer before preview.')
-    p=subprocess.run([require_node(),str(ROOT/'tools/check-scene.mjs'),str(scene_path),'--catalog',str(catalog_path)],capture_output=True,text=True)
+    p=subprocess.run([require_node(),str(ROOT/'tools/check-scene.mjs'),str(scene_path),'--catalog',str(catalog_path),'--project-root',str(project)],capture_output=True,text=True)
     try:state=json.loads(p.stdout)
     except ValueError:raise CommandError('Scene audit failed: '+p.stderr,'runtime_error',3)
     result={'ok':integrity['ok'] and state['ok'],'integrity':integrity,'state':state,
