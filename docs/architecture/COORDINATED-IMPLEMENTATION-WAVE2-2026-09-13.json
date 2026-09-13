@@ -140,7 +140,7 @@
       "branch": "codex/canvas-render-sequence",
       "baseline_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
       "dispatch_state": "active",
-      "cursor": "d1e00d1b-810d-42df-bace-389fde3d14e1:1",
+      "cursor": "d1e00d1b-810d-42df-bace-389fde3d14e1:2",
       "interface": "Exact baseline reproduced in 24 runs: imageSmoothingQuality high alone reproduces alternating pixels; restoring low restores fresh pixels, finishing on/off. Granted explicit enabled/high initialization in drawCoverage to match drawScene/extractView. Fresh coverage intentionally changes; finished bytes must remain unchanged.",
       "baseline_verified": true,
       "first_native_slot": "Reserved; may start after focused matrix passes and candidate commit is frozen. Notify start/finish and release.",
@@ -156,6 +156,16 @@
         "finished_png_pairs_independently_verified": 216,
         "existing_identity_binding": "stage_adapter_sha256 and alphaDiagnosticIdentity verified; old immutable proofs retain historical identity",
         "remaining": "Public CLI/browser proof, frozen candidate commit and full native suite pending."
+      },
+      "public_proof_review": {
+        "report": "/Users/lb/.codex/worktrees/dbe1/ambiance-studio/work/canvas-sequence/corrected-proof/render-report.json",
+        "report_sha256": "5282142ad74f9d2a2e2b9c9aafd9184e416392916372ca2f3640db8e63f32565",
+        "finished_png_pairs_independently_verified": 8,
+        "diagnostic_delta": "Earliest worst frame 1 to 0 because coverage uses high smoothing from the first frame; total remains 120 (110 interior, 10 boundary), landscape zero.",
+        "corrected_module_identity_verified": true,
+        "worker_browser_observation": "Both shared-clock views inspected; paused frame 2 at .750s, diagnostic source frame 0 at 0s and interior/top-boundary heatmap.",
+        "coordinator_browser_observation": "Not repeated; coordinator independently compared all eight saved finished PNGs and inspected exact report/module identity.",
+        "remaining": "Committed freeze and granted full native suite pending."
       }
     }
   ],
