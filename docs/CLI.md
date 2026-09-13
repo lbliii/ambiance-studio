@@ -29,7 +29,7 @@ Revision selections and asset/placement manifests use project-relative reference
 | `studio open [--port N --no-browser]` / `studio serve [--port N]` | Start/reuse the background film library, or serve it in the foreground |
 | `studio status` / `studio stop` | Identify or stop the current registry's server |
 | `project latest [--channel review/release]` | Resolve the current selection to its exact movie and watch links |
-| `project overview [--stage STAGE --view ID --revision ID --out FILE]` | Current movies, working divergence, open criteria, available work, recent runs and shared production readiness |
+| `project overview [--stage STAGE --view ID --revision ID --out FILE]` | Current movies, separate selected/working identities, open criteria, available work and pure scoped readiness |
 | `delivery import FILE [--dry-run]` | Register an immutable movie set from captured editions or identity-bound legacy reports |
 | `delivery list` / `delivery inspect ID` | Inspect movie roles, identity and availability |
 | `delivery present ID --by NAME [--note TEXT --channel review/release --expect-selection HASH]` | Select a review or evidence-qualified release; preserve selection history |
@@ -61,7 +61,7 @@ Revision selections and asset/placement manifests use project-relative reference
 | `plan spec apply FILE [--dry-run --expect-sha256 HASH]` | Apply explicit scope revisions with a reviewable diff and preserved plan history |
 | `plan spec migrate FILE --original PATH [--original PATH] --out DIR` | Preserve original notes/inventory and emit an authored migration candidate/diff without saving it |
 | `plan complexity [--out FILE]` | Separate workload dimensions and declared coverage counts, without an aesthetic score |
-| `plan coverage [--stage layout/assets/animation/export --view ID --revision ID --phase current/preflight --details --out FILE]` | Shared stage-aware readiness, stable gaps and exact typed evidence; default reports remain compact |
+| `plan coverage [--stage layout/assets/animation/export --view ID --revision ID --phase current/preflight --details --out FILE]` | Explicitly acquire evidence and save immutable stage-aware readiness reports; default reports remain compact |
 | `plan evidence EXPECTATION --view ID --receipt PATH [--revision ID --role score/effects/silent]` | Verify and register an exact provider receipt against canonical intent, preserving inventory history |
 | `iteration preflight FILE [--stage STAGE --out FILE]` | Inspect the same scope/readiness decision used by iteration execution; final movies remain future outputs until rendered |
 | `plan check --require-complete [--inventory PATH --out FILE]` | Also fail empty or unfinished declared production scope; report remaining items without certifying artistic quality |
@@ -116,6 +116,8 @@ Revision selections and asset/placement manifests use project-relative reference
 A blank project is the default for new artwork. It has no layers; its technical check deliberately reports incomplete until prepared assets and a scene are added. The explicit Last Lantern template copies the existing assets into the project, so editing one project cannot modify another's catalog or artwork.
 
 [Saved views](VIEWS.md) support portrait/landscape project setup, framing edits, checks, synchronized previews, paired raster proofs and single-view video export. Omitting `--view` preserves full authored-canvas rendering. Version-2 iteration recipes produce the Cartesian product of views and soundtrack editions, with resumable steps and one combined delivery.
+
+Overview/next assessment creates no project reports, decode caches or writer locks. Missing runtime or exact cached movie decode evidence stays unknown with a diagnostic; explicit `plan evidence` or `plan coverage` acquires evidence. An explicit `--out FILE` still requests a result file. See the [assessment contract and replay](../reports/workflow-cli/WF-01-ASSESSMENT.md).
 
 Detailed contracts and examples: [inventory and asset proofs](PRODUCTION-INVENTORY.md), [crop/return preparation](ASSET-PREPARATION.md), [scene transactions](architecture/SCENE-TRANSACTIONS.md), [authored tracks](SCENE-CONTRACT.md), [rendering/media](RENDERING.md), [audio sessions](AUDIO-SESSION.md), [revisions and editions](REVISIONS.md). Edition audio may cite `--audio-run`, `--audio-provenance` or additional `--audio-session` inputs; their provenance requirements are described in the revision contract.
 

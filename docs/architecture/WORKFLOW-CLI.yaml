@@ -1,7 +1,7 @@
 format: ambiance-workflow-roadmap
 schema_version: 1
-updated: '2026-09-12'
-status: proposed
+updated: '2026-09-13'
+status: in_progress
 design: docs/architecture/WORKFLOW-CLI.md
 alignment: docs/architecture/STUDIO-PLAN-ALIGNMENT.md
 size_meaning: Relative implementation scope and integration risk, not a calendar estimate.
@@ -21,7 +21,16 @@ milestones:
 tasks:
   - id: WF-01
     title: Separate assessment from report persistence
-    status: proposed
+    status: implemented
+    implementation:
+      contract: reports/workflow-cli/WF-01-ASSESSMENT.md
+      replay: tests/replay_coverage_assessment.py
+      validation: >-
+        Exact-source required-native suite passed 427 cases with zero skips;
+        56 baseline parity cases and seven unchanged-project pure reads passed.
+        Local integration and combined evidence are recorded in
+        docs/architecture/COORDINATED-IMPLEMENTATION-2026-09-13.json.
+      limits: WF-02 through WF-07, operator adoption and artistic acceptance remain open.
     depends_on: []
     size: medium
     paths:

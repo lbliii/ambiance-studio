@@ -32,9 +32,9 @@
       ],
       "host_id": "local",
       "baseline_commit": "00c64436543d0252fc0850f3ef58e686badda1b6",
-      "dispatch_state": "reviewed_ready_for_integration",
+      "dispatch_state": "integrated",
       "handoff": "/Users/lb/.codex/worktrees/4fda/ambiance-studio/.ambiance/wf01/handoff.json",
-      "integration_commit": null,
+      "integration_commit": "31084b6",
       "worker_reported_progress": "30 coverage tests (3 native deferred), 11 delivery and 6 query/authoring pass. Public 11-command replay plus 24 canonical and 8 legacy payload/identity comparisons reported; handoff verification pending.",
       "candidate_commit": "6e3e1e7182dfcf5042bfc95441e12c7fe9c523be",
       "full_validation": {
@@ -50,10 +50,19 @@
         "verified_hashes": 17,
         "baseline_parity_cases": 56,
         "public_cli_commands": 11,
-        "pure_reads_unchanged": 7
+        "pure_reads_unchanged": 7,
+        "integrated_focused_tests": {
+          "total": 32,
+          "passed": 29,
+          "native_skipped": 3
+        }
       },
       "retained_evidence": "/Users/lb/.codex/worktrees/cfeb/ambiance-studio/.ambiance/coordination/2026-09-13/workflow-assessment",
-      "retention_note": "Exact evidence copy; recorded argv and original project paths retain their original meaning."
+      "retention_note": "Exact evidence copy; recorded argv and original project paths retain their original meaning.",
+      "integration_commits": [
+        "5380d8d",
+        "31084b6"
+      ]
     },
     {
       "stream": "M",
@@ -93,7 +102,7 @@
       "client_thread_id": "client-new-thread:d6b601f2-1dd4-457d-8f03-3945a5560578",
       "worktree": "/Users/lb/.codex/worktrees/4a8d/ambiance-studio",
       "first_assignment": "TV-QUALITY-AND-SOUND-LIBRARY.yaml BASE-01 then AUDIO-01",
-      "cursor": "970fa786-eed5-4501-aba7-6641d6e18a62:3",
+      "cursor": "970fa786-eed5-4501-aba7-6641d6e18a62:4",
       "leases": [
         "new audio source/preparation modules",
         "audio.py parser/service hooks",
@@ -211,7 +220,7 @@
   "native_test_queue": [
     "S"
   ],
-  "native_test_queue_note": "Explicit owner handoff D \u2192 W \u2192 S. Each owner may start when predecessor releases the slot and source is frozen; notify coordinator at start/finish. Coordinator independently reviews exact results before integration. Reruns request a new slot.",
+  "native_test_queue_note": "S finishes frozen original full suite, then its narrow legacy guard correction and focused native/legacy checks. The final corrected source is covered by the coordinator combined required-native run; no redundant second worker full suite.",
   "active_native_test_owner": "S",
   "combined_validation": {
     "scope": "Model contract plus alpha diagnostics at 27ae5bf",
