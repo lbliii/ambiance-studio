@@ -1,0 +1,207 @@
+{
+  "packet_version": "mc/1",
+  "baseline": "00c64436543d0252fc0850f3ef58e686badda1b6",
+  "scope": "Design specimens and unchanged current-code foundation; no model/finite runtime, raster proof or human review.",
+  "checks": [
+    {
+      "id": "model-contract",
+      "command": [
+        "node",
+        "tests/test-model-contract.mjs"
+      ],
+      "exit_code": 0,
+      "check_count": 10,
+      "artifact": "contract-check.json"
+    },
+    {
+      "id": "roadmap",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_roadmap.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/ambiance-mc1-validation-20260913/roadmap.stdout.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/private/tmp/ambiance-mc1-validation-20260913/roadmap.stderr.txt",
+        "sha256": "5e2f4b41f24304f44424c69e44b63c7ace13ff756786da21389f957a95f94abf"
+      },
+      "summary": "test_capability_index_rejects_stale_routes_and_never_registers_planned_work (test_roadmap.RoadmapTests.test_capability_index_rejects_stale_routes_and_never_registers_planned_work) ... ok\ntest_dependencies_sources_and_duplicate_keys_fail_without_calling_commands (test_roadmap.RoadmapTests.test_dependencies_sources_and_duplicate_keys_fail_without_calling_commands) ... ok\n\n----------------------------------------------------------------------\nRan 2 tests in 0.018s\n\nOK\n"
+    },
+    {
+      "id": "package",
+      "command": [
+        "python3",
+        "tools/package_audit.py"
+      ],
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/ambiance-mc1-validation-20260913/package-complete.stdout.txt",
+        "sha256": "fb587753eb8089f4b2f595961c4bddaf51581fabafb23148df32567846400d74"
+      },
+      "stderr": {
+        "path": "/private/tmp/ambiance-mc1-validation-20260913/package-complete.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "summary": {
+        "ok": true,
+        "local_links_checked": 572,
+        "errors": [],
+        "roadmap": {
+          "ok": true,
+          "task_count": 30,
+          "errors": [],
+          "limits": [
+            "Affected future paths may not exist; source/evidence references must.",
+            "Reference validation does not execute planned commands or certify implemented behavior."
+          ]
+        },
+        "capabilities": {
+          "ok": true,
+          "count": 21,
+          "errors": [],
+          "limits": [
+            "Routes are inspected without executing production operations.",
+            "Registered routes and references do not establish readiness or artistic approval."
+          ]
+        }
+      }
+    },
+    {
+      "id": "timing",
+      "command": [
+        "./ambiance",
+        "--project",
+        "/private/tmp/ambiance-mc1-placement-20260913",
+        "scene",
+        "timing",
+        "--layer",
+        "gesture"
+      ],
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/ambiance-mc1-validation-20260913/timing.stdout.txt",
+        "sha256": "7e0fafa2282bcfdcd5efd12afc4775abee713ddf43a170c92f3e8fca3d01f892"
+      },
+      "stderr": {
+        "path": "/private/tmp/ambiance-mc1-validation-20260913/timing.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "summary": {
+        "ok": true,
+        "data_keys": [
+          "version",
+          "engine_version",
+          "scene",
+          "picture_seconds",
+          "output_fps",
+          "output_frames",
+          "layers",
+          "limits"
+        ]
+      }
+    },
+    {
+      "id": "reparent-dry-run",
+      "command": [
+        "./ambiance",
+        "--project",
+        "/private/tmp/ambiance-mc1-placement-20260913",
+        "scene",
+        "reparent",
+        "gesture",
+        "--to",
+        "body",
+        "--socket",
+        "hand",
+        "--keep-world",
+        "--at",
+        "0",
+        "--dry-run"
+      ],
+      "exit_code": 0,
+      "stdout": {
+        "path": "/private/tmp/ambiance-mc1-validation-20260913/reparent-dry-run.stdout.txt",
+        "sha256": "697ffaa9a9241265808bc60054cd65e2e9a2d47a316d03b355758afd2e5bd84a"
+      },
+      "stderr": {
+        "path": "/private/tmp/ambiance-mc1-validation-20260913/reparent-dry-run.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "summary": {
+        "ok": true,
+        "data_keys": [
+          "dry_run",
+          "previous_sha256",
+          "scene",
+          "dependencies",
+          "diagnostics",
+          "operations"
+        ]
+      }
+    },
+    {
+      "id": "source-placement",
+      "command": [
+        "node",
+        "tests/test-source-placement.mjs"
+      ],
+      "exit_code": 0,
+      "check_count": 8,
+      "evidence": "Observed tool stdout during this assignment; no retained raw log."
+    },
+    {
+      "id": "rig",
+      "command": [
+        "node",
+        "tests/test-rig.mjs"
+      ],
+      "exit_code": 0,
+      "check_count": 7,
+      "evidence": "Observed tool stdout during this assignment; no retained raw log."
+    },
+    {
+      "id": "assets",
+      "command": [
+        "python3",
+        "tests/test_assets.py"
+      ],
+      "exit_code": 0,
+      "test_count": 10,
+      "evidence": "Observed tool stdout during this assignment; no retained raw log."
+    }
+  ],
+  "named_current_modules_checked": [
+    "editor/engine.mjs",
+    "editor/timing.mjs",
+    "tools/asset_tool.py",
+    "tools/render-scene.mjs",
+    "tools/render/outputs.mjs",
+    "tools/render/raster.mjs",
+    "tools/rig-proof.mjs",
+    "tools/scene-command.mjs"
+  ],
+  "native_runtime_suite": {
+    "executed_here": false,
+    "reason": "Coordinator refined this design-only handoff to focused checks and is separately validating the unchanged baseline."
+  },
+  "resolved_check_attempts": [
+    "Initial fixture path-escape mutation referred to a nonexistent file; corrected to an existing out-of-root test path and reran the contract checks.",
+    "Direct test_roadmap.py invocation first lacked import path; PYTHONPATH allowed import but file has no unittest main. Final unittest discovery actually ran both cases."
+  ],
+  "remaining_acceptance": [
+    "General model validator/resolver/library operations and public model CLI do not exist yet.",
+    "Finite clock/cue/sequence runtime acceptance remains with P03/P04/P05.",
+    "Typed model evidence provider remains to implement.",
+    "Seed, complete scene census, canonical production project and artistic inputs/reviews remain unresolved."
+  ]
+}

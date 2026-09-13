@@ -123,6 +123,8 @@ At development restart, inspect the settled system and map this plan onto existi
 
 The alignment note records the initial reconciliation at `a7dae5a`; refresh it against the actual implementation baseline. Resolve shared identity, local/source coordinates, clock consumption and proof/dependency ownership with the first-short P00/P02 interfaces before dependent code diverges. A character package is a specialized use of the shared model/registration foundation, not a competing general object graph. This does not require completing narrative finite-shot or dialogue features before the two-lantern experiment.
 
+The [mc/1 model and character contract packet](model-contract/README.md) reconciles that shared technical subset against `00c6443`, with versioned specimens, focused checks and bounded construction/instance slices. It implements no model runtime and does not complete Phase 1 or P00: production seed selection, the complete scene census and production inputs remain outstanding.
+
 | Adjacent work | Integration outcome to preserve |
 | --- | --- |
 | [Production intent and coverage][production-plan] | One authoritative inventory/requirement model with model ownership and exact evidence references. |

@@ -1,0 +1,22 @@
+{
+  "packet_version": "mc/1",
+  "kind": "finite-shot-contract-specimen",
+  "shot_id": "b",
+  "revision_id": "fixture-b-v1",
+  "fps": {
+    "numerator": 24,
+    "denominator": 1
+  },
+  "duration_frames": 96,
+  "mode": "finite",
+  "view": {
+    "output_view_id": "landscape",
+    "rect_pixels": [
+      0,
+      0,
+      320,
+      180
+    ]
+  },
+  "meaning": "Pinned semantic input for future P03/P05; not a captured production revision or loadable finite scene."
+}

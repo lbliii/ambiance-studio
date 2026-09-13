@@ -1,0 +1,203 @@
+{
+  "packet_version": "mc/1",
+  "kind": "clock-cue-specimen",
+  "path_base": "document",
+  "fps": {
+    "numerator": 24,
+    "denominator": 1
+  },
+  "first_native_profiles": "Existing integer rates; 24/1 finite acceptance proposed. Arbitrary rational export is not implemented.",
+  "shots": [
+    {
+      "shot_id": "a",
+      "revision_id": "fixture-a-v1",
+      "duration_frames": 60,
+      "revision": {
+        "file": "shots/a-v1.json",
+        "sha256": "aa6a4bf90fd19a5ca3426abb41ebf2da2b2c87a5880b63c843f44404eecce7da"
+      }
+    },
+    {
+      "shot_id": "b",
+      "revision_id": "fixture-b-v1",
+      "duration_frames": 96,
+      "revision": {
+        "file": "shots/b-v1.json",
+        "sha256": "341f69c0b75805a7003fa1ea6da12da38ca5110a821c765e34690c9f7076a441"
+      }
+    }
+  ],
+  "edit": [
+    {
+      "shot_id": "a",
+      "in_frame": 12,
+      "out_frame": 60,
+      "at_frame": 0
+    },
+    {
+      "shot_id": "b",
+      "in_frame": 6,
+      "out_frame": 78,
+      "at_frame": 48
+    }
+  ],
+  "expected_edit_frames": 120,
+  "finite_inspection": [
+    {
+      "request_frame": -1,
+      "effective_frame": 0,
+      "region": "before"
+    },
+    {
+      "request_frame": 59,
+      "effective_frame": 59,
+      "region": "inside"
+    },
+    {
+      "request_frame": 60,
+      "effective_frame": 60,
+      "region": "at-or-after-end"
+    },
+    {
+      "request_frame": 61,
+      "effective_frame": 60,
+      "region": "at-or-after-end"
+    }
+  ],
+  "rounding_cases": [
+    {
+      "value": [
+        -3,
+        2
+      ],
+      "floor": -2,
+      "ceil": -1,
+      "nearest-half-away-from-zero": -2
+    },
+    {
+      "value": [
+        3,
+        2
+      ],
+      "floor": 1,
+      "ceil": 2,
+      "nearest-half-away-from-zero": 2
+    },
+    {
+      "value": [
+        1,
+        3
+      ],
+      "floor": 0,
+      "ceil": 1,
+      "nearest-half-away-from-zero": 0
+    }
+  ],
+  "local_cycle": {
+    "period_seconds": {
+      "numerator": 1,
+      "denominator": 1
+    },
+    "phase_turns": 0.25,
+    "samples": [
+      {
+        "shot_frame": 0,
+        "progress": 0.25
+      },
+      {
+        "shot_frame": 18,
+        "progress": 0
+      },
+      {
+        "shot_frame": 30,
+        "progress": 0.5
+      },
+      {
+        "shot_frame": 60,
+        "progress": 0.75
+      }
+    ]
+  },
+  "take": {
+    "take_id": "silent-fixture",
+    "file": "silence.wav",
+    "sha256": "e3fa8d3994eea081996c6af3f6b9e29c3d09c84b7a5ad99bb6bdd19c6c401aac",
+    "pcm_sha256": "17744bb6a4ed1d9d51d85d7eb645cde30352530d494233c434027f9e3193bae4",
+    "sample_rate": 48000,
+    "channels": 1,
+    "sample_format": "pcm_s16le",
+    "samples": 9600,
+    "provenance": "Generated zero-valued PCM engineering specimen; no speech, transcript or audition."
+  },
+  "drawing_map": {
+    "character_id": "keeper",
+    "definition": {
+      "model_id": "keeper",
+      "version": "1",
+      "file": "models/character-v1.json",
+      "sha256": "147978a56ee8b11bd471896a5c02b03473a2a79b574078e887d4b6cb689c66bb"
+    },
+    "character_view_id": "front",
+    "neutral": "mouth-neutral",
+    "open": "mouth-open"
+  },
+  "placement": {
+    "shot_id": "b",
+    "at_shot_frame": 18,
+    "offset_samples": 500,
+    "source_in_samples": 2400
+  },
+  "cues": [
+    {
+      "cue_id": "open",
+      "drawing_id": "mouth-open",
+      "source_samples": [
+        4400,
+        6400
+      ],
+      "shot_samples": [
+        38500,
+        40500
+      ],
+      "edit_samples": [
+        122500,
+        124500
+      ],
+      "shot_frames": [
+        20,
+        21
+      ],
+      "edit_frames": [
+        62,
+        63
+      ],
+      "origin": "authored-fixture"
+    },
+    {
+      "cue_id": "tiny-alternative",
+      "drawing_id": "mouth-open",
+      "source_samples": [
+        4450,
+        4500
+      ],
+      "shot_samples": [
+        38550,
+        38600
+      ],
+      "edit_samples": [
+        122550,
+        122600
+      ],
+      "shot_frames": [
+        20,
+        20
+      ],
+      "edit_frames": [
+        62,
+        62
+      ],
+      "origin": "separate-negative-case-not-simultaneous",
+      "diagnostic": "unpresented"
+    }
+  ]
+}

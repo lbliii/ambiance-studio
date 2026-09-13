@@ -1,0 +1,230 @@
+{
+  "packet_version": "mc/1",
+  "baseline": "00c64436543d0252fc0850f3ef58e686badda1b6",
+  "path_base": "repository unless absolute local replay artifact",
+  "files": [
+    {
+      "path": "docs/architecture/REUSABLE-MODEL-SCENES-PLAN.md",
+      "sha256": "fed35427534c5a66b84864827fea562d4d0e6bb1c4a32662ba5923c2cfd9294c",
+      "bytes": 23178
+    },
+    {
+      "path": "docs/architecture/model-contract/HANDOFF.md",
+      "sha256": "180d2f3f18430ba8c24e58e86b8f4a3e2d8d06e7acc9e0afec6ee8cec6064c5f",
+      "bytes": 4859
+    },
+    {
+      "path": "docs/architecture/model-contract/README.md",
+      "sha256": "bc8b37d22c893c6c084d022193dbe8484d8ac825d198a082ad068e03bf083556",
+      "bytes": 5856
+    },
+    {
+      "path": "docs/architecture/model-contract/clock-v1.md",
+      "sha256": "c478cb76cad81b8df6ad734de4d01062eda1ddd22e0858442f35ca905ae3243b",
+      "bytes": 7393
+    },
+    {
+      "path": "docs/architecture/model-contract/contract-v1.md",
+      "sha256": "fd6c7ee59d883d655eff173505088fe7cd2bab6cd6e55b65c70f86acb4e4d3ea",
+      "bytes": 15257
+    },
+    {
+      "path": "docs/architecture/model-contract/evidence/checks.json",
+      "sha256": "5628660b7d0282a6b71365faa7dc8603a930314268f8320e2c94e4150076501b",
+      "bytes": 6757
+    },
+    {
+      "path": "docs/architecture/model-contract/evidence/contract-check.json",
+      "sha256": "d0216f8ac429d5732f06e99f1c75c317725ed9b8873b1ac222cb2b5000828940",
+      "bytes": 1259
+    },
+    {
+      "path": "docs/architecture/model-contract/implementation-v1.md",
+      "sha256": "d3e1db76cb96833a1055f57eba9b4bdc54a38ecb47a0b4618c481ec8d803bd2b",
+      "bytes": 8227
+    },
+    {
+      "path": "tests/fixtures/model-contract/README.md",
+      "sha256": "d048ed11e241539ac850883b1d5bde0cf7b7a2a19697d6758ba1fdfacf51d926",
+      "bytes": 2876
+    },
+    {
+      "path": "tests/fixtures/model-contract/art/body.png",
+      "sha256": "da20274ce19dc952fee5902bc8edcdec2dc8df598cab3793e545b59325a659ab",
+      "bytes": 318
+    },
+    {
+      "path": "tests/fixtures/model-contract/art/flame.png",
+      "sha256": "87b92478ac9aaf9ca148dc09968aad114d671edc8580712d2f1fce30e3836eb2",
+      "bytes": 99
+    },
+    {
+      "path": "tests/fixtures/model-contract/art/frame-arched.png",
+      "sha256": "74c18fe057623f0273c0bcbdaa313e15eb8fe75e5621f08f20a22013e957e7d7",
+      "bytes": 168
+    },
+    {
+      "path": "tests/fixtures/model-contract/art/frame-square.png",
+      "sha256": "dae25947b7a3e5c16c6391fd1d83b5ef2c6e97f508653861cc137367ac3ac07d",
+      "bytes": 168
+    },
+    {
+      "path": "tests/fixtures/model-contract/art/ground.png",
+      "sha256": "ed2ca7d108ede192de6dd665f98a66f7cc070b410f76d03a7a3d6d7df66055d1",
+      "bytes": 144
+    },
+    {
+      "path": "tests/fixtures/model-contract/art/head-strip.png",
+      "sha256": "3b02e9dec157b230845b67a045b6513d9a7ada8f0a079f91594202177928c0db",
+      "bytes": 230
+    },
+    {
+      "path": "tests/fixtures/model-contract/art/head.png",
+      "sha256": "bc507e67a547c1fc64b36a58228c3411c8092bc3406e13741dfc947f88e2e1b2",
+      "bytes": 156
+    },
+    {
+      "path": "tests/fixtures/model-contract/art/housing.png",
+      "sha256": "39ae79183ef8f11cf809f04d2edbbb2a68dfb7cb6ccbee3118c8bdb307aadf3f",
+      "bytes": 147
+    },
+    {
+      "path": "tests/fixtures/model-contract/art/light.png",
+      "sha256": "ab2584505c271ba9c1f5a05136d6992ffa205f5ef96d7e9e6d28a60b5615b259",
+      "bytes": 116
+    },
+    {
+      "path": "tests/fixtures/model-contract/art/mouth.png",
+      "sha256": "9e1599df1cf395d789ce52738b12bcb573fe0347e64d63ccce896f0ba19def1b",
+      "bytes": 112
+    },
+    {
+      "path": "tests/fixtures/model-contract/art/reference.png",
+      "sha256": "31f3d76fbb8eeda3844a0de237cadaa5a307cc02dcd0bdf1034a82e6703fe1c2",
+      "bytes": 756
+    },
+    {
+      "path": "tests/fixtures/model-contract/art/wax.png",
+      "sha256": "0c445be76b3f24c403e63759e0f5c77565245b25e533e19c36bc6a73faad03ea",
+      "bytes": 105
+    },
+    {
+      "path": "tests/fixtures/model-contract/clock-cues.json",
+      "sha256": "fa87c7b88e06ce4a352c1bd81c0684d6b2624c9f4b0768da956ffa677afbaef9",
+      "bytes": 4124
+    },
+    {
+      "path": "tests/fixtures/model-contract/instances.json",
+      "sha256": "2058a75211210d8cad745d76da819af9162d5472d3a5b53def0554e8b289de77",
+      "bytes": 3243
+    },
+    {
+      "path": "tests/fixtures/model-contract/models/candle-v1.json",
+      "sha256": "91e903bd37842d3faaa2b156ada47cf172335126b208006e320d49a4169d20e4",
+      "bytes": 3637
+    },
+    {
+      "path": "tests/fixtures/model-contract/models/character-v1.json",
+      "sha256": "147978a56ee8b11bd471896a5c02b03473a2a79b574078e887d4b6cb689c66bb",
+      "bytes": 5646
+    },
+    {
+      "path": "tests/fixtures/model-contract/models/lantern-v1.json",
+      "sha256": "5eccd5edca17fae8a522a66ad9f5b807e2f5ce63f5d3476a02521de1248416cb",
+      "bytes": 4486
+    },
+    {
+      "path": "tests/fixtures/model-contract/runtime.json",
+      "sha256": "790ff8de6e3921d7c0ddaaf7b9f337eef54fd03598e412dd172ffb6aa9641d3b",
+      "bytes": 9369
+    },
+    {
+      "path": "tests/fixtures/model-contract/shots/a-v1.json",
+      "sha256": "aa6a4bf90fd19a5ca3426abb41ebf2da2b2c87a5880b63c843f44404eecce7da",
+      "bytes": 1524
+    },
+    {
+      "path": "tests/fixtures/model-contract/shots/b-v1.json",
+      "sha256": "341f69c0b75805a7003fa1ea6da12da38ca5110a821c765e34690c9f7076a441",
+      "bytes": 465
+    },
+    {
+      "path": "tests/fixtures/model-contract/silence.wav",
+      "sha256": "e3fa8d3994eea081996c6af3f6b9e29c3d09c84b7a5ad99bb6bdd19c6c401aac",
+      "bytes": 19244
+    },
+    {
+      "path": "tests/test-model-contract.mjs",
+      "sha256": "e8e1b91b72ec72fd6cb6825cdeaa1c1f726dd902d0cf0eca2931f4f288fcad5b",
+      "bytes": 17304
+    }
+  ],
+  "supplemental_local_replay": [
+    {
+      "path": "/private/tmp/ambiance-mc1-placement-20260913/ambiance-project.json",
+      "sha256": "35fb3dc4feacbaba49e8e0d8c1f0f53fe344d3df35fc6893599c0ec095c4b03b",
+      "bytes": 86
+    },
+    {
+      "path": "/private/tmp/ambiance-mc1-placement-20260913/scene/scene.json",
+      "sha256": "b24a80a5e472daf56fc64a554ffd06114dbb517d3e57575f82423b5010241b48",
+      "bytes": 3776
+    },
+    {
+      "path": "/private/tmp/ambiance-mc1-placement-20260913/assets/catalog.json",
+      "sha256": "538ae3d326ade1fbfb04f59e40e09989be1c8fcd44ac6a6691592d955a130af7",
+      "bytes": 14367
+    },
+    {
+      "path": "/private/tmp/ambiance-mc1-placement-20260913/transaction-report.json",
+      "sha256": "af28cf7a0112e1ed2b37f6f2eed2f4781ce4aefda9c5c77a3c47b282e2b7b9a5",
+      "bytes": 9138
+    },
+    {
+      "path": "/private/tmp/ambiance-mc1-placement-20260913/placement.json",
+      "sha256": "2bedd3239ba691cfa0d345535be688843fb08bd6800cdc531ac3eada2fdabe2f",
+      "bytes": 1762
+    },
+    {
+      "path": "/private/tmp/ambiance-mc1-validation-20260913/roadmap.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/ambiance-mc1-validation-20260913/roadmap.stderr.txt",
+      "sha256": "5e2f4b41f24304f44424c69e44b63c7ace13ff756786da21389f957a95f94abf",
+      "bytes": 470
+    },
+    {
+      "path": "/private/tmp/ambiance-mc1-validation-20260913/package-complete.stdout.txt",
+      "sha256": "fb587753eb8089f4b2f595961c4bddaf51581fabafb23148df32567846400d74",
+      "bytes": 208080
+    },
+    {
+      "path": "/private/tmp/ambiance-mc1-validation-20260913/package-complete.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/ambiance-mc1-validation-20260913/timing.stdout.txt",
+      "sha256": "7e0fafa2282bcfdcd5efd12afc4775abee713ddf43a170c92f3e8fca3d01f892",
+      "bytes": 8812
+    },
+    {
+      "path": "/private/tmp/ambiance-mc1-validation-20260913/timing.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/ambiance-mc1-validation-20260913/reparent-dry-run.stdout.txt",
+      "sha256": "697ffaa9a9241265808bc60054cd65e2e9a2d47a316d03b355758afd2e5bd84a",
+      "bytes": 6614
+    },
+    {
+      "path": "/private/tmp/ambiance-mc1-validation-20260913/reparent-dry-run.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ],
+  "limits": "Exact file identities, not an artistic or native-media acceptance receipt."
+}

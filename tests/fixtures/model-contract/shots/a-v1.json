@@ -1,0 +1,94 @@
+{
+  "packet_version": "mc/1",
+  "kind": "finite-shot-contract-specimen",
+  "shot_id": "a",
+  "revision_id": "fixture-a-v1",
+  "fps": {
+    "numerator": 24,
+    "denominator": 1
+  },
+  "duration_frames": 60,
+  "mode": "finite",
+  "view": {
+    "output_view_id": "landscape",
+    "rect_pixels": [
+      0,
+      0,
+      320,
+      180
+    ]
+  },
+  "meaning": "Pinned semantic input for future P03/P05; not a captured production revision or loadable finite scene.",
+  "endpoint_fixture": {
+    "root_x_keys_frames": [
+      [
+        0,
+        0
+      ],
+      [
+        60,
+        60
+      ]
+    ],
+    "cel_keys_frames": [
+      [
+        0,
+        0
+      ],
+      [
+        59,
+        1
+      ],
+      [
+        60,
+        2
+      ]
+    ],
+    "visible_keys_frames": [
+      [
+        0,
+        true
+      ],
+      [
+        60,
+        false
+      ]
+    ],
+    "socket_x_by_cel": [
+      0,
+      10,
+      20
+    ],
+    "child_offset_x": 3,
+    "expected_samples": [
+      {
+        "request_frame": -1,
+        "root_x": 0,
+        "cell": 0,
+        "child_x": 3,
+        "visible": true
+      },
+      {
+        "request_frame": 59,
+        "root_x": 59,
+        "cell": 1,
+        "child_x": 72,
+        "visible": true
+      },
+      {
+        "request_frame": 60,
+        "root_x": 60,
+        "cell": 2,
+        "child_x": 83,
+        "visible": false
+      },
+      {
+        "request_frame": 61,
+        "root_x": 60,
+        "cell": 2,
+        "child_x": 83,
+        "visible": false
+      }
+    ]
+  }
+}

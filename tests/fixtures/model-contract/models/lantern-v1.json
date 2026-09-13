@@ -1,0 +1,252 @@
+{
+  "packet_version": "mc/1",
+  "model_id": "lantern",
+  "version": "1",
+  "kind": "prop",
+  "path_base": "document",
+  "local_frame": {
+    "size": [
+      32,
+      48
+    ],
+    "pivot": [
+      16,
+      46
+    ],
+    "clip": "none"
+  },
+  "root_part_id": "housing",
+  "drawings": [
+    {
+      "drawing_id": "housing",
+      "asset": {
+        "asset_id": "housing-v1",
+        "file": "../art/housing.png",
+        "sha256": "39ae79183ef8f11cf809f04d2edbbb2a68dfb7cb6ccbee3118c8bdb307aadf3f",
+        "width": 32,
+        "height": 48,
+        "cell_size": [
+          32,
+          48
+        ],
+        "pivot": [
+          0.5,
+          0.9583333333333334
+        ]
+      },
+      "cel_index": 0,
+      "material_role": "solid"
+    },
+    {
+      "drawing_id": "frame-square",
+      "asset": {
+        "asset_id": "frame-square-v1",
+        "file": "../art/frame-square.png",
+        "sha256": "dae25947b7a3e5c16c6391fd1d83b5ef2c6e97f508653861cc137367ac3ac07d",
+        "width": 32,
+        "height": 48,
+        "cell_size": [
+          32,
+          48
+        ],
+        "pivot": [
+          0.5,
+          0.9583333333333334
+        ]
+      },
+      "cel_index": 0,
+      "material_role": "solid"
+    },
+    {
+      "drawing_id": "frame-arched",
+      "asset": {
+        "asset_id": "frame-arched-v1",
+        "file": "../art/frame-arched.png",
+        "sha256": "74c18fe057623f0273c0bcbdaa313e15eb8fe75e5621f08f20a22013e957e7d7",
+        "width": 32,
+        "height": 48,
+        "cell_size": [
+          32,
+          48
+        ],
+        "pivot": [
+          0.5,
+          0.9583333333333334
+        ]
+      },
+      "cel_index": 0,
+      "material_role": "solid"
+    }
+  ],
+  "parts": [
+    {
+      "part_id": "housing",
+      "drawing_id": "housing",
+      "cell_to_local": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "part_id": "candle",
+      "definition": {
+        "model_id": "candle",
+        "version": "1",
+        "file": "candle-v1.json",
+        "sha256": "91e903bd37842d3faaa2b156ada47cf172335126b208006e320d49a4169d20e4"
+      },
+      "mount": {
+        "part_path": [
+          "housing"
+        ],
+        "socket_id": "candle-seat"
+      },
+      "local_to_parent": [
+        1,
+        0,
+        0,
+        1,
+        6,
+        8
+      ]
+    },
+    {
+      "part_id": "front",
+      "drawing_id": "frame-square",
+      "mount": {
+        "part_path": [
+          "housing"
+        ],
+        "socket_id": "origin"
+      },
+      "cell_to_local": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "sockets": [
+    {
+      "socket_id": "origin",
+      "part_path": [
+        "housing"
+      ],
+      "cell_uv": [
+        0,
+        0
+      ]
+    },
+    {
+      "socket_id": "candle-seat",
+      "part_path": [
+        "housing"
+      ],
+      "cell_uv": [
+        0.5,
+        0.8
+      ]
+    },
+    {
+      "socket_id": "hang",
+      "part_path": [
+        "housing"
+      ],
+      "cell_uv": [
+        0.5,
+        0
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "control_id": "source-on",
+      "type": "boolean",
+      "default": true,
+      "target": {
+        "part_path": [
+          "candle"
+        ],
+        "control_id": "flame-on"
+      }
+    },
+    {
+      "control_id": "flame-phase",
+      "type": "number",
+      "unit": "turns",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "target": {
+        "part_path": [
+          "candle"
+        ],
+        "cycle_id": "flame",
+        "channel": "phase_turns"
+      }
+    }
+  ],
+  "variant_sets": [
+    {
+      "variant_set_id": "frame",
+      "default": "square",
+      "variants": [
+        {
+          "variant_id": "square",
+          "replacements": [
+            {
+              "part_path": [
+                "front"
+              ],
+              "drawing_id": "frame-square"
+            }
+          ]
+        },
+        {
+          "variant_id": "arched",
+          "replacements": [
+            {
+              "part_path": [
+                "front"
+              ],
+              "drawing_id": "frame-arched"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "paint_order": [
+    [
+      "housing"
+    ],
+    [
+      "candle",
+      "wax"
+    ],
+    [
+      "candle",
+      "flame"
+    ],
+    [
+      "front"
+    ]
+  ],
+  "emitters": [
+    {
+      "emitter_id": "wick-light",
+      "part_path": [
+        "candle",
+        "flame"
+      ],
+      "off": 0
+    }
+  ]
+}

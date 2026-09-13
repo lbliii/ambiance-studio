@@ -1,0 +1,322 @@
+{
+  "packet_version": "mc/1",
+  "model_id": "keeper",
+  "version": "1",
+  "kind": "character",
+  "path_base": "document",
+  "local_frame": {
+    "size": [
+      120,
+      220
+    ],
+    "pivot": [
+      60,
+      210
+    ],
+    "clip": "none"
+  },
+  "character_views": [
+    {
+      "character_view_id": "front",
+      "reference": {
+        "file": "../art/reference.png",
+        "sha256": "31f3d76fbb8eeda3844a0de237cadaa5a307cc02dcd0bdf1034a82e6703fe1c2",
+        "width": 200,
+        "height": 300
+      },
+      "reference_to_local": [
+        1,
+        0,
+        0,
+        1,
+        -40,
+        -30
+      ]
+    }
+  ],
+  "root_part_id": "body",
+  "drawings": [
+    {
+      "drawing_id": "body-rest",
+      "asset": {
+        "asset_id": "body-v1",
+        "file": "../art/body.png",
+        "sha256": "da20274ce19dc952fee5902bc8edcdec2dc8df598cab3793e545b59325a659ab",
+        "width": 70,
+        "height": 120,
+        "cell_size": [
+          70,
+          120
+        ],
+        "pivot": [
+          0.5,
+          0.9166666666666666
+        ]
+      },
+      "cel_index": 0,
+      "material_role": "solid"
+    },
+    {
+      "drawing_id": "head-rest",
+      "asset": {
+        "asset_id": "head-v1",
+        "file": "../art/head.png",
+        "sha256": "bc507e67a547c1fc64b36a58228c3411c8092bc3406e13741dfc947f88e2e1b2",
+        "width": 40,
+        "height": 40,
+        "cell_size": [
+          40,
+          40
+        ],
+        "pivot": [
+          0.5,
+          0.5
+        ]
+      },
+      "cel_index": 0,
+      "material_role": "solid"
+    },
+    {
+      "drawing_id": "mouth-neutral",
+      "asset": {
+        "asset_id": "mouth-v1",
+        "file": "../art/mouth.png",
+        "sha256": "9e1599df1cf395d789ce52738b12bcb573fe0347e64d63ccce896f0ba19def1b",
+        "width": 40,
+        "height": 20,
+        "cell_size": [
+          20,
+          20
+        ],
+        "pivot": [
+          0.5,
+          0.5
+        ]
+      },
+      "cel_index": 0,
+      "material_role": "solid"
+    },
+    {
+      "drawing_id": "mouth-open",
+      "asset": {
+        "asset_id": "mouth-v1",
+        "file": "../art/mouth.png",
+        "sha256": "9e1599df1cf395d789ce52738b12bcb573fe0347e64d63ccce896f0ba19def1b",
+        "width": 40,
+        "height": 20,
+        "cell_size": [
+          20,
+          20
+        ],
+        "pivot": [
+          0.5,
+          0.5
+        ]
+      },
+      "cel_index": 1,
+      "material_role": "solid"
+    }
+  ],
+  "parts": [
+    {
+      "part_id": "body",
+      "drawing_id": "body-rest",
+      "cell_to_local": [
+        2,
+        0,
+        0,
+        2,
+        -10,
+        -10
+      ]
+    },
+    {
+      "part_id": "head",
+      "drawing_id": "head-rest",
+      "cell_to_local": [
+        2,
+        0,
+        0,
+        2,
+        20,
+        0
+      ],
+      "mount": {
+        "part_path": [
+          "body"
+        ],
+        "socket_id": "neck"
+      }
+    },
+    {
+      "part_id": "mouth",
+      "drawing_id": "mouth-neutral",
+      "cell_to_local": [
+        1,
+        0,
+        0,
+        1,
+        50,
+        45
+      ],
+      "mount": {
+        "part_path": [
+          "head"
+        ],
+        "socket_id": "mouth"
+      }
+    }
+  ],
+  "registration_assertions": [
+    {
+      "drawing_id": "body-rest",
+      "character_view_id": "front",
+      "reference_to_cell": [
+        0.5,
+        0,
+        0,
+        0.5,
+        -15,
+        -10
+      ],
+      "cell_size": [
+        70,
+        120
+      ],
+      "shared_scale": 0.5,
+      "padding": 5
+    },
+    {
+      "drawing_id": "head-rest",
+      "character_view_id": "front",
+      "reference_to_cell": [
+        0.5,
+        0,
+        0,
+        0.5,
+        -30,
+        -15
+      ],
+      "cell_size": [
+        40,
+        40
+      ],
+      "shared_scale": 0.5,
+      "padding": 5
+    }
+  ],
+  "registration_origin": "Authored synthetic geometric assertions, not a compiler receipt or observed art registration. Mouth uses separately authored local geometry.",
+  "sockets": [
+    {
+      "socket_id": "neck",
+      "part_path": [
+        "body"
+      ],
+      "cell_uv": [
+        0.5,
+        0.2
+      ]
+    },
+    {
+      "socket_id": "mouth",
+      "part_path": [
+        "head"
+      ],
+      "cell_uv": [
+        0.5,
+        0.7
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "control_id": "mouth",
+      "type": "drawing",
+      "default": "mouth-neutral",
+      "drawings": [
+        "mouth-neutral",
+        "mouth-open"
+      ],
+      "target": {
+        "part_path": [
+          "mouth"
+        ],
+        "channel": "drawing"
+      }
+    }
+  ],
+  "paint_order": [
+    [
+      "body"
+    ],
+    [
+      "head"
+    ],
+    [
+      "mouth"
+    ]
+  ],
+  "registration_chain_specimen": {
+    "meaning": "Authored geometry showing raw cel versus whole-input coordinates; not a compiler report.",
+    "input": {
+      "file": "../art/head-strip.png",
+      "sha256": "3b02e9dec157b230845b67a045b6513d9a7ada8f0a079f91594202177928c0db",
+      "width": 120,
+      "height": 60
+    },
+    "source_rect": [
+      60,
+      0,
+      60,
+      60
+    ],
+    "image_to_reference": [
+      1,
+      0,
+      0,
+      1,
+      10,
+      40
+    ],
+    "raw_cel_to_cell": [
+      0.5,
+      0,
+      0,
+      0.5,
+      5,
+      5
+    ],
+    "source_to_cell": [
+      0.5,
+      0,
+      0,
+      0.5,
+      -25,
+      5
+    ],
+    "reference_to_cell": [
+      0.5,
+      0,
+      0,
+      0.5,
+      -30,
+      -15
+    ],
+    "raw_point": [
+      30,
+      30
+    ],
+    "input_point": [
+      90,
+      30
+    ],
+    "reference_point": [
+      100,
+      70
+    ],
+    "cell_point": [
+      20,
+      20
+    ]
+  }
+}

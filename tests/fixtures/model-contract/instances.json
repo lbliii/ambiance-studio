@@ -1,0 +1,161 @@
+{
+  "packet_version": "mc/1",
+  "kind": "instance-specimen",
+  "path_base": "document",
+  "instances": [
+    {
+      "instance_id": "lamp-a",
+      "definition": {
+        "model_id": "lantern",
+        "version": "1",
+        "file": "models/lantern-v1.json",
+        "sha256": "5eccd5edca17fae8a522a66ad9f5b807e2f5ce63f5d3476a02521de1248416cb"
+      },
+      "placement": {
+        "anchor_pixels": [
+          60,
+          100
+        ],
+        "scale": 1,
+        "rotation": 0
+      },
+      "variants": {
+        "frame": "square"
+      },
+      "overrides": {
+        "source-on": true,
+        "flame-phase": 0
+      }
+    },
+    {
+      "instance_id": "lamp-b",
+      "definition": {
+        "model_id": "lantern",
+        "version": "1",
+        "file": "models/lantern-v1.json",
+        "sha256": "5eccd5edca17fae8a522a66ad9f5b807e2f5ce63f5d3476a02521de1248416cb"
+      },
+      "placement": {
+        "anchor_pixels": [
+          180,
+          100
+        ],
+        "scale": 1,
+        "rotation": 0
+      },
+      "variants": {
+        "frame": "arched"
+      },
+      "overrides": {
+        "source-on": true,
+        "flame-phase": 0.5
+      }
+    }
+  ],
+  "receiver_links": [
+    {
+      "link_id": "lamp-a-floor",
+      "source": {
+        "instance_id": "lamp-a",
+        "emitter_id": "wick-light"
+      },
+      "receiver_instance_id": "ground",
+      "contribution_part_id": "ground-a-light",
+      "off": 0,
+      "valid_source_anchor_envelope_pixels": [
+        40,
+        80,
+        80,
+        120
+      ],
+      "outside_envelope": "requires-explicit-reauthoring"
+    }
+  ],
+  "derived_subject": {
+    "packet_version": "mc/1",
+    "definition": {
+      "model_id": "lantern",
+      "version": "1",
+      "file": "models/lantern-v1.json",
+      "sha256": "5eccd5edca17fae8a522a66ad9f5b807e2f5ce63f5d3476a02521de1248416cb"
+    },
+    "nested_definitions": [
+      {
+        "model_id": "candle",
+        "version": "1",
+        "file": "candle-v1.json",
+        "sha256": "91e903bd37842d3faaa2b156ada47cf172335126b208006e320d49a4169d20e4"
+      }
+    ],
+    "instance_id": "lamp-a",
+    "variants": {
+      "frame": "square"
+    },
+    "overrides": {
+      "source-on": true,
+      "flame-phase": 0
+    },
+    "pose": {
+      "pose_id": "rest",
+      "drawing_ids": [
+        "housing",
+        "wax",
+        "flame-0",
+        "frame-square"
+      ]
+    },
+    "clock": {
+      "mode": "loop",
+      "frame": 0,
+      "fps": {
+        "numerator": 24,
+        "denominator": 1
+      },
+      "duration_frames": 48,
+      "local_cycles": {
+        "flame": {
+          "progress": 0
+        }
+      }
+    },
+    "included_parts": [
+      [
+        "housing"
+      ],
+      [
+        "candle",
+        "wax"
+      ],
+      [
+        "candle",
+        "flame"
+      ],
+      [
+        "front"
+      ]
+    ],
+    "excluded_external_contributions": [
+      "ground-a-light"
+    ],
+    "product": {
+      "space": "model-local",
+      "roles": [
+        "solid"
+      ],
+      "threshold": 1,
+      "resolution": [
+        32,
+        48
+      ],
+      "crop_to_local": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    "status": "input-identity-specimen-no-rendered-proof"
+  }
+}
