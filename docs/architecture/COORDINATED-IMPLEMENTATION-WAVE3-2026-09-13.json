@@ -248,7 +248,8 @@
         "audio_cues.alignment frame/sample exact conversion only; preserve rejection policy",
         "Actual prepared-scene snapshot module lists add clock.mjs; only scene clock/sample CLI signature fixture entries after frozen run",
         "After freeze: preparation.py copied modules, preparation_server.py served allowlist, preparation_commands.py proof runtime_files add clock.mjs together; focused existing copy/serve/identity tests",
-        "Explicit authored-N repair: existing clock/canvas validators, render plan/job, timing/browser/audit frame counts and media verify defaults only; broader activity/coverage/region evidence reconciled by coordinator"
+        "Explicit authored-N repair: existing clock/canvas validators, render plan/job, timing/browser/audit frame counts and media verify defaults only; broader activity/coverage/region evidence reconciled by coordinator",
+        "Narrow test-only CLI invocation correction before freeze: media verify positional PATH instead of unsupported --file; equivalent test invocation corrections need reporting, not redundant approval."
       ],
       "thread_id": "01a09b0c-779a-75c1-9e08-5f7ace309f1a",
       "client_thread_id": "client-new-thread:e21a93f6-dd26-48c0-b681-da9df8fc2d79",
@@ -264,7 +265,7 @@
       "validation_note": "JS test-clock auto-discovered; Python clock tests should exercise actual CLI, not duplicate JS wrapper. Coordinator reconciles renderer source-list verifiers.",
       "clock_context_proposal": "compiled.clock.seconds(seconds)/frame(integer) returns frozen context; compiled.sample(context) validates equivalent definition and does not rewrap; sample(seconds) retains array and sampleFrame preserves requested frame. consumerTime selects local-cycle values. Authored clock revision label is distinct from external scene/revision hashes.",
       "focused_progress": {
-        "state": "repaired_frozen_candidate_queued",
+        "state": "correcting_test_only_media_verify_invocation",
         "source": "worker-reported; frozen replay and coordinator verification pending",
         "implementation": "Shared finite/loop engine, JS/Python exact conversions, CLI clock/sample, local-cycle camera/layer/signal and finite reparent/raster consumers.",
         "reported_checks": "Legacy track/rig/binding/finishing checks and four CLI cases passed.",
@@ -279,14 +280,14 @@
         },
         "browser_observation": "Worker inspected both sample/endpoint poses and observed Play stop at frame59. Coordinator has not repeated this observation.",
         "native_slot_requested": false,
-        "next": "On explicit slot grant, refresh native short/range proofs and required-native-2 on exact2847b83; M3 precedes only if its repaired frozen replay is ready."
+        "next": "Remove unsupported --file from new media verify test (positional path), commit test-only successor and refresh manifest. Runtime2847b83 unchanged; M3 still owns native slot."
       },
       "candidate_commit": "2847b83c149611bf785ff5b95e32320c8083ce5c",
       "full_validation": {
-        "state": "queued_after_M3_if_ready",
+        "state": "test_invocation_successor_before_reserved_slot",
         "candidate_commit": "2847b83c149611bf785ff5b95e32320c8083ce5c",
-        "source_frozen": true,
-        "clean_verified_by_coordinator": true,
+        "source_frozen": false,
+        "clean_verified_by_coordinator": false,
         "required_native": true,
         "artifacts": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/required-native-2"
       },
