@@ -160,6 +160,25 @@ def inspect(project, instance_id=None):
     return {'scene_sha256': inputs[1]['sha256'], 'instances': found, 'acceptance': 'not established'}
 
 
+def retained_pin(project, catalog, package_hash, definition):
+    """Reuse an exact contained package still referenced by restored catalog art.
+
+    Only our generation/package path layout and exact byte pin are candidates;
+    family/version labels never select a replacement for occupied art.
+    """
+    candidates = set()
+    for asset in catalog['assets']:
+        parts = Path(asset['file']).parts
+        if (len(parts) >= 7 and parts[:2] == ('.ambiance', 'model-generations')
+                and parts[3:6] == ('packages', package_hash, 'source')):
+            candidates.add((Path(*parts[:5])/'model-package.json').as_posix())
+    if len(candidates) > 1: raise ValueError('Ambiguous retained package locations; inspect exact catalog sources')
+    if not candidates: return None
+    pin = {'package': candidates.pop(), 'sha256': package_hash, 'definition': definition}
+    open_pin(project, pin)
+    return pin
+
+
 def apply(project, recipe_file, *, dry_run=False):
     project = Path(project).resolve(); recipe_file = Path(recipe_file).resolve()
     # Read inside the lock and pin the exact recipe; expected scene is mandatory.
@@ -209,9 +228,13 @@ def apply(project, recipe_file, *, dry_run=False):
                 if digest(package/'model-package.json') != package_hash: raise ValueError('Requested package pin differs')
                 # Reuse an already contained exact package; otherwise stage once.
                 reused = next((r['pin'] for r in current if r['pin']['sha256'] == package_hash), None)
+                reused = reused or retained_pin(project, catalog, package_hash, manifest['definition'])
                 target = generation/'packages'/package_hash
                 pin = reused or {'package': (target/'model-package.json').relative_to(project).as_posix(), 'sha256': package_hash, 'definition': manifest['definition']}
                 if not reused: packages[package_hash] = (package, manifest)
+                else:
+                    contained, retained_manifest, _, _ = open_pin(project, reused)
+                    pinned.extend(dependencies(contained, retained_manifest))
             pinned.extend(dependencies(package, manifest))
             contract = interface(closure, root)
             preview = None
