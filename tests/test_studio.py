@@ -4,6 +4,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -56,6 +57,46 @@ class StudioTests(unittest.TestCase):
         s=self.status();self.assertEqual(s['gates']['assets']['state'],'stale')
         self.assertEqual(s['gates']['sound-design']['state'],'passed')
         self.assertNotEqual(s['gates']['animation']['state'],'passed');self.assertFalse(s['release_ready'])
+    def configure_picture(self, generation):
+        folder='.ambiance/model-generations/'+generation
+        studio.write(self.project/folder/'scene.json',{'version':1,'layers':[]})
+        studio.write(self.project/folder/'catalog.json',{'version':1,'assets':[]})
+        studio.write(self.project/'ambiance-project.json',{'version':1,'scene':folder+'/scene.json','catalog':folder+'/catalog.json'})
+        return self.project/folder
+    def test_selected_generation_switch_stales_picture_but_not_sound(self):
+        first=self.configure_picture('first');self.all_pass()
+        self.configure_picture('second')
+        s=self.status()['gates']
+        self.assertEqual(s['assets']['state'],'stale');self.assertEqual(s['animation']['state'],'stale')
+        self.assertEqual(s['intent']['state'],'passed');self.assertEqual(s['sound-design']['state'],'passed')
+        # Restoring exact selection restores currentness without rewriting reviews.
+        studio.write(self.project/'ambiance-project.json',{'version':1,'scene':str((first/'scene.json').relative_to(self.project)),
+            'catalog':str((first/'catalog.json').relative_to(self.project))})
+        self.assertTrue(self.status()['archived'])
+    def test_selected_picture_edits_and_missing_inputs_are_gate_local(self):
+        folder=self.configure_picture('first');self.all_pass()
+        config=studio.read(self.project/'ambiance-project.json');config['title']='Unrelated metadata'
+        studio.write(self.project/'ambiance-project.json',config)
+        self.assertTrue(self.status()['archived'])
+        studio.write(folder/'scene.json',{'version':1,'layers':[],'note':'Changed picture'})
+        self.assertEqual(self.status()['gates']['animation']['state'],'stale')
+        self.assertEqual(self.status()['gates']['assets']['state'],'passed')
+        (folder/'catalog.json').unlink()
+        s=self.status()['gates'];self.assertEqual(s['assets']['state'],'stale')
+        self.assertEqual(s['sound-design']['state'],'passed')
+        with self.assertRaisesRegex(ValueError,'Review inputs are unavailable'):self.record('assets')
+        self.assertEqual(s['intent']['state'],'passed')
+        studio.write(self.project/'ambiance-project.json',{'version':999})
+        self.assertEqual(self.status()['gates']['intent']['state'],'passed')
+        self.assertEqual(self.status()['gates']['assets']['state'],'stale')
+    def test_selection_change_during_recording_does_not_publish_receipt(self):
+        self.configure_picture('first');self.record('intent');self.record('layout')
+        from ambiance_studio.production_coverage import normalize_observations
+        def switch(*args,**kwargs):
+            result=normalize_observations(*args,**kwargs);self.configure_picture('second');return result
+        with patch('ambiance_studio.production_coverage.normalize_observations',side_effect=switch):
+            with self.assertRaisesRegex(ValueError,'inputs changed during review'):self.record('assets')
+        self.assertFalse((self.project/'reviews/assets.json').exists())
     def test_new_receipt_invalidates_dependent_and_preserves_history(self):
         self.record('intent');self.record('layout');self.record('intent')
         self.assertEqual(self.status()['gates']['layout']['state'],'stale')

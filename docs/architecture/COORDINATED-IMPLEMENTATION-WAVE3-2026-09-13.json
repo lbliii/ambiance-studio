@@ -135,8 +135,8 @@
       "worktree": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio",
       "branch": "codex/model-instances-wave3",
       "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
-      "dispatch_state": "active",
-      "cursor": "ffefdcba-0a41-43f5-ba3d-53cf50e2b5a4:5",
+      "dispatch_state": "complete",
+      "cursor": "ffefdcba-0a41-43f5-ba3d-53cf50e2b5a4:7",
       "interface": "Project-scoped model instance apply recipe, exact contained package pins and deterministic tuple IDs; managed-layer fingerprints and adoption conflict preview. Actual C1/C2 lantern lowering probe passes.",
       "baseline_verified": true,
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
@@ -144,7 +144,7 @@
       "transaction_refinement": "Active generation contains mutable working scene; captured previous config/scene and contained model packages remain immutable. Existing edit/restore/view/render/revision compatibility is still required.",
       "bounded_lowering_gap": "C1 static constant-cell keys at 0/1 seconds fail a host with a 2-second duration; this is an endpoint duration mismatch, not fps arithmetic. Granted constant-cell endpoints mapped to validated host interval, rejecting animated inputs beyond subset; actual finite-host compatibility remains required.",
       "focused_progress": {
-        "state": "full_native_passed_handoff_pending",
+        "state": "reviewed_locally_integrated",
         "source": "worker-reported tests; current source reviewed for alias issue, not a frozen handoff",
         "reported_checks": [
           "dry/save/retry",
@@ -156,7 +156,7 @@
           "generation asset-root validation",
           "actual raster provider wrapper"
         ],
-        "next": "Documentation-only handoff, coordinator local integration and shared fixes."
+        "next": "Coordinator shared review-watch/finite integration and combined validation."
       },
       "candidate_commit": "fe2ab3eeffd587cb41df1dbd7bba9922adb65306",
       "full_validation": {
@@ -239,6 +239,40 @@
         "coordinator_verified_artifact_files": 598,
         "public_calls": 36,
         "mismatches": []
+      },
+      "handoff_commit": "b6d17587db3e26035384324fa82d44d518b913ff",
+      "local_integration": {
+        "state": "integrated",
+        "commits": [
+          "a9bc46e",
+          "7edfa6f",
+          "527e359",
+          "dd3176b",
+          "b78ebbc",
+          "8fea96e",
+          "337b17a",
+          "244b0de",
+          "f610553",
+          "7836616",
+          "69f16ec"
+        ],
+        "source_commits": [
+          "c8a0fe6",
+          "2ab73ac",
+          "2702829",
+          "690318d",
+          "70e0937",
+          "92e6448",
+          "a65f630",
+          "cf2c701",
+          "1458e37",
+          "fe2ab3e",
+          "b6d17587db3e26035384324fa82d44d518b913ff"
+        ],
+        "handoff": "reports/model-instances/HANDOFF.md",
+        "conflict_resolution": "Preserved additive W3 prepare, A3 measure and all M3 routes in CLI option/output fixture conflicts. Equivalent affine prerequisite already integrated.",
+        "focused_validation": "Combined W3+A3+M3 CLI contract suite:8 passed.",
+        "combined_validation": "pending"
       }
     },
     {
@@ -267,7 +301,7 @@
       "branch": "codex/wave3-p03-clock",
       "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
       "dispatch_state": "active",
-      "cursor": "4dbdebd1-a93d-43a6-a836-cf97b90e0435:3",
+      "cursor": "4dbdebd1-a93d-43a6-a836-cf97b90e0435:4",
       "interface": "Opt-in scene.clock version/mode/id/revision/duration_frames/local_cycles; canvas.loop_seconds remains duration mirror. Shared editor/clock.mjs context; existing sample(seconds) array stays; scene clock/sample frame/context routes proposed. Revision-pin and closure details need final contract.",
       "baseline_verified": true,
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
@@ -293,7 +327,7 @@
       },
       "candidate_commit": "369546b1533c9b65d3a94ebe9148037b0f492e91",
       "full_validation": {
-        "state": "slot_granted",
+        "state": "running",
         "candidate_commit": "369546b1533c9b65d3a94ebe9148037b0f492e91",
         "source_frozen": true,
         "clean_verified_by_coordinator": true,
@@ -383,6 +417,12 @@
         "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/duration-repair/observation-2847b83.json",
         "sha256": "5b38ff535504130631f3beb3f1149fec50072249bb8098e8d3dc7a0b478e3fb4",
         "reported_result": "31-frame30fps fixture loads Ready, seek31 exposes endpoint, Play restarts then stops at30; static floor fixture, no artistic acceptance."
+      },
+      "native_proof_refresh": {
+        "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/proof-manifest.json",
+        "sha256": "53d5efd87ba4718e44d8829d1494897281d468bb88716e94cd7ec9b54b077a6e",
+        "candidate_commit": "369546b1533c9b65d3a94ebe9148037b0f492e91",
+        "coordinator_verified": "Manifest hash verified; worker reports decoded 60/59@24,31/30@30,7/6@25 and retained endpoints. Detailed artifact rehash pending."
       }
     },
     {
@@ -645,5 +685,11 @@
     "report": "/private/tmp/ambiance-wave3-audio-integration-package.json",
     "sha256": "f54f411526c96f7afff213867ea4b9b0a13d59852abc0ea5d25e5b5119bed97d",
     "meaning": "After W3/A3 local integration; not final combined validation."
+  },
+  "shared_review_watch_repair": {
+    "state": "implemented_focused_checks_passed_peer_review_pending",
+    "scope": "Legacy scene/assets folder watches additionally follow selected scene/catalog, catalog images and complete active model package closure. Gate-local malformed/missing inputs cannot pass; independent sound/intent and immutable revision scopes preserved; selection rechecked before receipt save.",
+    "regression": "17 studio tests,15 model instance tests and15 revision tests passed; includes real CLI placement, complete package closure mutation/recovery, pointer switch/restoration, independent sound/intent and concurrent selection change rejection.",
+    "root_cause_proof": "/private/tmp/wave3-legacy-watch-mm37p9ad/repro.json"
   }
 }

@@ -130,6 +130,29 @@ class InstanceTests(unittest.TestCase):
         self.assertLess(result['previews'][0]['mount']['max_world_corner_error_pixels'], 1e-7)
         self.command('model', 'instance', 'inspect')
 
+    def test_legacy_picture_watch_tracks_selected_package_closure(self):
+        gates={g['id']:g for g in studio.pipeline(self.project)}
+        before={key:studio.watch_snapshot(self.project,gates[key]) for key in ['assets','animation','sound-design']}
+        self.save([self.place()])
+        snapshots={key:studio.watch_snapshot(self.project,gates[key]) for key in before}
+        self.assertNotEqual(before['assets'],snapshots['assets'])
+        self.assertNotEqual(before['animation'],snapshots['animation'])
+        self.assertEqual(before['sound-design'],snapshots['sound-design'])
+        self.assertEqual(studio.watch_state(self.project,gates['assets'])[1],[])
+        pin=self.scene()['model_instances']['instances'][0]['pin']
+        package,manifest,_,_=model_instances.open_pin(self.project,pin)
+        # Definitions and art under the selected package are all watched.
+        for name in manifest['files']:
+            self.assertIn((package/'source'/name).relative_to(self.project).as_posix(),snapshots['assets'])
+        definition=package/'source'/manifest['definition']['file'];original=definition.read_bytes()
+        definition.write_bytes(original+b'\n')
+        self.assertTrue(studio.watch_state(self.project,gates['assets'])[1])
+        definition.write_bytes(original)
+        self.assertEqual(studio.watch_state(self.project,gates['assets']),(snapshots['assets'],[]))
+        # An unselected historical generation is not an active dependency.
+        studio.write(self.project/'.ambiance/model-generations/unselected/scene.json',{})
+        self.assertEqual(studio.watch_state(self.project,gates['assets']),(snapshots['assets'],[]))
+
     def test_project_root_checker_legacy_generation_and_escape(self):
         from kit import validate
         self.assertTrue(validate(*locations(self.project))['ok'])
