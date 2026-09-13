@@ -144,7 +144,19 @@
       "interface": "Exact baseline reproduced in 24 runs: imageSmoothingQuality high alone reproduces alternating pixels; restoring low restores fresh pixels, finishing on/off. Granted explicit enabled/high initialization in drawCoverage to match drawScene/extractView. Fresh coverage intentionally changes; finished bytes must remain unchanged.",
       "baseline_verified": true,
       "first_native_slot": "Reserved; may start after focused matrix passes and candidate commit is frozen. Notify start/finish and release.",
-      "progress_verified": "wait_threads confirmed active/in-progress at the recorded cursor."
+      "progress_verified": "wait_threads confirmed active/in-progress at the recorded cursor.",
+      "early_patch_review": {
+        "state": "reviewed_working_candidate_not_yet_integrated",
+        "production_change": "drawCoverage explicitly enables image smoothing and sets high quality in editor/stage-raster.mjs",
+        "stage_adapter_sha256": "5f59d3457594c7ecf6bb91bb85f32c44cdad997d86e87c34ee0e6a298c015ba1",
+        "matrix_comparison": "/Users/lb/.codex/worktrees/dbe1/ambiance-studio/work/canvas-sequence/matrix-comparison.json",
+        "matrix_comparison_sha256": "1d441e822c6a921ce256f6687820228cb3e2f335caff9efadd0036a570c9f848",
+        "baseline_history_dependent": 54,
+        "corrected_history_dependent": 0,
+        "finished_png_pairs_independently_verified": 216,
+        "existing_identity_binding": "stage_adapter_sha256 and alphaDiagnosticIdentity verified; old immutable proofs retain historical identity",
+        "remaining": "Public CLI/browser proof, frozen candidate commit and full native suite pending."
+      }
     }
   ],
   "status_owner_note": "Dispatch/integration record only; owning workflow YAML, model plan and quality YAML retain implementation/acceptance status.",
