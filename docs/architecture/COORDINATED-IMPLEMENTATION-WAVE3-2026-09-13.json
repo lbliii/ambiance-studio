@@ -44,7 +44,7 @@
       "branch": "codex/wave3-workflow-packets-outcomes",
       "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
       "dispatch_state": "active",
-      "cursor": "94fa07e9-c120-463c-8e93-bef403873fbf:1",
+      "cursor": "94fa07e9-c120-463c-8e93-bef403873fbf:2",
       "interface": "Global --guidance off|auto|full default off with separate ambiance-operation-guidance v1; fresh workflow prepare packets use native validation; global metadata removed before native Namespace forwarding.",
       "baseline_verified": true,
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
@@ -69,6 +69,21 @@
         "clean_verified_by_coordinator": true,
         "required_native": true,
         "artifacts": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-native-final"
+      },
+      "public_replay": {
+        "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/run.json",
+        "sha256": "4962caa99ea61ef095b8f0044a37c0f441b04477efbaff82606f87de4c352798",
+        "commit": "0ccabe4198d91a3b56afbcd2bbad004b10847d44",
+        "ok": true,
+        "source_unchanged_reported": true,
+        "coordinator_verified_source_files": 104,
+        "coordinator_verified_io_files": 48,
+        "public_calls": 24,
+        "mismatches": []
+      },
+      "coordinator_review": {
+        "state": "source_review_no_blocking_finding_initial_replay_verified",
+        "scope": "Read packet/outcome modules, native draft helper, CLI namespace/output boundary, routes and contract. Rehashed104 recorded source files and48 CLI stdout/stderr records with expected exits. Full native and final artifacts still pending."
       }
     },
     {
@@ -113,7 +128,17 @@
           "actual raster provider wrapper"
         ],
         "next": "Tie namespaced runtime asset identity to exact compiler pack from model closure/state before revision alias acceptance; complete public revision/reuse replay and freeze."
-      }
+      },
+      "candidate_commit": "70e0937b985f9bec47ea089fc9a9624fb0401c0f",
+      "full_validation": {
+        "state": "queued_after_W3",
+        "candidate_commit": "70e0937b985f9bec47ea089fc9a9624fb0401c0f",
+        "source_frozen": true,
+        "clean_verified_by_coordinator": true,
+        "required_native": true,
+        "artifacts": null
+      },
+      "finite_integration": "Coordinator-only final combined probe on reviewed T3+M3 commits; do not adopt known-failing intermediate clock stack. Static candidate full-native validation proceeds independently."
     },
     {
       "stream": "T3",
@@ -139,7 +164,7 @@
       "branch": "codex/wave3-p03-clock",
       "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
       "dispatch_state": "active",
-      "cursor": "4dbdebd1-a93d-43a6-a836-cf97b90e0435:1",
+      "cursor": "4dbdebd1-a93d-43a6-a836-cf97b90e0435:2",
       "interface": "Opt-in scene.clock version/mode/id/revision/duration_frames/local_cycles; canvas.loop_seconds remains duration mirror. Shared editor/clock.mjs context; existing sample(seconds) array stays; scene clock/sample frame/context routes proposed. Revision-pin and closure details need final contract.",
       "baseline_verified": true,
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
@@ -209,20 +234,27 @@
       "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
       "measurement_scope": "Initial streaming double-precision Node DSP backend at explicit 48kHz; ITU Annex1/2 coefficients. EBU fixture download HTTP403 retained; deterministic published-definition signal/tolerance validation and any independent conformance gaps must be stated.",
       "focused_progress": {
-        "state": "focused_native_supported_rates_passed_replay_in_progress",
+        "state": "frozen_candidate_final_replay_in_progress",
         "source": "worker-reported; candidate not frozen or coordinator-reviewed",
         "reported_tests_passed": 8,
         "reference_cases": "EBU-defined loudness 1-5 and dBTP 15-19 with published tolerances",
         "native_trial": "Worker reports format-specific applicableEncodeBitRates stereo48k max320000; global available list misleadingly includes384000. New preflight rejects384 before raster. Real native 256000 and explicit320000 passed mux/decode with96000 presented samples/2s, source/float32 hashes and legacy PCM16 half-LSB compatibility.",
-        "next": "Execution-time pending-audio preflight before required picture jobs; unsupported rate starts zero picture jobs and verified-output resume retains behavior. Complete retained public replay/freeze before requesting native suite slot.",
-        "native_slot_requested": false
-      }
+        "next": "Finish exact-commit replay-final and confirm full hash before native queue placement.",
+        "native_slot_requested": false,
+        "reported_checks": "10 measurement,2 native,8 CLI,9 revision-contract,6 render-service plus iteration-step checks and package audit passed.",
+        "development_replay": {
+          "path": "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/replay-dev5/replay.json",
+          "sha256": "eb36e47f9bba744d7cc6ed45904faa4d3059c962c924c7c380474631d77ddf5c"
+        }
+      },
+      "candidate_commit_reported": "2e7aefb"
     }
   ],
   "shared_owner": "Coordinator reconciles central CLI/output/evidence/backlog/capabilities. W3 owns optional global outcome guidance; M3 model transport and typed model evidence; T3 picture clocks/evaluation; A3 audio measurements/encoding. New shared semantics require a concrete interface and narrow lease, not user permission.",
   "bounded_prerequisite": "Integrated mc/1 and C1/C2 plus corrected renderer permit I1/I2 and independent P03 technical fixtures. Full model Phase 1/P00 seed/story/census/art requirements remain open.",
   "native_test_queue": [
-    "W3"
+    "W3",
+    "M3"
   ],
   "active_native_test_owner": "T3",
   "native_test_policy": "One committed frozen-source full native suite at a time across these tasks. Focused independent checks continue. Coordinator runs final combined required-native suite; reuse validated 516-case baseline.",
