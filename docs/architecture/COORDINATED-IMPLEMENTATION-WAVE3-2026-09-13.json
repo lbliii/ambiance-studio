@@ -1,0 +1,193 @@
+{
+  "format": "studio-workstream-coordination",
+  "schema_version": 1,
+  "wave": 3,
+  "updated_utc": "2026-09-13",
+  "coordinator_thread_id": "01a0983d-40cf-71a3-bd9c-cb8308ad6efa",
+  "coordinator_worktree": "/Users/lb/.codex/worktrees/cfeb/ambiance-studio",
+  "coordinator_branch": "codex/coordinated-studio-wave3",
+  "saved_project_id": "f5120268-3ebf-40fb-8c45-d50ab7c7bcff",
+  "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
+  "status": "active",
+  "authorization": "User accepted the proposed four-task Wave 3 and requested kickoff like the previous two waves. Fresh tasks, ongoing coordination/unblocking, review, local integration and combined validation are authorized. No new wave or provider/account changes are implied.",
+  "previous_wave": {
+    "pr": "https://github.com/lbliii/ambiance-studio/pull/33",
+    "state": "MERGED",
+    "merge_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
+    "validation": {
+      "recorded_cases": 516,
+      "python_tests": 501,
+      "skips": 0,
+      "report": ".ambiance/coordination/2026-09-13/wave2-combined/run.json",
+      "sha256": "701e2c70d63642dc2f78e48d84b944bb8e8706752c7575b86a82669cd17314cc"
+    },
+    "github_ci": "No job executed due billing/spending limit; no account changes."
+  },
+  "plan": "docs/architecture/COORDINATED-IMPLEMENTATION-WAVE3-2026-09-13.md",
+  "workers": [
+    {
+      "stream": "W3",
+      "title": "Build workflow input packets and outcome guidance",
+      "assignment": "WF-04 and WF-05",
+      "leases": [
+        "workflow packet/outcome modules and workflow_commands.py/workflow_operations.py",
+        "narrow cli.py global guidance flag and outcome adapter preserving selected_output/emit/error contracts",
+        "native intent/review/iteration initializer adapters",
+        "new-route CLI fixtures and affected signatures only",
+        "production_plan.py pure intent draft helper after demonstrated missing initializer",
+        "cli.run strips global guidance namespace metadata before native dispatch"
+      ],
+      "thread_id": "01a09b0c-3462-71c1-9a61-2d7201602138",
+      "client_thread_id": "client-new-thread:71289471-5a22-45e0-aba5-d6345a08d0c0",
+      "host_id": "local",
+      "worktree": "/Users/lb/.codex/worktrees/61c0/ambiance-studio",
+      "branch": "codex/wave3-workflow-packets-outcomes",
+      "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
+      "dispatch_state": "active",
+      "cursor": "94fa07e9-c120-463c-8e93-bef403873fbf:1",
+      "interface": "Global --guidance off|auto|full default off with separate ambiance-operation-guidance v1; fresh workflow prepare packets use native validation; global metadata removed before native Namespace forwarding.",
+      "baseline_verified": true,
+      "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot."
+    },
+    {
+      "stream": "M3",
+      "title": "Build independent model instances and version adoption",
+      "assignment": "mc/1 I1 and I2",
+      "leases": [
+        "new model instance/adoption modules and tools/model/",
+        "model_commands.py model instance routes",
+        "scene_runtime.py/tools/scene-command.mjs model transport hooks and scene transaction integration",
+        "revision_dependencies.py typed model edges and coverage_evidence.py typed model provider only",
+        "cli.py command_project project-scoped model instance exception",
+        "provisional scene_transactions.py scene/catalog bundle transaction; finalized semantics require coordinator review"
+      ],
+      "thread_id": "01a09b0c-4fcf-7542-b921-c1b7aa265a7b",
+      "client_thread_id": "client-new-thread:0efa40dc-4201-4e0b-a4ad-7cf69acf5601",
+      "host_id": "local",
+      "worktree": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio",
+      "branch": "codex/model-instances-wave3",
+      "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
+      "dispatch_state": "active",
+      "cursor": "ffefdcba-0a41-43f5-ba3d-53cf50e2b5a4:1",
+      "interface": "Project-scoped model instance apply recipe, exact contained package pins and deterministic tuple IDs; managed-layer fingerprints and adoption conflict preview. Actual C1/C2 lantern lowering probe passes.",
+      "baseline_verified": true,
+      "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
+      "open_design_review": "Scene/catalog pointer commit may fit, but existing finish() mutates active scene path: separate immutable packages/staging from mutable active scene, preserve/rebase catalog-relative paths, prove ordinary edit/restore/view/render/revision after pointer switch and failed-write recovery.",
+      "transaction_refinement": "Active generation contains mutable working scene; captured previous config/scene and contained model packages remain immutable. Existing edit/restore/view/render/revision compatibility is still required."
+    },
+    {
+      "stream": "T3",
+      "title": "Build finite-shot timing and local cycles",
+      "assignment": "P03 bounded engineering",
+      "leases": [
+        "editor/engine.mjs editor/timing.mjs and common time conversion helpers",
+        "narrow reparent/source-placement/finishing/binding clock consumers",
+        "scene timing/authoring CLI hooks",
+        "render raster/job/receipt clock fields only; no audio bitrate/native codec changes",
+        "editor/editor.mjs finite playback/seek only; editor/audit.mjs loop versus finite validation",
+        "clock.mjs renderer source identity registration",
+        "tools/scene-command.mjs clock/sample branches only; preserve M3 model transport",
+        "kit.py finite/named versus legacy loop cycle precheck only",
+        "audio_cues.alignment frame/sample exact conversion only; preserve rejection policy"
+      ],
+      "thread_id": "01a09b0c-779a-75c1-9e08-5f7ace309f1a",
+      "client_thread_id": "client-new-thread:e21a93f6-dd26-48c0-b681-da9df8fc2d79",
+      "host_id": "local",
+      "worktree": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio",
+      "branch": "codex/wave3-p03-clock",
+      "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
+      "dispatch_state": "active",
+      "cursor": "4dbdebd1-a93d-43a6-a836-cf97b90e0435:1",
+      "interface": "Opt-in scene.clock version/mode/id/revision/duration_frames/local_cycles; canvas.loop_seconds remains duration mirror. Shared editor/clock.mjs context; existing sample(seconds) array stays; scene clock/sample frame/context routes proposed. Revision-pin and closure details need final contract.",
+      "baseline_verified": true,
+      "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
+      "validation_note": "JS test-clock auto-discovered; Python clock tests should exercise actual CLI, not duplicate JS wrapper. Coordinator reconciles renderer source-list verifiers."
+    },
+    {
+      "stream": "A3",
+      "title": "Build audio level measurements and export controls",
+      "assignment": "quality AUDIO-02",
+      "leases": [
+        "new loudness/true-peak measurement modules and audio.py measurement routes",
+        "native/media/media.m audio encoding/measurement options only",
+        "audio bitrate fields in rendering/render_plan/render_execution/native-process and receipt/dependency adapters",
+        "audio recipe/output fixtures and new audio evidence",
+        "native/media/compose.m media_commands.h verify_audio.m audio-only implementation",
+        "media_operations.py media_verification.py editions.py audio-only request/evidence adapters",
+        "actual iteration recipe/step/plan/pass-through owners audio_bitrate only; no iteration_contract.py exists"
+      ],
+      "thread_id": "01a09b0c-90a8-7613-8e74-3804bbbcafea",
+      "client_thread_id": "client-new-thread:e959c4d5-f200-429b-9778-2a9cd8b4d92e",
+      "host_id": "local",
+      "worktree": "/Users/lb/.codex/worktrees/80a1/ambiance-studio",
+      "branch": "codex/wave3-audio02",
+      "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
+      "dispatch_state": "active",
+      "cursor": "a089d4e4-c7e5-4434-bffe-2e70338c74c0:1",
+      "interface": "audio measure SOURCE source-bound method/backend/version results; audio_bitrate default 256000 with 384000 trial; separate audio_encoding and source/decoded measurements. Extracted native compose/verify_audio owns AAC and unchanged presentation interval.",
+      "baseline_verified": true,
+      "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot."
+    }
+  ],
+  "shared_owner": "Coordinator reconciles central CLI/output/evidence/backlog/capabilities. W3 owns optional global outcome guidance; M3 model transport and typed model evidence; T3 picture clocks/evaluation; A3 audio measurements/encoding. New shared semantics require a concrete interface and narrow lease, not user permission.",
+  "bounded_prerequisite": "Integrated mc/1 and C1/C2 plus corrected renderer permit I1/I2 and independent P03 technical fixtures. Full model Phase 1/P00 seed/story/census/art requirements remain open.",
+  "native_test_queue": [],
+  "active_native_test_owner": null,
+  "native_test_policy": "One committed frozen-source full native suite at a time across these tasks. Focused independent checks continue. Coordinator runs final combined required-native suite; reuse validated 516-case baseline.",
+  "cross_stream_dependencies": [
+    {
+      "id": "instance-clock-integration",
+      "owner": "T3",
+      "consumer": "M3",
+      "state": "interface_shared_implementation_pending",
+      "action": "M3 proceeds with static model transactions, preserves unowned clock data and adopts committed shared context for combined finite tests."
+    },
+    {
+      "id": "scene-catalog-atomic-save",
+      "owner": "M3",
+      "state": "design_review_pending",
+      "action": "Scene/catalog pointer commit may fit, but existing finish() mutates active scene path: separate immutable packages/staging from mutable active scene, preserve/rebase catalog-relative paths, prove ordinary edit/restore/view/render/revision after pointer switch and failed-write recovery."
+    },
+    {
+      "id": "picture-audio-render-boundary",
+      "owners": [
+        "T3",
+        "A3"
+      ],
+      "state": "narrow_leases_granted",
+      "action": "Separate picture clock/range/receipt fields from audio bitrate/encoding/measurement fields and retain narrow commits."
+    },
+    {
+      "id": "shared-affine-exports",
+      "owner": "T3",
+      "consumer": "M3",
+      "state": "requested",
+      "action": "Export existing engine scaling/rotation without math changes as an independent commit; M3 continues transaction work then adopts shared exports."
+    }
+  ],
+  "blocking_decisions": [],
+  "automation": {
+    "id": "coordinate-studio-implementation",
+    "kind": "heartbeat",
+    "status": "ACTIVE",
+    "interval_minutes": 15,
+    "target_thread_id": "01a0983d-40cf-71a3-bd9c-cb8308ad6efa",
+    "prompt_updated": true
+  },
+  "scope_limits": [
+    "WF-06/07, model Phase 4-7, P02/P04/P05/P06, TV-01/02 and production pilots remain separate continuations.",
+    "No paid generation, account changes, canonical film mutations, publishing or inferred artistic/audition acceptance.",
+    "Finish this bounded wave with reviewed local integration, combined validation and handoff. Ground any future main merge in current user direction."
+  ],
+  "combined_validation": {
+    "state": "pending"
+  },
+  "dispatch_validation": {
+    "ok": true,
+    "local_links_checked": 650,
+    "errors": [],
+    "report": "/private/tmp/ambiance-wave3-dispatch-package.json"
+  },
+  "list_threads_limitation": "New tasks may be omitted by list_threads. Preserve setup IDs and resolve actual IDs from worker messages/confirmed task state; never create duplicate replacements.",
+  "native_slot_state": "free"
+}
