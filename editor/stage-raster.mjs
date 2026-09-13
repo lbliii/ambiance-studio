@@ -21,6 +21,9 @@ function drawCoverage(canvas, states, images) {
   const ctx = canvas.getContext('2d');
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // Match layer sampling in drawScene; a fresh context otherwise starts at low
+  // quality while a preceding finished pass leaves this shared stage at high.
+  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
   for (const state of states) {
     if (!state.visible) continue;
     ctx.setTransform(...state.matrix); ctx.globalAlpha = state.opacity; ctx.globalCompositeOperation = state.blend;

@@ -13,6 +13,42 @@ if(!runtime)throw Error('Node Canvas required for view raster tests');
 const {createCanvas}=runtime,checks=[];
 const pixels=canvas=>Buffer.from(canvas.getContext('2d').getImageData(0,0,canvas.width,canvas.height).data);
 const test=async(name,fn)=>{await fn();checks.push(name);};
+await test('Coverage and finished pixels are independent of render order at every supported supersampling scale',()=>{
+  const f=movingFixture(createCanvas);
+  f.scene.camera={overscan:1,x_amplitude:0,y_amplitude:0,zoom_amplitude:0};
+  f.scene.layers[0].width=f.scene.layers[0].height=1;
+  const room=f.images.get('room').getContext('2d');room.clearRect(72,16,8,8);room.clearRect(88,0,8,1);
+  const source=JSON.stringify(f.scene),times=[0,.125,.625],modes=[true,false];
+  for(const finishing of [true,false])for(const supersample of [1,2,4]){
+    const scene=structuredClone(f.scene);if(!finishing)delete scene.finishing;
+    const plan=planViews(scene,[{id:'portrait'},{id:'landscape'}],{long_edge:160,supersample});
+    const make=()=>createStageRenderer(scene,f.catalog,f.images,plan,createCanvas);
+    const canvases=r=>new Map([['stage',r.stage],...r.outputs]);
+    const reference=new Map();
+    for(const coverage of modes)for(const time of times){
+      const fresh=make();fresh.render(time,{coverage});
+      reference.set(`${coverage}/${time}`,new Map([...canvases(fresh)].map(([id,c])=>[id,pixels(c)])));
+    }
+    const sequences=[
+      // The retained failing sequence, followed by a repeated identical call.
+      [[true,0],[false,0],[true,.125],[true,.125]],
+      times.toReversed().flatMap(t=>[[true,t],[false,t],[false,t],[true,t]]),
+      modes.flatMap(c=>[.625,0,.125,0].map(t=>[c,t])),
+      modes.toReversed().flatMap(c=>[.125,.625,0].map(t=>[c,t]))
+    ];
+    for(const [sequence,steps] of sequences.entries()){
+      const renderer=make();
+      for(const [coverage,time] of steps){
+        renderer.render(time,{coverage});
+        for(const [id,canvas] of canvases(renderer))assert(pixels(canvas).equals(reference.get(`${coverage}/${time}`).get(id)),
+          `${id}: finishing=${finishing}, supersample=${supersample}, sequence=${sequence}, coverage=${coverage}, time=${time}`);
+      }
+    }
+    // These modes intentionally differ: coverage keeps paint holes, beauty fills them.
+    assert(!reference.get('true/0').get('portrait').equals(reference.get('false/0').get('portrait')));
+  }
+  assert.equal(JSON.stringify(f.scene),source);
+});
 await test('Paired finished crops match an independently specified stage at every frame and supersampling scale',()=>{
   const {scene,catalog,images}=movingFixture(createCanvas),before=JSON.stringify(scene);
   for(const supersample of [1,2]){
@@ -66,12 +102,14 @@ await test('Alpha localization retains the measured worst raster and leaves the 
   assert.equal(metadata.alpha.all.count,row.max_uncovered_pixels);
   assert(metadata.alpha.interior.count>0);assert(metadata.alpha.boundary.count>0);
   const renderer=createStageRenderer(f.scene,f.catalog,f.images,report.raster_plan,createCanvas);
-  // Reproduce the actual alternating audit sequence: finishing may leave Canvas
-  // context state that differs from a fresh one-off render at the same time.
+  // Compare the actual alternating audit sequence and an independent fresh seek.
   for(let frame=0;frame<metadata.frame;frame++){renderer.render(frame/f.scene.canvas.fps,{coverage:true});renderer.render(frame/f.scene.canvas.fps);}
   renderer.render(metadata.time_seconds,{coverage:true});
   const measured=pixels(renderer.outputs.get('portrait'));
   assert(data.equals(measured),'Saved data must be the exact pre-background measured raster');
+  const fresh=createStageRenderer(f.scene,f.catalog,f.images,report.raster_plan,createCanvas);
+  fresh.render(metadata.time_seconds,{coverage:true});
+  assert(data.equals(pixels(fresh.outputs.get('portrait'))),'Saved coverage must also match a fresh seek');
   renderer.render(metadata.time_seconds);
   assert([...pixels(renderer.outputs.get('portrait'))].filter((_,i)=>i%4===3).every(alpha=>alpha===255));
   assert.equal(report.views.landscape.ok,true);
