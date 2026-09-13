@@ -53,7 +53,7 @@
       "worktree": "/Users/lb/.codex/worktrees/1fb5/ambiance-studio",
       "branch": "codex/workflow-guidance-wave2",
       "baseline_commit": "71aa947a8bfc2b71dd21ea4966caf0136e9bb15b",
-      "dispatch_state": "active",
+      "dispatch_state": "final_review_corrections",
       "cursor": "3eb0771e-775e-4022-af41-0e043619dc93:2",
       "baseline_verified": true,
       "interface": "Advisory catalog plus exact selected-pipeline gates; explicit working/review/release/revision/edition/view subjects, stable logical action IDs and separate freshness; workflow inspect/stage/explain and project next --guided. Revision-only inspection remains supported.",
@@ -63,21 +63,27 @@
         "envelopes": "Blank about 10 KiB; populated one subject about 11 KiB.",
         "coverage": "All nine gates, hidden preparation verbs through stage details, pure WF01 assessment, revision-only and exact subject tests.",
         "latest": "Focused pure/stale/custom pipeline/dependency/wrong-view checks pass; native preparation replay uncovered empty initializer foreground part, correction through existing prepare edit retained in replay.",
-        "reported_passes": 16,
+        "reported_passes": 20,
         "cli_contract_passes": 8,
         "public_cli_calls": 39,
-        "next": "Two final consequential tests, committed candidate freeze, then granted full-native slot after M2 release."
+        "next": "Final project-bound action identity and pagination context corrections, replacement committed freeze, then reserved full-native after M2 release."
       },
       "coordinator_findings": [
         {
           "issue": "Feedback collapsed multi-entry delivery to last subject, including wrong-view feedback",
-          "state": "worker correcting with exact-entry/delivery-scope and view-filter regression before freeze"
+          "state": "corrected in 570d332; coordinator verified source and actual default/details CLI over multi-entry feedback fixture"
         },
         {
           "issue": "view.inspect incorrectly claimed no captured revision support",
-          "state": "worker splitting from scene.timing to reuse existing view inspect --revision"
+          "state": "corrected in 570d332; coordinator reviewed native revision route and regression"
+        },
+        {
+          "issue": "Returned next action-page argv drops subject pagination and can switch to first selected movie entry",
+          "state": "reproduced via actual CLI with subject-offset 1/subject-limit 1; sent correction before full suite"
         }
-      ]
+      ],
+      "candidate_commit": "570d33260ca1b49b0320aacdbcde0f3b060af613",
+      "worker_identity_followup": "Project namespace added to action/subject IDs to reject unqualified stale IDs from a different project; replacement candidate pending."
     },
     {
       "stream": "M2",
