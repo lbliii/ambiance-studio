@@ -708,11 +708,25 @@
     "Finish this bounded wave with reviewed local integration, combined validation and handoff. Ground any future main merge in current user direction."
   ],
   "combined_validation": {
-    "state": "blocked_usage_limit_before_execution",
+    "state": "failed_environment_xcode_license",
     "required_native": true,
-    "blocked_reason": "Automatic approval rejected the final required-native exec because the Codex usage limit was reached; no command executed. Retry is unavailable until Sep 19 2026 11:03 AM.",
+    "blocked_reason": "The final required-native suite executed, but native media builds failed because this macOS environment has not accepted the Xcode license; no code or test failure was isolated. A privileged xcodebuild license acceptance is required before retry.",
     "source_policy": "Clean committed integration runtime frozen for entire run; exact candidate recorded by runner inputs.json. No source changes until completion. Subsequent central/handoff documentation changes require package audit, not another native rerun.",
-    "public_replay": "passed on c27b22b; later motion-context integer normalization passed18 focused tests."
+    "public_replay": "passed on c27b22b; later motion-context integer normalization passed18 focused tests.",
+    "final_run": {
+      "state": "failed",
+      "report": ".ambiance/coordination/2026-09-13/wave3-combined-final/run.json",
+      "report_sha256": "fb6d2f1d2aab0460c1083e63c39d9e822f96a74da585aaf4656eeb89080362f3",
+      "python_report_sha256": "7c12f8a59fb2f554f63e2502353154791db36eefcd84ee74fa1959dcf502a586",
+      "recorded_cases": 588,
+      "python_tests": 571,
+      "skips": 0,
+      "failed_cases": 23,
+      "passing_checks": ["CI-NATIVE-CAPABILITY", "CI-ENGINE", "CI-ACTIVITY", "CI-BINDINGS", "CI-CLOCK", "CI-FINISHING", "CI-MODEL-CONTRACT", "CI-REGION-SIZING", "CI-RENDER-STATE", "CI-RENDER-TRANSPORT", "CI-RIG", "CI-SOURCE-PLACEMENT", "CI-TRACKS", "CI-VIEW-RASTER", "CI-VIEWS", "CI-PACKAGE", "CI-FAILURE-CONTRACT"],
+      "failing_check": "CI-PYTHON",
+      "failure_signature": "Native media build failed: You have not agreed to the Xcode license agreements.",
+      "next_action": "Accept the Xcode license in the macOS environment, then rerun exactly once against a clean committed source tree."
+    }
   },
   "dispatch_validation": {
     "ok": true,
