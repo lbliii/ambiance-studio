@@ -708,7 +708,11 @@
     "Finish this bounded wave with reviewed local integration, combined validation and handoff. Ground any future main merge in current user direction."
   ],
   "combined_validation": {
-    "state": "pending"
+    "state": "blocked_usage_limit_before_execution",
+    "required_native": true,
+    "blocked_reason": "Automatic approval rejected the final required-native exec because the Codex usage limit was reached; no command executed. Retry is unavailable until Sep 19 2026 11:03 AM.",
+    "source_policy": "Clean committed integration runtime frozen for entire run; exact candidate recorded by runner inputs.json. No source changes until completion. Subsequent central/handoff documentation changes require package audit, not another native rerun.",
+    "public_replay": "passed on c27b22b; later motion-context integer normalization passed18 focused tests."
   },
   "dispatch_validation": {
     "ok": true,
@@ -744,7 +748,7 @@
   },
   "documentation_followup": {
     "owner": "W3 existing task",
-    "state": "in_progress",
+    "state": "complete",
     "scope": [
       "docs/CLI.md",
       "docs/CAPABILITIES.json",
@@ -754,7 +758,14 @@
       "docs/architecture/FIRST-SHORT-WORK-PACKAGES.json",
       "docs/architecture/TV-QUALITY-AND-SOUND-LIBRARY.yaml"
     ],
-    "combined_acceptance": "pending"
+    "combined_acceptance": "complete",
+    "commit": "6cc99b2",
+    "evidence": {
+      "handoff": "reports/workflow-cli/WF-04-05-HANDOFF.md",
+      "package_audit": ".ambiance/validation/w3-handoff-package-audit.json",
+      "package_audit_links_checked": 650,
+      "package_audit_sha256": "749376acd42475cd6e113529359db54b3659a925f16d54609b47720a7f1263f9"
+    }
   },
   "combined_public_replay": {
     "state": "passed",
@@ -773,5 +784,11 @@
     "observation": ".ambiance/coordination/2026-09-13/wave3-finite-replay-2/coordinator-observation.json",
     "observation_sha256": "97c9841dc028ee5fa5bde7328a236abedd8bb60c095a1b769c55794c80f48389",
     "limits": "Static engineering models with a local camera cycle and synthetic tone; no film or listening acceptance. Later motion-proof count normalization is separately focused-tested and awaits final suite."
+  },
+  "precombined_package_audit": {
+    "ok": true,
+    "links": 671,
+    "path": "/private/tmp/ambiance-wave3-precombined-package-fixed.json",
+    "sha256": "964c518f1950a7695a85f16103cb3069655848f47e9ccf57a3488e7f41c4df94"
   }
 }
