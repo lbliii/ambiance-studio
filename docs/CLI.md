@@ -31,8 +31,8 @@ Wave 3 interfaces are locally integrated. The required-native closeout passed on
 | Command | Effect |
 | --- | --- |
 | `doctor` | Report runtime paths and executable capability availability |
-| `project init DIR [--reference FILE] [--title NAME] [--template blank or last-lantern] [--format dual]` | Create an isolated workspace atomically; optional dual framing requires the blank template |
-| `project list [--directory DIR]` | List registered/main-checkout projects, or limit discovery to child projects in DIR |
+| `project init [DIR] [--reference FILE] [--title NAME] [--template blank or last-lantern] [--format dual]` | Create an isolated workspace atomically; without DIR, `--title` is required and creates it under the external project root; optional dual framing requires the blank template |
+| `project list [--directory DIR]` | List registered, external-root, and checkout projects, or limit discovery to child projects in DIR |
 | `studio register PATH [--id ID --relocate]` | Register or explicitly relocate a canonical local project address |
 | `studio open [--port N --no-browser]` / `studio serve [--port N]` | Start/reuse the background film library, or serve it in the foreground |
 | `studio status` / `studio stop` | Identify or stop the current registry's server |
@@ -140,6 +140,12 @@ Wave 3 interfaces are locally integrated. The required-native closeout passed on
 | `test [--out FILE --artifacts DIR --require-native]` | Run Python/Node regressions and package audit; save bounded JSON/JUnit/log evidence with exact inputs |
 
 A blank project is the default for new artwork. It has no layers; its technical check deliberately reports incomplete until prepared assets and a scene are added. The explicit Last Lantern template copies the existing assets into the project, so editing one project cannot modify another's catalog or artwork.
+
+### Project locations
+
+`project init DIR` retains its existing explicit-path behavior. If `DIR` is omitted, supply `--title`; the CLI applies Unicode NFKD normalization, drops non-ASCII characters, lowercases the result, replaces each run of non-alphanumeric characters with `-`, trims edge hyphens, and truncates the slug to 100 characters. That slug becomes the project directory and project ID. The default parent is `~/Ambiance Projects`; `AMBIANCE_PROJECTS_DIR` overrides it. The CLI refuses an existing destination or an ID already registered or discoverable, and never silently adds a numeric suffix.
+
+`project list` discovers immediate project folders in that external root, as well as registered projects and the existing checkout/main-checkout `projects/` folders. It does not register or copy discovered projects. `--project SLUG` resolves these discovered IDs without writing the registry. The registry remains at `~/.ambiance-studio/registry.json` by default (or `AMBIANCE_REGISTRY`); use `studio register PATH` when a stable registered address is desired.
 
 [Saved views](VIEWS.md) support portrait/landscape project setup, framing edits, checks, synchronized previews, paired raster proofs and single-view video export. Omitting `--view` preserves full authored-canvas rendering. Version-2 iteration recipes produce the Cartesian product of views and soundtrack editions, with resumable steps and one combined delivery.
 

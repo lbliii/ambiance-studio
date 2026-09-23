@@ -13,6 +13,12 @@ def registry_path(value=None):
                 Path.home()/'.ambiance-studio/registry.json').expanduser().resolve()
 
 
+def projects_directory(value=None):
+    """Default home for newly created projects and external project discovery."""
+    return Path(value or os.environ.get('AMBIANCE_PROJECTS_DIR') or
+                Path.home()/'Ambiance Projects').expanduser().resolve()
+
+
 @contextmanager
 def registry_lock(path):
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -77,8 +83,8 @@ def register(path, project, alias=None, relocate=False):
 
 
 def project_roots(root):
-    """Discover the main checkout without copying or registering its media."""
-    roots = [Path(root)/'projects']
+    """Discover external projects plus local and main-checkout legacy projects."""
+    roots = [projects_directory(), Path(root)/'projects']
     try:
         result = subprocess.run(['git', '-C', str(root), 'rev-parse', '--git-common-dir'],
                                 capture_output=True, text=True, timeout=3)

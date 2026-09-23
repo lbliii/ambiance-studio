@@ -9,25 +9,29 @@ Use `./ambiance studio open` for the local film library. Register canonical proj
 ## Create a project
 
 ```sh
-./ambiance project init projects/autumn-library --reference /path/to/reference.png --title "Autumn Library"
-./ambiance --project projects/autumn-library project status
+./ambiance project init --reference /path/to/reference.png --title "Autumn Library"
+./ambiance --project autumn-library project status
 ```
 
-The initializer creates `ambiance-project.json`, an empty scene/catalog by default, copies the reference, records its hash, and creates the working folders, brief, layer plan, source ledger, and project-specific gate definitions. It refuses to overwrite an existing directory. Without `--reference`, it creates an intake project with the reference still missing. It does not generate media, spend credits, or mark gates passed.
+With no destination, the project is created under `~/Ambiance Projects` or the directory selected by `AMBIANCE_PROJECTS_DIR`. The title is normalized into a lowercase ASCII slug (`Autumn Library` becomes `autumn-library`), used as the folder and project ID. A directory or registered/discoverable ID collision is reported; choose another title or provide an explicit destination. Supplying `DIR` keeps the original behavior and creates the project exactly there.
+
+The initializer creates `ambiance-project.json`, an empty scene/catalog by default, copies the reference, records its hash, and creates the working folders, brief, layer plan, source ledger, and project-specific gate definitions. It refuses to overwrite an existing directory. Without `--reference`, it creates an intake project with the reference still missing. It does not generate media, spend credits, mark gates passed, or mutate the studio registry. `project list` discovers immediate children of the configured external root, so their IDs can be used with `--project` from any working directory.
 
 The default delivery settings are 1080 × 1920, 30 fps, 16-second picture and 48-second master. Edit these to fit the film before closing intent. The budget starts unspecified; record actual scope/authority before paid generation.
 
 ## Record a review
 
 ```sh
-./ambiance --project projects/autumn-library review draft intent --out projects/autumn-library/review-drafts/intent.json
+PROJECT="$HOME/Ambiance Projects/autumn-library"
+./ambiance --project autumn-library review draft intent --out "$PROJECT/review-drafts/intent.json"
 ```
 
 Complete the draft using the actual checks. Each criterion begins as `not-run`, and the overall verdict begins as `revise`. Add the observer, observations, and evidence paths. Paths are relative to the project, such as `inputs/reference.png` or `plans/brief.md`.
 
 ```sh
-./ambiance --project projects/autumn-library review record projects/autumn-library/review-drafts/intent.json
-./ambiance --project projects/autumn-library project status
+PROJECT="$HOME/Ambiance Projects/autumn-library"
+./ambiance --project autumn-library review record "$PROJECT/review-drafts/intent.json"
+./ambiance --project autumn-library project status
 ```
 
 Use `pass` only when every criterion passed and dependencies are current. A `revise` record may retain failed or unperformed checks and does not pretend the stage is ready. Do not edit generated current receipts directly; submit a new review. Previous receipts are preserved by content hash.

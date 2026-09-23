@@ -29,15 +29,14 @@ This machine was tested with Python 3.14 and Node 24. `./ambiance doctor` report
 ./ambiance doctor
 ./ambiance studio open
 ./ambiance project list
-./ambiance --project projects/last-lantern project check
-./ambiance --project projects/last-lantern preview --port 8784
+./ambiance project init --title "The Last Lantern" --template last-lantern
+./ambiance --project the-last-lantern project check
+./ambiance --project the-last-lantern preview --port 8784
 ```
 
-The migrated local repository includes `projects/last-lantern`. A fresh Git clone excludes working projects; create one with:
+New projects are stored outside the tool checkout under `~/Ambiance Projects` by default. Set `AMBIANCE_PROJECTS_DIR` to choose another project root. When `project init` has no destination, `--title` is required and its normalized lowercase slug names the new project; an existing path or project ID is an error. Existing explicit destinations continue to work.
 
-```sh
-./ambiance project init projects/last-lantern --template last-lantern --title "The Last Lantern"
-```
+This migrated checkout also has a legacy local `projects/last-lantern` example. Working projects and the production archive are ignored by Git; a fresh Git clone does not include them. The title-only command above creates a separate copy of the example in the default external project root.
 
 Bookmark `http://127.0.0.1:8783/` for the film library. Use `./ambiance --project PROJECT project latest` for the exact selected movie and `project overview` to resume work. Register external project folders once with `./ambiance studio register PATH`.
 
@@ -46,11 +45,10 @@ The separate `preview` command opens the scene editor (use `--port 8784` if the 
 ## Work through the CLI
 
 ```sh
-./ambiance --project projects/last-lantern scene inspect
-./ambiance --project projects/last-lantern scene set cottage --scale 1.05
-./ambiance --project projects/last-lantern scene sample --time 3.5
-./ambiance --project projects/last-lantern scene check --out projects/last-lantern/reports/animation/cli-check.json
-./ambiance --project projects/last-lantern project status
+./ambiance --project the-last-lantern scene inspect
+./ambiance --project the-last-lantern scene set cottage --scale 1.05
+./ambiance --project the-last-lantern scene sample --time 3.5
+./ambiance --project the-last-lantern project status
 ./ambiance test
 ```
 
@@ -68,10 +66,10 @@ Commands emit JSON with stable exit codes. Inside a project, the CLI discovers i
 | `assets/`, `scenes/`, `templates/` | Reusable example inputs and production contracts |
 | `.agents/skills/`, `docs/` | Six production skills, guides, quality gates and engineering plans |
 | `tests/`, `.github/workflows/` | Local regression suite and CI definition |
-| `projects/` | Local film workspaces; excluded from Git |
+| `projects/` | Legacy local film workspaces; excluded from Git. New projects default outside the checkout. |
 | `archive/session-2026-09-10/` | Full prior production session, including films, sound, sources, drafts and earlier kits; excluded from Git |
 
-Small reusable PNG assets are tracked in this repository. Large media, working projects and archives live alongside it locally and need their own backup. A Git clone alone does not include the finished-film archive. The migration inventory records each copied source file and hash. The original chat workspace is retained to keep its links usable.
+Small reusable PNG assets are tracked in this repository. Large media, working projects and archives are outside normal Git tracking and need their own backup. Newly created projects default outside the tool checkout. A Git clone alone does not include the finished-film archive. The migration inventory records each copied source file and hash. The original chat workspace is retained to keep its links usable.
 
 ## Guides
 

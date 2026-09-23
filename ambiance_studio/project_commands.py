@@ -2,9 +2,11 @@
 from .command_output import Output, add_output
 import json
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import tempfile
+import unicodedata
 
 import studio
 from . import __version__, views
@@ -14,7 +16,29 @@ from .scene_runtime import require_node, scene_bridge
 
 ROOT = Path(__file__).resolve().parents[1]
 
-def init_project(destination,reference,title,template,output_format=None):
+def default_project_slug(title):
+    """Make a stable directory ID from a title for default-root projects."""
+    if not isinstance(title, str) or not title.strip():
+        raise CommandError('Omitting the destination requires a non-empty --title.')
+    ascii_title=unicodedata.normalize('NFKD',title.strip()).encode('ascii','ignore').decode('ascii')
+    slug=re.sub(r'[^a-z0-9]+','-',ascii_title.lower()).strip('-')[:100].rstrip('-')
+    if not slug:
+        raise CommandError('Title must contain ASCII letters or numbers to derive a project slug; provide an explicit destination instead.')
+    return slug
+
+
+def init_project(destination,reference,title,template,output_format=None,registry_file=None,root=ROOT):
+    from . import registry
+    defaulted=destination is None
+    if defaulted:
+        slug=default_project_slug(title)
+        destination=registry.projects_directory()/slug
+        if destination.exists():
+            raise CommandError(f'Default project path already exists: {destination}; choose a different title or an explicit destination.')
+        collisions=[item for item in registry.projects(root,registry.registry_path(registry_file)) if item['id']==slug]
+        if collisions:
+            raise CommandError(f'Project ID {slug!r} is already registered or discoverable at {collisions[0]["path"]}; choose a different title or an explicit destination.')
+        title=title.strip()
     destination=Path(destination).resolve()
     if destination.exists():raise CommandError('Project already exists; choose a new directory.')
     if output_format not in [None,'dual']:raise CommandError('Unsupported project output format')
@@ -74,7 +98,7 @@ def check_project(project,include_views=True):
 
 def add_parsers(sub):
     group=sub.add_parser('project').add_subparsers(dest='action',required=True)
-    q=group.add_parser('init');q.add_argument('destination',type=Path);q.add_argument('--reference',type=Path);q.add_argument('--title');q.add_argument('--template',choices=['blank','last-lantern'],default='blank')
+    q=group.add_parser('init');q.add_argument('destination',nargs='?',type=Path,help='Project directory (default: AMBIANCE_PROJECTS_DIR or ~/Ambiance Projects, using the title slug)');q.add_argument('--reference',type=Path);q.add_argument('--title',help='Required when omitting DESTINATION; determines the default directory slug');q.add_argument('--template',choices=['blank','last-lantern'],default='blank')
     q.add_argument('--format',dest='output_format',choices=['dual'],help='Blank square stage with saved portrait and landscape framing')
     q=group.add_parser('list');q.add_argument('--directory',type=Path)
     group.add_parser('status');q=group.add_parser('check');add_output(q, Output.REPORT, type=Path)
@@ -93,7 +117,8 @@ def add_parsers(sub):
 def run(args, project, root, registry_file):
     from . import deliveries, registry, revision_reviews
     if args.action == 'init':
-        return init_project(args.destination, args.reference, args.title, args.template, args.output_format)
+        return init_project(args.destination, args.reference, args.title, args.template, args.output_format,
+                            registry_file=registry_file, root=root)
     if args.action == 'list':
         return {'projects': registry.projects(root, registry_file, args.directory), 'registry': str(registry_file)}
     if args.action in ['storage', 'cleanup']:
