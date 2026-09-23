@@ -65,8 +65,10 @@ export function compileClock(scene){
     const region=original[0]<0n?'before':declaredEnd||original[0]*duration[1]>=duration[0]*original[1]?'at-or-after-end':'inside';
     const effective=mode==='finite'?(region==='before'?[0n,1n]:region==='at-or-after-end'?duration:original):
       requestedFrame===null&&typeof request==='number'?read(wrapTime(n,T)):mod(original,duration);
-    // Preserve legacy floating arithmetic and cel schedules for seconds callers.
-    const seconds=mode==='loop'?wrapTime(n,T):region==='inside'&&typeof request==='number'?n:number(effective);
+    // Seconds callers retain legacy modulo arithmetic; frame callers use the
+    // exact effective frame time so a wrapped double cannot fall below a key.
+    const seconds=mode==='loop'?(requestedFrame===null?wrapTime(n,T):number(effective)):
+      region==='inside'&&typeof request==='number'?n:number(effective);
     const local=Object.fromEntries(cycles.map(([id,period,phase])=>{
       const progress=mod(add(div(effective,period),phase),[1n,1n]);
       return [id,Object.freeze({progress:number(progress),progress_exact:json(progress),seconds:number(mul(progress,period)),period_seconds:number(period)})];

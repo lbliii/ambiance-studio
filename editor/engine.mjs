@@ -2,7 +2,7 @@
 import {validateFinishing,drawFinished} from './finishing.mjs';
 import {validateBindings,sampleBinding} from './bindings.mjs';
 import {validateFraming} from './views.mjs';
-import {compileClock,consumerTime,cycleCell,isClockContext,validateCycleReference} from './clock.mjs';
+import {compileClock,consumerTime,cycleCell,isClockContext,rational,validateCycleReference} from './clock.mjs';
 export {wrapTime} from './clock.mjs';
 export const TAU = Math.PI * 2;
 const identity = [1,0,0,1,0,0];
@@ -37,6 +37,14 @@ export function sampleLayerMotion(layer,wrappedSeconds,duration) {
 
 // Tracks use absolute picture time. They replace an authored value; optional
 // periodic motion remains an additive offset, as it was for untracked layers.
+function exactCellBoundary(track,context) {
+  if(!track||context.mode!=='loop'||context.region!=='inside'||context.requested_frame!==null)return null;
+  const requested=context.requested_seconds;
+  return track.keys.find(([time])=>{
+    const key=rational(time);
+    return String(key.numerator)===String(requested.numerator)&&String(key.denominator)===String(requested.denominator);
+  })||null;
+}
 function trackValue(track,time,fallback) {
   if(!track)return fallback;
   const keys=track.keys;
@@ -115,10 +123,11 @@ export function compileScene(input,inputCatalog) {
     const t=consumerTime(context,layer.local_cycle).seconds,motion=sampleLayerMotion(layer,context);
     const tracks=layer.tracks||{};
     const asset=assets.get(layer.asset), atlas=asset.atlas;
+    const exactCell=layer.local_cycle?null:exactCellBoundary(tracks.cell,context);
     const channels={x:trackValue(tracks.x,t,layer.x)+motion.x,y:trackValue(tracks.y,t,layer.y)+motion.y,
       rotation:trackValue(tracks.rotation,t,layer.rotation)+motion.rotation,scale:trackValue(tracks.scale,t,layer.scale),
       ...sampleLayerAppearance(layer,context),
-      cell:trackValue(tracks.cell,t,atlas?(layer.local_cycle?cycleCell(context,layer.local_cycle,atlas.frame_count,layer.phase_frames):
+      cell:exactCell?exactCell[1]:trackValue(tracks.cell,t,atlas?(layer.local_cycle?cycleCell(context,layer.local_cycle,atlas.frame_count,layer.phase_frames):
         (Math.floor(t/layer.cycle_seconds*atlas.frame_count+1e-7)+(layer.phase_frames||0))%atlas.frame_count):0)};
     const responses=bindings.get(layer.id).map(b=>sampleBinding(b,signals,id=>visit(layers.get(id)),context,T));
     for(const response of responses)channels[response.target.channel]=response.value;

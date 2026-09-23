@@ -50,6 +50,15 @@ check('authored integer duration survives nonintegral floating products',()=>{
     assert.equal(compileScene(loop,catalog).clock.duration_frames,N);
   }
 });
+check('Legacy loop cel keys select exact in-range frames and preserve circular seeks',()=>{
+  const scene={version:1,id:'loop-frame-boundary',canvas:{width:320,height:180,fps:24,loop_seconds:2,background:'#000'},camera:{overscan:1,x_amplitude:0,y_amplitude:0,zoom_amplitude:0},groups:[],layers:[card('subject',{asset:'cels',cycle_seconds:2,phase_frames:0,tracks:{cell:track([[0,0],[1/24,1],[3/24,2],[5/24,0],[2,0]])}})]};
+  const rig=compileScene(scene,catalog);
+  assert.equal(rig.sample(1/24)[0].cell,1);
+  assert.equal(rig.sample(rig.clock.seconds(1/24))[0].cell,1);
+  assert.equal(rig.sampleFrame(1)[0].cell,1);
+  assert.deepEqual(rig.sample(2.25),rig.sample(.25));
+  assert.deepEqual(rig.sample(-.25),rig.sample(1.75));
+});
 check('Local cycles evaluate from clamped time once for motion, camera, cels, sockets and held tracks',()=>{
   const scene=fixture();scene.camera={...scene.camera,local_cycle:'flame',x_amplitude:.1};
   scene.layers[0]={...card('root',{asset:'cels',depth:1}),cycle_seconds:7,phase_frames:0,local_cycle:'flame',sockets:{tip:{frames:[[0,0],[.5,0],[1,0]]}},motion:{x_amplitude:.1,y_amplitude:0,cycles:1,phase:0},tracks:{cell:track([[0,0],[.5,1],[.8,2],[1,0]])}};
