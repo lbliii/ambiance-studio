@@ -28,3 +28,9 @@ Use real public CLI probes/replays and existing shared validators. Preserve sour
 The coordinator reviews source and exact handoffs, supplies missing interfaces, integrates focused commits in dependency order and runs one combined required-native suite on the stable tree. Story/art/voice/film and broader follow-up work remain outside this kickoff. Native technical evidence never establishes artistic acceptance or a human audition.
 
 The existing 15-minute heartbeat resumes for these four tasks and reads the ledger. It remains quiet on unchanged/non-actionable state, reports meaningful progress or a real blocker, and pauses after reviewed local integration, combined validation and the handoff. Future PR/main merge follows the user's then-current direction; no account/protection changes are authorized.
+
+## Closeout — 2026-09-23
+
+Wave 3 is locally integrated and its required-native closeout passed on frozen main commit `de4601df965afb7c1166b4eb5e1c5b0499fbca23`. The retained run at `reports/coordinated-wave3/closeout-native-2026-09-23/run.json` records 587/587 cases, 571 Python tests, zero skips, and 18/18 CI checks. The tracked source tree SHA-256 is `c029a932abe74ae96911ef352112f7e1d8d03cb4037a41f5e9c28740f6fe1744`; the run and input-manifest hashes are recorded in the ledger. The earlier Xcode-license-blocked attempt remains in the ledger as historical evidence. The native slot is released.
+
+This closes the bounded engineering wave. WF-06/07, the next model adoption phases, broader audio work, and production/artistic reviews remain future work; the suite does not imply human audition or film acceptance.

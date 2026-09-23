@@ -2,13 +2,13 @@
   "format": "studio-workstream-coordination",
   "schema_version": 1,
   "wave": 3,
-  "updated_utc": "2026-09-13",
+  "updated_utc": "2026-09-23",
   "coordinator_thread_id": "01a0983d-40cf-71a3-bd9c-cb8308ad6efa",
   "coordinator_worktree": "/Users/lb/.codex/worktrees/cfeb/ambiance-studio",
   "coordinator_branch": "codex/coordinated-studio-wave3",
   "saved_project_id": "f5120268-3ebf-40fb-8c45-d50ab7c7bcff",
   "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
-  "status": "active",
+  "status": "complete",
   "authorization": "User accepted the proposed four-task Wave 3 and requested kickoff like the previous two waves. Fresh tasks, ongoing coordination/unblocking, review, local integration and combined validation are authorized. No new wave or provider/account changes are implied.",
   "previous_wave": {
     "pr": "https://github.com/lbliii/ambiance-studio/pull/33",
@@ -110,7 +110,8 @@
           "d7d28e172d18fbc2f94af9b6b757ff2fcadb59b8"
         ],
         "handoff": "reports/workflow-cli/WF-04-05-HANDOFF.md",
-        "combined_validation": "pending"
+        "combined_validation": "passed",
+        "combined_validation_report": "reports/coordinated-wave3/closeout-native-2026-09-23/run.json"
       }
     },
     {
@@ -272,7 +273,8 @@
         "handoff": "reports/model-instances/HANDOFF.md",
         "conflict_resolution": "Preserved additive W3 prepare, A3 measure and all M3 routes in CLI option/output fixture conflicts. Equivalent affine prerequisite already integrated.",
         "focused_validation": "Combined W3+A3+M3 CLI contract suite:8 passed.",
-        "combined_validation": "pending"
+        "combined_validation": "passed",
+        "combined_validation_report": "reports/coordinated-wave3/closeout-native-2026-09-23/run.json"
       }
     },
     {
@@ -379,7 +381,7 @@
       ],
       "coordinator_review": {
         "state": "runtime_and_test_successor_reviewed_native_pending",
-        "scope": "Reviewed1567a39 authored duration authority throughout clock/validator/render/timing/media-default consumers. Independently replayed original public7@25 and31@30 author/sample failures: now pass with correct N\u22121/N region and frame identities. Worker actual browser inspection caught install reading compiled.clock before initialization; narrow fix underway. Native suite and broader combined evidence reconciliation pending. Reviewed one-line2847b83 initialization fix and verified all32 current source manifest entries. Worker browser observation record/manifest hashes verified; actual browser playback observation is worker-reported. Reviewed369546b: only removes unsupported --file in one new native test. Actual CLI help confirms positional file. Clean tree and all32 current manifest source hashes verified."
+        "scope": "Reviewed1567a39 authored duration authority throughout clock/validator/render/timing/media-default consumers. Independently replayed original public7@25 and31@30 author/sample failures: now pass with correct N−1/N region and frame identities. Worker actual browser inspection caught install reading compiled.clock before initialization; narrow fix underway. Native suite and broader combined evidence reconciliation pending. Reviewed one-line2847b83 initialization fix and verified all32 current source manifest entries. Worker browser observation record/manifest hashes verified; actual browser playback observation is worker-reported. Reviewed369546b: only removes unsupported --file in one new native test. Actual CLI help confirms positional file. Clean tree and all32 current manifest source hashes verified."
       },
       "public_replay": {
         "source_commit": "8a24cff847751c0f0163c8b9779024815fd6908b",
@@ -461,7 +463,9 @@
         ],
         "handoff": "reports/p03-clock/HANDOFF.md",
         "conflict_resolution": "Preserved M3 dispatch alongside exact clock sampling. Recomputed only merged render video signature for both start-frame and audio bitrate; retained other additive routes.",
-        "focused_validation": "Integrated CLI contract8 passed; combined native pending."
+        "focused_validation": "Integrated CLI contract8 passed; combined native pending.",
+        "combined_validation": "passed",
+        "combined_validation_report": "reports/coordinated-wave3/closeout-native-2026-09-23/run.json"
       }
     },
     {
@@ -566,7 +570,8 @@
         "handoff": "reports/audio02/HANDOFF.md",
         "conflict_resolution": "Additive cli-outputs fixture end-of-list conflict resolved retaining both workflow prepare and audio measure.",
         "focused_validation": "python3 -m unittest discover -s tests -p test_cli_contract.py:8 passed. Direct script invocation initially lacked module import path; module discovery passed.",
-        "combined_validation": "pending"
+        "combined_validation": "passed",
+        "combined_validation_report": "reports/coordinated-wave3/closeout-native-2026-09-23/run.json"
       }
     }
   ],
@@ -708,25 +713,61 @@
     "Finish this bounded wave with reviewed local integration, combined validation and handoff. Ground any future main merge in current user direction."
   ],
   "combined_validation": {
-    "state": "failed_environment_xcode_license",
+    "state": "passed",
     "required_native": true,
-    "blocked_reason": "The final required-native suite executed, but native media builds failed because this macOS environment has not accepted the Xcode license; no code or test failure was isolated. A privileged xcodebuild license acceptance is required before retry.",
+    "source_commit": "de4601df965afb7c1166b4eb5e1c5b0499fbca23",
+    "tracked_tree_sha256": "c029a932abe74ae96911ef352112f7e1d8d03cb4037a41f5e9c28740f6fe1744",
+    "report": "reports/coordinated-wave3/closeout-native-2026-09-23/run.json",
+    "report_sha256": "7f47ca2b03785b249228393919d251ecf68f05e411b44881fb667e5ac46cb1b0",
+    "inputs_manifest": "reports/coordinated-wave3/closeout-native-2026-09-23/inputs.json",
+    "inputs_manifest_sha256": "8647800c9a60ab3ac7ddf374dd02bedef547912b7f820a0fbd6051de57e0ab6d",
+    "recorded_cases": 587,
+    "passed_cases": 587,
+    "skipped_cases": 0,
+    "python_tests": 571,
+    "python_skips": 0,
+    "checks_passed": 18,
+    "checks_total": 18,
+    "native_slot_released": true,
+    "previous_failed_attempt": {
+      "state": "failed_environment_xcode_license",
+      "blocked_reason": "The final required-native suite executed, but native media builds failed because this macOS environment has not accepted the Xcode license; no code or test failure was isolated. A privileged xcodebuild license acceptance is required before retry.",
+      "run": {
+        "state": "failed",
+        "report": ".ambiance/coordination/2026-09-13/wave3-combined-final/run.json",
+        "report_sha256": "fb6d2f1d2aab0460c1083e63c39d9e822f96a74da585aaf4656eeb89080362f3",
+        "python_report_sha256": "7c12f8a59fb2f554f63e2502353154791db36eefcd84ee74fa1959dcf502a586",
+        "recorded_cases": 588,
+        "python_tests": 571,
+        "skips": 0,
+        "failed_cases": 23,
+        "passing_checks": [
+          "CI-NATIVE-CAPABILITY",
+          "CI-ENGINE",
+          "CI-ACTIVITY",
+          "CI-BINDINGS",
+          "CI-CLOCK",
+          "CI-FINISHING",
+          "CI-MODEL-CONTRACT",
+          "CI-REGION-SIZING",
+          "CI-RENDER-STATE",
+          "CI-RENDER-TRANSPORT",
+          "CI-RIG",
+          "CI-SOURCE-PLACEMENT",
+          "CI-TRACKS",
+          "CI-VIEW-RASTER",
+          "CI-VIEWS",
+          "CI-PACKAGE",
+          "CI-FAILURE-CONTRACT"
+        ],
+        "failing_check": "CI-PYTHON",
+        "failure_signature": "Native media build failed: You have not agreed to the Xcode license agreements.",
+        "next_action": "Accept the Xcode license in the macOS environment, then rerun exactly once against a clean committed source tree."
+      },
+      "resolution": "Xcode license check later returned exit 0; required-native rerun passed on the frozen main commit above."
+    },
     "source_policy": "Clean committed integration runtime frozen for entire run; exact candidate recorded by runner inputs.json. No source changes until completion. Subsequent central/handoff documentation changes require package audit, not another native rerun.",
-    "public_replay": "passed on c27b22b; later motion-context integer normalization passed18 focused tests.",
-    "final_run": {
-      "state": "failed",
-      "report": ".ambiance/coordination/2026-09-13/wave3-combined-final/run.json",
-      "report_sha256": "fb6d2f1d2aab0460c1083e63c39d9e822f96a74da585aaf4656eeb89080362f3",
-      "python_report_sha256": "7c12f8a59fb2f554f63e2502353154791db36eefcd84ee74fa1959dcf502a586",
-      "recorded_cases": 588,
-      "python_tests": 571,
-      "skips": 0,
-      "failed_cases": 23,
-      "passing_checks": ["CI-NATIVE-CAPABILITY", "CI-ENGINE", "CI-ACTIVITY", "CI-BINDINGS", "CI-CLOCK", "CI-FINISHING", "CI-MODEL-CONTRACT", "CI-REGION-SIZING", "CI-RENDER-STATE", "CI-RENDER-TRANSPORT", "CI-RIG", "CI-SOURCE-PLACEMENT", "CI-TRACKS", "CI-VIEW-RASTER", "CI-VIEWS", "CI-PACKAGE", "CI-FAILURE-CONTRACT"],
-      "failing_check": "CI-PYTHON",
-      "failure_signature": "Native media build failed: You have not agreed to the Xcode license agreements.",
-      "next_action": "Accept the Xcode license in the macOS environment, then rerun exactly once against a clean committed source tree."
-    }
+    "scope_limit": "This closes Wave 3 engineering validation and handoff only; it does not claim artistic acceptance, a full film review, or a human audition."
   },
   "dispatch_validation": {
     "ok": true,
@@ -735,7 +776,7 @@
     "report": "/private/tmp/ambiance-wave3-dispatch-package.json"
   },
   "list_threads_limitation": "New tasks may be omitted by list_threads. Preserve setup IDs and resolve actual IDs from worker messages/confirmed task state; never create duplicate replacements.",
-  "native_slot_state": "granted",
+  "native_slot_state": "released",
   "integration_package_audit": {
     "ok": true,
     "local_links_checked": 661,

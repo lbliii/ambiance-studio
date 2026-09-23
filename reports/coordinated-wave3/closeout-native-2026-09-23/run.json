@@ -1,0 +1,4025 @@
+{
+  "format": "ambiance-test-run",
+  "schema_version": 1,
+  "ok": true,
+  "state": "passed",
+  "runtime": {
+    "python": "3.14.0",
+    "node": "v24.9.0",
+    "platform": "Darwin"
+  },
+  "source": {
+    "commit": "de4601df965afb7c1166b4eb5e1c5b0499fbca23",
+    "tracked_tree_sha256": "c029a932abe74ae96911ef352112f7e1d8d03cb4037a41f5e9c28740f6fe1744",
+    "manifest": "inputs.json"
+  },
+  "native_required": true,
+  "checks": [
+    {
+      "id": "CI-NATIVE-CAPABILITY",
+      "ok": true,
+      "state": "available-unexercised",
+      "executed": false,
+      "issue_id": null,
+      "next_action": null
+    },
+    {
+      "id": "CI-PYTHON",
+      "command": [
+        "$HOME/.pyenv/versions/3.14.0/bin/python3",
+        "tools/unittest_report.py",
+        "--out",
+        "$REPO/.ambiance/coordination/2026-09-23/wave3-closeout-native/python.json"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "timed_out": false,
+      "elapsed_seconds": 498.691,
+      "logs": {
+        "stdout": {
+          "path": "CI-PYTHON.stdout.txt",
+          "captured_bytes": 0,
+          "original_bytes": 0,
+          "truncated": false,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "path": "CI-PYTHON.stderr.txt",
+          "captured_bytes": 8166,
+          "original_bytes": 8166,
+          "truncated": false,
+          "sha256": "b72d5d9e6ecdcd52f39a5a0c275d2600ae629e59252531186e5c9399eee4a262"
+        }
+      }
+    },
+    {
+      "id": "CI-ENGINE",
+      "command": [
+        "node",
+        "editor/verify-engine.mjs"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "timed_out": false,
+      "elapsed_seconds": 0.187,
+      "logs": {
+        "stdout": {
+          "path": "CI-ENGINE.stdout.txt",
+          "captured_bytes": 449,
+          "original_bytes": 449,
+          "truncated": false,
+          "sha256": "949e3f252375b14e20eab03aa73fcd9846f076d4d7be955fa0d279d7f33bbc68"
+        },
+        "stderr": {
+          "path": "CI-ENGINE.stderr.txt",
+          "captured_bytes": 0,
+          "original_bytes": 0,
+          "truncated": false,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "CI-ACTIVITY",
+      "command": [
+        "node",
+        "tests/test-activity.mjs"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "timed_out": false,
+      "elapsed_seconds": 0.077,
+      "logs": {
+        "stdout": {
+          "path": "CI-ACTIVITY.stdout.txt",
+          "captured_bytes": 143,
+          "original_bytes": 143,
+          "truncated": false,
+          "sha256": "2b0d1921245600929e2388d38881144b08d3f2deaf92e975cb49a79fdd7b1a35"
+        },
+        "stderr": {
+          "path": "CI-ACTIVITY.stderr.txt",
+          "captured_bytes": 0,
+          "original_bytes": 0,
+          "truncated": false,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "CI-BINDINGS",
+      "command": [
+        "node",
+        "tests/test-bindings.mjs"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "timed_out": false,
+      "elapsed_seconds": 0.236,
+      "logs": {
+        "stdout": {
+          "path": "CI-BINDINGS.stdout.txt",
+          "captured_bytes": 801,
+          "original_bytes": 801,
+          "truncated": false,
+          "sha256": "faae1ae6bce32c77800217fdefbebdf68cce87e8f888cfba1da5ec1fe0e8caff"
+        },
+        "stderr": {
+          "path": "CI-BINDINGS.stderr.txt",
+          "captured_bytes": 0,
+          "original_bytes": 0,
+          "truncated": false,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "CI-CLOCK",
+      "command": [
+        "node",
+        "tests/test-clock.mjs"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "timed_out": false,
+      "elapsed_seconds": 0.245,
+      "logs": {
+        "stdout": {
+          "path": "CI-CLOCK.stdout.txt",
+          "captured_bytes": 778,
+          "original_bytes": 778,
+          "truncated": false,
+          "sha256": "d8faa2c1ef7b912b4cabee26d136bf3cf341dc1c42a64c785a0eec4f5a569013"
+        },
+        "stderr": {
+          "path": "CI-CLOCK.stderr.txt",
+          "captured_bytes": 0,
+          "original_bytes": 0,
+          "truncated": false,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "CI-FINISHING",
+      "command": [
+        "node",
+        "tests/test-finishing.mjs"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "timed_out": false,
+      "elapsed_seconds": 0.297,
+      "logs": {
+        "stdout": {
+          "path": "CI-FINISHING.stdout.txt",
+          "captured_bytes": 1443,
+          "original_bytes": 1443,
+          "truncated": false,
+          "sha256": "548ccb90b91b33976d9d387f0e3de6cee5a5fb5092cd94f110d4271b72f50e32"
+        },
+        "stderr": {
+          "path": "CI-FINISHING.stderr.txt",
+          "captured_bytes": 0,
+          "original_bytes": 0,
+          "truncated": false,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "CI-MODEL-CONTRACT",
+      "command": [
+        "node",
+        "tests/test-model-contract.mjs"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "timed_out": false,
+      "elapsed_seconds": 0.075,
+      "logs": {
+        "stdout": {
+          "path": "CI-MODEL-CONTRACT.stdout.txt",
+          "captured_bytes": 1259,
+          "original_bytes": 1259,
+          "truncated": false,
+          "sha256": "d0216f8ac429d5732f06e99f1c75c317725ed9b8873b1ac222cb2b5000828940"
+        },
+        "stderr": {
+          "path": "CI-MODEL-CONTRACT.stderr.txt",
+          "captured_bytes": 0,
+          "original_bytes": 0,
+          "truncated": false,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "CI-REGION-SIZING",
+      "command": [
+        "node",
+        "tests/test-region-sizing.mjs"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "timed_out": false,
+      "elapsed_seconds": 0.079,
+      "logs": {
+        "stdout": {
+          "path": "CI-REGION-SIZING.stdout.txt",
+          "captured_bytes": 113,
+          "original_bytes": 113,
+          "truncated": false,
+          "sha256": "7fb43897f198d286eea1a2bec966420a33b9d73e72e2bd502f40730893484558"
+        },
+        "stderr": {
+          "path": "CI-REGION-SIZING.stderr.txt",
+          "captured_bytes": 0,
+          "original_bytes": 0,
+          "truncated": false,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "CI-RENDER-STATE",
+      "command": [
+        "node",
+        "tests/test-render-state.mjs"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "timed_out": false,
+      "elapsed_seconds": 0.241,
+      "logs": {
+        "stdout": {
+          "path": "CI-RENDER-STATE.stdout.txt",
+          "captured_bytes": 293,
+          "original_bytes": 293,
+          "truncated": false,
+          "sha256": "c59fbed6c3fda45a502940460a556e28504686b54075e5c1073c35e525ed5378"
+        },
+        "stderr": {
+          "path": "CI-RENDER-STATE.stderr.txt",
+          "captured_bytes": 0,
+          "original_bytes": 0,
+          "truncated": false,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "CI-RENDER-TRANSPORT",
+      "command": [
+        "node",
+        "tests/test-render-transport.mjs"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "timed_out": false,
+      "elapsed_seconds": 0.447,
+      "logs": {
+        "stdout": {
+          "path": "CI-RENDER-TRANSPORT.stdout.txt",
+          "captured_bytes": 567,
+          "original_bytes": 567,
+          "truncated": false,
+          "sha256": "9c31adf4ee9f328c7cdf143b208916216e881de7ffdc4ea559fad185406ea58d"
+        },
+        "stderr": {
+          "path": "CI-RENDER-TRANSPORT.stderr.txt",
+          "captured_bytes": 0,
+          "original_bytes": 0,
+          "truncated": false,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "CI-RIG",
+      "command": [
+        "node",
+        "tests/test-rig.mjs"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "timed_out": false,
+      "elapsed_seconds": 0.077,
+      "logs": {
+        "stdout": {
+          "path": "CI-RIG.stdout.txt",
+          "captured_bytes": 541,
+          "original_bytes": 541,
+          "truncated": false,
+          "sha256": "15e46d2b9e4d762394797f5aaac49dc52a3c11332cd32958b9c70aadd33e507b"
+        },
+        "stderr": {
+          "path": "CI-RIG.stderr.txt",
+          "captured_bytes": 0,
+          "original_bytes": 0,
+          "truncated": false,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "CI-SOURCE-PLACEMENT",
+      "command": [
+        "node",
+        "tests/test-source-placement.mjs"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "timed_out": false,
+      "elapsed_seconds": 0.877,
+      "logs": {
+        "stdout": {
+          "path": "CI-SOURCE-PLACEMENT.stdout.txt",
+          "captured_bytes": 815,
+          "original_bytes": 815,
+          "truncated": false,
+          "sha256": "fb7d1070df69faf44a9ecabccb67b9c65c40c96b95f510beeadba6901e304f9a"
+        },
+        "stderr": {
+          "path": "CI-SOURCE-PLACEMENT.stderr.txt",
+          "captured_bytes": 0,
+          "original_bytes": 0,
+          "truncated": false,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "CI-TRACKS",
+      "command": [
+        "node",
+        "tests/test-tracks.mjs"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "timed_out": false,
+      "elapsed_seconds": 0.816,
+      "logs": {
+        "stdout": {
+          "path": "CI-TRACKS.stdout.txt",
+          "captured_bytes": 913,
+          "original_bytes": 913,
+          "truncated": false,
+          "sha256": "e5466700e4a5af3a9a6e153aaf8a51d153b472f47f4376197e9c982ddc82165a"
+        },
+        "stderr": {
+          "path": "CI-TRACKS.stderr.txt",
+          "captured_bytes": 0,
+          "original_bytes": 0,
+          "truncated": false,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "CI-VIEW-RASTER",
+      "command": [
+        "node",
+        "tests/test-view-raster.mjs"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "timed_out": false,
+      "elapsed_seconds": 8.277,
+      "logs": {
+        "stdout": {
+          "path": "CI-VIEW-RASTER.stdout.txt",
+          "captured_bytes": 704,
+          "original_bytes": 704,
+          "truncated": false,
+          "sha256": "6f0265b191f34c3efa5779cac3a979a44836e774d037ee9f6ce9244f1d785b0d"
+        },
+        "stderr": {
+          "path": "CI-VIEW-RASTER.stderr.txt",
+          "captured_bytes": 0,
+          "original_bytes": 0,
+          "truncated": false,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "CI-VIEWS",
+      "command": [
+        "node",
+        "tests/test-views.mjs"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "timed_out": false,
+      "elapsed_seconds": 0.132,
+      "logs": {
+        "stdout": {
+          "path": "CI-VIEWS.stdout.txt",
+          "captured_bytes": 541,
+          "original_bytes": 541,
+          "truncated": false,
+          "sha256": "dfc996dfc7c36212331b23b72763f1f8b9c8be47eb61b4a218eac4a243002b29"
+        },
+        "stderr": {
+          "path": "CI-VIEWS.stderr.txt",
+          "captured_bytes": 0,
+          "original_bytes": 0,
+          "truncated": false,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "CI-PACKAGE",
+      "command": [
+        "$HOME/.pyenv/versions/3.14.0/bin/python3",
+        "tools/package_audit.py"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "timed_out": false,
+      "elapsed_seconds": 0.771,
+      "logs": {
+        "stdout": {
+          "path": "CI-PACKAGE.stdout.txt",
+          "captured_bytes": 32768,
+          "original_bytes": 214317,
+          "truncated": true,
+          "sha256": "72e65add69f20a921a37a7e61b61e9c0d43a75da1d48d3054acc6a6fdfd9c2d9"
+        },
+        "stderr": {
+          "path": "CI-PACKAGE.stderr.txt",
+          "captured_bytes": 0,
+          "original_bytes": 0,
+          "truncated": false,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "id": "CI-FAILURE-CONTRACT",
+      "command": [
+        "$HOME/.pyenv/versions/3.14.0/bin/python3",
+        "tools/ci_failure_probe.py",
+        "--out",
+        "$REPO/.ambiance/coordination/2026-09-23/wave3-closeout-native/failure-probe"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "timed_out": false,
+      "elapsed_seconds": 0.292,
+      "logs": {
+        "stdout": {
+          "path": "CI-FAILURE-CONTRACT.stdout.txt",
+          "captured_bytes": 113,
+          "original_bytes": 143,
+          "truncated": false,
+          "sha256": "28aed5a2938235c91f767edc424643b24b5757627110f29641968ddb1102f456"
+        },
+        "stderr": {
+          "path": "CI-FAILURE-CONTRACT.stderr.txt",
+          "captured_bytes": 0,
+          "original_bytes": 0,
+          "truncated": false,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    }
+  ],
+  "cases": [
+    {
+      "id": "test_activity.ActivityTests.test_actual_observation_requires_exact_raster_view_and_speed",
+      "status": "passed",
+      "seconds": 0.6237,
+      "detail": ""
+    },
+    {
+      "id": "test_activity.ActivityTests.test_binding_samples_and_disabled_source_include_coupled_receiver",
+      "status": "passed",
+      "seconds": 8.1816,
+      "detail": ""
+    },
+    {
+      "id": "test_activity.ActivityTests.test_explicit_audio_binding_detects_retime_delete_repeat_and_preserves_pcm",
+      "status": "passed",
+      "seconds": 2.1159,
+      "detail": ""
+    },
+    {
+      "id": "test_activity.ActivityTests.test_finite_raster_uses_exact_count_without_circular_predecessor",
+      "status": "passed",
+      "seconds": 1.0286,
+      "detail": ""
+    },
+    {
+      "id": "test_activity.ActivityTests.test_full_loop_raster_uses_last_sample_predecessor_but_partial_does_not",
+      "status": "passed",
+      "seconds": 0.6744,
+      "detail": ""
+    },
+    {
+      "id": "test_activity.ActivityTests.test_global_pulse_never_becomes_character_approval",
+      "status": "passed",
+      "seconds": 0.564,
+      "detail": ""
+    },
+    {
+      "id": "test_activity.ActivityTests.test_invalid_limits_and_unknown_fields_publish_no_success_receipt",
+      "status": "passed",
+      "seconds": 0.4644,
+      "detail": ""
+    },
+    {
+      "id": "test_activity.ActivityTests.test_occluded_offscreen_duplicate_tiny_and_low_contrast",
+      "status": "passed",
+      "seconds": 2.6963,
+      "detail": ""
+    },
+    {
+      "id": "test_activity.ActivityTests.test_paired_movies_preserve_selected_pcm_and_exact_sample_clock",
+      "status": "passed",
+      "seconds": 6.7055,
+      "detail": ""
+    },
+    {
+      "id": "test_activity.ActivityTests.test_partial_raster_run_resumes_and_never_overwrites_changed_frames",
+      "status": "passed",
+      "seconds": 0.8828,
+      "detail": ""
+    },
+    {
+      "id": "test_activity.ActivityTests.test_public_cli_out_is_artifact_directory",
+      "status": "passed",
+      "seconds": 0.3982,
+      "detail": ""
+    },
+    {
+      "id": "test_activity.ActivityTests.test_real_raster_parity_clock_identity_and_resume",
+      "status": "passed",
+      "seconds": 0.9138,
+      "detail": ""
+    },
+    {
+      "id": "test_activity.ActivityTests.test_semantic_plan_adapter_pins_exact_action_targets_and_expectations",
+      "status": "passed",
+      "seconds": 1.6767,
+      "detail": ""
+    },
+    {
+      "id": "test_activity.ActivityTests.test_strength_and_cadence_are_separate_bounded_experiments",
+      "status": "passed",
+      "seconds": 0.7352,
+      "detail": ""
+    },
+    {
+      "id": "test_art_regions.Regions.test_browser_draft_and_cli_build_share_rasters_and_preserve_inputs",
+      "status": "passed",
+      "seconds": 0.5923,
+      "detail": ""
+    },
+    {
+      "id": "test_art_regions.Regions.test_compilation_retains_high_resolution_and_validates_dependencies",
+      "status": "passed",
+      "seconds": 0.0856,
+      "detail": ""
+    },
+    {
+      "id": "test_art_regions.Regions.test_context_padding_increases_size_without_reducing_density",
+      "status": "passed",
+      "seconds": 0.0016,
+      "detail": ""
+    },
+    {
+      "id": "test_art_regions.Regions.test_explicit_shortfall_and_transparent_paint_are_not_ready",
+      "status": "passed",
+      "seconds": 0.0392,
+      "detail": ""
+    },
+    {
+      "id": "test_art_regions.Regions.test_holes_and_native_composite_protect_original_pixels",
+      "status": "passed",
+      "seconds": 0.0373,
+      "detail": ""
+    },
+    {
+      "id": "test_art_regions.Regions.test_imported_soft_alpha_survives_outside_polygon_edits",
+      "status": "passed",
+      "seconds": 0.031,
+      "detail": ""
+    },
+    {
+      "id": "test_art_regions.Regions.test_invalid_edits_empty_region_and_source_races_leave_no_output",
+      "status": "passed",
+      "seconds": 0.0108,
+      "detail": ""
+    },
+    {
+      "id": "test_art_regions.Regions.test_reopening_packet_finds_the_recorded_return_without_resubmission",
+      "status": "passed",
+      "seconds": 0.0285,
+      "detail": ""
+    },
+    {
+      "id": "test_art_regions.Regions.test_scene_context_is_current_for_builds_and_snapshotted_for_admission",
+      "status": "passed",
+      "seconds": 0.1598,
+      "detail": ""
+    },
+    {
+      "id": "test_art_regions.Regions.test_square_padding_preserves_uniform_geometry_and_source",
+      "status": "passed",
+      "seconds": 0.0217,
+      "detail": ""
+    },
+    {
+      "id": "test_art_regions.Regions.test_wrong_dimensions_missing_alignment_and_shift_correction",
+      "status": "passed",
+      "seconds": 0.0456,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_motion.MotionTests.test_cli_initialization_and_stale_batch",
+      "status": "passed",
+      "seconds": 0.3794,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_motion.MotionTests.test_clipping_is_failure_without_published_output",
+      "status": "passed",
+      "seconds": 0.0347,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_motion.MotionTests.test_conflicting_check_never_fitted",
+      "status": "passed",
+      "seconds": 0.0267,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_motion.MotionTests.test_context_proof_odd_frame_count_uses_export_clock",
+      "status": "passed",
+      "seconds": 0.0218,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_motion.MotionTests.test_draft_http_origin_and_tamper",
+      "status": "passed",
+      "seconds": 0.5698,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_motion.MotionTests.test_draft_pixels_export_reproduce_saved_build",
+      "status": "passed",
+      "seconds": 0.109,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_motion.MotionTests.test_incomplete_study_inspectable",
+      "status": "passed",
+      "seconds": 0.0342,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_motion.MotionTests.test_recipe_cannot_change_scale",
+      "status": "passed",
+      "seconds": 0.0371,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_motion.MotionTests.test_recovery_independent_check_pixels_and_cache",
+      "status": "passed",
+      "seconds": 0.0785,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_motion.MotionTests.test_region_mask_does_not_create_texture",
+      "status": "passed",
+      "seconds": 0.019,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_motion.MotionTests.test_revision_and_scene_provenance",
+      "status": "passed",
+      "seconds": 0.073,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_motion.MotionTests.test_scene_clock_overrides_finishing_and_adoption",
+      "status": "passed",
+      "seconds": 0.7872,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_motion.MotionTests.test_stale_proposal_and_output_collision_are_not_published",
+      "status": "passed",
+      "seconds": 0.0402,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_motion.MotionTests.test_subpixel_constraints_and_ignored_regions",
+      "status": "passed",
+      "seconds": 0.0298,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_motion.MotionTests.test_tampered_source_rejected_on_cache",
+      "status": "passed",
+      "seconds": 0.1322,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_motion.MotionTests.test_tracking_known_points_and_textureless_stop",
+      "status": "passed",
+      "seconds": 0.1872,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_motion.MotionTests.test_transparent_rgb_and_soft_region_measurements",
+      "status": "passed",
+      "seconds": 0.0176,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_motion.MotionTests.test_views_batch_roundtrip_and_stale_packet",
+      "status": "passed",
+      "seconds": 0.0597,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_prep.PreparationTests.test_explicit_translation_returns_enlarged_shifted_edit",
+      "status": "passed",
+      "seconds": 0.0083,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_prep.PreparationTests.test_grayscale_mask_limits_replacement_and_is_hashed",
+      "status": "passed",
+      "seconds": 0.0086,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_prep.PreparationTests.test_mapped_compiler_composes_resize_padding_and_pivot",
+      "status": "passed",
+      "seconds": 0.0084,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_prep.PreparationTests.test_missing_registration_and_unexpected_return_size_fail",
+      "status": "passed",
+      "seconds": 0.0055,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_prep.PreparationTests.test_nearest_crop_return_preserves_original_and_native_coordinates",
+      "status": "passed",
+      "seconds": 0.0076,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_prep.PreparationTests.test_original_tamper_path_escape_and_existing_destination_fail",
+      "status": "passed",
+      "seconds": 0.0052,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_prep.PreparationTests.test_preflight_distinguishes_rgb_opaque_rgba_and_real_alpha",
+      "status": "passed",
+      "seconds": 0.0064,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_prep.PreparationTests.test_preflight_rejects_source_changed_while_building_previews",
+      "status": "passed",
+      "seconds": 0.0021,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_prep.PreparationTests.test_sheet_mapping_uses_whole_source_coordinates",
+      "status": "passed",
+      "seconds": 0.0035,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_proof_integrity.AssetProofIntegrityTests.test_catalog_and_direct_pack_proofs_keep_original_registration",
+      "status": "passed",
+      "seconds": 0.0288,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_proof_integrity.AssetProofIntegrityTests.test_catalog_registration_cannot_relabel_a_different_pack",
+      "status": "passed",
+      "seconds": 0.0078,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_proof_integrity.AssetProofIntegrityTests.test_changed_original_source_leaves_no_finished_proof",
+      "status": "passed",
+      "seconds": 0.0084,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_proof_integrity.AssetProofIntegrityTests.test_changed_pack_recipe_is_not_reused_by_catalog_proof",
+      "status": "passed",
+      "seconds": 0.0073,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_proof_integrity.AssetProofIntegrityTests.test_decoded_dimensions_must_match_static_and_atlas_metadata",
+      "status": "passed",
+      "seconds": 0.005,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_proof_integrity.AssetProofIntegrityTests.test_pack_report_cannot_omit_output_hashes",
+      "status": "passed",
+      "seconds": 0.0052,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_proof_integrity.AssetProofIntegrityTests.test_recipe_input_must_match_recorded_source_even_if_report_is_updated",
+      "status": "passed",
+      "seconds": 0.0082,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_proof_integrity.AssetProofIntegrityTests.test_report_pivot_changes_cannot_silently_move_exported_anchors",
+      "status": "passed",
+      "seconds": 0.0079,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_proof_integrity.AssetProofIntegrityTests.test_uncompiled_library_study_still_produces_prepared_anchor_proof",
+      "status": "passed",
+      "seconds": 0.0137,
+      "detail": ""
+    },
+    {
+      "id": "test_asset_strip_previews.StripPreviewTests.test_extreme_aspect_ratios_preserve_atlas_and_produce_readable_files",
+      "status": "passed",
+      "seconds": 0.0129,
+      "detail": ""
+    },
+    {
+      "id": "test_assets.AssetTests.test_bottom_center_estimate_recovers_shift_and_warns",
+      "status": "passed",
+      "seconds": 0.0042,
+      "detail": ""
+    },
+    {
+      "id": "test_assets.AssetTests.test_cache_hit_and_tamper_detection",
+      "status": "passed",
+      "seconds": 0.005,
+      "detail": ""
+    },
+    {
+      "id": "test_assets.AssetTests.test_catalog_id_protected",
+      "status": "passed",
+      "seconds": 0.0059,
+      "detail": ""
+    },
+    {
+      "id": "test_assets.AssetTests.test_changed_recipe_requires_new_version_directory",
+      "status": "passed",
+      "seconds": 0.0048,
+      "detail": ""
+    },
+    {
+      "id": "test_assets.AssetTests.test_empty_frame_rejected",
+      "status": "passed",
+      "seconds": 0.0018,
+      "detail": ""
+    },
+    {
+      "id": "test_assets.AssetTests.test_landmark_count_rejected",
+      "status": "passed",
+      "seconds": 0.0014,
+      "detail": ""
+    },
+    {
+      "id": "test_assets.AssetTests.test_landmarks_remove_known_displacement_without_scale_change",
+      "status": "passed",
+      "seconds": 0.0042,
+      "detail": ""
+    },
+    {
+      "id": "test_assets.AssetTests.test_one_scale_preserves_relative_shape_size",
+      "status": "passed",
+      "seconds": 0.005,
+      "detail": ""
+    },
+    {
+      "id": "test_assets.AssetTests.test_opaque_proof_rejected",
+      "status": "passed",
+      "seconds": 0.0018,
+      "detail": ""
+    },
+    {
+      "id": "test_assets.AssetTests.test_pack_recipe_resolves_originals_and_hits_same_cache",
+      "status": "passed",
+      "seconds": 0.0046,
+      "detail": ""
+    },
+    {
+      "id": "test_audio.AudioTests.test_changed_or_missing_selected_source_fails_even_when_muted",
+      "status": "passed",
+      "seconds": 0.0013,
+      "detail": ""
+    },
+    {
+      "id": "test_audio.AudioTests.test_check_detects_tampered_master_and_path_escape",
+      "status": "passed",
+      "seconds": 0.0038,
+      "detail": ""
+    },
+    {
+      "id": "test_audio.AudioTests.test_compare_gain_is_relative_and_does_not_normalize_muted_sources",
+      "status": "passed",
+      "seconds": 0.006,
+      "detail": ""
+    },
+    {
+      "id": "test_audio.AudioTests.test_exact_sample_circular_tail_stems_reconstruct_and_immutable_session",
+      "status": "passed",
+      "seconds": 0.0039,
+      "detail": ""
+    },
+    {
+      "id": "test_audio.AudioTests.test_excerpt_includes_wrapped_tail_without_restarting_cue",
+      "status": "passed",
+      "seconds": 0.0029,
+      "detail": ""
+    },
+    {
+      "id": "test_audio.AudioTests.test_import_is_explicit_and_does_not_overwrite_legacy_or_prior_session",
+      "status": "passed",
+      "seconds": 0.0018,
+      "detail": ""
+    },
+    {
+      "id": "test_audio.AudioTests.test_invalid_region_rate_unknown_fields_and_clipping_never_publish",
+      "status": "passed",
+      "seconds": 0.003,
+      "detail": ""
+    },
+    {
+      "id": "test_audio.AudioTests.test_master_sum_clipping_fails_without_reducing_gain",
+      "status": "passed",
+      "seconds": 0.0025,
+      "detail": ""
+    },
+    {
+      "id": "test_audio.AudioTests.test_pan_travel_and_stereo_preservation",
+      "status": "passed",
+      "seconds": 0.0053,
+      "detail": ""
+    },
+    {
+      "id": "test_audio.AudioTests.test_parsers_and_source_inspection",
+      "status": "passed",
+      "seconds": 0.0041,
+      "detail": ""
+    },
+    {
+      "id": "test_audio.AudioTests.test_region_repeat_fades_and_pan_are_applied_at_authored_samples",
+      "status": "passed",
+      "seconds": 0.0039,
+      "detail": ""
+    },
+    {
+      "id": "test_audio.AudioTests.test_tail_longer_than_loop_and_stem_named_master",
+      "status": "passed",
+      "seconds": 0.004,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_library.LibraryTests.test_archived_preparation_exact_bytes_and_origin_unavailable",
+      "status": "passed",
+      "seconds": 0.0312,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_library.LibraryTests.test_archived_projection_validates_all_paths_before_linking",
+      "status": "passed",
+      "seconds": 0.0298,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_library.LibraryTests.test_audition_exact_region_preserves_channels_and_does_not_listen",
+      "status": "passed",
+      "seconds": 0.064,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_library.LibraryTests.test_bad_hashes_kinds_and_wrong_parent_publish_no_version",
+      "status": "passed",
+      "seconds": 0.0268,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_library.LibraryTests.test_candidate_prepared_version_parent_and_duplicate_detection",
+      "status": "passed",
+      "seconds": 0.0839,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_library.LibraryTests.test_duplicate_record_id_and_broken_parent_are_rejected",
+      "status": "passed",
+      "seconds": 0.0394,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_library.LibraryTests.test_escaped_manifest_event_and_audition_receipts_fail",
+      "status": "passed",
+      "seconds": 0.0725,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_library.LibraryTests.test_explicit_stable_config_no_implicit_worktree_or_project",
+      "status": "passed",
+      "seconds": 0.0313,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_library.LibraryTests.test_external_symlink_escape_on_import_and_materialization",
+      "status": "passed",
+      "seconds": 0.0267,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_library.LibraryTests.test_failed_copy_config_import_audition_event_and_materialization_preserve_state",
+      "status": "passed",
+      "seconds": 0.0552,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_library.LibraryTests.test_final_publication_failures_leave_no_version_or_use_and_allow_retry",
+      "status": "passed",
+      "seconds": 0.1327,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_library.LibraryTests.test_malformed_version_hashes_and_stale_existing_parent",
+      "status": "passed",
+      "seconds": 0.0534,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_library.LibraryTests.test_materialization_tampering_and_no_generic_archival_dependencies",
+      "status": "passed",
+      "seconds": 0.0892,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_library.LibraryTests.test_portable_materialization_after_origin_and_library_removed",
+      "status": "passed",
+      "seconds": 0.2972,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_library.LibraryTests.test_promotion_requires_actual_current_full_source_observation",
+      "status": "passed",
+      "seconds": 0.1048,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_library.LibraryTests.test_public_routes_and_output_ownership",
+      "status": "passed",
+      "seconds": 0.1273,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_library.LibraryTests.test_stale_changed_or_missing_version_and_event_fail",
+      "status": "passed",
+      "seconds": 0.055,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_library.LibraryTests.test_states_accept_reject_revise_and_no_inherited_acceptance",
+      "status": "passed",
+      "seconds": 0.0839,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_library.LibraryTests.test_unaccepted_requires_opt_in_and_stale_state_fails",
+      "status": "passed",
+      "seconds": 0.0532,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_measurements.AudioEncodingNativeTests.test_384_trial_is_admitted_only_when_applicable_before_raster",
+      "status": "passed",
+      "seconds": 3.849,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_measurements.AudioEncodingNativeTests.test_configured_native_mux_decode_and_legacy_pcm16",
+      "status": "passed",
+      "seconds": 5.826,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_measurements.MeasurementTests.test_cli_measure_owns_envelope_and_preserves_original",
+      "status": "passed",
+      "seconds": 0.3129,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_measurements.MeasurementTests.test_complete_blocks_and_interval_hash",
+      "status": "passed",
+      "seconds": 0.1018,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_measurements.MeasurementTests.test_ebu_integrated_reference_cases_1_to_5",
+      "status": "passed",
+      "seconds": 11.6858,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_measurements.MeasurementTests.test_ebu_true_peak_reference_cases_15_to_19",
+      "status": "passed",
+      "seconds": 0.256,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_measurements.MeasurementTests.test_invalid_bitrate_and_silent_export_reject_before_native",
+      "status": "passed",
+      "seconds": 0.0576,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_measurements.MeasurementTests.test_iteration_bitrate_validator_and_typed_argv",
+      "status": "passed",
+      "seconds": 0.0008,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_measurements.MeasurementTests.test_iteration_preflight_starts_no_picture_on_unsupported_and_skips_saved_outputs",
+      "status": "passed",
+      "seconds": 0.0016,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_measurements.MeasurementTests.test_mono_stereo_and_phase_cancellation_are_distinct",
+      "status": "passed",
+      "seconds": 0.2483,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_measurements.MeasurementTests.test_silence_short_and_below_gate_have_no_invented_lufs",
+      "status": "passed",
+      "seconds": 0.3127,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_measurements.MeasurementTests.test_unclipped_float_and_truncated_nonfinite_failures",
+      "status": "passed",
+      "seconds": 0.0732,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_sources.NativeSourceTests.test_native_aac_alac_mono_stereo_and_resampling",
+      "status": "passed",
+      "seconds": 0.5883,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_sources.NativeSourceTests.test_native_non_integral_duration_and_pcm32",
+      "status": "passed",
+      "seconds": 0.0714,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_sources.SourceTests.test_backend_failure_publishes_nothing",
+      "status": "passed",
+      "seconds": 0.0046,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_sources.SourceTests.test_duplicate_id_and_changed_original_are_rejected",
+      "status": "passed",
+      "seconds": 0.0084,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_sources.SourceTests.test_explicit_wav_speaker_layout_is_preserved_or_rejected",
+      "status": "passed",
+      "seconds": 0.0036,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_sources.SourceTests.test_legacy_nonobject_preparation_keeps_invalid_input_error",
+      "status": "passed",
+      "seconds": 0.0033,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_sources.SourceTests.test_mono_stereo_exact_expansion_and_inspection_pure",
+      "status": "passed",
+      "seconds": 0.0754,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_sources.SourceTests.test_mp3_structure_and_declared_frame_truncation",
+      "status": "passed",
+      "seconds": 0.0033,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_sources.SourceTests.test_mp4_malformed_lengths_and_unknown_format",
+      "status": "passed",
+      "seconds": 0.003,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_sources.SourceTests.test_public_cli_and_revision_capture_pins_preparation",
+      "status": "passed",
+      "seconds": 0.7601,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_sources.SourceTests.test_raw_declaration_and_byte_exact_source_identity",
+      "status": "passed",
+      "seconds": 0.0094,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_sources.SourceTests.test_revision_adapter_never_marks_source_as_complete_mix",
+      "status": "passed",
+      "seconds": 0.0105,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_sources.SourceTests.test_symlink_escape_and_provenance_validation",
+      "status": "passed",
+      "seconds": 0.0057,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_sources.SourceTests.test_tampered_working_original_recipe_and_receipt",
+      "status": "passed",
+      "seconds": 0.0109,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_sources.SourceTests.test_truncated_wav_chunk_alignment_and_unsupported_float",
+      "status": "passed",
+      "seconds": 0.0057,
+      "detail": ""
+    },
+    {
+      "id": "test_audio_sources.SourceTests.test_wrong_rate_and_unsupported_layout_publish_nothing",
+      "status": "passed",
+      "seconds": 0.0118,
+      "detail": ""
+    },
+    {
+      "id": "test_binding_proof.BindingProof.test_preparation_snapshots_keep_transitive_engine_modules",
+      "status": "passed",
+      "seconds": 0.0918,
+      "detail": ""
+    },
+    {
+      "id": "test_binding_proof.BindingProof.test_source_receiver_proof_captures_both_views_and_module_closure",
+      "status": "passed",
+      "seconds": 7.2491,
+      "detail": ""
+    },
+    {
+      "id": "test_bindings_cli.BindingCLI.test_binding_timing_and_reparent_cannot_silently_replace_drivers",
+      "status": "passed",
+      "seconds": 0.1817,
+      "detail": ""
+    },
+    {
+      "id": "test_bindings_cli.BindingCLI.test_captured_mask_and_source_driver_divergence_are_separate",
+      "status": "passed",
+      "seconds": 0.1873,
+      "detail": ""
+    },
+    {
+      "id": "test_bindings_cli.BindingCLI.test_changed_source_asset_or_mask_fails_before_mutation",
+      "status": "passed",
+      "seconds": 0.0731,
+      "detail": ""
+    },
+    {
+      "id": "test_bindings_cli.BindingCLI.test_compiler_companion_registration_correction_and_package_identity",
+      "status": "passed",
+      "seconds": 0.5836,
+      "detail": ""
+    },
+    {
+      "id": "test_bindings_cli.BindingCLI.test_inspect_transaction_dry_run_invalid_atomic_and_restore",
+      "status": "passed",
+      "seconds": 0.4414,
+      "detail": ""
+    },
+    {
+      "id": "test_bindings_cli.BindingCLI.test_look_and_rig_package_roundtrip_keep_links_receivers_masks_and_actual_values",
+      "status": "passed",
+      "seconds": 0.6795,
+      "detail": ""
+    },
+    {
+      "id": "test_checks.BundleTests.test_allowlist_ignores_private_project_and_rejects_symlinks_and_oversize",
+      "status": "passed",
+      "seconds": 0.0051,
+      "detail": ""
+    },
+    {
+      "id": "test_checks.BundleTests.test_combined_bundle_keeps_named_recovery_evidence_and_excludes_unlisted_media",
+      "status": "passed",
+      "seconds": 0.0042,
+      "detail": ""
+    },
+    {
+      "id": "test_checks.CheckArtifactsTests.test_invalid_utf8_and_multibyte_tails_remain_valid_and_byte_bounded",
+      "status": "passed",
+      "seconds": 0.0436,
+      "detail": ""
+    },
+    {
+      "id": "test_checks.CheckArtifactsTests.test_native_required_cannot_succeed_as_unavailable_or_skip",
+      "status": "passed",
+      "seconds": 0.0005,
+      "detail": ""
+    },
+    {
+      "id": "test_checks.CheckArtifactsTests.test_real_failure_has_stable_id_bounded_scrubbed_logs_and_hash",
+      "status": "passed",
+      "seconds": 0.0226,
+      "detail": ""
+    },
+    {
+      "id": "test_checks.CheckArtifactsTests.test_real_unittest_failure_error_skip_and_junit_retain_test_identity",
+      "status": "passed",
+      "seconds": 0.0614,
+      "detail": ""
+    },
+    {
+      "id": "test_checks.CheckArtifactsTests.test_timed_out_process_fails_and_retains_diagnostics",
+      "status": "passed",
+      "seconds": 0.11,
+      "detail": ""
+    },
+    {
+      "id": "test_cli.CLIEntryTests.test_interruption_preserves_json_contract_and_exit_130",
+      "status": "passed",
+      "seconds": 0.0316,
+      "detail": ""
+    },
+    {
+      "id": "test_cli.CLIEntryTests.test_missing_project_is_actionable",
+      "status": "passed",
+      "seconds": 0.1167,
+      "detail": ""
+    },
+    {
+      "id": "test_cli.CLIEntryTests.test_unknown_command_is_json_and_nonzero",
+      "status": "passed",
+      "seconds": 0.1126,
+      "detail": ""
+    },
+    {
+      "id": "test_cli.CLITests.test_asset_tamper_causes_nonzero_check",
+      "status": "passed",
+      "seconds": 0.3898,
+      "detail": ""
+    },
+    {
+      "id": "test_cli.CLITests.test_blank_project_requires_assets_before_preview",
+      "status": "passed",
+      "seconds": 0.4553,
+      "detail": ""
+    },
+    {
+      "id": "test_cli.CLITests.test_edit_sample_history_restore_from_another_directory",
+      "status": "passed",
+      "seconds": 0.6106,
+      "detail": ""
+    },
+    {
+      "id": "test_cli.CLITests.test_existing_destination_and_lock_protected",
+      "status": "passed",
+      "seconds": 0.3539,
+      "detail": ""
+    },
+    {
+      "id": "test_cli.CLITests.test_invalid_edit_never_replaces_scene",
+      "status": "passed",
+      "seconds": 0.2909,
+      "detail": ""
+    },
+    {
+      "id": "test_cli.CLITests.test_missing_socket_and_cycle_rejected",
+      "status": "passed",
+      "seconds": 0.6149,
+      "detail": ""
+    },
+    {
+      "id": "test_cli.CLITests.test_preview_mounts_only_editor_and_selected_assets",
+      "status": "passed",
+      "seconds": 0.1474,
+      "detail": ""
+    },
+    {
+      "id": "test_cli.CLITests.test_project_config_cannot_escape",
+      "status": "passed",
+      "seconds": 0.2606,
+      "detail": ""
+    },
+    {
+      "id": "test_cli.CLITests.test_project_template_and_checks_use_local_catalog",
+      "status": "passed",
+      "seconds": 0.6798,
+      "detail": ""
+    },
+    {
+      "id": "test_cli.CLITests.test_review_draft_uses_real_gate_and_does_not_pass",
+      "status": "passed",
+      "seconds": 0.4292,
+      "detail": ""
+    },
+    {
+      "id": "test_cli.CLITests.test_scene_add_uses_catalog_pivot",
+      "status": "passed",
+      "seconds": 0.4752,
+      "detail": ""
+    },
+    {
+      "id": "test_cli_contract.CLIContractTests.test_artifact_previews_keep_one_startup_object_and_ignore_project",
+      "status": "passed",
+      "seconds": 0.1134,
+      "detail": ""
+    },
+    {
+      "id": "test_cli_contract.CLIContractTests.test_errors_and_interruptions_do_not_write_report_files",
+      "status": "passed",
+      "seconds": 0.082,
+      "detail": ""
+    },
+    {
+      "id": "test_cli_contract.CLIContractTests.test_every_out_route_preserves_envelope_or_service_owned_destination",
+      "status": "passed",
+      "seconds": 3.7179,
+      "detail": ""
+    },
+    {
+      "id": "test_cli_contract.CLIContractTests.test_every_public_route_retains_flags_defaults_types_and_help",
+      "status": "passed",
+      "seconds": 0.0289,
+      "detail": ""
+    },
+    {
+      "id": "test_cli_contract.CLIContractTests.test_missing_output_declaration_fails_before_execution",
+      "status": "passed",
+      "seconds": 0.0006,
+      "detail": ""
+    },
+    {
+      "id": "test_cli_contract.CLIContractTests.test_optional_dependency_guard_and_project_selection_order",
+      "status": "passed",
+      "seconds": 0.0239,
+      "detail": ""
+    },
+    {
+      "id": "test_cli_contract.CLIContractTests.test_project_free_asset_build_preserves_shell_paths",
+      "status": "passed",
+      "seconds": 0.0259,
+      "detail": ""
+    },
+    {
+      "id": "test_cli_contract.CLIContractTests.test_real_reports_drafts_and_artifacts_keep_paths_and_bytes",
+      "status": "passed",
+      "seconds": 0.367,
+      "detail": ""
+    },
+    {
+      "id": "test_cli_replay.NativeCLIReplayTests.test_process_interruption_preserves_first_view_and_resumes_only_second",
+      "status": "passed",
+      "seconds": 11.7173,
+      "detail": ""
+    },
+    {
+      "id": "test_clock_cli.ClockCLI.test_authored_duration_is_integer_authority_for_public_samples_and_ranges",
+      "status": "passed",
+      "seconds": 4.7228,
+      "detail": ""
+    },
+    {
+      "id": "test_clock_cli.ClockCLI.test_exact_audio_alignment_and_rounding_specimens",
+      "status": "passed",
+      "seconds": 0.0043,
+      "detail": ""
+    },
+    {
+      "id": "test_clock_cli.ClockCLI.test_exact_source_start_and_remaining_count_survive_raster_transport",
+      "status": "passed",
+      "seconds": 1.0084,
+      "detail": ""
+    },
+    {
+      "id": "test_clock_cli.ClockCLI.test_native_24fps_exports_only_0_through_59",
+      "status": "passed",
+      "seconds": 5.6344,
+      "detail": ""
+    },
+    {
+      "id": "test_clock_cli.ClockCLI.test_native_authored_duration_and_range_preserve_exact_counts",
+      "status": "passed",
+      "seconds": 7.697,
+      "detail": ""
+    },
+    {
+      "id": "test_clock_cli.ClockCLI.test_public_integer_frame_and_subframe_samples_endpoint_diagnostics",
+      "status": "passed",
+      "seconds": 1.8448,
+      "detail": ""
+    },
+    {
+      "id": "test_clock_cli.ClockCLI.test_transaction_dry_run_stale_guard_and_history",
+      "status": "passed",
+      "seconds": 0.6236,
+      "detail": ""
+    },
+    {
+      "id": "test_clock_cli.ClockCLI.test_unknown_cycle_and_finite_export_ranges_fail_without_writes",
+      "status": "passed",
+      "seconds": 1.2711,
+      "detail": ""
+    },
+    {
+      "id": "test_combined_replay.CombinedReplayTests.test_failed_attempt_is_preserved_and_completed_output_cannot_be_reused_after_tamper",
+      "status": "passed",
+      "seconds": 0.0539,
+      "detail": ""
+    },
+    {
+      "id": "test_combined_replay.CombinedReplayTests.test_fixture_timeout_is_failure",
+      "status": "passed",
+      "seconds": 0.1051,
+      "detail": ""
+    },
+    {
+      "id": "test_combined_replay.CombinedReplayTests.test_unavailable_native_case_is_explicit_and_escaped_resume_file_is_rejected",
+      "status": "passed",
+      "seconds": 0.2203,
+      "detail": ""
+    },
+    {
+      "id": "test_compound_preparation.CompoundPreparationTests.test_bound_cli_replay_and_paired_raster_proof_resume",
+      "status": "passed",
+      "seconds": 11.2215,
+      "detail": ""
+    },
+    {
+      "id": "test_compound_preparation.CompoundPreparationTests.test_changed_source_companion_and_independent_correction_rejected",
+      "status": "passed",
+      "seconds": 0.0662,
+      "detail": ""
+    },
+    {
+      "id": "test_compound_preparation.CompoundPreparationTests.test_diagnostics_expose_missing_backing_and_stuck_foreground",
+      "status": "passed",
+      "seconds": 0.0046,
+      "detail": ""
+    },
+    {
+      "id": "test_compound_preparation.CompoundPreparationTests.test_immutable_build_compiler_and_companion_share_exact_source_map",
+      "status": "passed",
+      "seconds": 0.1528,
+      "detail": ""
+    },
+    {
+      "id": "test_compound_preparation.CompoundPreparationTests.test_public_inspect_edit_build_and_rest_raster",
+      "status": "passed",
+      "seconds": 0.9393,
+      "detail": ""
+    },
+    {
+      "id": "test_compound_preparation.CompoundPreparationTests.test_public_place_replaces_baked_base_and_preserves_subpixel_source_anchor",
+      "status": "passed",
+      "seconds": 3.5703,
+      "detail": ""
+    },
+    {
+      "id": "test_compound_preparation.CompoundPreparationTests.test_related_parts_companion_alpha_and_hidden_backing_remain_independent",
+      "status": "passed",
+      "seconds": 0.0056,
+      "detail": ""
+    },
+    {
+      "id": "test_compound_preparation.CompoundPreparationTests.test_stale_recipe_and_invalid_late_batch_are_atomic",
+      "status": "passed",
+      "seconds": 0.0067,
+      "detail": ""
+    },
+    {
+      "id": "test_config_storage.ConfigStorageTests.test_cleanup_preserves_refs_stale_plan_and_roundtrip",
+      "status": "passed",
+      "seconds": 0.1012,
+      "detail": ""
+    },
+    {
+      "id": "test_config_storage.ConfigStorageTests.test_cleanup_retention_unknown_bundle_and_modified_trash",
+      "status": "passed",
+      "seconds": 0.0875,
+      "detail": ""
+    },
+    {
+      "id": "test_config_storage.ConfigStorageTests.test_cleanup_yaml_relative_references_and_invalid_evidence",
+      "status": "passed",
+      "seconds": 0.1016,
+      "detail": ""
+    },
+    {
+      "id": "test_config_storage.ConfigStorageTests.test_config_missing_values_duplicate_keys_and_path_escape_fail",
+      "status": "passed",
+      "seconds": 0.0584,
+      "detail": ""
+    },
+    {
+      "id": "test_config_storage.ConfigStorageTests.test_config_order_typed_values_origin_and_frozen_recipe",
+      "status": "passed",
+      "seconds": 0.1535,
+      "detail": ""
+    },
+    {
+      "id": "test_config_storage.ConfigStorageTests.test_public_cli_initializer_emits_valid_envelope",
+      "status": "passed",
+      "seconds": 0.1934,
+      "detail": ""
+    },
+    {
+      "id": "test_deliveries.DeliveryTests.test_atomic_current_groups_roles_and_preserves_old_exact_version",
+      "status": "passed",
+      "seconds": 0.0197,
+      "detail": ""
+    },
+    {
+      "id": "test_deliveries.DeliveryTests.test_byte_ranges_head_suffix_and_explicit_mount_boundaries",
+      "status": "passed",
+      "seconds": 0.1425,
+      "detail": ""
+    },
+    {
+      "id": "test_deliveries.DeliveryTests.test_changed_evidence_and_broken_working_scene_do_not_hide_intact_movie",
+      "status": "passed",
+      "seconds": 0.0719,
+      "detail": ""
+    },
+    {
+      "id": "test_deliveries.DeliveryTests.test_changed_movie_never_falls_back_and_cannot_be_presented",
+      "status": "passed",
+      "seconds": 0.0388,
+      "detail": ""
+    },
+    {
+      "id": "test_deliveries.DeliveryTests.test_feedback_is_version_bound_and_cross_origin_writes_fail",
+      "status": "passed",
+      "seconds": 0.035,
+      "detail": ""
+    },
+    {
+      "id": "test_deliveries.DeliveryTests.test_hash_cache_detects_same_length_changes_even_when_mtime_restored",
+      "status": "passed",
+      "seconds": 0.0121,
+      "detail": ""
+    },
+    {
+      "id": "test_deliveries.DeliveryTests.test_iteration_validation_and_failure_preserve_current",
+      "status": "passed",
+      "seconds": 0.0171,
+      "detail": ""
+    },
+    {
+      "id": "test_deliveries.DeliveryTests.test_register_does_not_select_or_approve_and_duplicate_is_idempotent",
+      "status": "passed",
+      "seconds": 0.0144,
+      "detail": ""
+    },
+    {
+      "id": "test_deliveries.DeliveryTests.test_registry_and_latest_work_from_unrelated_checkout_directory",
+      "status": "passed",
+      "seconds": 0.2024,
+      "detail": ""
+    },
+    {
+      "id": "test_deliveries.DeliveryTests.test_separate_registries_in_one_directory_keep_independent_server_addresses",
+      "status": "passed",
+      "seconds": 0.0106,
+      "detail": ""
+    },
+    {
+      "id": "test_deliveries.DeliveryTests.test_verification_movie_identity_roles_and_path_escape_are_rejected",
+      "status": "passed",
+      "seconds": 0.0124,
+      "detail": ""
+    },
+    {
+      "id": "test_edge_quality.EdgeTests.test_changed_input_aborts_staged_output",
+      "status": "passed",
+      "seconds": 0.0189,
+      "detail": ""
+    },
+    {
+      "id": "test_edge_quality.EdgeTests.test_changed_pack_proof_rejected",
+      "status": "passed",
+      "seconds": 0.0049,
+      "detail": ""
+    },
+    {
+      "id": "test_edge_quality.EdgeTests.test_choke_and_feather_are_explicit_and_preserve_hue_in_added_alpha",
+      "status": "passed",
+      "seconds": 0.0161,
+      "detail": ""
+    },
+    {
+      "id": "test_edge_quality.EdgeTests.test_compiler_keeps_preparation_chain_and_rechecks_upstream_on_cache",
+      "status": "passed",
+      "seconds": 0.0221,
+      "detail": ""
+    },
+    {
+      "id": "test_edge_quality.EdgeTests.test_context_must_be_explicit_unscaled_in_bounds_and_paired",
+      "status": "passed",
+      "seconds": 0.0142,
+      "detail": ""
+    },
+    {
+      "id": "test_edge_quality.EdgeTests.test_declared_matte_recovers_known_color_and_keeps_every_alpha",
+      "status": "passed",
+      "seconds": 0.0142,
+      "detail": ""
+    },
+    {
+      "id": "test_edge_quality.EdgeTests.test_existing_and_concurrent_output_are_never_replaced",
+      "status": "passed",
+      "seconds": 0.0153,
+      "detail": ""
+    },
+    {
+      "id": "test_edge_quality.EdgeTests.test_invalid_recipe_fields_dimensions_numbers_and_undeclared_matte_fail",
+      "status": "passed",
+      "seconds": 0.0032,
+      "detail": ""
+    },
+    {
+      "id": "test_edge_quality.EdgeTests.test_isolated_resampling_cannot_sample_adjacent_atlas_cell",
+      "status": "passed",
+      "seconds": 0.0009,
+      "detail": ""
+    },
+    {
+      "id": "test_edge_quality.EdgeTests.test_neutral_recipe_preserves_rgba_including_whiskers_and_hidden_rgb",
+      "status": "passed",
+      "seconds": 0.0153,
+      "detail": ""
+    },
+    {
+      "id": "test_edge_quality.EdgeTests.test_opaque_and_multiframe_sources_rejected_without_output",
+      "status": "passed",
+      "seconds": 0.0018,
+      "detail": ""
+    },
+    {
+      "id": "test_edge_quality.EdgeTests.test_padding_moves_each_cell_independently_and_preserves_unused_slots",
+      "status": "passed",
+      "seconds": 0.0115,
+      "detail": ""
+    },
+    {
+      "id": "test_edge_quality.EdgeTests.test_preparation_verifier_rejects_snapshot_change_and_wrong_atlas",
+      "status": "passed",
+      "seconds": 0.015,
+      "detail": ""
+    },
+    {
+      "id": "test_edge_quality.EdgeTests.test_proof_all_cels_actual_pixels_scale_and_context_position",
+      "status": "passed",
+      "seconds": 0.0181,
+      "detail": ""
+    },
+    {
+      "id": "test_edge_quality.EdgeTests.test_proof_input_race_is_detected_after_rendering",
+      "status": "passed",
+      "seconds": 0.0137,
+      "detail": ""
+    },
+    {
+      "id": "test_feedback.FeedbackTests.test_cli_and_http_untimed_and_resolution",
+      "status": "passed",
+      "seconds": 0.0943,
+      "detail": ""
+    },
+    {
+      "id": "test_feedback.FeedbackTests.test_delivery_report_retry_and_original_survive_new_selection",
+      "status": "passed",
+      "seconds": 0.0255,
+      "detail": ""
+    },
+    {
+      "id": "test_feedback.FeedbackTests.test_entry_ambiguity_and_time_boundaries",
+      "status": "passed",
+      "seconds": 0.017,
+      "detail": ""
+    },
+    {
+      "id": "test_feedback.FeedbackTests.test_event_chain_gap_and_concurrent_resolution",
+      "status": "passed",
+      "seconds": 0.0153,
+      "detail": ""
+    },
+    {
+      "id": "test_feedback.FeedbackTests.test_import_source_and_pagination",
+      "status": "passed",
+      "seconds": 0.0599,
+      "detail": ""
+    },
+    {
+      "id": "test_feedback.FeedbackTests.test_legacy_reads_and_tamper_do_not_rewrite_history",
+      "status": "passed",
+      "seconds": 0.0145,
+      "detail": ""
+    },
+    {
+      "id": "test_finishing_cli.FinishingTests.test_apply_dry_run_history_expected_hash_and_remove",
+      "status": "passed",
+      "seconds": 0.2493,
+      "detail": ""
+    },
+    {
+      "id": "test_finishing_cli.FinishingTests.test_check_detects_unpainted_mask_change_and_dependency_roles",
+      "status": "passed",
+      "seconds": 0.2174,
+      "detail": ""
+    },
+    {
+      "id": "test_finishing_cli.FinishingTests.test_edge_preparation_provenance_cannot_be_relabelled_in_catalog",
+      "status": "passed",
+      "seconds": 0.0499,
+      "detail": ""
+    },
+    {
+      "id": "test_finishing_cli.FinishingTests.test_edge_preparation_snapshot_is_pinned_and_stales_revision",
+      "status": "passed",
+      "seconds": 0.2525,
+      "detail": ""
+    },
+    {
+      "id": "test_finishing_cli.FinishingTests.test_export_collision_and_dependency_change_do_not_promote",
+      "status": "passed",
+      "seconds": 0.2691,
+      "detail": ""
+    },
+    {
+      "id": "test_finishing_cli.FinishingTests.test_export_import_remaps_relationships_and_grade_art_with_exact_mask",
+      "status": "passed",
+      "seconds": 0.4804,
+      "detail": ""
+    },
+    {
+      "id": "test_finishing_cli.FinishingTests.test_malformed_package_and_changed_input_during_import_fail",
+      "status": "passed",
+      "seconds": 0.3321,
+      "detail": ""
+    },
+    {
+      "id": "test_finishing_cli.FinishingTests.test_missing_colliding_and_wrong_mask_bindings_reject_without_save",
+      "status": "passed",
+      "seconds": 0.2194,
+      "detail": ""
+    },
+    {
+      "id": "test_finishing_cli.FinishingTests.test_revision_capture_pins_mask_without_scene_layer_and_detects_change",
+      "status": "passed",
+      "seconds": 0.1413,
+      "detail": ""
+    },
+    {
+      "id": "test_finishing_cli.FinishingTests.test_rig_import_requires_flag_matching_clock_and_exact_image_socket_version",
+      "status": "passed",
+      "seconds": 0.307,
+      "detail": ""
+    },
+    {
+      "id": "test_finishing_cli.FinishingTests.test_rig_import_restores_lantern_cadence_casket_overlap_and_ancestor_geometry",
+      "status": "passed",
+      "seconds": 0.9614,
+      "detail": ""
+    },
+    {
+      "id": "test_finishing_cli.FinishingTests.test_rig_package_scope_rejects_unknown_fields_and_missing_ancestor",
+      "status": "passed",
+      "seconds": 0.2216,
+      "detail": ""
+    },
+    {
+      "id": "test_finishing_render.FinishingRenderTests.test_look_artifact_pins_extra_masks_and_shared_modules_and_preserves_originals",
+      "status": "passed",
+      "seconds": 0.3882,
+      "detail": ""
+    },
+    {
+      "id": "test_finishing_render.FinishingRenderTests.test_look_unknown_recipe_or_finishing_fields_fail_before_artifact",
+      "status": "passed",
+      "seconds": 0.9175,
+      "detail": ""
+    },
+    {
+      "id": "test_finishing_render.FinishingRenderTests.test_supersampled_motion_proof_outputs_exact_requested_size_and_frame_count",
+      "status": "passed",
+      "seconds": 0.336,
+      "detail": ""
+    },
+    {
+      "id": "test_finishing_render.FinishingRenderTests.test_supersampling_limit_rejects_before_creating_output",
+      "status": "passed",
+      "seconds": 0.0092,
+      "detail": ""
+    },
+    {
+      "id": "test_finishing_render.FinishingRenderTests.test_supersampling_renders_geometry_at_internal_resolution_before_output",
+      "status": "passed",
+      "seconds": 0.9725,
+      "detail": ""
+    },
+    {
+      "id": "test_finishing_render.FinishingRenderTests.test_workbench_download_operation_round_trips_through_scene_apply",
+      "status": "passed",
+      "seconds": 0.0846,
+      "detail": ""
+    },
+    {
+      "id": "test_finishing_render.SupersampledNativeTests.test_finished_neutral_and_color_patches_survive_native_encoding_with_bounded_error",
+      "status": "passed",
+      "seconds": 5.1973,
+      "detail": ""
+    },
+    {
+      "id": "test_finishing_render.SupersampledNativeTests.test_supersampled_picture_is_encoded_and_decoded_at_output_dimensions",
+      "status": "passed",
+      "seconds": 4.5801,
+      "detail": ""
+    },
+    {
+      "id": "test_generation_ledger.GenerationLedgerTests.test_changed_source_and_changed_event_fail_without_ledger_change",
+      "status": "passed",
+      "seconds": 0.0064,
+      "detail": ""
+    },
+    {
+      "id": "test_generation_ledger.GenerationLedgerTests.test_direct_tool_output_duplicate_receipts_and_resumed_selection",
+      "status": "passed",
+      "seconds": 0.0067,
+      "detail": ""
+    },
+    {
+      "id": "test_generation_ledger.GenerationLedgerTests.test_interruption_after_snapshot_reuses_bytes_without_duplicate_selection",
+      "status": "passed",
+      "seconds": 0.006,
+      "detail": ""
+    },
+    {
+      "id": "test_generation_ledger.GenerationLedgerTests.test_invalid_output_and_foreign_selection_do_not_advance",
+      "status": "passed",
+      "seconds": 0.0048,
+      "detail": ""
+    },
+    {
+      "id": "test_generation_ledger.GenerationLedgerTests.test_request_idempotence_legacy_preservation_and_validation",
+      "status": "passed",
+      "seconds": 0.0034,
+      "detail": ""
+    },
+    {
+      "id": "test_generation_ledger.GenerationLedgerTests.test_uncertain_timeout_never_becomes_new_submission",
+      "status": "passed",
+      "seconds": 0.0039,
+      "detail": ""
+    },
+    {
+      "id": "test_iteration_native.NativeIterationTests.test_real_iteration_and_resume_preserve_movie_identity",
+      "status": "passed",
+      "seconds": 5.1464,
+      "detail": ""
+    },
+    {
+      "id": "test_iteration_steps.IterationStepTests.test_failed_step_retains_attempt_but_never_claims_completion",
+      "status": "passed",
+      "seconds": 0.0019,
+      "detail": ""
+    },
+    {
+      "id": "test_iteration_steps.IterationStepTests.test_saved_step_reuses_outputs_and_rejects_tampering",
+      "status": "passed",
+      "seconds": 0.0061,
+      "detail": ""
+    },
+    {
+      "id": "test_look_preview.LookPreviewTests.test_only_receipt_files_are_served_and_changed_modules_fail",
+      "status": "passed",
+      "seconds": 0.0023,
+      "detail": ""
+    },
+    {
+      "id": "test_look_preview.LookPreviewTests.test_receipt_path_escape_fails",
+      "status": "passed",
+      "seconds": 0.0016,
+      "detail": ""
+    },
+    {
+      "id": "test_media_compose.CompositionNativeTests.test_original_changed_during_composition_invalidates_result",
+      "status": "passed",
+      "seconds": 4.6883,
+      "detail": ""
+    },
+    {
+      "id": "test_media_compose.CompositionNativeTests.test_two_public_editions_preserve_elementary_picture_payloads_and_requested_contacts",
+      "status": "passed",
+      "seconds": 6.5312,
+      "detail": ""
+    },
+    {
+      "id": "test_media_compose.ContactTests.test_out_of_range_nonfinite_and_fractional_indices_fail",
+      "status": "passed",
+      "seconds": 0.0006,
+      "detail": ""
+    },
+    {
+      "id": "test_media_compose.ContactTests.test_requested_times_and_exact_boundaries",
+      "status": "passed",
+      "seconds": 0.0005,
+      "detail": ""
+    },
+    {
+      "id": "test_media_compose.RigProofTests.test_explicit_revision_context_never_reads_changed_working_scene",
+      "status": "passed",
+      "seconds": 0.3227,
+      "detail": ""
+    },
+    {
+      "id": "test_media_compose.RigProofTests.test_malformed_variant_region_or_inventory_rejected_without_output",
+      "status": "passed",
+      "seconds": 0.9363,
+      "detail": ""
+    },
+    {
+      "id": "test_media_compose.RigProofTests.test_variant_overrides_preserve_canonical_scene_and_expose_contamination",
+      "status": "passed",
+      "seconds": 0.3349,
+      "detail": ""
+    },
+    {
+      "id": "test_media_operations.MediaOperationsTests.test_file_identity_streams_large_and_empty_files",
+      "status": "passed",
+      "seconds": 0.0044,
+      "detail": ""
+    },
+    {
+      "id": "test_media_operations.MediaOperationsTests.test_invalid_edition_inputs_never_reach_renderer",
+      "status": "passed",
+      "seconds": 0.0009,
+      "detail": ""
+    },
+    {
+      "id": "test_media_operations.MediaOperationsTests.test_runtime_failure_does_not_record_an_edition",
+      "status": "passed",
+      "seconds": 0.0008,
+      "detail": ""
+    },
+    {
+      "id": "test_media_operations.MediaOperationsTests.test_typed_jobs_and_saved_cli_commands_have_identical_options",
+      "status": "passed",
+      "seconds": 0.0668,
+      "detail": ""
+    },
+    {
+      "id": "test_media_operations.MediaOperationsTests.test_video_rejects_truncated_pcm_before_starting_native_encoder",
+      "status": "passed",
+      "seconds": 0.0269,
+      "detail": ""
+    },
+    {
+      "id": "test_midnight_authoring.AuthoringTests.test_clock_transaction_dry_run_invalid_batch_and_restore",
+      "status": "passed",
+      "seconds": 0.6015,
+      "detail": ""
+    },
+    {
+      "id": "test_midnight_authoring.AuthoringTests.test_fulfillment_checks_real_files_and_keeps_scope_and_reviews",
+      "status": "passed",
+      "seconds": 0.0577,
+      "detail": ""
+    },
+    {
+      "id": "test_midnight_authoring.AuthoringTests.test_initializer_is_atomic_explicit_and_does_not_capture",
+      "status": "passed",
+      "seconds": 0.1495,
+      "detail": ""
+    },
+    {
+      "id": "test_midnight_authoring.QueryTests.test_absent_or_unverifiable_owner_never_appears_active",
+      "status": "passed",
+      "seconds": 0.0098,
+      "detail": ""
+    },
+    {
+      "id": "test_midnight_authoring.QueryTests.test_large_reports_are_not_returned_and_open_feedback_remains_actionable",
+      "status": "passed",
+      "seconds": 0.0836,
+      "detail": ""
+    },
+    {
+      "id": "test_midnight_authoring.QueryTests.test_run_records_retain_handles_without_duplicating_media_samples",
+      "status": "passed",
+      "seconds": 0.0084,
+      "detail": ""
+    },
+    {
+      "id": "test_midnight_media.MidnightMediaTests.test_benchmark_records_actual_view_work_and_unknown_native_cost",
+      "status": "passed",
+      "seconds": 0.9035,
+      "detail": ""
+    },
+    {
+      "id": "test_midnight_media.MidnightMediaTests.test_cel_comparison_preserves_geometry_and_rejects_companion_conflicts",
+      "status": "passed",
+      "seconds": 0.3629,
+      "detail": ""
+    },
+    {
+      "id": "test_midnight_media.MidnightMediaTests.test_trim_compiles_exact_pixels_and_rejects_source_tampering",
+      "status": "passed",
+      "seconds": 0.1406,
+      "detail": ""
+    },
+    {
+      "id": "test_model_instances.InstanceTests.test_adoption_old_pin_reset_and_restore",
+      "status": "passed",
+      "seconds": 1.4147,
+      "detail": ""
+    },
+    {
+      "id": "test_model_instances.InstanceTests.test_changed_input_at_materialization_cannot_select_partial_bundle",
+      "status": "passed",
+      "seconds": 0.3147,
+      "detail": ""
+    },
+    {
+      "id": "test_model_instances.InstanceTests.test_changed_socket_drawing_and_nested_dependency_interfaces_conflict",
+      "status": "passed",
+      "seconds": 2.2849,
+      "detail": ""
+    },
+    {
+      "id": "test_model_instances.InstanceTests.test_drift_stale_pin_and_outside_receiver_envelope_reject",
+      "status": "passed",
+      "seconds": 1.0835,
+      "detail": ""
+    },
+    {
+      "id": "test_model_instances.InstanceTests.test_finite_receiver_checks_last_authored_frame_when_seconds_product_rounds_down",
+      "status": "passed",
+      "seconds": 0.2154,
+      "detail": ""
+    },
+    {
+      "id": "test_model_instances.InstanceTests.test_historical_revision_detects_selection_switch_without_config_origin",
+      "status": "passed",
+      "seconds": 0.5193,
+      "detail": ""
+    },
+    {
+      "id": "test_model_instances.InstanceTests.test_late_invalid_mount_and_materialization_interrupt_leave_pointer_intact",
+      "status": "passed",
+      "seconds": 0.5482,
+      "detail": ""
+    },
+    {
+      "id": "test_model_instances.InstanceTests.test_legacy_picture_watch_tracks_selected_package_closure",
+      "status": "passed",
+      "seconds": 0.581,
+      "detail": ""
+    },
+    {
+      "id": "test_model_instances.InstanceTests.test_minimal_static_state_adopts_defaults_and_unknown_record_fields_reject",
+      "status": "passed",
+      "seconds": 1.0136,
+      "detail": ""
+    },
+    {
+      "id": "test_model_instances.InstanceTests.test_mount_uses_real_reparent_and_preserves_all_corners",
+      "status": "passed",
+      "seconds": 0.9405,
+      "detail": ""
+    },
+    {
+      "id": "test_model_instances.InstanceTests.test_ordinary_edit_restore_and_independent_move_variant_hide",
+      "status": "passed",
+      "seconds": 2.3162,
+      "detail": ""
+    },
+    {
+      "id": "test_model_instances.InstanceTests.test_project_root_checker_legacy_generation_and_escape",
+      "status": "passed",
+      "seconds": 0.8307,
+      "detail": ""
+    },
+    {
+      "id": "test_model_instances.InstanceTests.test_raster_provider_pixels_and_revision_model_edges",
+      "status": "passed",
+      "seconds": 4.1042,
+      "detail": ""
+    },
+    {
+      "id": "test_model_instances.InstanceTests.test_recomputed_fingerprint_cannot_disguise_swapped_mapping_or_pack",
+      "status": "passed",
+      "seconds": 1.5661,
+      "detail": ""
+    },
+    {
+      "id": "test_model_instances.InstanceTests.test_restore_pre_instance_scene_reuses_retained_exact_package",
+      "status": "passed",
+      "seconds": 1.206,
+      "detail": ""
+    },
+    {
+      "id": "test_model_instances.InstanceTests.test_two_instances_dry_save_retry_and_portable_reopen",
+      "status": "passed",
+      "seconds": 1.8874,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_competing_controls",
+      "status": "passed",
+      "seconds": 0.1082,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_competing_forwarders",
+      "status": "passed",
+      "seconds": 0.1097,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_concurrent_publisher_is_preserved",
+      "status": "passed",
+      "seconds": 0.2034,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_duplicate_ids",
+      "status": "passed",
+      "seconds": 0.0524,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_immutable_package_detects_added_and_modified_sources",
+      "status": "passed",
+      "seconds": 0.0901,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_interrupted_materialization_publishes_nothing",
+      "status": "passed",
+      "seconds": 0.0958,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_missing_and_changed_pins",
+      "status": "passed",
+      "seconds": 0.0796,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_mount_cycle",
+      "status": "passed",
+      "seconds": 0.1159,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_nonpaint_root",
+      "status": "passed",
+      "seconds": 0.059,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_preserves_occupied_output",
+      "status": "passed",
+      "seconds": 0.0998,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_proof_masks_stale_state_and_portable_entry",
+      "status": "passed",
+      "seconds": 4.3662,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_public_build_inspect_without_project",
+      "status": "passed",
+      "seconds": 0.1001,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_public_lower_is_deterministic_and_engine_valid",
+      "status": "passed",
+      "seconds": 0.4324,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_rebuild_geometry_and_atlas",
+      "status": "passed",
+      "seconds": 0.0152,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_reopens_materialized_closure_without_original",
+      "status": "passed",
+      "seconds": 0.3348,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_repeated_identical_nested_definition_has_distinct_tuples",
+      "status": "passed",
+      "seconds": 0.3315,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_same_version_different_bytes_in_closure_rejects",
+      "status": "passed",
+      "seconds": 0.0618,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_shear_rejected",
+      "status": "passed",
+      "seconds": 0.0475,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_source_and_symlink_escape",
+      "status": "passed",
+      "seconds": 0.0414,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_state_writers_and_unknown_overrides",
+      "status": "passed",
+      "seconds": 0.2908,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_unknown_fields_and_cycles_are_not_silently_frozen",
+      "status": "passed",
+      "seconds": 0.0461,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_unmounted_nonroot",
+      "status": "passed",
+      "seconds": 0.062,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_variant_order_census",
+      "status": "passed",
+      "seconds": 0.1108,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_variant_registration",
+      "status": "passed",
+      "seconds": 0.1154,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_wrong_model_pivot",
+      "status": "passed",
+      "seconds": 0.1093,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_wrong_registration",
+      "status": "passed",
+      "seconds": 0.1099,
+      "detail": ""
+    },
+    {
+      "id": "test_models.ModelTests.test_wrong_socket",
+      "status": "passed",
+      "seconds": 0.1116,
+      "detail": ""
+    },
+    {
+      "id": "test_native_sources.NativeCommandTests.test_split_commands_decode_pcm_and_refuse_partial_raw_streams",
+      "status": "passed",
+      "seconds": 4.0122,
+      "detail": ""
+    },
+    {
+      "id": "test_native_sources.NativeSourceTests.test_compiler_uses_all_units_and_header_changes_get_a_fresh_cache",
+      "status": "passed",
+      "seconds": 0.0061,
+      "detail": ""
+    },
+    {
+      "id": "test_native_sources.NativeSourceTests.test_manifest_covers_headers_additions_removals_and_names",
+      "status": "passed",
+      "seconds": 0.0028,
+      "detail": ""
+    },
+    {
+      "id": "test_preparation.PreparationTests.test_build_is_immutable_rebuildable_and_contains_compiler_mapping",
+      "status": "passed",
+      "seconds": 0.1303,
+      "detail": ""
+    },
+    {
+      "id": "test_preparation.PreparationTests.test_changed_source_and_changed_artifact_are_rejected",
+      "status": "passed",
+      "seconds": 0.0662,
+      "detail": ""
+    },
+    {
+      "id": "test_preparation.PreparationTests.test_imported_soft_alpha_survives_until_explicit_polygon_overrides",
+      "status": "passed",
+      "seconds": 0.0047,
+      "detail": ""
+    },
+    {
+      "id": "test_preparation.PreparationTests.test_invalid_recipes_and_coordinate_bounds_fail_before_publication",
+      "status": "passed",
+      "seconds": 0.0048,
+      "detail": ""
+    },
+    {
+      "id": "test_preparation.PreparationTests.test_live_preview_and_saved_build_use_identical_raster_bytes",
+      "status": "passed",
+      "seconds": 0.0658,
+      "detail": ""
+    },
+    {
+      "id": "test_preparation.PreparationTests.test_masks_are_separate_and_fixed_foreground_restores_rest_pixels",
+      "status": "passed",
+      "seconds": 0.0023,
+      "detail": ""
+    },
+    {
+      "id": "test_preparation.PreparationTests.test_mid_build_source_change_and_concurrent_destination_leave_no_partial_output",
+      "status": "passed",
+      "seconds": 0.0649,
+      "detail": ""
+    },
+    {
+      "id": "test_preparation.PreparationTests.test_preview_http_rejects_other_origins_paths_and_changed_sources",
+      "status": "passed",
+      "seconds": 0.5755,
+      "detail": ""
+    },
+    {
+      "id": "test_preparation.PreparationTests.test_public_cli_build_and_shared_renderer_preserve_rest_and_move_cutout",
+      "status": "passed",
+      "seconds": 1.0986,
+      "detail": ""
+    },
+    {
+      "id": "test_preparation.PreparationTests.test_registration_uses_existing_affine_and_reports_uncovered_repair",
+      "status": "passed",
+      "seconds": 0.0044,
+      "detail": ""
+    },
+    {
+      "id": "test_preparation.PreparationTests.test_subtractive_polygon_leaves_a_hole_without_changing_other_masks",
+      "status": "passed",
+      "seconds": 0.0023,
+      "detail": ""
+    },
+    {
+      "id": "test_production_cli.ProductionTests.test_asset_and_library_inspection_discover_the_current_project",
+      "status": "passed",
+      "seconds": 0.5915,
+      "detail": ""
+    },
+    {
+      "id": "test_production_cli.ProductionTests.test_asset_proof_keeps_original_and_exposes_actual_pixels",
+      "status": "passed",
+      "seconds": 0.6054,
+      "detail": ""
+    },
+    {
+      "id": "test_production_cli.ProductionTests.test_batch_dry_run_stale_hash_atomic_failure_and_restore",
+      "status": "passed",
+      "seconds": 1.1304,
+      "detail": ""
+    },
+    {
+      "id": "test_production_cli.ProductionTests.test_completion_accepts_produced_scope_but_rejects_changed_or_revision_evidence",
+      "status": "passed",
+      "seconds": 0.6974,
+      "detail": ""
+    },
+    {
+      "id": "test_production_cli.ProductionTests.test_completion_check_catches_missing_scope_without_changing_integrity_checks",
+      "status": "passed",
+      "seconds": 0.6965,
+      "detail": ""
+    },
+    {
+      "id": "test_production_cli.ProductionTests.test_cycles_unknown_assets_and_fake_completion_fail",
+      "status": "passed",
+      "seconds": 0.4547,
+      "detail": ""
+    },
+    {
+      "id": "test_production_cli.ProductionTests.test_deferring_a_backing_does_not_fulfill_another_objects_dependency",
+      "status": "passed",
+      "seconds": 0.3141,
+      "detail": ""
+    },
+    {
+      "id": "test_production_cli.ProductionTests.test_direct_scene_change_during_batch_validation_is_not_overwritten",
+      "status": "passed",
+      "seconds": 0.3929,
+      "detail": ""
+    },
+    {
+      "id": "test_production_cli.ProductionTests.test_library_search_exposes_flame_study",
+      "status": "passed",
+      "seconds": 0.4514,
+      "detail": ""
+    },
+    {
+      "id": "test_production_cli.ProductionTests.test_missing_work_is_visible_but_not_integrity_failure",
+      "status": "passed",
+      "seconds": 0.447,
+      "detail": ""
+    },
+    {
+      "id": "test_production_cli.ProductionTests.test_named_landmark_compilation_portable_cache_and_source_change",
+      "status": "passed",
+      "seconds": 0.3297,
+      "detail": ""
+    },
+    {
+      "id": "test_production_cli.ProductionTests.test_required_scope_cannot_be_dismissed_or_claimed_without_parts",
+      "status": "passed",
+      "seconds": 0.6977,
+      "detail": ""
+    },
+    {
+      "id": "test_production_cli.ProductionTests.test_review_requesting_revision_remains_actionable",
+      "status": "passed",
+      "seconds": 0.3258,
+      "detail": ""
+    },
+    {
+      "id": "test_production_cli.ProductionTests.test_track_and_full_inspection",
+      "status": "passed",
+      "seconds": 0.8426,
+      "detail": ""
+    },
+    {
+      "id": "test_production_cli.ProductionTests.test_transitive_dependencies_and_missing_source_evidence",
+      "status": "passed",
+      "seconds": 0.3189,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_activity_adapter_enforces_provider_timing_and_exact_action_realization",
+      "status": "passed",
+      "seconds": 0.138,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_arbitrary_report_wrong_view_and_changed_png_rejected",
+      "status": "passed",
+      "seconds": 0.8702,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_captured_dependency_integrity_remains_required_but_material_stays_readable",
+      "status": "passed",
+      "seconds": 0.2968,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_captured_inputs_isolate_stale_controls_without_working_fallback",
+      "status": "passed",
+      "seconds": 0.2414,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_changed_during_assessment_invalidates_results_and_reused_inputs",
+      "status": "passed",
+      "seconds": 0.142,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_changed_source_and_missing_required_art_expectation_are_gaps",
+      "status": "passed",
+      "seconds": 0.2939,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_cli_overview_and_iteration_use_identical_blocked_ids_drafts_renderable",
+      "status": "passed",
+      "seconds": 0.4743,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_compatibility_exports_retain_their_dedicated_owners",
+      "status": "passed",
+      "seconds": 0.091,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_empty_missing_and_omitted_expectations_never_vacuously_pass",
+      "status": "passed",
+      "seconds": 0.1423,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_full_native_iteration_registers_exact_movies_and_partial_review_stays_presentable",
+      "status": "passed",
+      "seconds": 8.5921,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_invalid_components_and_legacy_plan_absence_remain_scoped",
+      "status": "passed",
+      "seconds": 0.1546,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_layout_animation_export_applicability_and_real_raster_registration",
+      "status": "passed",
+      "seconds": 1.0832,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_legacy_gate_verdict_does_not_require_canonical_plan_adoption",
+      "status": "passed",
+      "seconds": 0.1349,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_missing_wrong_view_stale_evidence_and_changed_sources_are_not_success",
+      "status": "passed",
+      "seconds": 0.9318,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_native_movie_registration_decodes_once_and_rejects_changed_cache",
+      "status": "passed",
+      "seconds": 6.3287,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_persisted_report_identity_projection_and_exit_compatibility",
+      "status": "passed",
+      "seconds": 0.6199,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_pure_cli_reads_on_nonwritable_project_do_not_acquire_writer_lock",
+      "status": "passed",
+      "seconds": 0.458,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_pure_cold_and_warm_movie_cache_never_builds_native_runtime",
+      "status": "passed",
+      "seconds": 0.8522,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_readiness_reports_pin_exact_inputs_and_reject_mid_check_edits",
+      "status": "passed",
+      "seconds": 0.2507,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_recorded_observation_is_exact_and_does_not_transfer_to_other_view",
+      "status": "passed",
+      "seconds": 1.2729,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_removed_view_and_evidence_race_are_explicitly_diagnosed",
+      "status": "passed",
+      "seconds": 0.7594,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_review_draft_preserves_unperformed_observations_and_binds_plan",
+      "status": "passed",
+      "seconds": 0.7129,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_scoped_inputs_preserve_intent_inventory_and_pipeline_without_runtime",
+      "status": "passed",
+      "seconds": 0.1007,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_selected_movie_identity_survives_broken_working_scene_without_writes",
+      "status": "passed",
+      "seconds": 0.8909,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_small_review_movie_is_presented_without_claiming_final_evidence",
+      "status": "passed",
+      "seconds": 6.6145,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_stage_view_matrix_keeps_cli_overview_and_preflight_in_parity",
+      "status": "passed",
+      "seconds": 7.3723,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_stale_plan_wrong_revision_and_captured_identity",
+      "status": "passed",
+      "seconds": 1.2007,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_two_baked_labels_do_not_prove_independent_control",
+      "status": "passed",
+      "seconds": 0.1459,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_typed_but_non_media_edition_cannot_satisfy_movie",
+      "status": "passed",
+      "seconds": 0.4136,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_unperformed_expectation_cannot_be_a_passing_review",
+      "status": "passed",
+      "seconds": 0.3249,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_verifier_boundary_preserves_history_reuse_and_rejects_failures",
+      "status": "passed",
+      "seconds": 1.0445,
+      "detail": ""
+    },
+    {
+      "id": "test_production_coverage.CoverageTests.test_zero_warning_activity_receipt_is_not_an_observation",
+      "status": "passed",
+      "seconds": 0.2801,
+      "detail": ""
+    },
+    {
+      "id": "test_production_plan.PlanTests.test_binding_validates_declared_and_actual_inventory_part",
+      "status": "passed",
+      "seconds": 0.0016,
+      "detail": ""
+    },
+    {
+      "id": "test_production_plan.PlanTests.test_cli_replay_dry_apply_check_complexity_and_migrate",
+      "status": "passed",
+      "seconds": 0.1693,
+      "detail": ""
+    },
+    {
+      "id": "test_production_plan.PlanTests.test_dry_run_expected_hash_history_and_explicit_restore",
+      "status": "passed",
+      "seconds": 0.0092,
+      "detail": ""
+    },
+    {
+      "id": "test_production_plan.PlanTests.test_migration_pins_preserved_copies_as_live_inventory_evolves",
+      "status": "passed",
+      "seconds": 0.0069,
+      "detail": ""
+    },
+    {
+      "id": "test_production_plan.PlanTests.test_migration_preserves_originals_reports_contradictions_and_mapping",
+      "status": "passed",
+      "seconds": 0.0055,
+      "detail": ""
+    },
+    {
+      "id": "test_production_plan.PlanTests.test_required_inventory_cannot_disappear_from_new_scope",
+      "status": "passed",
+      "seconds": 0.0016,
+      "detail": ""
+    },
+    {
+      "id": "test_production_plan.PlanTests.test_source_identity_and_outside_paths",
+      "status": "passed",
+      "seconds": 0.002,
+      "detail": ""
+    },
+    {
+      "id": "test_production_plan.PlanTests.test_strict_contract_missing_extra_duplicate_nonfinite_and_types",
+      "status": "passed",
+      "seconds": 0.002,
+      "detail": ""
+    },
+    {
+      "id": "test_render_services.NativeServiceTests.test_failed_native_build_never_installs_binary",
+      "status": "passed",
+      "seconds": 0.0053,
+      "detail": ""
+    },
+    {
+      "id": "test_render_services.NativeServiceTests.test_native_build_reuses_exact_source_platform_compiler_identity",
+      "status": "passed",
+      "seconds": 0.0044,
+      "detail": ""
+    },
+    {
+      "id": "test_render_services.NativeServiceTests.test_requested_contact_missing_fails_with_provenance_and_saved_report",
+      "status": "passed",
+      "seconds": 0.0033,
+      "detail": ""
+    },
+    {
+      "id": "test_render_services.NativeServiceTests.test_transport_preserves_json_process_tracking_and_failure_contract",
+      "status": "passed",
+      "seconds": 0.0013,
+      "detail": ""
+    },
+    {
+      "id": "test_render_services.RenderPlanTests.test_legacy_imports_resolve_to_public_owners",
+      "status": "passed",
+      "seconds": 0.001,
+      "detail": ""
+    },
+    {
+      "id": "test_render_services.RenderPlanTests.test_video_planning_captures_pcm_without_building_or_rendering",
+      "status": "passed",
+      "seconds": 0.005,
+      "detail": ""
+    },
+    {
+      "id": "test_rendering.CapabilityTests.test_invalid_explicit_canvas_override_does_not_silently_fall_back",
+      "status": "passed",
+      "seconds": 0.0508,
+      "detail": ""
+    },
+    {
+      "id": "test_rendering.CapabilityTests.test_media_changed_during_decode_invalidates_report",
+      "status": "passed",
+      "seconds": 0.0029,
+      "detail": ""
+    },
+    {
+      "id": "test_rendering.CapabilityTests.test_unsupported_native_platform_is_explicit",
+      "status": "passed",
+      "seconds": 0.0009,
+      "detail": ""
+    },
+    {
+      "id": "test_rendering.NativeTests.test_preroll_pcm_mux_exact_presentation_and_mismatch_failure",
+      "status": "passed",
+      "seconds": 5.5365,
+      "detail": ""
+    },
+    {
+      "id": "test_rendering.RasterTests.test_asset_tamper_and_path_escape_reject_before_output",
+      "status": "passed",
+      "seconds": 0.6839,
+      "detail": ""
+    },
+    {
+      "id": "test_rendering.RasterTests.test_disabling_a_visible_track_hides_every_frame",
+      "status": "passed",
+      "seconds": 0.3632,
+      "detail": ""
+    },
+    {
+      "id": "test_rendering.RasterTests.test_frame_is_deterministic_uses_config_and_preserves_scene",
+      "status": "passed",
+      "seconds": 0.7115,
+      "detail": ""
+    },
+    {
+      "id": "test_rendering.RasterTests.test_invalid_ratio_unknown_effect_and_fractional_frame_reject_before_output",
+      "status": "passed",
+      "seconds": 0.0114,
+      "detail": ""
+    },
+    {
+      "id": "test_rendering.RasterTests.test_proof_contains_actual_speed_and_distinct_disabled_variant",
+      "status": "passed",
+      "seconds": 0.3611,
+      "detail": ""
+    },
+    {
+      "id": "test_rendering.RasterTests.test_selected_audio_is_required_and_exact_not_synthesized",
+      "status": "passed",
+      "seconds": 0.0064,
+      "detail": ""
+    },
+    {
+      "id": "test_review_packets.PacketTests.test_atomic_init_rejects_missing_pcm_and_no_partial_bundle_on_failure",
+      "status": "passed",
+      "seconds": 0.3207,
+      "detail": ""
+    },
+    {
+      "id": "test_review_packets.PacketTests.test_native_packet_resume_preserves_selection_and_detects_tampering",
+      "status": "passed",
+      "seconds": 8.2083,
+      "detail": ""
+    },
+    {
+      "id": "test_review_packets.PacketTests.test_native_recovery_at_render_and_verification_boundaries",
+      "status": "passed",
+      "seconds": 13.478,
+      "detail": ""
+    },
+    {
+      "id": "test_review_packets.PacketTests.test_owned_cancellation_requested_during_native_phases_and_resume",
+      "status": "passed",
+      "seconds": 19.2476,
+      "detail": ""
+    },
+    {
+      "id": "test_revision_contracts.RevisionContractTests.test_all_previous_public_functions_and_constants_are_aliases",
+      "status": "passed",
+      "seconds": 0.2866,
+      "detail": ""
+    },
+    {
+      "id": "test_revision_contracts.RevisionContractTests.test_capture_and_both_edition_versions_retain_exact_baseline_bytes",
+      "status": "passed",
+      "seconds": 0.3159,
+      "detail": ""
+    },
+    {
+      "id": "test_revision_contracts.RevisionContractTests.test_identifier_and_field_validation_remain_import_compatible",
+      "status": "passed",
+      "seconds": 0.0016,
+      "detail": ""
+    },
+    {
+      "id": "test_revision_contracts.RevisionContractTests.test_persisted_seals_are_kind_and_version_specific_and_do_not_rewrite",
+      "status": "passed",
+      "seconds": 0.0026,
+      "detail": ""
+    },
+    {
+      "id": "test_revision_contracts.RevisionContractTests.test_record_and_reference_consumers_do_not_load_revision_services",
+      "status": "passed",
+      "seconds": 0.1567,
+      "detail": ""
+    },
+    {
+      "id": "test_revision_contracts.RevisionContractTests.test_reference_identity_retains_roles_order_and_stale_byte_checks",
+      "status": "passed",
+      "seconds": 0.0028,
+      "detail": ""
+    },
+    {
+      "id": "test_revision_contracts.RevisionContractTests.test_reference_paths_keep_containment_and_distinct_resolution_rules",
+      "status": "passed",
+      "seconds": 0.0023,
+      "detail": ""
+    },
+    {
+      "id": "test_revision_contracts.RevisionContractTests.test_seals_preserve_legacy_unicode_nan_and_existing_payload_policy",
+      "status": "passed",
+      "seconds": 0.0016,
+      "detail": ""
+    },
+    {
+      "id": "test_revision_contracts.RevisionContractTests.test_tampering_and_noninteger_versions_reject_even_with_a_valid_seal",
+      "status": "passed",
+      "seconds": 0.003,
+      "detail": ""
+    },
+    {
+      "id": "test_revisions.RevisionTests.test_bad_paths_missing_sources_and_unknown_contracts_fail",
+      "status": "passed",
+      "seconds": 0.1399,
+      "detail": ""
+    },
+    {
+      "id": "test_revisions.RevisionTests.test_capture_freezes_controls_and_ignores_new_working_drafts",
+      "status": "passed",
+      "seconds": 0.1678,
+      "detail": ""
+    },
+    {
+      "id": "test_revisions.RevisionTests.test_capture_selection_digest_and_concurrent_change_fail_without_promotion",
+      "status": "passed",
+      "seconds": 0.2515,
+      "detail": ""
+    },
+    {
+      "id": "test_revisions.RevisionTests.test_capture_validates_the_exact_scene_bytes_it_snapshots",
+      "status": "passed",
+      "seconds": 0.1427,
+      "detail": ""
+    },
+    {
+      "id": "test_revisions.RevisionTests.test_captured_scene_manifest_and_pipeline_changes_are_detected",
+      "status": "passed",
+      "seconds": 0.3047,
+      "detail": ""
+    },
+    {
+      "id": "test_revisions.RevisionTests.test_cli_draft_status_handoff_and_nonzero_bad_check",
+      "status": "passed",
+      "seconds": 0.2568,
+      "detail": ""
+    },
+    {
+      "id": "test_revisions.RevisionTests.test_compiler_mapping_cannot_be_relabelled_only_in_catalog",
+      "status": "passed",
+      "seconds": 0.1447,
+      "detail": ""
+    },
+    {
+      "id": "test_revisions.RevisionTests.test_compose_cannot_relabel_unbound_picture_as_selected_revision",
+      "status": "passed",
+      "seconds": 0.2858,
+      "detail": ""
+    },
+    {
+      "id": "test_revisions.RevisionTests.test_edition_rechecks_media_inputs_before_registering",
+      "status": "passed",
+      "seconds": 0.2282,
+      "detail": ""
+    },
+    {
+      "id": "test_revisions.RevisionTests.test_editions_have_separate_output_freshness_and_exact_human_membership",
+      "status": "passed",
+      "seconds": 0.7347,
+      "detail": ""
+    },
+    {
+      "id": "test_revisions.RevisionTests.test_image_change_stales_picture_and_preserves_independent_sound",
+      "status": "passed",
+      "seconds": 0.2858,
+      "detail": ""
+    },
+    {
+      "id": "test_revisions.RevisionTests.test_legacy_reviews_not_migrated_and_edition_needs_its_own_evidence",
+      "status": "passed",
+      "seconds": 0.3126,
+      "detail": ""
+    },
+    {
+      "id": "test_revisions.RevisionTests.test_master_without_processing_record_cannot_pass_mix",
+      "status": "passed",
+      "seconds": 0.1544,
+      "detail": ""
+    },
+    {
+      "id": "test_revisions.RevisionTests.test_unconfigured_capture_preserves_explicit_legacy_selection",
+      "status": "passed",
+      "seconds": 0.1593,
+      "detail": ""
+    },
+    {
+      "id": "test_revisions.RevisionTests.test_wav_change_detected_when_recipe_and_reports_unchanged",
+      "status": "passed",
+      "seconds": 0.2756,
+      "detail": ""
+    },
+    {
+      "id": "test_rig_proof_outputs.ProofOutputIntegrityTests.test_context_difference_and_comparison_names_are_valid_without_overwriting",
+      "status": "passed",
+      "seconds": 0.376,
+      "detail": ""
+    },
+    {
+      "id": "test_rig_proof_outputs.ProofOutputIntegrityTests.test_hyphenated_ids_do_not_alias_concatenated_sample_and_region_names",
+      "status": "passed",
+      "seconds": 0.3476,
+      "detail": ""
+    },
+    {
+      "id": "test_roadmap.RoadmapTests.test_capability_index_rejects_stale_routes_and_never_registers_planned_work",
+      "status": "passed",
+      "seconds": 0.0037,
+      "detail": ""
+    },
+    {
+      "id": "test_roadmap.RoadmapTests.test_dependencies_sources_and_duplicate_keys_fail_without_calling_commands",
+      "status": "passed",
+      "seconds": 0.0056,
+      "detail": ""
+    },
+    {
+      "id": "test_run_control.RunControlTests.test_process_identity_and_reused_pid_fail_closed",
+      "status": "passed",
+      "seconds": 0.0104,
+      "detail": ""
+    },
+    {
+      "id": "test_run_control.RunControlTests.test_progress_is_separate_and_cancellation_reaps_owned_child",
+      "status": "passed",
+      "seconds": 0.5419,
+      "detail": ""
+    },
+    {
+      "id": "test_run_control.RunControlTests.test_reconcile_absent_owner_preserves_completed_output_and_selection",
+      "status": "passed",
+      "seconds": 0.0099,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_authoring.SceneAuthoringTests.test_catalog_cannot_relabel_or_omit_pack_source_provenance",
+      "status": "passed",
+      "seconds": 0.0289,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_authoring.SceneAuthoringTests.test_change_after_resolution_is_detected_before_save",
+      "status": "passed",
+      "seconds": 0.0365,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_authoring.SceneAuthoringTests.test_changed_pack_or_catalog_mapping_is_rejected",
+      "status": "passed",
+      "seconds": 0.0275,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_authoring.SceneAuthoringTests.test_explicit_bound_mapping_supports_immutable_legacy_base",
+      "status": "passed",
+      "seconds": 0.1257,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_authoring.SceneAuthoringTests.test_kit_uses_shared_timing_and_does_not_modify_scene",
+      "status": "passed",
+      "seconds": 0.1399,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_authoring.SceneAuthoringTests.test_real_mapped_compiler_outputs_resolve_and_place_without_mutating_inputs",
+      "status": "passed",
+      "seconds": 0.0914,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_authoring.SceneAuthoringTests.test_stale_reference_wrong_dimensions_and_escape_fail",
+      "status": "passed",
+      "seconds": 0.0233,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_authoring_cli.AuthoringCliTests.test_bad_reference_identity_fails_publicly_before_any_scene_write",
+      "status": "passed",
+      "seconds": 0.1559,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_authoring_cli.AuthoringCliTests.test_batch_and_track_input_changes_abort_without_history",
+      "status": "passed",
+      "seconds": 0.172,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_authoring_cli.AuthoringCliTests.test_catalog_and_configuration_changed_during_validation_never_save",
+      "status": "passed",
+      "seconds": 0.2201,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_authoring_cli.AuthoringCliTests.test_changed_history_snapshot_is_not_restored_or_replaced",
+      "status": "passed",
+      "seconds": 0.3267,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_authoring_cli.AuthoringCliTests.test_invalid_track_shape_is_a_structured_error",
+      "status": "passed",
+      "seconds": 0.1545,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_authoring_cli.AuthoringCliTests.test_public_apply_routes_source_placement_and_keeps_legacy_dry_run_fields",
+      "status": "passed",
+      "seconds": 0.2325,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_authoring_cli.AuthoringCliTests.test_public_place_dry_run_commit_stale_hash_and_restore",
+      "status": "passed",
+      "seconds": 0.7613,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_authoring_cli.AuthoringCliTests.test_public_reparent_reports_exact_pose_and_preserves_gesture_timing",
+      "status": "passed",
+      "seconds": 0.3829,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_authoring_cli.AuthoringCliTests.test_public_timing_is_read_only_and_reports_actual_cell_tracks",
+      "status": "passed",
+      "seconds": 0.2055,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_authoring_cli.AuthoringCliTests.test_retargeting_scene_symlink_with_identical_bytes_is_stale",
+      "status": "passed",
+      "seconds": 0.0986,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_authoring_cli.AuthoringCliTests.test_simple_edits_and_restore_reject_concurrent_project_changes",
+      "status": "passed",
+      "seconds": 0.9298,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_authoring_cli.AuthoringCliTests.test_source_changed_after_evaluator_never_saves_or_creates_history",
+      "status": "passed",
+      "seconds": 0.1207,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_runtime.SceneRuntimeTests.test_evaluator_rejections_keep_invalid_input_classification",
+      "status": "passed",
+      "seconds": 0.0013,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_runtime.SceneRuntimeTests.test_launch_failure_or_unsuccessful_exit_is_runtime_error",
+      "status": "passed",
+      "seconds": 0.0015,
+      "detail": ""
+    },
+    {
+      "id": "test_scene_runtime.SceneRuntimeTests.test_malformed_responses_report_runtime_failure_through_cli",
+      "status": "passed",
+      "seconds": 0.1488,
+      "detail": ""
+    },
+    {
+      "id": "test_studio.StudioTests.test_agent_cannot_substitute_for_required_human_observation",
+      "status": "passed",
+      "seconds": 0.0935,
+      "detail": ""
+    },
+    {
+      "id": "test_studio.StudioTests.test_dependency_order_enforced",
+      "status": "passed",
+      "seconds": 0.0117,
+      "detail": ""
+    },
+    {
+      "id": "test_studio.StudioTests.test_evidence_change_invalidates_review",
+      "status": "passed",
+      "seconds": 0.0195,
+      "detail": ""
+    },
+    {
+      "id": "test_studio.StudioTests.test_existing_project_protected",
+      "status": "passed",
+      "seconds": 0.0062,
+      "detail": ""
+    },
+    {
+      "id": "test_studio.StudioTests.test_explicit_selected_filename_watches_follow_generation",
+      "status": "passed",
+      "seconds": 0.1371,
+      "detail": ""
+    },
+    {
+      "id": "test_studio.StudioTests.test_final_change_clears_release_readiness",
+      "status": "passed",
+      "seconds": 0.1273,
+      "detail": ""
+    },
+    {
+      "id": "test_studio.StudioTests.test_human_review_requires_exact_final_file_and_feedback",
+      "status": "passed",
+      "seconds": 0.0114,
+      "detail": ""
+    },
+    {
+      "id": "test_studio.StudioTests.test_missing_evidence_rejected",
+      "status": "passed",
+      "seconds": 0.0106,
+      "detail": ""
+    },
+    {
+      "id": "test_studio.StudioTests.test_new_project_has_no_passes",
+      "status": "passed",
+      "seconds": 0.01,
+      "detail": ""
+    },
+    {
+      "id": "test_studio.StudioTests.test_new_receipt_invalidates_dependent_and_preserves_history",
+      "status": "passed",
+      "seconds": 0.0411,
+      "detail": ""
+    },
+    {
+      "id": "test_studio.StudioTests.test_receipt_edit_detected",
+      "status": "passed",
+      "seconds": 0.0196,
+      "detail": ""
+    },
+    {
+      "id": "test_studio.StudioTests.test_reference_paths_cannot_escape_project",
+      "status": "passed",
+      "seconds": 0.0095,
+      "detail": ""
+    },
+    {
+      "id": "test_studio.StudioTests.test_revision_retained_without_claiming_pass",
+      "status": "passed",
+      "seconds": 0.0183,
+      "detail": ""
+    },
+    {
+      "id": "test_studio.StudioTests.test_selected_generation_switch_stales_picture_but_not_sound",
+      "status": "passed",
+      "seconds": 0.1514,
+      "detail": ""
+    },
+    {
+      "id": "test_studio.StudioTests.test_selected_picture_edits_and_missing_inputs_are_gate_local",
+      "status": "passed",
+      "seconds": 0.1853,
+      "detail": ""
+    },
+    {
+      "id": "test_studio.StudioTests.test_selection_change_during_recording_does_not_publish_receipt",
+      "status": "passed",
+      "seconds": 0.0377,
+      "detail": ""
+    },
+    {
+      "id": "test_studio.StudioTests.test_targeted_asset_change_preserves_independent_sound_review",
+      "status": "passed",
+      "seconds": 0.1183,
+      "detail": ""
+    },
+    {
+      "id": "test_studio.StudioTests.test_unperformed_check_cannot_pass",
+      "status": "passed",
+      "seconds": 0.0105,
+      "detail": ""
+    },
+    {
+      "id": "test_view_deliveries.ViewDeliveryTests.test_native_pair_recovers_after_receipt_save_and_reuses_both_soundtracks",
+      "status": "passed",
+      "seconds": 8.2185,
+      "detail": ""
+    },
+    {
+      "id": "test_view_deliveries.ViewDeliveryTests.test_overview_and_handoff_keep_each_view_review_separate",
+      "status": "passed",
+      "seconds": 1.8362,
+      "detail": ""
+    },
+    {
+      "id": "test_view_deliveries.ViewDeliveryTests.test_pairs_posters_defaults_and_exact_feedback",
+      "status": "passed",
+      "seconds": 1.2599,
+      "detail": ""
+    },
+    {
+      "id": "test_view_deliveries.ViewDeliveryTests.test_routes_pin_each_entry_and_legacy_movies_remain_readable",
+      "status": "passed",
+      "seconds": 0.9911,
+      "detail": ""
+    },
+    {
+      "id": "test_view_deliveries.ViewDeliveryTests.test_whole_job_preflight_rejects_bad_second_view_audio_and_foreign_destinations",
+      "status": "passed",
+      "seconds": 0.4025,
+      "detail": ""
+    },
+    {
+      "id": "test_view_editions.ViewEditionTests.test_composition_inherits_picture_view_and_rejects_an_explicit_mismatch",
+      "status": "passed",
+      "seconds": 0.711,
+      "detail": ""
+    },
+    {
+      "id": "test_view_editions.ViewEditionTests.test_named_receipt_has_exact_view_and_output_while_legacy_stays_unchanged",
+      "status": "passed",
+      "seconds": 0.5317,
+      "detail": ""
+    },
+    {
+      "id": "test_view_editions.ViewEditionTests.test_native_view_editions_compose_and_verify_using_bound_dimensions",
+      "status": "passed",
+      "seconds": 7.2578,
+      "detail": ""
+    },
+    {
+      "id": "test_view_editions.ViewEditionTests.test_picture_reviews_are_separate_and_edition_reviews_require_matching_view",
+      "status": "passed",
+      "seconds": 0.7413,
+      "detail": ""
+    },
+    {
+      "id": "test_view_editions.ViewEditionTests.test_schema_versions_are_accepted_per_record_kind",
+      "status": "passed",
+      "seconds": 0.3424,
+      "detail": ""
+    },
+    {
+      "id": "test_view_editions.ViewEditionTests.test_wrong_render_or_forged_view_receipt_cannot_be_registered",
+      "status": "passed",
+      "seconds": 0.5776,
+      "detail": ""
+    },
+    {
+      "id": "test_view_rendering.ViewRenderTests.test_alpha_preview_rejects_changed_missing_escaping_or_misattributed_files",
+      "status": "passed",
+      "seconds": 0.4596,
+      "detail": ""
+    },
+    {
+      "id": "test_view_rendering.ViewRenderTests.test_alpha_proof_preserves_holes_and_lists_exact_source_frame_artifacts",
+      "status": "passed",
+      "seconds": 0.4705,
+      "detail": ""
+    },
+    {
+      "id": "test_view_rendering.ViewRenderTests.test_both_orientations_encode_and_decode_at_requested_dimensions",
+      "status": "passed",
+      "seconds": 5.2665,
+      "detail": ""
+    },
+    {
+      "id": "test_view_rendering.ViewRenderTests.test_captured_render_uses_the_captured_crop_after_working_framing_changes",
+      "status": "passed",
+      "seconds": 1.283,
+      "detail": ""
+    },
+    {
+      "id": "test_view_rendering.ViewRenderTests.test_diagnostic_directory_does_not_collide_with_a_view_named_alpha",
+      "status": "passed",
+      "seconds": 0.4329,
+      "detail": ""
+    },
+    {
+      "id": "test_view_rendering.ViewRenderTests.test_implicit_authored_proof_keeps_previous_default_and_named_default_is_valid",
+      "status": "passed",
+      "seconds": 0.9178,
+      "detail": ""
+    },
+    {
+      "id": "test_view_rendering.ViewRenderTests.test_invalid_views_dimensions_and_internal_stage_fail_before_output",
+      "status": "passed",
+      "seconds": 0.2557,
+      "detail": ""
+    },
+    {
+      "id": "test_view_rendering.ViewRenderTests.test_named_frame_and_disabled_proof_keep_selected_dimensions_and_source",
+      "status": "passed",
+      "seconds": 0.798,
+      "detail": ""
+    },
+    {
+      "id": "test_view_rendering.ViewRenderTests.test_paired_frames_have_common_times_hashes_and_verified_preview",
+      "status": "passed",
+      "seconds": 0.4607,
+      "detail": ""
+    },
+    {
+      "id": "test_view_rendering.ViewRenderTests.test_source_change_after_planning_rejects_before_output",
+      "status": "passed",
+      "seconds": 0.3787,
+      "detail": ""
+    },
+    {
+      "id": "test_view_rendering.ViewRenderTests.test_tiny_view_audit_does_not_require_more_detail_than_the_requested_proof",
+      "status": "passed",
+      "seconds": 0.3966,
+      "detail": ""
+    },
+    {
+      "id": "test_views_cli.ViewTests.test_captured_view_does_not_follow_working_edits",
+      "status": "passed",
+      "seconds": 0.4492,
+      "detail": ""
+    },
+    {
+      "id": "test_views_cli.ViewTests.test_dry_run_stale_edit_and_history_restore",
+      "status": "passed",
+      "seconds": 0.7248,
+      "detail": ""
+    },
+    {
+      "id": "test_views_cli.ViewTests.test_dual_init_and_legacy_defaults",
+      "status": "passed",
+      "seconds": 0.2073,
+      "detail": ""
+    },
+    {
+      "id": "test_views_cli.ViewTests.test_existing_raster_resize_is_unchanged_by_framing",
+      "status": "passed",
+      "seconds": 0.9504,
+      "detail": ""
+    },
+    {
+      "id": "test_views_cli.ViewTests.test_framing_file_change_during_validation_is_rejected",
+      "status": "passed",
+      "seconds": 0.1287,
+      "detail": ""
+    },
+    {
+      "id": "test_views_cli.ViewTests.test_invalid_and_duplicate_fields_preserve_source",
+      "status": "passed",
+      "seconds": 0.6751,
+      "detail": ""
+    },
+    {
+      "id": "test_views_cli.ViewTests.test_library_overview_survives_invalid_working_framing",
+      "status": "passed",
+      "seconds": 0.1144,
+      "detail": ""
+    },
+    {
+      "id": "test_views_cli.ViewTests.test_view_checks_report_empty_scene_and_configuration_mismatch",
+      "status": "passed",
+      "seconds": 1.2739,
+      "detail": ""
+    },
+    {
+      "id": "test_workbench_http.WorkbenchHTTPTests.test_concurrent_drafts_keep_lock_order_and_release_after_failure",
+      "status": "passed",
+      "seconds": 0.0726,
+      "detail": ""
+    },
+    {
+      "id": "test_workbench_http.WorkbenchHTTPTests.test_drafts_reject_changed_captured_identities",
+      "status": "passed",
+      "seconds": 0.0668,
+      "detail": ""
+    },
+    {
+      "id": "test_workbench_http.WorkbenchHTTPTests.test_exact_host_origin_and_error_formats",
+      "status": "passed",
+      "seconds": 0.062,
+      "detail": ""
+    },
+    {
+      "id": "test_workbench_http.WorkbenchHTTPTests.test_export_bytes_download_and_identity_rejection",
+      "status": "passed",
+      "seconds": 0.0222,
+      "detail": ""
+    },
+    {
+      "id": "test_workbench_http.WorkbenchHTTPTests.test_length_bounds_malformed_json_and_transfer_encoding",
+      "status": "passed",
+      "seconds": 0.0845,
+      "detail": ""
+    },
+    {
+      "id": "test_workbench_http.WorkbenchHTTPTests.test_read_timeouts_remain_specific_to_each_workbench",
+      "status": "passed",
+      "seconds": 0.0658,
+      "detail": ""
+    },
+    {
+      "id": "test_workbench_http.WorkbenchHTTPTests.test_routes_content_types_and_captured_bytes",
+      "status": "passed",
+      "seconds": 0.0629,
+      "detail": ""
+    },
+    {
+      "id": "test_workbench_http.WorkbenchHTTPTests.test_short_reads_keep_workbench_specific_behavior",
+      "status": "passed",
+      "seconds": 0.0784,
+      "detail": ""
+    },
+    {
+      "id": "test_workbench_http.WorkbenchHTTPTests.test_success_and_content_type_query_differences",
+      "status": "passed",
+      "seconds": 0.0989,
+      "detail": ""
+    },
+    {
+      "id": "test_workbench_http.WorkbenchLifecycleTests.test_startup_envelopes_loopback_and_close_on_interrupt_or_error",
+      "status": "passed",
+      "seconds": 0.0047,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow.WorkflowTests.test_action_from_another_project_is_not_substituted_without_token",
+      "status": "passed",
+      "seconds": 3.0828,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow.WorkflowTests.test_actual_custom_pipeline_criteria_and_native_verdict_no_catalog_authority",
+      "status": "passed",
+      "seconds": 3.1873,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow.WorkflowTests.test_blank_begins_reference_intent_and_preserves_creative_fields",
+      "status": "passed",
+      "seconds": 2.1795,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow.WorkflowTests.test_captured_view_inspection_uses_supported_native_revision_route",
+      "status": "passed",
+      "seconds": 1.4831,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow.WorkflowTests.test_catalog_routes_docs_and_bindings_reject_executable_or_unknown_fields",
+      "status": "passed",
+      "seconds": 1.7287,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow.WorkflowTests.test_concurrent_inputs_diagnose_and_remove_runnable_commands",
+      "status": "passed",
+      "seconds": 1.4709,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow.WorkflowTests.test_guidance_edit_does_not_stale_native_gate_receipt",
+      "status": "passed",
+      "seconds": 1.2134,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow.WorkflowTests.test_invalid_selectors_no_fallback",
+      "status": "passed",
+      "seconds": 5.0531,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow.WorkflowTests.test_inventory_work_dependencies_dedup_and_pending_gates_do_not_hide_proofs",
+      "status": "passed",
+      "seconds": 1.5435,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow.WorkflowTests.test_missing_runtime_and_malformed_scene_keep_intent_pipeline_material",
+      "status": "passed",
+      "seconds": 2.0131,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow.WorkflowTests.test_prepared_art_has_direct_compiler_path_and_all_argv_parse",
+      "status": "passed",
+      "seconds": 3.2967,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow.WorkflowTests.test_pure_queries_with_lock_and_readonly_project_no_persistence",
+      "status": "passed",
+      "seconds": 5.5646,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow.WorkflowTests.test_revision_without_edition_does_not_fallback_after_working_or_captured_scene_damage",
+      "status": "passed",
+      "seconds": 4.5434,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow.WorkflowTests.test_shared_proof_dedup_and_stage_filter_retains_native_prerequisites",
+      "status": "passed",
+      "seconds": 1.555,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow.WorkflowTests.test_stable_logical_ids_separate_freshness_and_removed_action_rejects",
+      "status": "passed",
+      "seconds": 5.6454,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow.WorkflowTests.test_wrong_view_and_stale_raster_are_projected_from_native_coverage",
+      "status": "passed",
+      "seconds": 3.43,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_cli.WorkflowCLITests.test_action_pagination_preserves_subject_page_and_subject_paging_resets_action_offset",
+      "status": "passed",
+      "seconds": 9.4185,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_cli.WorkflowCLITests.test_feedback_preserves_entry_or_delivery_scope_and_never_becomes_working_advice",
+      "status": "passed",
+      "seconds": 7.8529,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_cli.WorkflowCLITests.test_missing_one_entry_keeps_other_entry_and_actual_captured_pipeline",
+      "status": "passed",
+      "seconds": 2.1103,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_cli.WorkflowCLITests.test_multi_entry_preserves_revisions_views_roles_and_stale_selection_rejects",
+      "status": "passed",
+      "seconds": 9.2022,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_cli.WorkflowCLITests.test_no_optional_runtime_retains_selected_pipeline_and_entry_identity",
+      "status": "passed",
+      "seconds": 1.1178,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_cli.WorkflowCLITests.test_unflagged_next_schema_unchanged_report_envelope_and_selector_rejection",
+      "status": "passed",
+      "seconds": 3.1367,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_outcomes.OutcomeTests.test_all_supported_auto_routes_preserve_payload_and_have_parseable_continuations",
+      "status": "passed",
+      "seconds": 0.5219,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_outcomes.OutcomeTests.test_auto_does_not_assess_coverage_read_catalog_or_scan_library",
+      "status": "passed",
+      "seconds": 0.2059,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_outcomes.OutcomeTests.test_dry_run_success_never_claims_completed_mutation",
+      "status": "passed",
+      "seconds": 0.1631,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_outcomes.OutcomeTests.test_full_has_fresh_exact_scope_and_bounded_size",
+      "status": "passed",
+      "seconds": 1.6795,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_outcomes.OutcomeTests.test_full_legacy_review_uses_actual_native_scope",
+      "status": "passed",
+      "seconds": 1.5157,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_outcomes.OutcomeTests.test_global_option_does_not_reach_native_scene_namespace",
+      "status": "passed",
+      "seconds": 0.1199,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_outcomes.OutcomeTests.test_guidance_exceptions_and_nonserializable_values_preserve_success",
+      "status": "passed",
+      "seconds": 0.5748,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_outcomes.OutcomeTests.test_native_non_ok_result_remains_failure_without_guessed_cause",
+      "status": "passed",
+      "seconds": 0.1136,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_outcomes.OutcomeTests.test_off_is_exact_legacy_envelope_and_native_report_has_no_guidance",
+      "status": "passed",
+      "seconds": 0.4712,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_outcomes.OutcomeTests.test_real_successful_scene_mutation_survives_full_guidance_failure",
+      "status": "passed",
+      "seconds": 1.0213,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_outcomes.OutcomeTests.test_structured_failure_mapping_preserves_native_error_exit_and_report",
+      "status": "passed",
+      "seconds": 0.1693,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_outcomes.OutcomeTests.test_unsupported_route_and_no_project_do_not_infer_gate_criteria",
+      "status": "passed",
+      "seconds": 0.2075,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_packets.PacketTests.test_complete_intent_packet_public_consumption_and_reprepare_preserves_first",
+      "status": "passed",
+      "seconds": 4.5544,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_packets.PacketTests.test_complete_iteration_invalid_view_or_audio_fails_native_validation",
+      "status": "passed",
+      "seconds": 3.0094,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_packets.PacketTests.test_direct_manifest_keeps_resolved_native_command_and_file_hashes",
+      "status": "passed",
+      "seconds": 2.6854,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_packets.PacketTests.test_failed_write_cleans_staging_and_concurrent_arrival_is_not_replaced",
+      "status": "passed",
+      "seconds": 3.4851,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_packets.PacketTests.test_input_changed_during_write_is_rejected",
+      "status": "passed",
+      "seconds": 2.3655,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_packets.PacketTests.test_intent_incomplete_preserves_scope_origins_and_source_bytes",
+      "status": "passed",
+      "seconds": 2.2545,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_packets.PacketTests.test_iteration_complete_uses_native_build_and_preflight_without_capture",
+      "status": "passed",
+      "seconds": 3.6488,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_packets.PacketTests.test_iteration_incomplete_has_explicit_identity_sound_and_scope_choices",
+      "status": "passed",
+      "seconds": 3.7614,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_packets.PacketTests.test_multi_revision_delivery_packet_never_substitutes_default_entry",
+      "status": "passed",
+      "seconds": 11.7417,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_packets.PacketTests.test_native_validator_rejects_complete_invalid_intent_without_output",
+      "status": "passed",
+      "seconds": 2.3798,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_packets.PacketTests.test_partial_authored_inputs_retain_origins_and_unresolved_choices",
+      "status": "passed",
+      "seconds": 3.2563,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_packets.PacketTests.test_path_escape_symlink_and_occupied_output_preserve_prior_files",
+      "status": "passed",
+      "seconds": 1.3024,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_packets.PacketTests.test_private_staging_is_excluded_from_watched_directory_differences",
+      "status": "passed",
+      "seconds": 2.4063,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_packets.PacketTests.test_review_is_native_unperformed_draft_no_guessed_recorder",
+      "status": "passed",
+      "seconds": 2.4144,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_packets.PacketTests.test_stale_assessment_and_stale_action_never_publish",
+      "status": "passed",
+      "seconds": 4.0296,
+      "detail": ""
+    },
+    {
+      "id": "test_workflow_packets.PacketTests.test_symlink_input_and_reference_are_rejected_before_publication",
+      "status": "passed",
+      "seconds": 4.5867,
+      "detail": ""
+    },
+    {
+      "id": "CI-ENGINE",
+      "status": "passed",
+      "seconds": 0.187,
+      "detail": "CI-ENGINE.stderr.txt"
+    },
+    {
+      "id": "CI-ACTIVITY",
+      "status": "passed",
+      "seconds": 0.077,
+      "detail": "CI-ACTIVITY.stderr.txt"
+    },
+    {
+      "id": "CI-BINDINGS",
+      "status": "passed",
+      "seconds": 0.236,
+      "detail": "CI-BINDINGS.stderr.txt"
+    },
+    {
+      "id": "CI-CLOCK",
+      "status": "passed",
+      "seconds": 0.245,
+      "detail": "CI-CLOCK.stderr.txt"
+    },
+    {
+      "id": "CI-FINISHING",
+      "status": "passed",
+      "seconds": 0.297,
+      "detail": "CI-FINISHING.stderr.txt"
+    },
+    {
+      "id": "CI-MODEL-CONTRACT",
+      "status": "passed",
+      "seconds": 0.075,
+      "detail": "CI-MODEL-CONTRACT.stderr.txt"
+    },
+    {
+      "id": "CI-REGION-SIZING",
+      "status": "passed",
+      "seconds": 0.079,
+      "detail": "CI-REGION-SIZING.stderr.txt"
+    },
+    {
+      "id": "CI-RENDER-STATE",
+      "status": "passed",
+      "seconds": 0.241,
+      "detail": "CI-RENDER-STATE.stderr.txt"
+    },
+    {
+      "id": "CI-RENDER-TRANSPORT",
+      "status": "passed",
+      "seconds": 0.447,
+      "detail": "CI-RENDER-TRANSPORT.stderr.txt"
+    },
+    {
+      "id": "CI-RIG",
+      "status": "passed",
+      "seconds": 0.077,
+      "detail": "CI-RIG.stderr.txt"
+    },
+    {
+      "id": "CI-SOURCE-PLACEMENT",
+      "status": "passed",
+      "seconds": 0.877,
+      "detail": "CI-SOURCE-PLACEMENT.stderr.txt"
+    },
+    {
+      "id": "CI-TRACKS",
+      "status": "passed",
+      "seconds": 0.816,
+      "detail": "CI-TRACKS.stderr.txt"
+    },
+    {
+      "id": "CI-VIEW-RASTER",
+      "status": "passed",
+      "seconds": 8.277,
+      "detail": "CI-VIEW-RASTER.stderr.txt"
+    },
+    {
+      "id": "CI-VIEWS",
+      "status": "passed",
+      "seconds": 0.132,
+      "detail": "CI-VIEWS.stderr.txt"
+    },
+    {
+      "id": "CI-PACKAGE",
+      "status": "passed",
+      "seconds": 0.771,
+      "detail": "CI-PACKAGE.stderr.txt"
+    },
+    {
+      "id": "CI-FAILURE-CONTRACT",
+      "status": "passed",
+      "seconds": 0.292,
+      "detail": "CI-FAILURE-CONTRACT.stderr.txt"
+    }
+  ],
+  "ci": {
+    "run_id": null,
+    "attempt": null,
+    "event": null,
+    "head_sha": null,
+    "checkout_sha": null
+  },
+  "limits": [
+    "Regression checks and artifact replay are not autonomous agent trials or artistic reviews.",
+    "Retained logs are scrubbed bounded tails; detailed synthetic proofs require an explicit allowlist."
+  ]
+}

@@ -24,7 +24,7 @@ Revision selections and asset/placement manifests use project-relative reference
 
 Global `--guidance off|auto|full` defaults to `off`. On supported commands, `auto` adds bounded hints from the returned operation facts; `full` requests a fresh assessment when an exact compatible subject is available. The optional stdout `guidance` field never enters native reports or artifacts. Guidance failure preserves the original success/error and exit status; it is not a reason to repeat a successful mutation. See [packets and outcome guidance](../reports/workflow-cli/WF-04-05-PACKETS-OUTCOMES.md).
 
-Wave 3 interfaces are locally integrated and each worker's frozen required-native suite passed. The final combined suite recorded 588 cases / 571 Python tests / zero skips, but CI-PYTHON was blocked because native media builds require Xcode license acceptance; the [coordination ledger](architecture/COORDINATED-IMPLEMENTATION-WAVE3-2026-09-13.json) records the failure and exact rerun gate.
+Wave 3 interfaces are locally integrated. The required-native closeout passed on frozen main commit `de4601df965afb7c1166b4eb5e1c5b0499fbca23`: 587 recorded cases, 571 Python tests, zero skips, and 18/18 CI checks. The [coordination ledger](architecture/COORDINATED-IMPLEMENTATION-WAVE3-2026-09-13.json) retains the earlier Xcode-license-blocked attempt and the successful rerun evidence.
 
 ## Implemented commands
 
