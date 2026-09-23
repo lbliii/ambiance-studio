@@ -118,6 +118,8 @@ class CompoundPreparationTests(unittest.TestCase):
         self.assertEqual(report['status'],'complete');run=p.load(out/'proof-run.json');self.assertEqual(original,run['steps']['normal'])
         self.assertEqual(commands.validate_proof(out/'proof-run.json')['scope'],'isolated preparation raster study')
         self.assertIn('tools/render/raster.mjs', run['identity']['runtime'])
+        self.assertIn('editor/clock.mjs', run['identity']['runtime'])
+        self.assertIn('ambiance_studio/timebase.py', run['identity']['runtime'])
         renderer_bytes = (ROOT/'tools/render/raster.mjs').read_bytes()
         real_sha = p.sha
         with patch.object(p, 'sha', side_effect=lambda data: '0'*64 if data == renderer_bytes else real_sha(data)):

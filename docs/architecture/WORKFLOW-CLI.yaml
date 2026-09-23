@@ -30,7 +30,7 @@ tasks:
         56 baseline parity cases and seven unchanged-project pure reads passed.
         Local integration and combined evidence are recorded in
         docs/architecture/COORDINATED-IMPLEMENTATION-2026-09-13.json.
-      limits: WF-04 through WF-07, operator adoption and artistic acceptance remain open.
+      limits: WF-06/07 operator adoption and artistic acceptance remain open; WF-04/05 have separate implementation evidence below.
     depends_on: []
     size: medium
     paths:
@@ -60,7 +60,7 @@ tasks:
         and 22 focused subject/action checks. The frozen worker required-native suite passed
         469 cases / 455 Python tests / zero skips. Combined validation is recorded in
         docs/architecture/COORDINATED-IMPLEMENTATION-WAVE2-2026-09-13.json.
-      limits: WF-04 through WF-07, model-operation guidance and artistic acceptance remain open.
+      limits: WF-06/07, model-operation guidance and artistic acceptance remain open; WF-04/05 have separate implementation evidence below.
     depends_on: [WF-01]
     size: medium
     paths:
@@ -95,7 +95,7 @@ tasks:
         and 22 focused subject/action checks. The frozen worker required-native suite passed
         469 cases / 455 Python tests / zero skips. Combined validation is recorded in
         docs/architecture/COORDINATED-IMPLEMENTATION-WAVE2-2026-09-13.json.
-      limits: WF-04 through WF-07, model-operation guidance and artistic acceptance remain open.
+      limits: WF-06/07, model-operation guidance and artistic acceptance remain open; WF-04/05 have separate implementation evidence below.
     depends_on: [WF-02]
     size: medium
     paths:
@@ -123,7 +123,23 @@ tasks:
 
   - id: WF-04
     title: Prepare native input packets
-    status: proposed
+    status: implemented
+    implementation:
+      contract: reports/workflow-cli/WF-04-05-PACKETS-OUTCOMES.md
+      handoff: reports/workflow-cli/WF-04-05-HANDOFF.md
+      replay: tests/replay_workflow_packets.py
+      tested_commit: 0ccabe4198d91a3b56afbcd2bbad004b10847d44
+      result: >-
+        Native intent/review/iteration adapters and direct-argument packets preserve origins, unresolved choices, exact subjects and immutable publication.
+      validation: >-
+        The frozen worker required-native suite passed 544 recorded cases / 529 Python tests / zero skips;
+        the exact-source 24-call public replay passed. The code is integrated in Wave 3. The final combined
+        suite recorded 588 cases / 571 Python tests / zero skips and failed at CI-PYTHON because native media
+        builds require Xcode license acceptance; the coordinator ledger records this environment block.
+      limits: >-
+        Review drafts remain unperformed; complete iteration packets offer preflight and execution
+        still requires explicit recorder identity. Full iteration-outcome reassessment is unavailable
+        without a compatible selected subject. WF-06/07, model-operation guidance and artistic acceptance remain open.
     depends_on: [WF-03]
     size: medium
     paths:
@@ -149,7 +165,23 @@ tasks:
 
   - id: WF-05
     title: Add bounded guidance to command outcomes
-    status: proposed
+    status: implemented
+    implementation:
+      contract: reports/workflow-cli/WF-04-05-PACKETS-OUTCOMES.md
+      handoff: reports/workflow-cli/WF-04-05-HANDOFF.md
+      replay: tests/replay_workflow_packets.py
+      tested_commit: 0ccabe4198d91a3b56afbcd2bbad004b10847d44
+      result: >-
+        Opt-in off/auto/full guidance preserves native success/error/exit and output ownership, including success followed by guidance failure; auto uses operation-local facts.
+      validation: >-
+        The frozen worker required-native suite passed 544 recorded cases / 529 Python tests / zero skips;
+        the exact-source 24-call public replay passed. The code is integrated in Wave 3. The final combined
+        suite recorded 588 cases / 571 Python tests / zero skips and failed at CI-PYTHON because native media
+        builds require Xcode license acceptance; the coordinator ledger records this environment block.
+      limits: >-
+        Review drafts remain unperformed; complete iteration packets offer preflight and execution
+        still requires explicit recorder identity. Full iteration-outcome reassessment is unavailable
+        without a compatible selected subject. WF-06/07, model-operation guidance and artistic acceptance remain open.
     depends_on: [WF-03]
     size: medium
     paths:

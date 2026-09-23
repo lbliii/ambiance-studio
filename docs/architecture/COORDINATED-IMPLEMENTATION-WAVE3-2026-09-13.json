@@ -1,0 +1,808 @@
+{
+  "format": "studio-workstream-coordination",
+  "schema_version": 1,
+  "wave": 3,
+  "updated_utc": "2026-09-13",
+  "coordinator_thread_id": "01a0983d-40cf-71a3-bd9c-cb8308ad6efa",
+  "coordinator_worktree": "/Users/lb/.codex/worktrees/cfeb/ambiance-studio",
+  "coordinator_branch": "codex/coordinated-studio-wave3",
+  "saved_project_id": "f5120268-3ebf-40fb-8c45-d50ab7c7bcff",
+  "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
+  "status": "active",
+  "authorization": "User accepted the proposed four-task Wave 3 and requested kickoff like the previous two waves. Fresh tasks, ongoing coordination/unblocking, review, local integration and combined validation are authorized. No new wave or provider/account changes are implied.",
+  "previous_wave": {
+    "pr": "https://github.com/lbliii/ambiance-studio/pull/33",
+    "state": "MERGED",
+    "merge_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
+    "validation": {
+      "recorded_cases": 516,
+      "python_tests": 501,
+      "skips": 0,
+      "report": ".ambiance/coordination/2026-09-13/wave2-combined/run.json",
+      "sha256": "701e2c70d63642dc2f78e48d84b944bb8e8706752c7575b86a82669cd17314cc"
+    },
+    "github_ci": "No job executed due billing/spending limit; no account changes."
+  },
+  "plan": "docs/architecture/COORDINATED-IMPLEMENTATION-WAVE3-2026-09-13.md",
+  "workers": [
+    {
+      "stream": "W3",
+      "title": "Build workflow input packets and outcome guidance",
+      "assignment": "WF-04 and WF-05",
+      "leases": [
+        "workflow packet/outcome modules and workflow_commands.py/workflow_operations.py",
+        "narrow cli.py global guidance flag and outcome adapter preserving selected_output/emit/error contracts",
+        "native intent/review/iteration initializer adapters",
+        "new-route CLI fixtures and affected signatures only",
+        "production_plan.py pure intent draft helper after demonstrated missing initializer",
+        "cli.run strips global guidance namespace metadata before native dispatch"
+      ],
+      "thread_id": "01a09b0c-3462-71c1-9a61-2d7201602138",
+      "client_thread_id": "client-new-thread:71289471-5a22-45e0-aba5-d6345a08d0c0",
+      "host_id": "local",
+      "worktree": "/Users/lb/.codex/worktrees/61c0/ambiance-studio",
+      "branch": "codex/wave3-workflow-packets-outcomes",
+      "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
+      "dispatch_state": "complete",
+      "cursor": "94fa07e9-c120-463c-8e93-bef403873fbf:6",
+      "interface": "Global --guidance off|auto|full default off with separate ambiance-operation-guidance v1; fresh workflow prepare packets use native validation; global metadata removed before native Namespace forwarding.",
+      "baseline_verified": true,
+      "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
+      "focused_progress": {
+        "state": "reviewed_locally_integrated",
+        "source": "worker update; candidate not frozen or coordinator-reviewed",
+        "native_slot_requested": false,
+        "reported_behavior": [
+          "Packets reuse native intent/review/iteration validators and immutable no-replace publication.",
+          "Existing output parent required; symlink/escape and occupied destinations rejected.",
+          "Review drafts remain not-run; no inferred recorder. Complete iteration packets expose preflight, execution still needs explicit by.",
+          "Auto guidance reads native outcome fields; full guidance uses fresh exact-subject assessment or explicit unavailable diagnostic."
+        ],
+        "next": "Coordinator central registration and final combined validation.",
+        "reported_checks": "Worker reports 56 existing/new focused tests plus final legacy review/watched-parent/delivery-wide cases passed; 24-call native CLI replay passed, earlier restricted failure retained."
+      },
+      "candidate_commit": "0ccabe4198d91a3b56afbcd2bbad004b10847d44",
+      "full_validation": {
+        "state": "passed",
+        "candidate_commit": "0ccabe4198d91a3b56afbcd2bbad004b10847d44",
+        "source_frozen": true,
+        "clean_verified_by_coordinator": true,
+        "required_native": true,
+        "artifacts": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-native-final",
+        "grant_reverified_clean_head": true,
+        "report_sha256": "a80640460ebe7cd636d571c215159fbe4d59e539166d241d4d4924e9b87e42b8",
+        "recorded_cases": 544,
+        "passed_cases": 544,
+        "skips": 0,
+        "tracked_source_sha256": "2e1cafa4ceeaede5415e6589131b4aaa273f7fd0a475d130398639844033ccff",
+        "slot_released": true,
+        "coordinator_verified": "Report hash, exact commit, native_required true, passed state, all17 checks and544 recorded cases passed. Final handoff pending.",
+        "python_tests": 529,
+        "coordinator_verified_source_files": 580,
+        "source_manifest_sha256": "6b449b1d5d334f9e74562c02b9043badb42e246f491580e3d2e832efef5e3303"
+      },
+      "public_replay": {
+        "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/run.json",
+        "sha256": "4962caa99ea61ef095b8f0044a37c0f441b04477efbaff82606f87de4c352798",
+        "commit": "0ccabe4198d91a3b56afbcd2bbad004b10847d44",
+        "ok": true,
+        "source_unchanged_reported": true,
+        "coordinator_verified_source_files": 104,
+        "coordinator_verified_io_files": 48,
+        "public_calls": 24,
+        "mismatches": []
+      },
+      "coordinator_review": {
+        "state": "source_review_no_blocking_finding_initial_replay_verified",
+        "scope": "Read packet/outcome modules, native draft helper, CLI namespace/output boundary, routes and contract. Rehashed104 recorded source files and48 CLI stdout/stderr records with expected exits. Full native and final artifacts still pending."
+      },
+      "handoff_commit": "d7d28e172d18fbc2f94af9b6b757ff2fcadb59b8",
+      "local_integration": {
+        "state": "integrated",
+        "commits": [
+          "6cb70e6",
+          "c4c631c",
+          "6cc99b2"
+        ],
+        "source_commits": [
+          "06c1315010f8f8653a96e1073693aeebf177f544",
+          "0ccabe4198d91a3b56afbcd2bbad004b10847d44",
+          "d7d28e172d18fbc2f94af9b6b757ff2fcadb59b8"
+        ],
+        "handoff": "reports/workflow-cli/WF-04-05-HANDOFF.md",
+        "combined_validation": "pending"
+      }
+    },
+    {
+      "stream": "M3",
+      "title": "Build independent model instances and version adoption",
+      "assignment": "mc/1 I1 and I2",
+      "leases": [
+        "new model instance/adoption modules and tools/model/",
+        "model_commands.py model instance routes",
+        "scene_runtime.py/tools/scene-command.mjs model transport hooks and scene transaction integration",
+        "revision_dependencies.py typed model edges and coverage_evidence.py typed model provider only",
+        "cli.py command_project project-scoped model instance exception",
+        "provisional scene_transactions.py scene/catalog bundle transaction; finalized semantics require coordinator review",
+        "kit.validate optional project_root and nested attachment subprocess forwarding only; legacy inferred root retained",
+        "tools/check-scene.mjs --project-root and project_commands.check_project root forwarding only",
+        "revision_dependencies.py configured project selection control/origin and narrow affected revision tests/replay; preserve immutable revision integrity and unconfigured legacy selections",
+        "revision_capture.compare active configured scene/catalog selection comparison for historical manifests without config origins; immutable captured integrity/render unchanged"
+      ],
+      "thread_id": "01a09b0c-4fcf-7542-b921-c1b7aa265a7b",
+      "client_thread_id": "client-new-thread:0efa40dc-4201-4e0b-a4ad-7cf69acf5601",
+      "host_id": "local",
+      "worktree": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio",
+      "branch": "codex/model-instances-wave3",
+      "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
+      "dispatch_state": "complete",
+      "cursor": "ffefdcba-0a41-43f5-ba3d-53cf50e2b5a4:7",
+      "interface": "Project-scoped model instance apply recipe, exact contained package pins and deterministic tuple IDs; managed-layer fingerprints and adoption conflict preview. Actual C1/C2 lantern lowering probe passes.",
+      "baseline_verified": true,
+      "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
+      "open_design_review": "Source review resolved for bounded scene/catalog generation. Retained public replay verifies ordinary edit/restore, portable reopen and captured old revision raster. Full native/combined checks pending.",
+      "transaction_refinement": "Active generation contains mutable working scene; captured previous config/scene and contained model packages remain immutable. Existing edit/restore/view/render/revision compatibility is still required.",
+      "bounded_lowering_gap": "C1 static constant-cell keys at 0/1 seconds fail a host with a 2-second duration; this is an endpoint duration mismatch, not fps arithmetic. Granted constant-cell endpoints mapped to validated host interval, rejecting animated inputs beyond subset; actual finite-host compatibility remains required.",
+      "focused_progress": {
+        "state": "reviewed_locally_integrated",
+        "source": "worker-reported tests; current source reviewed for alias issue, not a frozen handoff",
+        "reported_checks": [
+          "dry/save/retry",
+          "independent move/variant/hide with receiver off",
+          "keep-world mount",
+          "stale/late/interrupt rejection",
+          "interface conflicts",
+          "ordinary scene edit/restore",
+          "generation asset-root validation",
+          "actual raster provider wrapper"
+        ],
+        "next": "Coordinator shared review-watch/finite integration and combined validation."
+      },
+      "candidate_commit": "fe2ab3eeffd587cb41df1dbd7bba9922adb65306",
+      "full_validation": {
+        "state": "passed",
+        "candidate_commit": "fe2ab3eeffd587cb41df1dbd7bba9922adb65306",
+        "source_frozen": true,
+        "clean_verified_by_coordinator": true,
+        "required_native": true,
+        "artifacts": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/native-final",
+        "grant_reverified_clean_head": true,
+        "report_sha256": "a93b719108ff28640db53968828e73ae28f046f05fe62821c996fff367ad8c1e",
+        "recorded_cases": 531,
+        "passed_cases": 531,
+        "python_tests": 516,
+        "skips": 0,
+        "tracked_source_sha256": "9d60ee5138a1d621a7cf0b7ca118855dcd0fdfb4f11edb957230ecec1c1cfe46",
+        "source_manifest_sha256": "22bde2f2b23c6123a9fd06cce0a00a00a540d18190b59ed65a50166786c694a6",
+        "slot_released": true,
+        "coordinator_verified": "Report hash, exact commit, native_required true,531 passed recorded cases/516 Python/zero skips, all17 checks passed;582 source-file hashes reverified."
+      },
+      "finite_integration": "Coordinator-only final combined probe on reviewed T3+M3 commits; do not adopt known-failing intermediate clock stack. Static candidate full-native validation proceeds independently.",
+      "public_replay": {
+        "path": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/public-final/evidence.json",
+        "sha256": "14ddc9a1875292fa451c627c972de22220ac6499be32e8b18f5beafe6c81b883",
+        "source_commit": "fe2ab3eeffd587cb41df1dbd7bba9922adb65306",
+        "coordinator_verified_source_files": 4,
+        "coordinator_verified_artifact_files": 611,
+        "public_calls": 43,
+        "mismatches": [],
+        "coordinator_probe": "/private/tmp/wave3-model-final-working-check.json",
+        "coordinator_probe_sha256": "cb3e0d136dc83c5a387203f27bebc65e39da674216c7675db9cfe970ac84000a",
+        "observed_result": "Portable compare --working returns true; captured revision check true; captured-old raster hash equals original two-square raster. No artistic acceptance."
+      },
+      "successor_fix": "Committed92e6448 normalizes optional controls/variants and rejects unknown fields; fresh exact-commit replay verified.",
+      "queue_policy": "Ready A3 took the released W3 slot while M3 repairs. Grant M3 next only after clean frozen successor and fresh replay; otherwise allow ready T3.",
+      "historical_public_replay": {
+        "path": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/public-70e0937/evidence.json",
+        "sha256": "e17a73f424b701565aa397d2ead4efd5368dff0776df059a0ece6a159cae8ca3",
+        "coordinator_verified": "Report hash and prior committed HEAD verified. Current working tree has a subsequent bounded fix in progress; this replay remains tied only to70e0937.",
+        "reported_pixels_changed": {
+          "moved": 4527,
+          "variant": 4536,
+          "hidden": 3700
+        },
+        "reported_second_instance_crop": "byte exact",
+        "reported_mount_corner_error_pixels": 2.0097183471152322e-14,
+        "reported_receiver_opacity": {
+          "hidden_source": 0,
+          "unrelated": 0.8
+        },
+        "reported_portability": "Origin/package/source project unavailable; portable inspect/check and captured old revision render passed.",
+        "browser_observation": "Worker inspected13-layer scene with moved/arched lantern; exposed canvas remains deliberate engineering fixture limitation."
+      },
+      "coordinator_review": {
+        "state": "lifecycle_successor_source_reviewed_replay_verified",
+        "scope": "Reviewed retained exact package lookup/closure validation and batch staged-vs-persisted dependency distinction; new configured origins and historical active-selection comparisons; corresponding tests/public replay changes. Corrected43-call final replay and all611 artifacts/4 listed source hashes verified. Independent portable compare/check confirms working divergence true while captured integrity remains true. Legacy-watch and finite integration obligations remain coordinator-owned.",
+        "transaction_limit": "Interrupted publication before selection may retain an unselected generation; occupied recipe-hash generation rejects, never overwrites. This boundary is documented; direct filesystem writes bypass the CLI lock."
+      },
+      "unready_successor_commits": [
+        "a65f630",
+        "cf2c701",
+        "1458e37"
+      ],
+      "known_unready_successor": "1458e37 alone is invalid; fe2ab3e corrects staged same-package dependency recheck. Include all four lifecycle commits.",
+      "required_successor_commits": [
+        "a65f630",
+        "cf2c701",
+        "1458e37",
+        "fe2ab3e"
+      ],
+      "prior_public_replay_before_lifecycle_repairs": {
+        "path": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/public-92e6448/evidence.json",
+        "sha256": "758c2aeb7323cd0d98a6f0df87e55326fd6005b9affa3f1c1da7b2516ac71714",
+        "source_commit": "92e64484fb9358827ff1a71879753525ab85aa56",
+        "coordinator_verified": "All4 recorded source-file hashes,598 replay artifact hashes and36 expected CLI exits verified. Actual two-square/moved-mounted/hidden PNGs inspected: one instance changes and disappears, second stays visible; geometric fixture is not artistic acceptance.",
+        "observations": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/observations-92e6448.json",
+        "observations_sha256": "3bd49be059653f56b54732dabf59bddf9248d0c3d6c0ee49d93170d0d997fdce",
+        "package_audit": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/package-audit-92e6448.json",
+        "coordinator_verified_source_files": 4,
+        "coordinator_verified_artifact_files": 598,
+        "public_calls": 36,
+        "mismatches": []
+      },
+      "handoff_commit": "b6d17587db3e26035384324fa82d44d518b913ff",
+      "local_integration": {
+        "state": "integrated",
+        "commits": [
+          "a9bc46e",
+          "7edfa6f",
+          "527e359",
+          "dd3176b",
+          "b78ebbc",
+          "8fea96e",
+          "337b17a",
+          "244b0de",
+          "f610553",
+          "7836616",
+          "69f16ec"
+        ],
+        "source_commits": [
+          "c8a0fe6",
+          "2ab73ac",
+          "2702829",
+          "690318d",
+          "70e0937",
+          "92e6448",
+          "a65f630",
+          "cf2c701",
+          "1458e37",
+          "fe2ab3e",
+          "b6d17587db3e26035384324fa82d44d518b913ff"
+        ],
+        "handoff": "reports/model-instances/HANDOFF.md",
+        "conflict_resolution": "Preserved additive W3 prepare, A3 measure and all M3 routes in CLI option/output fixture conflicts. Equivalent affine prerequisite already integrated.",
+        "focused_validation": "Combined W3+A3+M3 CLI contract suite:8 passed.",
+        "combined_validation": "pending"
+      }
+    },
+    {
+      "stream": "T3",
+      "title": "Build finite-shot timing and local cycles",
+      "assignment": "P03 bounded engineering",
+      "leases": [
+        "editor/engine.mjs editor/timing.mjs and common time conversion helpers",
+        "narrow reparent/source-placement/finishing/binding clock consumers",
+        "scene timing/authoring CLI hooks",
+        "render raster/job/receipt clock fields only; no audio bitrate/native codec changes",
+        "editor/editor.mjs finite playback/seek only; editor/audit.mjs loop versus finite validation",
+        "clock.mjs renderer source identity registration",
+        "tools/scene-command.mjs clock/sample branches only; preserve M3 model transport",
+        "kit.py finite/named versus legacy loop cycle precheck only",
+        "audio_cues.alignment frame/sample exact conversion only; preserve rejection policy",
+        "Actual prepared-scene snapshot module lists add clock.mjs; only scene clock/sample CLI signature fixture entries after frozen run",
+        "After freeze: preparation.py copied modules, preparation_server.py served allowlist, preparation_commands.py proof runtime_files add clock.mjs together; focused existing copy/serve/identity tests",
+        "Explicit authored-N repair: existing clock/canvas validators, render plan/job, timing/browser/audit frame counts and media verify defaults only; broader activity/coverage/region evidence reconciled by coordinator",
+        "Narrow test-only CLI invocation correction before freeze: media verify positional PATH instead of unsupported --file; equivalent test invocation corrections need reporting, not redundant approval."
+      ],
+      "thread_id": "01a09b0c-779a-75c1-9e08-5f7ace309f1a",
+      "client_thread_id": "client-new-thread:e21a93f6-dd26-48c0-b681-da9df8fc2d79",
+      "host_id": "local",
+      "worktree": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio",
+      "branch": "codex/wave3-p03-clock",
+      "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
+      "dispatch_state": "complete",
+      "cursor": "4dbdebd1-a93d-43a6-a836-cf97b90e0435:4",
+      "interface": "Opt-in scene.clock version/mode/id/revision/duration_frames/local_cycles; canvas.loop_seconds remains duration mirror. Shared editor/clock.mjs context; existing sample(seconds) array stays; scene clock/sample frame/context routes proposed. Revision-pin and closure details need final contract.",
+      "baseline_verified": true,
+      "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
+      "validation_note": "JS test-clock auto-discovered; Python clock tests should exercise actual CLI, not duplicate JS wrapper. Coordinator reconciles renderer source-list verifiers.",
+      "clock_context_proposal": "compiled.clock.seconds(seconds)/frame(integer) returns frozen context; compiled.sample(context) validates equivalent definition and does not rewrap; sample(seconds) retains array and sampleFrame preserves requested frame. consumerTime selects local-cycle values. Authored clock revision label is distinct from external scene/revision hashes.",
+      "focused_progress": {
+        "state": "test_corrected_frozen_candidate_queued",
+        "source": "worker-reported; frozen replay and coordinator verification pending",
+        "implementation": "Shared finite/loop engine, JS/Python exact conversions, CLI clock/sample, local-cycle camera/layer/signal and finite reparent/raster consumers.",
+        "reported_checks": "Legacy track/rig/binding/finishing checks and four CLI cases passed.",
+        "native_movie": {
+          "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-movie",
+          "fps": 24,
+          "decoded_frames": 60,
+          "duration_seconds": 2.5,
+          "pts_error": 0,
+          "frame59": "yellow",
+          "endpoint_frame60": "blue with socket shift"
+        },
+        "browser_observation": "Worker inspected both sample/endpoint poses and observed Play stop at frame59. Coordinator has not repeated this observation.",
+        "native_slot_requested": false,
+        "next": "Run retained native full/range proofs and required-native-2 against exact369546b, then explicitly release."
+      },
+      "candidate_commit": "369546b1533c9b65d3a94ebe9148037b0f492e91",
+      "full_validation": {
+        "state": "passed",
+        "candidate_commit": "369546b1533c9b65d3a94ebe9148037b0f492e91",
+        "source_frozen": true,
+        "clean_verified_by_coordinator": true,
+        "required_native": true,
+        "artifacts": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/required-native-2",
+        "grant_reverified_clean_head": true,
+        "slot_released": true,
+        "recorded_cases": 525,
+        "passed_cases": 525,
+        "python_tests": 509,
+        "skips": 0,
+        "report_sha256": "f3770f39dc3be5f9cd3a97f8a59e925a9c75a418556f3b9e677051d1f75f0599",
+        "source_manifest_sha256": "12cfa5910961c65735c894151bef5f516e434a8fa3eb50727783a2dc89667a5f",
+        "tracked_source_sha256": "e7f1280dca1adc45d6467029aa321e46f9e5246d0a715b0d45b62755993d85a5",
+        "coordinator_verified_source_files": 581,
+        "coordinator_verified": "Exact committed source,18 successful check entries,all581 source-file hashes and retained movie count/hash claims reverified."
+      },
+      "legacy_parity_reported": {
+        "complete_state_samples": 485,
+        "description": "480 bundled frames plus five negative/end/out-of-order samples match baseline after preserving original numeric seconds; coordinator verification pending."
+      },
+      "failed_native_runs": [
+        {
+          "state": "failed_completed",
+          "candidate_commit": "06a50236b09fffa4e5ece61037ecbc340672b2cb",
+          "source_frozen": true,
+          "clean_verified_by_coordinator": true,
+          "required_native": true,
+          "artifacts": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/required-native-1",
+          "observed_failures": [
+            "Prepared snapshot imports clock.mjs but fixed module bundle omitted it.",
+            "Intentional scene clock/sample route signatures require fixture updates."
+          ],
+          "report_sha256": "a70ac99c98fda0e9bbe0103c2c22da46c68c940cd806992e3cff4eb95336370c",
+          "reported_python_tests": 506,
+          "reported_skips": 0,
+          "coordinator_verified": "Report hash and completed failed state; CI-PYTHON failed, all17 other check entries passed.",
+          "slot_released": true,
+          "reported_recorded_cases": {
+            "total": 523,
+            "passed": 520,
+            "failed": 3
+          }
+        }
+      ],
+      "repair_commits": [
+        "ff917d2c31428a0ebd723f5273fd5ac7dbe4c8a8",
+        "8a24cff847751c0f0163c8b9779024815fd6908b"
+      ],
+      "coordinator_review": {
+        "state": "runtime_and_test_successor_reviewed_native_pending",
+        "scope": "Reviewed1567a39 authored duration authority throughout clock/validator/render/timing/media-default consumers. Independently replayed original public7@25 and31@30 author/sample failures: now pass with correct N\u22121/N region and frame identities. Worker actual browser inspection caught install reading compiled.clock before initialization; narrow fix underway. Native suite and broader combined evidence reconciliation pending. Reviewed one-line2847b83 initialization fix and verified all32 current source manifest entries. Worker browser observation record/manifest hashes verified; actual browser playback observation is worker-reported. Reviewed369546b: only removes unsupported --file in one new native test. Actual CLI help confirms positional file. Clean tree and all32 current manifest source hashes verified."
+      },
+      "public_replay": {
+        "source_commit": "8a24cff847751c0f0163c8b9779024815fd6908b",
+        "source_manifest": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/source-manifest-reviewed.json",
+        "source_manifest_sha256": "d08e0708f41d4962f701026b223d555d051eb54cce43c9199af25dd06ad63e95",
+        "movies": [
+          {
+            "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-reviewed/picture.mp4",
+            "sha256": "c441ef1697616a88218e8df8219f7bb2414e2383abe5528ebf2f337a653195c7",
+            "reported_source_range": [
+              0,
+              60
+            ],
+            "reported_decoded_frames": 60
+          },
+          {
+            "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/range-reviewed/picture.mp4",
+            "sha256": "097b9440b6c6f39971ea93e343bfb0cffa5fab543aaaada49d0e8c43429e287e",
+            "reported_source_range": [
+              1,
+              60
+            ],
+            "reported_decoded_frames": 59
+          }
+        ],
+        "coordinator_verified": "Manifest, source-file and movie hashes; reported render ranges/verification metadata inspected. Worker inspected actual final yellow cel; no coordinator raster observation yet."
+      },
+      "duration_repair_replay": {
+        "commit": "1567a39b10d929202f44ca44bd197a98eaaaf06a",
+        "coordinator_public_replay": "/private/tmp/wave3-clock-duration-ycvdp61p/repro-repaired-1567a39.json",
+        "coordinator_public_replay_sha256": "3893e79650aaf3b5baeb544c55f0fd22e0059675e057792c44909251d7bc004e",
+        "worker_public_replay": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/duration-repair/public-replay.json",
+        "worker_public_replay_sha256": "14c2ba1c04dac806ed69afae032bab8688dbbfb6bd0a57795b990489ccf57bbf",
+        "public_calls": 12,
+        "source_manifest_sha256": "b36579d227bd5a3607001ef0aa1eed1a647a75d07bebdcdccee4c111b2c1af17",
+        "source_note": "32 manifest entries; later audit found editor/editor.mjs mismatch during reported browser repair. This is historical1567a39 evidence, not current clean successor validation."
+      },
+      "current_source_manifest": {
+        "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/duration-repair/source-manifest-369546b.json",
+        "sha256": "e39310f1886f0a36c4079a995b07b763804f387e02dff5236abac5b03d7a00a4",
+        "source_files": 32,
+        "mismatches": []
+      },
+      "current_browser_observation": {
+        "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/duration-repair/observation-2847b83.json",
+        "sha256": "5b38ff535504130631f3beb3f1149fec50072249bb8098e8d3dc7a0b478e3fb4",
+        "reported_result": "31-frame30fps fixture loads Ready, seek31 exposes endpoint, Play restarts then stops at30; static floor fixture, no artistic acceptance."
+      },
+      "native_proof_refresh": {
+        "path": "/Users/lb/.codex/worktrees/fc6f/ambiance-studio/.ambiance/p03-clock/native-369546b/proof-manifest.json",
+        "sha256": "53d5efd87ba4718e44d8829d1494897281d468bb88716e94cd7ec9b54b077a6e",
+        "candidate_commit": "369546b1533c9b65d3a94ebe9148037b0f492e91",
+        "coordinator_verified": "Manifest hash verified; worker reports decoded 60/59@24,31/30@30,7/6@25 and retained endpoints. Detailed artifact rehash pending."
+      },
+      "handoff_commit": "e6f2e5a",
+      "local_integration": {
+        "state": "integrated",
+        "commits": [
+          "d8c7dd3",
+          "ce00f82",
+          "9d2d5c9",
+          "a945b5d",
+          "020f83b",
+          "e44c45f",
+          "e8e8967",
+          "e07f870",
+          "dcd4016"
+        ],
+        "source_commits": [
+          "5869f76",
+          "8d5a171",
+          "06a5023",
+          "ff917d2",
+          "8a24cff",
+          "1567a39",
+          "2847b83",
+          "369546b",
+          "e6f2e5a"
+        ],
+        "handoff": "reports/p03-clock/HANDOFF.md",
+        "conflict_resolution": "Preserved M3 dispatch alongside exact clock sampling. Recomputed only merged render video signature for both start-frame and audio bitrate; retained other additive routes.",
+        "focused_validation": "Integrated CLI contract8 passed; combined native pending."
+      }
+    },
+    {
+      "stream": "A3",
+      "title": "Build audio level measurements and export controls",
+      "assignment": "quality AUDIO-02",
+      "leases": [
+        "new loudness/true-peak measurement modules and audio.py measurement routes",
+        "native/media/media.m audio encoding/measurement options only",
+        "audio bitrate fields in rendering/render_plan/render_execution/native-process and receipt/dependency adapters",
+        "audio recipe/output fixtures and new audio evidence",
+        "native/media/compose.m media_commands.h verify_audio.m audio-only implementation",
+        "media_operations.py media_verification.py editions.py audio-only request/evidence adapters",
+        "actual iteration recipe/step/plan/pass-through owners audio_bitrate only; no iteration_contract.py exists",
+        "native/media/encode.m encodeAudio audio bitrate signature/settings/result only, preserving standalone default",
+        "iterations execution-time pending-audio capability preflight before required picture work; preserve pure planning, injected executors and recovery of completed outputs"
+      ],
+      "thread_id": "01a09b0c-90a8-7613-8e74-3804bbbcafea",
+      "client_thread_id": "client-new-thread:e959c4d5-f200-429b-9778-2a9cd8b4d92e",
+      "host_id": "local",
+      "worktree": "/Users/lb/.codex/worktrees/80a1/ambiance-studio",
+      "branch": "codex/wave3-audio02",
+      "baseline_commit": "75d24b85a8977f234d87daa1c18993d394036c1c",
+      "dispatch_state": "complete",
+      "cursor": "a089d4e4-c7e5-4434-bffe-2e70338c74c0:6",
+      "interface": "audio measure PATH [--source-sha256 HASH --out FILE] uses REPORT envelope. Optional audio_bitrate allows explicit 256/320/384k with actual format-specific capability rejection, no substitution. Audio encoding and separate source/decoded measurement evidence retain actual presentation interval.",
+      "baseline_verified": true,
+      "progress_verified": "Confirmed active/inProgress by compact wait_threads snapshot.",
+      "measurement_scope": "Initial streaming double-precision Node DSP backend at explicit 48kHz; ITU Annex1/2 coefficients. EBU fixture download HTTP403 retained; deterministic published-definition signal/tolerance validation and any independent conformance gaps must be stated.",
+      "focused_progress": {
+        "state": "reviewed_locally_integrated",
+        "source": "worker-reported; candidate not frozen or coordinator-reviewed",
+        "reported_tests_passed": 8,
+        "reference_cases": "EBU-defined loudness 1-5 and dBTP 15-19 with published tolerances",
+        "native_trial": "Worker reports format-specific applicableEncodeBitRates stereo48k max320000; global available list misleadingly includes384000. New preflight rejects384 before raster. Real native 256000 and explicit320000 passed mux/decode with96000 presented samples/2s, source/float32 hashes and legacy PCM16 half-LSB compatibility.",
+        "next": "Coordinator central registration and final combined validation.",
+        "native_slot_requested": false,
+        "reported_checks": "10 measurement,2 native,8 CLI,9 revision-contract,6 render-service plus iteration-step checks and package audit passed.",
+        "development_replay": {
+          "path": "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/replay-dev5/replay.json",
+          "sha256": "eb36e47f9bba744d7cc6ed45904faa4d3059c962c924c7c380474631d77ddf5c"
+        }
+      },
+      "candidate_commit_reported": "2e7aefb",
+      "candidate_commit": "2e7aefb87b3e4911bf19d6117b6cd8e2d9b72cde",
+      "full_validation": {
+        "state": "passed",
+        "candidate_commit": "2e7aefb87b3e4911bf19d6117b6cd8e2d9b72cde",
+        "source_frozen": true,
+        "clean_verified_by_coordinator": true,
+        "required_native": true,
+        "artifacts": "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/native-final",
+        "grant_reverified_clean_head": true,
+        "report_sha256": "9db12e775179702a3c54c445b61b7597c613f2aae3acfe9ab3e1cbb9519b7225",
+        "recorded_cases": 528,
+        "passed_cases": 528,
+        "python_tests": 513,
+        "skips": 0,
+        "tracked_source_sha256": "f39dab3b4f31377b53d3f357333e0e85d5140d11932a9dac6cc1fcfa2d28a38f",
+        "slot_released": true,
+        "coordinator_verified": "Report hash, exact commit, native_required true,528 passed recorded cases/513 Python/zero skips, all17 check entries passed.582 source-file hashes reverified."
+      },
+      "public_replay": {
+        "path": "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/replay-final/replay.json",
+        "sha256": "13060f7932bc9a3f2656e444d713735b3b6abd51b0dfa76991ce43ff74dbe6d5",
+        "coordinator_verified": "Report/source identity verified:582 source-file hashes,118 artifact hashes/sizes and6 library artifact hashes/sizes match.18 checks report pass. Full native suite pending.",
+        "reported_checks": 18,
+        "reported_limits": "384k rejected before raster; 256/320k requests encode exact96000 presentation samples, estimated simple-tone bitrates differ; explicit unaccepted library use, no promotion/audition.",
+        "coordinator_verified_source_files": 582,
+        "coordinator_verified_artifact_files": 118,
+        "coordinator_verified_library_files": 6,
+        "mismatches": []
+      },
+      "supplemental_peak_proof": {
+        "path": "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/high-native/high-peak-observation.json",
+        "sha256": "563c56b7ff04a4ab5272ddf92962e28989776479947135f472951cd746061cf7",
+        "render_report_sha256": "cbb4a4e94ef641d6548412dfd8b00c1dfc5d39f7ac35169ffc6fb4d5a91b7e79",
+        "reported_samples": 9600,
+        "reported_decoded_float_max": 1.009989619255066,
+        "reported_float_true_peak_dbtp": 3.1122539839,
+        "meaning": "Worker reports float overshoots retained while legacy PCM16 clamps; source unchanged, no audition. Coordinator verified observation record hash only."
+      },
+      "coordinator_review": {
+        "state": "source_review_no_blocking_finding",
+        "scope": "Reviewed DSP, integer/raw-float input validation, native float decode/legacy PCM16 derivative, bitrate preflight/pass-through, pending-iteration preflight and edition float dependency. Checked K-weighting coefficients, FIR phases and limited EBU signal definitions against primary publications. No full conformance or audition claim. Full native pending.",
+        "primary_sources": [
+          "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.1770-5-202311-I!!PDF-E.pdf",
+          "https://tech.ebu.ch/docs/tech/tech3341.pdf"
+        ]
+      },
+      "handoff_commit": "3348e365aa5f009e05e16d76e50624b90e079a30",
+      "local_integration": {
+        "state": "integrated",
+        "source_commits": [
+          "2e7aefb87b3e4911bf19d6117b6cd8e2d9b72cde",
+          "3348e365aa5f009e05e16d76e50624b90e079a30"
+        ],
+        "commits": [
+          "52543df",
+          "9469d14"
+        ],
+        "handoff": "reports/audio02/HANDOFF.md",
+        "conflict_resolution": "Additive cli-outputs fixture end-of-list conflict resolved retaining both workflow prepare and audio measure.",
+        "focused_validation": "python3 -m unittest discover -s tests -p test_cli_contract.py:8 passed. Direct script invocation initially lacked module import path; module discovery passed.",
+        "combined_validation": "pending"
+      }
+    }
+  ],
+  "shared_owner": "Coordinator reconciles central CLI/output/evidence/backlog/capabilities. W3 owns optional global outcome guidance; M3 model transport and typed model evidence; T3 picture clocks/evaluation; A3 audio measurements/encoding. New shared semantics require a concrete interface and narrow lease, not user permission.",
+  "bounded_prerequisite": "Integrated mc/1 and C1/C2 plus corrected renderer permit I1/I2 and independent P03 technical fixtures. Full model Phase 1/P00 seed/story/census/art requirements remain open.",
+  "native_test_queue": [],
+  "active_native_test_owner": null,
+  "native_test_policy": "One committed frozen-source full native suite at a time across these tasks. Focused independent checks continue. Coordinator runs final combined required-native suite; reuse validated 516-case baseline.",
+  "cross_stream_dependencies": [
+    {
+      "id": "instance-clock-integration",
+      "owner": "T3",
+      "consumer": "M3",
+      "state": "interface_shared_implementation_pending",
+      "action": "M3 proceeds with static model transactions, preserves unowned clock data and adopts committed shared context for combined finite tests."
+    },
+    {
+      "id": "scene-catalog-atomic-save",
+      "owner": "M3",
+      "state": "source_and_public_replay_reviewed",
+      "action": "Source review resolved for bounded scene/catalog generation. Retained public replay verifies ordinary edit/restore, portable reopen and captured old revision raster. Full native/combined checks pending."
+    },
+    {
+      "id": "picture-audio-render-boundary",
+      "owners": [
+        "T3",
+        "A3"
+      ],
+      "state": "narrow_leases_granted",
+      "action": "Separate picture clock/range/receipt fields from audio bitrate/encoding/measurement fields and retain narrow commits."
+    },
+    {
+      "id": "shared-affine-exports",
+      "owner": "T3",
+      "consumer": "M3",
+      "state": "integrated_and_relayed",
+      "action": "Export existing engine scaling/rotation without math changes as an independent commit; M3 continues transaction work then adopts shared exports.",
+      "source_commit": "c6cfbb2bb6a256a399124dda01ac86b044f968c9",
+      "integration_commit": "f874719",
+      "coordinator_review": "Only exports existing declarations; no arithmetic change. Source-placement 8 checks and rig 7 checks passed. Exact commit sent to M3 for adoption."
+    },
+    {
+      "id": "selected-catalog-root-validation",
+      "owner": "M3",
+      "state": "source_and_public_replay_reviewed",
+      "observed_failure": "Actual saved generation catalog fails kit.validate and tools/check-scene.mjs because catalog.parent.parent is assumed asset root. Coordinator inspected both and nested attachment audit.",
+      "action": "Pass explicit selected project root through project check and nested validators, preserving legacy inferred fallback and containment/hash diagnostics. Keep separate from T3 finite-cycle guards; validate new generation, legacy layout and invalid source cases."
+    },
+    {
+      "id": "model-runtime-compiler-alias",
+      "owner": "M3",
+      "state": "source_and_negative_tests_reviewed",
+      "finding": "Current set-based Collector id skip is populated from record mapping after fingerprint and independent package checks; no semantic relation to expected compiler identity is established.",
+      "required_fix": "Derive explicit runtime-to-compiler identity and pinned pack/recipe mapping from exact closure/state using shared lowering. Preserve other checks; reject swapped mapping/different valid pack even after managed fingerprint recomputation and reject ordinary non-model alias.",
+      "coordinator_followup": "Re-lowering now validates mappings/layers and compiler identity; expected catalog collision rejects changed assets. Final comparison should include all managed signals/bindings/contact state, not only layers, to detect recomputed-fingerprint receiver drift.",
+      "resolution": "Exact package re-lowering and full managed-subject comparison present at92e6448; mapping/pack/signal/binding tamper with recomputed fingerprint and ordinary alias negatives inspected. Full native pending."
+    },
+    {
+      "id": "finite-render-integer-start",
+      "owner": "T3",
+      "state": "repair_source_reviewed_full_native_pending",
+      "finding": "secondsToFrames((1/24),24) and frames2/29 fail exact conversion because numeric CLI seconds are decimal rationals; render_plan/job-input/outputs use this exact conversion, so no current selector expresses many finite starting frames.",
+      "required_fix": "Provide an explicit integer-frame input path to finite render selection and carry that identity through job/output/receipt, preserving subframe rejection and legacy seconds behavior. Prove frame1 at24fps and nonzero boundary render without implicit rounding.",
+      "approved_interface": "proof/video/views-proof mutually exclusive --start or --start-frame; integer start/count transported through raster and source range receipt; finite omitted duration is remaining range (proof retains 3-second cap); nonzero finite video plus audio rejects before output creation.",
+      "repair_candidate": "8a24cff847751c0f0163c8b9779024815fd6908b"
+    },
+    {
+      "id": "prepared-clock-module-closure",
+      "owner": "T3",
+      "state": "repair_source_reviewed_full_native_pending",
+      "finding": "Prepared engine imports missing prepared/clock.mjs; fixed snapshot module list omits new transitive dependency.",
+      "required_fix": "Narrow actual snapshot closure updates and scene clock/sample CLI fixture updates after frozen run; preserve failed bundle, then commit and requeue behind W3.",
+      "repair_candidate": "8a24cff847751c0f0163c8b9779024815fd6908b"
+    },
+    {
+      "id": "explicit-duration-frame-authority",
+      "owner": "T3",
+      "state": "source_and_public_replay_repair_verified_native_pending",
+      "candidate": "8a24cff847751c0f0163c8b9779024815fd6908b",
+      "finding": "Clock/validator reconstruct N as fps*loop_seconds; explicit7frames25fps and31frames30/60fps round-trip to nonintegers and reject. Public scene clock --file succeeds for24fps60 control and fails for25fps7/30fps31 with invalid canvas/frame count. Direct compileClock also reproduced.",
+      "reproduction": "/private/tmp/wave3-clock-duration-ycvdp61p/repro-public.json",
+      "required_fix": "Use explicit duration_frames as integer authority, check seconds mirror against N/fps, carry exact N through scene validation/render plan/job/receipts and affected consumers without weakening legacy loops. Cover25fps7 and30fps31 public author/sample/native ranges; fresh committed proof before native slot.",
+      "combined_followup": "M3 tools/model/instance.mjs currently derives receiver-envelope frames from canvas product; reconcile against shared compiled clock when integrating corrected T3+M3.",
+      "repair_candidate": "1567a39b10d929202f44ca44bd197a98eaaaf06a"
+    },
+    {
+      "id": "revision-working-selection-origin",
+      "owner": "M3",
+      "state": "successor_source_and_public_replay_reviewed_native_pending",
+      "candidate": "92e64484fb9358827ff1a71879753525ab85aa56",
+      "finding": "revision compare before --working incorrectly reports no divergence after scene/catalog generation pointer switch: old origin files remain unchanged, configured project selection is not an origin. Raster evidence and old captured revision integrity remain correct.",
+      "reproduction": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/revision-pointer-probe-working-92e6448.json",
+      "reproduction_sha256": "c0a70e8615739c4e0d67b84e4b87c00aaeda49aa9ee36206cde7fa58cd0e267f",
+      "required_fix": "Capture configured project selection as an animation control/origin (or equally explicit typed selection identity); mutable config must not stale old captured revision integrity. Preserve unconfigured selections, prove working/watch invalidation and old revision render, fresh CLI replay before reserved suite after A3. Historical captures also need compare to inspect current configured selection against recorded scene/catalog; lease granted to revision_capture.compare.",
+      "repair_candidate": "fe2ab3eeffd587cb41df1dbd7bba9922adb65306"
+    },
+    {
+      "id": "legacy-watch-selected-generation",
+      "owner": "coordinator",
+      "state": "coordinator_reproduced_integration_fix_pending",
+      "finding": "studio.watch_snapshot hashes literal gate watch paths. Config-selected generations can live outside scene/ and assets/ watches. No human review reproduction or acceptance is claimed.",
+      "next": "Coordinator fixes selected scene/catalog and relevant contained-art watch identity after M3 integration; preserve unconfigured and scoped-review behavior, test affected gate staleness. This obligation remains open.",
+      "reproduction": "/private/tmp/wave3-legacy-watch-mm37p9ad/repro.json",
+      "reproduction_sha256": "5d3cf1949ad0bebb06ec041d01a5427c9f508198fe3f1eb522bf65d26ac28ae8",
+      "result": "Actual watch_snapshot returns equal animation/assets snapshots after config selects different generation scene bytes. Pure engineering reproduction; no fabricated review."
+    },
+    {
+      "id": "restored-scene-retained-package-reuse",
+      "owner": "M3",
+      "state": "successor_source_and_public_replay_reviewed_native_pending",
+      "candidate": "92e64484fb9358827ff1a71879753525ab85aa56",
+      "finding": "After restore to pre-instance scene, catalog retains pinned art but no live instance holds its pin. Placing same package under a fresh instance ID attempts a second contained path and fails exact managed asset identity collision.",
+      "reproduction": "/Users/lb/.codex/worktrees/f1b4/ambiance-studio/.ambiance/model-instances/restore-replace-probe-92e6448.json",
+      "reproduction_sha256": "a1f3363f5b52afc7e823150050a3e31248c02c9de40f2972897485b0d9ad901d",
+      "required_fix": "Reuse exact-hash validated contained package from retained generation data even without a live instance; never overwrite accepted packages or relax compiler/path collision checks. Add public restore/fresh-place and invalid retained-source negatives; freeze with selection-origin repair before native slot.",
+      "repair_candidate": "fe2ab3eeffd587cb41df1dbd7bba9922adb65306"
+    },
+    {
+      "id": "browser-installed-clock-initialization",
+      "owner": "T3",
+      "state": "repair_source_and_manifest_reviewed_browser_observation_reported",
+      "finding": "Actual browser install at1567a39 accesses compiled.clock for slider max before compiled is initialized.",
+      "required_fix": "Compile validated installed scene before reading clock, repeat actual31@30 endpoint/stop browser check, freeze one-line successor and refresh source manifest; no full suite underway.",
+      "repair_candidate": "2847b83c149611bf785ff5b95e32320c8083ce5c"
+    }
+  ],
+  "blocking_decisions": [],
+  "automation": {
+    "id": "coordinate-studio-implementation",
+    "kind": "heartbeat",
+    "status": "ACTIVE",
+    "interval_minutes": 15,
+    "target_thread_id": "01a0983d-40cf-71a3-bd9c-cb8308ad6efa",
+    "prompt_updated": true
+  },
+  "scope_limits": [
+    "WF-06/07, model Phase 4-7, P02/P04/P05/P06, TV-01/02 and production pilots remain separate continuations.",
+    "No paid generation, account changes, canonical film mutations, publishing or inferred artistic/audition acceptance.",
+    "Finish this bounded wave with reviewed local integration, combined validation and handoff. Ground any future main merge in current user direction."
+  ],
+  "combined_validation": {
+    "state": "failed_environment_xcode_license",
+    "required_native": true,
+    "blocked_reason": "The final required-native suite executed, but native media builds failed because this macOS environment has not accepted the Xcode license; no code or test failure was isolated. A privileged xcodebuild license acceptance is required before retry.",
+    "source_policy": "Clean committed integration runtime frozen for entire run; exact candidate recorded by runner inputs.json. No source changes until completion. Subsequent central/handoff documentation changes require package audit, not another native rerun.",
+    "public_replay": "passed on c27b22b; later motion-context integer normalization passed18 focused tests.",
+    "final_run": {
+      "state": "failed",
+      "report": ".ambiance/coordination/2026-09-13/wave3-combined-final/run.json",
+      "report_sha256": "fb6d2f1d2aab0460c1083e63c39d9e822f96a74da585aaf4656eeb89080362f3",
+      "python_report_sha256": "7c12f8a59fb2f554f63e2502353154791db36eefcd84ee74fa1959dcf502a586",
+      "recorded_cases": 588,
+      "python_tests": 571,
+      "skips": 0,
+      "failed_cases": 23,
+      "passing_checks": ["CI-NATIVE-CAPABILITY", "CI-ENGINE", "CI-ACTIVITY", "CI-BINDINGS", "CI-CLOCK", "CI-FINISHING", "CI-MODEL-CONTRACT", "CI-REGION-SIZING", "CI-RENDER-STATE", "CI-RENDER-TRANSPORT", "CI-RIG", "CI-SOURCE-PLACEMENT", "CI-TRACKS", "CI-VIEW-RASTER", "CI-VIEWS", "CI-PACKAGE", "CI-FAILURE-CONTRACT"],
+      "failing_check": "CI-PYTHON",
+      "failure_signature": "Native media build failed: You have not agreed to the Xcode license agreements.",
+      "next_action": "Accept the Xcode license in the macOS environment, then rerun exactly once against a clean committed source tree."
+    }
+  },
+  "dispatch_validation": {
+    "ok": true,
+    "local_links_checked": 650,
+    "errors": [],
+    "report": "/private/tmp/ambiance-wave3-dispatch-package.json"
+  },
+  "list_threads_limitation": "New tasks may be omitted by list_threads. Preserve setup IDs and resolve actual IDs from worker messages/confirmed task state; never create duplicate replacements.",
+  "native_slot_state": "granted",
+  "integration_package_audit": {
+    "ok": true,
+    "local_links_checked": 661,
+    "report": "/private/tmp/ambiance-wave3-audio-integration-package.json",
+    "sha256": "f54f411526c96f7afff213867ea4b9b0a13d59852abc0ea5d25e5b5119bed97d",
+    "meaning": "After W3/A3 local integration; not final combined validation."
+  },
+  "shared_review_watch_repair": {
+    "state": "focused_checks_passed",
+    "scope": "Legacy scene/assets folder watches additionally follow selected scene/catalog, catalog images and complete active model package closure. Gate-local malformed/missing inputs cannot pass; independent sound/intent and immutable revision scopes preserved; selection rechecked before receipt save.",
+    "regression": "18 studio,15 model instance and15 revision tests passed. Explicit canonical filename watches also covered after peer review.",
+    "root_cause_proof": "/private/tmp/wave3-legacy-watch-mm37p9ad/repro.json",
+    "peer_review": "M3 re-reviewed normalization and independently probed all six directory/file/trailing-separator forms: no remaining blocking findings."
+  },
+  "integration_checks": {
+    "state": "implementation_focused_checks_passed_public_replay_ready",
+    "scope": "Shared authored frame counts in activity, region demand, movie evidence, motion-context proofs and model receiver envelopes; finite diagnostics use linear predecessors and no loop joins. Clock dependency identities added to affected report owners. Finite activity requirement evidence remains unavailable pending P06.",
+    "focused": "16 instance tests,14 activity tests with one native-only skip in focused run,8 CLI contract tests,18 motion tests (restricted localhost failure followed by successful native-access rerun), JS activity/region/clock passed. Full required-native run will require zero skips.",
+    "public_replay": "examples/model-instances/replay.py --finite exercises W3 auto guidance, M3 lifecycle, T3 exact29@25 with local camera cycle and A3 measurement/320k finite tone encode.",
+    "retained_failures": [
+      "Public replay1 reached successful views-proof, then harness read a compact-output field that belongs in the detailed receipt. Harness corrected; replay2 passed.",
+      "Precombined package audit rejected T3 handoff links to its original worktree. Converted to explicit retained evidence paths; no evidence files or hashes changed."
+    ]
+  },
+  "documentation_followup": {
+    "owner": "W3 existing task",
+    "state": "complete",
+    "scope": [
+      "docs/CLI.md",
+      "docs/CAPABILITIES.json",
+      "docs/architecture/STUDIO-PLAN-ALIGNMENT.md",
+      "docs/architecture/WORKFLOW-CLI.yaml",
+      "docs/architecture/model-contract/implementation-v1.md",
+      "docs/architecture/FIRST-SHORT-WORK-PACKAGES.json",
+      "docs/architecture/TV-QUALITY-AND-SOUND-LIBRARY.yaml"
+    ],
+    "combined_acceptance": "complete",
+    "commit": "6cc99b2",
+    "evidence": {
+      "handoff": "reports/workflow-cli/WF-04-05-HANDOFF.md",
+      "package_audit": ".ambiance/validation/w3-handoff-package-audit.json",
+      "package_audit_links_checked": 650,
+      "package_audit_sha256": "749376acd42475cd6e113529359db54b3659a925f16d54609b47720a7f1263f9"
+    }
+  },
+  "combined_public_replay": {
+    "state": "passed",
+    "source_commit": "c27b22bd2ec70408b10fd45f0b4bb3365541a423",
+    "path": ".ambiance/coordination/2026-09-13/wave3-finite-replay-2/evidence.json",
+    "sha256": "714af3517fbe7f5e08872090324163d8030e27e1b244d07459843ce9df6e28af",
+    "public_calls": 54,
+    "source_files_verified": 614,
+    "artifact_files_verified": 817,
+    "fully_decoded_frames": 29,
+    "fps": 25,
+    "presented_audio_samples": 55680,
+    "audio_sample_rate": 48000,
+    "requested_audio_bitrate": 320000,
+    "movie_sha256": "d3655ee6a92230b7c886a642d5240526aeedaf71dbcbe91237fd31dd41e178b0",
+    "observation": ".ambiance/coordination/2026-09-13/wave3-finite-replay-2/coordinator-observation.json",
+    "observation_sha256": "97c9841dc028ee5fa5bde7328a236abedd8bb60c095a1b769c55794c80f48389",
+    "limits": "Static engineering models with a local camera cycle and synthetic tone; no film or listening acceptance. Later motion-proof count normalization is separately focused-tested and awaits final suite."
+  },
+  "precombined_package_audit": {
+    "ok": true,
+    "links": 671,
+    "path": "/private/tmp/ambiance-wave3-precombined-package-fixed.json",
+    "sha256": "964c518f1950a7695a85f16103cb3069655848f47e9ccf57a3488e7f41c4df94"
+  }
+}

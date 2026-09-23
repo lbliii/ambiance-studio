@@ -11,6 +11,7 @@ import math
 import studio
 from . import production_plan as spec, editions, project_references, record_contracts, revision_reviews
 from .coverage_context import AssessmentUnavailable, pinned, relative_file
+from .timebase import scene_frame_count
 
 
 class FileReference(TypedDict):
@@ -19,7 +20,7 @@ class FileReference(TypedDict):
 
 
 class ProviderEvidence(TypedDict):
-    kind: Literal['raster', 'movie', 'activity', 'observation']
+    kind: Literal['raster', 'model-raster', 'movie', 'activity', 'observation']
     references: list[FileReference]
     output: NotRequired[dict[str, int]]
     role: NotRequired[str]
@@ -130,7 +131,7 @@ def movie_receipt(project, path, ctx, view, role=None) -> ProviderEvidence:
     expected = ctx['views'][view]['output']
     if facts['width'] != expected['width'] or facts['height'] != expected['height'] or facts['fps'] != ctx['scene']['canvas']['fps']:
         raise ValueError('Movie decode dimensions/clock differ from expected view')
-    if verification.get('loop_frames') != ctx['scene']['canvas']['fps']*ctx['scene']['canvas']['loop_seconds']:
+    if verification.get('loop_frames') != scene_frame_count(ctx['scene']):
         raise ValueError('Movie evidence does not cover the full captured picture loop')
     from . import media_verification, native_media
     # Run the existing decoder once per exact movie/expectations. Warm readiness
@@ -171,7 +172,9 @@ def activity_receipt(project, path, ctx, exp, view) -> ProviderEvidence:
         raise ValueError('Activity receipt has wrong view identity')
     summary = next((r for r in receipt['summary'] if r['view'] == view), {})
     clock = receipt['clock']
-    if clock['start_frame'] != 0 or clock['frames'] != clock['fps']*clock['picture_seconds'] or clock['stride'] != 1:
+    if ctx['scene'].get('clock', {}).get('mode') == 'finite':
+        raise ValueError('Finite activity remains diagnostic; finite-shot requirement evidence is not implemented')
+    if clock['start_frame'] != 0 or clock['frames'] != scene_frame_count(ctx['scene']) or clock['stride'] != 1:
         raise ValueError('Required activity evidence needs the full picture loop at every output frame; reduced sampling remains diagnostic')
     actions = {r['id']: r for r in summary.get('actions', [])}
     planned_actions = {r['id']: r for r in activity.actions_from_plan(ctx['plan'])}
@@ -259,7 +262,12 @@ class ProviderVerifier:
         project, path = request.project, request.receipt
         ctx, exp, view, role = request.context, request.expectation, request.view, request.role
         check = exp['requirement']['check']
-        if check == 'raster': return raster_receipt(project, path, ctx, view)
+        if check == 'raster':
+            receipt = studio.read(path)
+            if isinstance(receipt, dict) and receipt.get('format') == 'ambiance-model-scene-evidence':
+                from .model_evidence import verify
+                return verify(project, path, ctx, view)
+            return raster_receipt(project, path, ctx, view)
         if check == 'movie': return movie_receipt(project, path, ctx, view, role)
         if check == 'activity': return activity_receipt(project, path, ctx, exp, view)
         if exp['requirement']['type'] == 'observed': return observed_receipt(project, path, ctx, exp, view)

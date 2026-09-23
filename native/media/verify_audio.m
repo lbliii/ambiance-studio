@@ -29,13 +29,15 @@ NSDictionary *verifyAudio(AVURLAsset *source, NSArray *sounds, int expectedFrame
     }];
     if (sounds.count) {
         AVAssetTrack *sound = sounds.firstObject;
+        FourCharCode codec = CMFormatDescriptionGetMediaSubType((__bridge CMFormatDescriptionRef)sound.formatDescriptions.firstObject);
+        audio[@"source_codec_fourcc"] = [NSString stringWithFormat:@"%c%c%c%c", (char)(codec>>24), (char)(codec>>16), (char)(codec>>8), (char)codec];
         AVAssetReader *ar = [[AVAssetReader alloc] initWithAsset:source error:&error];
         AVAssetReaderTrackOutput *ao =
             [AVAssetReaderTrackOutput assetReaderTrackOutputWithTrack:sound
                                                        outputSettings:@{
                                                            AVFormatIDKey : @(kAudioFormatLinearPCM),
-                                                           AVLinearPCMBitDepthKey : @16,
-                                                           AVLinearPCMIsFloatKey : @NO,
+                                                           AVLinearPCMBitDepthKey : @32,
+                                                           AVLinearPCMIsFloatKey : @YES,
                                                            AVLinearPCMIsBigEndianKey : @NO,
                                                            AVLinearPCMIsNonInterleaved : @NO
                                                        }];
@@ -56,6 +58,10 @@ NSDictionary *verifyAudio(AVURLAsset *source, NSArray *sounds, int expectedFrame
         FILE *wav = wavPath ? fopen(wavPath.fileSystemRepresentation, "wb") : NULL;
         if (wavPath && !wav)
             fail(@"Cannot open decoded PCM output");
+        NSString *floatPath = [framesPath isEqualToString:@"-"] ? nil :
+            [framesPath stringByAppendingPathComponent:@"decoded-audio.f32le"];
+        FILE *floating = floatPath ? fopen(floatPath.fileSystemRepresentation, "wb") : NULL;
+        if (floatPath && !floating) fail(@"Cannot open presentation float PCM output");
         uint32_t wavBytes = 0;
         if (wav)
             wavHeader(wav, 0, 48000, 2);
@@ -64,6 +70,8 @@ NSDictionary *verifyAudio(AVURLAsset *source, NSArray *sounds, int expectedFrame
                 const AudioStreamBasicDescription *fmt =
                     CMAudioFormatDescriptionGetStreamBasicDescription(
                         CMSampleBufferGetFormatDescription(sample));
+                if ((rate && rate != fmt->mSampleRate) || (channels && channels != fmt->mChannelsPerFrame))
+                    fail(@"Changing decoded audio rate/layout is unsupported");
                 rate = fmt->mSampleRate;
                 channels = fmt->mChannelsPerFrame;
                 long n = CMSampleBufferGetNumSamples(sample);
@@ -92,26 +100,30 @@ NSDictionary *verifyAudio(AVURLAsset *source, NSArray *sounds, int expectedFrame
                 if (!block)
                     fail(@"Decoded PCM buffer is unavailable");
                 size_t len = CMBlockBufferGetDataLength(block);
-                if (len < (size_t)n * channels * 2)
+                if (len < (size_t)n * channels * 4)
                     fail(@"Decoded PCM buffer is truncated");
-                int16_t *pcm = malloc(len);
+                float *pcm = malloc(len);
                 if (!pcm)
                     fail(@"Decoded PCM allocation failed");
                 if (CMBlockBufferCopyDataBytes(block, 0, len, pcm) != kCMBlockBufferNoErr)
                     fail(@"Decoded PCM copy failed");
                 {
                     for (long i = from * channels; i < to * channels; i++) {
-                        double v = pcm[i] / 32768.0;
+                        if (!isfinite(pcm[i])) fail(@"Non-finite decoded audio sample");
+                        // Legacy playback WAV and its RMS/peak retain PCM16 semantics.
+                        int16_t q = (int16_t)fmax(-32768, fmin(32767, round(pcm[i] * 32768.0)));
+                        double v = q / 32768.0;
                         peak = fmax(peak, fabs(v));
                         sumSq += v * v;
                         values++;
+                        if (wav && fwrite(&q, 2, 1, wav) != 1) fail(@"Decoded PCM save failed");
                     }
                     if (wav && to > from) {
                         uint32_t countBytes = (uint32_t)(to - from) * channels * 2;
-                        if (fwrite(pcm + from * channels, 1, countBytes, wav) != countBytes)
-                            fail(@"Decoded PCM save failed");
                         wavBytes += countBytes;
                     }
+                    if (floating && to > from && fwrite(pcm + from * channels, channels*4, to-from, floating) != (size_t)(to-from))
+                        fail(@"Presentation float PCM save failed");
                 }
                 free(pcm);
                 CFRelease(sample);
@@ -122,6 +134,13 @@ NSDictionary *verifyAudio(AVURLAsset *source, NSArray *sounds, int expectedFrame
             fclose(wav);
             audio[@"decoded_wav"] = wavPath;
         }
+        if (floating) {
+            fclose(floating);
+            audio[@"decoded_float"] = floatPath;
+            audio[@"decoded_float_format"] = @"interleaved float32 little endian; unclipped presentation samples";
+            audio[@"decoded_wav_method"] = @"float32 decode rounded/clamped to legacy PCM16 playback WAV";
+        }
+        audio[@"estimated_encoded_bitrate_bps"] = @(sound.estimatedDataRate);
         NSMutableArray *segments = [NSMutableArray array];
         for (AVAssetTrackSegment *segment in sound.segments) {
             CMTimeMapping m = segment.timeMapping;

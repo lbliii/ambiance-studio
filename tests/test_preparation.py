@@ -197,6 +197,8 @@ class PreparationTests(unittest.TestCase):
             response = connection.getresponse(); data = response.read(); status = response.status
             connection.close(); return status, data
         self.assertEqual(request('GET', '/')[0], 200)
+        status, clock = request('GET', '/clock.mjs')
+        self.assertEqual(status, 200); self.assertEqual(clock, (out/'clock.mjs').read_bytes())
         self.assertEqual(request('GET', '/snapshots/source.bin')[0], 404)
         self.assertEqual(request('GET', '/../recipe.json')[0], 404)
         self.assertEqual(request('GET', '/', headers={'Host': 'evil.example'})[0], 403)

@@ -19,7 +19,7 @@ class BindingProof(unittest.TestCase):
             result=subprocess.run(['node','--input-type=module','-e',f"await import({json.dumps((out/'engine.mjs').as_uri())})"],capture_output=True,text=True)
             self.assertEqual(result.returncode,0,result.stderr)
             _,_,files=preparation.artifact(out)
-            self.assertIn('bindings.mjs',files);self.assertIn('views.mjs',files)
+            self.assertIn('bindings.mjs',files);self.assertIn('views.mjs',files);self.assertIn('clock.mjs',files)
 
     def test_source_receiver_proof_captures_both_views_and_module_closure(self):
         with tempfile.TemporaryDirectory() as temp:

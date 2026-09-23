@@ -29,9 +29,9 @@ def proof(project, directory, out, long_edge=640, resume=False):
     integer(long_edge,'proof long edge',32,2048)
     views=list(receipt['views']) or ['authored']
     if len(views)>8: raise ValueError('Preparation proof supports at most 8 selected views')
-    runtime_files=['tools/render-scene.mjs','tools/views-proof.mjs','editor/engine.mjs','editor/finishing.mjs',
+    runtime_files=['tools/render-scene.mjs','tools/views-proof.mjs','editor/engine.mjs','editor/clock.mjs','editor/finishing.mjs',
                    'editor/views.mjs','editor/stage-raster.mjs','editor/audit.mjs','ambiance_studio/rendering.py',
-                   'ambiance_studio/render_plan.py','ambiance_studio/render_execution.py',
+                   'ambiance_studio/render_plan.py','ambiance_studio/timebase.py','ambiance_studio/render_execution.py',
                    'ambiance_studio/media_inputs.py','ambiance_studio/media_verification.py',
                    'ambiance_studio/native_media.py','ambiance_studio/native_sources.py']
     if (ROOT/'editor/bindings.mjs').exists(): runtime_files.append('editor/bindings.mjs')

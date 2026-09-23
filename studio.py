@@ -50,7 +50,7 @@ def pipeline(project,context=None):
             raise ValueError('Gate criteria must be nonempty and unique')
     return gates
 
-def watch_snapshot(project,gate):
+def watch_state(project,gate):
     snapshot={}
     for relative in gate['watch']:
         p=inside(project,relative)
@@ -62,7 +62,16 @@ def watch_snapshot(project,gate):
                     snapshot[rel]=digest(checked)
         elif p.is_file(): snapshot[relative]=digest(p)
         else: snapshot[relative]=None
-    return snapshot
+    from ambiance_studio.review_watches import selected_picture
+    selected,issues=selected_picture(project,gate)
+    snapshot.update(selected)
+    return snapshot,issues
+
+def watch_snapshot(project,gate):
+    return watch_state(project,gate)[0]
+
+def scoped_watch(project,gate,context=None):
+    return (context['snapshot'](gate['id']),context['issues'](gate['id'])) if context else watch_state(project,gate)
 
 def scoped_snapshot(project,gate,context=None):
     return context['snapshot'](gate['id']) if context else watch_snapshot(project,gate)
@@ -80,7 +89,7 @@ def gate_status(project,context=None):
         record=read(path) if path.is_file() else None
         state='blocked' if unavailable else 'pending'
         reasons=[f'Dependency {d}: {results[d]["state"]}' for d in unavailable]
-        scope_issues=context['issues'](id) if context else []
+        current_snapshot,scope_issues=scoped_watch(project,g,context)
         if scope_issues:state='blocked';reasons=scope_issues+reasons
         if record:
             stale=[]
@@ -88,7 +97,7 @@ def gate_status(project,context=None):
             if record.get('payload_sha256')!=encoded_hash(payload): stale.append('Receipt content changed or lacks an integrity digest')
             if record.get('project_digest')!=encoded_hash(settings): stale.append('Project settings changed')
             if record.get('gate_digest')!=encoded_hash(g): stale.append('Gate criteria changed')
-            if record.get('watch_snapshot')!=scoped_snapshot(project,g,context): stale.append('Watched inputs or outputs changed')
+            if record.get('watch_snapshot')!=current_snapshot: stale.append('Watched inputs or outputs changed')
             if context and (record.get('version')!=2 or record.get('subject')!=context['subject']):stale.append('Review subject changed')
             stale.extend(scope_issues)
             for d in g['depends']:
@@ -161,7 +170,7 @@ def record_review(project,source,context=None):
     gate=next((g for g in pipeline(project,context) if g['id']==review.get('gate')),None)
     if not gate: raise ValueError('Unknown gate in review')
     status=gate_status(project,context)['gates']
-    initial_snapshot=scoped_snapshot(project,gate,context)
+    initial_snapshot,initial_issues=scoped_watch(project,gate,context)
     if review.get('verdict') not in ['pass','revise']: raise ValueError('Verdict must be pass or revise')
     if not isinstance(review.get('recorder'),str) or not review['recorder'].strip(): raise ValueError('Name the person or agent recording this review')
     checks=review.get('checks',[])
@@ -192,7 +201,7 @@ def record_review(project,source,context=None):
             elif not any(e['path'].startswith('deliverables/final/') for e in evidence): raise ValueError('Human release review must identify the exact final file')
         normalized.append(dict(id=c['id'],result=c['result'],observed_by=observer,note=c.get('note',''),evidence=evidence))
     if review['verdict']=='pass':
-        if context and context['issues'](gate['id']):raise ValueError('Revision inputs are unavailable or changed: '+'; '.join(context['issues'](gate['id'])))
+        if initial_issues:raise ValueError('Review inputs are unavailable or changed: '+'; '.join(initial_issues))
         blocked=[d for d in gate['depends'] if status[d]['state']!='passed']
         if blocked: raise ValueError('Unpassed or stale dependencies: '+', '.join(blocked))
     from ambiance_studio.production_coverage import normalize_observations
@@ -205,13 +214,13 @@ def record_review(project,source,context=None):
     if context:
         receipt['subject']=context['subject']
         if context.get('plan_context'): receipt['expectations']=observations
-        if scoped_snapshot(project,gate,context)!=initial_snapshot:raise ValueError('Revision inputs changed during review recording')
         for check in normalized:
             for ev in check['evidence']:
                 if digest(inside(project,ev['path']))!=ev['sha256']:raise ValueError('Evidence changed during review recording')
         for check in observations:
             for ev in check.get('evidence',[]):
                 if digest(inside(project,ev['path']))!=ev['sha256']:raise ValueError('Expectation evidence changed during review recording')
+    if scoped_watch(project,gate,context)!=(initial_snapshot,initial_issues):raise ValueError('Review inputs changed during review recording')
     receipt['payload_sha256']=encoded_hash(receipt)
     review_dir=context['review_dir'] if context else project/'reviews'
     path=review_dir/f'{gate["id"]}.json'

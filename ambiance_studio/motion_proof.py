@@ -100,21 +100,23 @@ def context_render(context,candidate,stage,seconds):
     if proposal is None or not proposal['ok']:return proposal
     from .native_media import json_command
     scene=proposal['scene'];fps=scene['canvas']['fps'];duration=scene['canvas']['loop_seconds']
-    frames=max(1,min(round(seconds*fps),round(duration*fps)));seconds=frames/fps
+    from .timebase import scene_frame_count
+    count=int(scene_frame_count(scene));finite=scene.get('clock',{}).get('mode')=='finite'
+    frames=max(1,min(round(seconds*fps),count));seconds=frames/fps
     width,height=scene['canvas']['width'],scene['canvas']['height']
     # Scene proof is at authored pixel dimensions. Bound volume rather than silently reduce scale.
     if width*height*frames*2>160_000_000:raise ValueError('Context proof exceeds 160 million pixels; shorten --context-seconds')
     studio.write(stage/'candidate.scene.json',scene);studio.write(stage/'candidate.catalog.json',proposal['catalog']);studio.write(stage/'adoption.json',proposal['batch'])
-    binding=context['study']['view']['scene'];start=max(0,round(duration*fps)-frames//2)/fps
+    binding=context['study']['view']['scene'];start_frame=max(0,count-(frames if finite else frames//2));start=start_frame/fps
     sides=[]
     for side,scene_path,catalog_path in [('original',motion.checked(context['project'],binding['scene']),motion.checked(context['project'],binding['catalog'])),('candidate',stage/'candidate.scene.json',stage/'candidate.catalog.json')]:
         out=stage/f'scene-{side}'
         json_command([require_node(),str(motion.ROOT/'tools/render-scene.mjs')],{'project':str(context['project']),'scene_path':str(scene_path),'catalog_path':str(catalog_path),
-            'out':str(out),'mode':'proof','width':width,'height':height,'start':start,'seconds':seconds,'disable':[],'supersample':1})
+            'out':str(out),'mode':'proof','width':width,'height':height,'start':start,'seconds':seconds,'start_frame':start_frame,'frame_count':frames,'disable':[],'supersample':1})
         sides.append([f'scene-{side}/current/{i:05d}.png' for i in range(frames)])
     return {'ok':True,'frames':sides,'width':width,'height':height,'fps':fps,'start':start,'seconds':seconds,'loop_seconds':duration,
             'adoption':'adoption.json','expected_scene_sha256':proposal['expected_scene_sha256'],
-            'limits':['Context frames straddle the join using the original absolute scene clock.','Global grades and rendered shadows retain the shared renderer; unsupported object-bound masks/lights block context/adoption.']}
+            'limits':['Context frames cover the finite ending without wrap.' if finite else 'Context frames straddle the join using the original absolute scene clock.','Global grades and rendered shadows retain the shared renderer; unsupported object-bound masks/lights block context/adoption.']}
 
 
 def verify(directory):
@@ -141,7 +143,7 @@ def proof(context,file,out,candidate=None,finding=None,region=None,offset=0,limi
         _,after=assets.read_asset(candidate_asset,project)
         if [x.tobytes() for x in after]!=[x.tobytes() for x in motion.raster(context)]:raise ValueError('Candidate raster differs from same-runtime source correction')
     if region and region not in context['study']['regions']:raise ValueError('Unknown region')
-    request={'implementation':{name:studio.digest(motion.ROOT/name) for name in ['ambiance_studio/asset_motion.py','ambiance_studio/motion_proof.py','tools/asset_tool.py','editor/motion-workbench.html','editor/motion-workbench.mjs','editor/engine.mjs','editor/finishing.mjs','editor/bindings.mjs']},'study_sha256':study_hash,'candidate':motion.identity(project,candidate/'asset.json') if candidate else None,'context_seconds':context_seconds}
+    request={'implementation':{name:studio.digest(motion.ROOT/name) for name in ['ambiance_studio/asset_motion.py','ambiance_studio/motion_proof.py','tools/asset_tool.py','editor/motion-workbench.html','editor/motion-workbench.mjs','editor/engine.mjs','editor/clock.mjs','ambiance_studio/timebase.py','editor/finishing.mjs','editor/bindings.mjs']},'study_sha256':study_hash,'candidate':motion.identity(project,candidate/'asset.json') if candidate else None,'context_seconds':context_seconds}
     if out.exists():
         report=verify(out)
         if report['request']!=request:raise ValueError('Proof directory belongs to different inputs/settings')

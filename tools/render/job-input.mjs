@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 
 import {compileScene} from '../../editor/engine.mjs';
+import {secondsToFrames} from '../../editor/clock.mjs';
 import {finishingAssetIds} from '../../editor/finishing.mjs';
 import {planViews, resizeSceneCanvas} from '../../editor/views.mjs';
 import {prepareLookProof} from '../look-proof.mjs';
@@ -62,10 +63,15 @@ export async function prepareJob(request, runtime) {
   if (!viewPlan)
     resizeSceneCanvas(scene, internalWidth, internalHeight);
   const compiled = compileScene(scene, catalog), fps = scene.canvas.fps,
-        loopFrames = fps * scene.canvas.loop_seconds;
+        loopFrames = compiled.clock.duration_frames;
   if (!scene.layers.length)
     throw Error('Cannot render an empty scene');
-  const start = finite(request.start ?? 0, 'start');
+  let start = finite(request.start ?? 0, 'start'), startFrame = request.start_frame ?? null;
+  if(startFrame!==null){
+    if(!Number.isSafeInteger(startFrame)||startFrame<0)throw Error('Source start frame must be a safe nonnegative integer');
+    if(request.start!==undefined&&request.start!==startFrame/fps)throw Error('Source start frame and seconds mirror disagree');
+    start=startFrame/fps;
+  }
   if (start < 0)
     throw Error('start must be nonnegative');
   const mode = request.mode;
@@ -81,13 +87,21 @@ export async function prepareJob(request, runtime) {
   if (mode === 'rig-proof' && supersample !== 1)
     throw Error(
         'Rig-proof matrix uses fixed resolution; supersampling is supported for frame, proof, look-proof and video');
-  const seconds = finite(request.seconds ?? ([ 'proof', 'views-proof' ].includes(mode)
-                                                 ? Math.min(3, scene.canvas.loop_seconds)
-                                                 : scene.canvas.loop_seconds),
-                         'seconds');
-  const frames = mode === 'frame' ? 1 : seconds * fps;
+  const finiteRange=compiled.clock.mode==='finite'&&['video','proof','views-proof'].includes(mode);
+  if(finiteRange&&startFrame===null)startFrame=secondsToFrames(start,compiled.clock.fps).value;
+  const remaining=finiteRange?loopFrames-startFrame:loopFrames;
+  const defaultFrames=['proof','views-proof'].includes(mode)?Math.min(3*fps,remaining):remaining;
+  const defaultSeconds=finiteRange?defaultFrames/fps:
+      ['proof','views-proof'].includes(mode)?Math.min(3,scene.canvas.loop_seconds):scene.canvas.loop_seconds;
+  const seconds=finite(request.seconds??(request.frame_count===undefined?defaultSeconds:request.frame_count/fps),'seconds');
+  const frames = mode === 'frame' ? 1 : request.frame_count ?? (request.seconds===undefined&&(finiteRange||scene.clock)?defaultFrames:seconds*fps);
+  if(request.frame_count!==undefined&&seconds!==frames/fps)throw Error('Source frame count and seconds mirror disagree');
   if (!Number.isInteger(frames) || frames < 1 || frames > loopFrames)
     throw Error('Duration must contain an integer frame count within one scene loop');
+  if(finiteRange){
+    if(startFrame+frames>loopFrames)throw Error('Finite render range must stay within [0,N); endpoint inspection is frame-only');
+    if(mode==='video'&&(request.repeats??1)!==1)throw Error('Finite video cannot repeat the shot');
+  }
   if (mode === 'video' && (width % 2 || height % 2))
     throw Error('Native H.264 dimensions must be even');
   const disable = request.disable ?? [];
@@ -102,7 +116,7 @@ export async function prepareJob(request, runtime) {
       if (layer.tracks?.visible)
         layer.tracks.visible = {
           interpolation : 'hold',
-          keys : [ [ 0, false ], [ scene.canvas.loop_seconds, false ] ]
+          keys : [ [ 0, false ], [ layer.tracks.visible.keys.at(-1)[0], false ] ]
         };
     }
   const alternateCompiled = compileScene(alternate, catalog);
@@ -154,6 +168,7 @@ export async function prepareJob(request, runtime) {
     fps,
     loopFrames,
     start,
+    startFrame,
     mode,
     frames,
     disable,

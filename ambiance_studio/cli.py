@@ -23,8 +23,10 @@ import studio
 class Parser(argparse.ArgumentParser):
     def error(self,message):raise CommandError(message)
 
-def emit(command,data,ok=True):
-    print(json.dumps({'ok':ok,'schema_version':1,'command':command,'data':data},indent=2,allow_nan=False))
+def emit(command,data,ok=True,*,guidance=None):
+    payload={'ok':ok,'schema_version':1,'command':command,'data':data}
+    if guidance is not None:payload['guidance']=guidance
+    print(json.dumps(payload,indent=2,allow_nan=False))
 
 def project_path(value, registry_file=None):
     if value:
@@ -50,6 +52,7 @@ def parser():
     p.add_argument('--version', action='version', version=f'Ambiance Studio {__version__}')
     p.add_argument('--project', type=Path, help='Project directory; otherwise discover it from the working directory')
     p.add_argument('--registry', type=Path, help='Shared local registry; defaults to AMBIANCE_REGISTRY or ~/.ambiance-studio/registry.json')
+    p.add_argument('--guidance',choices=['off','auto','full'],default='off',help='Optional outcome guidance; native results and artifacts remain unchanged')
     sub = p.add_subparsers(dest='command', required=True)
     sub.add_parser('doctor', help='Inspect runtimes and implemented capabilities')
     for module in [project_commands, studio_commands, asset_commands, scene_commands,
@@ -74,7 +77,7 @@ def command_project(args):
     route = (command, action)
     if route == ('audio', 'library') and args.library_action not in ['import', 'materialize', 'check']:
         return None
-    if command in ['studio', 'doctor', 'test', 'model'] or route in PROJECT_FREE:
+    if command in ['studio', 'doctor', 'test'] or command == 'model' and action != 'instance' or route in PROJECT_FREE:
         return None
     if command == 'preview' and preview_commands.is_artifact(args):
         return None
@@ -95,6 +98,8 @@ def run_render(args, project):
 
 
 def run(args):
+    # Global presentation metadata must never enter a native recipe/transaction.
+    args=argparse.Namespace(**{k:v for k,v in vars(args).items() if k!='guidance'})
     from . import audio, bindings, registry
     from .media_operations import execute_media
     registry_file = registry.registry_path(getattr(args, 'registry', None))
@@ -125,6 +130,21 @@ def run(args):
 
 
 def main(argv=None):
+    args=None;output=None
+    def guided(payload):
+        if args is not None and getattr(args,'guidance','off')!='off':
+            try:
+                from .workflow_outcomes import attach
+                return attach(args,payload,output)
+            except (Exception,KeyboardInterrupt,SystemExit) as error:
+                return {**payload,'guidance':{'format':'ambiance-operation-guidance','schema_version':1,
+                    'state':'unavailable','operation_ok':payload['ok'],
+                    'diagnostic':{'code':'guidance_unavailable','type':type(error).__name__},
+                    'meaning':'Native outcome preserved; do not repeat a successful operation.'}}
+        return payload
+    def failure(error,exit_code):
+        payload=guided({'ok':False,'schema_version':1,'error':error})
+        print(json.dumps(payload,indent=2));return exit_code
     try:
         command_parser=parser()
         args=command_parser.parse_args(argv)
@@ -136,11 +156,12 @@ def main(argv=None):
         payload={'ok':ok,'schema_version':1,'command':command,'data':result}
         if output is Output.REPORT and getattr(args,'out',None):
             studio.write(args.out,payload)
-        emit(command,result,ok)
+        payload=guided(payload)
+        emit(command,result,ok,guidance=payload.get('guidance'))
         return 0 if ok else 1
     except CommandError as e:
-        print(json.dumps({'ok':False,'schema_version':1,'error':{'code':e.code,'message':str(e)}},indent=2));return e.exit_code
+        return failure({'code':e.code,'message':str(e)},e.exit_code)
     except (OSError,ValueError,TypeError,KeyError) as e:
-        print(json.dumps({'ok':False,'schema_version':1,'error':{'code':'invalid_input','message':str(e)}},indent=2));return 2
+        return failure({'code':'invalid_input','message':str(e)},2)
     except KeyboardInterrupt:
-        print(json.dumps({'ok':False,'schema_version':1,'error':{'code':'interrupted','message':'Operation interrupted. Inspect saved run/artifact state and resume the unchanged recipe where supported.'}}));return 130
+        return failure({'code':'interrupted','message':'Operation interrupted. Inspect saved run/artifact state and resume the unchanged recipe where supported.'},130)

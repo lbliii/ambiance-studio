@@ -49,7 +49,7 @@ export function prepareRaster(job) {
       active.render(time);
       if (active.stage.finishingReport)
         finishingDiagnostics.push(
-            {...active.stage.finishingReport, time_seconds : time, disabled_variant : off});
+            {...active.stage.finishingReport, time_seconds : typeof time==='number'?time:time.seconds, disabled_variant : off});
       if (off) {
         const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, width, height);
@@ -63,7 +63,7 @@ export function prepareRaster(job) {
     });
     if (internalCanvas.finishingReport)
       finishingDiagnostics.push(
-          {...internalCanvas.finishingReport, time_seconds : time, disabled_variant : off});
+          {...internalCanvas.finishingReport, time_seconds : typeof time==='number'?time:time.seconds, disabled_variant : off});
     if (supersample !== 1) {
       const ctx = canvas.getContext('2d');
       ctx.clearRect(0, 0, width, height);
@@ -85,16 +85,18 @@ export function prepareRaster(job) {
       const row = endpoints.get(id);
       row.rgba_endpoint_exact = row.first.equals(c.data());
       row.endpoint_difference = difference(row.first, c.data());
-      if (!row.rgba_endpoint_exact)
+      if (compiled.clock.mode==='loop'&&!row.rgba_endpoint_exact)
         throw Error('Raster endpoint differs for view ' + id);
     }
   const endpointDifference = difference(first, endpoint);
-  if (!first.equals(endpoint))
+  if (compiled.clock.mode==='loop'&&!first.equals(endpoint))
     throw Error('Raster endpoint differs from frame zero');
-  render((loopFrames - 1) / fps);
+  render(compiled.clock.frame(loopFrames-1));
+  const lastToEndpoint=difference(canvas.data(),endpoint);
   const seam = difference(first, canvas.data());
   if (stageRenderer)
     for (const [id, c] of stageRenderer.outputs)
       endpoints.get(id).last_to_first = difference(endpoints.get(id).first, c.data());
-  return {stageRenderer, canvas, render, finishingDiagnostics, endpoints, endpointDifference, seam};
+  const renderFrame=(frame,off=false)=>render(compiled.clock.frame(frame),off);
+  return {stageRenderer,canvas,render,renderFrame,finishingDiagnostics,endpoints,endpointDifference,seam,lastToEndpoint,endpointExact:first.equals(endpoint)};
 }

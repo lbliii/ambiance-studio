@@ -1,0 +1,257 @@
+{
+  "format": "ambiance-wave3-workflow-evidence",
+  "schema_version": 1,
+  "tested_candidate": "0ccabe4198d91a3b56afbcd2bbad004b10847d44",
+  "tree": "0efcafae651af6d7399dd91b040c84a451681744",
+  "replay": {
+    "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/run.json",
+    "sha256": "4962caa99ea61ef095b8f0044a37c0f441b04477efbaff82606f87de4c352798",
+    "bytes": 44492
+  },
+  "source_unchanged": true,
+  "calls": 24,
+  "movies": [
+    {
+      "step": "portrait.picture.silent",
+      "movie": {
+        "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/film/runs/packet-movie/portrait.picture.silent-1/picture.mp4",
+        "sha256": "4087814c168f44d04480384d89a0a8e6ac5f4bd690aa89b9ca03a73df362c0ce",
+        "bytes": 1059
+      },
+      "expectations": {
+        "width": 90,
+        "height": 160,
+        "fps": 6,
+        "frames": 6,
+        "loop_frames": 6,
+        "audio_tracks": 0
+      },
+      "render_report": {
+        "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/film/runs/packet-movie/portrait.picture.silent-1/render-report.json",
+        "sha256": "f5ed697cfacd064ffa8367d0a9d1fdec1a373e939d7da1da8e4cca1c6bf55e58",
+        "bytes": 11204
+      },
+      "edition": {
+        "id": "packet-movie-09322f7c84e67bd0",
+        "revision": "packet-revision",
+        "receipt": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/film/revisions/packet-revision/editions/packet-movie-09322f7c84e67bd0.json",
+        "sha256": "5be574d69f2347539049883c48358d5b94243dbaac83d3561b5c06f07f5ae71e"
+      },
+      "verification": {
+        "ok": true,
+        "report": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/film/runs/packet-movie/portrait.picture.silent-1/verification/media-report.json"
+      },
+      "verification_report": {
+        "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/film/runs/packet-movie/portrait.picture.silent-1/verification/media-report.json",
+        "sha256": "74fee7b73b7af71aa6294be40ba67c1d74c0896185a0b840682c2e9c8b5cb9de",
+        "bytes": 2866
+      },
+      "decode_observation": {
+        "fully_decoded": true,
+        "decoded_frames": 6,
+        "width": 90,
+        "height": 160,
+        "fps": 6,
+        "duration_seconds": 1,
+        "input_unchanged": true,
+        "visual_review_performed": false,
+        "human_listening_review_performed": false
+      }
+    },
+    {
+      "step": "landscape.picture.silent",
+      "movie": {
+        "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/film/runs/packet-movie/landscape.picture.silent-1/picture.mp4",
+        "sha256": "7620bc5140f41385b2610023550ea958818ad1e41f8e272683cfbbd95ba23065",
+        "bytes": 1018
+      },
+      "expectations": {
+        "width": 160,
+        "height": 90,
+        "fps": 6,
+        "frames": 6,
+        "loop_frames": 6,
+        "audio_tracks": 0
+      },
+      "render_report": {
+        "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/film/runs/packet-movie/landscape.picture.silent-1/render-report.json",
+        "sha256": "78ba855a0c78ff9d7dc79ab526ef0daa6cdd3ef6b8b3ab76663671ff79ccae91",
+        "bytes": 11236
+      },
+      "edition": {
+        "id": "packet-movie-cbde01ab7de1ebb4",
+        "revision": "packet-revision",
+        "receipt": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/film/revisions/packet-revision/editions/packet-movie-cbde01ab7de1ebb4.json",
+        "sha256": "a8350f5ac5eb456fb6060af7a05292dd6e502bcbccbdf870fe2c4951350afe95"
+      },
+      "verification": {
+        "ok": true,
+        "report": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/film/runs/packet-movie/landscape.picture.silent-1/verification/media-report.json"
+      },
+      "verification_report": {
+        "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/film/runs/packet-movie/landscape.picture.silent-1/verification/media-report.json",
+        "sha256": "3a3d254f642c72c8e0c6daf8486eb6b9da5105282f5cbb618dba43df937b043c",
+        "bytes": 2887
+      },
+      "decode_observation": {
+        "fully_decoded": true,
+        "decoded_frames": 6,
+        "width": 160,
+        "height": 90,
+        "fps": 6,
+        "duration_seconds": 1,
+        "input_unchanged": true,
+        "visual_review_performed": false,
+        "human_listening_review_performed": false
+      }
+    }
+  ],
+  "mutation_then_guidance_failure": {
+    "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/22-mutation-guidance-failure.json",
+    "sha256": "343d49e0a825d34997dc7c2a86be05b782e8bfff9a9654d5b3a64b2c3adfbb96",
+    "bytes": 1695
+  },
+  "packets": [
+    {
+      "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/blank/03-incomplete-intent/packet.json",
+      "sha256": "5f602fc4acd3e78d34cbbba25b6abe34cc1e7dc39d30385177908d11af8ad282",
+      "bytes": 7494
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/film/05-complete-intent/packet.json",
+      "sha256": "32d56cbcfbfcbc8bb9ccba10b114b205fe4c852eed803d4c0648217d04256d80",
+      "bytes": 26873
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/film/10-direct-proof-packet/packet.json",
+      "sha256": "8bbb3f768e3d3a7c32160a562e4038cbbcf08c80be333076008aac5425236acc",
+      "bytes": 6178
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/film/13-review-draft/packet.json",
+      "sha256": "3b805529298d71ba5acb042a50a78877730309f075abab546bdbe8dc64cc8036",
+      "bytes": 48393
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/film/16-iteration-packet/packet.json",
+      "sha256": "52e90bfe5f8254d0f90127a1c6c022f1f23419b1663c70de6591919682334244",
+      "bytes": 9898
+    }
+  ],
+  "earlier_restricted_failure": {
+    "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-1/run.json",
+    "sha256": "77a3b50d50daf45a070e8b89db966e3d9416a53681070bc809abcce1f8ad63d2",
+    "bytes": 32380
+  },
+  "raster": {
+    "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-replay-frozen/film/raster/frame.png",
+    "sha256": "5a33aa0d629e1514d834053b13b0828a94feb61b1d450476d02d488d9428092f",
+    "bytes": 461
+  },
+  "observations": {
+    "raster": "Viewed the exact final frozen raster: uniform ochre/brown synthetic flat paint in 90 x 160 portrait; no finished-film/artistic claim.",
+    "playback": "No human playback or audition claimed. Native complete encode/decode reports bind each six-frame silent movie."
+  },
+  "native_suite": {
+    "ok": true,
+    "state": "passed",
+    "cases": 544,
+    "python_tests": 529,
+    "skips": 0,
+    "source": {
+      "commit": "0ccabe4198d91a3b56afbcd2bbad004b10847d44",
+      "tracked_tree_sha256": "2e1cafa4ceeaede5415e6589131b4aaa273f7fd0a475d130398639844033ccff",
+      "manifest": "inputs.json"
+    },
+    "report": {
+      "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-native-final/run.json",
+      "sha256": "a80640460ebe7cd636d571c215159fbe4d59e539166d241d4d4924e9b87e42b8",
+      "bytes": 115664
+    },
+    "inputs": {
+      "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-native-final/inputs.json",
+      "sha256": "6b449b1d5d334f9e74562c02b9043badb42e246f491580e3d2e832efef5e3303",
+      "bytes": 65110
+    },
+    "python_report": {
+      "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-native-final/python.json",
+      "sha256": "d766c3dc258905532bb4e825d65c9fa57fdf51de73f758d84bb152b9a72a5885",
+      "bytes": 100342
+    },
+    "argv": [
+      "./ambiance",
+      "test",
+      "--require-native",
+      "--artifacts",
+      ".ambiance/validation/w3-native-final"
+    ]
+  },
+  "thread_id": "01a09b0c-3462-71c1-9a61-2d7201602138",
+  "branch": "codex/wave3-workflow-packets-outcomes",
+  "commits": [
+    "06c1315010f8f8653a96e1073693aeebf177f544",
+    "0ccabe4198d91a3b56afbcd2bbad004b10847d44"
+  ],
+  "changed_paths": [
+    "ambiance_studio/cli.py",
+    "ambiance_studio/production_plan.py",
+    "ambiance_studio/workflow_commands.py",
+    "ambiance_studio/workflow_outcomes.py",
+    "ambiance_studio/workflow_packets.py",
+    "reports/workflow-cli/WF-04-05-PACKETS-OUTCOMES.md",
+    "tests/fixtures/cli-options.json",
+    "tests/fixtures/cli-outputs.json",
+    "tests/replay_workflow_packets.py",
+    "tests/test_workflow_outcomes.py",
+    "tests/test_workflow_packets.py"
+  ],
+  "focused_evidence": [
+    {
+      "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-focused/run-2.log",
+      "sha256": "18f25f0715cb85b9b7e4634154318c0e1143b0545003e707b98897cbed6991a1",
+      "bytes": 799
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-focused/mutation-check.log",
+      "sha256": "4e74c2240ec6a78bfda8176c3e30e1027ea0e58a054b02436fe13b59e4d28c83",
+      "bytes": 979
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-focused/mutation-check-2.log",
+      "sha256": "bdb905eeac3bd002c08c73bb307260e53cd5e7c74f31ecdf02dcffbbb08c41b6",
+      "bytes": 276
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-focused/run-3.log",
+      "sha256": "f25ccc617e71ea7dd0456db9a7e10e1be52fad0a65f482f01f56c712be1569b2",
+      "bytes": 100
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-focused/run-final.log",
+      "sha256": "0aad0f3c0ae611d796995d8a03cfc96a5207d0f1f140db35e94e9febecf2a5c8",
+      "bytes": 99
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-focused/native-scope.log",
+      "sha256": "0b360d68436033cdff12066f9e48e271847f2537d243279ecf194c18ad97b26c",
+      "bytes": 97
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-focused/watched-parent.log",
+      "sha256": "706ddc181d29b28362272ec29d739ab69c939b30cba662f3af037b9d8d4ce7f7",
+      "bytes": 96
+    },
+    {
+      "path": "/Users/lb/.codex/worktrees/61c0/ambiance-studio/.ambiance/validation/w3-focused/feedback-scope.log",
+      "sha256": "f41322c410aa445e91827b579bc041bf09f052e2cc13942ab9be39a01fd18314",
+      "bytes": 96
+    }
+  ],
+  "limits": [
+    "WF-06/07 fresh-operator adoption remains open.",
+    "Model-operation guidance is deferred to its native interfaces.",
+    "No artistic, human playback or audition acceptance is recorded.",
+    "Full assessment is explicitly unavailable for unpresented or multi-entry iteration outcomes without a compatible selected subject; auto retains native run facts.",
+    "No hosted CI pass is claimed; no account or billing changes were made."
+  ]
+}

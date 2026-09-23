@@ -147,6 +147,15 @@ class MotionTests(unittest.TestCase):
         self.assertEqual(len(result['frames'][0]),5)
         self.assertEqual(result['start']*12,22)
         self.assertEqual(render.call_args_list[0].args[1]['start'],22/12)
+        proposal['scene']['canvas'].update(fps=25,loop_seconds=29/25)
+        proposal['scene']['clock']={'version':1,'mode':'finite','id':'motion-shot','revision':'1','duration_frames':29}
+        stage=self.root/'finite-clock-proof';stage.mkdir()
+        with patch('ambiance_studio.motion_proof.scene_candidate',return_value=proposal), patch('ambiance_studio.motion_proof.motion.checked',return_value=self.file), patch('ambiance_studio.native_media.json_command') as render:
+            result=context_render(context,{},stage,5/25)
+        request=render.call_args_list[0].args[1]
+        self.assertEqual((request['start_frame'],request['frame_count']),(24,5))
+        self.assertEqual(result['start'],24/25)
+        self.assertIn('without wrap',result['limits'][0])
     def test_draft_pixels_export_reproduce_saved_build(self):
         from ambiance_studio.motion_proof import proof
         from ambiance_studio.motion_server import evaluate

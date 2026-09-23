@@ -51,8 +51,8 @@ async function main(){
   }
   const state=measureActivity(scene,catalog,{views:viewPlan.views,painted,actions:req.actions,stride:req.stride,start_frame:req.start_frame,frames:req.frames});
   if(rig.inspectBindings)for(let f=req.start_frame;f<req.start_frame+req.frames;f+=req.stride)state.driver_samples.push({frame:f,values:rig.inspectBindings(f/scene.canvas.fps)});
-  const frames=req.frames/req.stride,actions=req.raster?(req.actions??[]):[],fullLoop=req.start_frame===0&&req.frames===scene.canvas.fps*scene.canvas.loop_seconds;
-  const workSamples=frames+(fullLoop?1:0)+2;
+  const frames=req.frames/req.stride,actions=req.raster?(req.actions??[]):[],fullLoop=rig.clock.mode==='loop'&&req.start_frame===0&&req.frames===rig.clock.duration_frames;
+  const joinSamples=rig.clock.mode==='loop'?2:0,workSamples=frames+(fullLoop?1:0)+joinSamples;
   if(req.raster&&(actions.length>8||frames>600||(actions.length+variants.length)*viewPlan.views.length>16||workSamples*(actions.length+variants.length)*viewPlan.internal_canvas.width*viewPlan.internal_canvas.height>400000000))
     throw Error('Raster workload exceeds 8 actions, 16 panes, 600 samples or 400 million stage pixels; shorten proof, filter actions, increase stride or lower --long-edge');
   const renderers=new Map();
@@ -72,11 +72,11 @@ async function main(){
   const makePane=(variant,view)=>({id:variant+' / '+view.view.id,variant,view:view.view.id,output:view.output,files:[],hashes:[]});
   if(req.raster)for(const variant of renderers.keys())for(const view of viewPlan.views)panes.push(makePane(variant,view));
   const rasterStarted=performance.now();
-  if(fullLoop)for(const [variant,renderer] of renderers){renderer.render((req.frames-req.stride)/scene.canvas.fps);
+  if(fullLoop)for(const [variant,renderer] of renderers){renderer.render(rig.clock.frame(req.frames-req.stride));
     for(const [id,canvas] of renderer.outputs)previous.set(variant+'/'+id,Buffer.from(canvas.data()));}
   for(let i=0;req.raster&&i<frames;i++){
     const frame=req.start_frame+i*req.stride,time=frame/scene.canvas.fps,now=new Map();
-    for(const [variant,renderer] of renderers){renderer.render(time);for(const v of viewPlan.views){
+    for(const [variant,renderer] of renderers){renderer.render(rig.clock.frame(frame));for(const v of viewPlan.views){
       const id=v.view.id,canvas=renderer.outputs.get(id),key=variant+'/'+id,bytes=canvas.toBuffer('image/png'),relative=`frames/${key}/${String(i).padStart(5,'0')}.png`;
       now.set(key,Buffer.from(canvas.data()));if(i===0)firstSaved.set(key,now.get(key));await save(relative,bytes);const pane=panes.find(p=>p.variant===variant&&p.view===id);pane.files.push(relative);pane.hashes.push(sha(bytes));
     }}
@@ -91,10 +91,10 @@ async function main(){
   }
   const rasterSeconds=(performance.now()-rasterStarted)/1000;
   const joins=[];
-  for(const [variant,renderer] of renderers){renderer.render(scene.canvas.loop_seconds);const endpoint=new Map([...renderer.outputs].map(([id,c])=>[id,Buffer.from(c.data())]));renderer.render(0);
+  for(const [variant,renderer] of (joinSamples?renderers:[])){renderer.render(rig.clock.frame(rig.clock.duration_frames));const endpoint=new Map([...renderer.outputs].map(([id,c])=>[id,Buffer.from(c.data())]));renderer.render(0);
     for(const [id,c] of renderer.outputs)joins.push({variant,view:id,zero_to_endpoint_rgba_exact:endpoint.get(id).equals(Buffer.from(c.data())),
       saved_last_to_first:pixelMetrics(firstSaved.get(variant+'/'+id),previous.get(variant+'/'+id)).metrics,
-      saved_segment_is_full_loop:req.start_frame===0&&req.frames===scene.canvas.fps*scene.canvas.loop_seconds});}
+      saved_segment_is_full_loop:fullLoop});}
   for(const [key,values] of maps){const view=viewPlan.views.find(v=>v.view.id===key.split('/')[1]);const canvas=rt.createCanvas(view.output.width,view.output.height),ctx=canvas.getContext('2d'),pixels=ctx.createImageData(canvas.width,canvas.height);values.forEach((n,i)=>{pixels.data[i*4]=Math.min(255,n);pixels.data[i*4+3]=255;});ctx.putImageData(pixels,0,0);await save('maps/'+key+'.png',canvas.toBuffer('image/png'));}
   if(req.raster)await save('index.html',viewsProofPage(panes,scene.canvas.fps/req.stride,req.start_frame/scene.canvas.fps,frames,scene.canvas.loop_seconds,{measurePlayback:true})
     .replace('Portrait and landscape proof','Motion activity proof').replace('One scene, shared timing','Motion activity proof')
@@ -103,9 +103,9 @@ async function main(){
     a.candidate_quiet_intervals=activityIntervals(raster.map(r=>r.residual_changed_pixels===0),req.stride/scene.canvas.fps,req.start_frame/scene.canvas.fps,fullLoop).filter(r=>r.active).map(({active,...r})=>r);
     a.attribution='Disabled layer set includes attached descendants and coupled lighting. Residual change is an intervention result, not exclusive gesture attribution or an artistic pass.';
   }
-  await save('state.json',json(state));await save('raster.json',json({version:1,rows,circular:fullLoop,units:'8-bit sRGB maximum absolute RGB channel delta; alpha excluded',first_sample:fullLoop?'Compared with last sampled frame of the same loop':'No temporal comparison before first saved sample of this partial segment',map:'Maximum per-pixel sampled temporal difference; action maps use signed residual difference',warnings:'Diagnostic thresholds are fixture-calibrated prompts to inspect, never salience levels or requirement satisfaction'}));
+  await save('state.json',json(state));await save('raster.json',json({version:1,rows,circular:fullLoop,units:'8-bit sRGB maximum absolute RGB channel delta; alpha excluded',first_sample:fullLoop?'Compared with last sampled frame of the same loop':'No temporal comparison before first saved sample of this linear segment',map:'Maximum per-pixel sampled temporal difference; action maps use signed residual difference',warnings:'Diagnostic thresholds are fixture-calibrated prompts to inspect, never salience levels or requirement satisfaction'}));
   await save('painted-cells.json',json(painted));
-  const modules={};for(const name of ['editor/engine.mjs','editor/timing.mjs','editor/activity.mjs','editor/views.mjs','editor/stage-raster.mjs','editor/finishing.mjs','tools/activity-scene.mjs','tools/views-proof.mjs'])modules[name]=sha(await fs.readFile(path.join(root,name)));
+  const modules={};for(const name of ['editor/engine.mjs','editor/clock.mjs','editor/timing.mjs','editor/activity.mjs','editor/views.mjs','editor/stage-raster.mjs','editor/finishing.mjs','tools/activity-scene.mjs','tools/views-proof.mjs'])modules[name]=sha(await fs.readFile(path.join(root,name)));
   if(rig.inspectBindings)modules['editor/bindings.mjs']=sha(await fs.readFile(path.join(root,'editor/bindings.mjs')));
   const inputsUnchanged=sha(await fs.readFile(scenePath))===req.scene_sha256&&sha(await fs.readFile(catalogPath))===req.catalog_sha256&&(!req.plan||sha(await fs.readFile(req.plan.path))===req.plan.plan_sha256)&&(await Promise.all(assets.map(async a=>sha(await fs.readFile(a.path))===a.sha256))).every(Boolean);
   if(!inputsUnchanged)throw Error('Inputs changed during activity proof; completed receipt was not published');
@@ -113,7 +113,7 @@ async function main(){
     views:viewPlan.views.map(v=>({...v,view_sha256:sha(canonicalView(v.view))})),clock:{picture_seconds:scene.canvas.loop_seconds,fps:scene.canvas.fps,start_frame:req.start_frame,frames:req.frames,stride:req.stride,sampling_hz:scene.canvas.fps/req.stride},
     actions:req.actions,variants:variants.map(v=>({id:v.id,experiment:v.experiment??'target',scene_sha256:sha(json(v.scene))})),
     artifacts:files,source_assets:assets,modules,runtime:{node:process.version,canvas:rt.version,platform:process.platform},
-    performance:{elapsed_seconds:(performance.now()-started)/1000,raster_seconds:rasterSeconds,peak_rss_bytes:process.resourceUsage().maxRSS*1024,stage_pixel_samples:req.raster?workSamples*renderers.size*viewPlan.internal_canvas.width*viewPlan.internal_canvas.height:0,raster_predecessor_samples:fullLoop&&req.raster?1:0,join_samples_per_variant:req.raster?2:0,saved_frames:panes.reduce((n,p)=>n+p.files.length,0)},
+    performance:{elapsed_seconds:(performance.now()-started)/1000,raster_seconds:rasterSeconds,peak_rss_bytes:process.resourceUsage().maxRSS*1024,stage_pixel_samples:req.raster?workSamples*renderers.size*viewPlan.internal_canvas.width*viewPlan.internal_canvas.height:0,raster_predecessor_samples:fullLoop&&req.raster?1:0,join_samples_per_variant:req.raster?joinSamples:0,saved_frames:panes.reduce((n,p)=>n+p.files.length,0)},
     summary:state.views.map(v=>({view:v.view.id,actions:v.actions.map(a=>({id:a.id,applicable:a.applicable,warnings:a.warnings,timing_target_diagnostics:a.timing_target_diagnostics,max_sampled_rest_seconds:a.max_sampled_rest_seconds,status:'unreviewed'}))})),
     raster_performed:req.raster,joins,visual_review_performed:false,review_required:true,
     diagnostic_coverage:{no_warning_is_readability:false,known_missed_conditions:['low contrast','barely visible paint','excessive movement','global pulse ambiguity'],

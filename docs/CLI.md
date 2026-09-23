@@ -8,17 +8,23 @@ The [feedback and production operations](MIDNIGHT-OPERATIONS.md) document curren
 
 The [studio library](STUDIO-LIBRARY.md) provides shared discovery, exact/current movie links, recorded iteration runs and feedback. Start with `./ambiance studio open`. Registered IDs work with `--project ID` across worktrees; use `studio register PATH` for other project locations. Global `--registry FILE` or `AMBIANCE_REGISTRY` selects an isolated registry.
 
-Use `ambiance --project PATH COMMAND`, placing the global project option before the command. Without it, the CLI searches the current directory and its parents for `ambiance-project.json`. This small file points to `scene/scene.json` and `assets/catalog.json` within the project. Source paths never depend on the original chat location.
+Use `ambiance --project PATH COMMAND`, placing the global project option before the command. Without it, the CLI searches the current directory and its parents for `ambiance-project.json`. This file selects the scene and catalog within the project. New projects start with `scene/scene.json` and `assets/catalog.json`; model transactions can select a new contained generation. Source paths never depend on the original chat location.
+
+Legacy picture review watches follow the selected scene/catalog generation and exact model packages, including explicit-file records. Independent sound and intent watches retain their own dependencies.
 
 Each finite command writes one JSON result to stdout: `ok`, `schema_version: 1`, `command`, and `data`. Errors contain `error.code` and `error.message`. Exit codes: 0 success, 1 failed checks, 2 invalid input or a locked project, 3 missing runtime/runtime failure, 130 interruption. Help/version are plain text. Preview prints one startup JSON object and serves until Ctrl-C; HTTP request logs go to stderr.
 
-`--out` on check/test commands writes the same result envelope to a file. CLI checks do not close quality gates; they are evidence for a separate review.
+`--out` on check/test commands writes the native result envelope to a file, without optional outcome guidance. CLI checks do not close quality gates; they are evidence for a separate review.
 
 `--out` on asset proofs, rendering and media verification instead names a **fresh artifact directory**. Those commands save their own reports alongside actual outputs. Audio mix outputs are immutable directories under the selected project's `audio/runs/`; source preparations use `audio/preparations/ID/`. Explicit recipe/batch/render paths are relative to the shell working directory; audio session and source paths are project-relative as described in the audio contract.
 
-Model routes are project-free and use explicit shell-relative package/state/recipe paths. Their build/lower/proof/admit outputs are fresh artifact directories; inspect/check use optional result-envelope files. Audio library selection uses an explicit absolute config; import/materialize/check still require a selected project.
+Model build/inspect/lower/proof/check/admit routes are project-free and use explicit shell-relative package/state/recipe paths. Build/lower/proof/admit outputs are fresh artifact directories; inspect/check use optional result-envelope files. `model instance` routes require a selected project: apply/inspect use optional result-envelope files, while evidence writes a fresh sealed file over an existing raster receipt. Audio library selection uses an explicit absolute config; import/materialize/check still require a selected project.
 
 Revision selections and asset/placement manifests use project-relative references. Their explicit command input/output filenames retain shell-relative semantics. `revision handoff --out` also creates a fresh artifact directory. Revision-aware commands identify working divergence separately from captured input integrity and review verdicts; see [revisions and editions](REVISIONS.md).
+
+Global `--guidance off|auto|full` defaults to `off`. On supported commands, `auto` adds bounded hints from the returned operation facts; `full` requests a fresh assessment when an exact compatible subject is available. The optional stdout `guidance` field never enters native reports or artifacts. Guidance failure preserves the original success/error and exit status; it is not a reason to repeat a successful mutation. See [packets and outcome guidance](../reports/workflow-cli/WF-04-05-PACKETS-OUTCOMES.md).
+
+Wave 3 interfaces are locally integrated and each worker's frozen required-native suite passed. The final combined suite recorded 588 cases / 571 Python tests / zero skips, but CI-PYTHON was blocked because native media builds require Xcode license acceptance; the [coordination ledger](architecture/COORDINATED-IMPLEMENTATION-WAVE3-2026-09-13.json) records the failure and exact rerun gate.
 
 ## Implemented commands
 
@@ -35,6 +41,7 @@ Revision selections and asset/placement manifests use project-relative reference
 | `workflow inspect [--subject working/review/release or --revision ID --edition ID] [--view ID]` | Read actual gates, pure coverage, exact selected entries and available work; omitted data has retrieval commands |
 | `workflow stage GATE [--details]` | Inspect the selected pipeline's criteria and native operation contracts, including preparation verbs |
 | `workflow explain ACTION_ID [--expect-assessment HASH]` | Explain a project-bound action; reject stale or substituted subjects/inputs |
+| `workflow prepare ACTION_ID --out DIR [--inputs FILE --expect-assessment HASH]` | Prepare immutable native intent, unperformed review or iteration inputs; unresolved choices keep `ready_to_run` false |
 | `project next --guided [--subject working/review/release or --revision ID --edition ID]` | Opt into the shared workflow action schema; unflagged next remains compatible |
 | `delivery import FILE [--dry-run]` | Register an immutable movie set from captured editions or identity-bound legacy reports |
 | `delivery list` / `delivery inspect ID` | Inspect movie roles, identity and availability |
@@ -64,6 +71,9 @@ Revision selections and asset/placement manifests use project-relative reference
 | `model inspect PACKAGE_OR_ENTRY` / `model lower PACKAGE --state FILE --out DIR` | Inspect a technical candidate or lower a static state through the existing scene evaluator |
 | `model proof PACKAGE --recipe FILE --out DIR` / `model check PROOF --package PACKAGE --recipe FILE` | Render and check exact static source/assembly and material-role evidence |
 | `model admit PACKAGE --proof PROOF --recipe FILE --out ENTRY` | Copy a verified portable technical entry; does not record artistic acceptance or create scene instances |
+| `model instance apply RECIPE [--dry-run --out FILE]` | Place, update or explicitly adopt pinned models in one scene/catalog transaction; stale guards live in the recipe |
+| `model instance inspect [--id ID --out FILE]` | Inspect independent instance state, pins, mappings, placement and contacts |
+| `model instance evidence --receipt RASTER --instance ID [--instance ID] --out FILE` | Bind exact model subjects to an existing view-bound frame or views-proof receipt; static evidence does not establish motion |
 | `library find [QUERY] [--directory DIR]` | Find assets and real proof paths across bundled and initialized project catalogs |
 | `library inspect ID [--catalog FILE]` | Inspect exact source metadata, integrity and decoded cel counts |
 | `plan inspect/check/next [--inventory PATH --out FILE]` | Reconcile intended parts, actual evidence, dependencies and remaining work; next returns five ready items by default (`--limit N`) |
@@ -83,10 +93,11 @@ Revision selections and asset/placement manifests use project-relative reference
 | `scene track LAYER FILE [--dry-run --expect-sha256 HASH]` | Author deterministic movement/cel tracks through the same transaction path |
 | `scene activity --out DIR [--view ID --action-id ID --layer ID --raster --compare FILE --start-frame N --frames N --stride N --long-edge N --revision ID --resume]` | Save per-view sampled activity, bounded raster contributions and exact proof identities; see [scene activity](SCENE-ACTIVITY.md) |
 | `scene activity-review FILE --out FILE` | Record an actual observation of an exact normal-speed action/view proof |
-| `scene timing [--layer ID --out FILE]` | Report actual timing, holds, authored rates, output-frame sampling and inherited visibility |
+| `scene timing [--layer ID --out FILE]` | Report actual timing, local cycles, output sampling and finite endpoint/last-frame state |
+| `scene clock (--loop-seconds N or --file FILE) [--dry-run --expect-sha256 HASH]` | Author a loop duration or explicit finite clock through the existing restorable transaction |
 | `scene place FILE [--dry-run --expect-sha256 HASH]` | Resolve source-coordinate placement and save a validated batch |
 | `scene reparent LAYER --to PARENT --socket NAME --keep-world --at N [--dry-run --expect-sha256 HASH]` | Preserve world geometry/appearance at one reference time; report changed inheritance |
-| `scene sample --time SECONDS` | Return sampled matrices, source rectangles, cels and sockets |
+| `scene sample (--time SECONDS or --frame N) [--context]` | Return sampled state; opt into its evaluated clock context without rounding subframe requests |
 | `scene add ASSET --id ID [--name NAME] [--x N --y N --width N --depth N]` | Add an instance using the asset's default pivot |
 | `scene set LAYER [--x N --y N --scale N --rotation-deg N --opacity N --depth N --cycle-seconds N --phase-frames N]` | Validate and atomically save an authored change |
 | `scene socket LAYER NAME --u N --v N` | Define an object-local normalized static socket |
@@ -107,17 +118,18 @@ Revision selections and asset/placement manifests use project-relative reference
 | `look import PACKAGE --bindings FILE [--include-rig --dry-run --expect-sha256 HASH]` | Rebind a package to explicit targets; rig adoption requires matching canvas/clock and exact rig assets |
 | `preview [--port N] [--look DIR or --prepare DIR or --views-proof DIR]` | Serve the selected project or verified artifact; preparation supports in-memory draft editing and recipe downloads without project writes |
 | `render frame --time N --out DIR [--revision ID --view ID]` | Render an actual PNG from the shared scene evaluator and drawing code |
-| `render proof --out DIR [--revision ID --view ID --start N --seconds N --disable LAYER --width N]` | Render a normal-speed HTML comparison with frame seeking and optional disabled layers |
-| `render views-proof --view ID --view ID --out DIR [--revision ID --start N --seconds N --long-edge N --supersample 1/2/4]` | Save synchronized crops with coverage, seam and frame hashes; failing alpha includes the measured frame, heatmap and bounded defect coordinates |
+| `render proof --out DIR [--revision ID --view ID --start SECONDS or --start-frame N --seconds N --disable LAYER --width N]` | Render a normal-speed HTML comparison with frame seeking and optional disabled layers |
+| `render views-proof --view ID --view ID --out DIR [--revision ID --start SECONDS or --start-frame N --seconds N --long-edge N --supersample 1/2/4]` | Save synchronized crops with coverage, seam and frame hashes; failing alpha includes the measured frame, heatmap and bounded defect coordinates |
 | `render rig-proof FILE --out DIR [--revision ID --width N]` | Render named poses/hidden-part variants, detail crops, differences and optional playback |
 | `render look-proof FILE --out DIR [--revision ID --width N --supersample 1/2/4]` | Save interactive baseline/variant comparison, grading/light controls, passes and downloadable transactions |
-| `render video --out DIR [--revision ID --view ID --edition ID --seconds N --repeats N --audio WAV --width N --height N --bitrate N]` | Encode H.264, optionally mux PCM, and verify output; edition binding retains exact named-view identity |
-| `media compose PICTURE --audio PCM --repeats N --out DIR [--revision ID --edition ID --view ID --picture-receipt FILE]` | Reuse compressed picture samples with selected PCM; verify the resulting edition |
+| `render video --out DIR [--revision ID --view ID --edition ID --start SECONDS or --start-frame N --seconds N --repeats N --audio WAV --audio-bitrate N --width N --height N --bitrate N]` | Encode H.264, optionally mux PCM, and verify output; edition binding retains exact named-view identity |
+| `media compose PICTURE --audio PCM --repeats N --out DIR [--revision ID --edition ID --view ID --picture-receipt FILE --audio-bitrate N]` | Reuse compressed picture samples with selected PCM; verify the resulting edition |
 | `media verify FILE [--revision ID --edition ID --view ID] --out DIR [--frames N --loop-frames N --audio-tracks 0/1 --contact-time N --contact-frame N]` | Completely decode video/audio, check timing and save join/requested-contact evidence |
 | `audio source-inspect SOURCE --backend pcm/macos-afconvert` | Inspect actual format, decode identity and source hash; raw PCM needs explicit format/rate/channel flags |
 | `audio source-prepare SOURCE --backend BACKEND --source-sha256 HASH --preparation-id ID [--provenance FILE]` | Preserve original bytes and publish a fresh 48 kHz PCM24 preparation with exact source/tool/recipe identities |
 | `audio source-check RECEIPT` | Verify a prepared source and its dependencies without asserting a complete mix or audition |
 | `audio library configure/search/inspect/import/audition/observe/promote/materialize/check` | Versioned local sources, explicit listening records and portable project copies; see [audio library](AUDIO-LIBRARY.md) for required config, hash and review inputs |
+| `audio measure SOURCE [--source-sha256 HASH --out FILE]` | Measure 48 kHz mono/stereo integer PCM LUFS, oversampled true peak and mono compatibility without changing levels |
 | `audio inspect SESSION` | Validate explicit selected PCM sources and inspect arrangement/levels |
 | `audio import-stems SESSION --session-id ID` | Preserve a legacy session and create a new executable session from its rendered stems |
 | `audio mix SESSION [--run-id ID --start N --duration N --solo STEM --mute STEM --gain STEM=DB]` | Render a versioned circular arrangement, aligned stems and numerical reports |
@@ -131,7 +143,15 @@ A blank project is the default for new artwork. It has no layers; its technical 
 
 [Saved views](VIEWS.md) support portrait/landscape project setup, framing edits, checks, synchronized previews, paired raster proofs and single-view video export. Omitting `--view` preserves full authored-canvas rendering. Version-2 iteration recipes produce the Cartesian product of views and soundtrack editions, with resumable steps and one combined delivery.
 
-Overview/next assessment creates no project reports, decode caches or writer locks. Missing runtime or exact cached movie decode evidence stays unknown with a diagnostic; explicit `plan evidence` or `plan coverage` acquires evidence. An explicit `--out FILE` still requests a result file. See the [assessment contract and replay](../reports/workflow-cli/WF-01-ASSESSMENT.md) and [guided workflow inspection](../examples/workflow-guidance/README.md). Workflow selectors apply to inspect/stage/explain; --edition requires --revision, and --subject cannot be combined with --revision. Workflow outputs are advisory and retain native gate, coverage and observation authority.
+Overview/next assessment creates no project reports, decode caches or writer locks. Missing runtime or exact cached movie decode evidence stays unknown with a diagnostic; explicit `plan evidence` or `plan coverage` acquires evidence. An explicit `--out FILE` still requests a result file. See the [assessment contract and replay](../reports/workflow-cli/WF-01-ASSESSMENT.md) and [guided workflow inspection](../examples/workflow-guidance/README.md). Workflow selectors apply to inspect/stage/explain/prepare; --edition requires --revision, and --subject cannot be combined with --revision. Workflow outputs are advisory and retain native gate, coverage and observation authority.
+
+`workflow prepare` requires a fresh destination with an existing parent inside the project. It preserves known input origins and rejects stale assessments, symlinks, escapes and occupied destinations. Review drafts stay unperformed; complete iteration packets offer native preflight, while execution still requires an explicit `--by`. Preparing a packet performs no capture, render, provider call or selection change. See the [WF-04/05 contract](../reports/workflow-cli/WF-04-05-PACKETS-OUTCOMES.md).
+
+[Independent model instances](../examples/model-instances/README.md) share contained source art while retaining separate placement, visibility, static controls, variants and receiver contacts. Adoption accepts conservative compatible metadata/default changes; changed drawing, socket, registration or nested-pin interfaces conflict. Broader model, character and whole-scene acceptance remains open.
+
+[Finite clocks](FINITE-CLOCK.md) keep integer `duration_frames` authoritative. Movies export `[0,N)`; endpoint N can be inspected separately, and browser playback stops at N−1. Use `--start-frame` for exact finite ranges. Legacy sampling stays compatible; finite movie repeats, nonzero finite audio ranges and arbitrary rational native fps are unsupported. Finite activity uses linear diagnostics without a circular predecessor or join; typed activity requirement evidence explicitly rejects finite scenes pending P06. Cues, sequence assembly and film-level evidence remain open.
+
+[Audio levels and encoding](AUDIO-LEVELS.md) separate source PCM from unclipped decoded AAC measurements. `--audio-bitrate` and iteration edition `audio_bitrate` retain the 256000 default and check requests against the actual format-specific encoder before rendering. 320000 was encoded/decoded; the 384000 trial was rejected on the recorded stereo 48 kHz backend without substitution. Metering is limited to 48 kHz mono/stereo, with selected reference-signal checks; full conformance and actual auditions remain open. Numerical results do not normalize audio or establish release approval.
 
 Detailed contracts and examples: [inventory and asset proofs](PRODUCTION-INVENTORY.md), [crop/return preparation](ASSET-PREPARATION.md), [scene transactions](architecture/SCENE-TRANSACTIONS.md), [authored tracks](SCENE-CONTRACT.md), [rendering/media](RENDERING.md), [audio sessions](AUDIO-SESSION.md), [source preparation](AUDIO-SOURCES.md), [portable audio library](AUDIO-LIBRARY.md), [local model construction](architecture/model-contract/construction-v1.md), [revisions and editions](REVISIONS.md). Edition audio may cite `--audio-run`, `--audio-provenance` or additional `--audio-session` inputs; their provenance requirements are described in the revision contract.
 

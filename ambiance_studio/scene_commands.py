@@ -12,8 +12,8 @@ from .scene_transactions import scene_transaction
 
 def add_parsers(sub):
     group=sub.add_parser('scene').add_subparsers(dest='action',required=True)
-    q=group.add_parser('clock');q.add_argument('--loop-seconds',type=float,required=True);q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256')
-    q=group.add_parser('inspect');q.add_argument('--full',action='store_true');q=group.add_parser('sample');q.add_argument('--time',type=float,required=True)
+    q=group.add_parser('clock');clock_input=q.add_mutually_exclusive_group(required=True);clock_input.add_argument('--loop-seconds',type=float);clock_input.add_argument('--file',type=Path);q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256')
+    q=group.add_parser('inspect');q.add_argument('--full',action='store_true');q=group.add_parser('sample');sample_input=q.add_mutually_exclusive_group(required=True);sample_input.add_argument('--time',type=float);sample_input.add_argument('--frame',type=int);q.add_argument('--context',action='store_true')
     q=group.add_parser('apply');q.add_argument('file',type=Path);q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256')
     q=group.add_parser('track');q.add_argument('layer');q.add_argument('file',type=Path);q.add_argument('--dry-run',action='store_true');q.add_argument('--expect-sha256')
     from . import activity
@@ -46,7 +46,8 @@ def run(args, project):
 
 def scene_batch(args, transaction):
     if args.action == 'clock':
-        return {'version': 1, 'operations': [{'op': 'clock', 'values': {'loop_seconds': args.loop_seconds}}]}
+        values = transaction.read_json(args.file, 'clock-input') if getattr(args, 'file', None) else {'loop_seconds': args.loop_seconds}
+        return {'version': 1, 'operations': [{'op': 'clock', 'values': values}]}
     if args.action == 'reparent':
         return {'version': 1, 'operations': [{'op': 'reparent', 'layer': args.layer,
                 'to': args.to, 'socket': args.socket, 'preserve': 'world_at_time', 'at_seconds': args.at}]}
@@ -98,7 +99,7 @@ def run_scene(args, project):
     if action in ['inspect', 'sample', 'timing']:
         scene_path, catalog_path = locations(project)
         return scene_runtime.scene_bridge(action, studio.read(scene_path), studio.read(catalog_path),
-            {'time': getattr(args, 'time', None), 'full': getattr(args, 'full', False), 'layer': getattr(args, 'layer', None)})
+            {'time': getattr(args, 'time', None), 'frame': getattr(args, 'frame', None), 'context': getattr(args, 'context', False), 'full': getattr(args, 'full', False), 'layer': getattr(args, 'layer', None)})
     if action == 'history':
         return {'snapshots': [{'sha256': path.stem, 'path': str(path)}
                 for path in sorted((project/'.ambiance/scene-history').glob('*.json'))]}
@@ -113,7 +114,7 @@ def run_scene(args, project):
             for path in sorted((project/'audio').glob('**/*.wav')):
                 try:
                     info = wav_info(path)
-                    impact['audio'].append({'path': str(path), 'duration_seconds': info['seconds'], 'picture_loop_seconds': args.loop_seconds, 'needs_cue_review': True})
+                    impact['audio'].append({'path': str(path), 'duration_seconds': info['seconds'], 'picture_loop_seconds': after['picture_seconds'], 'needs_cue_review': True})
                 except (OSError, ValueError) as error: impact['audio'].append({'path': str(path), 'error': str(error)})
             return transaction.finish(report['scene'], 'clock', dry_run=args.dry_run, details={'timing_impact': impact})
         if action in ['apply', 'track', 'place', 'reparent']:

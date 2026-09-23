@@ -18,6 +18,8 @@ from .media_verification import verify_media
 from .native_media import RENDERER, NATIVE_SOURCE
 from .render_plan import RenderPlan
 from .scene_runtime import require_node
+from . import audio_encoding
+from .audio_measurements import measure_file
 
 
 def execute_render(plan: RenderPlan):
@@ -28,6 +30,9 @@ def execute_render(plan: RenderPlan):
     mode = request['mode']
     if mode == 'video':
         request['native'] = str(native_media.native_binary(project))
+    encoding = request.get('audio_encoding')
+    encoding_probe = audio_encoding.preflight(request['native'], encoding) if mode == 'video' else None
+    source_measurement = measure_file(audio, hashlib.sha256(audio_bytes).hexdigest()) if audio else None
     node = require_node()
     probe = native_media.json_command([node, RENDERER, '--probe'])
     if not probe.get('ok'):
@@ -46,7 +51,8 @@ def execute_render(plan: RenderPlan):
                 file.write(audio_bytes)
         if plan.repeats != 1 or audio:
             final = out/'video.mp4'
-            data['composition'] = native_media.json_command([binary, 'compose', data['output'], audio_snapshot or '-', final, plan.repeats])
+            data['composition'] = native_media.json_command([binary, 'compose', data['output'], audio_snapshot or '-', final, plan.repeats,
+                                                             encoding['bitrate_bps'] if encoding else audio_encoding.DEFAULT_BITRATE])
             if audio_snapshot and digest(audio_snapshot) != hashlib.sha256(audio_bytes).hexdigest():
                 raise CommandError('Selected audio snapshot changed during mux; output identity is unverified.', 'check_failed', 1)
             data['output'] = str(final)
@@ -56,6 +62,8 @@ def execute_render(plan: RenderPlan):
         data['repeats'] = plan.repeats
         data['final_frames'] = plan.frames*plan.repeats
         data['audio_source'] = {'path': str(audio), 'sha256': hashlib.sha256(audio_bytes).hexdigest(), 'snapshot': str(audio_snapshot)} if audio else None
+        data['audio_encoding'] = {**encoding, 'preflight': encoding_probe} if encoding else None
+        data['audio_source_measurement'] = source_measurement
         data['verification'] = verify_media(binary, data['output'], out/'verification', request['width'], request['height'],
                                        plan.fps, data['final_frames'], int(bool(audio)), plan.frames)
         data['ok'] = data['verification']['ok']
@@ -76,6 +84,7 @@ def compose(args, project):
     if getattr(args,'view',None) is not None and not getattr(args,'edition',None):
         raise CommandError('--view on composition requires --revision and --edition so the picture identity can be checked')
     out = fresh_output(args.out)
+    encoding = audio_encoding.encoding_settings(getattr(args, 'audio_bitrate', None))
     picture = args.picture.resolve(); audio = args.audio.resolve()
     for source in [picture, audio]:
         if not source.is_file():
@@ -83,6 +92,7 @@ def compose(args, project):
     positive_integer(args.repeats, 'repeats')
     context = render_plan.render_context(project, args.revision) if getattr(args, 'revision', None) else {}
     binary = native_media.native_binary(project)
+    encoding_probe = audio_encoding.preflight(binary, encoding)
     picture_identity = input_identity(picture)
     probe = native_media.json_command([binary, 'probe-picture', picture])
     if not probe['supported_cfr_h264']:
@@ -91,6 +101,7 @@ def compose(args, project):
         raise CommandError('Selected picture changed during compressed-sample inspection.', 'check_failed', 1)
     pcm = pcm_bytes(audio, probe['duration_seconds']*args.repeats)
     audio_identity = {'resolved_path':str(audio), 'path_base':'absolute', 'bytes':len(pcm), 'sha256':hashlib.sha256(pcm).hexdigest()}
+    source_measurement = measure_file(audio, audio_identity['sha256'])
     if digest(audio) != audio_identity['sha256']:
         raise CommandError('Selected audio changed while being captured.', 'check_failed', 1)
     out.mkdir(parents=True)
@@ -100,6 +111,7 @@ def compose(args, project):
     if digest(picture_snapshot) != picture_identity['sha256']:
         raise CommandError('Selected picture changed while being copied.', 'check_failed', 1)
     recipe = {'version':1, 'operation':'media compose', 'picture':picture_identity, 'audio':audio_identity,
+              'audio_encoding': {**encoding, 'preflight': encoding_probe},
               'repeats':args.repeats, 'input_video_tracks':probe['video_tracks'], 'input_audio_tracks':probe['audio_tracks'],
               'input_audio_policy':'The selected PCM replaces any input movie audio.',
               'native_binary':input_identity(binary), 'native_source':input_identity(NATIVE_SOURCE),
@@ -108,7 +120,7 @@ def compose(args, project):
               'revision':{k:context[k] for k in ['revision_id','manifest_sha256'] if k in context} or None}
     (out/'composition-recipe.json').write_text(json.dumps(recipe,indent=2)+'\n')
     output = out/'video.mp4'
-    native = native_media.json_command([binary, 'compose', picture_snapshot, audio_snapshot, output, args.repeats])
+    native = native_media.json_command([binary, 'compose', picture_snapshot, audio_snapshot, output, args.repeats, encoding['bitrate_bps']])
     expected_frames = probe['frames']*args.repeats
     verification = verify_media(binary, output, out/'verification', int(probe['width']), int(probe['height']),
                            probe['fps'], expected_frames, 1, probe['frames'])
@@ -124,6 +136,7 @@ def compose(args, project):
               'operation':'media compose','recipe':str(out/'composition-recipe.json'), 'revision':recipe['revision'],
               'picture':str(picture), 'picture_sha256':picture_identity['sha256'], 'picture_identity':picture_identity,
               'picture_snapshot':str(picture_snapshot), 'audio_source':{'path':str(audio), 'snapshot':str(audio_snapshot), 'sha256':audio_identity['sha256']},
+              'audio_encoding':recipe['audio_encoding'], 'audio_source_measurement':source_measurement,
               'output':str(output), 'output_sha256':digest(output), 'resolved_path':str(output), 'path_base':'absolute',
               'repeats':args.repeats, 'final_frames':expected_frames, 'input_tracks':{'video':probe['video_tracks'],'audio':probe['audio_tracks']},
               'output_tracks':{'video':output_probe['video_tracks'],'audio':output_probe['audio_tracks']},

@@ -258,7 +258,7 @@ def pictures(recipe, inputs, info=None):
 
 def runtime():
     files=['ambiance_studio/art_regions.py','ambiance_studio/masks.py','ambiance_studio/asset_prep.py',
-           'editor/region-sizing.mjs','editor/source-placement.mjs','editor/engine.mjs','editor/views.mjs','tools/scene-command.mjs']
+           'editor/region-sizing.mjs','editor/source-placement.mjs','editor/engine.mjs','editor/clock.mjs','editor/views.mjs','tools/scene-command.mjs']
     from PIL import __version__
     return {'files':{name:ap.sha((ROOT/name).read_bytes()) for name in files},'pillow':__version__}
 

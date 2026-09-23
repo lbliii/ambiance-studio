@@ -10,7 +10,7 @@ export function largestScale(m) {
 
 export function regionDemand(scene,catalog,options) {
   const {base,reference,bounds,views,start_frame=0,frames}=options;
-  const N=Math.round(scene.canvas.fps*scene.canvas.loop_seconds), count=frames??N;
+  const rig=compileScene(scene,catalog),N=rig.clock.duration_frames, count=frames??(N-start_frame);
   if(!Number.isInteger(start_frame)||start_frame<0||!Number.isInteger(count)||count<1||start_frame+count>N)
     throw Error('Region sizing needs whole output frames within one loop');
   if(!Array.isArray(views)||!views.length||views.length>8||new Set(views).size!==views.length||count*views.length>200000)
@@ -19,11 +19,11 @@ export function regionDemand(scene,catalog,options) {
   const layer=scene.layers.find(l=>l.id===base), asset=catalog.assets.find(a=>a.id===layer?.asset);
   if(!asset||(asset.atlas?.frame_count??1)!==1)throw Error('Region base must be an existing one-cell source plane');
   const B=referenceMapping(asset,reference), cw=asset.atlas?.cell_width??asset.width, ch=asset.atlas?.cell_height??asset.height;
-  const rig=compileScene(scene,catalog), resolved=views.map(id=>resolveView(scene,id));
+  const resolved=views.map(id=>resolveView(scene,id));
   const rows=resolved.map(v=>({id:v.id,output:v.output,max_density:0,maximum_frame:null,intersects_view:false,fully_contained_every_frame:true}));
   let maximum=0,cause=null;
   for(let frame=start_frame;frame<start_frame+count;frame++){
-    const state=rig.sample(frame/scene.canvas.fps).find(l=>l.id===base), [x,y,w,h]=state.rect;
+    const state=rig.sampleFrame(frame).find(l=>l.id===base), [x,y,w,h]=state.rect;
     const sourceToScene=multiply(state.matrix,multiply([w/cw,0,0,h/ch,x,y],B));
     for(let i=0;i<resolved.length;i++){
       const m=multiply(viewProjection(resolved[i]),sourceToScene),density=largestScale(m),row=rows[i];

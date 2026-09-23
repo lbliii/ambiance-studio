@@ -9,9 +9,10 @@ import {placeFromSource,reparentAtTime} from '../editor/source-placement.mjs';
 import {regionDemand} from '../editor/region-sizing.mjs';
 import {resolveView,viewIds,viewProjection,canonicalView,dualFraming,planViews} from '../editor/views.mjs';
 import {auditViews} from '../editor/audit.mjs';
+import {placeInstance} from './model/instance.mjs';
 
-const layerFields=['name','asset','x','y','width','height','anchor','scale','rotation','opacity','visible','blend','depth','group','attach','sockets','cycle_seconds','phase_frames','motion','tracks','track_loop'];
-const optionalFields=['depth','group','attach','sockets','cycle_seconds','phase_frames','motion','tracks','track_loop'];
+const layerFields=['name','asset','x','y','width','height','anchor','scale','rotation','opacity','visible','blend','depth','group','attach','sockets','cycle_seconds','phase_frames','motion','tracks','track_loop','local_cycle'];
+const optionalFields=['depth','group','attach','sockets','cycle_seconds','phase_frames','motion','tracks','track_loop','local_cycle'];
 const object=value=>value&&typeof value==='object'&&!Array.isArray(value);
 function fields(value,allowed,label){
   if(!object(value)||Object.keys(value).some(k=>!allowed.includes(k)))throw Error(`Unknown or invalid ${label} fields`);
@@ -30,7 +31,15 @@ function applyOperations(scene,catalog,operations,report=false){
     if(!shapes[op.op])throw Error(`Unsupported scene operation: ${op.op}`);
     fields(op,shapes[op.op],op.op);
     if(['finishing','framing','bindings'].includes(op.op)){if(op.value===null)delete scene[op.op];else scene[op.op]=structuredClone(op.value);}
-    else if(op.op==='clock'){fields(op.values,['loop_seconds'],'clock');if(typeof op.values.loop_seconds!=='number'||!Number.isFinite(op.values.loop_seconds)||op.values.loop_seconds<=0)throw Error('Clock needs positive finite loop_seconds');scene.canvas.loop_seconds=op.values.loop_seconds;}
+    else if(op.op==='clock'){fields(op.values,['loop_seconds','fps','clock'],'clock');
+      if(op.values.fps!==undefined)scene.canvas.fps=op.values.fps;
+      if(op.values.clock!==undefined)scene.clock=structuredClone(op.values.clock);
+      if(scene.clock&&(op.values.clock!==undefined||op.values.fps!==undefined))scene.canvas.loop_seconds=scene.clock.duration_frames/scene.canvas.fps;
+      if(op.values.loop_seconds!==undefined){
+        if(op.values.clock!==undefined&&op.values.loop_seconds!==scene.canvas.loop_seconds)throw Error('Clock duration_frames and loop_seconds disagree');
+        scene.canvas.loop_seconds=op.values.loop_seconds;if(scene.clock&&op.values.clock===undefined&&op.values.loop_seconds!==scene.clock.duration_frames/scene.canvas.fps)scene.clock.duration_frames=scene.canvas.fps*scene.canvas.loop_seconds;
+      }
+      if(!Object.keys(op.values).length)throw Error('Clock needs authored values');}
     else if(op.op==='place_from_source')diagnostics.push(placeFromSource(scene,catalog,op));
     else if(op.op==='reparent')diagnostics.push(reparentAtTime(scene,catalog,op));
     else if(op.op==='add'){
@@ -74,7 +83,7 @@ function applyOperations(scene,catalog,operations,report=false){
         const g={id:op.id,...op.value};if(index<0)scene.groups.push(g);else scene.groups[index]=g;
       }
     }else if(op.op==='camera'){
-      fields(op.values,['overscan','x_amplitude','y_amplitude','zoom_amplitude'],'camera');Object.assign(scene.camera,op.values);
+      fields(op.values,['overscan','x_amplitude','y_amplitude','zoom_amplitude','local_cycle'],'camera');Object.assign(scene.camera,op.values);
     }else if(op.op==='socket'){
       socketName(op.name);const l=layer(op.layer);l.sockets||={};
       if(op.value===null)delete l.sockets[op.name];else l.sockets[op.name]=structuredClone(op.value);
@@ -98,7 +107,8 @@ try{
   const {action,catalog,args={}}=input,scene=structuredClone(input.scene);
   validateScene(scene,catalog);
   let result;
-  if(action==='sample')result=compileScene(scene,catalog).sample(args.time);
+  if(action==='sample'){const rig=compileScene(scene,catalog),context=args.frame!==undefined&&args.frame!==null?rig.clock.frame(args.frame):rig.clock.seconds(args.time);const states=rig.sample(context);result=args.context?{clock:context,states}:states;}
+  else if(action==='model-instance')result=placeInstance(scene,structuredClone(catalog),args);
   else if(action==='region-demand')result=regionDemand(scene,catalog,args);
   else if(action==='binding-check')result=compileScene(scene,catalog).inspectBindings(args.time??0);
   else if(action==='view-defaults')result=dualFraming();

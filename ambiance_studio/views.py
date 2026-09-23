@@ -32,6 +32,7 @@ def inspect(project, id=None, revision=None, check=False, selected=None):
                         'catalog_sha256': hashlib.sha256(catalog_bytes).hexdigest(),
                         'views_module_sha256': studio.digest(scene_runtime.ROOT/'editor/views.mjs'),
                         'engine_sha256': studio.digest(scene_runtime.ROOT/'editor/engine.mjs'),
+                        'clock_sha256': studio.digest(scene_runtime.ROOT/'editor/clock.mjs'),
                         'audit_sha256': studio.digest(scene_runtime.ROOT/'editor/audit.mjs')}
     result['revision'] = revision
     if scene_path.read_bytes() != scene_bytes or catalog_path.read_bytes() != catalog_bytes:

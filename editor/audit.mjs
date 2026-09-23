@@ -7,11 +7,11 @@ export const ALPHA_THRESHOLD=254;
 const distance=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);
 export function auditScene(scene,catalog,{coverageRect=null}={}){
   const rig=compileScene(scene,catalog),{width:W,height:H,fps,loop_seconds:T}=scene.canvas;
-  const N=Math.round(fps*T),failures=[],warnings=[],coverage=scene.coverage_layers||[];
+  const N=rig.clock.duration_frames,failures=[],warnings=[],coverage=scene.coverage_layers||[];
   const [vx,vy,vw,vh]=coverageRect??[0,0,W,H];
   let maxAttachmentError=0,minCoverageMargin=Infinity;
   const closure=JSON.stringify(rig.sample(0))===JSON.stringify(rig.sample(T));
-  if(!closure)failures.push({check:'state closure'});
+  if(rig.clock.mode==='loop'&&!closure)failures.push({check:'state closure'});
   if(!coverage.length)warnings.push('No coverage plate declared; geometric coverage was not checked.');
   for(let frame=0;frame<N;frame++){
     const states=rig.sample(frame/fps),byId=new Map(states.map(s=>[s.id,s]));
@@ -32,11 +32,11 @@ export function auditScene(scene,catalog,{coverageRect=null}={}){
     }
   }
   return {ok:!failures.length,engine_version:ENGINE_VERSION,scene:scene.id,frame_count:N,
-    state_closure:closure,attachment_count:scene.layers.filter(l=>l.attach).length,max_attachment_error_pixels:maxAttachmentError,
+    state_closure:closure,state_closure_required:rig.clock.mode==='loop',clock:rig.clock.frame(N),attachment_count:scene.layers.filter(l=>l.attach).length,max_attachment_error_pixels:maxAttachmentError,
     coverage_layers:coverage,min_coverage_margin_local_pixels:Number.isFinite(minCoverageMargin)?minCoverageMargin:null,
     failure_count:failures.length,failures:failures.slice(0,30),warnings,
     limits:['Geometric coverage assumes declared plates are opaque; browser pixel audit checks actual composite alpha at preview resolution.',
-      'The evaluator wraps time by design. State closure does not establish cel artwork continuity or the encoded video join.',
+      rig.clock.mode==='finite'?'Finite endpoint N is held for inspection; output contains frames [0,N). No loop closure is required.':'The evaluator wraps time by design. State closure does not establish cel artwork continuity or the encoded video join.',
       'Attachments follow authored sockets; this does not detect an incorrectly placed socket in the painting.']};
 }
 
@@ -59,7 +59,7 @@ export async function auditPixels(scene,catalog,images,onProgress=()=>{}){
   const rig=compileScene(scene,catalog),W=135,H=Math.round(W*scene.canvas.height/scene.canvas.width);
   const canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;
   const ctx=canvas.getContext('2d',{willReadFrequently:true}),ratio=W/scene.canvas.width;
-  const N=Math.round(scene.canvas.fps*scene.canvas.loop_seconds);
+  const N=rig.clock.duration_frames;
   const background=document.createElement('canvas');background.width=W;background.height=H;
   const bc=background.getContext('2d',{willReadFrequently:true});
   let first,prev,uncoveredFrames=0,maxUncovered=0,worstFrame=0;
@@ -85,7 +85,7 @@ export async function auditPixels(scene,catalog,images,onProgress=()=>{}){
   onProgress(N,N);
   return {ok:!uncoveredFrames,resolution:[W,H],frames:N,uncovered_frames:uncoveredFrames,
     worst_frame:worstFrame,max_uncovered_pixels:maxUncovered,last_to_first_rgb_difference:seam,
-    adjacent_difference_p95:p95,seam_review_suggested:seam>Math.max(.01,p95*2),
+    adjacent_difference_p95:p95,seam_review_suggested:scene.clock?.mode!=='finite'&&seam>Math.max(.01,p95*2),
     limits:['Low-resolution composite pixel check only. Small fringes, fine cel jitter, artistic continuity and encoded media need separate inspection.',
       'Seam difference is an attention cue, not a perceptual pass/fail decision.']};
 }
@@ -129,7 +129,7 @@ export async function auditViewPixels(scene,catalog,images,ids,createCanvas,onPr
   });
   const plan=planViews(scene,requests);
   const renderer=createStageRenderer(scene,catalog,images,plan,createCanvas);
-  const frames=scene.canvas.fps*scene.canvas.loop_seconds;
+  const frames=compileScene(scene,catalog).clock.duration_frames;
   const rows=new Map(plan.views.map(v=>[v.view.id,{resolution:[v.output.width,v.output.height],frames,
     uncovered_frames:0,max_uncovered_pixels:0,worst_frame:null,deltas:[],first:null,previous:null}]));
   const delta=(a,b)=>{let sum=0;for(let i=0;i<a.length;i+=4)sum+=Math.abs(a[i]-b[i])+Math.abs(a[i+1]-b[i+1])+Math.abs(a[i+2]-b[i+2]);return sum/(a.length/4*3*255);};
@@ -157,7 +157,7 @@ export async function auditViewPixels(scene,catalog,images,ids,createCanvas,onPr
   }
   const views=Object.fromEntries([...rows].map(([id,row])=>{
     const {first,previous,deltas,worstPixels,...report}=row,sorted=deltas.sort((a,b)=>a-b),p95=sorted[Math.floor((sorted.length-1)*.95)]||0,seam=delta(first,previous);
-    return [id,{...report,ok:!row.uncovered_frames,last_to_first_rgb_difference:seam,adjacent_difference_p95:p95,seam_review_suggested:seam>Math.max(.01,p95*2)}];
+    return [id,{...report,ok:!row.uncovered_frames,last_to_first_rgb_difference:seam,adjacent_difference_p95:p95,seam_review_suggested:scene.clock?.mode!=='finite'&&seam>Math.max(.01,p95*2)}];
   }));
   onProgress(frames,frames);
   return {ok:Object.values(views).every(v=>v.ok),views,raster_plan:plan,

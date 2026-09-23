@@ -2,6 +2,8 @@
 import {validateFinishing,drawFinished} from './finishing.mjs';
 import {validateBindings,sampleBinding} from './bindings.mjs';
 import {validateFraming} from './views.mjs';
+import {compileClock,consumerTime,cycleCell,isClockContext,validateCycleReference} from './clock.mjs';
+export {wrapTime} from './clock.mjs';
 export const TAU = Math.PI * 2;
 const identity = [1,0,0,1,0,0];
 export function multiply(a,b) {
@@ -10,8 +12,8 @@ export function multiply(a,b) {
     a[0]*b[4]+a[2]*b[5]+a[4], a[1]*b[4]+a[3]*b[5]+a[5]];
 }
 export const translation = (x,y) => [1,0,0,1,x,y];
-const scaling = s => [s,0,0,s,0,0];
-const rotation = r => [Math.cos(r),Math.sin(r),-Math.sin(r),Math.cos(r),0,0];
+export const scaling = s => [s,0,0,s,0,0];
+export const rotation = r => [Math.cos(r),Math.sin(r),-Math.sin(r),Math.cos(r),0,0];
 const chain = (...matrices) => matrices.reduce(multiply,identity);
 export function point(m,x,y) { return [m[0]*x+m[2]*y+m[4],m[1]*x+m[3]*y+m[5]]; }
 export function inverseVector(m,x,y) {
@@ -24,10 +26,10 @@ export function inverseMatrix(m) {
   if(!m.every(Number.isFinite)||!Number.isFinite(det)||Math.abs(det)<1e-14)throw Error('Singular or unstable transform');
   return [m[3]/det,-m[1]/det,-m[2]/det,m[0]/det,(m[2]*m[5]-m[3]*m[4])/det,(m[1]*m[4]-m[0]*m[5])/det];
 }
-export function wrapTime(time,duration){return ((time%duration)+duration)%duration;}
 // wrappedSeconds is already normalized by the caller. Keep this arithmetic in
 // one place for rendering and the exact-at-time reparent solver.
 export function sampleLayerMotion(layer,wrappedSeconds,duration) {
+  if(isClockContext(wrappedSeconds)){const local=consumerTime(wrappedSeconds,layer.local_cycle);wrappedSeconds=local.seconds;duration=local.duration;}
   const motion=layer.motion,p=TAU*wrappedSeconds/duration,q=motion?p*motion.cycles+motion.phase:0;
   return {x:motion?motion.x_amplitude*Math.sin(q):0,y:motion?motion.y_amplitude*Math.sin(2*q):0,
     rotation:(motion?.rotation_amplitude||0)*Math.sin(q+.3)};
@@ -48,10 +50,11 @@ function trackValue(track,time,fallback) {
   return a+(b-a)*u;
 }
 export function sampleLayerAppearance(layer,wrappedSeconds){
+  if(isClockContext(wrappedSeconds))wrappedSeconds=consumerTime(wrappedSeconds,layer.local_cycle).seconds;
   return {visible:trackValue(layer.tracks?.visible,wrappedSeconds,layer.visible),opacity:trackValue(layer.tracks?.opacity,wrappedSeconds,layer.opacity)};
 }
 
-function validateTracks(layer,asset,canvas) {
+function validateTracks(layer,asset,canvas,{duration=canvas.loop_seconds,closed=true}={}) {
   const tracks=layer.tracks;
   if(layer.track_loop!==undefined&&!['closed','hidden-reset'].includes(layer.track_loop))throw Error(`Invalid track loop policy: ${layer.id}`);
   if(tracks===undefined){
@@ -59,7 +62,7 @@ function validateTracks(layer,asset,canvas) {
     return;
   }
   if(!tracks||typeof tracks!=='object'||Array.isArray(tracks)||!Object.keys(tracks).length)throw Error(`Expected nonempty tracks: ${layer.id}`);
-  const allowed=['x','y','scale','rotation','opacity','visible','cell'],T=canvas.loop_seconds;
+  const allowed=['x','y','scale','rotation','opacity','visible','cell'],T=duration;
   for(const [name,track] of Object.entries(tracks)){
     const label=`${layer.id}.${name}`;
     if(!allowed.includes(name)||!track||typeof track!=='object'||Array.isArray(track)||Object.keys(track).some(k=>!['interpolation','keys'].includes(k)))throw Error(`Invalid track: ${label}`);
@@ -74,9 +77,9 @@ function validateTracks(layer,asset,canvas) {
       if(name==='scale'&&v<=0||name==='opacity'&&(v<0||v>1)||name==='cell'&&(!Number.isInteger(v)||v<0||v>=asset.atlas.frame_count))throw Error(`Track value outside valid range: ${label}`);
     }
     if(track.keys[0][0]!==0||track.keys.at(-1)[0]!==T)throw Error(`Track must include zero and loop endpoint: ${label}`);
-    if(layer.track_loop!=='hidden-reset'&&track.keys[0][1]!==track.keys.at(-1)[1])throw Error(`Track endpoints must close, or declare a hidden reset: ${label}`);
+    if(closed&&layer.track_loop!=='hidden-reset'&&track.keys[0][1]!==track.keys.at(-1)[1])throw Error(`Track endpoints must close, or declare a hidden reset: ${label}`);
   }
-  if(layer.track_loop==='hidden-reset'){
+  if(closed&&layer.track_loop==='hidden-reset'){
     const visible=tracks.visible,frame=1/canvas.fps;
     if(!visible||visible.keys[0][1]!==false||visible.keys.at(-1)[1]!==false||
       visible.keys.some(([t,v])=>v&&(t<frame||t>T-frame))||
@@ -92,11 +95,12 @@ export function compileScene(input,inputCatalog) {
   const assets=new Map(catalog.assets.map(a=>[a.id,a]));
   const groups=new Map(scene.groups.map(g=>[g.id,g]));
   const layers=new Map(scene.layers.map(l=>[l.id,l]));
+  const clock=compileClock(scene);
   const signals=new Map((scene.finishing?.signals||[]).map(s=>[s.id,s]));
   const bindings=new Map(scene.layers.map(l=>[l.id,(scene.bindings?.links||[]).filter(b=>b.target.layer===l.id)]));
   function sample(time){
-    if(!Number.isFinite(time))throw Error('Time must be finite.');
-    const t=wrapTime(time,T), p=TAU*t/T, memo=new Map();
+    const context=isClockContext(time)?clock.accept(time):clock.seconds(time);
+    const cameraTime=consumerTime(context,camera.local_cycle),p=TAU*cameraTime.seconds/cameraTime.duration,memo=new Map();
     function visit(layer){
     if(memo.has(layer.id))return memo.get(layer.id);
     const attached=layer.attach?visit(layers.get(layer.attach.layer)):null;
@@ -108,14 +112,15 @@ export function compileScene(input,inputCatalog) {
       const socket=attached.socketLocal[layer.attach.socket];
       parent=multiply(attached.matrix,translation(...socket));
     }
-    const motion=sampleLayerMotion(layer,t,T);
+    const t=consumerTime(context,layer.local_cycle).seconds,motion=sampleLayerMotion(layer,context);
     const tracks=layer.tracks||{};
     const asset=assets.get(layer.asset), atlas=asset.atlas;
     const channels={x:trackValue(tracks.x,t,layer.x)+motion.x,y:trackValue(tracks.y,t,layer.y)+motion.y,
       rotation:trackValue(tracks.rotation,t,layer.rotation)+motion.rotation,scale:trackValue(tracks.scale,t,layer.scale),
-      ...sampleLayerAppearance(layer,t),
-      cell:trackValue(tracks.cell,t,atlas?(Math.floor(t/layer.cycle_seconds*atlas.frame_count+1e-7)+(layer.phase_frames||0))%atlas.frame_count:0)};
-    const responses=bindings.get(layer.id).map(b=>sampleBinding(b,signals,id=>visit(layers.get(id)),t,T));
+      ...sampleLayerAppearance(layer,context),
+      cell:trackValue(tracks.cell,t,atlas?(layer.local_cycle?cycleCell(context,layer.local_cycle,atlas.frame_count,layer.phase_frames):
+        (Math.floor(t/layer.cycle_seconds*atlas.frame_count+1e-7)+(layer.phase_frames||0))%atlas.frame_count):0)};
+    const responses=bindings.get(layer.id).map(b=>sampleBinding(b,signals,id=>visit(layers.get(id)),context,T));
     for(const response of responses)channels[response.target.channel]=response.value;
     const matrix=chain(parent,translation(channels.x*W,channels.y*H),rotation(channels.rotation),scaling(channels.scale));
     const cell=channels.cell;
@@ -133,8 +138,10 @@ export function compileScene(input,inputCatalog) {
     }
     return scene.layers.map(visit);
   }
-  const inspectBindings=time=>({version:1,time:wrapTime(time,T),bindings:structuredClone(scene.bindings??null),samples:sample(time).flatMap(s=>s.bindings)});
-  return {sample,inspectBindings,scene,catalog};
+  sample.clock=clock;
+  const sampleFrame=frame=>sample(clock.frame(frame));
+  const inspectBindings=time=>{const context=clock.seconds(time);return {version:1,time:context.seconds,clock:context,bindings:structuredClone(scene.bindings??null),samples:sample(context).flatMap(s=>s.bindings)};};
+  return {sample,sampleFrame,clock,inspectBindings,scene,catalog};
 }
 export function sampleScene(scene,catalog,time){
   return compileScene(scene,catalog).sample(time);
@@ -145,7 +152,9 @@ export function validateScene(scene,catalog) {
   const vector = v=>Array.isArray(v)&&v.length===2&&v.every(finite);
   if(!scene||scene.version!==1||!Array.isArray(scene.layers)||!Array.isArray(scene.groups)) throw Error('Expected a version 1 scene with layers and groups.');
   const c=scene.canvas;
-  if(!c||!['width','height','fps','loop_seconds'].every(k=>finite(c[k])&&c[k]>0)||c.width>4096||c.height>4096||!Number.isInteger(c.width)||!Number.isInteger(c.height)||!Number.isInteger(c.fps)||!Number.isInteger(c.fps*c.loop_seconds)) throw Error('Invalid canvas or frame count (preview maximum 4096 pixels per side).');
+  if(!c||!['width','height','fps','loop_seconds'].every(k=>finite(c[k])&&c[k]>0)||c.width>4096||c.height>4096||!Number.isInteger(c.width)||!Number.isInteger(c.height)||!Number.isInteger(c.fps)||(scene.clock===undefined&&!Number.isInteger(c.fps*c.loop_seconds))) throw Error('Invalid canvas or frame count (preview maximum 4096 pixels per side).');
+  const clock=compileClock(scene);
+  validateCycleReference(scene,scene.camera??{});
   validateFraming(scene);
   if(!scene.camera||!['overscan','x_amplitude','y_amplitude','zoom_amplitude'].every(k=>finite(scene.camera[k]))||scene.camera.overscan<1) throw Error('Invalid camera.');
   const groups=new Map();
@@ -161,9 +170,10 @@ export function validateScene(scene,catalog) {
     if(l.attach){
       if(l.group||'depth' in l||!l.attach.layer||!l.attach.socket)throw Error(`Attached layers inherit depth and group: ${l.id}`);
     }else if(l.group?(!groups.has(l.group)||'depth' in l):!finite(l.depth)) throw Error(`Invalid depth/group: ${l.id}`);
-    if(assets.get(l.asset).atlas && (!finite(l.cycle_seconds)||l.cycle_seconds<=0||Math.abs(c.loop_seconds/l.cycle_seconds-Math.round(c.loop_seconds/l.cycle_seconds))>1e-8||!Number.isInteger(l.phase_frames)||l.phase_frames<0)) throw Error(`Cel cycle must divide the visual loop: ${l.id}`);
+    const local=validateCycleReference(scene,l);
+    if(assets.get(l.asset).atlas && (!finite(l.cycle_seconds)||l.cycle_seconds<=0||(clock.mode==='loop'&&!l.local_cycle&&Math.abs(c.loop_seconds/l.cycle_seconds-Math.round(c.loop_seconds/l.cycle_seconds))>1e-8)||!Number.isInteger(l.phase_frames)||l.phase_frames<0)) throw Error(`Cel cycle must divide the visual loop: ${l.id}`);
     if(l.motion&&(!['x_amplitude','y_amplitude','cycles','phase'].every(k=>finite(l.motion[k]))||!Number.isInteger(l.motion.cycles)||l.motion.cycles<1||!finite(l.motion.rotation_amplitude||0))) throw Error(`Invalid motion: ${l.id}`);
-    validateTracks(l,assets.get(l.asset),c);
+    validateTracks(l,assets.get(l.asset),c,{duration:local.duration,closed:clock.mode==='loop'||l.local_cycle!==undefined});
   }
   const layers=new Map(scene.layers.map(l=>[l.id,l])), visited=new Set(), visiting=new Set(),depths=new Map();
   for(const l of scene.layers){
@@ -205,9 +215,10 @@ export function drawScene(canvas,scene,catalog,images,time,{selected=null,grid=f
   ctx.clearRect(0,0,W,H);
   ctx.fillStyle=scene.canvas.background;ctx.fillRect(0,0,W,H);
   ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
-  const states=sampler?sampler(time):sampleScene(scene,catalog,time);
+  const context=isClockContext(time)?time:(sampler?.clock??compileClock(scene)).seconds(time);
+  const states=sampler?sampler(context):compileScene(scene,catalog).sample(context);
   canvas.finishingReport=null;
-  if(scene.finishing)canvas.finishingReport=drawFinished(canvas,scene,catalog,images,time,states,{selected,solo,createCanvas,pass});
+  if(scene.finishing)canvas.finishingReport=drawFinished(canvas,scene,catalog,images,context,states,{selected,solo,createCanvas,pass});
   else if(['lights','shadows','reflections','illuminations'].includes(pass)){ctx.fillStyle='#000000';ctx.fillRect(0,0,W,H);}
   else for(const s of states){
     if(!s.visible||(solo&&s.id!==selected))continue;

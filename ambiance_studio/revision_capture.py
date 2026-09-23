@@ -70,6 +70,23 @@ def check(project, id):
 def compare(project, id):
     data = load(project, id)
     differences = changed(project, data['origins'])
+    configuration = project/'ambiance-project.json'
+    if configuration.exists():
+        from .project import locations
+        selected_scene, selected_catalog = locations(project)
+        # This also covers historical manifests captured before the selector
+        # became a typed origin. An invalid/missing current selection is an
+        # error, not evidence that working state is unchanged.
+        for role, selected in [('scene', selected_scene), ('catalog', selected_catalog)]:
+            if not selected.is_file(): raise ValueError('Current configured '+role+' is missing: '+str(selected))
+            current = relative(project, selected)
+            previous = relative(project, studio.inside(project, data['selection'][role]))
+            if current != previous:
+                differences.append({'path': 'ambiance-project.json', 'section': 'animation' if role == 'scene' else 'assets',
+                                    'role': 'active_'+role, 'reason': 'active selection changed',
+                                    'before_path': previous, 'after_path': current,
+                                    'expected_sha256': next((r['sha256'] for r in data['dependencies'] if r['path'] == data['controls'][role]), None),
+                                    'actual_sha256': studio.digest(selected)})
     return {'ok': True, 'id': id, 'working_diverged': bool(differences), 'working_changes': differences, 'integrity': check(project, id),
             'meaning': 'Working divergence does not replace the captured revision or transfer its review.'}
 

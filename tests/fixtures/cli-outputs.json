@@ -70,5 +70,10 @@
   {"argv": ["model", "admit", "input", "--proof", "input", "--recipe", "input", "--out", "output"], "output": "artifact-directory", "command": "model admit"},
   {"argv": ["workflow", "inspect", "--out", "output"], "output": "result-envelope", "command": "workflow inspect"},
   {"argv": ["workflow", "stage", "intent", "--out", "output"], "output": "result-envelope", "command": "workflow stage"},
-  {"argv": ["workflow", "explain", "wf1.action", "--out", "output"], "output": "result-envelope", "command": "workflow explain"}
+  {"argv": ["workflow", "explain", "wf1.action", "--out", "output"], "output": "result-envelope", "command": "workflow explain"},
+  {"argv": ["workflow", "prepare", "action", "--out", "output"], "output": "artifact-directory", "command": "workflow prepare"},
+  {"argv": ["audio", "measure", "input", "--out", "output"], "output": "result-envelope", "command": "audio measure"},
+  {"argv": ["model", "instance", "apply", "recipe.json", "--out", "output"], "output": "result-envelope", "command": "model instance"},
+  {"argv": ["model", "instance", "inspect", "--out", "output"], "output": "result-envelope", "command": "model instance"},
+  {"argv": ["model", "instance", "evidence", "--receipt", "report.json", "--instance", "a", "--out", "output"], "output": "command-file", "command": "model instance"}
 ]

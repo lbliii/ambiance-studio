@@ -79,9 +79,11 @@ def alignment(session, picture, links):
             rows.append({'clip_id':link['clip_id'], 'action_id':link['action_id'], 'aligned':False, 'missing_clip':True})
             continue
         starts = [clip['at_frame'] + i * clip.get('every_frames', clip['frames']) for i in range(clip.get('repeat', 1))]
-        positions = [f*rate/fps + link['offset_samples'] for f in link['picture_frames']]
-        if any(n != round(n) for n in positions): raise ValueError('Picture cue falls between PCM samples; choose explicit sample-aligned picture/offset timing')
-        expected = list(map(round, positions))
+        from .timebase import frames_to_samples
+        try:
+            expected = [frames_to_samples(f, fps, rate)['value'] + link['offset_samples'] for f in link['picture_frames']]
+        except ValueError as error:
+            raise ValueError('Picture cue falls between PCM samples; choose explicit sample-aligned picture/offset timing') from error
         rows.append({'clip_id': link['clip_id'], 'action_id': link['action_id'], 'actual_start_samples': starts,
                      'picture_anchor_samples': expected, 'delta_samples': [a-b for a,b in zip(starts, expected)],
                      'unmapped_repeat_count':abs(len(starts)-len(expected)), 'aligned': starts == expected})

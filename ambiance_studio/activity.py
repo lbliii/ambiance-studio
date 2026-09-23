@@ -298,7 +298,8 @@ def run(args, project):
         if not re.fullmatch(r'[a-zA-Z0-9][a-zA-Z0-9_.-]{0,99}', action['id']): raise ValueError('Activity action IDs must use the canonical stable-ID vocabulary')
         if not set(action['layers']) <= layers: raise ValueError(f'Action {action["id"]} references unrealized layers')
     if args.compare and not args.raster: raise ValueError('--compare requires --raster')
-    frames = args.frames if args.frames is not None else round(scene['canvas']['fps'] * scene['canvas']['loop_seconds'])
+    from .timebase import scene_frame_count
+    frames = args.frames if args.frames is not None else scene_frame_count(scene)-args.start_frame
     request = {'project': str(Path(project).resolve()), 'out': str(args.out.resolve()), 'scene_path': str(scene_path), 'catalog_path': str(catalog_path),
                'scene_sha256': digest(scene_path), 'catalog_sha256': digest(catalog_path), 'plan': plan,
                'revision': {k:context[k] for k in ['revision_id', 'manifest_sha256'] if k in context} or None,

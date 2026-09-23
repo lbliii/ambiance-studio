@@ -29,7 +29,8 @@ def capabilities():
     from .audio_source_backend import capabilities as source_capabilities
     return {'audio_arrangement': True, 'audio_pcm_wav': True,
             'audio_source_hashes': True, 'audio_comparisons': True,
-            'audio_normalization': False, 'audio_true_peak': False,
+            'audio_normalization': False, 'audio_true_peak': bool(shutil.which('node')),
+            'audio_lufs': bool(shutil.which('node')), 'level_measurement_scope': '48 kHz mono/stereo; explicit audio measure only',
             'source_preparation': source_capabilities()}
 
 
@@ -41,6 +42,10 @@ def add_parsers(sub):
     audio_sources.add_parsers(group)
     from . import audio_library
     audio_library.add_parsers(group)
+    from .command_output import Output, add_output
+    p = group.add_parser('measure', help='Measure 48 kHz PCM LUFS, 4x true peak and mono compatibility without changing levels')
+    p.add_argument('path', type=Path); p.add_argument('--source-sha256')
+    add_output(p, Output.REPORT, type=Path)
     p = group.add_parser('inspect'); p.add_argument('session', type=Path)
     p = group.add_parser('import-stems', help='Create a new unity-gain session from an existing session stem list')
     p.add_argument('legacy_session', type=Path); p.add_argument('--session-id', required=True)
@@ -465,6 +470,12 @@ def run(args, project):
         from . import audio_cues
         return audio_cues.bind(args, project) if action == 'cue-bind' else audio_cues.check(args, project)
     if action == 'check': return check_audio(argument_path(project, args.path))
+    if action == 'measure':
+        from .audio_measurements import measure_file
+        source = argument_path(project, args.path)
+        if args.out is not None and args.out.resolve() == source.resolve():
+            raise ValueError('Audio measurement report cannot overwrite its source')
+        return measure_file(source, args.source_sha256)
     if action == 'import-stems': return import_stems(project, argument_path(project, args.legacy_session), args.session_id)
     path = argument_path(project, args.session)
     if action == 'inspect': return inspect_session(project, path)

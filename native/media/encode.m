@@ -111,7 +111,8 @@ void encode(NSString *path, int width, int height, int fps, int frames, int bitr
         },
         nil);
 }
-void encodeAudio(NSString *sourcePath, NSString *outPath) {
+void encodeAudio(NSString *sourcePath, NSString *outPath, int bitrate) {
+    NSDictionary *settings = audioEncodingSettings(bitrate);
     fresh(outPath);
     AVURLAsset *source = asset(sourcePath);
     AVAssetTrack *track = [source tracksWithMediaType:AVMediaTypeAudio].firstObject;
@@ -125,8 +126,8 @@ void encodeAudio(NSString *sourcePath, NSString *outPath) {
         [AVAssetReaderTrackOutput assetReaderTrackOutputWithTrack:track
                                                    outputSettings:@{
                                                        AVFormatIDKey : @(kAudioFormatLinearPCM),
-                                                       AVLinearPCMBitDepthKey : @16,
-                                                       AVLinearPCMIsFloatKey : @NO,
+                                                       AVLinearPCMBitDepthKey : @32,
+                                                       AVLinearPCMIsFloatKey : @YES,
                                                        AVLinearPCMIsBigEndianKey : @NO,
                                                        AVLinearPCMIsNonInterleaved : @NO
                                                    }];
@@ -138,12 +139,7 @@ void encodeAudio(NSString *sourcePath, NSString *outPath) {
         fail(error.description);
     AVAssetWriterInput *input =
         [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeAudio
-                                           outputSettings:@{
-                                               AVFormatIDKey : @(kAudioFormatMPEG4AAC),
-                                               AVSampleRateKey : @48000,
-                                               AVNumberOfChannelsKey : @2,
-                                               AVEncoderBitRateKey : @256000
-                                           }];
+                                           outputSettings:settings];
     [writer addInput:input];
     if (![writer startWriting] || ![reader startReading])
         fail(writer.error.description ?: reader.error.description);
@@ -171,7 +167,7 @@ void encodeAudio(NSString *sourcePath, NSString *outPath) {
             @"codec" : @"AAC",
             @"sample_rate" : @48000,
             @"channels" : @2,
-            @"bitrate" : @256000,
+            @"bitrate" : @(bitrate),
             @"source_seconds" : @(CMTimeGetSeconds(source.duration))
         },
         nil);

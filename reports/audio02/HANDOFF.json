@@ -1,0 +1,135 @@
+{
+  "commit": "2e7aefb87b3e4911bf19d6117b6cd8e2d9b72cde",
+  "replay": {
+    "path": "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/replay-final/replay.json",
+    "sha256": "13060f7932bc9a3f2656e444d713735b3b6abd51b0dfa76991ce43ff74dbe6d5",
+    "source": {
+      "commit": "2e7aefb87b3e4911bf19d6117b6cd8e2d9b72cde",
+      "tracked_tree_sha256": "f39dab3b4f31377b53d3f357333e0e85d5140d11932a9dac6cc1fcfa2d28a38f"
+    },
+    "checks": 18,
+    "all_passed": true
+  },
+  "source_identity_report": {
+    "path": "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/replay-final/source-identity.json",
+    "sha256": "17f71b568949f705f79083516924471cb7360f3dc507314e5b6bcd97ae3f21e1"
+  },
+  "native_sources": {
+    "files": {
+      "compose.m": "c209d089c141fd9087f8f1f14f38900b539afef8923999bb073c0e1b34a83ea0",
+      "encode.m": "622a93e477cae5b2bb81a7a8f2b1a083911a4fa99991a60269a6707c775576fb",
+      "inspect.m": "e35106b8b5e18b6102aee03a01591bab52aa7c76de0869e2f0dfc5cae2ab946a",
+      "media.m": "3ee705487831863e221998ee3781ebed8d3d3c9d8e5f99b0263110456ab1eb4f",
+      "media_commands.h": "28608ca0141b2e339467babb2336c8cb41ff318c866b65db6238af8edc28fbe3",
+      "media_common.h": "77e03b8aa62d6a7475928ca2567c5c8b6d42c2f375ab9ce2e134e7927539ca60",
+      "media_common.m": "448c27174b9553a1c6f23a5c1461a8dfd4dbe131f93c4c815bb87e8c0fdb0309",
+      "verify.m": "37f51a0ef5a1e42c418ff1131269bd45c90a9a9dbe1607dfa220842664f0b554",
+      "verify_audio.h": "59f2148dc4bbf052fd55103d52d2e5d0a8e0815949410a3af74e85fde4a81734",
+      "verify_audio.m": "0da14046cca0bccba619474ec8094395d857bd43c14f1f3da70d3c56e74f7783"
+    },
+    "sha256": "cd9b78be4adec9082e83f242271886a54c1226ac2f0b01cc7a176f98cb39051e"
+  },
+  "meter_sha256": "de80c3bacffb3f7c6a9a9f0ba2911efc88bf7de4e856781d8182d323b9b09c54",
+  "adapter_sha256": "dd253cc382d0356554c825275f8d3f78732d4117058a56d8b1d1d72478577c66",
+  "artifact_examples": {
+    "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/replay-final/native-320000/video.mp4": "73afd2c40584e66f73923fb4a53664a020133dcb101755bec7d5e56e35632dd1",
+    "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/replay-final/native-320000/verification/media-report.json": "24cbfb07cdfff922caa5a849d36066bc8dc535e35c06781d68b5171f1e894dc4",
+    "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/replay-final/native-320000/verification/contacts/decoded-audio.f32le": "7c6f919779e10bf23635478d0f05f267944c6a16093e6cdcf1adadda05be5d06",
+    "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/replay-final/native-320000/verification/contacts/decoded-audio.wav": "0624dc6a5cf4da618a15eb7503f78b23bda36578a0db8258ea8f09d2fb5a257f",
+    "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/replay-final/native-320000/verification/contacts/decoded-0000.png": "49c56619410224a49a3f65c6ced1dfea9c17106d20dfe89c53ab434d3969c586",
+    "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/replay-final/revisions/levels-v1/editions/aac-320000.json": "be3439e5ca6f92c696468c7cddce840c7aaff82368e0254cb3199616fb51f611"
+  },
+  "logs": {
+    "native-restricted.log": "6c207f08bd5e7a9d033a9082cc13931b3d3e4786fc5a9ac8bb2ebaa21a8b5855",
+    "replay-dev5.log": "b75cc03bc19a174bc329114452a123ac2209b71466f24ed249806f6937242bd3",
+    "replay-dev4.log": "cb50f3d56513173781eae317b6554780b0063461ef927ebaad3d684468bc6437",
+    "package-audit-v2.log": "70e62c1f91aeaa3b9fa5944b105998a5cfa2f2a0b740b8a75f34d36dbb5bd063",
+    "focused-measurements.log": "c163db490fa9d84c56465d50c28462b1e938f646ff821ba77d9fdfea90f7251b",
+    "replay-dev3.log": "1d08241d001970e6408bf29bf3fd399bb1219a4dd7b492eb75fc17931132c0e5",
+    "replay-dev.log": "81fdc9d9f7ab6855e43bdccb79dd9cb4ac4792ec07ff6eabf4c900ed1005ca89",
+    "package-audit.log": "70e62c1f91aeaa3b9fa5944b105998a5cfa2f2a0b740b8a75f34d36dbb5bd063",
+    "replay-dev2.log": "90cc8767688cd5cf4460da8d48a12141eb462cc4a8dbd3af020423305cef1cb1",
+    "native-enabled-v3.log": "f2e16273290ab7a7ec2ba2771cf813237c6844724d74eaa9ae23f7abb7feeacc",
+    "native-enabled.log": "d7eda88d660c8dfea877c0bbc5d58953a7d4e59d9c64f6e758640f658a5070c3",
+    "native-enabled-v2.log": "c580addf1337ae24cf205564157d2d811b60f17c4b7c10c031971fe51ddaad02",
+    "focused-cli-v2.log": "4d73359c30ecaa6ba868375ec876bf402124c50781b66935d666d713601773c5",
+    "focused-cli.log": "972c449843fdfdb0d926e81c5996fcef8b177cc695c3dfcfda2a0ff821d2658d",
+    "focused-render-services.log": "24a53d6753ecf9c4716c2f3f03db7ef1eb57e271069360b5d1d37ad7f4b4cbc6",
+    "focused-overwrite.log": "9bb98dae76cceffcc38dd961d7ace9b6f575a1c0fa1b4f7b488831f7511c8e30",
+    "focused-media.log": "e01fd75b27c4acf9963cb63f68f9b174e9169895a3b5a993127002de9894d262",
+    "focused-revision-contracts.log": "e5c2a1a7ae365d54876db7610a95309aa4c7b0c0262eb07fee1e464320cc5854",
+    "focused-render-services-v2.log": "9dcd28667e1283c487c705512175a0d7eae82f1b684d2c36c2fa50a9e9d9288b",
+    "focused-iteration-steps.log": "0d5f19ead2bf9676d74342ac6c647b4bf2294bed713605930a76f4b7d5b1c878",
+    "focused-measurements-v2.log": "ae384b813d537eb1c04608c1d4641421eb016a25b255a4728993cb7b53c5f71e",
+    "replay-final.log": "bcf7f117e95d2790f1639813bb85bc229ce100f6b9cb44282151bceab79ab77c"
+  },
+  "observations": {
+    "visual": "Inspected exact decoded-0000.png from final320000 output: centered ochre square on dark background; synthetic32x32fixture. No picture rendering changes claimed.",
+    "listening": "unperformed"
+  },
+  "high_peak_trial": {
+    "path": "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/high-native/high-peak-observation.json",
+    "sha256": "563c56b7ff04a4ab5272ddf92962e28989776479947135f472951cd746061cf7",
+    "max_native_float": 1.009989619255066,
+    "decoded_true_peak_dbtp": 3.1122539839015566,
+    "presented_samples": 9600
+  },
+  "required_native": {
+    "argv": "./ambiance test --require-native --artifacts .ambiance/audio02/native-final",
+    "report": "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/native-final/run.json",
+    "sha256": "9db12e775179702a3c54c445b61b7597c613f2aae3acfe9ab3e1cbb9519b7225",
+    "source": {
+      "commit": "2e7aefb87b3e4911bf19d6117b6cd8e2d9b72cde",
+      "tracked_tree_sha256": "f39dab3b4f31377b53d3f357333e0e85d5140d11932a9dac6cc1fcfa2d28a38f",
+      "manifest": "inputs.json"
+    },
+    "recorded_cases": 528,
+    "python_tests": 513,
+    "skips": 0,
+    "inputs_sha256": "17f71b568949f705f79083516924471cb7360f3dc507314e5b6bcd97ae3f21e1",
+    "python_report_sha256": "316a157d314def2f31b3ee241907f465a55d3030275d6d90cadce96d8938c923"
+  },
+  "format": "ambiance-audio02-handoff",
+  "schema_version": 1,
+  "thread_id": "01a09b0c-90a8-7613-8e74-3804bbbcafea",
+  "worktree": "/Users/lb/.codex/worktrees/80a1/ambiance-studio",
+  "branch": "codex/wave3-audio02",
+  "base": "75d24b85a8977f234d87daa1c18993d394036c1c",
+  "implementation_commit": "2e7aefb87b3e4911bf19d6117b6cd8e2d9b72cde",
+  "changed_paths": [
+    "ambiance_studio/audio.py",
+    "ambiance_studio/audio_encoding.py",
+    "ambiance_studio/audio_measurements.py",
+    "ambiance_studio/editions.py",
+    "ambiance_studio/iteration_plan.py",
+    "ambiance_studio/iterations.py",
+    "ambiance_studio/media_operations.py",
+    "ambiance_studio/media_verification.py",
+    "ambiance_studio/render_execution.py",
+    "ambiance_studio/render_plan.py",
+    "ambiance_studio/rendering.py",
+    "docs/AUDIO-LEVELS.md",
+    "examples/audio-level-replay/README.md",
+    "examples/audio-level-replay/replay.py",
+    "native/media/compose.m",
+    "native/media/encode.m",
+    "native/media/media.m",
+    "native/media/media_commands.h",
+    "native/media/verify_audio.m",
+    "reports/audio02/IMPLEMENTATION-NOTES.md",
+    "tests/fixtures/cli-options.json",
+    "tests/fixtures/cli-outputs.json",
+    "tests/test_audio_measurements.py",
+    "tests/test_render_services.py",
+    "tools/audio-measure.mjs"
+  ],
+  "native_slot": "released",
+  "audition": "unperformed",
+  "boundary": "AUDIO-02 bounded engineering complete; full reference conformance, audition/comfort/acceptance, TV-01/02, LIB-02, MIX-01 and surround remain open",
+  "reference_scope": "EBU Tech3341 deterministic definitions 1\u20135 and 15\u201319; official audio archive download unavailable (HTTP 403); no full EBU Mode certification",
+  "handoff_package_audit": {
+    "path": "/Users/lb/.codex/worktrees/80a1/ambiance-studio/.ambiance/audio02/handoff-package-audit.log",
+    "sha256": "3eb6294f7c573c0e16c1f3a26fab680472bee353847bba8c1a6eeb639a7f06d9",
+    "passed": true
+  }
+}

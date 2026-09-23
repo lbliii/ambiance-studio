@@ -205,6 +205,20 @@ def identity(plan):
             'expectations': {e['id']: studio.encoded_hash(e) for e in plan['expectations']}}
 
 
+def draft(project, *, outputs=()):
+    """Unperformed authoring material; null choices are deliberately not a plan.
+
+    Call validate on completed values. Existing prose, inventory and reference
+    files remain source material, never automatically inferred creative scope.
+    """
+    path = studio.inside(Path(project).resolve(), PATH)
+    return {'format': FORMAT, 'schema_version': 1,
+            'story': {'premise': None, 'direction': None}, 'sources': None,
+            'elements': None, 'actions': None, 'relations': None, 'expectations': None,
+            'outputs': [{'view_id': o['view_id'], 'roles': o['roles'] or None} for o in outputs] or None,
+            'change': {'reason': None, 'supersedes_sha256': studio.digest(path) if path.is_file() else None}}
+
+
 def load(project):
     return validate(project, read(studio.inside(Path(project).resolve(), PATH)))
 

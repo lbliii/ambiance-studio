@@ -60,7 +60,9 @@ def validate_recipe(recipe):
         raise ValueError('Iteration requires editions')
     roles = set()
     for entry in entries:
-        record_contracts.fields(entry, {'role', 'audio', 'audio_run', 'audio_provenance', 'repeats'}, 'iteration edition')
+        record_contracts.fields(entry, {'role', 'audio', 'audio_run', 'audio_provenance', 'repeats', 'audio_bitrate'}, 'iteration edition')
+        from .audio_encoding import encoding_settings
+        encoding_settings(entry.get('audio_bitrate'), has_audio=bool(entry.get('audio')))
         role = entry.get('role')
         if role not in deliveries.ROLES or role in roles:
             raise ValueError('Iteration soundtrack roles must be unique')

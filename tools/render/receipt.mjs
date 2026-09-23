@@ -52,6 +52,8 @@ export async function renderReceipt(job, raster) {
     finishing_engine_sha256 : sha(await fs.readFile(path.join(root, 'editor/finishing.mjs'))),
     views_module_sha256 : sha(await fs.readFile(path.join(root, 'editor/views.mjs'))),
     start_seconds : start,
+    source_start_frame : job.startFrame,
+    source_end_frame_exclusive : job.startFrame===null?null:job.startFrame+frames,
     frames,
     seconds : frames / fps,
     source_assets : assetHashes,
@@ -62,7 +64,11 @@ export async function renderReceipt(job, raster) {
     renderer_sha256 : sha(await fs.readFile(path.join(root, 'tools/render-scene.mjs'))),
     rig_proof_renderer_sha256 :
         rigPlan ? sha(await fs.readFile(path.join(root, 'tools/rig-proof.mjs'))) : null,
-    rgba_endpoint_exact : true,
+    rgba_endpoint_exact : raster.endpointExact,
+    picture_clock : job.compiled.clock.frame(job.compiled.clock.duration_frames),
+    endpoint_policy : job.compiled.clock.mode==='finite'?'Authored endpoint N is inspection-only; exported samples are [0,N)':'Loop endpoint closes frame zero; exported samples are [0,N)',
+    last_exported_to_endpoint : raster.lastToEndpoint,
+    clock_engine_sha256 : sha(await fs.readFile(path.join(root,'editor/clock.mjs'))),
     endpoint_difference : endpointDifference,
     last_to_first : seam,
     visual_review_performed : false

@@ -27,6 +27,7 @@ class Collector:
     def __init__(self, project):
         self.project = project; self.refs = []; self.documents = {}; self.origins = []; self.masters = []
         self.sound_complete = set(); self.notes = []
+        self.model_assets = {}
 
     def pin(self, path, section, role, expected=None):
         item = ref(self.project, path, section, role, expected)
@@ -44,6 +45,12 @@ class Collector:
         self.documents[name] = {'bytes': raw if content is None else (json.dumps(content, indent=2, allow_nan=False)+'\n').encode(),
                                 'section': section, 'role': role, 'origin': original['path']}
         return self.documents[name]
+
+    def models(self, scene, catalog):
+        from .model_evidence import model_references
+        references, self.model_assets = model_references(self.project, scene, catalog)
+        for item in references:
+            self.pin(studio.inside(self.project, item['path']), item['section'], item['role'], item['sha256'])
 
     def session(self, path, name='audio-session.json'):
         doc = self.document(name, path, 'mix', 'audio_session')
@@ -117,8 +124,17 @@ class Collector:
         checked = assets.inspect_pack(pack)
         if not checked['ok']: raise ValueError(f'Prepared pack changed: {pack}')
         packed = checked['asset']
+        model_source = self.model_assets.get(item['id'])
+        if model_source:
+            if (item['file'] != model_source['file'] or item['sha256'] != model_source['sha256']
+                    or recipe_name != model_source['recipe'] or packed['id'] != model_source['compiler_id']
+                    or studio.digest(pack/'asset.json') != model_source['compiler_asset']['sha256']):
+                raise ValueError('Model runtime asset differs from exact compiler source mapping')
         for key in ['id', 'sha256', 'width', 'height', 'atlas', 'pivot', 'registration_mapping']:
-            if item.get(key) != packed.get(key): raise ValueError(f'Catalog/pack {key} mismatch for {item["id"]}')
+            # Only the typed, pinned model adapter may namespace a runtime ID.
+            # Every image/geometry/provenance comparison below remains exact.
+            value = model_source['compiler_id'] if key == 'id' and model_source else item.get(key)
+            if value != packed.get(key): raise ValueError(f'Catalog/pack {key} mismatch for {item["id"]}')
         if item.get('provenance', {}).get('sources') != packed.get('provenance', {}).get('sources'):
             raise ValueError('Catalog and pack source provenance differ')
         for key in ['registration_source', 'source_mapping', 'edge_preparation', 'motion_preparation', 'preparation_receipt', 'cel_trim', 'region_receipt']:
@@ -216,9 +232,15 @@ def collect(project, selection):
     scene_path = studio.inside(project, selection['scene']); catalog_path = studio.inside(project, selection['catalog'])
     scene = json.loads(c.document('scene.json', scene_path, 'animation', 'scene')['bytes'])
     catalog = json.loads(c.document('catalog.json', catalog_path, 'assets', 'catalog')['bytes'])
+    # A pointer switch leaves old source files intact. Capture the configured
+    # selector as an origin/control, never as a mutable integrity dependency.
+    configuration = project/'ambiance-project.json'
+    if configuration.is_file():
+        c.document('active-project.json', configuration, 'animation', 'active_project')
     if scene.get('version') != 1 or catalog.get('version') != 1: raise ValueError('Unsupported scene/catalog version')
     from .scene_runtime import scene_bridge
     scene_bridge('inspect', scene, catalog, {'full': True})
+    c.models(scene, catalog)
     from .finishing import used_asset_ids, dependency_roles
     used = used_asset_ids(scene); roles = dependency_roles(scene)
     selected = [a for a in catalog['assets'] if a['id'] in used]
